@@ -171,6 +171,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link walkingkooka.validation.form.Form} and {@link walkingkooka.validation.Validator}
+     */
+    public static Converter<SpreadsheetConverterContext> formAndValidation() {
+        return FORM_AND_VALIDATION;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> FORM_AND_VALIDATION = namedCollection(
+        "form-and-validation",
+        textToFormName(),
+        textToValidationError(),
+        toValidationErrorList()
+    );
+
+    /**
      * {@see SpreadsheetConverterFormatPatternToString}
      */
     public static Converter<SpreadsheetConverterContext> formatPatternToString(final String pattern) {

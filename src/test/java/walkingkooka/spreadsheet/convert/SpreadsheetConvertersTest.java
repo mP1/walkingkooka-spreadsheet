@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
@@ -76,7 +77,11 @@ import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.form.FormName;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -676,6 +681,119 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // formAndValidation................................................................................................
+
+    @Test
+    public void testFormAndValidationConvertStringToSpreadsheetErrorFails() {
+        this.convertFails(
+            SpreadsheetConverters.formAndValidation(),
+            SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
+                .toString(),
+            SpreadsheetError.class,
+            FORM_AND_VALIDATION_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertStringToValidatorSelectorFails() {
+        final ValidatorSelector selector = ValidatorSelector.parse("validator-selector-123");
+
+        this.convertFails(
+            SpreadsheetConverters.formAndValidation(),
+            selector.toString(),
+            ValidatorSelector.class,
+            FORM_AND_VALIDATION_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertStringToFormName() {
+        final String formName = "FormName123";
+
+        this.formAndValidationConvertAndCheck(
+            formName,
+            FormName.with(formName)
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertStringToValidationError() {
+        final ValidationError<SpreadsheetExpressionReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
+            .toValidationError(SpreadsheetSelection.A1);
+
+        this.formAndValidationConvertAndCheck(
+            error.text(),
+            error
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertStringToTextFormAndValidationPropertyName() {
+        final ValidationError<SpreadsheetExpressionReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
+            .toValidationError(SpreadsheetSelection.A1);
+
+        this.formAndValidationConvertAndCheck(
+            error,
+            ValidationErrorList.<SpreadsheetExpressionReference>empty()
+                .concat(error)
+        );
+    }
+
+    private void formAndValidationConvertAndCheck(final Object value,
+                                                  final Object expected) {
+        this.formAndValidationConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void formAndValidationConvertAndCheck(final Object value,
+                                                      final Class<T> type,
+                                                      final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.formAndValidation(),
+            value,
+            type,
+            FORM_AND_VALIDATION_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext FORM_AND_VALIDATION_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+
+        @Override
+        public SpreadsheetExpressionReference validationReference() {
+            return SpreadsheetSelection.A1;
+        }
+    };
+    
     // json.............................................................................................................
 
     @Test

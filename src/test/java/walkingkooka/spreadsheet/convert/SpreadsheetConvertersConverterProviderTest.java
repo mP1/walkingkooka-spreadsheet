@@ -169,6 +169,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithFormAndValidationString() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.formAndValidation()
+        );
+    }
+
+    @Test
     public void testConverterNameWithGeneral() {
         final ConverterProvider provider = this.createConverterProvider();
 
