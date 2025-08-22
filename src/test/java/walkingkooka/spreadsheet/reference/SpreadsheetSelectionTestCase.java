@@ -408,6 +408,23 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
+    final void toExpressionReferenceAndCheck(final String selection,
+                                             final String expected) {
+        this.toExpressionReferenceAndCheck(
+            this.parseString(selection),
+            SpreadsheetSelection.parseExpressionReference(expected)
+        );
+    }
+
+    final void toExpressionReferenceAndCheck(final SpreadsheetSelection selection,
+                                             final SpreadsheetExpressionReference expected) {
+        this.checkEquals(
+            expected,
+            selection.toExpressionReference(),
+            selection::toString
+        );
+    }
+
     final void toExpressionReferenceFails() {
         assertThrows(
             UnsupportedOperationException.class,

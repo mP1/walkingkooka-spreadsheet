@@ -120,13 +120,6 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertNotSame(reference, this.createReference(value));
     }
 
-    // toExpressionReference............................................................................................
-
-    @Test
-    public final void testToExpressionReferenceFails() {
-        this.toExpressionReferenceFails();
-    }
-
     // toRange.........................................................................................................
 
     @Test

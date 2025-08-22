@@ -744,6 +744,16 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         );
     }
 
+    // toExpressionReference............................................................................................
+
+    @Test
+    public void testToExpressionReference() {
+        this.toCellOrCellRangeAndCheck(
+            "A",
+            "A1:A" + SpreadsheetColumnOrRowReferenceKind.ROW.lastRelative()
+        );
+    }
+
     // columnRange...................................................................................................,,,
 
     @Test
