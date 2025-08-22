@@ -430,14 +430,45 @@ final class MissingConverterVerifier {
             );
 
             finder.addIfConversionFail(
+                Lists.of(
+                    cell,
+                    cellRange,
+                    column,
+                    columnRange,
+                    row,
+                    rowRange
+                ),
+                SpreadsheetCellRangeReference.class,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+            );
+
+            finder.addIfConversionFail(
                 column,
                 SpreadsheetColumnReference.class,
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
             );
 
             finder.addIfConversionFail(
+                Lists.of(
+                    column,
+                    columnRange
+                ),
+                SpreadsheetColumnRangeReference.class,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+            );
+
+            finder.addIfConversionFail(
                 row,
                 SpreadsheetRowReference.class,
+                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                Lists.of(
+                    row,
+                    rowRange
+                ),
+                SpreadsheetRowRangeReference.class,
                 SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
             );
         }
