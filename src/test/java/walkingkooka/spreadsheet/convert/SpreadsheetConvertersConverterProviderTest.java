@@ -549,6 +549,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithUrl() {
+        this.converterAndCheck(
+            "url",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.url()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithUrlToHyperlink() {
         this.converterAndCheck(
             "url-to-hyperlink",

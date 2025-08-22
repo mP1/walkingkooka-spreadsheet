@@ -34,6 +34,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -1676,6 +1677,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    private final static AbsoluteUrl URL = Url.parseAbsolute("http://www.example.com/123");
+
     @Test
     public void testConvertUrlToString() {
         final String url = "http://www.example.com";
@@ -1690,6 +1693,100 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // url..............................................................................................................
+
+    @Test
+    public void testUrlConvertStringToColorFails() {
+        this.convertFails(
+            SpreadsheetConverters.url(),
+            Color.BLACK.value(),
+            Color.class,
+            URL_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testUrlConvertHasTextUrlToUrl() {
+        this.urlConvertAndCheck(
+            URL,
+            URL
+        );
+    }
+
+    @Test
+    public void testUrlConvertStringToUrl() {
+        this.urlConvertAndCheck(
+            URL.text(),
+            URL
+        );
+    }
+
+    @Test
+    public void testUrlConvertStringToHyperlink() {
+        this.urlConvertAndCheck(
+            URL,
+            TextNode.hyperlink(URL)
+        );
+    }
+
+    @Test
+    public void testUrlConvertStringToImage() {
+        this.urlConvertAndCheck(
+            URL,
+            TextNode.image(URL)
+        );
+    }
+
+    private void urlConvertAndCheck(final Object value,
+                                    final Object expected) {
+        this.urlConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void urlConvertAndCheck(final Object value,
+                                        final Class<T> type,
+                                        final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.url(),
+            value,
+            type,
+            URL_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext URL_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+    
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
             SpreadsheetConverterContexts.NO_METADATA,

@@ -654,6 +654,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link Url}.
+     */
+    public static Converter<SpreadsheetConverterContext> url() {
+        return URL;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> URL = namedCollection(
+        "url",
+        textToUrl(),
+        urlToHyperlink(),
+        urlToImage()
+    );
+
+    /**
      * {@see TreeTextConverters.urlToHyperlink()}
      */
     public static Converter<SpreadsheetConverterContext> urlToHyperlink() {
