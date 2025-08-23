@@ -866,6 +866,168 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    // expression.......................................................................................................
+
+    private final Expression EXPRESSION = Expression.add(
+        Expression.value(
+            EXPRESSION_NUMBER_KIND.one()
+        ),
+        Expression.value(
+            EXPRESSION_NUMBER_KIND.create(2)
+        )
+    );
+
+    @Test
+    public void testExpressionConvertStringToTemplateValueNameFails() {
+        this.convertFails(
+            SpreadsheetConverters.expression(),
+            "Template123",
+            TemplateValueName.class,
+            EXPRESSION_CONVERTER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testExpressionConvertStringToExpression() {
+        this.expressionConvertAndCheck(
+            "1+2",
+            Expression.class,
+            EXPRESSION
+        );
+    }
+
+    private void expressionConvertAndCheck(final Object value,
+                                           final Object expected) {
+        this.expressionConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void expressionConvertAndCheck(final Object value,
+                                               final Class<T> type,
+                                               final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.expression(),
+            value,
+            type,
+            EXPRESSION_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext EXPRESSION_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.text()
+            )
+        );
+
+        @Override
+        public ExpressionNumberKind expressionNumberKind() {
+            return EXPRESSION_NUMBER_KIND;
+        }
+
+        @Override
+        public String currencySymbol() {
+            return this.decimalNumberContext.currencySymbol();
+        }
+
+        @Override
+        public char decimalSeparator() {
+            return this.decimalNumberContext.decimalSeparator();
+        }
+
+        @Override
+        public String exponentSymbol() {
+            return this.decimalNumberContext.exponentSymbol();
+        }
+
+        @Override
+        public char groupSeparator() {
+            return this.decimalNumberContext.groupSeparator();
+        }
+
+        @Override
+        public String infinitySymbol() {
+            return this.decimalNumberContext.infinitySymbol();
+        }
+
+        @Override
+        public char monetaryDecimalSeparator() {
+            return this.decimalNumberContext.monetaryDecimalSeparator();
+        }
+
+        @Override
+        public String nanSymbol() {
+            return this.decimalNumberContext.nanSymbol();
+        }
+
+        @Override
+        public char negativeSign() {
+            return this.decimalNumberContext.negativeSign();
+        }
+
+        @Override
+        public char percentSymbol() {
+            return this.decimalNumberContext.percentSymbol();
+        }
+
+        @Override
+        public char permillSymbol() {
+            return this.decimalNumberContext.permillSymbol();
+        }
+
+        @Override
+        public char positiveSign() {
+            return this.decimalNumberContext.positiveSign();
+        }
+
+        @Override
+        public char zeroDigit() {
+            return this.decimalNumberContext.zeroDigit();
+        }
+
+        @Override
+        public DecimalNumberSymbols decimalNumberSymbols() {
+            return this.decimalNumberContext.decimalNumberSymbols();
+        }
+
+        @Override
+        public Locale locale() {
+            return this.decimalNumberContext.locale();
+        }
+
+        @Override
+        public MathContext mathContext() {
+            return this.decimalNumberContext.mathContext();
+        }
+
+        private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
+    };
     
     // formAndValidation................................................................................................
 

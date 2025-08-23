@@ -198,6 +198,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link walkingkooka.tree.expression.Expression}
+     */
+    public static Converter<SpreadsheetConverterContext> expression() {
+        return EXPRESSION;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> EXPRESSION = namedCollection(
+        "expression",
+        textToExpression()
+    );
+
+    /**
      * A converter that involves {@link walkingkooka.validation.form.Form} and {@link walkingkooka.validation.Validator}
      */
     public static Converter<SpreadsheetConverterContext> formAndValidation() {
