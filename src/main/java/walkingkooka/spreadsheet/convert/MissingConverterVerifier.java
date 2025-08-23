@@ -79,7 +79,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -493,12 +492,7 @@ final class MissingConverterVerifier {
                         )
                     )
                 ).setDecimalNumberSymbols(
-                    Optional.of(
-                        DecimalNumberSymbols.fromDecimalFormatSymbols(
-                            '+',
-                            new DecimalFormatSymbols(locale)
-                        )
-                    )
+                    context.decimalNumberSymbolsForLocale(locale)
                 ).setLocale(
                     Optional.of(locale)
                 ).setFormatter(
