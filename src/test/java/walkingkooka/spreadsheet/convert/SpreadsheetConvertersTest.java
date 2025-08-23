@@ -738,6 +738,61 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
     };
 
+    // decimalNumberSymbols.............................................................................................
+
+    @Test
+    public void testDecimalNumberSymbolsConvertStringToDecimalNumberSymbols() {
+        this.convertAndCheck(
+            SpreadsheetConverters.decimalNumberSymbols(),
+            DECIMAL_NUMBER_SYMBOLS_CONTEXT.locale()
+                .toLanguageTag(),
+            DecimalNumberSymbols.class,
+            DECIMAL_NUMBER_SYMBOLS_CONTEXT,
+            DECIMAL_NUMBER_SYMBOLS_CONTEXT.decimalNumberSymbolsForLocale(DECIMAL_NUMBER_SYMBOLS_CONTEXT.locale())
+                .get()
+        );
+    }
+
+    private final static SpreadsheetConverterContext DECIMAL_NUMBER_SYMBOLS_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.text(),
+                LocaleConverters.locale()
+            )
+        );
+
+        @Override
+        public Locale locale() {
+            return Locale.forLanguageTag("en-AU");
+        }
+
+        @Override
+        public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+            return LocaleContexts.jre(locale)
+                .decimalNumberSymbolsForLocale(locale);
+        }
+    };
+    
     // formAndValidation................................................................................................
 
     @Test

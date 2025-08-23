@@ -165,6 +165,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link LocaleConverters#decimalNumberSymbols()}
+     */
+    public static Converter<SpreadsheetConverterContext> decimalNumberSymbols() {
+        return LocaleConverters.decimalNumberSymbols();
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetErrorThrowing}
      */
     public static Converter<SpreadsheetConverterContext> errorThrowing() {

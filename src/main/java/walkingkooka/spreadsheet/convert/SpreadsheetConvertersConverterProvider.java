@@ -111,6 +111,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.dateTimeSymbols();
                 break;
+            case DECIMAL_NUMBER_SYMBOLS_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.decimalNumberSymbols();
+                break;
             case ERROR_THROWING_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -421,6 +426,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName DATE_TIME_SYMBOLS= ConverterName.with(DATE_TIME_SYMBOLS_STRING);
 
+    private final static String DECIMAL_NUMBER_SYMBOLS_STRING = "decimal-number-symbols";
+
+    final static ConverterName DECIMAL_NUMBER_SYMBOLS= ConverterName.with(DECIMAL_NUMBER_SYMBOLS_STRING);
+
     private final static String ERROR_THROWING_STRING = "error-throwing";
 
     final static ConverterName ERROR_THROWING = ConverterName.with(ERROR_THROWING_STRING);
@@ -647,6 +656,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(COLOR_TO_COLOR),
             converterInfo(COLOR_TO_NUMBER),
             converterInfo(DATE_TIME_SYMBOLS),
+            converterInfo(DECIMAL_NUMBER_SYMBOLS),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(FORMAT_PATTERN_TO_STRING),
