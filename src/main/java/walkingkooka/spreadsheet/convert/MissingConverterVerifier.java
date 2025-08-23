@@ -78,7 +78,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -486,11 +485,7 @@ final class MissingConverterVerifier {
             final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
                     SpreadsheetFormula.EMPTY.setText("=1+2")
                 ).setDateTimeSymbols(
-                    Optional.of(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                            new DateFormatSymbols(locale)
-                        )
-                    )
+                    context.dateTimeSymbolsForLocale(locale)
                 ).setDecimalNumberSymbols(
                     context.decimalNumberSymbolsForLocale(locale)
                 ).setLocale(
