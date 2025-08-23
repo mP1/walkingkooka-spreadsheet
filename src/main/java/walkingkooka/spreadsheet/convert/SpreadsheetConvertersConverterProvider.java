@@ -116,6 +116,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.decimalNumberSymbols();
                 break;
+            case ENVIRONMENT_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.environment();
+                break;
             case ERROR_THROWING_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -430,6 +435,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName DECIMAL_NUMBER_SYMBOLS= ConverterName.with(DECIMAL_NUMBER_SYMBOLS_STRING);
 
+    private final static String ENVIRONMENT_STRING = "environment";
+
+    final static ConverterName ENVIRONMENT = ConverterName.with(ENVIRONMENT_STRING);
+
     private final static String ERROR_THROWING_STRING = "error-throwing";
 
     final static ConverterName ERROR_THROWING = ConverterName.with(ERROR_THROWING_STRING);
@@ -657,6 +666,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(COLOR_TO_NUMBER),
             converterInfo(DATE_TIME_SYMBOLS),
             converterInfo(DECIMAL_NUMBER_SYMBOLS),
+            converterInfo(ENVIRONMENT),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(FORMAT_PATTERN_TO_STRING),

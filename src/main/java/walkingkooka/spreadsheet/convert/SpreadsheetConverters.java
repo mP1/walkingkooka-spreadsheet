@@ -172,6 +172,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link walkingkooka.environment.EnvironmentContext} as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> environment() {
+        return ENVIRONMENT;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> ENVIRONMENT = namedCollection(
+        "environment",
+        EnvironmentConverters.textToEnvironmentValueName()
+    );
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetErrorThrowing}
      */
     public static Converter<SpreadsheetConverterContext> errorThrowing() {

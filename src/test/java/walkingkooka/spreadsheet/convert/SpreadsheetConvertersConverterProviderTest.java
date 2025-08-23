@@ -142,6 +142,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithEnvironment() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.ENVIRONMENT + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.environment()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithErrorToNumber() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.ERROR_TO_NUMBER + "",

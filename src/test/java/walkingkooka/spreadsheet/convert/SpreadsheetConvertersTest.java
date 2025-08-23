@@ -33,6 +33,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasDateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbols;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.convert.LocaleConverters;
@@ -799,6 +800,70 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             return LocaleContexts.jre(locale)
                 .decimalNumberSymbolsForLocale(locale);
         }
+    };
+
+    // environmentSymbols...............................................................................................
+
+    @Test
+    public void testEnvironmentSymbolsConvertEnvironmentValueNameToEnvironmentValueName() {
+        final EnvironmentValueName<?> name = EnvironmentValueName.with("CurrentPath");
+
+        this.environmentConvertAndCheck(
+            name,
+            EnvironmentValueName.class,
+            name
+        );
+    }
+
+    @Test
+    public void testEnvironmentSymbolsConvertStringToEnvironmentValueName() {
+        final EnvironmentValueName<?> name = EnvironmentValueName.with("CurrentPath");
+
+        this.environmentConvertAndCheck(
+            name.value(),
+            EnvironmentValueName.class,
+            name
+        );
+    }
+
+    private <T> void environmentConvertAndCheck(final Object value,
+                                                final Class<T> targetType,
+                                                final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.environment(),
+            value,
+            targetType,
+            ENVIRONMENT_SYMBOLS_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext ENVIRONMENT_SYMBOLS_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.text()
+            )
+        );
     };
     
     // formAndValidation................................................................................................
