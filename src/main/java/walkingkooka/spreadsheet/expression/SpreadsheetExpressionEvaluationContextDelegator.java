@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -47,6 +48,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextDelegator;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContextDelegator;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -66,7 +68,18 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     StorageExpressionEvaluationContextDelegator,
     TerminalContextDelegator {
 
+    @Override
+    default LocaleContext localeContext() {
+        return this.spreadsheetConverterContext();
+    }
+
     // SpreadsheetConverterContextDelegator.............................................................................
+
+    @Override
+    default Locale locale() {
+        return this.spreadsheetConverterContext()
+            .locale();
+    }
 
     @Override
     default SpreadsheetConverterContext spreadsheetConverterContext() {

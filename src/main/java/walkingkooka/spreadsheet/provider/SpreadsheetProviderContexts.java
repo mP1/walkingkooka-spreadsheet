@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
-
-import java.util.Locale;
 
 public final class SpreadsheetProviderContexts implements PublicStaticHelper {
 
@@ -31,14 +30,14 @@ public final class SpreadsheetProviderContexts implements PublicStaticHelper {
      * {@see BasicProviderContext}
      */
     public static ProviderContext basic(final PluginStore pluginStore,
-                                        final Locale locale,
                                         final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                        final EnvironmentContext environmentContext) {
+                                        final EnvironmentContext environmentContext,
+                                        final LocaleContext localeContext) {
         return BasicProviderContext.with(
             pluginStore,
-            locale,
             jsonNodeMarshallUnmarshallContext,
-            environmentContext
+            environmentContext,
+            localeContext
         );
     }
 

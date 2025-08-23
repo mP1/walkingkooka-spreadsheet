@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -80,7 +81,8 @@ public final class SpreadsheetConverterGeneralBooleanStringTest implements Conve
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.basic(),
             SpreadsheetLabelNameResolvers.fake(),
-            JsonNodeConverterContexts.fake()
+            JsonNodeConverterContexts.fake(),
+            LocaleContexts.fake()
         );
     }
 

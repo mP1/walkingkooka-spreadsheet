@@ -425,7 +425,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     ProviderContext PROVIDER_CONTEXT = SpreadsheetProviderContexts.basic(
         PluginStores.fake(),
-        LOCALE,
         JsonNodeMarshallUnmarshallContexts.basic(
             JSON_NODE_MARSHALL_CONTEXT,
             JSON_NODE_UNMARSHALL_CONTEXT
@@ -466,7 +465,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 ),
                 ENVIRONMENT_CONTEXT
             )
-        )
+        ),
+        LOCALE_CONTEXT
     );
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(

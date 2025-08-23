@@ -150,7 +150,8 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                     EXPRESSION_NUMBER_KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
-            )
+            ),
+            LocaleContexts.fake()
         );
 
         return new FakeSpreadsheetFormatterContext() {

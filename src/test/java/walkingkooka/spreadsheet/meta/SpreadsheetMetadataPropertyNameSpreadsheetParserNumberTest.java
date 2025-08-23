@@ -107,7 +107,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                         kind
                     ),
                     JsonNodeMarshallUnmarshallContexts.fake()
-                )
+                ),
+                LocaleContexts.jre(locale)
             )
         );
 

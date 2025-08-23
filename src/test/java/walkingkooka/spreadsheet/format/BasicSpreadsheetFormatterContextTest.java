@@ -26,6 +26,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.plugin.ProviderContext;
@@ -241,7 +242,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 EXPRESSION_NUMBER_KIND
             ),
             JsonNodeMarshallUnmarshallContexts.fake()
-        )
+        ),
+        LocaleContexts.jre(LOCALE)
     );
 
     private final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT =

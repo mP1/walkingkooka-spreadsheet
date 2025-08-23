@@ -31,6 +31,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -1708,7 +1709,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ExpressionNumberKind.BIG_DECIMAL
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
-            )
+            ),
+            LocaleContexts.jre(locale)
         );
     }
 
@@ -1923,7 +1925,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     kind
                 ),
                 JsonNodeMarshallUnmarshallContexts.fake()
-            )
+            ),
+            LocaleContexts.fake()
         );
     }
 

@@ -26,7 +26,8 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
@@ -39,12 +40,15 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
 public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider>,
     SpreadsheetMetadataTesting {
+
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
+        Locale.forLanguageTag("EN-AU")
+    );
 
     @Test
     public void testConverterNameWithBasic() {
@@ -206,10 +210,9 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                                 Converters.JAVA_EPOCH_OFFSET, // dateOffset
                                 Converters.fake(),
                                 DateTimeContexts.basic(
-                                    DateTimeSymbols.fromDateFormatSymbols(
-                                        new DateFormatSymbols(Locale.ENGLISH)
-                                    ),
-                                    Locale.ENGLISH,
+                                    LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
+                                        .get(),
+                                    LOCALE,
                                     1900,
                                     20,
                                     LocalDateTime::now
@@ -219,7 +222,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                             kind
                         ),
                         JsonNodeMarshallUnmarshallContexts.fake()
-                    )
+                    ),
+                    LOCALE_CONTEXT
                 )
             )
         );
