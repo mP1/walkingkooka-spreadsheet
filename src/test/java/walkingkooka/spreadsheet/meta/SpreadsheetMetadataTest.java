@@ -325,9 +325,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 LocaleContexts.jre(Locale.FRANCE)
             );
 
-        this.checkEquals(
-            locale,
-            context.locale()
+        this.localeAndCheck(
+            context,
+            locale
         );
     }
 
