@@ -36,7 +36,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  * A {@link SpreadsheetColumnReference} to {@link SpreadsheetCellRangeReference} is supported, A -> A1:A1048576.
  * Other conversions for example are not supported, eg: column to a row.
  * Attempts to convert from a {@link SpreadsheetSelection} to another type such as {@link String} will fail.
- * Attempts to convert from a {@link SpreadsheetLabelName} will also fail.
+ * Attempts to convert from a {@link SpreadsheetLabelName} will attempt to resolve it to a {@link SpreadsheetCellReferenceOrRange},
+ * and then the target type.
  */
 final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
@@ -56,7 +57,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
         boolean can = false;
 
         if (value instanceof SpreadsheetSelection) {
-            if (SpreadsheetLabelName.class != type && SpreadsheetSelection.isSelectionClass(type)) {
+            if (SpreadsheetSelection.isSelectionClass(type)) {
                 if (SpreadsheetSelection.class == type) {
                     can = true;
                 } else {
