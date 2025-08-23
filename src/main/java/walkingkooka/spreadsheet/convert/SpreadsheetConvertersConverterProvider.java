@@ -106,6 +106,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.colorToNumber();
                 break;
+            case DATE_TIME_SYMBOLS_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.dateTimeSymbols();
+                break;
             case ERROR_THROWING_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -412,6 +417,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName COLOR_TO_NUMBER = ConverterName.with(COLOR_TO_NUMBER_STRING);
 
+    private final static String DATE_TIME_SYMBOLS_STRING = "date-time-symbols";
+
+    final static ConverterName DATE_TIME_SYMBOLS= ConverterName.with(DATE_TIME_SYMBOLS_STRING);
+
     private final static String ERROR_THROWING_STRING = "error-throwing";
 
     final static ConverterName ERROR_THROWING = ConverterName.with(ERROR_THROWING_STRING);
@@ -637,6 +646,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(COLOR),
             converterInfo(COLOR_TO_COLOR),
             converterInfo(COLOR_TO_NUMBER),
+            converterInfo(DATE_TIME_SYMBOLS),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(FORMAT_PATTERN_TO_STRING),
