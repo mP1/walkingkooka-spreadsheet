@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceOrRange;
@@ -33,9 +35,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.Optional;
+
 public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext>,
     ToStringTesting<SpreadsheetSelectionToSpreadsheetSelectionConverter> {
-    
+
     // cell.............................................................................................................
 
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
@@ -567,7 +571,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
         );
     }
 
-    // label.........................................................................................................
+    // label............................................................................................................
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
 
@@ -576,6 +580,151 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
         this.convertFails(
             LABEL,
             String.class
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToCell() {
+        this.convertLabelAndCheck(
+            CELL,
+            CELL
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToCellRange() {
+        this.convertLabelAndCheck(
+            CELL,
+            CELL.toCellRange()
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToCellOrCellRange() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetCellReferenceOrRange.class,
+            CELL
+        );
+    }
+
+
+    @Test
+    public void testConvertLabelToCellRangeToCellOrCellRange() {
+        this.convertLabelAndCheck(
+            CELL_RANGE,
+            SpreadsheetCellReferenceOrRange.class,
+            CELL_RANGE
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToSpreadsheetSelection() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetSelection.class,
+            CELL
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToExpressionReference() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetExpressionReference.class,
+            CELL
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToColumn() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetColumnReference.class,
+            CELL.toColumn()
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToColumnRange() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetColumnRangeReference.class,
+            CELL.toColumnRange()
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToRow() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetRowReference.class,
+            CELL.toRow()
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToRowRange() {
+        this.convertLabelAndCheck(
+            CELL,
+            SpreadsheetRowRangeReference.class,
+            CELL.toRowRange()
+        );
+    }
+
+    @Test
+    public void testConvertLabelToCellToColumnOrRowFails() {
+        this.convertFails(
+            this.createConverter(),
+            CELL,
+            SpreadsheetColumnOrRowReference.class,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public Optional<SpreadsheetSelection> resolveIfLabel(final SpreadsheetSelection selection) {
+                    return Optional.of(CELL);
+                }
+            }
+        );
+    }
+
+    private void convertLabelAndCheck(final SpreadsheetSelection labelTarget,
+                                      final SpreadsheetSelection expected) {
+        this.convertLabelAndCheck(
+            labelTarget,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T extends SpreadsheetSelection> void convertLabelAndCheck(final SpreadsheetSelection labelTarget,
+                                                                       final Class<T> target,
+                                                                       final T expected) {
+        this.convertAndCheck(
+            this.createConverter(),
+            LABEL,
+            target,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public Optional<SpreadsheetSelection> resolveIfLabel(final SpreadsheetSelection selection) {
+                    return Optional.of(labelTarget);
+                }
+            },
+            expected
+        );
+    }
+
+    @Test
+    public void testConvertUnknownLabelFails() {
+        this.convertFails(
+            this.createConverter(),
+            CELL,
+            SpreadsheetCellReference.class,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public Optional<SpreadsheetSelection> resolveIfLabel(final SpreadsheetSelection selection) {
+                    return Optional.empty();
+                }
+            }
         );
     }
 
