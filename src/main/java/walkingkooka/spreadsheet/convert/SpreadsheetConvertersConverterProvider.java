@@ -80,7 +80,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
         switch (name.value()) {
             case BASIC_SPREADSHEET_CONVERTER_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.basic();
                 break;
@@ -92,47 +92,47 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 );
                 break;
             case COLOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.color();
                 break;
             case COLOR_TO_COLOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.colorToColor();
                 break;
             case COLOR_TO_NUMBER_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.colorToNumber();
                 break;
             case DATE_TIME_SYMBOLS_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.dateTimeSymbols();
                 break;
             case DECIMAL_NUMBER_SYMBOLS_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.decimalNumberSymbols();
                 break;
             case ENVIRONMENT_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.environment();
                 break;
             case ERROR_THROWING_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.errorThrowing();
                 break;
             case ERROR_TO_NUMBER_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.errorToNumber();
                 break;
             case EXPRESSION_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.expression();
                 break;
@@ -144,257 +144,257 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 );
                 break;
             case FORM_AND_VALIDATION_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.formAndValidation();
                 break;
             case GENERAL_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = general.apply(context);
                 break;
             case HAS_TEXT_STYLE_TO_STYLE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.hasTextStyleToTextStyle();
                 break;
             case JSON_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.json();
                 break;
             case JSON_TO_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.jsonTo();
                 break;
             case LOCALE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.locale();
                 break;
             case NUMBER_TO_COLOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.numberToColor();
                 break;
             case NUMBER_TO_NUMBER_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.numberToNumber();
                 break;
             case NULL_TO_NUMBER_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.nullToNumber();
                 break;
             case SELECTION_TO_SELECTION_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.selectionToSelection();
                 break;
             case SELECTION_TO_TEXT_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.selectionToText();
                 break;
             case SIMPLE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.simple();
                 break;
             case SPREADSHEET_CELL_TO_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetCellTo();
                 break;
             case SPREADSHEET_METADATA_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetMetadata();
                 break;
             case SPREADSHEET_VALUE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetValue();
                 break;
             case STYLE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.style();
                 break;
             case TEMPLATE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.template();
                 break;
             case TEXT_NODE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textNode();
                 break;
             case TEXT_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.text();
                 break;
             case TEXT_TO_COLOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToColor();
                 break;
             case TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToEnvironmentValueName();
                 break;
             case TEXT_TO_ERROR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetError();
                 break;
             case TEXT_TO_EXPRESSION_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToExpression();
                 break;
             case TEXT_TO_FORM_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToFormName();
                 break;
             case TEXT_TO_JSON_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToJson();
                 break;
             case TEXT_TO_LOCALE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToLocale();
                 break;
             case TEXT_TO_SELECTION_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSelection();
                 break;
             case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetColorName();
                 break;
             case TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetFormatterSelector();
                 break;
             case TEXT_TO_SPREADSHEET_ID_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetId();
                 break;
             case TEXT_TO_SPREADSHEET_METADATA_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetMetadata();
                 break;
             case TEXT_TO_SPREADSHEET_METADATA_COLOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetMetadataColor();
                 break;
             case TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetMetadataPropertyName();
                 break;
             case TEXT_TO_SPREADSHEET_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetName();
                 break;
             case TEXT_TO_SPREADSHEET_TEXT_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetText();
                 break;
             case TEXT_TO_TEMPLATE_VALUE_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTemplateValueName();
                 break;
             case TEXT_TO_TEXT_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToText();
                 break;
             case TEXT_TO_TEXT_NODE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextNode();
                 break;
             case TEXT_TO_TEXT_STYLE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextStyle();
                 break;
             case TEXT_TO_TEXT_STYLE_PROPERTY_NAME_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextStylePropertyName();
                 break;
             case TEXT_TO_URL_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToUrl();
                 break;
             case TEXT_TO_VALIDATION_ERROR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToValidationError();
                 break;
             case TEXT_TO_VALIDATOR_SELECTOR_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToValidatorSelector();
                 break;
             case TEXT_TO_VALUE_TYPE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToValueType();
                 break;
             case TO_JSON_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toJson();
                 break;
             case TO_STYLEABLE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toStyleable();
                 break;
             case TO_TEXT_NODE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toTextNode();
                 break;
             case TO_VALIDATION_ERROR_LIST_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.toValidationErrorList();
                 break;
             case URL_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.url();
                 break;
             case URL_TO_HYPERLINK_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.urlToHyperlink();
                 break;
             case URL_TO_IMAGE_STRING:
-                parameterCountCheck(copy, 0);
+                noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.urlToImage();
                 break;
@@ -410,8 +410,15 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
      */
     private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general;
 
-    private void parameterCountCheck(final List<?> values,
-                                     final int expected) {
+    private static void noParameterCheck(final List<?> values) {
+        parameterCountCheck(
+            values,
+            0
+        );
+    }
+
+    private static void parameterCountCheck(final List<?> values,
+                                            final int expected) {
         if (expected != values.size()) {
             throw new IllegalArgumentException("Expected " + expected + " values got " + values.size() + " " + values);
         }
