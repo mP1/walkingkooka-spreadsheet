@@ -24,6 +24,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.convert.EnvironmentConverters;
+import walkingkooka.locale.convert.LocaleConverters;
 import walkingkooka.net.Url;
 import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
@@ -154,6 +155,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> colorToNumber() {
         return ColorConverters.colorToNumber();
+    }
+
+    /**
+     * {@link LocaleConverters#dateTimeSymbols()}
+     */
+    public static Converter<SpreadsheetConverterContext> dateTimeSymbols() {
+        return LocaleConverters.dateTimeSymbols();
     }
 
     /**

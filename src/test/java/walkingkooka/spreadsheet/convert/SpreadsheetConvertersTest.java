@@ -32,6 +32,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.convert.LocaleConverters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -681,6 +682,61 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             expected
         );
     }
+
+    // dateTimeSymbols..................................................................................................
+
+    @Test
+    public void testDateTimeSymbolsConvertStringToDateTimeSymbols() {
+        this.convertAndCheck(
+            SpreadsheetConverters.dateTimeSymbols(),
+            DATE_TIME_SYMBOLS_CONTEXT.locale()
+                .toLanguageTag(),
+            DateTimeSymbols.class,
+            DATE_TIME_SYMBOLS_CONTEXT,
+            DATE_TIME_SYMBOLS_CONTEXT.dateTimeSymbolsForLocale(DATE_TIME_SYMBOLS_CONTEXT.locale())
+                .get()
+        );
+    }
+
+    private final static SpreadsheetConverterContext DATE_TIME_SYMBOLS_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.text(),
+                LocaleConverters.locale()
+            )
+        );
+
+        @Override
+        public Locale locale() {
+            return Locale.forLanguageTag("en-AU");
+        }
+
+        @Override
+        public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+            return LocaleContexts.jre(locale)
+                .dateTimeSymbolsForLocale(locale);
+        }
+    };
 
     // formAndValidation................................................................................................
 
