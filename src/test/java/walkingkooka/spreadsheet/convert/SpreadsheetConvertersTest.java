@@ -31,11 +31,16 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasDateTimeSymbols;
+import walkingkooka.datetime.HasOptionalDateTimeSymbols;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.convert.LocaleConverters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasDecimalNumberSymbols;
+import walkingkooka.math.HasOptionalDecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
@@ -79,6 +84,8 @@ import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.util.HasLocale;
+import walkingkooka.util.HasOptionalLocale;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationValueTypeName;
@@ -88,6 +95,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.lang.reflect.Method;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1024,28 +1032,196 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             );
         }
     };
-    
+
     // locale...........................................................................................................
 
-    @Test
-    public void testLocaleConvertLocaleToLocaleFails() {
-        final Locale locale = Locale.FRANCE;
+    private final static Locale LOCALE = Locale.FRANCE;
 
-        this.convertFails(
-            SpreadsheetConverters.locale(),
-            locale,
-            Locale.class,
-            LOCALE_CONTEXT
+    private final static DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
+        new DateFormatSymbols(LOCALE)
+    );
+
+    @Test
+    public void testLocaleConvertLocaleToDateTimeSymbols() {
+        this.localeConvertAndCheck(
+            LOCALE,
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasDateTimeSymbolsToDateTimeSymbols() {
+        this.localeConvertAndCheck(
+            new HasDateTimeSymbols() {
+                @Override
+                public DateTimeSymbols dateTimeSymbols() {
+                    return DATE_TIME_SYMBOLS;
+                }
+            },
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasOptionalDateTimeSymbolsToDateTimeSymbols() {
+        this.localeConvertAndCheck(
+            new HasOptionalDateTimeSymbols() {
+                @Override
+                public Optional<DateTimeSymbols> dateTimeSymbols() {
+                    return Optional.of(DATE_TIME_SYMBOLS);
+                }
+            },
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasLocaleToDateTimeSymbols() {
+        this.localeConvertAndCheck(
+            new HasLocale() {
+                @Override
+                public Locale locale() {
+                    return LOCALE;
+                }
+            },
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasOptionalLocaleToDateTimeSymbols() {
+        this.localeConvertAndCheck(
+            new HasOptionalLocale() {
+                @Override
+                public Optional<Locale> locale() {
+                    return Optional.of(LOCALE);
+                }
+            },
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertStringToDateTimeSymbols() {
+        this.localeConvertAndCheck(
+            LOCALE.toLanguageTag(),
+            DATE_TIME_SYMBOLS
+        );
+    }
+
+
+    private final static DecimalNumberSymbols DECIMAL_NUMBER_SYMBOLS = DecimalNumberSymbols.fromDecimalFormatSymbols(
+        '+',
+        new DecimalFormatSymbols(LOCALE)
+    );
+
+    @Test
+    public void testLocaleConvertLocaleToDecimalNumberSymbols() {
+        this.localeConvertAndCheck(
+            LOCALE,
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasDecimalNumberSymbolsToDecimalNumberSymbols() {
+        this.localeConvertAndCheck(
+            new HasDecimalNumberSymbols() {
+                @Override
+                public DecimalNumberSymbols decimalNumberSymbols() {
+                    return DECIMAL_NUMBER_SYMBOLS;
+                }
+            },
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasOptionalDecimalNumberSymbolsToDecimalNumberSymbols() {
+        this.localeConvertAndCheck(
+            new HasOptionalDecimalNumberSymbols() {
+                @Override
+                public Optional<DecimalNumberSymbols> decimalNumberSymbols() {
+                    return Optional.of(DECIMAL_NUMBER_SYMBOLS);
+                }
+            },
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasLocaleToDecimalNumberSymbols() {
+        this.localeConvertAndCheck(
+            new HasLocale() {
+                @Override
+                public Locale locale() {
+                    return LOCALE;
+                }
+            },
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasOptionalLocaleToDecimalNumberSymbols() {
+        this.localeConvertAndCheck(
+            new HasOptionalLocale() {
+                @Override
+                public Optional<Locale> locale() {
+                    return Optional.of(LOCALE);
+                }
+            },
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertStringToDecimalNumberSymbols() {
+        this.localeConvertAndCheck(
+            LOCALE.toLanguageTag(),
+            DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testLocaleConvertLocaleToLocale() {
+        this.localeConvertAndCheck(
+            LOCALE,
+            LOCALE
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasLocaleToLocale() {
+        this.localeConvertAndCheck(
+            new HasLocale() {
+                @Override
+                public Locale locale() {
+                    return LOCALE;
+                }
+            },
+            LOCALE
+        );
+    }
+
+    @Test
+    public void testLocaleConvertHasOptionalLocaleToLocale() {
+        this.localeConvertAndCheck(
+            new HasOptionalLocale() {
+                @Override
+                public Optional<Locale> locale() {
+                    return Optional.of(LOCALE);
+                }
+            },
+            LOCALE
         );
     }
 
     @Test
     public void testLocaleConvertStringToLocale() {
-        final Locale locale = Locale.FRANCE;
-
         this.localeConvertAndCheck(
-            locale.toLanguageTag(),
-            locale
+            LOCALE.toLanguageTag(),
+            LOCALE
         );
     }
 
@@ -1091,12 +1267,24 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             );
         }
 
-        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+        private final Converter<SpreadsheetConverterContext> converter = Converters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
-                SpreadsheetConverters.text()
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.locale()
             )
         );
+
+        @Override
+        public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+            return this.localeContext.dateTimeSymbolsForLocale(locale);
+        }
+
+        @Override
+        public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+            return this.localeContext.decimalNumberSymbolsForLocale(locale);
+        }
+
+        private final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
     };
 
     // spreadsheetMetadata..............................................................................................

@@ -268,7 +268,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
         "locale",
-        textToLocale()
+        LocaleConverters.locale(),
+        LocaleConverters.dateTimeSymbols(),
+        LocaleConverters.decimalNumberSymbols()
     );
 
     /**
