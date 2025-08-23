@@ -34,7 +34,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 /**
  * A {@link Converter} that only handles most selection to selection conversions, that make sense.
  * A {@link SpreadsheetColumnReference} to {@link SpreadsheetCellRangeReference} is supported, A -> A1:A1048576.
- * Other conversions for example are not supported, eg: column to a row
+ * Other conversions for example are not supported, eg: column to a row.
+ * Attempts to convert from a {@link SpreadsheetSelection} to another type such as {@link String} will fail.
+ * Attempts to convert from a {@link SpreadsheetLabelName} will also fail.
  */
 final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
@@ -54,7 +56,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
         boolean can = false;
 
         if (value instanceof SpreadsheetSelection) {
-            if (SpreadsheetLabelName.class != type) {
+            if (SpreadsheetLabelName.class != type && SpreadsheetSelection.isSelectionClass(type)) {
                 if (SpreadsheetSelection.class == type) {
                     can = true;
                 } else {

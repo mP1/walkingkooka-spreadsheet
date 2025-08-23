@@ -41,6 +41,14 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     private final static SpreadsheetCellReference CELL = SpreadsheetSelection.A1;
 
     @Test
+    public void testConvertCellToStringFails() {
+        this.convertFails(
+            CELL,
+            String.class
+        );
+    }
+
+    @Test
     public void testConvertCellToSpreadsheetSelection() {
         this.convertAndCheck(
             CELL,
@@ -114,7 +122,15 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     // cellRange........................................................................................................
 
     private final static SpreadsheetCellRangeReference CELL_RANGE = SpreadsheetSelection.parseCellRange("B2:C3");
-    
+
+    @Test
+    public void testConvertCellRangeToStringFails() {
+        this.convertFails(
+            CELL_RANGE,
+            String.class
+        );
+    }
+
     @Test
     public void testConvertCellRangeToCell() {
         this.convertAndCheck(
@@ -191,6 +207,14 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     private final static SpreadsheetColumnReference COLUMN = SpreadsheetSelection.parseColumn("B");
 
     @Test
+    public void testConvertColumnToStringFails() {
+        this.convertFails(
+            COLUMN,
+            String.class
+        );
+    }
+
+    @Test
     public void testConvertColumnToSpreadsheetSelection() {
         this.convertAndCheck(
             COLUMN,
@@ -265,6 +289,14 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     // columnRange......................................................................................................
 
     private final static SpreadsheetColumnRangeReference COLUMN_RANGE = SpreadsheetSelection.parseColumnRange("C:D");
+
+    @Test
+    public void testConvertColumnRangeToStringFails() {
+        this.convertFails(
+            COLUMN_RANGE,
+            String.class
+        );
+    }
 
     @Test
     public void testConvertColumnRangeToCellFails() {
@@ -353,6 +385,14 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     private final static SpreadsheetRowReference ROW = SpreadsheetSelection.parseRow("4");
 
     @Test
+    public void testConvertRowToStringFails() {
+        this.convertFails(
+            ROW,
+            String.class
+        );
+    }
+
+    @Test
     public void testConvertRowToSpreadsheetSelection() {
         this.convertAndCheck(
             ROW,
@@ -438,6 +478,14 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     private final static SpreadsheetRowRangeReference ROW_RANGE = SpreadsheetSelection.parseRowRange("5:6");
 
     @Test
+    public void testConvertRowRangeToStringFails() {
+        this.convertFails(
+            ROW_RANGE,
+            String.class
+        );
+    }
+
+    @Test
     public void testConvertRowRangeToCellFails() {
         this.convertFails(
             ROW_RANGE,
@@ -519,6 +567,17 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
         );
     }
 
+    // label.........................................................................................................
+
+    private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("Label123");
+
+    @Test
+    public void testConvertLabelToStringFails() {
+        this.convertFails(
+            LABEL,
+            String.class
+        );
+    }
 
     // Converter........................................................................................................
 
