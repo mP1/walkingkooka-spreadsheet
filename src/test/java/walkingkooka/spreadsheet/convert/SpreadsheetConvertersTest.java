@@ -68,6 +68,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -2294,6 +2295,69 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // template.........................................................................................................
+
+    private final static TemplateValueName TEMPLATE_VALUE_NAME = TemplateValueName.with("Template123");
+
+    @Test
+    public void testTemplateConvertTemplateValueNameToTemplateValueName() {
+        this.templateConvertAndCheck(
+            TEMPLATE_VALUE_NAME,
+            TemplateValueName.class,
+            TEMPLATE_VALUE_NAME
+        );
+    }
+
+    @Test
+    public void testTemplateConvertStringToTemplateValueName() {
+        this.templateConvertAndCheck(
+            TEMPLATE_VALUE_NAME.text(),
+            TemplateValueName.class,
+            TEMPLATE_VALUE_NAME
+        );
+    }
+
+    private <T> void templateConvertAndCheck(final Object value,
+                                             final Class<T> type,
+                                             final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.template(),
+            value,
+            type,
+            TEMPLATE_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext TEMPLATE_CONTEXT = new FakeSpreadsheetConverterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.text()
+            )
+        );
+    };
+    
     // text.............................................................................................................
 
     @Test

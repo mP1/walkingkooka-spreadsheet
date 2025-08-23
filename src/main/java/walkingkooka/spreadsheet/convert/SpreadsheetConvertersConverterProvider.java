@@ -218,6 +218,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.style();
                 break;
+            case TEMPLATE_STRING:
+                parameterCountCheck(copy, 0);
+
+                converter = SpreadsheetConverters.template();
+                break;
             case TEXT_NODE_STRING:
                 parameterCountCheck(copy, 0);
 
@@ -515,6 +520,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STYLE = ConverterName.with(STYLE_STRING);
 
+    private final static String TEMPLATE_STRING = "template";
+
+    final static ConverterName TEMPLATE = ConverterName.with(TEMPLATE_STRING);
+    
     private final static String TEXT_STRING = "text";
 
     final static ConverterName TEXT = ConverterName.with(TEXT_STRING);
@@ -686,6 +695,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_VALUE),
             converterInfo(STYLE),
+            converterInfo(TEMPLATE),
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),
             converterInfo(TEXT_TO_COLOR),

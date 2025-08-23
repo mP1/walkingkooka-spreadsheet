@@ -402,6 +402,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A converter that involves templating.
+     */
+    public static Converter<SpreadsheetConverterContext> template() {
+        return TEMPLATE;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> TEMPLATE = namedCollection(
+        "template",
+        TemplateConverters.textToTemplateValueName()
+    );
+
+    /**
      * A {@link Converter} that handles converting basic text conversions.
      */
     public static Converter<SpreadsheetConverterContext> text() {
