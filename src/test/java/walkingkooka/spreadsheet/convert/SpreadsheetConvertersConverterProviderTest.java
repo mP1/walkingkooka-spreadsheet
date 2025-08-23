@@ -131,6 +131,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             SpreadsheetConverters.dateTimeSymbols()
         );
     }
+    
+    @Test
+    public void testConverterSelectorWithDecimalNumberSymbols() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.decimalNumberSymbols()
+        );
+    }
 
     @Test
     public void testConverterSelectorWithErrorToNumber() {
