@@ -188,6 +188,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.nullToNumber();
                 break;
+            case PLUGINS_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.plugins();
+                break;
             case SELECTION_TO_SELECTION_STRING:
                 noParameterCheck(copy);
 
@@ -508,6 +513,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName NUMBER_TO_NUMBER = ConverterName.with(NUMBER_TO_NUMBER_STRING);
 
+    private final static String PLUGINS_STRING = "plugins";
+
+    final static ConverterName PLUGINS = ConverterName.with(PLUGINS_STRING);
+
     private final static String SELECTION_TO_SELECTION_STRING = "selection-to-selection";
 
     final static ConverterName SELECTION_TO_SELECTION = ConverterName.with(SELECTION_TO_SELECTION_STRING);
@@ -705,6 +714,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(NULL_TO_NUMBER),
             converterInfo(NUMBER_TO_COLOR),
             converterInfo(NUMBER_TO_NUMBER),
+            converterInfo(PLUGINS),
             converterInfo(SPREADSHEET_CELL_TO),
             converterInfo(SELECTION_TO_SELECTION),
             converterInfo(SELECTION_TO_TEXT),

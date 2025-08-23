@@ -303,6 +303,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithPlugins() {
+        this.converterAndCheck(
+            "plugins",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.plugins()
+        );
+    }
+
+    @Test
     public void testConverterNameWithSelectionToSelection() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION,

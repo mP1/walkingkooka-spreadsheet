@@ -338,6 +338,19 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves plugin as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> plugins() {
+        return PLUGINS;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> PLUGINS = namedCollection(
+        "plugins",
+        textToSpreadsheetFormatterSelector(),
+        textToValidatorSelector()
+    );
+
+    /**
      * {@see SpreadsheetSelectionToSpreadsheetSelectionConverter}
      */
     public static Converter<SpreadsheetConverterContext> selectionToSelection() {
