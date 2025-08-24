@@ -312,6 +312,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithNumberToText() {
+        this.converterAndCheck(
+            "number-to-text",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.numberToText()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithPlugins() {
         this.converterAndCheck(
             "plugins",
