@@ -84,6 +84,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.basic();
                 break;
+            case BOOLEAN_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.booleans();
+                break;
             case COLLECTION_STRING:
                 converter = Converters.collection(
                     values.stream()
@@ -438,6 +443,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName BASIC_SPREADSHEET_CONVERTER = ConverterName.with(BASIC_SPREADSHEET_CONVERTER_STRING);
 
+    private final static String BOOLEAN_STRING = "boolean";
+
+    final static ConverterName BOOLEAN = ConverterName.with(BOOLEAN_STRING);
+
     private final static String COLLECTION_STRING = "collection";
 
     final static ConverterName COLLECTION = ConverterName.COLLECTION;
@@ -703,6 +712,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     final static ConverterInfoSet INFOS = ConverterInfoSet.with(
         Sets.of(
             converterInfo(BASIC_SPREADSHEET_CONVERTER),
+            converterInfo(BOOLEAN),
             converterInfo(COLLECTION),
             converterInfo(COLOR),
             converterInfo(COLOR_TO_COLOR),

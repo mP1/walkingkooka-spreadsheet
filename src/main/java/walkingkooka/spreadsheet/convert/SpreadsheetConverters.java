@@ -40,6 +40,8 @@ import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.template.convert.TemplateConverters;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -114,6 +116,25 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     ).converter(
         BASIC_CONVERTER_SELECTOR,
         ProviderContexts.fake()
+    );
+
+    /**
+     * A converter that involves plugin as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> booleans() {
+        return BOOLEAN;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> BOOLEAN = namedCollection(
+        "textToBoolean",
+        Converters.toBoolean(
+            (v) -> v instanceof CharSequences,
+            (k) -> k == Boolean.class,
+            (v) -> CaseSensitivity.INSENSITIVE.equals("true", (CharSequence) v),
+            true,
+            false
+        ),
+        SpreadsheetConverters.textToBoolean()
     );
 
     /**
