@@ -598,6 +598,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToNumber() {
+        this.converterAndCheck(
+            "to-number",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toNumber()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToStyleable() {
         this.converterAndCheck(
             "to-styleable",
