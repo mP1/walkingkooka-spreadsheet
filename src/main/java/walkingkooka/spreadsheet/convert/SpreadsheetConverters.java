@@ -119,7 +119,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * A converter that involves plugin as a source or destination
+     * A {@link Converter} that handles converting from or to a {@link Boolean} value
      */
     public static Converter<SpreadsheetConverterContext> booleans() {
         return BOOLEAN;
