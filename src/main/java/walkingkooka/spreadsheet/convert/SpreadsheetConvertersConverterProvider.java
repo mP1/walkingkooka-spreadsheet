@@ -383,6 +383,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toJson();
                 break;
+            case TO_NUMBER_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toNumber();
+                break;
             case TO_STYLEABLE_STRING:
                 noParameterCheck(copy);
 
@@ -679,6 +684,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
 
+    private final static String TO_NUMBER_STRING = "to-number";
+
+    final static ConverterName TO_NUMBER = ConverterName.with(TO_NUMBER_STRING);
+
     private final static String TO_STYLEABLE_STRING = "to-styleable";
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
@@ -771,6 +780,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),
             converterInfo(TO_JSON),
+            converterInfo(TO_NUMBER),
             converterInfo(TO_STYLEABLE),
             converterInfo(TO_TEXT_NODE),
             converterInfo(TO_VALIDATION_ERROR_LIST),
