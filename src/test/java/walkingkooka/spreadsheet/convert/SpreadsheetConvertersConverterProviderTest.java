@@ -70,6 +70,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithBoolean() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.BOOLEAN + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.booleans()
+        );
+    }
+
+    @Test
     public void testConverterNameWithCollection() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.COLLECTION,
