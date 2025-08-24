@@ -104,7 +104,7 @@ public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends Sp
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE,
-            "Selection to String"
+            "Selection to Text"
         );
     }
 

@@ -42,10 +42,9 @@ final class SpreadsheetConverterSpreadsheetSelectionToText extends SpreadsheetCo
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
         return value instanceof SpreadsheetSelection &&
-            TO_TEXT.canConvert(
+            context.canConvert(
                 null,
-                type,
-                context
+                type
             );
     }
 
@@ -53,26 +52,24 @@ final class SpreadsheetConverterSpreadsheetSelectionToText extends SpreadsheetCo
     public <T> Either<T, String> doConvert(final Object value,
                                            final Class<T> type,
                                            final SpreadsheetConverterContext context) {
-        return this.convertSpreadsheetSelectionToString(
+        return this.convertSpreadsheetSelectionToText(
             (SpreadsheetSelection) value,
             type,
             context
         );
     }
 
-    public <T> Either<T, String> convertSpreadsheetSelectionToString(final SpreadsheetSelection selection,
-                                                                     final Class<T> type,
-                                                                     final SpreadsheetConverterContext context) {
+    public <T> Either<T, String> convertSpreadsheetSelectionToText(final SpreadsheetSelection selection,
+                                                                   final Class<T> type,
+                                                                   final SpreadsheetConverterContext context) {
         return context.convert(
             selection.text(),
             type
         );
     }
 
-    private final static Converter<SpreadsheetConverterContext> TO_TEXT = SpreadsheetConverters.textToText();
-
     @Override
     public String toString() {
-        return "Selection to String";
+        return "Selection to Text";
     }
 }
