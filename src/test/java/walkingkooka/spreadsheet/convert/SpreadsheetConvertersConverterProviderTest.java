@@ -404,6 +404,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToBoolean() {
+        this.converterAndCheck(
+            "text-to-boolean",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToBoolean()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToColor() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR + "",
