@@ -734,6 +734,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A {@link Converter} that handles converting from or to a {@link Number} values
+     */
+    public static Converter<SpreadsheetConverterContext> toNumber() {
+        return SpreadsheetConverterToNumber.INSTANCE;
+    }
+
+    /**
      * {@see TreeTextConverters.toStyleable}
      */
     public static Converter<SpreadsheetConverterContext> toStyleable() {
