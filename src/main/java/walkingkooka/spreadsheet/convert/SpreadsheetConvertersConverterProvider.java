@@ -233,6 +233,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.template();
                 break;
+            case TEXT_TO_BOOLEAN_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToBoolean();
+                break;
             case TEXT_NODE_STRING:
                 noParameterCheck(copy);
 
@@ -557,6 +562,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_NODE = ConverterName.with(TEXT_NODE_STRING);
 
+    private final static String TEXT_TO_BOOLEAN_STRING = "text-to-boolean";
+
+    final static ConverterName TEXT_TO_BOOLEAN = ConverterName.with(TEXT_TO_BOOLEAN_STRING);
+    
     private final static String TEXT_TO_COLOR_STRING = "text-to-color";
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
@@ -725,6 +734,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEMPLATE),
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),
+            converterInfo(TEXT_TO_BOOLEAN),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),
