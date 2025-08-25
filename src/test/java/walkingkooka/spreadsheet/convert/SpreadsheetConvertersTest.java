@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -95,6 +96,8 @@ import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
@@ -1515,6 +1518,264 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         private final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
     };
 
+    // number...........................................................................................................
+
+    @Test
+    public void testNumberConvertNullToNumber() {
+        this.numberConvertAndCheck(
+            null,
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testNumberConvertBooleanTrueToInteger() {
+        this.numberConvertAndCheck(
+            true,
+            1
+        );
+    }
+
+    @Test
+    public void testNumberConvertBooleanTrueToNumber() {
+        this.numberConvertAndCheck(
+            true,
+            EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testNumberConvertBooleanFalseToNumber() {
+        this.numberConvertAndCheck(
+            false,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testNumberConvertNumberToStringWithInteger() {
+        this.numberConvertAndCheck(
+            123,
+            "123"
+        );
+    }
+
+    @Test
+    public void testNumberConvertNumberToStringWithExpressionNumber() {
+        this.numberConvertAndCheck(
+            EXPRESSION_NUMBER_KIND.create(123),
+            "123"
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToInteger() {
+        this.numberConvertAndCheck(
+            "123",
+            123
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToLong() {
+        this.numberConvertAndCheck(
+            "123",
+            123L
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToFloat() {
+        this.numberConvertAndCheck(
+            "123.5",
+            123.5f
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToDouble() {
+        this.numberConvertAndCheck(
+            "123.5",
+            123.5
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToBigInteger() {
+        this.numberConvertAndCheck(
+            "123",
+            BigInteger.valueOf(123)
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToBigDecimal() {
+        this.numberConvertAndCheck(
+            "123.5",
+            BigDecimal.valueOf(123.5)
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToExpressionNumberWithWholeNumber() {
+        this.numberConvertAndCheck(
+            "123",
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToExpressionNumberWithDecimalPoints() {
+        this.numberConvertAndCheck(
+            "456.75",
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.create(456.75)
+        );
+    }
+
+    private void numberConvertAndCheck(final Object value,
+                                       final Object expected) {
+        this.numberConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void numberConvertAndCheck(final Object value,
+                                           final Class<T> type,
+                                           final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.number(),
+            value,
+            type,
+            NUMBER_CONVERTER_CONTEXT,
+            expected
+        );
+    }
+
+    private final static SpreadsheetConverterContext NUMBER_CONVERTER_CONTEXT = new FakeSpreadsheetConverterContext() {
+
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(
+                value,
+                type,
+                this
+            );
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(
+                value,
+                target,
+                this
+            );
+        }
+
+        private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+            Lists.of(
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.numberToNumber()
+            )
+        );
+
+        @Override
+        public ExpressionNumberKind expressionNumberKind() {
+            return EXPRESSION_NUMBER_KIND;
+        }
+
+        @Override
+        public String currencySymbol() {
+            return this.decimalNumberContext.currencySymbol();
+        }
+
+        @Override
+        public char decimalSeparator() {
+            return this.decimalNumberContext.decimalSeparator();
+        }
+
+        @Override
+        public String exponentSymbol() {
+            return this.decimalNumberContext.exponentSymbol();
+        }
+
+        @Override
+        public char groupSeparator() {
+            return this.decimalNumberContext.groupSeparator();
+        }
+
+        @Override
+        public String infinitySymbol() {
+            return this.decimalNumberContext.infinitySymbol();
+        }
+
+        @Override
+        public char monetaryDecimalSeparator() {
+            return this.decimalNumberContext.monetaryDecimalSeparator();
+        }
+
+        @Override
+        public String nanSymbol() {
+            return this.decimalNumberContext.nanSymbol();
+        }
+
+        @Override
+        public char negativeSign() {
+            return this.decimalNumberContext.negativeSign();
+        }
+
+        @Override
+        public char percentSymbol() {
+            return this.decimalNumberContext.percentSymbol();
+        }
+
+        @Override
+        public char permillSymbol() {
+            return this.decimalNumberContext.permillSymbol();
+        }
+
+        @Override
+        public char positiveSign() {
+            return this.decimalNumberContext.positiveSign();
+        }
+
+        @Override
+        public char zeroDigit() {
+            return this.decimalNumberContext.zeroDigit();
+        }
+
+        @Override
+        public DecimalNumberSymbols decimalNumberSymbols() {
+            return this.decimalNumberContext.decimalNumberSymbols();
+        }
+
+        @Override
+        public Locale locale() {
+            return this.decimalNumberContext.locale();
+        }
+
+        @Override
+        public MathContext mathContext() {
+            return this.decimalNumberContext.mathContext();
+        }
+
+        private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
+
+        @Override
+        public SpreadsheetMetadata spreadsheetMetadata() {
+            return SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
+            );
+        }
+    };
+    
     // spreadsheetMetadata..............................................................................................
 
     @Test
