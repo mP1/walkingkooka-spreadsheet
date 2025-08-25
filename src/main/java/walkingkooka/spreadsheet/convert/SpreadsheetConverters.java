@@ -74,6 +74,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A {@link Converter} that handles the most basic conversion requests
+     */
+    public static Converter<SpreadsheetConverterContext> basic() {
+        return SpreadsheetConverterBasic.INSTANCE;
+    }
+
+    /**
      * A {@link Converter} that handles converting from or to a {@link Boolean} value
      */
     public static Converter<SpreadsheetConverterContext> booleans() {

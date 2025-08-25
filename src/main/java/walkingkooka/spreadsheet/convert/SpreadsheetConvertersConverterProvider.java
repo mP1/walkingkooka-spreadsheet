@@ -79,6 +79,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         final List<?> copy = Lists.immutable(values);
 
         switch (name.value()) {
+            case BASIC_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.basic();
+                break;
             case BOOLEAN_STRING:
                 noParameterCheck(copy);
 
@@ -454,6 +459,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         }
     }
 
+    private final static String BASIC_STRING = "basic";
+
+    final static ConverterName BASIC = ConverterName.with(BASIC_STRING);
+
     private final static String BOOLEAN_STRING = "boolean";
 
     final static ConverterName BOOLEAN = ConverterName.with(BOOLEAN_STRING);
@@ -738,6 +747,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     // @see SpreadsheetConverters constants
     final static ConverterInfoSet INFOS = ConverterInfoSet.with(
         Sets.of(
+            converterInfo(BASIC),
             converterInfo(BOOLEAN),
             converterInfo(COLLECTION),
             converterInfo(COLOR),

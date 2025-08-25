@@ -51,6 +51,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     );
 
     @Test
+    public void testConverterSelectorWithBasic() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.BASIC + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.basic()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithBoolean() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.BOOLEAN + "",
