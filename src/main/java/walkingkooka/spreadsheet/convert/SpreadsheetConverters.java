@@ -126,7 +126,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     private final static Converter<SpreadsheetConverterContext> BOOLEAN = namedCollection(
-        "textToBoolean",
+        "boolean",
         Converters.toBoolean(
             (v) -> v instanceof CharSequences,
             (k) -> k == Boolean.class,
