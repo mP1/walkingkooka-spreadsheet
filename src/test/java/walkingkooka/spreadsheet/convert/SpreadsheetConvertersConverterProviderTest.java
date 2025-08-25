@@ -303,6 +303,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithNumber() {
+        this.converterAndCheck(
+            "number",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.number()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithNumberToColor() {
         this.converterAndCheck(
             "number-to-color",

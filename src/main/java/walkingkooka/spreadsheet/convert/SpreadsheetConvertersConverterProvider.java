@@ -178,6 +178,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.locale();
                 break;
+            case NUMBER_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.number();
+                break;
             case NUMBER_TO_COLOR_STRING:
                 noParameterCheck(copy);
 
@@ -529,6 +534,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName NULL_TO_NUMBER = ConverterName.with(NULL_TO_NUMBER_STRING);
 
+    private final static String NUMBER_STRING = "number";
+
+    final static ConverterName NUMBER = ConverterName.with(NUMBER_STRING);
+
     private final static String NUMBER_TO_COLOR_STRING = "number-to-color";
 
     final static ConverterName NUMBER_TO_COLOR = ConverterName.with(NUMBER_TO_COLOR_STRING);
@@ -749,6 +758,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
             converterInfo(NULL_TO_NUMBER),
+            converterInfo(NUMBER),
             converterInfo(NUMBER_TO_COLOR),
             converterInfo(NUMBER_TO_NUMBER),
             converterInfo(NUMBER_TO_TEXT),

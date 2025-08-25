@@ -326,6 +326,21 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A converter that involves {@link Number} as a source or destination
+     */
+    public static Converter<SpreadsheetConverterContext> number() {
+        return NUMBER;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> NUMBER = namedCollection(
+        "number",
+        nullToNumber(),
+        numberToNumber(),
+        toNumber(),
+        numberToText()
+    );
+    
+    /**
      * {@see ColorConverters#numberToColor}
      */
     public static Converter<SpreadsheetConverterContext> numberToColor() {
