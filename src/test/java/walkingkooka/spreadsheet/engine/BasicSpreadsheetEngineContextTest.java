@@ -27,7 +27,6 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -351,19 +350,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
     };
 
-    private final static LocaleContext LOCALE_CONTEXT = new FakeLocaleContext() {
-        @Override
-        public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
-        }
-    };
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     // with.............................................................................................................
 
@@ -1648,26 +1635,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"viewportHome\": \"A1\"\n" +
                 "}"
         );
-    }
-
-    @Override
-    public void testFindByLocaleTextWithNullTextFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testFindByLocaleTextWithNegativeOffsetFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testFindByLocaleTextWithInvalidCountFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testLocaleTextWithNullFails() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
