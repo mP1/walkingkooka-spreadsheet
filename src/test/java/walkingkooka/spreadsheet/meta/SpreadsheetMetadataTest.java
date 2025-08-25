@@ -686,10 +686,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.toStringAndCheck(
             converter,
-            "formulaConverter: collection(null-to-number, simple, number-to-number, text-to-text, " +
-                "error-to-number, error-throwing, text-to-error, text-to-selection, selection-to-selection, " +
-                "selection-to-text, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
-                "general)"
+            "formulaConverter: collection(text, number, basic, spreadsheet-value, boolean, error-throwing, locale, template, url)"
         );
     }
 
@@ -719,14 +716,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.toStringAndCheck(
             converter,
-            "formattingConverter: collection(null-to-number, simple, number-to-number, text-to-text, " +
-                "error-to-number, error-throwing, text-to-error, text-to-expression, text-to-locale, " +
-                "text-to-template-value-name, text-to-url, text-to-selection, selection-to-selection, " +
-                "selection-to-text, spreadsheet-cell-to, has-style-to-style, text-to-color, color-to-number, " +
-                "number-to-color, color-to-color, text-to-spreadsheet-color-name, " +
-                "text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, " +
-                "text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, " +
-                "url-to-hyperlink, url-to-image, general)"
+            "formattingConverter: collection(text, number, basic, spreadsheet-value, boolean, color, environment, error-throwing, json, locale, style, text-node, template, url)"
         );
     }
 
