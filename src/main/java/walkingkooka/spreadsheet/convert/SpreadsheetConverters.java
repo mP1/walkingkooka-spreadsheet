@@ -340,6 +340,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterNumberToText}
+     */
+    public static Converter<SpreadsheetConverterContext> numberToText() {
+        return SpreadsheetConverterNumberToText.INSTANCE;
+    }
+
+    /**
      * A wrapper around {@link Converters#parser(Class, Parser, Function, BiFunction)} simplifying the abstraction.
      */
     public static <V> Converter<SpreadsheetConverterContext> parser(final Class<V> parserValueType,
