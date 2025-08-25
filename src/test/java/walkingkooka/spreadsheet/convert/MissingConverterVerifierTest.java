@@ -136,7 +136,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     public void testVerifyAndCheckWithWithFormulaConverterAndSpreadsheetMetadataTestingSpreadsheetProvider() {
         this.verifyAndCheck(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            SpreadsheetConverters.BASIC_CONVERTER_SELECTOR,
+            SpreadsheetConverters.SYSTEM_CONVERTER_SELECTOR,
             SpreadsheetMetadataTesting.CONVERTER_PROVIDER
         );
     }

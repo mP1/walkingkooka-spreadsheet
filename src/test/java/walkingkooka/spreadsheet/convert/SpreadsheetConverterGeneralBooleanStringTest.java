@@ -79,7 +79,7 @@ public final class SpreadsheetConverterGeneralBooleanStringTest implements Conve
         return SpreadsheetConverterContexts.basic(
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            SpreadsheetConverters.basic(),
+            SpreadsheetConverters.system(),
             SpreadsheetLabelNameResolvers.fake(),
             JsonNodeConverterContexts.fake(),
             LocaleContexts.fake()

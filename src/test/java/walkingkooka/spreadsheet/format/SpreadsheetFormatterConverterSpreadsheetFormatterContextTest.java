@@ -163,7 +163,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         return SpreadsheetConverterContexts.basic(
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            SpreadsheetConverters.basic(),
+            SpreadsheetConverters.system(),
             (s) -> {
                 throw new UnsupportedOperationException();
             },

@@ -1809,7 +1809,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 );
             }
 
-            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.basic();
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
 
             @Override
             public String currencySymbol() {
