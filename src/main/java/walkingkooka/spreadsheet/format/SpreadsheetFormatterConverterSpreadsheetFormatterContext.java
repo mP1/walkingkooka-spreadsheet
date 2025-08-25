@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -118,7 +119,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public int generalFormatNumberDigitCount() {
-        throw new UnsupportedOperationException();
+        return this.context.spreadsheetMetadata()
+            .getOrFail(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
     }
 
     @Override
