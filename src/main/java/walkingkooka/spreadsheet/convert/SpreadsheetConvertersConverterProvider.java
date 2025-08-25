@@ -79,11 +79,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         final List<?> copy = Lists.immutable(values);
 
         switch (name.value()) {
-            case BASIC_SPREADSHEET_CONVERTER_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.basic();
-                break;
             case BOOLEAN_STRING:
                 noParameterCheck(copy);
 
@@ -242,6 +237,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.style();
+                break;
+            case SYSTEM_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.system();
                 break;
             case TEMPLATE_STRING:
                 noParameterCheck(copy);
@@ -454,10 +454,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         }
     }
 
-    private final static String BASIC_SPREADSHEET_CONVERTER_STRING = "basic";
-
-    final static ConverterName BASIC_SPREADSHEET_CONVERTER = ConverterName.with(BASIC_SPREADSHEET_CONVERTER_STRING);
-
     private final static String BOOLEAN_STRING = "boolean";
 
     final static ConverterName BOOLEAN = ConverterName.with(BOOLEAN_STRING);
@@ -581,6 +577,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String STYLE_STRING = "style";
 
     final static ConverterName STYLE = ConverterName.with(STYLE_STRING);
+
+    private final static String SYSTEM_STRING = "system";
+
+    final static ConverterName SYSTEM = ConverterName.with(SYSTEM_STRING);
 
     private final static String TEMPLATE_STRING = "template";
 
@@ -738,7 +738,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     // @see SpreadsheetConverters constants
     final static ConverterInfoSet INFOS = ConverterInfoSet.with(
         Sets.of(
-            converterInfo(BASIC_SPREADSHEET_CONVERTER),
             converterInfo(BOOLEAN),
             converterInfo(COLLECTION),
             converterInfo(COLOR),
@@ -770,6 +769,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_VALUE),
             converterInfo(STYLE),
+            converterInfo(SYSTEM),
             converterInfo(TEMPLATE),
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),

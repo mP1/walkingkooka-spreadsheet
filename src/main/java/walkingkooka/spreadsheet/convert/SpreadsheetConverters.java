@@ -74,51 +74,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * A {@link Converter} that supports most of the provider conversions and will be used as the system converter for
-     * the system {@link ProviderContext}.
-     */
-    public static Converter<SpreadsheetConverterContext> basic() {
-        return BASIC_CONVERTER;
-    }
-
-    private final static Converter<SpreadsheetConverterContext> BASIC_GENERAL = general(
-        SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
-            .formatter(),
-        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-            .parser(),
-        SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
-            .formatter(),
-        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
-            .parser(),
-        SpreadsheetPattern.parseNumberFormatPattern("0.##")
-            .formatter(),
-        SpreadsheetPattern.parseNumberParsePattern("0.##;#0;")
-            .parser(),
-        SpreadsheetFormatters.defaultText(),
-        SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
-            .formatter(),
-        SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
-            .parser()
-    );
-
-    // @VisibleForTesting
-    final static ConverterSelector BASIC_CONVERTER_SELECTOR = ConverterSelector.parse(
-        "collection(number-to-number, text-to-text, error-to-number, \n" +
-            "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
-            "  text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
-            "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
-            "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
-            "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"
-    );
-
-    private final static Converter<SpreadsheetConverterContext> BASIC_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-        (ProviderContext context) -> BASIC_GENERAL
-    ).converter(
-        BASIC_CONVERTER_SELECTOR,
-        ProviderContexts.fake()
-    );
-
-    /**
      * A {@link Converter} that handles converting from or to a {@link Boolean} value
      */
     public static Converter<SpreadsheetConverterContext> booleans() {
@@ -438,7 +393,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
      * A converter that involves spreadsheet values like {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection},
-     * but not basic types like number, date etc.
+     * but not system types like number, date etc.
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetValue() {
         return SPREADSHEET_VALUE;
@@ -470,6 +425,51 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A {@link Converter} that supports most of the provider conversions and will be used as the system converter for
+     * the system {@link ProviderContext}.
+     */
+    public static Converter<SpreadsheetConverterContext> system() {
+        return SYSTEM_CONVERTER;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> SYSTEM_GENERAL = general(
+        SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
+            .formatter(),
+        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+            .parser(),
+        SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
+            .formatter(),
+        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
+            .parser(),
+        SpreadsheetPattern.parseNumberFormatPattern("0.##")
+            .formatter(),
+        SpreadsheetPattern.parseNumberParsePattern("0.##;#0;")
+            .parser(),
+        SpreadsheetFormatters.defaultText(),
+        SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
+            .formatter(),
+        SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+            .parser()
+    );
+
+    // @VisibleForTesting
+    final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
+        "collection(number-to-number, text-to-text, error-to-number, \n" +
+            "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
+            "  text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
+            "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
+            "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
+            "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"
+    );
+
+    private final static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+        (ProviderContext context) -> SYSTEM_GENERAL
+    ).converter(
+        SYSTEM_CONVERTER_SELECTOR,
+        ProviderContexts.fake()
+    );
+
+    /**
      * A converter that involves templating.
      */
     public static Converter<SpreadsheetConverterContext> template() {
@@ -482,7 +482,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * A {@link Converter} that handles converting basic text conversions.
+     * A {@link Converter} that handles converting system text conversions.
      */
     public static Converter<SpreadsheetConverterContext> text() {
         return TEXT;

@@ -51,25 +51,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     );
 
     @Test
-    public void testConverterNameWithBasic() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER,
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.basic()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithBasic() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.BASIC_SPREADSHEET_CONVERTER + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.basic()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithBoolean() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.BOOLEAN + "",
@@ -237,7 +218,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SpreadsheetConverterContexts.basic(
                     SpreadsheetConverterContexts.NO_METADATA,
                     SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                    SpreadsheetConverters.basic(),
+                    SpreadsheetConverters.system(),
                     SpreadsheetLabelNameResolvers.fake(),
                     JsonNodeConverterContexts.basic(
                         ExpressionNumberConverterContexts.basic(
@@ -409,6 +390,25 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "style",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.style()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithSystem() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.SYSTEM,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.system()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithSystem() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.SYSTEM + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.system()
         );
     }
 

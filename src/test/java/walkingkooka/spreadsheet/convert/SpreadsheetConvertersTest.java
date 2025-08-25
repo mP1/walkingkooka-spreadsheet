@@ -112,412 +112,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     PublicStaticHelperTesting<SpreadsheetConverters>,
     ConverterTesting {
 
-    // basic............................................................................................................
-
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
-
-    @Test
-    public void testBasicConvertStringTrueToBoolean() {
-        this.basicConvertAndCheck(
-            "true",
-            true
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringFalseToBoolean() {
-        this.basicConvertAndCheck(
-            "false",
-            false
-        );
-    }
-
-    @Test
-    public void testBasicConvertBooleanTrueToString() {
-        this.basicConvertAndCheck(
-            true,
-            "true"
-        );
-    }
-
-    @Test
-    public void testBasicConvertBooleanFalseToString() {
-        this.basicConvertAndCheck(
-            false,
-            "false"
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToDate() {
-        this.basicConvertAndCheck(
-            "1999/12/31",
-            LocalDate.of(
-                1999,
-                12,
-                31
-            )
-        );
-    }
-
-    @Test
-    public void testBasicConvertDateToString() {
-        this.basicConvertAndCheck(
-            LocalDate.of(
-                1999,
-                12,
-                31
-            ),
-            "1999/12/31"
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToDateTime() {
-        this.basicConvertAndCheck(
-            "1999/12/31 12:58:59",
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                58,
-                59
-            )
-        );
-    }
-
-    @Test
-    public void testBasicConvertDateTimeToString() {
-        this.basicConvertAndCheck(
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                58,
-                59
-            ),
-            "1999/12/31 12:58:59"
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToNumberInteger() {
-        this.basicConvertAndCheck(
-            "123",
-            EXPRESSION_NUMBER_KIND.create(123)
-        );
-    }
-
-    @Test
-    public void testBasicConvertNumberIntegerToString() {
-        this.basicConvertAndCheck(
-            EXPRESSION_NUMBER_KIND.create(123),
-            "123."
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToNumberDecimal() {
-        this.basicConvertAndCheck(
-            "45.75",
-            EXPRESSION_NUMBER_KIND.create(45.75)
-        );
-    }
-
-    @Test
-    public void testBasicConvertNumberDecimalToString() {
-        this.basicConvertAndCheck(
-            EXPRESSION_NUMBER_KIND.create(45.75),
-            "45.75"
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToString() {
-        final String text = "Hello World 123";
-
-        this.basicConvertAndCheck(
-            text,
-            text
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToTime() {
-        this.basicConvertAndCheck(
-            "12:58:59",
-            LocalTime.of(
-                12,
-                58,
-                59
-            )
-        );
-    }
-
-    @Test
-    public void testBasicConvertTimeToString() {
-        this.basicConvertAndCheck(
-            LocalTime.of(
-                12,
-                58,
-                59
-            ),
-            "12:58:59"
-        );
-    }
-
-    @Test
-    public void testBasicConvertNumberToRgbColor() {
-        final Integer number = 0x123456;
-
-        this.basicConvertAndCheck(
-            number,
-            RgbColor.class,
-            RgbColor.fromRgb(number)
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToRgbColor() {
-        final String text = "#123";
-
-        this.basicConvertAndCheck(
-            text,
-            RgbColor.class,
-            RgbColor.parseRgb(text)
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToExpression() {
-        this.basicConvertAndCheck(
-            "1+2",
-            Expression.class,
-            Expression.add(
-                Expression.value(
-                    EXPRESSION_NUMBER_KIND.one()
-                ),
-                Expression.value(
-                    EXPRESSION_NUMBER_KIND.create(2)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testBasicConvertStringToTextStyle() {
-        final String text = "{color: #123}";
-
-        this.basicConvertAndCheck(
-            text,
-            TextStyle.class,
-            TextStyle.parse(text)
-        );
-    }
-
-    private void basicConvertAndCheck(final Object value,
-                                      final Object expected) {
-        this.basicConvertAndCheck(
-            value,
-            expected.getClass(),
-            Cast.to(expected)
-        );
-    }
-
-    private <T> void basicConvertAndCheck(final Object value,
-                                          final Class<T> type,
-                                      final T expected) {
-        final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.basic();
-
-        this.convertAndCheck(
-            converter,
-            value,
-            type,
-            new FakeSpreadsheetConverterContext() {
-                @Override
-                public boolean canConvert(final Object v,
-                                          final Class<?> t) {
-                    return converter.canConvert(
-                        v,
-                        t,
-                        this
-                    );
-                }
-
-                @Override
-                public <T> Either<T, String> convert(final Object v,
-                                                     final Class<T> t) {
-                    return converter.convert(
-                        v,
-                        t,
-                        this
-                    );
-                }
-
-                @Override
-                public ExpressionNumberKind expressionNumberKind() {
-                    return EXPRESSION_NUMBER_KIND;
-                }
-
-                @Override
-                public String currencySymbol() {
-                    return this.decimalNumberContext.currencySymbol();
-                }
-
-                @Override
-                public char decimalSeparator() {
-                    return this.decimalNumberContext.decimalSeparator();
-                }
-
-                @Override
-                public String exponentSymbol() {
-                    return this.decimalNumberContext.exponentSymbol();
-                }
-
-                @Override
-                public char groupSeparator() {
-                    return this.decimalNumberContext.groupSeparator();
-                }
-
-                @Override
-                public String infinitySymbol() {
-                    return this.decimalNumberContext.infinitySymbol();
-                }
-
-                @Override
-                public char monetaryDecimalSeparator() {
-                    return this.decimalNumberContext.monetaryDecimalSeparator();
-                }
-
-                @Override
-                public String nanSymbol() {
-                    return this.decimalNumberContext.nanSymbol();
-                }
-
-                @Override
-                public char negativeSign() {
-                    return this.decimalNumberContext.negativeSign();
-                }
-
-                @Override
-                public char percentSymbol() {
-                    return this.decimalNumberContext.percentSymbol();
-                }
-
-                @Override
-                public char permillSymbol() {
-                    return this.decimalNumberContext.permillSymbol();
-                }
-
-                @Override
-                public char positiveSign() {
-                    return this.decimalNumberContext.positiveSign();
-                }
-
-                @Override
-                public char zeroDigit() {
-                    return this.decimalNumberContext.zeroDigit();
-                }
-
-                @Override
-                public DecimalNumberSymbols decimalNumberSymbols() {
-                    return this.decimalNumberContext.decimalNumberSymbols();
-                }
-
-                @Override
-                public Locale locale() {
-                    return this.decimalNumberContext.locale();
-                }
-
-                @Override
-                public MathContext mathContext() {
-                    return this.decimalNumberContext.mathContext();
-                }
-
-                private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
-
-                @Override
-                public List<String> ampms() {
-                    return this.dateTimeContext.ampms();
-                }
-
-                @Override
-                public String ampm(final int hourOfDay) {
-                    return this.dateTimeContext.ampm(hourOfDay);
-                }
-
-                @Override
-                public int defaultYear() {
-                    return this.dateTimeContext.defaultYear();
-                }
-
-                @Override
-                public List<String> monthNames() {
-                    return this.dateTimeContext.ampms();
-                }
-
-                @Override
-                public String monthName(final int month) {
-                    return this.dateTimeContext.monthName(month);
-                }
-
-                @Override
-                public List<String> monthNameAbbreviations() {
-                    return this.dateTimeContext.monthNameAbbreviations();
-                }
-
-                @Override
-                public String monthNameAbbreviation(final int month) {
-                    return this.dateTimeContext.monthNameAbbreviation(month);
-                }
-
-                @Override
-                public int twoDigitYear() {
-                    return this.dateTimeContext.twoDigitYear();
-                }
-
-                @Override
-                public List<String> weekDayNames() {
-                    return this.dateTimeContext.weekDayNames();
-                }
-
-                @Override
-                public String weekDayName(final int day) {
-                    return this.dateTimeContext.weekDayName(day);
-                }
-
-                @Override
-                public List<String> weekDayNameAbbreviations() {
-                    return this.dateTimeContext.weekDayNameAbbreviations();
-                }
-
-                @Override
-                public String weekDayNameAbbreviation(final int day) {
-                    return this.dateTimeContext.weekDayNameAbbreviation(day);
-                }
-
-                @Override
-                public DateTimeSymbols dateTimeSymbols() {
-                    return this.dateTimeContext.dateTimeSymbols();
-                }
-
-                private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
-                    DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(Locale.ENGLISH)
-                    ),
-                    Locale.forLanguageTag("en-AU"),
-                    1980, // defaultYear
-                    50, // twoDigitYear,
-                    () -> {
-                        throw new UnsupportedOperationException();
-                    }
-                );
-            },
-            Cast.to(expected)
-        );
-    }
 
     // color.............................................................................................................
 
@@ -2251,6 +1846,411 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
+
+    // system...........................................................................................................
+
+    @Test
+    public void testSystemConvertStringTrueToBoolean() {
+        this.systemConvertAndCheck(
+            "true",
+            true
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringFalseToBoolean() {
+        this.systemConvertAndCheck(
+            "false",
+            false
+        );
+    }
+
+    @Test
+    public void testSystemConvertBooleanTrueToString() {
+        this.systemConvertAndCheck(
+            true,
+            "true"
+        );
+    }
+
+    @Test
+    public void testSystemConvertBooleanFalseToString() {
+        this.systemConvertAndCheck(
+            false,
+            "false"
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToDate() {
+        this.systemConvertAndCheck(
+            "1999/12/31",
+            LocalDate.of(
+                1999,
+                12,
+                31
+            )
+        );
+    }
+
+    @Test
+    public void testSystemConvertDateToString() {
+        this.systemConvertAndCheck(
+            LocalDate.of(
+                1999,
+                12,
+                31
+            ),
+            "1999/12/31"
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToDateTime() {
+        this.systemConvertAndCheck(
+            "1999/12/31 12:58:59",
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                58,
+                59
+            )
+        );
+    }
+
+    @Test
+    public void testSystemConvertDateTimeToString() {
+        this.systemConvertAndCheck(
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                58,
+                59
+            ),
+            "1999/12/31 12:58:59"
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToNumberInteger() {
+        this.systemConvertAndCheck(
+            "123",
+            EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
+    public void testSystemConvertNumberIntegerToString() {
+        this.systemConvertAndCheck(
+            EXPRESSION_NUMBER_KIND.create(123),
+            "123."
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToNumberDecimal() {
+        this.systemConvertAndCheck(
+            "45.75",
+            EXPRESSION_NUMBER_KIND.create(45.75)
+        );
+    }
+
+    @Test
+    public void testSystemConvertNumberDecimalToString() {
+        this.systemConvertAndCheck(
+            EXPRESSION_NUMBER_KIND.create(45.75),
+            "45.75"
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToString() {
+        final String text = "Hello World 123";
+
+        this.systemConvertAndCheck(
+            text,
+            text
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToTime() {
+        this.systemConvertAndCheck(
+            "12:58:59",
+            LocalTime.of(
+                12,
+                58,
+                59
+            )
+        );
+    }
+
+    @Test
+    public void testSystemConvertTimeToString() {
+        this.systemConvertAndCheck(
+            LocalTime.of(
+                12,
+                58,
+                59
+            ),
+            "12:58:59"
+        );
+    }
+
+    @Test
+    public void testSystemConvertNumberToRgbColor() {
+        final Integer number = 0x123456;
+
+        this.systemConvertAndCheck(
+            number,
+            RgbColor.class,
+            RgbColor.fromRgb(number)
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToRgbColor() {
+        final String text = "#123";
+
+        this.systemConvertAndCheck(
+            text,
+            RgbColor.class,
+            RgbColor.parseRgb(text)
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToExpression() {
+        this.systemConvertAndCheck(
+            "1+2",
+            Expression.class,
+            Expression.add(
+                Expression.value(
+                    EXPRESSION_NUMBER_KIND.one()
+                ),
+                Expression.value(
+                    EXPRESSION_NUMBER_KIND.create(2)
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSystemConvertStringToTextStyle() {
+        final String text = "{color: #123}";
+
+        this.systemConvertAndCheck(
+            text,
+            TextStyle.class,
+            TextStyle.parse(text)
+        );
+    }
+
+    private void systemConvertAndCheck(final Object value,
+                                       final Object expected) {
+        this.systemConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void systemConvertAndCheck(final Object value,
+                                           final Class<T> type,
+                                           final T expected) {
+        final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
+
+        this.convertAndCheck(
+            converter,
+            value,
+            type,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object v,
+                                          final Class<?> t) {
+                    return converter.canConvert(
+                        v,
+                        t,
+                        this
+                    );
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object v,
+                                                     final Class<T> t) {
+                    return converter.convert(
+                        v,
+                        t,
+                        this
+                    );
+                }
+
+                @Override
+                public ExpressionNumberKind expressionNumberKind() {
+                    return EXPRESSION_NUMBER_KIND;
+                }
+
+                @Override
+                public String currencySymbol() {
+                    return this.decimalNumberContext.currencySymbol();
+                }
+
+                @Override
+                public char decimalSeparator() {
+                    return this.decimalNumberContext.decimalSeparator();
+                }
+
+                @Override
+                public String exponentSymbol() {
+                    return this.decimalNumberContext.exponentSymbol();
+                }
+
+                @Override
+                public char groupSeparator() {
+                    return this.decimalNumberContext.groupSeparator();
+                }
+
+                @Override
+                public String infinitySymbol() {
+                    return this.decimalNumberContext.infinitySymbol();
+                }
+
+                @Override
+                public char monetaryDecimalSeparator() {
+                    return this.decimalNumberContext.monetaryDecimalSeparator();
+                }
+
+                @Override
+                public String nanSymbol() {
+                    return this.decimalNumberContext.nanSymbol();
+                }
+
+                @Override
+                public char negativeSign() {
+                    return this.decimalNumberContext.negativeSign();
+                }
+
+                @Override
+                public char percentSymbol() {
+                    return this.decimalNumberContext.percentSymbol();
+                }
+
+                @Override
+                public char permillSymbol() {
+                    return this.decimalNumberContext.permillSymbol();
+                }
+
+                @Override
+                public char positiveSign() {
+                    return this.decimalNumberContext.positiveSign();
+                }
+
+                @Override
+                public char zeroDigit() {
+                    return this.decimalNumberContext.zeroDigit();
+                }
+
+                @Override
+                public DecimalNumberSymbols decimalNumberSymbols() {
+                    return this.decimalNumberContext.decimalNumberSymbols();
+                }
+
+                @Override
+                public Locale locale() {
+                    return this.decimalNumberContext.locale();
+                }
+
+                @Override
+                public MathContext mathContext() {
+                    return this.decimalNumberContext.mathContext();
+                }
+
+                private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
+
+                @Override
+                public List<String> ampms() {
+                    return this.dateTimeContext.ampms();
+                }
+
+                @Override
+                public String ampm(final int hourOfDay) {
+                    return this.dateTimeContext.ampm(hourOfDay);
+                }
+
+                @Override
+                public int defaultYear() {
+                    return this.dateTimeContext.defaultYear();
+                }
+
+                @Override
+                public List<String> monthNames() {
+                    return this.dateTimeContext.ampms();
+                }
+
+                @Override
+                public String monthName(final int month) {
+                    return this.dateTimeContext.monthName(month);
+                }
+
+                @Override
+                public List<String> monthNameAbbreviations() {
+                    return this.dateTimeContext.monthNameAbbreviations();
+                }
+
+                @Override
+                public String monthNameAbbreviation(final int month) {
+                    return this.dateTimeContext.monthNameAbbreviation(month);
+                }
+
+                @Override
+                public int twoDigitYear() {
+                    return this.dateTimeContext.twoDigitYear();
+                }
+
+                @Override
+                public List<String> weekDayNames() {
+                    return this.dateTimeContext.weekDayNames();
+                }
+
+                @Override
+                public String weekDayName(final int day) {
+                    return this.dateTimeContext.weekDayName(day);
+                }
+
+                @Override
+                public List<String> weekDayNameAbbreviations() {
+                    return this.dateTimeContext.weekDayNameAbbreviations();
+                }
+
+                @Override
+                public String weekDayNameAbbreviation(final int day) {
+                    return this.dateTimeContext.weekDayNameAbbreviation(day);
+                }
+
+                @Override
+                public DateTimeSymbols dateTimeSymbols() {
+                    return this.dateTimeContext.dateTimeSymbols();
+                }
+
+                private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(Locale.ENGLISH)
+                    ),
+                    Locale.forLanguageTag("en-AU"),
+                    1980, // defaultYear
+                    50, // twoDigitYear,
+                    () -> {
+                        throw new UnsupportedOperationException();
+                    }
+                );
+            },
+            Cast.to(expected)
+        );
+    }
 
     // textNode.........................................................................................................
 
