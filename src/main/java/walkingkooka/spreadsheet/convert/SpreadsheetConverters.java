@@ -67,8 +67,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
         "TEXT",
-        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-        Converters.hasTextToString()
+        Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString()
     );
 
     /**
