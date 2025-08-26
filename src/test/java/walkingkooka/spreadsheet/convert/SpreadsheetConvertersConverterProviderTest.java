@@ -616,6 +616,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToBoolean() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TO_BOOLEAN + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toBoolean()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToJson() {
         this.converterAndCheck(
             "to-json",
