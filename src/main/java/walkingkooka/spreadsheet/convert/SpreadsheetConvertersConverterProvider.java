@@ -393,6 +393,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToValueType();
                 break;
+            case TO_BOOLEAN_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toBoolean();
+                break;
             case TO_JSON_STRING:
                 noParameterCheck(copy);
 
@@ -707,6 +712,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_VALUE_TYPE = ConverterName.with(TEXT_TO_VALUE_TYPE_STRING);
 
+    private final static String TO_BOOLEAN_STRING = "to-boolean";
+
+    final static ConverterName TO_BOOLEAN = ConverterName.with(TO_BOOLEAN_STRING);
+    
     private final static String TO_JSON_STRING = "to-json";
 
     final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
@@ -809,6 +818,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_VALIDATION_ERROR),
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),
+            converterInfo(TO_BOOLEAN),
             converterInfo(TO_JSON),
             converterInfo(TO_NUMBER),
             converterInfo(TO_STYLEABLE),
