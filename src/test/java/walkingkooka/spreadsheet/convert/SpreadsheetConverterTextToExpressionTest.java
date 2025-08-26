@@ -35,7 +35,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     implements SpreadsheetMetadataTesting {
 
     @Test
-    public void testConvertEmptyString() {
+    public void testConvertEmptyStringToExpression() {
         this.convertFails(
             SpreadsheetConverterTextToExpression.INSTANCE,
             "",
@@ -46,7 +46,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     }
 
     @Test
-    public void testConvertInvalidExpression() {
+    public void testConvertInvalidExpressionStringToExpression() {
         this.convertFails(
             SpreadsheetConverterTextToExpression.INSTANCE,
             "1+xyz(",
@@ -57,7 +57,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     }
 
     @Test
-    public void testConvertAddExpression() {
+    public void testConvertStringAddExpressionToExpression() {
         this.convertStringAndEvaluateExpression(
             "1+2.5",
             EXPRESSION_NUMBER_KIND.create(1 + 2.5)
@@ -65,7 +65,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     }
 
     @Test
-    public void testConvertAddExpressionWithStringBuilder() {
+    public void testConvertStringBuilderToExpressionWithAddExpressionToExpression() {
         this.convertStringAndEvaluateExpression(
             new StringBuilder("1+2.5"),
             EXPRESSION_NUMBER_KIND.create(1 + 2.5)
@@ -73,7 +73,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     }
 
     @Test
-    public void testConvertComplexExpression() {
+    public void testConvertStringComplexExpressionToExpression() {
         this.convertStringAndEvaluateExpression(
             "1+2*3",
             EXPRESSION_NUMBER_KIND.create(1 + 2 * 3)
