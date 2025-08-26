@@ -47,6 +47,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // boolean..........................................................................................................
 
     @Test
+    public void testConvertBooleanTrueToVoidFails() {
+        this.convertFails(
+            Boolean.TRUE,
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertBooleanTrueToBoolean() {
         this.convertAndCheck(
             Boolean.TRUE
@@ -65,6 +73,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     private final static LocalDate DATE_FALSE = LocalDate.of(1899, 12, 30);
 
     private final static LocalDate DATE_TRUE = DATE_FALSE.plusDays(1);
+
+    @Test
+    public void testConvertDateToVoidFails() {
+        this.convertFails(
+            DATE_FALSE,
+            Void.class
+        );
+    }
 
     @Test
     public void testConvertDateToBooleanFalse() {
@@ -93,6 +109,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
         DATE_TRUE,
         LocalTime.MIDNIGHT
     );
+
+    @Test
+    public void testConvertDateTimeToVoidFails() {
+        this.convertFails(
+            DATE_TIME_TRUE,
+            Void.class
+        );
+    }
 
     @Test
     public void testConvertDateTimeToBooleanTrue() {
@@ -126,9 +150,17 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // byte.............................................................................................................
 
     @Test
+    public void testConvertByteToVoidFails() {
+        this.convertFails(
+            (byte) 1,
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertByteToBooleanTrue() {
         this.convertAndCheck(
-            (byte)1,
+            (byte) 1,
             Boolean.TRUE
         );
     }
@@ -136,7 +168,7 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     @Test
     public void testConvertByteToBooleanFalse() {
         this.convertAndCheck(
-            (byte)0,
+            (byte) 0,
             Boolean.FALSE
         );
     }
@@ -144,9 +176,17 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // short............................................................................................................
 
     @Test
+    public void testConvertShortToVoidFails() {
+        this.convertFails(
+            (short) 1,
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertShortToBooleanTrue() {
         this.convertAndCheck(
-            (short)1,
+            (short) 1,
             Boolean.TRUE
         );
     }
@@ -154,12 +194,20 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     @Test
     public void testConvertShortToBooleanFalse() {
         this.convertAndCheck(
-            (short)0,
+            (short) 0,
             Boolean.FALSE
         );
     }
 
     // integer..........................................................................................................
+
+    @Test
+    public void testConvertIntegerToVoidFails() {
+        this.convertFails(
+            1,
+            Void.class
+        );
+    }
 
     @Test
     public void testConvertIntegerToBooleanTrue() {
@@ -180,6 +228,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // long.............................................................................................................
 
     @Test
+    public void testConvertLongToVoidFails() {
+        this.convertFails(
+            1L,
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertLongToBooleanTrue() {
         this.convertAndCheck(
             1L,
@@ -196,6 +252,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     }
 
     // float............................................................................................................
+
+    @Test
+    public void testConvertFloatToVoidFails() {
+        this.convertFails(
+            1f,
+            Void.class
+        );
+    }
 
     @Test
     public void testConvertFloatToBooleanTrue() {
@@ -216,6 +280,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // double............................................................................................................
 
     @Test
+    public void testConvertDoubleToVoidFails() {
+        this.convertFails(
+            1.0,
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertDoubleToBooleanTrue() {
         this.convertAndCheck(
             1.0,
@@ -232,6 +304,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     }
 
     // BigInteger.......................................................................................................
+
+    @Test
+    public void testConvertBigIntegerToVoidFails() {
+        this.convertFails(
+            BigInteger.ONE,
+            Void.class
+        );
+    }
 
     @Test
     public void testConvertBigIntegerToBooleanTrue() {
@@ -252,6 +332,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // BigDecimal.......................................................................................................
 
     @Test
+    public void testConvertBigDecimalToVoidFails() {
+        this.convertFails(
+            BigDecimal.ONE,
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertBigDecimalToBooleanTrue() {
         this.convertAndCheck(
             BigDecimal.ONE,
@@ -270,6 +358,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     // ExpressionNumberBigDecimal.......................................................................................
 
     @Test
+    public void testConvertExpressionNumberBigDecimalVoidFails() {
+        this.convertFails(
+            ExpressionNumberKind.BIG_DECIMAL.one(),
+            Void.class
+        );
+    }
+
+    @Test
     public void testConvertExpressionNumberBigDecimalToBooleanTrue() {
         this.convertAndCheck(
             ExpressionNumberKind.BIG_DECIMAL.one(),
@@ -286,6 +382,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     }
 
     // ExpressionNumberDouble...........................................................................................
+
+    @Test
+    public void testConvertExpressionNumberDoubleToVoidFails() {
+        this.convertFails(
+            ExpressionNumberKind.DOUBLE.one(),
+            Void.class
+        );
+    }
 
     @Test
     public void testConvertExpressionNumberDoubleToBooleanTrue() {
@@ -309,6 +413,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
         this.convertFails(
             "ABC",
             Boolean.class
+        );
+    }
+
+    @Test
+    public void testConvertStringTrueToVoidFails() {
+        this.convertFails(
+            "TRUE",
+            Void.class
         );
     }
 
