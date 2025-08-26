@@ -89,6 +89,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.booleans();
                 break;
+            case BOOLEAN_TO_TEXT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.booleanToText();
+                break;
             case COLLECTION_STRING:
                 converter = Converters.collection(
                     values.stream()
@@ -252,11 +257,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.template();
-                break;
-            case TEXT_TO_BOOLEAN_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.textToBoolean();
                 break;
             case TEXT_NODE_STRING:
                 noParameterCheck(copy);
@@ -467,6 +467,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName BOOLEAN = ConverterName.with(BOOLEAN_STRING);
 
+    private final static String BOOLEAN_TO_TEXT_STRING = "boolean-to-text";
+
+    final static ConverterName BOOLEAN_TO_TEXT = ConverterName.with(BOOLEAN_TO_TEXT_STRING);
+
     private final static String COLLECTION_STRING = "collection";
 
     final static ConverterName COLLECTION = ConverterName.COLLECTION;
@@ -603,10 +607,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_NODE = ConverterName.with(TEXT_NODE_STRING);
 
-    private final static String TEXT_TO_BOOLEAN_STRING = "text-to-boolean";
-
-    final static ConverterName TEXT_TO_BOOLEAN = ConverterName.with(TEXT_TO_BOOLEAN_STRING);
-    
     private final static String TEXT_TO_COLOR_STRING = "text-to-color";
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
@@ -749,6 +749,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
         Sets.of(
             converterInfo(BASIC),
             converterInfo(BOOLEAN),
+            converterInfo(BOOLEAN_TO_TEXT),
             converterInfo(COLLECTION),
             converterInfo(COLOR),
             converterInfo(COLOR_TO_COLOR),
@@ -783,7 +784,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEMPLATE),
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),
-            converterInfo(TEXT_TO_BOOLEAN),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),

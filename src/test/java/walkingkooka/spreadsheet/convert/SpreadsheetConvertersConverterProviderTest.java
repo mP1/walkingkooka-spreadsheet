@@ -69,6 +69,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithBooleanToText() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.BOOLEAN_TO_TEXT + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.booleanToText()
+        );
+    }
+
+    @Test
     public void testConverterNameWithCollection() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.COLLECTION,
@@ -436,15 +445,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "text-node",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.textNode()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithTextToBoolean() {
-        this.converterAndCheck(
-            "text-to-boolean",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToBoolean()
         );
     }
 

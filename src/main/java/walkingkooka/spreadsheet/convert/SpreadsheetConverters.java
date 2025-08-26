@@ -96,8 +96,15 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             true,
             false
         ),
-        SpreadsheetConverters.textToBoolean()
+        SpreadsheetConverters.booleanToText()
     );
+
+    /**
+     * {@see SpreadsheetConverterBooleanToText}
+     */
+    public static Converter<SpreadsheetConverterContext> booleanToText() {
+        return SpreadsheetConverterBooleanToText.INSTANCE;
+    }
 
     /**
      * {@see Converters#collection}
@@ -513,13 +520,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         urlToHyperlink(),
         urlToImage()
     );
-
-    /**
-     * {@see SpreadsheetConverterBooleanToText}
-     */
-    public static Converter<SpreadsheetConverterContext> textToBoolean() {
-        return SpreadsheetConverterBooleanToText.INSTANCE;
-    }
 
     /**
      * {@see ColorConverters#textToColor}
