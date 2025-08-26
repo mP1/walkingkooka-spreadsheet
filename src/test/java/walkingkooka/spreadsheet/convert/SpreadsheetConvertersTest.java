@@ -84,6 +84,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.Image;
+import walkingkooka.tree.text.Styleable;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -1873,10 +1874,36 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testStyleConvertHasTextStyleToTextStyle() {
+        this.styleConvertAndCheck(
+            STYLE,
+            STYLE
+        );
+    }
+
+    @Test
+    public void testStyleConvertHasTextStyleToStyleable() {
+        this.styleConvertAndCheck(
+            STYLE,
+            Styleable.class,
+            STYLE
+        );
+    }
+
+    @Test
     public void testStyleConvertHasTextStyleToStyleWithSpreadsheetCell() {
         this.styleConvertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setStyle(STYLE),
+            STYLE
+        );
+    }
+
+    @Test
+    public void testStyleConvertStringToStyleable() {
+        this.styleConvertAndCheck(
+            STYLE.text(),
+            Styleable.class,
             STYLE
         );
     }
@@ -1912,7 +1939,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                                           final Class<T> type,
                                           final T expected) {
         this.convertAndCheck(
-            SpreadsheetConverters.style(),
+            STYLE_CONVERTER_CONTEXT.converter(),
             value,
             type,
             STYLE_CONVERTER_CONTEXT,
@@ -1941,10 +1968,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             );
         }
 
+        @Override
+        public Converter<SpreadsheetConverterContext> converter() {
+            return this.converter;
+        }
+
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
                 SpreadsheetConverters.simple(),
-                SpreadsheetConverters.text()
+                SpreadsheetConverters.text(),
+                SpreadsheetConverters.style()
             )
         );
     };
