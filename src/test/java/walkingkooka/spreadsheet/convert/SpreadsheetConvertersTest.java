@@ -114,6 +114,107 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
+    // boolean..........................................................................................................
+
+    @Test
+    public void testBooleanConvertBooleanTrueToString() {
+        this.booleanConvertAndCheck(
+            Boolean.TRUE,
+            "TRUE"
+        );
+    }
+
+    @Test
+    public void testBooleanConvertBooleanFalseToString() {
+        this.booleanConvertAndCheck(
+            Boolean.FALSE,
+            "FALSE"
+        );
+    }
+
+    @Test
+    public void testBooleanConvertStringTrueCapitalisedToBoolean() {
+        this.booleanConvertAndCheck(
+            "True",
+            Boolean.TRUE
+        );
+    }
+
+    @Test
+    public void testBooleanConvertStringFalseCapitalisedToBoolean() {
+        this.booleanConvertAndCheck(
+            "False",
+            Boolean.FALSE
+        );
+    }
+
+    @Test
+    public void testBooleanConvertStringTrueUppercaseToBoolean() {
+        this.booleanConvertAndCheck(
+            "TRUE",
+            Boolean.TRUE
+        );
+    }
+
+    @Test
+    public void testBooleanConvertStringFalseUppercaseToBoolean() {
+        this.booleanConvertAndCheck(
+            "FALSE",
+            Boolean.FALSE
+        );
+    }
+
+    @Test
+    public void testBooleanConvertStringTrueLowercaseToBoolean() {
+        this.booleanConvertAndCheck(
+            "false",
+            Boolean.FALSE
+        );
+    }
+
+    private void booleanConvertAndCheck(final Object value,
+                                        final Object expected) {
+        this.booleanConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void booleanConvertAndCheck(final Object value,
+                                            final Class<T> type,
+                                            final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.booleans(),
+            value,
+            type,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.text();
+            },
+            expected
+        );
+    }
+    
     // color.............................................................................................................
 
     @Test
