@@ -28,6 +28,22 @@ import java.util.Locale;
 public final class SpreadsheetConverterTextToLocaleTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToLocale> {
 
     @Test
+    public void testConvertStringToStringFails() {
+        this.convertFails(
+            "EN-AU",
+            String.class
+        );
+    }
+
+    @Test
+    public void testConvertLocaleToLocaleFails() {
+        this.convertFails(
+            Locale.forLanguageTag("EN-AU"),
+            Locale.class
+        );
+    }
+
+    @Test
     public void testConvertStringToLocale() {
         final Locale locale = Locale.forLanguageTag("EN-AU");
 

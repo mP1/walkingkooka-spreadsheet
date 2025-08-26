@@ -39,7 +39,8 @@ final class SpreadsheetConverterTextToLocale extends SpreadsheetConverterTextTo 
     public boolean isTargetType(final Object value,
                                 final Class<?> type,
                                 final SpreadsheetConverterContext context) {
-        return Locale.class == type;
+        return value != Locale.class &&
+            Locale.class == type;
     }
 
     @Override
