@@ -44,12 +44,14 @@ final class SpreadsheetConverterToBoolean extends SpreadsheetConverter {
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
-        return value instanceof Boolean ||
-            value instanceof LocalDate ||
-            value instanceof LocalDateTime ||
-            value instanceof CharSequence ||
-            ExpressionNumber.is(value) &&
-                Boolean.class == type;
+        return (
+            value instanceof Boolean ||
+                value instanceof LocalDate ||
+                value instanceof LocalDateTime ||
+                value instanceof CharSequence ||
+                ExpressionNumber.is(value)
+        ) &&
+            Boolean.class == type;
     }
 
     @Override

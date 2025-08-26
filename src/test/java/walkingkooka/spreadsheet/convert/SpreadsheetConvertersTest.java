@@ -368,7 +368,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     Lists.of(
                         SpreadsheetConverters.simple(),
                         SpreadsheetConverters.text(),
-                        SpreadsheetConverters.numberToNumber()
+                        SpreadsheetConverters.numberToNumber()//,
+                        //SpreadsheetConverters.color()
                     )
                 );
 

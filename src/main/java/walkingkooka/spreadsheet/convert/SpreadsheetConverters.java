@@ -118,9 +118,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "color",
         text(),
         colorToColor(),
+        textToColor(),
         colorToNumber(),
         numberToColor(),
-        textToColor(),
         textToSpreadsheetColorName(),
         textToSpreadsheetMetadataColor()
     );
