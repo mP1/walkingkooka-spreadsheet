@@ -35,6 +35,16 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     implements SpreadsheetMetadataTesting {
 
     @Test
+    public void testConvertStringToStringFails() {
+        this.convertFails(
+            SpreadsheetConverterTextToExpression.INSTANCE,
+            "1+1",
+            String.class,
+            this.createContext()
+        );
+    }
+
+    @Test
     public void testConvertEmptyStringToExpression() {
         this.convertFails(
             SpreadsheetConverterTextToExpression.INSTANCE,
