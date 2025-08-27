@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 public final class SpreadsheetConverterToNumberSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetConverterToNumberSpreadsheetValueVisitor> {
     @Override
     public SpreadsheetConverterToNumberSpreadsheetValueVisitor createVisitor() {
-        return new SpreadsheetConverterToNumberSpreadsheetValueVisitor();
+        return new SpreadsheetConverterToNumberSpreadsheetValueVisitor(false);
     }
 
     // class............................................................................................................

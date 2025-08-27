@@ -30,15 +30,17 @@ import java.time.LocalDateTime;
  */
 final class SpreadsheetConverterToNumberSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
-    static Converter<SpreadsheetConverterContext> converter(final Object value) {
-        final SpreadsheetConverterToNumberSpreadsheetValueVisitor visitor = new SpreadsheetConverterToNumberSpreadsheetValueVisitor();
+    static Converter<SpreadsheetConverterContext> converter(final Object value,
+                                                            final boolean ignoreDecimalNumberContextSymbols) {
+        final SpreadsheetConverterToNumberSpreadsheetValueVisitor visitor = new SpreadsheetConverterToNumberSpreadsheetValueVisitor(ignoreDecimalNumberContextSymbols);
         visitor.accept(value);
         return visitor.converter;
     }
 
     // @VisibleForTesting
-    SpreadsheetConverterToNumberSpreadsheetValueVisitor() {
+    SpreadsheetConverterToNumberSpreadsheetValueVisitor(final boolean ignoreDecimalNumberContextSymbols) {
         super();
+        this.string = SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter.with(ignoreDecimalNumberContextSymbols);
     }
 
     @Override
@@ -64,10 +66,10 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitor extends Spreadsh
 
     @Override
     protected void visit(final String value) {
-        this.converter = STRING;
+        this.converter = string;
     }
 
-    private final static Converter<SpreadsheetConverterContext> STRING = SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter.INSTANCE;
+    private final Converter<SpreadsheetConverterContext> string;
 
     private Converter<SpreadsheetConverterContext> converter;
 

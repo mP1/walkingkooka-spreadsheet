@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -33,7 +34,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverterTestCase<SpreadsheetConverterToNumber> {
+public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverterTestCase<SpreadsheetConverterToNumber>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetConverterToNumber> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -560,10 +562,87 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
             EXPRESSION_NUMBER_KIND.create(BYTE_STRING_HALF)
         );
     }
+
+    @Test
+    public void testConvertStringToExpressionNumberWhenIgnoreDecimalNumberContextSymbolsFalse() {
+        this.convertAndCheck(
+            SpreadsheetConverterToNumber.with(
+                false // ignoreDecimalNumberContextSymbols
+            ),
+            "123*5",
+            ExpressionNumber.class,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                    Lists.of(
+                        SpreadsheetConverters.text(),
+                        SpreadsheetConverters.numberToNumber()
+                    )
+                );
+
+                @Override
+                public char decimalSeparator() {
+                    return '*';
+                }
+
+                @Override
+                public ExpressionNumberKind expressionNumberKind() {
+                    return EXPRESSION_NUMBER_KIND;
+                }
+
+                @Override
+                public String exponentSymbol() {
+                    return "E";
+                }
+
+                @Override
+                public MathContext mathContext() {
+                    return MathContext.DECIMAL32;
+                }
+
+                @Override
+                public char negativeSign() {
+                    return '-';
+                }
+
+                @Override
+                public char positiveSign() {
+                    return '+';
+                }
+
+                @Override
+                public char zeroDigit() {
+                    return '0';
+                }
+            },
+            EXPRESSION_NUMBER_KIND.create(123.5)
+        );
+    }
     
     @Override
     public SpreadsheetConverterToNumber createConverter() {
-        return SpreadsheetConverterToNumber.INSTANCE;
+        return SpreadsheetConverterToNumber.with(
+            true // ignoreDecimalNumberContextSymbols
+        );
     }
 
     @Override
@@ -611,6 +690,20 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
                 return MathContext.DECIMAL32;
             }
         };
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentIgnoreDecimalNumberContextSymbols() {
+        this.checkNotEquals(
+            SpreadsheetConverterToNumber.with(false)
+        );
+    }
+
+    @Override
+    public SpreadsheetConverterToNumber createObject() {
+        return SpreadsheetConverterToNumber.with(true);
     }
 
     // class............................................................................................................

@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -41,10 +42,32 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
     /**
      * Singleton
      */
-    final static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter INSTANCE = new SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter();
+    static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter with(final boolean ignoreDecimalNumberContextSymbols) {
+        return ignoreDecimalNumberContextSymbols ?
+            TRUE :
+            FALSE;
+    }
 
-    private SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter() {
+    private final static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter TRUE = new SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter(
+        (SpreadsheetConverterContext c) -> DecimalNumberContexts.american(c.mathContext())
+    );
+
+    private final static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter FALSE = new SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter(
+        (SpreadsheetConverterContext c) -> c // DecimalNumberContext
+    );
+
+    private SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter(final Function<SpreadsheetConverterContext, DecimalNumberContext> decimalNumberContextProvider) {
         super();
+        this.parser = Converters.parser(
+            BigDecimal.class,
+            Parsers.bigDecimal(), // parser
+            (final SpreadsheetConverterContext c) -> ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                decimalNumberContextProvider.apply(c)
+            ),
+            (ParserToken t, SpreadsheetConverterContext c) -> t.cast(BigDecimalParserToken.class).value()
+        );
     }
 
     @Override
@@ -58,7 +81,7 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
     public <T> Either<T, String> doConvert(final Object value,
                                            final Class<T> type,
                                            final SpreadsheetConverterContext context) {
-        final Either<BigDecimal, String> parsed = BIG_DECIMAL_PARSER.convert(
+        final Either<BigDecimal, String> parsed = this.parser.convert(
             value,
             BigDecimal.class, // wont accept other Number types
             context
@@ -82,16 +105,7 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
         return result;
     }
 
-    private final static Converter<SpreadsheetConverterContext> BIG_DECIMAL_PARSER = Converters.parser(
-        BigDecimal.class,
-        Parsers.bigDecimal(), // parser
-        (final SpreadsheetConverterContext c) -> ParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION,
-            DateTimeContexts.fake(),
-            DecimalNumberContexts.american(c.mathContext())
-        ),
-        (ParserToken t, SpreadsheetConverterContext c) -> t.cast(BigDecimalParserToken.class).value()
-    );
+    private final Converter<SpreadsheetConverterContext> parser;
 
     // Object...........................................................................................................
 

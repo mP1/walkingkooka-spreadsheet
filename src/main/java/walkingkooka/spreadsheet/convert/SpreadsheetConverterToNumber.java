@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -32,12 +33,25 @@ import java.time.LocalDateTime;
 final class SpreadsheetConverterToNumber extends SpreadsheetConverter {
 
     /**
-     * Singleton
+     * Gets an instance of {@link SpreadsheetConverterToNumber}.
+     * Note the boolean flag is used to control whether {@link walkingkooka.math.DecimalNumberContext} symbols are ignored.
+     * The default text to number behaviour requires the decimal point etc from the context to be ignored and "defaults"
+     * used instead, so formulas will always only accept "." as the decimal point.
+     * The function numberValue however must be able to pass custom decimal-point and group-separator.
      */
-    final static SpreadsheetConverterToNumber INSTANCE = new SpreadsheetConverterToNumber();
+    static SpreadsheetConverterToNumber with(final boolean ignoreDecimalNumberContextSymbols) {
+        return ignoreDecimalNumberContextSymbols ?
+            TRUE :
+            FALSE;
+    }
 
-    private SpreadsheetConverterToNumber() {
+    private final static SpreadsheetConverterToNumber TRUE = new SpreadsheetConverterToNumber(true);
+
+    private final static SpreadsheetConverterToNumber FALSE = new SpreadsheetConverterToNumber(false);
+
+    private SpreadsheetConverterToNumber(final boolean ignoreDecimalNumberContextSymbols) {
         super();
+        this.ignoreDecimalNumberContextSymbols = ignoreDecimalNumberContextSymbols;
     }
 
     @Override
@@ -55,7 +69,10 @@ final class SpreadsheetConverterToNumber extends SpreadsheetConverter {
     public <T> Either<T, String> doConvert(final Object value,
                                            final Class<T> type,
                                            final SpreadsheetConverterContext context) {
-        final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverterToNumberSpreadsheetValueVisitor.converter(value);
+        final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverterToNumberSpreadsheetValueVisitor.converter(
+            value,
+            this.ignoreDecimalNumberContextSymbols
+        );
         if(null == converter) {
             throw new IllegalArgumentException("Converter missing for " + value);
         }
@@ -66,7 +83,25 @@ final class SpreadsheetConverterToNumber extends SpreadsheetConverter {
         );
     }
 
+    private final boolean ignoreDecimalNumberContextSymbols;
+
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return System.identityHashCode(this);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            other instanceof SpreadsheetConverterToNumber &&
+                this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final SpreadsheetConverterToNumber other) {
+        return this.ignoreDecimalNumberContextSymbols == other.ignoreDecimalNumberContextSymbols;
+    }
 
     @Override
     public String toString() {
