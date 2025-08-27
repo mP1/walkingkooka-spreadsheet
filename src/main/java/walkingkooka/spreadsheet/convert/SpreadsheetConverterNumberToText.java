@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
@@ -28,12 +29,25 @@ import walkingkooka.tree.expression.ExpressionNumber;
 final class SpreadsheetConverterNumberToText extends SpreadsheetConverter {
 
     /**
-     * Singleton
+     * Gets an instance of {@link SpreadsheetConverterNumberToText}.
+     * Note the boolean flag is used to control whether {@link walkingkooka.math.DecimalNumberContext} symbols are ignored.
+     * The default text to number behaviour requires the decimal point etc from the context to be ignored and "defaults"
+     * used instead, so formulas will always only accept "." as the decimal point.
+     * The function numberValue however must be able to pass custom decimal-point and group-separator.
      */
-    final static SpreadsheetConverterNumberToText INSTANCE = new SpreadsheetConverterNumberToText();
+    static SpreadsheetConverterNumberToText with(final boolean ignoreDecimalNumberContextSymbols) {
+        return ignoreDecimalNumberContextSymbols ?
+            TRUE :
+            FALSE;
+    }
 
-    private SpreadsheetConverterNumberToText() {
+    private final static SpreadsheetConverterNumberToText TRUE = new SpreadsheetConverterNumberToText(true);
+
+    private final static SpreadsheetConverterNumberToText FALSE = new SpreadsheetConverterNumberToText(false);
+
+    private SpreadsheetConverterNumberToText(final boolean ignoreDecimalNumberContextSymbols) {
         super();
+        this.ignoreDecimalNumberContextSymbols = ignoreDecimalNumberContextSymbols;
     }
 
     @Override
@@ -51,14 +65,34 @@ final class SpreadsheetConverterNumberToText extends SpreadsheetConverter {
         return GENERAL_FORMATTER.convert(
             value,
             type,
-            SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(context)
+            this.ignoreDecimalNumberContextSymbols ?
+                SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(context) :
+                context
         );
     }
+
+    private final boolean ignoreDecimalNumberContextSymbols;
 
     private final static Converter<SpreadsheetConverterContext> GENERAL_FORMATTER = SpreadsheetFormatters.general()
         .converter();
 
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return System.identityHashCode(this);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            other instanceof SpreadsheetConverterNumberToText &&
+                this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final SpreadsheetConverterNumberToText other) {
+        return this.ignoreDecimalNumberContextSymbols == other.ignoreDecimalNumberContextSymbols;
+    }
 
     @Override
     public String toString() {

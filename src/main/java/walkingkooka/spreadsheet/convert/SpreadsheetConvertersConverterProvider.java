@@ -211,7 +211,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case NUMBER_TO_TEXT_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.numberToText();
+                converter = SpreadsheetConverters.numberToText(
+                    true // ignoreDecimalNumberContextSymbols
+                );
                 break;
             case NULL_TO_NUMBER_STRING:
                 noParameterCheck(copy);

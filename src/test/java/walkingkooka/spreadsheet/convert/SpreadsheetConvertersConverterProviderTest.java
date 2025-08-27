@@ -342,7 +342,9 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
             "number-to-text",
             PROVIDER_CONTEXT,
-            SpreadsheetConverters.numberToText()
+            SpreadsheetConverters.numberToText(
+                true // ignoreDecimalNumberContextSymbols
+            )
         );
     }
 
