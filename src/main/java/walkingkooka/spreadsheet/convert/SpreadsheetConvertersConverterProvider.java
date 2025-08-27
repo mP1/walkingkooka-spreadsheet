@@ -418,7 +418,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case TO_NUMBER_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.toNumber();
+                converter = SpreadsheetConverters.toNumber(
+                    true // ignoreDecimalNumberContextSymbols
+                );
                 break;
             case TO_STYLEABLE_STRING:
                 noParameterCheck(copy);
