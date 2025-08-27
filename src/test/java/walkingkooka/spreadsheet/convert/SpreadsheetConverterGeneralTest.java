@@ -325,12 +325,13 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     private final static LocalDate DATE_TRUE = LocalDate.ofEpochDay(NUMBER_TRUE + DATE_OFFSET);
     private final static LocalDate DATE_FALSE = LocalDate.ofEpochDay(NUMBER_FALSE + DATE_OFFSET);
 
-    private final static LocalTime TIME = LocalTime.of(12, 58, 59);
-    private final static LocalTime TIME_TRUE = LocalTime.ofSecondOfDay(NUMBER_TRUE);
-    private final static LocalTime TIME_FALSE = LocalTime.ofSecondOfDay(NUMBER_FALSE);
+    private final static Float TIME_FLOAT =  0.5f;
+    private final static LocalTime TIME = LocalTime.NOON;
+    private final static LocalTime TIME_FALSE = LocalTime.MIDNIGHT;
 
     private final static LocalDateTime DATE_TIME_TRUE = LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT);
-    private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT);
+    private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, TIME_FALSE);
+
     private final static LocalDateTime DATE_TIME = LocalDateTime.of(DATE, TIME);
 
     private final static String STRING_FALSE = "false";
@@ -681,10 +682,10 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithBooleanTrueToTime() {
-        this.convertAndBackCheck(
+    public void testConvertWithBooleanTrueToTimeFails() {
+        this.convertFails(
             true,
-            TIME_TRUE
+            LocalTime.class
         );
     }
 
@@ -1083,7 +1084,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public void testConvertWithDateTimeTrueToString() {
         this.convertAndCheck(
             DATE_TIME,
-            "DT 2000-12-31 12-58"
+            "DT 2000-12-31 12-00"
         );
     }
 
@@ -1396,7 +1397,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public void testConvertWithStringToDateTime() {
         this.convertAndCheck(
             "DT 31 12 2000 12 58 59",
-            DATE_TIME
+            LocalDateTime.of(2000, 12, 31, 12, 58, 59)
         );
     }
 
@@ -1538,7 +1539,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public void testConvertWithStringToTime() {
         this.convertAndCheck(
             "T 12 58 59",
-            TIME
+            LocalTime.of(12, 58, 59)
         );
     }
 
@@ -1735,10 +1736,10 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithStringTrueToTime() {
-        this.convertAndCheck(
+    public void testConvertWithStringTrueToTimeFails() {
+        this.convertFails(
             STRING_TRUE,
-            TIME_TRUE
+            LocalTime.class
         );
     }
 
@@ -1751,14 +1752,6 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     // Time.............................................................................................................
-
-    @Test
-    public void testConvertWithTimeTrueToBoolean() {
-        this.convertAndCheck(
-            TIME_TRUE,
-            true
-        );
-    }
 
     @Test
     public void testConvertWithTimeFalseToBoolean() {
@@ -1785,111 +1778,62 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     }
 
     @Test
-    public void testConvertWithTimeTrueToByte() {
+    public void testConvertWithTimeToByte() {
         this.convertAndCheck(
-            TIME_TRUE,
-            NUMBER_TRUE.byteValue()
+            TIME,
+            TIME_FLOAT.byteValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeFalseToByte() {
+    public void testConvertWithTimeToShort() {
         this.convertAndCheck(
-            TIME_FALSE,
-            NUMBER_FALSE.byteValue()
+            TIME,
+            TIME_FLOAT.shortValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeTrueToShort() {
+    public void testConvertWithTimeToInteger() {
         this.convertAndCheck(
-            TIME_TRUE,
-            NUMBER_TRUE.shortValue()
+            TIME,
+            TIME_FLOAT.intValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeFalseToShort() {
+    public void testConvertWithTimeToLong() {
         this.convertAndCheck(
-            TIME_FALSE,
-            NUMBER_FALSE.shortValue()
+            TIME,
+            TIME_FLOAT.longValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeTrueToInteger() {
+    public void testConvertWithTimeToFloat() {
         this.convertAndCheck(
-            TIME_TRUE,
-            NUMBER_TRUE.intValue()
+            TIME,
+            TIME_FLOAT.floatValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeFalseToInteger() {
+    public void testConvertWithTimeToDouble() {
         this.convertAndCheck(
-            TIME_FALSE,
-            NUMBER_FALSE.intValue()
+            TIME,
+            TIME_FLOAT.doubleValue()
         );
     }
 
     @Test
-    public void testConvertWithTimeTrueToLong() {
+    public void testConvertWithTimeToExpressionNumber() {
         this.convertAndCheck(
-            TIME_TRUE,
-            NUMBER_TRUE.longValue()
+            TIME,
+            EXPRESSION_NUMBER_KIND.create(TIME_FLOAT)
         );
     }
 
-    @Test
-    public void testConvertWithTimeFalseToLong() {
-        this.convertAndCheck(
-            TIME_FALSE,
-            NUMBER_FALSE.longValue()
-        );
-    }
-
-    @Test
-    public void testConvertWithTimeTrueToFloat() {
-        this.convertAndCheck(
-            TIME_TRUE,
-            NUMBER_TRUE.floatValue()
-        );
-    }
-
-    @Test
-    public void testConvertWithTimeFalseToFloat() {
-        this.convertAndCheck(
-            TIME_FALSE,
-            NUMBER_FALSE.floatValue()
-        );
-    }
-
-    @Test
-    public void testConvertWithTimeTrueToDouble() {
-        this.convertAndCheck(
-            TIME_TRUE,
-            NUMBER_TRUE.doubleValue()
-        );
-    }
-
-    @Test
-    public void testConvertWithTimeFalseToDouble() {
-        this.convertAndCheck(
-            TIME_FALSE,
-            NUMBER_FALSE.doubleValue()
-        );
-    }
-
-    @Test
-    public void testConvertWithTimeTrueToExpressionNumber() {
-        this.convertAndCheck(
-            TIME_TRUE,
-            EXPRESSION_NUMBER_KIND.one()
-        );
-    }
-
-    @Test
-    public void testConvertWithTimeFalseToExpressionNumber() {
+    public void testConvertWithTimeNoonToExpressionNumber() {
         this.convertAndCheck(
             TIME_FALSE,
             EXPRESSION_NUMBER_KIND.zero()

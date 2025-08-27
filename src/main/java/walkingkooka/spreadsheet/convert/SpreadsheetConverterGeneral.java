@@ -109,7 +109,35 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 textFormatter.converter()
                     .cast(SpreadsheetConverterContext.class)
             ), // boolean -> String
-            booleanTo(LocalTime.class, TRUE_TO_TIME, FALSE_TO_TIME)
+            new Converter<>() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type,
+                                          final SpreadsheetConverterContext context) {
+                    // Boolean.TRUE to LocalTime is impossible because TRUE = 1 aka 24 hours
+                    return Boolean.FALSE.equals(value) &&
+                        type == LocalTime.class;
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> type,
+                                                     final SpreadsheetConverterContext context) {
+                    return this.canConvert(
+                        value,
+                        type,
+                        context
+                    ) ?
+                        this.successfulConversion(
+                            LocalTime.MIDNIGHT,
+                            type
+                        ) :
+                        this.failConversion(
+                            value,
+                            type
+                        );
+                }
+            }
         ); // Time
 
         // LocalDate ->
@@ -221,10 +249,34 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
 
         // LocalTime ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> timeTo = mapping(
-            toBoolean(
-                LocalTime.class,
-                TRUE_TO_TIME
-            ),
+            new Converter<>() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type,
+                                          final SpreadsheetConverterContext context) {
+                    return value instanceof LocalTime &&
+                        type == Boolean.class;
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> type,
+                                                     final SpreadsheetConverterContext context) {
+                    return this.canConvert(
+                        value,
+                        type,
+                        context
+                    ) ?
+                        this.successfulConversion(
+                            false == LocalTime.MIDNIGHT.equals(value),
+                            type
+                        ) :
+                        this.failConversion(
+                            value,
+                            type
+                        );
+                }
+            },
             null, // time -> date invalid
             Converters.localTimeToLocalDateTime(),
             ExpressionNumberConverters.toNumberOrExpressionNumber(
@@ -244,8 +296,6 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
             timeTo
         );
     }
-
-    private final static LocalTime TRUE_TO_TIME = LocalTime.ofSecondOfDay(1);
 
     private final static LocalTime FALSE_TO_TIME = LocalTime.MIDNIGHT;
 
