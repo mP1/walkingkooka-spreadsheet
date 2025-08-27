@@ -139,6 +139,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link SpreadsheetConverterDateTime()}
+     */
+    public static Converter<SpreadsheetConverterContext> dateTime() {
+        return SpreadsheetConverterDateTime.INSTANCE;
+    }
+
+    /**
      * {@link LocaleConverters#dateTimeSymbols()}
      */
     public static Converter<SpreadsheetConverterContext> dateTimeSymbols() {

@@ -132,6 +132,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithDateTime() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.DATE_TIME + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.dateTime()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithDateTimeSymbols() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS + "",
