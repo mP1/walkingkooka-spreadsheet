@@ -796,7 +796,16 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck2(
             "General",
             LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-            "10956d540960648"
+            "10956d541015625"
+        );
+    }
+
+    @Test
+    public void testFormatterGeneral2() {
+        this.formatAndCheck2(
+            "General",
+            LocalDateTime.of(1999, 12, 31, 12, 0, 0),
+            "10956d5"
         );
     }
 
@@ -814,13 +823,13 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                 'd' + // decimalpoint
                 arabicDigit(5) +
                 arabicDigit(4) +
+                arabicDigit(1) +
                 arabicDigit(0) +
-                arabicDigit(9) +
+                arabicDigit(1) +
+                arabicDigit(5) +
                 arabicDigit(6) +
-                arabicDigit(0) +
-                arabicDigit(6) +
-                arabicDigit(4) +
-                arabicDigit(8) //"10956d540960648"
+                arabicDigit(2) +
+                arabicDigit(5) //"10956d541015625"
         );
     }
 
