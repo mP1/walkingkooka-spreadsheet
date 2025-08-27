@@ -68,13 +68,13 @@ final class SpreadsheetConverterToBoolean extends SpreadsheetConverter {
         } else {
             // handle "TRUE" and "FALSE"
             if (value instanceof CharSequence) {
-                if (SpreadsheetStrings.CASE_SENSITIVITY.equals("TRUE", (CharSequence) value)) {
+                if (SpreadsheetStrings.CASE_SENSITIVITY.equals(SpreadsheetStrings.BOOLEAN_TRUE, (CharSequence) value)) {
                     result = this.successfulConversion(
                         Boolean.TRUE,
                         type
                     );
                 } else {
-                    if (SpreadsheetStrings.CASE_SENSITIVITY.equals("FALSE", (CharSequence) value)) {
+                    if (SpreadsheetStrings.CASE_SENSITIVITY.equals(SpreadsheetStrings.BOOLEAN_FALSE, (CharSequence) value)) {
                         result = this.successfulConversion(
                             Boolean.FALSE,
                             type

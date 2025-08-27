@@ -23,6 +23,7 @@ import walkingkooka.naming.Name;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.formula.parser.LabelSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
@@ -88,8 +89,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
             INITIAL,
             PART
         ) &&
-            false == CASE_SENSITIVITY.equals("true", text) &&
-            false == CASE_SENSITIVITY.equals("false", text) &&
+            false == CASE_SENSITIVITY.equals(SpreadsheetStrings.BOOLEAN_TRUE, text) &&
+            false == CASE_SENSITIVITY.equals(SpreadsheetStrings.BOOLEAN_FALSE, text) &&
             false == SpreadsheetSelection.isCellText(text);
     }
 

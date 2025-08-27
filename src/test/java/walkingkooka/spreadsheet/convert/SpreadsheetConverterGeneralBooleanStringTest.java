@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -30,7 +31,10 @@ public final class SpreadsheetConverterGeneralBooleanStringTest implements Conve
 
     @Test
     public void testNonBooleanFails() {
-        this.convertFails("true", String.class);
+        this.convertFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            String.class
+        );
     }
 
     @Test

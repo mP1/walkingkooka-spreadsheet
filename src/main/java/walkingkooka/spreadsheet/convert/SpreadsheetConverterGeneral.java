@@ -20,7 +20,8 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.predicate.Predicates;
+import walkingkooka.convert.ShortCircuitingConverter;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.Parser;
@@ -101,11 +102,7 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 .cast(SpreadsheetConverterContext.class),
             ExpressionNumberConverters.toNumberOrExpressionNumber(Converters.booleanToNumber()),
             SpreadsheetConverterGeneralBooleanString.with(
-                booleanTo(
-                    String.class,
-                    TRUE_TO_STRING,
-                    FALSE_TO_STRING
-                ),
+                SpreadsheetConverters.booleanToText(),
                 textFormatter.converter()
                     .cast(SpreadsheetConverterContext.class)
             ), // boolean -> String
@@ -214,10 +211,28 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
         // String|Character ->
         final SpreadsheetConverterGeneralMapping<Converter<SpreadsheetConverterContext>> stringTo = SpreadsheetConverterGeneralMapping.with(
             characterOrStringTo(
-                toBoolean(
-                    String.class,
-                    TRUE_TO_STRING
-                )
+                new ShortCircuitingConverter<>() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> type,
+                                              final SpreadsheetConverterContext context) {
+                        return value instanceof String && Boolean.class == type;
+                    }
+
+                    @Override
+                    public <T> Either<T, String> doConvert(final Object value,
+                                                           final Class<T> type,
+                                                           final SpreadsheetConverterContext context) {
+                        return this.successfulConversion(
+                            textEquals(
+                                SpreadsheetStrings.BOOLEAN_TRUE,
+                                value
+                            ),
+                            type
+                        );
+                    }
+                }
             ), // string -> boolean
             characterOrStringTo(
                 SpreadsheetConverters.textToDate(dateParser)
@@ -298,50 +313,6 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
     }
 
     private final static LocalTime FALSE_TO_TIME = LocalTime.MIDNIGHT;
-
-    private final static String TRUE_TO_STRING = Boolean.TRUE.toString();
-
-    private final static String FALSE_TO_STRING = Boolean.FALSE.toString();
-
-    /**
-     * Creates a {@link Converter} that converts {@link Boolean} values to the given type.
-     */
-    private static <T> Converter<SpreadsheetConverterContext> booleanTo(final Class<T> targetType,
-                                                                        final T trueValue,
-                                                                        final T falseValue) {
-        return booleanTrueFalseConverter(
-            Boolean.class,
-            targetType,
-            Boolean.TRUE,
-            trueValue,
-            falseValue
-        );
-    }
-
-    private static <T> Converter<SpreadsheetConverterContext> toBoolean(final Class<T> from,
-                                                                        final T trueValue) {
-        return booleanTrueFalseConverter(
-            from,
-            Boolean.class,
-            trueValue,
-            Boolean.TRUE,
-            Boolean.FALSE
-        );
-    }
-
-    private static <T> Converter<SpreadsheetConverterContext> booleanTrueFalseConverter(final Class<?> fromType,
-                                                                                        final Class<T> targetType,
-                                                                                        final Object falseValueTest,
-                                                                                        final T falseValueResult,
-                                                                                        final T trueValueResult) {
-        return Converters.toBoolean(
-            t -> t.getClass() == fromType,
-            Predicates.is(targetType),
-            Predicates.is(falseValueTest),
-            falseValueResult,
-            trueValueResult
-        );
-    }
 
     /**
      * Converters any {@link Character} to {@link String} if necessary before calling the given {@link Converter}.
@@ -499,13 +470,13 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
                 value,
                 targetType
             ) :
-            TRUE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
+            textEquals(SpreadsheetStrings.BOOLEAN_TRUE, value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
                 this.convertNonNull0(
                     true,
                     targetType,
                     context
                 ) :
-                FALSE_TO_STRING.equals(value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
+                textEquals(SpreadsheetStrings.BOOLEAN_FALSE, value) && isDateOrDateTimeOrTimeOrNumber(targetType) ?
                     this.convertNonNull0(
                         false,
                         targetType,
@@ -522,6 +493,12 @@ final class SpreadsheetConverterGeneral extends SpreadsheetConverter {
      * Used to check that a value is an instanceof the target type.
      */
     private final static Converter<SpreadsheetConverterContext> INSTANCE_OF = Converters.simple();
+
+    private static boolean textEquals(final String value,
+                                      final Object other) {
+        return other instanceof CharSequence &&
+            SpreadsheetStrings.CASE_SENSITIVITY.equals(value, (CharSequence) other);
+    }
 
     private <T> Either<T, String> convertNonNull0(final Object value,
                                                   final Class<T> targetType,
