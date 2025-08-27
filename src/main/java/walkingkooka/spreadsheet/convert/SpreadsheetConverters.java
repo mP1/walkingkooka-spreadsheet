@@ -286,6 +286,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@link LocaleConverters#localeToText}
+     */
+    public static Converter<SpreadsheetConverterContext> localeToText() {
+        return LocaleConverters.localeToText();
+    }
+
+    /**
      * {@see SpreadsheetConverterNullToNumber}
      */
     public static Converter<SpreadsheetConverterContext> nullToNumber() {
