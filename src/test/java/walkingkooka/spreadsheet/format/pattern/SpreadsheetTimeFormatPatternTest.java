@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
@@ -465,13 +464,12 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
-    @Disabled
     public void testFormatterGeneralWithArabicZeroDigit() {
         this.formatAndCheck2(
             "General",
             LocalTime.of(12, 58, 59),
             ARABIC_ZERO_DIGIT,
-            "0" +
+            arabicDigit(0) +
                 "D" +
                 arabicDigit(5) +
                 arabicDigit(4) +
