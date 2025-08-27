@@ -29,6 +29,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -333,9 +334,6 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, TIME_FALSE);
 
     private final static LocalDateTime DATE_TIME = LocalDateTime.of(DATE, TIME);
-
-    private final static String STRING_FALSE = "false";
-    private final static String STRING_TRUE = "true";
 
     // Object..........................................................................................................
 
@@ -669,7 +667,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public void testConvertWithBooleanTrueToString() {
         this.convertAndCheck(
             true,
-            STRING_TRUE + TEXT_SUFFIX
+            SpreadsheetStrings.BOOLEAN_TRUE + TEXT_SUFFIX
         );
     }
 
@@ -677,7 +675,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     public void testConvertWithBooleanFalseToString() {
         this.convertAndCheck(
             false,
-            false + TEXT_SUFFIX
+            SpreadsheetStrings.BOOLEAN_FALSE + TEXT_SUFFIX
         );
     }
 
@@ -1362,7 +1360,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringToBooleanFalse() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             false
         );
     }
@@ -1370,7 +1368,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringToBooleanTrue() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             true
         );
     }
@@ -1546,7 +1544,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToByte() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             NUMBER_TRUE.byteValue()
         );
     }
@@ -1554,7 +1552,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToByte() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             NUMBER_FALSE.byteValue()
         );
     }
@@ -1562,7 +1560,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToShort() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             NUMBER_TRUE.shortValue()
         );
     }
@@ -1570,7 +1568,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToShort() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             NUMBER_FALSE.byteValue()
         );
     }
@@ -1578,7 +1576,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToInteger() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             NUMBER_TRUE.intValue()
         );
     }
@@ -1586,7 +1584,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToInteger() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             NUMBER_FALSE.intValue()
         );
     }
@@ -1594,7 +1592,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToLong() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             NUMBER_TRUE.longValue()
         );
     }
@@ -1602,7 +1600,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToLong() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             NUMBER_FALSE.longValue()
         );
     }
@@ -1610,7 +1608,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToFloat() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             NUMBER_TRUE.floatValue()
         );
     }
@@ -1618,7 +1616,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToFloat() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             NUMBER_FALSE.floatValue()
         );
     }
@@ -1626,7 +1624,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToDouble() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             NUMBER_TRUE.doubleValue()
         );
     }
@@ -1634,7 +1632,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToDouble() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             NUMBER_FALSE.doubleValue()
         );
     }
@@ -1642,7 +1640,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToBigInteger() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             new BigInteger(NUMBER_TRUE.toString())
         );
     }
@@ -1650,7 +1648,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToBigInteger() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             new BigInteger(NUMBER_FALSE.toString())
         );
     }
@@ -1658,7 +1656,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToBigDecimal() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             new BigDecimal(NUMBER_TRUE.toString())
         );
     }
@@ -1666,7 +1664,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToBigDecimal() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             new BigDecimal(NUMBER_FALSE.toString())
         );
     }
@@ -1674,7 +1672,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToNumberFails() {
         this.convertFails(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             Number.class
         );
     }
@@ -1682,7 +1680,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToNumberFails() {
         this.convertFails(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             Number.class
         );
     }
@@ -1690,7 +1688,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToExpressionNumber() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             EXPRESSION_NUMBER_KIND.one()
         );
     }
@@ -1698,7 +1696,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToExpressionNumber() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             EXPRESSION_NUMBER_KIND.zero()
         );
     }
@@ -1706,7 +1704,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToDate() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             DATE_TRUE
         );
     }
@@ -1714,7 +1712,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToDate() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             DATE_FALSE
         );
     }
@@ -1722,7 +1720,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToDateTime() {
         this.convertAndCheck(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             DATE_TIME_TRUE
         );
     }
@@ -1730,7 +1728,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToDateTime() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             DATE_TIME_FALSE
         );
     }
@@ -1738,7 +1736,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringTrueToTimeFails() {
         this.convertFails(
-            STRING_TRUE,
+            SpreadsheetStrings.BOOLEAN_TRUE,
             LocalTime.class
         );
     }
@@ -1746,7 +1744,7 @@ public final class SpreadsheetConverterGeneralTest extends SpreadsheetConverterT
     @Test
     public void testConvertWithStringFalseToTime() {
         this.convertAndCheck(
-            STRING_FALSE,
+            SpreadsheetStrings.BOOLEAN_FALSE,
             TIME_FALSE
         );
     }

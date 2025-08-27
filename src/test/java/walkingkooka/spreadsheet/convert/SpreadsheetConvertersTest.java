@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -121,7 +122,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testBooleanConvertBooleanTrueToString() {
         this.booleanConvertAndCheck(
             Boolean.TRUE,
-            "TRUE"
+            SpreadsheetStrings.BOOLEAN_TRUE
         );
     }
 
@@ -129,7 +130,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testBooleanConvertBooleanFalseToString() {
         this.booleanConvertAndCheck(
             Boolean.FALSE,
-            "FALSE"
+            SpreadsheetStrings.BOOLEAN_FALSE
         );
     }
 
@@ -2012,7 +2013,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSystemConvertBooleanTrueToString() {
         this.systemConvertAndCheck(
             true,
-            "true"
+            SpreadsheetStrings.BOOLEAN_TRUE
         );
     }
 
@@ -2020,7 +2021,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSystemConvertBooleanFalseToString() {
         this.systemConvertAndCheck(
             false,
-            "false"
+            SpreadsheetStrings.BOOLEAN_FALSE
         );
     }
 

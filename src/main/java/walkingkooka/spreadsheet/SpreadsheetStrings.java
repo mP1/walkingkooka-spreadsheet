@@ -26,6 +26,16 @@ import walkingkooka.text.CaseSensitivity;
 public final class SpreadsheetStrings implements PublicStaticHelper {
 
     /**
+     * The preferred string representation of {@link Boolean#TRUE}.
+     */
+    public static final String BOOLEAN_TRUE = "TRUE";
+
+    /**
+     * The preferred string representation of {@link Boolean#FALSE}.
+     */
+    public static final String BOOLEAN_FALSE = "FALSE";
+
+    /**
      * Function names are {@link CaseSensitivity#INSENSITIVE}
      */
     public static final CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.INSENSITIVE;

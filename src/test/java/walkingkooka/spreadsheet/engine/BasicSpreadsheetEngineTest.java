@@ -260,6 +260,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ExpressionNumberConverters.toNumberOrExpressionNumber(
                     Converters.numberToNumber()
                 ),
+                SpreadsheetConverters.booleanToText(),
                 Converters.objectToString()
             )
         );
