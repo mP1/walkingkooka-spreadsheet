@@ -280,6 +280,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
         "locale",
+        LocaleConverters.localeToText(),
         LocaleConverters.locale(),
         LocaleConverters.dateTimeSymbols(),
         LocaleConverters.decimalNumberSymbols()
