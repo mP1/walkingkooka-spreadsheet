@@ -1627,7 +1627,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                 "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                 "  \"twoDigitYear\": 20,\n" +
-                "  \"validationConverter\": \"collection(text, number, basic, spreadsheet-value, boolean, environment, error-throwing, locale, plugins, template)\\n\",\n" +
+                "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
                 "  \"validators\": \"collection, expression, non-null, text-length\",\n" +
