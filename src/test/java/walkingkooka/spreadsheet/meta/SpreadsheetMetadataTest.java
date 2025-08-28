@@ -716,7 +716,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         this.toStringAndCheck(
             converter,
-            "formattingConverter: collection(text, number, basic, spreadsheet-value, boolean, color, environment, error-throwing, json, locale, style, text-node, template, url)"
+            "formattingConverter: collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, url)"
         );
     }
 
