@@ -393,18 +393,18 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
     // Time.............................................................................................................
 
     @Test
-    public void testConvertTimeToBooleanNonZeroFails() {
-        this.convertFails(
-            LocalTime.ofNanoOfDay(123),
-            Boolean.class
+    public void testConvertTimeToBooleanTrue() {
+        this.convertAndCheck(
+            LocalTime.NOON,
+            Boolean.TRUE
         );
     }
 
     @Test
-    public void testConvertTimeToBooleanFails() {
-        this.convertFails(
+    public void testConvertTimeToBooleanFalse() {
+        this.convertAndCheck(
             FALSE_TIME,
-            Boolean.class
+            Boolean.FALSE
         );
     }
 
@@ -514,24 +514,6 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             FLOAT_TIME,
             ExpressionNumber.class,
             EXPRESSION_NUMBER_KIND.create(0.5)
-        );
-    }
-
-    // Number...........................................................................................................
-
-    @Test
-    public void testConvertNumberToBooleanWithNonZeroFails() {
-        this.convertFails(
-            LocalTime.NOON,
-            Boolean.class
-        );
-    }
-
-    @Test
-    public void testConvertNumberToBooleanWithZero() {
-        this.convertFails(
-            FALSE_TIME,
-            Boolean.class
         );
     }
 
@@ -863,6 +845,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
                 Lists.of(
                     SpreadsheetConverters.number(),
+                    SpreadsheetConverters.booleans(),
                     SpreadsheetConverterDateTime.INSTANCE
                 )
             );
