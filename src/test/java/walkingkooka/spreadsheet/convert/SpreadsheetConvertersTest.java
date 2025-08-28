@@ -1277,6 +1277,94 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testNumberConvertStringTrueToBoolean() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Boolean.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToByte() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Byte.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToShort() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Short.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToInteger() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Integer.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToLong() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Long.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToFloat() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Float.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToDouble() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            Double.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToBigInteger() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            BigInteger.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToBigDecimal() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            BigDecimal.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringTrueToExpressionNumber() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_TRUE,
+            ExpressionNumber.class
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringFalseToBoolean() {
+        this.numberConvertAndCheckFails(
+            SpreadsheetStrings.BOOLEAN_FALSE,
+            Boolean.class
+        );
+    }
+
+    @Test
     public void testNumberConvertStringToByte() {
         this.numberConvertAndCheck(
             "123",
@@ -1357,6 +1445,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             EXPRESSION_NUMBER_KIND.create(456.75)
         );
     }
+
+    private void numberConvertAndCheckFails(final Object value,
+                                            final Class<?> type) {
+        this.convertFails(
+            SpreadsheetConverters.number(),
+            value,
+            type,
+            NUMBER_CONVERTER_CONTEXT
+        );
+    }
+
 
     private void numberConvertAndCheck(final Object value,
                                        final Object expected) {
