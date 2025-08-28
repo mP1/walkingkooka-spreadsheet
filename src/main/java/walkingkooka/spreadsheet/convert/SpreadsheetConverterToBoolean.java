@@ -92,9 +92,7 @@ final class SpreadsheetConverterToBoolean extends SpreadsheetConverter {
 
             if (null != numberOrNull) {
                 result = this.successfulConversion(
-                    0 == numberOrNull.byteValue() ?
-                        Boolean.FALSE :
-                        Boolean.TRUE,
+                    SpreadsheetConverterToBooleanNumberVisitor.toBoolean(numberOrNull),
                     type
                 );
             }
