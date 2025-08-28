@@ -72,7 +72,7 @@
   "defaultYear": 1900,
   "exporters": "",
   "expressionNumberKind": "BIG_DECIMAL",
-  "findConverter": "collection(text, number, basic, spreadsheet-value, boolean, color, environment, error-throwing, json, locale, style, text-node, template, url)",
+  "findConverter": "collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)",
   "findFunctions": "@",
   "findHighlighting": false,
   "formattingConverter": "collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, url)",
