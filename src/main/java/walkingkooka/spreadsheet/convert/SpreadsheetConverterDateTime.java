@@ -63,7 +63,7 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
                 } else {
                     // Date | DateTime | Time -> DateTime | Number
                     if (value instanceof LocalDateTime) {
-                        can = LocalDate.class == type || LocalDateTime.class == type || ExpressionNumber.isClass(type);
+                        can = LocalDate.class == type || LocalDateTime.class == type || LocalTime.class == type || ExpressionNumber.isClass(type);
                     } else {
                         // Time -> Boolean | DateTime | Time | Number
                         if (value instanceof LocalTime) {
@@ -88,63 +88,71 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
                 type
             );
         } else {
-            Number number = null;
-
-            boolean valueIsBoolean = value instanceof Boolean;
-            boolean valueIsNumber =  false;
-
-            // Boolean -> Date | DateTime | Time
-            if (valueIsBoolean) {
-                number = Boolean.TRUE.equals(value) ?
-                    1 :
-                    0;
-            } else {
-                valueIsNumber = ExpressionNumber.is(value);
-                if (valueIsNumber) {
-                    // ExpressionNumber | Number -> Number
-                    number = value instanceof ExpressionNumber ?
-                        ((ExpressionNumber) value).value() :
-                        (Number) value;
-                } else {
-                    // Date | DateTime | Time -> Number -> Date | DateTime | Time
-                    Converter<SpreadsheetConverterContext> converter;
-                    if (value instanceof LocalDate) {
-                        converter = Converters.localDateToNumber();
-                    } else {
-                        if (value instanceof LocalDateTime) {
-                            converter = Converters.localDateTimeToNumber();
-                        } else {
-                            if (value instanceof LocalTime) {
-                                converter = Converters.localTimeToNumber();
-                            } else {
-                                throw new IllegalArgumentException("Unsupported type: " + type);
-                            }
-                        }
-                    }
-
-                    number = converter.convert(
-                        value,
-                        Number.class, // Date | DateTime | Time -> a Number
-                        context
-                    ).orElseLeft(null);
-                }
-            }
-
-            if (isDateDateTimeOrTimeClass(type)) {
-                // Boolean | Date | DateTime | Time -> Number -> Date | DateTime | Time
-                result = this.toDateOrDateTimeOrTime(
-                    number,
-                    type,
-                    context
+            if (value instanceof LocalDateTime && LocalTime.class == type) {
+                result = this.successfulConversion(
+                    ((LocalDateTime) value).toLocalTime(),
+                    type
                 );
             } else {
-                // Boolean | Date | DateTime | Time -> Number
-                if(valueIsBoolean || isDateDateTimeOrTime(value) || valueIsNumber) {
-                    result = context.convert(
+                Number number = null;
+
+                boolean valueIsBoolean = value instanceof Boolean;
+                boolean valueIsNumber = false;
+
+                // Boolean -> Date | DateTime | Time
+                if (valueIsBoolean) {
+                    number = Boolean.TRUE.equals(value) ?
+                        1 :
+                        0;
+                } else {
+                    valueIsNumber = ExpressionNumber.is(value);
+                    if (valueIsNumber) {
+                        // ExpressionNumber | Number -> Number
+                        number = value instanceof ExpressionNumber ?
+                            ((ExpressionNumber) value).value() :
+                            (Number) value;
+                    } else {
+                        // Date | DateTime | Time -> Number -> Date | DateTime | Time
+                        Converter<SpreadsheetConverterContext> converter;
+                        if (value instanceof LocalDate) {
+                            converter = Converters.localDateToNumber();
+                        } else {
+                            if (value instanceof LocalDateTime) {
+                                converter = Converters.localDateTimeToNumber();
+                            } else {
+                                if (value instanceof LocalTime) {
+                                    converter = Converters.localTimeToNumber();
+                                } else {
+                                    throw new IllegalArgumentException("Unsupported type: " + type);
+                                }
+                            }
+                        }
+
+                        number = converter.convert(
+                            value,
+                            Number.class, // Date | DateTime | Time -> a Number
+                            context
+                        ).orElseLeft(null);
+                    }
+                }
+
+                if (isDateDateTimeOrTimeClass(type)) {
+                    // Boolean | Date | DateTime | Time -> Number -> Date | DateTime | Time
+                    result = this.toDateOrDateTimeOrTime(
                         number,
-                        type
+                        type,
+                        context
                     );
-                };
+                } else {
+                    // Boolean | Date | DateTime | Time -> Number
+                    if (valueIsBoolean || isDateDateTimeOrTime(value) || valueIsNumber) {
+                        result = context.convert(
+                            number,
+                            type
+                        );
+                    }
+                    ;
+                }
             }
         }
 

@@ -294,10 +294,10 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
     }
 
     @Test
-    public void testConvertDateTimeToTimeFails() {
-        this.convertFails(
+    public void testConvertDateTimeToTime() {
+        this.convertAndCheck(
             FLOAT_DATE_TIME,
-            LocalTime.class
+            FLOAT_TIME
         );
     }
 
@@ -751,15 +751,15 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
     }
 
     @Test
-    public void testConvertNumberBigDecimalToTimeFails() {
-        this.convertFails(
+    public void testConvertNumberBigDecimalToTime() {
+        this.convertAndCheck(
             FLOAT_DATE_TIME,
-            LocalTime.class
+            FLOAT_TIME
         );
     }
 
     @Test
-    public void testConvertNumberBigDecimalToTime() {
+    public void testConvertNumberBigDecimalToTime2() {
         this.convertAndCheck(
             BigDecimal.valueOf(FLOAT - BYTE),
             LocalTime.class,
