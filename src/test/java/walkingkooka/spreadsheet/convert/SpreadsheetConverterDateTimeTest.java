@@ -22,6 +22,9 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -438,6 +441,14 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
     }
 
     @Test
+    public void testConvertTimeToString() {
+        this.convertAndCheck(
+            LocalTime.NOON,
+            "0.5"
+        );
+    }
+
+    @Test
     public void testConvertTimeToNumberByte() {
         this.convertAndCheck(
             FLOAT_TIME,
@@ -849,6 +860,14 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
                     SpreadsheetConverterDateTime.INSTANCE
                 )
             );
+
+            @Override
+            public SpreadsheetMetadata spreadsheetMetadata() {
+                return SpreadsheetMetadata.EMPTY.set(
+                    SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                    SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
+                );
+            }
         };
     }
 
