@@ -1374,7 +1374,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"showGridLines\": true,\n" +
                 "  \"showHeadings\": true,\n" +
                 "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                "  \"sortConverter\": \"collection(text, number, basic, spreadsheet-value, boolean, color, environment, json, locale, style, text-node, template, url)\",\n" +
+                "  \"sortConverter\": \"collection(text, number, basic, spreadsheet-value, boolean, color, locale, style, text-node, url)\",\n" +
                 "  \"style\": {\n" +
                 "    \"backgroundColor\": \"white\",\n" +
                 "    \"color\": \"black\",\n" +
@@ -1598,7 +1598,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"showGridLines\": true,\n" +
                 "  \"showHeadings\": true,\n" +
                 "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                "  \"sortConverter\": \"collection(text, number, basic, spreadsheet-value, boolean, color, environment, json, locale, style, text-node, template, url)\",\n" +
+                "  \"sortConverter\": \"collection(text, number, basic, spreadsheet-value, boolean, color, locale, style, text-node, url)\",\n" +
                 "  \"style\": {\n" +
                 "    \"backgroundColor\": \"white\",\n" +
                 "    \"color\": \"black\",\n" +
