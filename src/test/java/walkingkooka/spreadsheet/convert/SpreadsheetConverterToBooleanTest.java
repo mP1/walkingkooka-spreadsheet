@@ -270,6 +270,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     }
 
     @Test
+    public void testConvertFloatToBooleanTrueHalf() {
+        this.convertAndCheck(
+            0.5f,
+            Boolean.TRUE
+        );
+    }
+
+    @Test
     public void testConvertFloatToBooleanFalse() {
         this.convertAndCheck(
             0f,
@@ -291,6 +299,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     public void testConvertDoubleToBooleanTrue() {
         this.convertAndCheck(
             1.0,
+            Boolean.TRUE
+        );
+    }
+
+    @Test
+    public void testConvertDoubleToBooleanTrueHalf() {
+        this.convertAndCheck(
+            0.5,
             Boolean.TRUE
         );
     }
@@ -348,6 +364,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     }
 
     @Test
+    public void testConvertBigDecimalToBooleanTrueHalf() {
+        this.convertAndCheck(
+            BigDecimal.valueOf(0.5),
+            Boolean.TRUE
+        );
+    }
+
+    @Test
     public void testConvertBigDecimalToBooleanFalse() {
         this.convertAndCheck(
             BigDecimal.ZERO,
@@ -374,6 +398,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     }
 
     @Test
+    public void testConvertExpressionNumberBigDecimalToBooleanTrueHalf() {
+        this.convertAndCheck(
+            ExpressionNumberKind.BIG_DECIMAL.create(0.5),
+            Boolean.TRUE
+        );
+    }
+
+    @Test
     public void testConvertExpressionNumberBigDecimalToBooleanFalse() {
         this.convertAndCheck(
             ExpressionNumberKind.BIG_DECIMAL.zero(),
@@ -395,6 +427,14 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     public void testConvertExpressionNumberDoubleToBooleanTrue() {
         this.convertAndCheck(
             ExpressionNumberKind.DOUBLE.one(),
+            Boolean.TRUE
+        );
+    }
+
+    @Test
+    public void testConvertExpressionNumberDoubleToBooleanTrueHalf() {
+        this.convertAndCheck(
+            ExpressionNumberKind.DOUBLE.create(0.5),
             Boolean.TRUE
         );
     }
