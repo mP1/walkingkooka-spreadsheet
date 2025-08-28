@@ -65,9 +65,9 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
                     if (value instanceof LocalDateTime) {
                         can = LocalDate.class == type || LocalDateTime.class == type || ExpressionNumber.isClass(type);
                     } else {
-                        // Time -> DateTime | Time | Number
+                        // Time -> Boolean | DateTime | Time | Number
                         if (value instanceof LocalTime) {
-                            can = LocalDateTime.class == type || LocalTime.class == type || ExpressionNumber.isClass(type);
+                            can = Boolean.class == type || LocalDateTime.class == type || LocalTime.class == type || ExpressionNumber.isClass(type);
                         }
                     }
                 }
@@ -80,7 +80,7 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
     public <T> Either<T, String> doConvert(final Object value,
                                            final Class<T> type,
                                            final SpreadsheetConverterContext context) {
-        Either<T, String> result;
+        Either<T, String> result = null;
 
         if (value.getClass() == type) {
             result = this.successfulConversion(
@@ -90,13 +90,17 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
         } else {
             Number number = null;
 
+            boolean valueIsBoolean = value instanceof Boolean;
+            boolean valueIsNumber =  false;
+
             // Boolean -> Date | DateTime | Time
-            if (value instanceof Boolean) {
+            if (valueIsBoolean) {
                 number = Boolean.TRUE.equals(value) ?
                     1 :
                     0;
             } else {
-                if (ExpressionNumber.is(value)) {
+                valueIsNumber = ExpressionNumber.is(value);
+                if (valueIsNumber) {
                     // ExpressionNumber | Number -> Number
                     number = value instanceof ExpressionNumber ?
                         ((ExpressionNumber) value).value() :
@@ -134,11 +138,13 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
                     context
                 );
             } else {
-                // Date | DateTime | Time -> Number
-                result = context.convert(
-                    number,
-                    type
-                );
+                // Boolean | Date | DateTime | Time -> Number
+                if(valueIsBoolean || isDateDateTimeOrTime(value) || valueIsNumber) {
+                    result = context.convert(
+                        number,
+                        type
+                    );
+                };
             }
         }
 
