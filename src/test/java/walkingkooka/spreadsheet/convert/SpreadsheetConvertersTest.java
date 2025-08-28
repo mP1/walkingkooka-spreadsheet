@@ -1277,6 +1277,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testNumberConvertStringToByte() {
+        this.numberConvertAndCheck(
+            "123",
+            (byte)123
+        );
+    }
+
+    @Test
+    public void testNumberConvertStringToShort() {
+        this.numberConvertAndCheck(
+            "123",
+            (short)123
+        );
+    }
+
+    @Test
     public void testNumberConvertStringToInteger() {
         this.numberConvertAndCheck(
             "123",
