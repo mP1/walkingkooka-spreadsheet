@@ -65,9 +65,9 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
                     if (value instanceof LocalDateTime) {
                         can = LocalDate.class == type || LocalDateTime.class == type || LocalTime.class == type || ExpressionNumber.isClass(type);
                     } else {
-                        // Time -> Boolean | DateTime | Time | Number
+                        // Time -> Boolean | DateTime | Time | Number | String
                         if (value instanceof LocalTime) {
-                            can = Boolean.class == type || LocalDateTime.class == type || LocalTime.class == type || ExpressionNumber.isClass(type);
+                            can = Boolean.class == type || LocalDateTime.class == type || LocalTime.class == type || ExpressionNumber.isClass(type) || String.class == type;
                         }
                     }
                 }
