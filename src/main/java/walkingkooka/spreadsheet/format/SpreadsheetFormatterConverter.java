@@ -83,7 +83,7 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
     }
 
     private boolean equals0(final SpreadsheetFormatterConverter other) {
-        return this.formatter == other.formatter;
+        return this.formatter.equals(other.formatter);
     }
 
     @Override
