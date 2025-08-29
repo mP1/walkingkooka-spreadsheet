@@ -102,7 +102,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     private final static SpreadsheetParserContext PARSER_CONTEXT = SpreadsheetParserContexts.basic(
-        InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+        InvalidCharacterExceptionFactory.POSITION_EXPECTED,
         DateTimeContexts.fake(),
         ExpressionNumberContexts.basic(
             EXPRESSION_NUMBER_KIND,
