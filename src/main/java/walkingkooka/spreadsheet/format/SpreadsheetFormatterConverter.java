@@ -69,6 +69,23 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
 
     private final SpreadsheetFormatter formatter;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.formatter.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            other instanceof SpreadsheetFormatterConverter && this.equals0((SpreadsheetFormatterConverter) other);
+    }
+
+    private boolean equals0(final SpreadsheetFormatterConverter other) {
+        return this.formatter == other.formatter;
+    }
+
     @Override
     public String toString() {
         return this.formatter.toString();

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
@@ -43,7 +44,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
-public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, SpreadsheetConverterContext> {
+public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, SpreadsheetConverterContext>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -146,6 +148,26 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
             LocaleContexts.fake()
         );
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentSpreadsheetFormatter() {
+        this.checkNotEquals(
+            SpreadsheetFormatterConverter.with(
+                SpreadsheetFormatters.fake()
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormatterConverter createObject() {
+        return SpreadsheetFormatterConverter.with(
+            SpreadsheetFormatters.defaultText()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetFormatterConverter> type() {
