@@ -22,9 +22,12 @@ import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.UrlFragment;
@@ -1433,6 +1436,184 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testParseExpressionWithNumbersWithDecimals() {
+        final String text = "=1.5+2";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(".", "."),
+                                                SpreadsheetFormulaParserToken.digits("5", "5")
+                                            ),
+                                            "1.5"
+                                        ),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("2", "2")
+                                            ),
+                                            "2"
+                                        )
+                                    ),
+                                    "1.5+2"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testParseExpressionWithNumbersWithDecimalsAndCustomDecimalSeparator() {
+        final String text = "=1@5+2";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            this.parserContext(
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '-',
+                        '+',
+                        '0',
+                        "$",
+                        '@', // decimalSeparator
+                        "E",
+                        ',', // groupSeparator
+                        "Infinity",
+                        '.',
+                        "NAN",
+                        '%',
+                        '^'
+                    ),
+                    LOCALE,
+                    MathContext.DECIMAL32
+                )
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol("@", "@"), // custom DECIMAL SEPARATOR
+                                                SpreadsheetFormulaParserToken.digits("5", "5")
+                                            ),
+                                            "1@5"
+                                        ),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("2", "2")
+                                            ),
+                                            "2"
+                                        )
+                                    ),
+                                    "1@5+2"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testParseExpressionWithNumbersWithDecimalsAndCustomDecimalSeparator2() {
+        final String text = "=1,5+2";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            this.parserContext(
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '-',
+                        '+',
+                        '0',
+                        "$",
+                        ',', // decimalSeparator SWAPPED
+                        "E",
+                        '.', // groupSeparator
+                        "Infinity",
+                        ',',
+                        "NAN",
+                        '%',
+                        '^'
+                    ),
+                    LOCALE,
+                    MathContext.DECIMAL32
+                )
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("1", "1"),
+                                                SpreadsheetFormulaParserToken.decimalSeparatorSymbol(",", ","), // custom DECIMAL SEPARATOR
+                                                SpreadsheetFormulaParserToken.digits("5", "5")
+                                            ),
+                                            "1,5"
+                                        ),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("2", "2")
+                                            ),
+                                            "2"
+                                        )
+                                    ),
+                                    "1,5+2"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
     private void parseAndCheck(final String text,
                                final Parser<SpreadsheetParserContext> parser,
                                final SpreadsheetFormula expected) {
@@ -1476,27 +1657,45 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
-    private SpreadsheetParserContext parserContext() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
+    private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
 
-        return SpreadsheetParserContexts.basic(
-            InvalidCharacterExceptionFactory.POSITION_EXPECTED,
+    private SpreadsheetParserContext parserContext() {
+        return this.parserContext(
+            DecimalNumberContexts.american(MathContext.DECIMAL32)
+        );
+    }
+
+    private SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext) {
+        return this.parserContext(
             DateTimeContexts.basic(
                 DateTimeSymbols.fromDateFormatSymbols(
-                    new DateFormatSymbols(locale)
+                    new DateFormatSymbols(LOCALE)
                 ),
-                locale,
+                LOCALE,
                 1920,
                 50,
                 () -> {
                     throw new UnsupportedOperationException("now");
                 }
             ),
+            decimalNumberContext,
+            VALUE_SEPARATOR
+        );
+    }
+
+    private final static char VALUE_SEPARATOR = ',';
+
+    private SpreadsheetParserContext parserContext(final DateTimeContext dateTimeContext,
+                                                   final DecimalNumberContext decimalNumberContext,
+                                                   final char valueSeparator) {
+        return SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.POSITION_EXPECTED,
+            dateTimeContext,
             ExpressionNumberContexts.basic(
                 ExpressionNumberKind.BIG_DECIMAL,
-                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                decimalNumberContext
             ),
-            ','
+            valueSeparator
         );
     }
 
