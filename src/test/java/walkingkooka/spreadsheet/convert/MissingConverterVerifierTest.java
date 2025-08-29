@@ -335,6 +335,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     @Test
     public void testVerifyAndMarshall() {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+            (ProviderContext p) -> SpreadsheetMetadata.EMPTY.dateTimeConverter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                p
+            ),
             (ProviderContext p) -> SpreadsheetMetadata.EMPTY.generalConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,

@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.ShortCircuitingConverter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -34,6 +35,8 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.Temporal;
+import java.util.function.Function;
 
 public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverterTestCase<SpreadsheetConverterDateTime> {
 
@@ -257,6 +260,21 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         );
     }
 
+    @Test
+    public void testConvertDateToString() {
+        final LocalDate date = LocalDate.of(
+            1999,
+            12,
+            31
+        );
+
+        this.convertAndCheck(
+            BYTE_DATE,
+            LocalDate.class,
+            BYTE_DATE
+        );
+    }
+
     // DateTime.........................................................................................................
 
     @Test
@@ -393,6 +411,16 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         );
     }
 
+    @Test
+    public void testConvertDateTimeToString() {
+        final LocalDateTime dateTime = LocalDateTime.now();
+
+        this.convertAndCheck(
+            dateTime,
+            "DateTime: " + dateTime
+        );
+    }
+
     // Time.............................................................................................................
 
     @Test
@@ -437,14 +465,6 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             FLOAT_TIME,
             LocalTime.class,
             FLOAT_TIME
-        );
-    }
-
-    @Test
-    public void testConvertTimeToString() {
-        this.convertAndCheck(
-            LocalTime.NOON,
-            "0.5"
         );
     }
 
@@ -525,6 +545,16 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             FLOAT_TIME,
             ExpressionNumber.class,
             EXPRESSION_NUMBER_KIND.create(0.5)
+        );
+    }
+
+    @Test
+    public void testConvertTimeToString() {
+        final LocalTime time = LocalTime.NOON;
+
+        this.convertAndCheck(
+            time,
+            "Time: " + time
         );
     }
 
@@ -807,11 +837,103 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         );
     }
 
+    // String Date/DateTime/Time........................................................................................
+
+    @Test
+    public void testConvertStringToDate() {
+        this.convertAndCheck(
+            "2000-12-31",
+            LocalDate.of(2000, 12, 31)
+        );
+    }
+
+    @Test
+    public void testConvertStringToDateTime() {
+        this.convertAndCheck(
+            "2000-12-31T12:00:00",
+            LocalDateTime.of(2000, 12, 31, 12, 0, 0)
+        );
+    }
+
+    @Test
+    public void testConvertStringToTime() {
+        this.convertAndCheck(
+            "12:00:00",
+            LocalTime.NOON
+        );
+    }
+
     // Converter........................................................................................................
 
     @Override
     public SpreadsheetConverterDateTime createConverter() {
-        return SpreadsheetConverterDateTime.INSTANCE;
+        return SpreadsheetConverterDateTime.with(
+            temporalToStringConverter(LocalDate.class), // dateToString
+            temporalToStringConverter(LocalDateTime.class), // dateTimeToString
+            temporalToStringConverter(LocalTime.class), // timeToString
+            stringToTemporalConverter(LocalDate.class, LocalDate::parse), // stringToDate
+            stringToTemporalConverter(LocalDateTime.class, LocalDateTime::parse), // stringToDateTime
+            stringToTemporalConverter(LocalTime.class, LocalTime::parse) // stringToTime
+        );
+    }
+
+    private static Converter<SpreadsheetConverterContext> temporalToStringConverter(final Class<? extends Temporal> temporal) {
+        return new ShortCircuitingConverter<>() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type,
+                                      final SpreadsheetConverterContext context) {
+                return temporal.isInstance(value) && String.class == type;
+            }
+
+            @Override
+            public <T> Either<T, String> doConvert(final Object value,
+                                                   final Class<T> type,
+                                                   final SpreadsheetConverterContext context) {
+                return this.successfulConversion(
+                    value.getClass()
+                        .getSimpleName()
+                        .replace("Local", "") +
+                        ": " +
+                        value,
+                    type
+                );
+            }
+
+            @Override
+            public String toString() {
+                return temporal.getSimpleName() + " to String";
+            }
+        };
+    }
+
+    private static <T extends Temporal> Converter<SpreadsheetConverterContext> stringToTemporalConverter(final Class<T> temporal,
+                                                                                                         final Function<String, T> stringToTemporal) {
+        return new ShortCircuitingConverter<>() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> type,
+                                      final SpreadsheetConverterContext context) {
+                return value instanceof CharSequence && temporal == type;
+            }
+
+            @Override
+            public <T> Either<T, String> doConvert(final Object value,
+                                                   final Class<T> type,
+                                                   final SpreadsheetConverterContext context) {
+                return this.successfulConversion(
+                    stringToTemporal.apply(value.toString()),
+                    type
+                );
+            }
+
+            @Override
+            public String toString() {
+                return "String to " + temporal.getSimpleName();
+            }
+        };
     }
 
     @Override
@@ -857,7 +979,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
                 Lists.of(
                     SpreadsheetConverters.number(),
                     SpreadsheetConverters.booleans(),
-                    SpreadsheetConverterDateTime.INSTANCE
+                    SpreadsheetConverterDateTimeTest.this.createConverter()
                 )
             );
 

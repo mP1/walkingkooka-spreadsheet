@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
@@ -40,11 +41,13 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.MathContext;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
 public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider>,
-    SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting,
+    ConverterTesting {
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
         Locale.forLanguageTag("EN-AU")
@@ -133,10 +136,46 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
 
     @Test
     public void testConverterSelectorWithDateTime() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.DATE_TIME + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.dateTime()
+        final ConverterProvider provider = this.createConverterProvider();
+
+        final Converter<SpreadsheetConverterContext> converter = provider.converter(
+            SpreadsheetConvertersConverterProvider.DATE_TIME,
+            Lists.empty(),
+            PROVIDER_CONTEXT
+        );
+
+        this.convertAndCheck(
+            converter,
+            "2000/12/31",
+            LocalDate.class,
+            SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContexts.NO_METADATA,
+                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+                SpreadsheetConverters.system(),
+                SpreadsheetLabelNameResolvers.fake(),
+                JsonNodeConverterContexts.basic(
+                    ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(
+                            Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Converters.fake(),
+                            DateTimeContexts.basic(
+                                LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
+                                    .get(),
+                                LOCALE,
+                                1900,
+                                20,
+                                LocalDateTime::now
+                            ),
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        ),
+                        ExpressionNumberKind.BIG_DECIMAL
+                    ),
+                    JsonNodeMarshallUnmarshallContexts.fake()
+                ),
+                LOCALE_CONTEXT
+            ),
+            LocalDate.of(2000, 12, 31)
         );
     }
 
@@ -712,6 +751,11 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Override
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
+            (final ProviderContext context) -> SpreadsheetMetadataTesting.METADATA_EN_AU.dateTimeConverter(
+                SPREADSHEET_FORMATTER_PROVIDER,
+                SPREADSHEET_PARSER_PROVIDER,
+                context
+            ),
             (final ProviderContext context) -> SpreadsheetMetadataTesting.METADATA_EN_AU.generalConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,

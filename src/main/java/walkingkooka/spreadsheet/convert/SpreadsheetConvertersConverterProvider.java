@@ -28,6 +28,8 @@ import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 
@@ -41,17 +43,26 @@ import java.util.stream.Collectors;
  */
 final class SpreadsheetConvertersConverterProvider implements ConverterProvider {
 
+    // This constant is here to avoid NullPointerExceptions by #converterInfo during a static initializer
+    final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
+        "https://github.com/mP1/walkingkooka-spreadsheet/" + Converter.class.getSimpleName()
+    );
+
     /**
      * Factory
      */
-    static SpreadsheetConvertersConverterProvider with(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
+    static SpreadsheetConvertersConverterProvider with(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime,
+                                                       final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
         return new SpreadsheetConvertersConverterProvider(
+            Objects.requireNonNull(dateTime, "dateTime"),
             Objects.requireNonNull(general, "general")
         );
     }
 
-    private SpreadsheetConvertersConverterProvider(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
+    private SpreadsheetConvertersConverterProvider(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime,
+                                                   final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
         super();
+        this.dateTime = dateTime;
         this.general = general;
     }
 
@@ -119,7 +130,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case DATE_TIME_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.dateTime();
+                converter = this.dateTime.apply(context);
                 break;
             case DATE_TIME_SYMBOLS_STRING:
                 noParameterCheck(copy);
@@ -458,6 +469,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
         return Cast.to(converter);
     }
+
+    /**
+     * The {@link Function} that supplies the {@link Converter} when a request comes through for {@link #DATE_TIME}.
+     */
+    private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime;
 
     /**
      * The {@link Function} that supplies the {@link Converter} when a request comes through for {@link #GENERAL}.
@@ -859,7 +875,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
      */
     private static ConverterInfo converterInfo(final ConverterName name) {
         return ConverterInfo.with(
-            SpreadsheetConvertersConverterProviders.BASE_URL.appendPath(
+            BASE_URL.appendPath(
                 UrlPath.parse(
                     name.value()
                 )

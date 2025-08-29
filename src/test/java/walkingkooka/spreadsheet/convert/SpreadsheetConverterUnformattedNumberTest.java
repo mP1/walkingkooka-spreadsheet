@@ -191,6 +191,11 @@ public final class SpreadsheetConverterUnformattedNumberTest extends Spreadsheet
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             LABEL_NAME_RESOLVER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (ProviderContext p) -> metadata.dateTimeConverter(
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    p
+                ),
                 (ProviderContext p) -> metadata.generalConverter(
                     SPREADSHEET_FORMATTER_PROVIDER,
                     SPREADSHEET_PARSER_PROVIDER,
