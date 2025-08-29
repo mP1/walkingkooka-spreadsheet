@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -1614,6 +1615,138 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    @Test
+    public void testParseExpressionWithValueSeparator() {
+        final String text = "=concat(1,2)";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            this.parserContext(),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.namedFunction(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.functionName(
+                                            SpreadsheetFunctionName.with("concat"),
+                                            "concat"
+                                        ),
+                                        SpreadsheetFormulaParserToken.functionParameters(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.parenthesisOpenSymbol("(", "("),
+                                                SpreadsheetFormulaParserToken.number(
+                                                    Lists.of(
+                                                        SpreadsheetFormulaParserToken.digits("1", "1")
+                                                    ),
+                                                    "1"
+                                                ),
+                                                SpreadsheetFormulaParserToken.valueSeparatorSymbol(",", ","),
+                                                SpreadsheetFormulaParserToken.number(
+                                                    Lists.of(
+                                                        SpreadsheetFormulaParserToken.digits("2", "2")
+                                                    ),
+                                                    "2"
+                                                ),
+                                                SpreadsheetFormulaParserToken.parenthesisCloseSymbol(")", ")")
+                                            ),
+                                            "(1,2)"
+                                        )
+                                    ),
+                                    "concat(1,2)"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testParseExpressionWithCustomValueSeparator() {
+        final String text = "=concat(1;2)";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            this.parserContext(
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '-',
+                        '+',
+                        '0',
+                        "$",
+                        ',', // decimalSeparator SWAPPED
+                        "E",
+                        '.', // groupSeparator
+                        "Infinity",
+                        ',',
+                        "NAN",
+                        '%',
+                        '^'
+                    ),
+                    LOCALE,
+                    MathContext.DECIMAL32
+                ),
+                ';' // custom value separator
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.namedFunction(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.functionName(
+                                            SpreadsheetFunctionName.with("concat"),
+                                            "concat"
+                                        ),
+                                        SpreadsheetFormulaParserToken.functionParameters(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.parenthesisOpenSymbol("(", "("),
+                                                SpreadsheetFormulaParserToken.number(
+                                                    Lists.of(
+                                                        SpreadsheetFormulaParserToken.digits("1", "1")
+                                                    ),
+                                                    "1"
+                                                ),
+                                                SpreadsheetFormulaParserToken.valueSeparatorSymbol(";", ";"),
+                                                SpreadsheetFormulaParserToken.number(
+                                                    Lists.of(
+                                                        SpreadsheetFormulaParserToken.digits("2", "2")
+                                                    ),
+                                                    "2"
+                                                ),
+                                                SpreadsheetFormulaParserToken.parenthesisCloseSymbol(")", ")")
+                                            ),
+                                            "(1;2)"
+                                        )
+                                    ),
+                                    "concat(1;2)"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
     private void parseAndCheck(final String text,
                                final Parser<SpreadsheetParserContext> parser,
                                final SpreadsheetFormula expected) {
@@ -1667,6 +1800,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext) {
         return this.parserContext(
+            decimalNumberContext,
+            VALUE_SEPARATOR
+        );
+    }
+
+    private final static char VALUE_SEPARATOR = ',';
+
+    private SpreadsheetParserContext parserContext(final DecimalNumberContext decimalNumberContext,
+                                                   final char valueSeparator) {
+        return this.parserContext(
             DateTimeContexts.basic(
                 DateTimeSymbols.fromDateFormatSymbols(
                     new DateFormatSymbols(LOCALE)
@@ -1679,11 +1822,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 }
             ),
             decimalNumberContext,
-            VALUE_SEPARATOR
+            valueSeparator
         );
     }
-
-    private final static char VALUE_SEPARATOR = ',';
 
     private SpreadsheetParserContext parserContext(final DateTimeContext dateTimeContext,
                                                    final DecimalNumberContext decimalNumberContext,
