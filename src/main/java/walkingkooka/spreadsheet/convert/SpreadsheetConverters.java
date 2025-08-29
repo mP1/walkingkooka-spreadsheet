@@ -70,6 +70,36 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString()
     );
 
+    private static final Function<SpreadsheetConverterContext, SpreadsheetParserContext> SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT = (final SpreadsheetConverterContext scc) ->
+        SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.POSITION,
+            scc,
+            scc,
+            '*' // valueSeparator not required because not parsing multiple values.
+        );
+
+
+    private static final BiFunction<ParserToken, SpreadsheetConverterContext, LocalDate> TOKEN_N_CONTEXT_TO_DATE = (final ParserToken t,
+                                                                                                                    final SpreadsheetConverterContext scc) ->
+        t.cast(DateSpreadsheetFormulaParserToken.class)
+            .toLocalDate(scc);
+
+
+    private static final BiFunction<ParserToken, SpreadsheetConverterContext, LocalDateTime> TOKEN_N_CONTEXT_TO_DATE_TIME = (final ParserToken t,
+                                                                                                                             final SpreadsheetConverterContext scc) ->
+        t.cast(DateTimeSpreadsheetFormulaParserToken.class)
+            .toLocalDateTime(scc);
+
+    private static final BiFunction<ParserToken, SpreadsheetConverterContext, ExpressionNumber> TOKEN_N_CONTEXT_TO_NUMBER = (final ParserToken t,
+                                                                                                                             final SpreadsheetConverterContext scc) ->
+        t.cast(NumberSpreadsheetFormulaParserToken.class)
+            .toNumber(scc);
+
+    private static final BiFunction<ParserToken, SpreadsheetConverterContext, LocalTime> TOKEN_AND_CONTEXT_TO_TIME = (final ParserToken t,
+                                                                                                                      final SpreadsheetConverterContext scc) ->
+        t.cast(TimeSpreadsheetFormulaParserToken.class)
+            .toLocalTime();
+
     /**
      * A {@link Converter} that handles the most basic conversion requests
      */
@@ -349,12 +379,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return Converters.parser(
             parserValueType, // parserValueType
             parser, // parser
-            (final SpreadsheetConverterContext scc) -> SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.POSITION,
-                scc,
-                scc,
-                '*' // valueSeparator not required because not parsing multiple values.
-            ),
+            SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT,
             parserTokenToValue
         );
     }
@@ -547,9 +572,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return parser(
             LocalDate.class, // parserValueType
             parser,
-            (final ParserToken t,
-             final SpreadsheetConverterContext scc) -> t.cast(DateSpreadsheetFormulaParserToken.class)
-                .toLocalDate(scc)
+            TOKEN_N_CONTEXT_TO_DATE
         );
     }
 
@@ -561,9 +584,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return parser(
             LocalDateTime.class, // parserValueType
             parser,
-            (final ParserToken t,
-             final SpreadsheetConverterContext scc) -> t.cast(DateTimeSpreadsheetFormulaParserToken.class)
-                .toLocalDateTime(scc)
+            TOKEN_N_CONTEXT_TO_DATE_TIME
         );
     }
 
@@ -611,9 +632,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             parser(
                 ExpressionNumber.class, // parserValueType
                 parser,
-                (final ParserToken t,
-                 final SpreadsheetConverterContext scc) -> t.cast(NumberSpreadsheetFormulaParserToken.class)
-                    .toNumber(scc)
+                TOKEN_N_CONTEXT_TO_NUMBER
             ),
             numberToNumber()
         );
@@ -732,9 +751,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return parser(
             LocalTime.class, // parserValueType
             parser,
-            (final ParserToken t,
-             final SpreadsheetConverterContext scc) -> t.cast(TimeSpreadsheetFormulaParserToken.class)
-                .toLocalTime()
+            TOKEN_AND_CONTEXT_TO_TIME
         );
     }
 
