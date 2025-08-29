@@ -646,6 +646,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.dateTimeConverter(
+                    spreadsheetFormatterProvider(),
+                    spreadsheetParserProvider(),
+                    p
+                ),
                 (final ProviderContext p) -> metadata.generalConverter(
                     spreadsheetFormatterProvider(),
                     spreadsheetParserProvider(),
@@ -675,6 +680,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.dateTimeConverter(
+                    spreadsheetFormatterProvider(),
+                    spreadsheetParserProvider(),
+                    p
+                ),
                 (final ProviderContext p) -> metadata.generalConverter(
                     spreadsheetFormatterProvider(),
                     spreadsheetParserProvider(),
@@ -705,6 +715,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.dateTimeConverter(
+                    spreadsheetFormatterProvider(),
+                    spreadsheetParserProvider(),
+                    p
+                ),
                 (final ProviderContext p) -> metadata.generalConverter(
                     spreadsheetFormatterProvider(),
                     spreadsheetParserProvider(),
@@ -720,6 +735,69 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    // DateTimeConverter................................................................................................
+
+    @Test
+    public void testDateTimeConverterWithNullSpreadsheetFormatterProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.dateTimeConverter(
+                null,
+                SpreadsheetParserProviders.fake(),
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testDateTimeConverterWithNullSpreadsheetParserProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.dateTimeConverter(
+                SpreadsheetFormatterProviders.fake(),
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testDateTimeConverterWithMissingPropertyFails() {
+        final IllegalStateException thrown = assertThrows(
+            IllegalStateException.class,
+            () -> SpreadsheetMetadata.EMPTY.dateTimeConverter(
+                SpreadsheetFormatterProviders.fake(),
+                SpreadsheetParserProviders.fake(),
+                PROVIDER_CONTEXT
+            )
+        );
+        this.checkEquals(
+            "Metadata missing: dateFormatter, dateParser, dateTimeFormatter, dateTimeParser, timeFormatter, timeParser",
+            thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testDateTimeConverter() {
+        final Locale locale = Locale.forLanguageTag("EN-AU");
+
+        final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            .set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale
+            ).loadFromLocale(
+                LocaleContexts.jre(locale)
+            ).dateTimeConverter(
+                spreadsheetFormatterProvider(),
+                spreadsheetParserProvider(),
+                PROVIDER_CONTEXT
+            );
+        this.checkNotEquals(
+            null,
+            converter
+        );
+    }
+    
     // ExpressionFunctionProvider.......................................................................................
 
     @Test

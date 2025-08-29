@@ -21,7 +21,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 
@@ -36,9 +35,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
      * This is the base {@link AbsoluteUrl} for all {@link Converter} in this package. The name of each
      * converter will be appended to this base.
      */
-    public final static AbsoluteUrl BASE_URL = Url.parseAbsolute(
-        "https://github.com/mP1/walkingkooka-spreadsheet/" + Converter.class.getSimpleName()
-    );
+    public final static AbsoluteUrl BASE_URL = SpreadsheetConvertersConverterProvider.BASE_URL;
 
     public final static ConverterAliasSet FIND = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
@@ -92,8 +89,12 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     /**
      * {@see SpreadsheetConvertersConverterProvider}
      */
-    public static ConverterProvider spreadsheetConverters(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
-        return SpreadsheetConvertersConverterProvider.with(general);
+    public static ConverterProvider spreadsheetConverters(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime,
+                                                          final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
+        return SpreadsheetConvertersConverterProvider.with(
+            dateTime,
+            general
+        );
     }
 
     /**

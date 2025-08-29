@@ -1380,6 +1380,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
             converterSelector,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                (final ProviderContext p) -> metadata.dateTimeConverter(
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    p
+                ),
                 (final ProviderContext p) -> metadata.generalConverter(
                     SPREADSHEET_FORMATTER_PROVIDER,
                     SPREADSHEET_PARSER_PROVIDER,
@@ -1476,6 +1481,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                    (ProviderContext p) -> metadata.dateTimeConverter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        p
+                    ),
                     (ProviderContext p) -> metadata.generalConverter(
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
@@ -2044,6 +2054,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 },
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                    (ProviderContext p) -> metadata.dateTimeConverter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        p
+                    ),
                     (ProviderContext p) -> metadata.generalConverter(
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
@@ -2078,6 +2093,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 },
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                    (ProviderContext p) -> metadata.dateTimeConverter(
+                        SPREADSHEET_FORMATTER_PROVIDER,
+                        SPREADSHEET_PARSER_PROVIDER,
+                        p
+                    ),
                     (ProviderContext p) -> metadata.generalConverter(
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,

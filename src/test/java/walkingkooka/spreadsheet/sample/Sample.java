@@ -289,6 +289,11 @@ public final class Sample {
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatters();
         final SpreadsheetParserProvider spreadsheetParserProvider = SpreadsheetParserProviders.spreadsheetParsePattern(spreadsheetFormatterProvider);
         final ConverterProvider converterProvider = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+            (ProviderContext p) -> metadata.dateTimeConverter(
+                spreadsheetFormatterProvider,
+                spreadsheetParserProvider,
+                p
+            ),
             (ProviderContext p) -> metadata.generalConverter(
                 spreadsheetFormatterProvider,
                 spreadsheetParserProvider,

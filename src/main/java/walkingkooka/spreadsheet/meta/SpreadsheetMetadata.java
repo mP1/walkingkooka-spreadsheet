@@ -550,6 +550,57 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
+    /**
+     * Returns a general {@link Converter} using the required properties.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_OFFSET}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
+     * </ul>
+     */
+    public final Converter<SpreadsheetConverterContext> dateTimeConverter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
+                                                                          final SpreadsheetParserProvider spreadsheetParserProvider,
+                                                                          final ProviderContext context) {
+        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
+        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
+        Objects.requireNonNull(context, "context");
+
+        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
+
+        final SpreadsheetFormatterSelector dateFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
+        final SpreadsheetParserSelector dateParser = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
+
+        final SpreadsheetFormatterSelector dateTimeFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+        final SpreadsheetParserSelector dateTimeParser = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
+
+        final SpreadsheetFormatterSelector timeFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
+        final SpreadsheetParserSelector timeParser = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
+
+        missing.reportIfMissing();
+
+        return SpreadsheetConverters.dateTime(
+            spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context)
+                .converter(), // dateToString
+            spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context)
+                .converter(), // dateTimeToString
+            spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context)
+                .converter(), // timeToString
+            SpreadsheetConverters.textToDate(
+                spreadsheetParserProvider.spreadsheetParser(dateParser, context)
+            ), // stringToDate
+            SpreadsheetConverters.textToDateTime(
+                spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context)
+            ), // stringToDateTime
+            SpreadsheetConverters.textToTime(
+                spreadsheetParserProvider.spreadsheetParser(timeParser, context)
+            ) // stringToTime
+        );
+    }
+
     // DateTimeContext..................................................................................................
 
     /**
@@ -1651,6 +1702,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                    (final ProviderContext c) -> {
+                        throw new UnsupportedOperationException();
+                    },
                     (final ProviderContext c) -> {
                         throw new UnsupportedOperationException();
                     }
