@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -1379,6 +1380,50 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                                 SpreadsheetFormulaParserToken.textLiteral(
                                     "Hello",
                                     "Hello"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testParseExpressionWithNumbers() {
+        final String text = "=1+2";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("1", "1")
+                                            ),
+                                            "1"
+                                        ),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("2", "2")
+                                            ),
+                                            "2"
+                                        )
+                                    ),
+                                    "1+2"
                                 )
                             ),
                             text
