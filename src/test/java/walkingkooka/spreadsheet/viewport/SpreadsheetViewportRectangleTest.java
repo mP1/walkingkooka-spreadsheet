@@ -414,7 +414,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testFromUrlFragmentWithEmptyFails() {
         this.fromUrlFragmentFails(
             "",
-            "End of text at (1,1) expected \"/\""
+            "End of text, expected \"/\""
         );
     }
 
@@ -446,7 +446,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testFromUrlFragmentWithOnlyHomeFails() {
         this.fromUrlFragmentFails(
             "/home/A1",
-            "End of text at (9,1) expected \"/\""
+            "End of text, expected \"/\""
         );
     }
 
@@ -478,7 +478,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     public void testFromUrlFragmentWithOnlyHomeAndWidthFails() {
         this.fromUrlFragmentFails(
             "/home/A1/width/200",
-            "End of text at (19,1) expected \"/\""
+            "End of text, expected \"/\""
         );
     }
 

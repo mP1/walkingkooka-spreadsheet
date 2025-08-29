@@ -131,7 +131,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
         this.parseStringFails(
             text,
-            new EndOfTextException("End of text at (9,1) expected \"px\"")
+            new EndOfTextException("End of text, expected \"px\"")
         );
     }
 

@@ -178,7 +178,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
     public void testConditionRightParserParseEqualsSignMissingValueOrExpressionFails() {
         this.conditionRightParserParseThrows(
             "<",
-            "End of text at (2,1) expected VALUE | EXPRESSION"
+            "End of text, expected VALUE | EXPRESSION"
         );
     }
 
