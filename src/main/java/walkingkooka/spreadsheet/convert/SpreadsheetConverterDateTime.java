@@ -151,7 +151,6 @@ final class SpreadsheetConverterDateTime extends SpreadsheetConverter {
                             type
                         );
                     }
-                    ;
                 }
             }
         }
