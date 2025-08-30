@@ -343,7 +343,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
     }
 
@@ -405,7 +405,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
     }
 
@@ -444,7 +444,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
     }
 
