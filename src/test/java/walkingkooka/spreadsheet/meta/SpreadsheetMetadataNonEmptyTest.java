@@ -2692,7 +2692,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
@@ -2708,7 +2708,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
@@ -2760,7 +2760,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
@@ -2788,7 +2788,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("basic")
         );
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, SpreadsheetName.with("Spreadsheet-name-123"));
