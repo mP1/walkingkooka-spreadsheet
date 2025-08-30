@@ -117,7 +117,7 @@
     "word-wrap": "NORMAL"
   },
   "twoDigitYear": 20,
-  "validationConverter": "collection(text, number, basic, spreadsheet-value, boolean, environment, error-throwing, locale, plugins, template)\n",
+  "validationConverter": "collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)",
   "validationFunctions": "@",
   "validationValidators": "collection, expression, non-null, text-length",
   "validators": "",
