@@ -1433,7 +1433,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 selector,
-                TextNode.text("3.")
+                TextNode.text("3")
             )
         );
     }
@@ -1449,7 +1449,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSample.with(
                 "Sample",
                 selector,
-                TextNode.text("123.")
+                TextNode.text("123")
             )
         );
     }

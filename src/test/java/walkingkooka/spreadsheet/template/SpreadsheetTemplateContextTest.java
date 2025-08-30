@@ -139,7 +139,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public void testParseTemplateAndRenderWithNumberParameter() {
         this.parseTemplateAndRenderToStringAndCheck(
             "Apple ${TemplateValue111} Banana",
-            "Apple 111. Banana"
+            "Apple 111 Banana"
         );
     }
 
@@ -163,7 +163,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public void testParseTemplateAndRenderWithTemplateValueReferencingAnother() {
         this.parseTemplateAndRenderToStringAndCheck(
             "Apple ${TemplateValue333} Carrot",
-            "Apple 210. Carrot"
+            "Apple 210 Carrot"
         );
     }
 
@@ -171,7 +171,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public void testParseTemplateAndRenderWithNumber() {
         this.parseTemplateAndRenderToStringAndCheck(
             "${123}",
-            "123."
+            "123"
         );
     }
 
@@ -179,7 +179,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public void testParseTemplateAndRenderWithNumberTrailingWhitespace() {
         this.parseTemplateAndRenderToStringAndCheck(
             "${123   }",
-            "123."
+            "123"
         );
     }
 
@@ -187,7 +187,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public void testParseTemplateAndRenderWithMathExpression() {
         this.parseTemplateAndRenderToStringAndCheck(
             "${1+2}",
-            "3."
+            "3"
         );
     }
 
@@ -195,7 +195,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public void testParseTemplateAndRenderWithMathExpressionIncludesExtraWhitespace() {
         this.parseTemplateAndRenderToStringAndCheck(
             "${  1  +  2  }",
-            "3."
+            "3"
         );
     }
 
