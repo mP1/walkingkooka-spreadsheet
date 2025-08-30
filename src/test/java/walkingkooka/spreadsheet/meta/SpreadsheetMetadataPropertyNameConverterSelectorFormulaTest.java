@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameConverterSelectorFormulaTest e
 
     @Override
     ConverterSelector propertyValue() {
-        return ConverterSelector.parse("general");
+        return ConverterSelector.parse("basic");
     }
 
     // class............................................................................................................
