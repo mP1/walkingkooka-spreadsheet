@@ -42,6 +42,7 @@ import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -117,7 +118,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)
         .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
-        .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("general"))
+        .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(text, number, basic, spreadsheet-value)"))
+        .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT)
         .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
@@ -324,7 +326,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 EXPRESSION_NUMBER_KIND.create(111),
                 EXPRESSION_NUMBER_KIND.create(222)
             ),
-            "$111.,$222."
+            "111,222"
         );
     }
 
@@ -345,7 +347,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                     )
                 )
             ),
-            "$111."
+            "111"
         );
     }
 
