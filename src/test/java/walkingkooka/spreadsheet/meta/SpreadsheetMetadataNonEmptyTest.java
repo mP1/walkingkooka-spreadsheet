@@ -1180,14 +1180,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterExpressionNumberToString() {
         this.converterConvertAndCheck(
             EXPRESSION_NUMBER_KIND.create(123.5),
-            "Number 123.500");
+            "123.5");
     }
 
     @Test
     public void testConverterBigDecimalToString() {
         this.converterConvertAndCheck(
             BigDecimal.valueOf(123.5),
-            "Number 123.500"
+            "123.5"
         );
     }
 
@@ -1195,7 +1195,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterBigIntegerToString() {
         this.converterConvertAndCheck(
             BigInteger.valueOf(123),
-            "Number 123.000"
+            "123"
         );
     }
 
@@ -1203,7 +1203,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterByteToString() {
         this.converterConvertAndCheck(
             (byte) 123,
-            "Number 123.000"
+            "123"
         );
     }
 
@@ -1211,7 +1211,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterShortToString() {
         this.converterConvertAndCheck(
             (short) 123,
-            "Number 123.000"
+            "123"
         );
     }
 
@@ -1219,7 +1219,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterIntegerToString() {
         this.converterConvertAndCheck(
             123,
-            "Number 123.000"
+            "123"
         );
     }
 
@@ -1227,7 +1227,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterLongToString() {
         this.converterConvertAndCheck(
             123L,
-            "Number 123.000"
+            "123"
         );
     }
 
@@ -1235,7 +1235,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterFloatToString() {
         this.converterConvertAndCheck(
             123.5f,
-            "Number 123.500"
+            "123.5"
         );
     }
 
@@ -1243,14 +1243,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterDoubleToString() {
         this.converterConvertAndCheck(
             123.5,
-            "Number 123.500"
+            "123.5"
         );
     }
 
     @Test
     public void testConverterStringToExpressionNumber() {
         this.converterConvertAndCheck(
-            "Number 123.500",
+            "123.500",
             EXPRESSION_NUMBER_KIND.create(123.5)
         );
     }
@@ -1258,7 +1258,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToBigDecimal() {
         this.converterConvertAndCheck(
-            "Number 123.500",
+            "123.500",
             BigDecimal.valueOf(123.5)
         );
     }
@@ -1266,7 +1266,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToBigInteger() {
         this.converterConvertAndCheck(
-            "Number 123.000",
+            "123.000",
             BigInteger.valueOf(123)
         );
     }
@@ -1274,7 +1274,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToByte() {
         this.converterConvertAndCheck(
-            "Number 123.000",
+            "123.000",
             (byte) 123
         );
     }
@@ -1282,7 +1282,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToShort() {
         this.converterConvertAndCheck(
-            "Number 123.000",
+            "123.000",
             (short) 123
         );
     }
@@ -1290,7 +1290,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToInteger() {
         this.converterConvertAndCheck(
-            "Number 123.000",
+            "123.000",
             123
         );
     }
@@ -1298,7 +1298,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToLong() {
         this.converterConvertAndCheck(
-            "Number 123.000",
+            "123.000",
             123L
         );
     }
@@ -1306,7 +1306,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToFloat() {
         this.converterConvertAndCheck(
-            "Number 123.500",
+            "123.500",
             123.5f
         );
     }
@@ -1314,7 +1314,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToDouble() {
         this.converterConvertAndCheck(
-            "Number 123.500",
+            "123.500",
             123.5
         );
     }
@@ -1402,7 +1402,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             expected,
             converter,
             SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
+                Optional.of(metadata),
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 converter,
                 LABEL_NAME_RESOLVER,
@@ -1440,8 +1440,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("\"DateTime\" yyyy hh").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
-            .set(converterSelector, ConverterSelector.parse("collection(text-to-text, general)"))
+            .set(converterSelector, ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value)"))
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000").spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("\"Number\" 00.000").spreadsheetParserSelector())
@@ -2670,7 +2671,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.CONVERTERS,
-            ConverterAliasSet.parse("general")
+            ConverterAliasSet.parse("text, number, date-time, basic, spreadsheet-value, boolean")
         );
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
@@ -2725,7 +2726,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("general")
+            ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean)")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
