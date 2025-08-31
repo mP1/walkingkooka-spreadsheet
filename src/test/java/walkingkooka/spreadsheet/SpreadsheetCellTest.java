@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.parser.HasOptionalSpreadsheetParserSelectorTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.CanReplaceReferencesTesting;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReferenceTesting;
@@ -96,6 +97,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasTextStyleTesting,
     HasTextTesting,
     HasOptionalSpreadsheetFormatterSelectorTesting,
+    HasOptionalSpreadsheetParserSelectorTesting,
     HasOptionalValidatorSelectorTesting,
     ParseStringTesting<SpreadsheetCell>,
     JsonNodeMarshallingTesting<SpreadsheetCell>,
@@ -879,6 +881,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             selector,
             cell.parser(),
             "parser"
+        );
+
+        this.parserSelectorAndCheck(
+            cell,
+            selector
         );
     }
 
