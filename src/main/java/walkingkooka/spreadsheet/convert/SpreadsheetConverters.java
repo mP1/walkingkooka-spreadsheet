@@ -498,7 +498,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToSpreadsheetError(),
         textToValueType(),
         hasSpreadsheetFormatterSelector(),
-        hasSpreadsheetParserSelector()
+        hasSpreadsheetParserSelector(),
+        hasValidatorSelector()
     );
 
     /**
