@@ -417,13 +417,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterSpreadsheetSelectionToText}
-     */
-    public static Converter<SpreadsheetConverterContext> selectionToText() {
-        return SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE;
-    }
-
-    /**
      * {@see Converters#simple}
      */
     public static Converter<SpreadsheetConverterContext> simple() {
@@ -453,6 +446,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@see SpreadsheetConverterSpreadsheetSelectionToText}
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetSelectionToText() {
+        return SpreadsheetConverterSpreadsheetSelectionToText.INSTANCE;
+    }
+
+    /**
      * A converter that involves spreadsheet values like {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection},
      * but not system types like number, date etc.
      */
@@ -465,7 +465,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         errorToNumber(),
         nullToNumber(),
         selectionToSelection(),
-        selectionToText(),
+        spreadsheetSelectionToText(),
         textToSpreadsheetSelection(),
         textToSpreadsheetError(),
         textToValueType()
@@ -542,7 +542,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
         "collection(number-to-number, text-to-text, error-to-number, \n" +
             "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
-            "  text-to-spreadsheet-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
+            "  text-to-spreadsheet-selection, selection-to-selection, spreadsheet-selection-to-text, spreadsheet-cell-to, \n" +
             "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
             "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
             "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"

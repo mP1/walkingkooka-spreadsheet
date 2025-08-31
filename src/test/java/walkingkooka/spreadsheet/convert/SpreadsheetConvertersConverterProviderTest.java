@@ -416,25 +416,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithSelectionToText() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT,
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.selectionToText()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithSelectionToText() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SELECTION_TO_TEXT + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.selectionToText()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithSimple() {
         this.converterAndCheck(
             "simple",
@@ -449,6 +430,25 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "spreadsheet-metadata",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetMetadata()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithSpreadsheetSelectionToText() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_TEXT,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetSelectionToText()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithSpreadsheetSelectionToText() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_TEXT + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetSelectionToText()
         );
     }
 
