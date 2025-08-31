@@ -312,6 +312,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         );
     }
 
+    @Test
+    public void testConverterSelectorWithHasFormatterSelector() {
+        this.converterAndCheck(
+            "has-formatter-selector",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasSpreadsheetFormatterSelector()
+        );
+    }
 
     @Test
     public void testConverterSelectorWithHasStyleToStyle() {
