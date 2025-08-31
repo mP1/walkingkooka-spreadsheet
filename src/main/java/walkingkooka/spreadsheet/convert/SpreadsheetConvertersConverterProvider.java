@@ -241,11 +241,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.selectionToSelection();
                 break;
-            case SELECTION_TO_TEXT_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.selectionToText();
-                break;
             case SIMPLE_STRING:
                 noParameterCheck(copy);
 
@@ -260,6 +255,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.spreadsheetMetadata();
+                break;
+            case SPREADSHEET_SELECTION_TO_TEXT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.spreadsheetSelectionToText();
                 break;
             case SPREADSHEET_VALUE_STRING:
                 noParameterCheck(copy);
@@ -610,10 +610,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SELECTION_TO_SELECTION = ConverterName.with(SELECTION_TO_SELECTION_STRING);
 
-    private final static String SELECTION_TO_TEXT_STRING = "selection-to-text";
-
-    final static ConverterName SELECTION_TO_TEXT = ConverterName.with(SELECTION_TO_TEXT_STRING);
-
     private final static String SIMPLE_STRING = "simple";
 
     final static ConverterName SIMPLE = ConverterName.with(SIMPLE_STRING);
@@ -625,6 +621,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String SPREADSHEET_METADATA_STRING = "spreadsheet-metadata";
 
     final static ConverterName SPREADSHEET_METADATA = ConverterName.with(SPREADSHEET_METADATA_STRING);
+
+    private final static String SPREADSHEET_SELECTION_TO_TEXT_STRING = "spreadsheet-selection-to-text";
+
+    final static ConverterName SPREADSHEET_SELECTION_TO_TEXT = ConverterName.with(SPREADSHEET_SELECTION_TO_TEXT_STRING);
 
     private final static String SPREADSHEET_VALUE_STRING = "spreadsheet-value";
 
@@ -824,9 +824,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(PLUGINS),
             converterInfo(SPREADSHEET_CELL_TO),
             converterInfo(SELECTION_TO_SELECTION),
-            converterInfo(SELECTION_TO_TEXT),
             converterInfo(SIMPLE),
             converterInfo(SPREADSHEET_METADATA),
+            converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
             converterInfo(SPREADSHEET_VALUE),
             converterInfo(STYLE),
             converterInfo(SYSTEM),
