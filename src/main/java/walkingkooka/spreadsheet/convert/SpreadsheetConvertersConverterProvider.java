@@ -184,6 +184,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasTextStyleToTextStyle();
                 break;
+            case HAS_VALIDATOR_SELECTOR_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasValidatorSelector();
+                break;
             case JSON_STRING:
                 noParameterCheck(copy);
 
@@ -566,6 +571,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_TEXT_STYLE_TO_STYLE = ConverterName.with(HAS_TEXT_STYLE_TO_STYLE_STRING);
 
+    private final static String HAS_VALIDATOR_SELECTOR_STRING = "has-validator-selector";
+
+    final static ConverterName HAS_VALIDATOR_SELECTOR = ConverterName.with(HAS_VALIDATOR_SELECTOR_STRING);
+
     private final static String JSON_STRING = "json";
 
     final static ConverterName JSON = ConverterName.with(JSON_STRING);
@@ -593,7 +602,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String NUMBER_TO_COLOR_STRING = "number-to-color";
 
     final static ConverterName NUMBER_TO_COLOR = ConverterName.with(NUMBER_TO_COLOR_STRING);
-    
+
     private final static String NUMBER_TO_NUMBER_STRING = "number-to-number";
 
     final static ConverterName NUMBER_TO_NUMBER = ConverterName.with(NUMBER_TO_NUMBER_STRING);
@@ -641,7 +650,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEMPLATE_STRING = "template";
 
     final static ConverterName TEMPLATE = ConverterName.with(TEMPLATE_STRING);
-    
+
     private final static String TEXT_STRING = "text";
 
     final static ConverterName TEXT = ConverterName.with(TEXT_STRING);
@@ -677,7 +686,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEXT_TO_LOCALE_STRING = "text-to-locale";
 
     final static ConverterName TEXT_TO_LOCALE = ConverterName.with(TEXT_TO_LOCALE_STRING);
-    
+
     private final static String TEXT_TO_SPREADSHEET_COLOR_NAME_STRING = "text-to-spreadsheet-color-name";
 
     final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
@@ -753,7 +762,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TO_BOOLEAN_STRING = "to-boolean";
 
     final static ConverterName TO_BOOLEAN = ConverterName.with(TO_BOOLEAN_STRING);
-    
+
     private final static String TO_JSON_STRING = "to-json";
 
     final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
@@ -765,7 +774,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TO_STYLEABLE_STRING = "to-styleable";
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
-    
+
     private final static String TO_TEXT_NODE_STRING = "to-text-node";
 
     final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
@@ -773,11 +782,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TO_VALIDATION_ERROR_LIST_STRING = "to-validation-error-list";
 
     final static ConverterName TO_VALIDATION_ERROR_LIST = ConverterName.with(TO_VALIDATION_ERROR_LIST_STRING);
-    
+
     private final static String URL_STRING = "url";
 
     final static ConverterName URL = ConverterName.with(URL_STRING);
-    
+
     private final static String URL_TO_HYPERLINK_STRING = "url-to-hyperlink";
 
     final static ConverterName URL_TO_HYPERLINK = ConverterName.with(URL_TO_HYPERLINK_STRING);
@@ -812,6 +821,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(GENERAL),
             converterInfo(HAS_TEXT_STYLE_TO_STYLE),
+            converterInfo(HAS_VALIDATOR_SELECTOR),
             converterInfo(JSON),
             converterInfo(JSON_TO),
             converterInfo(LOCALE),

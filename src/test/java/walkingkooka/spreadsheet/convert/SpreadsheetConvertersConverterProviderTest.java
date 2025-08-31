@@ -323,6 +323,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasValidatorSelector() {
+        this.converterAndCheck(
+            "has-validator-selector",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasValidatorSelector()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithJson() {
         this.converterAndCheck(
             "json",

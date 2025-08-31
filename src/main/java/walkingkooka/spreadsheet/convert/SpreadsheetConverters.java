@@ -293,6 +293,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link ValidatorConvertConverters#hasOptionalValidatorSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> hasValidatorSelector() {
+        return ValidatorConvertConverters.hasOptionalValidatorSelector();
+    }
+
+    /**
      * A converter that involves {@link JsonNode} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> json() {
