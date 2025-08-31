@@ -160,12 +160,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 p
-            ),
-        (final ProviderContext p) ->
-            SpreadsheetMetadataTestingPrivate.CONVERTER_PROVIDER_SPREADSHEET_METADATA.generalConverter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                p
             )
     );
 

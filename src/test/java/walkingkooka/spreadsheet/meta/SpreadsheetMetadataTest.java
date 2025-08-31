@@ -295,24 +295,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // general........................................................................................................
-
-    @Test
-    public void testNonLocaleDefaultsGeneralConverter() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
-        SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-            .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
-            .loadFromLocale(
-                LocaleContexts.jre(locale)
-            ).set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-            .generalConverter(
-                spreadsheetFormatterProvider(),
-                spreadsheetParserProvider(),
-                PROVIDER_CONTEXT
-            );
-    }
-
     // localeContext....................................................................................................
 
     @Test
@@ -650,11 +632,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                     spreadsheetFormatterProvider(),
                     spreadsheetParserProvider(),
                     p
-                ),
-                (final ProviderContext p) -> metadata.generalConverter(
-                    spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider(),
-                    p
                 )
             ),
             PROVIDER_CONTEXT
@@ -681,11 +658,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 (final ProviderContext p) -> metadata.dateTimeConverter(
-                    spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider(),
-                    p
-                ),
-                (final ProviderContext p) -> metadata.generalConverter(
                     spreadsheetFormatterProvider(),
                     spreadsheetParserProvider(),
                     p
@@ -716,11 +688,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                 (final ProviderContext p) -> metadata.dateTimeConverter(
-                    spreadsheetFormatterProvider(),
-                    spreadsheetParserProvider(),
-                    p
-                ),
-                (final ProviderContext p) -> metadata.generalConverter(
                     spreadsheetFormatterProvider(),
                     spreadsheetParserProvider(),
                     p
@@ -835,69 +802,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             "Metadata missing: formulaFunctions",
             thrown.getMessage(),
             "message"
-        );
-    }
-
-    // GeneralConverter.................................................................................................
-
-    @Test
-    public void testGeneralConverterWithNullSpreadsheetFormatterProviderFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.generalConverter(
-                null,
-                SpreadsheetParserProviders.fake(),
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testGeneralConverterWithNullSpreadsheetParserProviderFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.generalConverter(
-                SpreadsheetFormatterProviders.fake(),
-                null,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testGeneralConverterWithMissingPropertyFails() {
-        final IllegalStateException thrown = assertThrows(
-            IllegalStateException.class,
-            () -> SpreadsheetMetadata.EMPTY.generalConverter(
-                SpreadsheetFormatterProviders.fake(),
-                SpreadsheetParserProviders.fake(),
-                PROVIDER_CONTEXT
-            )
-        );
-        this.checkEquals(
-            "Metadata missing: dateFormatter, dateParser, dateTimeFormatter, dateTimeParser, numberFormatter, numberParser, textFormatter, timeFormatter, timeParser",
-            thrown.getMessage()
-        );
-    }
-
-    @Test
-    public void testGeneralConverter() {
-        final Locale locale = Locale.forLanguageTag("EN-AU");
-
-        final Converter<SpreadsheetConverterContext> converter = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-            .set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ).loadFromLocale(
-                LocaleContexts.jre(locale)
-            ).generalConverter(
-                spreadsheetFormatterProvider(),
-                spreadsheetParserProvider(),
-                PROVIDER_CONTEXT
-            );
-        this.checkNotEquals(
-            null,
-            converter
         );
     }
 

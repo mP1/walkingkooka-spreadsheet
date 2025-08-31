@@ -89,12 +89,8 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
     /**
      * {@see SpreadsheetConvertersConverterProvider}
      */
-    public static ConverterProvider spreadsheetConverters(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime,
-                                                          final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
-        return SpreadsheetConvertersConverterProvider.with(
-            dateTime,
-            general
-        );
+    public static ConverterProvider spreadsheetConverters(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime) {
+        return SpreadsheetConvertersConverterProvider.with(dateTime);
     }
 
     /**

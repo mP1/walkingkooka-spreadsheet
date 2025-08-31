@@ -532,13 +532,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                     SpreadsheetFormatterProviders.fake()
                 ),
                 p
-            ),
-            (ProviderContext p) -> METADATA.generalConverter(
-                SpreadsheetFormatterProviders.spreadsheetFormatters(),
-                SpreadsheetParserProviders.spreadsheetParsePattern(
-                    SpreadsheetFormatterProviders.fake()
-                ),
-                p
             )
         );
 

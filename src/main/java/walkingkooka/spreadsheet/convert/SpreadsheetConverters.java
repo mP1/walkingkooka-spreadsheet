@@ -30,8 +30,6 @@ import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
@@ -258,31 +256,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> formatPatternToString(final String pattern) {
         return SpreadsheetConverterFormatPatternToString.with(pattern);
-    }
-
-    /**
-     * {@see SpreadsheetConverterGeneral}
-     */
-    public static Converter<SpreadsheetConverterContext> general(final SpreadsheetFormatter dateFormatter,
-                                                                 final Parser<SpreadsheetParserContext> dateParser,
-                                                                 final SpreadsheetFormatter dateTimeFormatter,
-                                                                 final Parser<SpreadsheetParserContext> dateTimeParser,
-                                                                 final SpreadsheetFormatter numberFormatter,
-                                                                 final Parser<SpreadsheetParserContext> numberParser,
-                                                                 final SpreadsheetFormatter textFormatter,
-                                                                 final SpreadsheetFormatter timeFormatter,
-                                                                 final Parser<SpreadsheetParserContext> timeParser) {
-        return SpreadsheetConverterGeneral.with(
-            dateFormatter,
-            dateParser,
-            dateTimeFormatter,
-            dateTimeParser,
-            numberFormatter,
-            numberParser,
-            textFormatter,
-            timeFormatter,
-            timeParser
-        );
     }
 
     /**
@@ -549,34 +522,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         ) // stringToTime
     );
 
-    private final static Converter<SpreadsheetConverterContext> SYSTEM_GENERAL = general(
-        SpreadsheetPattern.parseDateFormatPattern("yyyy/mm/dd")
-            .formatter(),
-        SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
-            .parser(),
-        SpreadsheetPattern.parseDateTimeFormatPattern("yyyy/mm/dd hh:mm:ss")
-            .formatter(),
-        SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
-            .parser(),
-        SpreadsheetPattern.parseNumberFormatPattern("0.##")
-            .formatter(),
-        SpreadsheetPattern.parseNumberParsePattern("0.##;#0;")
-            .parser(),
-        SpreadsheetFormatters.defaultText(),
-        SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss")
-            .formatter(),
-        SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
-            .parser()
-    );
-
     // @VisibleForTesting
     final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
         "collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)"
     );
 
     private final static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-        (ProviderContext context) -> SYSTEM_DATE_TIME,
-        (ProviderContext context) -> SYSTEM_GENERAL
+        (ProviderContext context) -> SYSTEM_DATE_TIME
     ).converter(
         SYSTEM_CONVERTER_SELECTOR,
         ProviderContexts.fake()

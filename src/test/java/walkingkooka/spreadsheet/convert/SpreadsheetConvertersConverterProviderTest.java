@@ -34,7 +34,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -261,54 +260,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION + "",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.formAndValidation()
-        );
-    }
-
-    @Test
-    public void testConverterNameWithGeneral() {
-        final ConverterProvider provider = this.createConverterProvider();
-
-        final Converter<SpreadsheetConverterContext> general = provider.converter(
-            SpreadsheetConvertersConverterProvider.GENERAL,
-            Lists.empty(),
-            PROVIDER_CONTEXT
-        );
-
-        final ExpressionNumberKind kind = ExpressionNumberKind.BIG_DECIMAL;
-
-        this.checkEquals(
-            kind.create(123.5),
-            general.convertOrFail(
-                "123.5",
-                ExpressionNumber.class,
-                SpreadsheetConverterContexts.basic(
-                    SpreadsheetConverterContexts.NO_METADATA,
-                    SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                    SpreadsheetConverters.system(),
-                    SpreadsheetLabelNameResolvers.fake(),
-                    JsonNodeConverterContexts.basic(
-                        ExpressionNumberConverterContexts.basic(
-                            Converters.fake(),
-                            ConverterContexts.basic(
-                                Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                                Converters.fake(),
-                                DateTimeContexts.basic(
-                                    LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
-                                        .get(),
-                                    LOCALE,
-                                    1900,
-                                    20,
-                                    LocalDateTime::now
-                                ),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                            ),
-                            kind
-                        ),
-                        JsonNodeMarshallUnmarshallContexts.fake()
-                    ),
-                    LOCALE_CONTEXT
-                )
-            )
         );
     }
 
@@ -778,11 +729,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     public SpreadsheetConvertersConverterProvider createConverterProvider() {
         return SpreadsheetConvertersConverterProvider.with(
             (final ProviderContext context) -> SpreadsheetMetadataTesting.METADATA_EN_AU.dateTimeConverter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                context
-            ),
-            (final ProviderContext context) -> SpreadsheetMetadataTesting.METADATA_EN_AU.generalConverter(
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 context
