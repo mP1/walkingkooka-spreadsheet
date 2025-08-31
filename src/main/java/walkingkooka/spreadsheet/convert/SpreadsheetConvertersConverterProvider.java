@@ -179,6 +179,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = general.apply(context);
                 break;
+            case HAS_FORMATTER_SELECTOR_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
+                break;
             case HAS_STYLE_STRING:
                 noParameterCheck(copy);
 
@@ -567,6 +572,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
 
+    private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
+
+    final static ConverterName HAS_FORMATTER_SELECTOR = ConverterName.with(HAS_FORMATTER_SELECTOR_STRING);
+
     private final static String HAS_STYLE_STRING = "has-style";
 
     final static ConverterName HAS_STYLE = ConverterName.with(HAS_STYLE_STRING);
@@ -820,6 +829,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(GENERAL),
+            converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_STYLE),
             converterInfo(HAS_TEXT_NODE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
