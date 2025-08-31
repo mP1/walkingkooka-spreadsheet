@@ -293,6 +293,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterHasOptionalSpreadsheetParserSelector}
+     */
+    public static Converter<SpreadsheetConverterContext> hasSpreadsheetParserSelector() {
+        return SpreadsheetConverterHasOptionalSpreadsheetParserSelector.INSTANCE;
+    }
+    
+    /**
      * {@see TreeTextConverters#hasTextStyle}
      */
     public static Converter<SpreadsheetConverterContext> hasStyle() {

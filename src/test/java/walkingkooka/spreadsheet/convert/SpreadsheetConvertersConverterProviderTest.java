@@ -322,6 +322,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasParserSelector() {
+        this.converterAndCheck(
+            "has-parser-selector",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasSpreadsheetParserSelector()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithHasStyleToStyle() {
         this.converterAndCheck(
             "has-style",
