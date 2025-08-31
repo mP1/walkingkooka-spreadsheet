@@ -381,7 +381,7 @@ final class MissingConverterVerifier {
             SpreadsheetConvertersConverterProvider.NULL_TO_NUMBER
         );
 
-        // selection-to-selection.......................................................................................
+        // spreadsheet-selection-to-spreadsheet-selection...............................................................
         if (formula) {
             finder.addIfConversionFail(
                 Lists.of(
@@ -389,7 +389,7 @@ final class MissingConverterVerifier {
                     cellRange
                 ),
                 SpreadsheetCellReference.class,
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
             );
 
             finder.addIfConversionFail(
@@ -402,13 +402,13 @@ final class MissingConverterVerifier {
                     rowRange
                 ),
                 SpreadsheetCellRangeReference.class,
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
             );
 
             finder.addIfConversionFail(
                 column,
                 SpreadsheetColumnReference.class,
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
             );
 
             finder.addIfConversionFail(
@@ -417,13 +417,13 @@ final class MissingConverterVerifier {
                     columnRange
                 ),
                 SpreadsheetColumnRangeReference.class,
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
             );
 
             finder.addIfConversionFail(
                 row,
                 SpreadsheetRowReference.class,
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
             );
 
             finder.addIfConversionFail(
@@ -432,7 +432,7 @@ final class MissingConverterVerifier {
                     rowRange
                 ),
                 SpreadsheetRowRangeReference.class,
-                SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
             );
         }
 

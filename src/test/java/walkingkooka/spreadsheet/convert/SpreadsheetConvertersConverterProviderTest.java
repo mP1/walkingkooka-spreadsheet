@@ -397,25 +397,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithSelectionToSelection() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION,
-            Lists.empty(),
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.selectionToSelection()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithSelectionToSelection() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.SELECTION_TO_SELECTION + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.selectionToSelection()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithSimple() {
         this.converterAndCheck(
             "simple",
@@ -430,6 +411,25 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "spreadsheet-metadata",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.spreadsheetMetadata()
+        );
+    }
+
+    @Test
+    public void testConverterNameWithSpreadsheetSelectionToSpreadsheetSelection() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithSpreadsheetSelectionToSpreadsheetSelection() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.spreadsheetSelectionToSpreadsheetSelection()
         );
     }
 
