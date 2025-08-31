@@ -496,7 +496,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         spreadsheetSelectionToText(),
         textToSpreadsheetSelection(),
         textToSpreadsheetError(),
-        textToValueType()
+        textToValueType(),
+        hasSpreadsheetFormatterSelector(),
+        hasSpreadsheetParserSelector()
     );
 
     /**

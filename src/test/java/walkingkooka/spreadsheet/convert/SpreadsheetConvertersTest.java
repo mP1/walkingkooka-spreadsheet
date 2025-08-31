@@ -55,12 +55,14 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -1914,6 +1916,32 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.spreadsheetValueConvertAndCheck(
             SpreadsheetSelection.parseCellRange(text),
             text
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetFormatterSelector() {
+        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("HelloFormatter");
+
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setFormatter(
+                    Optional.of(formatter)
+                ),
+            formatter
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetParserSelector() {
+        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("HelloParser");
+
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setParser(
+                    Optional.of(parser)
+                ),
+            parser
         );
     }
 
