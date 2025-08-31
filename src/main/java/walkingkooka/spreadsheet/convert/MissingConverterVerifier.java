@@ -513,11 +513,13 @@ final class MissingConverterVerifier {
         );
 
         // text-to-expression...........................................................................................
-        finder.addIfConversionFail(
-            "1+sum(2)",
-            Expression.class,
-            SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION
-        );
+        if(find || formatting || formula || scripting || validation) {
+            finder.addIfConversionFail(
+                "1+sum(2)",
+                Expression.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_EXPRESSION
+            );
+        };
 
         // text-to-form-name............................................................................................
         if (validation) {
