@@ -86,14 +86,14 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             SpreadsheetConvertersConverterProvider.COLLECTION,
             Lists.of(
                 SpreadsheetConverters.errorToNumber(),
-                SpreadsheetConverters.textToSelection()
+                SpreadsheetConverters.textToSpreadsheetSelection()
             ),
             PROVIDER_CONTEXT,
             SpreadsheetConverters.collection(
                 Cast.to(
                     Lists.of(
                         SpreadsheetConverters.errorToNumber(),
-                        SpreadsheetConverters.textToSelection()
+                        SpreadsheetConverters.textToSpreadsheetSelection()
                     )
                 )
             )
@@ -553,15 +553,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithTextToSelection() {
-        this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION + "",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToSelection()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadata() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA + "",
@@ -599,12 +590,21 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterNameWithTextToSelection() {
+    public void testConverterNameWithTextToSpreadsheetSelection() {
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION,
+            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetConverters.textToSelection()
+            SpreadsheetConverters.textToSpreadsheetSelection()
+        );
+    }
+
+    @Test
+    public void testConverterSelectorWithTextToSpreadsheetSelection() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToSpreadsheetSelection()
         );
     }
 
