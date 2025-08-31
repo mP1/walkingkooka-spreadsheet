@@ -322,10 +322,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
         "locale",
-        LocaleConverters.localeToText(),
+        localeToText(),
         LocaleConverters.locale(),
-        LocaleConverters.dateTimeSymbols(),
-        LocaleConverters.decimalNumberSymbols()
+        dateTimeSymbols(),
+        decimalNumberSymbols()
     );
 
     /**
