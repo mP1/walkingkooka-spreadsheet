@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.format.HasOptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.HasOptionalSpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.CanReplaceReferences;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
@@ -88,6 +89,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasOptionalDecimalNumberSymbols,
     HasOptionalLocale,
     HasOptionalSpreadsheetFormatterSelector,
+    HasOptionalSpreadsheetParserSelector,
     HasOptionalValidatorSelector,
     HasTextNode,
     HasTextStyle,
@@ -453,6 +455,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * A {@link SpreadsheetParserSelector} which will be used to parse and validate a formula
      */
     private final Optional<SpreadsheetParserSelector> parser;
+
+    // HasOptionalSpreadsheetParserSelector.............................................................................
+
+    @Override
+    public Optional<SpreadsheetParserSelector> parserSelector() {
+        return this.parser();
+    }
 
     // style ...........................................................................................................
 
