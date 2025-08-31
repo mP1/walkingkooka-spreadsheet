@@ -29,6 +29,7 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.format.HasOptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -86,6 +87,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasOptionalDateTimeSymbols,
     HasOptionalDecimalNumberSymbols,
     HasOptionalLocale,
+    HasOptionalSpreadsheetFormatterSelector,
     HasOptionalValidatorSelector,
     HasTextNode,
     HasTextStyle,
@@ -404,6 +406,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * Used to format the output of the cell's formula.
      */
     private final Optional<SpreadsheetFormatterSelector> formatter;
+
+    // HasOptionalSpreadsheetFormatterSelector..........................................................................
+
+    @Override
+    public Optional<SpreadsheetFormatterSelector> formatterSelector() {
+        return this.formatter();
+    }
 
     // parser...........................................................................................................
 

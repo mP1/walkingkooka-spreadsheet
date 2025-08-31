@@ -31,6 +31,7 @@ import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.HasOptionalSpreadsheetFormatterSelectorTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -94,6 +95,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasTextNodeTesting,
     HasTextStyleTesting,
     HasTextTesting,
+    HasOptionalSpreadsheetFormatterSelectorTesting,
     HasOptionalValidatorSelectorTesting,
     ParseStringTesting<SpreadsheetCell>,
     JsonNodeMarshallingTesting<SpreadsheetCell>,
@@ -712,6 +714,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             formatter,
             cell.formatter(),
             "formatter"
+        );
+
+        this.formatterSelectorAndCheck(
+            cell,
+            formatter
         );
     }
 
