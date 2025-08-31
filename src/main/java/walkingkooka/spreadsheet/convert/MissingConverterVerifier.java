@@ -275,41 +275,6 @@ final class MissingConverterVerifier {
 
         // general......................................................................................................
         {
-            finder.addIfConversionFail(
-                Lists.of(
-                    "true",
-                    "false"
-                ),
-                ExpressionNumber.class,
-                SpreadsheetConvertersConverterProvider.GENERAL
-            );
-            finder.addIfConversionFail(
-                Lists.of(
-                    "true",
-                    "false"
-                ),
-                NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.GENERAL
-            );
-
-            finder.addIfConversionFail(
-                Lists.of(
-                    "true",
-                    "false"
-                ),
-                NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.GENERAL
-            );
-
-            finder.addIfConversionFail(
-                Lists.of(
-                    "true",
-                    "false"
-                ),
-                NUMBER_TYPES,
-                SpreadsheetConvertersConverterProvider.GENERAL
-            );
-
             // general numbers
             finder.addIfConversionFail(
                 kind.one(),
