@@ -275,7 +275,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
                 "text-to-spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, " +
                 "spreadsheet-cell-to, " +
-                "has-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, " +
+                "has-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable,has-text-node, url-to-hyperlink, url-to-image, " +
                 "general)"
             )
         ).set(
@@ -338,7 +338,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 "text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, " +
                 "text-to-spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, " +
                 "spreadsheet-cell-to, " +
-                "has-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, " +
+                "has-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, to-styleable,has-text-node, url-to-hyperlink, url-to-image, " +
                 "text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name," +
                 "general)"
             )

@@ -323,6 +323,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasTextNode() {
+        this.converterAndCheck(
+            "has-text-node",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasTextNode()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithHasValidatorSelector() {
         this.converterAndCheck(
             "has-validator-selector",
@@ -718,15 +727,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "to-styleable",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.toStyleable()
-        );
-    }
-
-    @Test
-    public void testConverterSelectorWithToTextNode() {
-        this.converterAndCheck(
-            "to-text-node",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.toTextNode()
         );
     }
 

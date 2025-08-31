@@ -65,13 +65,13 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_STYLE)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_TEXT_NODE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_ERROR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_TEXT_NODE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
@@ -79,10 +79,10 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_STYLE)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_TEXT_NODE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_TEXT_STYLE_PROPERTY_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
-        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_TEXT_NODE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
