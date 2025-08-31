@@ -818,8 +818,8 @@ final class MissingConverterVerifier {
             );
         }
 
-        // to-text-node.................................................................................................
         if (formatting) {
+            // has-text-node............................................................................................
             finder.addIfConversionFail(
                 Lists.of(
                     TextNode.text("Text123").setTextStyle(
@@ -844,7 +844,7 @@ final class MissingConverterVerifier {
                     TextNode.text("Text123")
                 ),
                 TextNode.class,
-                SpreadsheetConvertersConverterProvider.TO_TEXT_NODE
+                SpreadsheetConvertersConverterProvider.HAS_TEXT_NODE
             );
 
             // url-to-hyperlink.........................................................................................

@@ -184,6 +184,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasStyle();
                 break;
+            case HAS_TEXT_NODE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasTextNode();
+                break;
             case HAS_VALIDATOR_SELECTOR_STRING:
                 noParameterCheck(copy);
 
@@ -443,11 +448,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toStyleable();
                 break;
-            case TO_TEXT_NODE_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.toTextNode();
-                break;
             case TO_VALIDATION_ERROR_LIST_STRING:
                 noParameterCheck(copy);
 
@@ -570,6 +570,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String HAS_STYLE_STRING = "has-style";
 
     final static ConverterName HAS_STYLE = ConverterName.with(HAS_STYLE_STRING);
+
+    private final static String HAS_TEXT_NODE_STRING = "has-text-node";
+
+    final static ConverterName HAS_TEXT_NODE = ConverterName.with(HAS_TEXT_NODE_STRING);
 
     private final static String HAS_VALIDATOR_SELECTOR_STRING = "has-validator-selector";
 
@@ -775,10 +779,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
 
-    private final static String TO_TEXT_NODE_STRING = "to-text-node";
-
-    final static ConverterName TO_TEXT_NODE = ConverterName.with(TO_TEXT_NODE_STRING);
-
     private final static String TO_VALIDATION_ERROR_LIST_STRING = "to-validation-error-list";
 
     final static ConverterName TO_VALIDATION_ERROR_LIST = ConverterName.with(TO_VALIDATION_ERROR_LIST_STRING);
@@ -821,6 +821,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(GENERAL),
             converterInfo(HAS_STYLE),
+            converterInfo(HAS_TEXT_NODE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
             converterInfo(JSON),
             converterInfo(JSON_TO),
@@ -872,7 +873,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_JSON),
             converterInfo(TO_NUMBER),
             converterInfo(TO_STYLEABLE),
-            converterInfo(TO_TEXT_NODE),
             converterInfo(TO_VALIDATION_ERROR_LIST),
             converterInfo(URL),
             converterInfo(URL_TO_HYPERLINK),
