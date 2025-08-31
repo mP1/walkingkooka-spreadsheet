@@ -1946,6 +1946,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellToValidatorSelector() {
+        final ValidatorSelector validator = ValidatorSelector.parse("HelloValidator");
+
+        this.spreadsheetValueConvertAndCheck(
+            SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                .setValidator(
+                    Optional.of(validator)
+                ),
+            validator
+        );
+    }
+
+    @Test
     public void testSpreadsheetValueConvertStringToValueType() {
         final ValidationValueTypeName type = SpreadsheetValueType.NUMBER;
 
