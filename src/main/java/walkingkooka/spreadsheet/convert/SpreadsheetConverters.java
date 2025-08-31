@@ -466,7 +466,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         nullToNumber(),
         selectionToSelection(),
         selectionToText(),
-        textToSelection(),
+        textToSpreadsheetSelection(),
         textToSpreadsheetError(),
         textToValueType()
     );
@@ -542,7 +542,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
         "collection(number-to-number, text-to-text, error-to-number, \n" +
             "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
-            "  text-to-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
+            "  text-to-spreadsheet-selection, selection-to-selection, selection-to-text, spreadsheet-cell-to, \n" +
             "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
             "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
             "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"
@@ -676,13 +676,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterTextToSpreadsheetSelection}
-     */
-    public static Converter<SpreadsheetConverterContext> textToSelection() {
-        return SpreadsheetConverterTextToSpreadsheetSelection.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterTextToSpreadsheetColorName}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
@@ -736,6 +729,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetName() {
         return SpreadsheetConverterTextToSpreadsheetName.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetSelection}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetSelection() {
+        return SpreadsheetConverterTextToSpreadsheetSelection.INSTANCE;
     }
 
     /**

@@ -326,11 +326,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToLocale();
                 break;
-            case TEXT_TO_SELECTION_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.textToSelection();
-                break;
             case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
                 noParameterCheck(copy);
 
@@ -365,6 +360,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToSpreadsheetName();
+                break;
+            case TEXT_TO_SPREADSHEET_SELECTION_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToSpreadsheetSelection();
                 break;
             case TEXT_TO_SPREADSHEET_TEXT_STRING:
                 noParameterCheck(copy);
@@ -677,11 +677,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEXT_TO_LOCALE_STRING = "text-to-locale";
 
     final static ConverterName TEXT_TO_LOCALE = ConverterName.with(TEXT_TO_LOCALE_STRING);
-
-    private final static String TEXT_TO_SELECTION_STRING = "text-to-selection";
-
-    final static ConverterName TEXT_TO_SELECTION = ConverterName.with(TEXT_TO_SELECTION_STRING);
-
+    
     private final static String TEXT_TO_SPREADSHEET_COLOR_NAME_STRING = "text-to-spreadsheet-color-name";
 
     final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
@@ -709,6 +705,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEXT_TO_SPREADSHEET_NAME_STRING = "text-to-spreadsheet-name";
 
     final static ConverterName TEXT_TO_SPREADSHEET_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_NAME_STRING);
+
+    private final static String TEXT_TO_SPREADSHEET_SELECTION_STRING = "text-to-spreadsheet-selection";
+
+    final static ConverterName TEXT_TO_SPREADSHEET_SELECTION = ConverterName.with(TEXT_TO_SPREADSHEET_SELECTION_STRING);
 
     private final static String TEXT_TO_SPREADSHEET_TEXT_STRING = "text-to-spreadsheet-text";
 
@@ -840,7 +840,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_FORM_NAME),
             converterInfo(TEXT_TO_JSON),
             converterInfo(TEXT_TO_LOCALE),
-            converterInfo(TEXT_TO_SELECTION),
             converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
             converterInfo(TEXT_TO_SPREADSHEET_ID),
@@ -848,6 +847,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_SPREADSHEET_METADATA_COLOR),
             converterInfo(TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_NAME),
+            converterInfo(TEXT_TO_SPREADSHEET_SELECTION),
             converterInfo(TEXT_TO_SPREADSHEET_TEXT),
             converterInfo(TEXT_TO_TEMPLATE_VALUE_NAME),
             converterInfo(TEXT_TO_TEXT),

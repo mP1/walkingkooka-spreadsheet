@@ -537,86 +537,6 @@ final class MissingConverterVerifier {
             );
         }
 
-        // text-to-selection...........................................................................................
-        if (formula || validation) {
-            for (final SpreadsheetSelection selection : Lists.of(
-                cell,
-                cellRange,
-                column,
-                columnRange,
-                label
-            )) {
-                finder.addIfConversionFail(
-                    selection.toString(),
-                    selection.getClass(),
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-                );
-            }
-
-            finder.addIfConversionFail(
-                cell.toString(),
-                Lists.of(
-                    SpreadsheetCellReference.class,
-                    SpreadsheetCellRangeReference.class
-                ),
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                cellRange.toString(),
-                SpreadsheetCellRangeReference.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                label.toString(),
-                SpreadsheetLabelName.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                column.toString(),
-                Lists.of(
-                    SpreadsheetColumnReference.class,
-                    SpreadsheetColumnRangeReference.class
-                ),
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                column.toString(),
-                SpreadsheetColumnReference.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                columnRange.toString(),
-                SpreadsheetColumnRangeReference.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                row.toString(),
-                Lists.of(
-                    SpreadsheetRowReference.class,
-                    SpreadsheetRowRangeReference.class
-                ),
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                row.toString(),
-                SpreadsheetRowReference.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-
-            finder.addIfConversionFail(
-                rowRange.toString(),
-                SpreadsheetRowRangeReference.class,
-                SpreadsheetConvertersConverterProvider.TEXT_TO_SELECTION
-            );
-        }
-
         // text-to-spreadsheet-color-name...............................................................................
         if (formatting || scripting) {
             finder.addIfConversionFail(
@@ -681,6 +601,86 @@ final class MissingConverterVerifier {
                 spreadsheetMetadataPropertyName.value(),
                 SpreadsheetMetadataPropertyName.class,
                 SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
+            );
+        }
+
+        // text-to-spreadsheet-selection................................................................................
+        if (formula || validation) {
+            for (final SpreadsheetSelection selection : Lists.of(
+                cell,
+                cellRange,
+                column,
+                columnRange,
+                label
+            )) {
+                finder.addIfConversionFail(
+                    selection.toString(),
+                    selection.getClass(),
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+                );
+            }
+
+            finder.addIfConversionFail(
+                cell.toString(),
+                Lists.of(
+                    SpreadsheetCellReference.class,
+                    SpreadsheetCellRangeReference.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                cellRange.toString(),
+                SpreadsheetCellRangeReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                label.toString(),
+                SpreadsheetLabelName.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                column.toString(),
+                Lists.of(
+                    SpreadsheetColumnReference.class,
+                    SpreadsheetColumnRangeReference.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                column.toString(),
+                SpreadsheetColumnReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                columnRange.toString(),
+                SpreadsheetColumnRangeReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                row.toString(),
+                Lists.of(
+                    SpreadsheetRowReference.class,
+                    SpreadsheetRowRangeReference.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                row.toString(),
+                SpreadsheetRowReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
+            );
+
+            finder.addIfConversionFail(
+                rowRange.toString(),
+                SpreadsheetRowRangeReference.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION
             );
         }
 
