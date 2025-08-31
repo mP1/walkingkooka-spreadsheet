@@ -286,10 +286,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see TreeTextConverters#hasTextStyleToTextStyle}
+     * {@see TreeTextConverters#hasTextStyle}
      */
-    public static Converter<SpreadsheetConverterContext> hasTextStyleToTextStyle() {
-        return TreeTextConverters.hasTextStyleToTextStyle();
+    public static Converter<SpreadsheetConverterContext> hasStyle() {
+        return TreeTextConverters.hasTextStyle();
     }
 
     /**
@@ -487,7 +487,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> STYLE = namedCollection(
         "style",
-        hasTextStyleToTextStyle(),
+        hasStyle(),
         textToTextStyle(),
         textToTextStylePropertyName(),
         SpreadsheetConverters.toStyleable()
@@ -550,7 +550,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "collection(number-to-number, text-to-text, error-to-number, \n" +
             "  text-to-error, text-to-expression, text-to-locale, text-to-template-value-name, text-to-url, \n" +
             "  text-to-spreadsheet-selection, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, spreadsheet-cell-to, \n" +
-            "  has-style-to-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
+            "  has-style, text-to-color, color-to-number, number-to-color, color-to-color, text-to-spreadsheet-color-name, \n" +
             "  text-to-spreadsheet-formatter-selector, text-to-spreadsheet-metadata-color, text-to-spreadsheet-text, text-to-text-node, \n" +
             "  text-to-text-style, text-to-text-style-property-name, to-styleable, to-text-node, url-to-hyperlink, url-to-image, general)"
     );

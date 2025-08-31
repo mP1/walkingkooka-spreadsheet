@@ -1998,7 +1998,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void testStyleConvertHasTextStyleToTextStyle() {
+    public void testStyleConvertHasStyle() {
         this.styleConvertAndCheck(
             STYLE,
             STYLE

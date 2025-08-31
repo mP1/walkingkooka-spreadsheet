@@ -361,7 +361,7 @@ final class MissingConverterVerifier {
                         .setStyle(style)
                 ),
                 TextStyle.class,
-                SpreadsheetConvertersConverterProvider.HAS_TEXT_STYLE_TO_STYLE
+                SpreadsheetConvertersConverterProvider.HAS_STYLE
             );
         }
 
