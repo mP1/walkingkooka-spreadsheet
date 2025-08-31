@@ -2247,7 +2247,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testSystemConvertNumberIntegerToString() {
         this.systemConvertAndCheck(
             EXPRESSION_NUMBER_KIND.create(123),
-            "123."
+            "123"
         );
     }
 
@@ -2536,6 +2536,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     return this.dateTimeContext.dateTimeSymbols();
                 }
 
+                @Override
+                public long dateOffset() {
+                    return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+                }
+
                 private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
                     DateTimeSymbols.fromDateFormatSymbols(
                         new DateFormatSymbols(Locale.ENGLISH)
@@ -2547,6 +2552,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         throw new UnsupportedOperationException();
                     }
                 );
+
+                @Override
+                public SpreadsheetMetadata spreadsheetMetadata() {
+                    return SpreadsheetMetadata.EMPTY.set(
+                        SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
+                    );
+                }
             },
             Cast.to(expected)
         );
