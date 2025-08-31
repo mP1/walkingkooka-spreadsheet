@@ -316,9 +316,9 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithHasStyleToStyle() {
         this.converterAndCheck(
-            "has-style-to-style",
+            "has-style",
             PROVIDER_CONTEXT,
-            SpreadsheetConverters.hasTextStyleToTextStyle()
+            SpreadsheetConverters.hasStyle()
         );
     }
 

@@ -179,10 +179,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = general.apply(context);
                 break;
-            case HAS_TEXT_STYLE_TO_STYLE_STRING:
+            case HAS_STYLE_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.hasTextStyleToTextStyle();
+                converter = SpreadsheetConverters.hasStyle();
                 break;
             case HAS_VALIDATOR_SELECTOR_STRING:
                 noParameterCheck(copy);
@@ -567,9 +567,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
 
-    private final static String HAS_TEXT_STYLE_TO_STYLE_STRING = "has-style-to-style";
+    private final static String HAS_STYLE_STRING = "has-style";
 
-    final static ConverterName HAS_TEXT_STYLE_TO_STYLE = ConverterName.with(HAS_TEXT_STYLE_TO_STYLE_STRING);
+    final static ConverterName HAS_STYLE = ConverterName.with(HAS_STYLE_STRING);
 
     private final static String HAS_VALIDATOR_SELECTOR_STRING = "has-validator-selector";
 
@@ -820,7 +820,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(GENERAL),
-            converterInfo(HAS_TEXT_STYLE_TO_STYLE),
+            converterInfo(HAS_STYLE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
             converterInfo(JSON),
             converterInfo(JSON_TO),
