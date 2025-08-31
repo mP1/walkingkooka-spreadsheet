@@ -69,6 +69,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasOptionalLocaleTesting;
 import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
@@ -93,6 +94,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasTextNodeTesting,
     HasTextStyleTesting,
     HasTextTesting,
+    HasOptionalValidatorSelectorTesting,
     ParseStringTesting<SpreadsheetCell>,
     JsonNodeMarshallingTesting<SpreadsheetCell>,
     HasSpreadsheetReferenceTesting,
@@ -1028,6 +1030,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             expected,
             cell.validator(),
             "validator"
+        );
+
+        this.validatorSelectorAndCheck(
+            cell,
+            expected
         );
     }
 

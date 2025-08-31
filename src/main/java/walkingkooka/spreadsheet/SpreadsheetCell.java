@@ -61,6 +61,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.HasOptionalLocale;
 import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.provider.HasOptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
@@ -85,6 +86,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasOptionalDateTimeSymbols,
     HasOptionalDecimalNumberSymbols,
     HasOptionalLocale,
+    HasOptionalValidatorSelector,
     HasTextNode,
     HasTextStyle,
     HasText,
@@ -534,6 +536,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
      * An optional validator this cell.
      */
     private final Optional<ValidatorSelector> validator;
+
+    // HasOptionalValidatorSelector.....................................................................................
+
+    @Override
+    public Optional<ValidatorSelector> validatorSelector() {
+        return this.validator;
+    }
 
     // replace..........................................................................................................
 
