@@ -24,23 +24,23 @@ import java.util.Optional;
 
 public interface HasOptionalSpreadsheetParserSelectorTesting extends Testing {
 
-    default void formatterSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has) {
-        this.formatterSelectorAndCheck(
+    default void parserSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has) {
+        this.parserSelectorAndCheck(
             has,
             Optional.empty()
         );
     }
 
-    default void formatterSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has,
-                                           final SpreadsheetParserSelector expected) {
-        this.formatterSelectorAndCheck(
+    default void parserSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has,
+                                        final SpreadsheetParserSelector expected) {
+        this.parserSelectorAndCheck(
             has,
             Optional.of(expected)
         );
     }
 
-    default void formatterSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has,
-                                           final Optional<SpreadsheetParserSelector> expected) {
+    default void parserSelectorAndCheck(final HasOptionalSpreadsheetParserSelector has,
+                                        final Optional<SpreadsheetParserSelector> expected) {
         final Optional<SpreadsheetParserSelector> selector = has.parserSelector();
         Objects.requireNonNull(has);
         this.checkEquals(
