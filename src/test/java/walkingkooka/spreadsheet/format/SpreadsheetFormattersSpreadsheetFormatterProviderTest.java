@@ -98,7 +98,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 }, // spreadsheetFormatterContextFactory
                 FormHandlerContexts.fake(),
                 ExpressionFunctionProviders.fake(),
-                SpreadsheetMetadataTesting.LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             ),

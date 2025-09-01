@@ -595,7 +595,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                     }
                 },
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 ProviderContexts.basic(
                     ConverterContexts.fake(),
                     EnvironmentContexts.map(
