@@ -370,7 +370,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
                 private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
                     Lists.of(
-                        SpreadsheetConverters.simple(),
+                        SpreadsheetConverters.basic(),
                         SpreadsheetConverters.text(),
                         SpreadsheetConverters.numberToNumber()//,
                         //SpreadsheetConverters.color()
@@ -835,7 +835,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text()
             )
         );
@@ -940,7 +940,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text()
             )
         );
@@ -1700,7 +1700,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text(),
                 SpreadsheetConverters.json()
             )
@@ -2012,7 +2012,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text(),
                 SpreadsheetConverters.numberToNumber()
             )
@@ -2140,7 +2140,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text(),
                 SpreadsheetConverters.style()
             )
@@ -2687,7 +2687,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text()
             )
         );
@@ -3002,7 +3002,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text()
             )
         );
@@ -3088,7 +3088,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
-                SpreadsheetConverters.simple(),
+                SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text()
             )
         );

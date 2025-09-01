@@ -411,13 +411,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {@see Converters#simple}
-     */
-    public static Converter<SpreadsheetConverterContext> simple() {
-        return Converters.simple();
-    }
-
-    /**
      * {@see SpreadsheetConverterSpreadsheetCell}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetCellTo() {

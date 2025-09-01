@@ -135,7 +135,6 @@ eg
 - [number-to-number](https://github.com/mP1/walkingkooka-tree/blob/master/src/main/java/walkingkooka/tree/expression/convert/ExpressionNumberConverters.java)
 - [parser](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [plugins](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
-- [simple](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/SimpleConverter.java)
 - [spreadsheet-cell-to](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterSpreadsheetCell.java)
 - [spreadsheet-metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [spreadsheet-selection-to-spreadsheet-selection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetSelectionToSpreadsheetSelectionConverter.java)
