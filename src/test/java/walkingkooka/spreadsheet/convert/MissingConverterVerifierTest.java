@@ -346,11 +346,6 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 p
-            ),
-            (ProviderContext p) -> SpreadsheetMetadata.EMPTY.generalConverter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                p
             )
         ).converter(
             ConverterSelector.parse("simple"),

@@ -1385,11 +1385,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     SPREADSHEET_FORMATTER_PROVIDER,
                     SPREADSHEET_PARSER_PROVIDER,
                     p
-                ),
-                (final ProviderContext p) -> metadata.generalConverter(
-                    SPREADSHEET_FORMATTER_PROVIDER,
-                    SPREADSHEET_PARSER_PROVIDER,
-                    p
                 )
             ),
             PROVIDER_CONTEXT
@@ -1465,41 +1460,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    @Test
-    public void testGeneralConvertWithConverterContext() {
-        final SpreadsheetMetadata metadata = createSpreadsheetMetadataWithConverterAndConverterContext();
-
-        this.convertAndCheck3(
-            LocalTime.of(12, 58, 59),
-            "Time 59 12",
-            metadata.generalConverter(
-                SPREADSHEET_FORMATTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                PROVIDER_CONTEXT
-            ),
-            metadata.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                LABEL_NAME_RESOLVER,
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    (ProviderContext p) -> metadata.dateTimeConverter(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        p
-                    ),
-                    (ProviderContext p) -> metadata.generalConverter(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        p
-                    )
-                ),
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
     private final static char VALUE_SEPARATOR = '\'';
 
     private final static DateTimeSymbols DATE_TIME_SYMBOLS = DateTimeSymbols.fromDateFormatSymbols(
@@ -1512,13 +1472,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             Locale.forLanguageTag("EN-AU")
         )
     ).setCurrencySymbol("$AUD");
-
-    private SpreadsheetMetadata createSpreadsheetMetadataWithConverterAndConverterContext() {
-        return this.createSpreadsheetMetadataWithConverter(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER)
-            .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
-            .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
-            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
-    }
 
     // HasDateTimeContext...............................................................................................
 
@@ -2060,11 +2013,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         p
-                    ),
-                    (ProviderContext p) -> metadata.generalConverter(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        p
                     )
                 ),
                 SPREADSHEET_FORMATTER_PROVIDER,
@@ -2096,11 +2044,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                     (ProviderContext p) -> metadata.dateTimeConverter(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        p
-                    ),
-                    (ProviderContext p) -> metadata.generalConverter(
                         SPREADSHEET_FORMATTER_PROVIDER,
                         SPREADSHEET_PARSER_PROVIDER,
                         p

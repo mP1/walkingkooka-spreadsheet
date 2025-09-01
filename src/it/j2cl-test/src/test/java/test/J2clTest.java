@@ -296,11 +296,6 @@ public class J2clTest {
                 spreadsheetFormatterProvider,
                 spreadsheetParserProvider,
                 p
-            ),
-            (ProviderContext p) -> metadata.generalConverter(
-                spreadsheetFormatterProvider,
-                spreadsheetParserProvider,
-                p
             )
         );
 

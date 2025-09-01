@@ -294,11 +294,6 @@ public final class Sample {
                 spreadsheetFormatterProvider,
                 spreadsheetParserProvider,
                 p
-            ),
-            (ProviderContext p) -> metadata.generalConverter(
-                spreadsheetFormatterProvider,
-                spreadsheetParserProvider,
-                p
             )
         );
 

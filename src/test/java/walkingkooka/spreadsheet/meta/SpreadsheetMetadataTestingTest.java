@@ -30,15 +30,6 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     TreePrintableTesting {
 
     @Test
-    public void testGeneralConverter() {
-        METADATA_EN_AU.generalConverter(
-            SPREADSHEET_FORMATTER_PROVIDER,
-            SPREADSHEET_PARSER_PROVIDER,
-            PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
     public void testEffectiveStyle() {
         METADATA_EN_AU.effectiveStyle();
     }

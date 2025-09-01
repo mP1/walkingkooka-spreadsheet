@@ -51,19 +51,15 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     /**
      * Factory
      */
-    static SpreadsheetConvertersConverterProvider with(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime,
-                                                       final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
+    static SpreadsheetConvertersConverterProvider with(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime) {
         return new SpreadsheetConvertersConverterProvider(
-            Objects.requireNonNull(dateTime, "dateTime"),
-            Objects.requireNonNull(general, "general")
+            Objects.requireNonNull(dateTime, "dateTime")
         );
     }
 
-    private SpreadsheetConvertersConverterProvider(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime,
-                                                   final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general) {
+    private SpreadsheetConvertersConverterProvider(final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime) {
         super();
         this.dateTime = dateTime;
-        this.general = general;
     }
 
     @Override
@@ -173,11 +169,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.formAndValidation();
-                break;
-            case GENERAL_STRING:
-                noParameterCheck(copy);
-
-                converter = general.apply(context);
                 break;
             case HAS_FORMATTER_SELECTOR_STRING:
                 noParameterCheck(copy);
@@ -490,11 +481,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
      */
     private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> dateTime;
 
-    /**
-     * The {@link Function} that supplies the {@link Converter} when a request comes through for {@link #GENERAL}.
-     */
-    private final Function<ProviderContext, Converter<SpreadsheetConverterContext>> general;
-
     private static void noParameterCheck(final List<?> values) {
         parameterCountCheck(
             values,
@@ -572,10 +558,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String FORM_AND_VALIDATION_STRING = "form-and-validation";
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
-
-    private final static String GENERAL_STRING = "general";
-
-    final static ConverterName GENERAL = ConverterName.with(GENERAL_STRING);
 
     private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
 
@@ -837,7 +819,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
-            converterInfo(GENERAL),
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_STYLE),

@@ -817,59 +817,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
     }
 
-    /**
-     * Returns a general {@link Converter} using the required properties.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_OFFSET}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_TIME_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMATTER}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSER}</li>
-     * </ul>
-     */
-    public final Converter<SpreadsheetConverterContext> generalConverter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
-                                                                         final SpreadsheetParserProvider spreadsheetParserProvider,
-                                                                         final ProviderContext context) {
-        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
-        Objects.requireNonNull(spreadsheetParserProvider, "spreadsheetParserProvider");
-        Objects.requireNonNull(context, "context");
-
-        final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
-
-        final SpreadsheetFormatterSelector dateFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
-        final SpreadsheetParserSelector dateParser = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSER);
-
-        final SpreadsheetFormatterSelector dateTimeFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
-        final SpreadsheetParserSelector dateTimeParser = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER);
-
-        final SpreadsheetFormatterSelector numberFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
-        final SpreadsheetParserSelector numberParser = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSER);
-
-        final SpreadsheetFormatterSelector textFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
-
-        final SpreadsheetFormatterSelector timeFormat = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
-        final SpreadsheetParserSelector timeParser = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSER);
-
-        missing.reportIfMissing();
-
-        return SpreadsheetConverters.general(
-            spreadsheetFormatterProvider.spreadsheetFormatter(dateFormat, context),
-            spreadsheetParserProvider.spreadsheetParser(dateParser, context),
-            spreadsheetFormatterProvider.spreadsheetFormatter(dateTimeFormat, context),
-            spreadsheetParserProvider.spreadsheetParser(dateTimeParser, context),
-            spreadsheetFormatterProvider.spreadsheetFormatter(numberFormat, context),
-            spreadsheetParserProvider.spreadsheetParser(numberParser, context),
-            spreadsheetFormatterProvider.spreadsheetFormatter(textFormat, context),
-            spreadsheetFormatterProvider.spreadsheetFormatter(timeFormat, context),
-            spreadsheetParserProvider.spreadsheetParser(timeParser, context)
-        );
-    }
-
     // HasJsonNodeMarshallContext.......................................................................................
 
     /**
@@ -1702,9 +1649,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         ).set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
             SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    (final ProviderContext c) -> {
-                        throw new UnsupportedOperationException();
-                    },
                     (final ProviderContext c) -> {
                         throw new UnsupportedOperationException();
                     }
