@@ -417,8 +417,6 @@ final class MissingConverterVerifier {
         // json.........................................................................................................
         {
             // to-json..................................................................................................
-            // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/7268
-            // Converter: MissingConverterVerifier: String to JsonNode and subclasses
             if (formula || scripting) {
                 finder.addIfConversionFail(
                     "Hello",
