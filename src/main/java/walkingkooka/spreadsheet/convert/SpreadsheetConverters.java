@@ -834,13 +834,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterUnformattedNumber}
-     */
-    public static Converter<SpreadsheetConverterContext> unformattedNumber() {
-        return SpreadsheetConverterUnformattedNumber.INSTANCE;
-    }
-
-    /**
      * A converter that involves {@link Url}.
      */
     public static Converter<SpreadsheetConverterContext> url() {
