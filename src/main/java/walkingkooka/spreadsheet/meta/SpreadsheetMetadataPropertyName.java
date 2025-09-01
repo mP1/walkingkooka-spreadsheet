@@ -442,6 +442,32 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     );
 
     /**
+     * Tries to locate a {@link SpreadsheetMetadataPropertyName} with the given name returning empty if unknown.
+     */
+    public static Optional<SpreadsheetMetadataPropertyName<?>> tryWith(final String name) {
+        CharSequences.failIfNullOrEmpty(name, "name");
+
+        SpreadsheetMetadataPropertyName<?> propertyName = CONSTANTS.get(name);
+        if (null == propertyName) {
+            if (name.startsWith(COLOR_PREFIX) || name.length() == COLOR_PREFIX.length()) {
+                final String after = name.substring(COLOR_PREFIX.length());
+
+                // name dash color is a numbered color, named dash letter is a named color
+                try {
+                    if (Character.isLetter(after.charAt(0))) {
+                        propertyName = namedColor(SpreadsheetColorName.with(after));
+                    } else {
+                        propertyName = numberedColor(Integer.parseInt(after));
+                    }
+                } catch (final RuntimeException cause) {
+                    propertyName = null;
+                }
+            }
+        }
+        return Optional.ofNullable(propertyName);
+    }
+
+    /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
      */
     public static SpreadsheetMetadataPropertyName<?> with(final String name) {

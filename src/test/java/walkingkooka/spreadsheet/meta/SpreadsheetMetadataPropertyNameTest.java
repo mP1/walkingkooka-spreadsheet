@@ -47,6 +47,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -129,6 +130,16 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                     propertyName.checkValue(color);
                 }
             );
+    }
+
+    // tryWith..........................................................................................................
+
+    @Test
+    public void testTryWithUnknown() {
+        this.checkEquals(
+            Optional.empty(),
+            SpreadsheetMetadataPropertyName.tryWith("???")
+        );
     }
 
     // toConverterSelector..............................................................................................
