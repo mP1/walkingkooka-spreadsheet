@@ -47,6 +47,14 @@ public final class SpreadsheetConverterBasicTest extends SpreadsheetConverterTes
     }
 
     @Test
+    public void testConvertIntegerToNumber() {
+        this.convertAndCheck(
+            1,
+            Number.class
+        );
+    }
+
+    @Test
     public void testConvertStringToObject() {
         this.convertAndCheck(
             "Hello",

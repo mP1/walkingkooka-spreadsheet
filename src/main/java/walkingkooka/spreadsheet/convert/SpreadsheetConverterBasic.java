@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.convert.TryingShortCircuitingConverter;
 
 /**
@@ -40,9 +41,15 @@ final class SpreadsheetConverterBasic implements TryingShortCircuitingConverter<
                               final Class<?> type,
                               final SpreadsheetConverterContext context) {
         return null == value ||
-            value.getClass() == type ||
+            SIMPLE.canConvert(
+                value,
+                type,
+                context
+            ) ||
             Object.class == type;
     }
+
+    private final static Converter<SpreadsheetConverterContext> SIMPLE = Converters.simple();
 
     @Override
     public Object tryConvertOrFail(final Object value,
