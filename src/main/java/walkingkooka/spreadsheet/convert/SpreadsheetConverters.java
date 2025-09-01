@@ -99,7 +99,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
             .toLocalTime();
 
     /**
-     * A {@link Converter} that handles the most basic conversion requests
+     * {@see SpreadsheetConverterBasic}
      */
     public static Converter<SpreadsheetConverterContext> basic() {
         return SpreadsheetConverterBasic.INSTANCE;
