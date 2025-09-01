@@ -372,6 +372,12 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         return this.context;
     }
 
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Override

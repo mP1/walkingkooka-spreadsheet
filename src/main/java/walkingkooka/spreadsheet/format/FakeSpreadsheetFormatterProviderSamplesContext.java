@@ -23,6 +23,7 @@ import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -38,6 +39,13 @@ public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsh
 
     @Override
     public PluginStore pluginStore() {
+        throw new UnsupportedOperationException();
+    }
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    public SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

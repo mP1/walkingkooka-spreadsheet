@@ -215,4 +215,9 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     public Optional<String> localeText(final Locale locale) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public SpreadsheetConverterContext setLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
 }

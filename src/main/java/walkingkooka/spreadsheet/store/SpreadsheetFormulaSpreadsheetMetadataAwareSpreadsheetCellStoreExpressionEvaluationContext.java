@@ -184,6 +184,12 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
+    public ExpressionEvaluationContext setLocale(final Locale locale) {
+        this.localeContext.setLocale(locale);
+        return this;
+    }
+
+    @Override
     public ExpressionNumberKind expressionNumberKind() {
         return this.metadata.expressionNumberKind();
     }

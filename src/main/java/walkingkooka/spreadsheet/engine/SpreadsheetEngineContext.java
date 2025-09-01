@@ -43,6 +43,7 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -166,4 +167,9 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    SpreadsheetEngineContext setLocale(final Locale locale);
 }

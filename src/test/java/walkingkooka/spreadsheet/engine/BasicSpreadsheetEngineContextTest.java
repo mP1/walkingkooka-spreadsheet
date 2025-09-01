@@ -1177,8 +1177,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             new FakeLocaleContext() {
                 @Override
                 public Locale locale() {
-                    return locale;
+                    return this.localLocale;
                 }
+
+                @Override
+                public LocaleContext setLocale(final Locale locale) {
+                    Objects.requireNonNull(locale, "locale");
+                    this.localLocale = locale;
+                    return this;
+                }
+
+                private Locale localLocale = locale;
             },
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,

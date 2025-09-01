@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Locale;
 import java.util.Optional;
 
 public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterContext implements SpreadsheetFormatterContext {
@@ -71,6 +72,11 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetFormatterContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

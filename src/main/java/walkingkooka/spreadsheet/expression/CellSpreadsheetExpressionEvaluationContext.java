@@ -29,6 +29,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.Form;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -110,6 +111,12 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
         return this.context;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
     }
 
     @Override

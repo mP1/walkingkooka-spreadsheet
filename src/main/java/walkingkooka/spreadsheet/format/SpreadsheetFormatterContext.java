@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -91,6 +92,11 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     default SpreadsheetExpressionReference validationReference() {
         throw new UnsupportedOperationException();
     }
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    SpreadsheetFormatterContext setLocale(final Locale locale);
 
     // SpreadsheetConverterContext......................................................................................
 

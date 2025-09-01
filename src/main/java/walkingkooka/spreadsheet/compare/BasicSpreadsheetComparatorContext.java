@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.util.Locale;
 import java.util.Objects;
 
 final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorContext,
@@ -36,6 +37,14 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
 
     private BasicSpreadsheetComparatorContext(final SpreadsheetConverterContext converterContext) {
         this.converterContext = converterContext;
+    }
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    public SpreadsheetComparatorContext setLocale(final Locale locale) {
+        this.converterContext.setLocale(locale);
+        return this;
     }
 
     @Override

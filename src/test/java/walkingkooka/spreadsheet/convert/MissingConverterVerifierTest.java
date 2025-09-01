@@ -287,6 +287,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
+        public SpreadsheetConverterContext setLocale(final Locale locale) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetExpressionReference validationReference() {
             return SpreadsheetSelection.A1;
         }

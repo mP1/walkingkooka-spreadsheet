@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -219,6 +220,12 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     private final SpreadsheetConverterContext spreadsheetConverterContext;
+
+    @Override
+    public SpreadsheetFormatterContext setLocale(final Locale locale) {
+        this.spreadsheetConverterContext.setLocale(locale);
+        return this;
+    }
 
     @Override
     public SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {

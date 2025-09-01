@@ -20,9 +20,16 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.util.Locale;
+
 public class FakeSpreadsheetComparatorContext extends FakeSpreadsheetConverterContext implements SpreadsheetComparatorContext {
     public FakeSpreadsheetComparatorContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetComparatorContext setLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
