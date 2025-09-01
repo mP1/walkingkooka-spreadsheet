@@ -61,24 +61,32 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     HasSpreadsheetPatternKindTesting {
 
     @Test
-    public void testUnknownConstantFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("unknown1234567"));
+    public void testWithUnknownConstantFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetMetadataPropertyName.with("unknown1234567")
+        );
     }
 
     @Test
-    public void testDefaultsSpecialInternalConstantFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("_defaults"));
+    public void testWithDefaultsSpecialInternalConstantFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetMetadataPropertyName.with("_defaults")
+        );
     }
 
     @Test
-    public void testConstants() {
-        this.checkEquals(Lists.empty(),
+    public void testWithConstants() {
+        this.checkEquals(
+            Lists.empty(),
             Arrays.stream(SpreadsheetMetadataPropertyName.class.getDeclaredFields())
                 .filter(FieldAttributes.STATIC::is)
                 .filter(f -> f.getType() == SpreadsheetMetadataPropertyName.class)
                 .filter(SpreadsheetMetadataPropertyNameTest::constantNotCached)
                 .collect(Collectors.toList()),
-            "");
+            ""
+        );
     }
 
     private static boolean constantNotCached(final Field field) {
@@ -91,13 +99,19 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testWithColorPropertyFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("color-"));
+    public void testWithColorPropertyMissingNumberOrNameFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetMetadataPropertyName.with("color-")
+        );
     }
 
     @Test
-    public void testWithColorPropertyFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("color-!"));
+    public void testWithColorPropertyInvalidFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetMetadataPropertyName.with("color-!")
+        );
     }
 
     @Test
