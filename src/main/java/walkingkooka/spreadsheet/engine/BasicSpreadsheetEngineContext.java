@@ -274,7 +274,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
             this.formHandlerContext,
             this.expressionFunctionProvider,
-            this.localeContext,
             this, // ProviderContext
             this.terminalContext
         );

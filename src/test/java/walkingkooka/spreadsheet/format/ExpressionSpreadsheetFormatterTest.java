@@ -221,7 +221,6 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                             }
                         )
                     ),
-                    LocaleContexts.fake(),
                     ProviderContexts.fake(),
                     TerminalContexts.fake()
                 ).addLocalVariable(

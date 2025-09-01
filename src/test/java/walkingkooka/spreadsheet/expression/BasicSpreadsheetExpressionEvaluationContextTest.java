@@ -114,7 +114,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -135,7 +134,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -156,7 +154,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -177,7 +174,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -198,7 +194,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -219,7 +214,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -240,7 +234,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -261,7 +254,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 null,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -281,28 +273,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
-                null,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullLocaleContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
                 null,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
@@ -324,7 +294,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 null,
                 TERMINAL_CONTEXT
             )
@@ -345,7 +314,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 null
             )
@@ -432,7 +400,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             ),
@@ -469,7 +436,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_CONTEXT
             ),
@@ -695,7 +661,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
             FORM_HANDLER_CONTEXT,
             EXPRESSION_FUNCTION_PROVIDER,
-            LOCALE_CONTEXT,
             providerContext,
             TERMINAL_CONTEXT
         );

@@ -19,7 +19,6 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -56,7 +55,6 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                                final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                               final LocaleContext localeContext,
                                                                final ProviderContext providerContext,
                                                                final TerminalContext terminalContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
@@ -69,7 +67,6 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
             spreadsheetFormatterContextFactory,
             formHandlerContext,
             expressionFunctionProvider,
-            localeContext,
             providerContext,
             terminalContext
         );
