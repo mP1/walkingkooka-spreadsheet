@@ -55,6 +55,7 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContext;
 import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -224,6 +225,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    SpreadsheetExpressionEvaluationContext setLocale(final Locale locale);
 
     // validation.......................................................................................................
 

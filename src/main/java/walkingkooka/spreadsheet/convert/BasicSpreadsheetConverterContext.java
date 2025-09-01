@@ -169,6 +169,12 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     }
 
     @Override
+    public SpreadsheetConverterContext setLocale(final Locale locale) {
+        this.localeContext.setLocale(locale);
+        return this;
+    }
+
+    @Override
     public LocaleContext localeContext() {
         return this.localeContext;
     }

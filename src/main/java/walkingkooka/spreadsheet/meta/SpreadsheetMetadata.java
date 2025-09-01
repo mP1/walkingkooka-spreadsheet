@@ -911,8 +911,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link LocaleContext}, with the given {@link SpreadsheetMetadataPropertyName#LOCALE}.
      */
     public final LocaleContext localeContext(final LocaleContext context) {
-        return SpreadsheetMetadataLocaleContext.with(
-            context,
+        return context.setLocale(
             this.locale()
         );
     }

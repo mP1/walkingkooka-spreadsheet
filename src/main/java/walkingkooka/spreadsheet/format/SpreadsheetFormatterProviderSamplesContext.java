@@ -21,6 +21,8 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.util.Locale;
+
 public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetFormatterContext,
     ProviderContext {
 
@@ -30,6 +32,9 @@ public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetF
 
     @Override
     SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
+    @Override
+    SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);

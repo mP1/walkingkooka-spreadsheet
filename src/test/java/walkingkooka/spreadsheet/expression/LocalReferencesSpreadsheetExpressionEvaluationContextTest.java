@@ -464,6 +464,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                 }
 
                 @Override
+                public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+                    Objects.requireNonNull(locale, "locale");
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
                 public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
                     Objects.requireNonNull(reference, "reference");
 

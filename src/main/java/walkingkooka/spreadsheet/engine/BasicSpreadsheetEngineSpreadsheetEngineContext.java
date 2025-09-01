@@ -41,6 +41,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -147,6 +148,12 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public SpreadsheetEngineContext setLocale(final Locale locale) {
+        this.spreadsheetEngineContext.setLocale(locale);
+        return this;
+    }
 
     @Override
     public LocaleContext localeContext() {

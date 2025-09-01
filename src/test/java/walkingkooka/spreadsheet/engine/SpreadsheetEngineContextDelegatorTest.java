@@ -23,6 +23,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting<SpreadsheetEngineContextDelegator> {
@@ -40,6 +42,12 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
 
         @Override
         public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetEngineContext setLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }
     }

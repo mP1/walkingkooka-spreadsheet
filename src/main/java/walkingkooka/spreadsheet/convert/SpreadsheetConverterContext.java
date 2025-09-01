@@ -28,6 +28,8 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
+import java.util.Locale;
+
 /**
  * A {@link walkingkooka.convert.ConverterContext} that includes a few extra operations that are needed in a Spreadsheet context.
  */
@@ -44,6 +46,9 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
         return this.expressionNumberKind()
             .zero();
     }
+
+    @Override
+    SpreadsheetConverterContext setLocale(final Locale locale);
 
     /**
      * Returns the {@link SpreadsheetExpressionReference} being validated. This is useful for converters within a

@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.util.Locale;
 import java.util.Objects;
 
 public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements SpreadsheetFormatterProviderSamplesContextTesting<TestSpreadsheetFormatterProviderSamplesContextDelegator>,
@@ -62,6 +63,12 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
         @Override
         public TestSpreadsheetFormatterProviderSamplesContextDelegator removeEnvironmentValue(final EnvironmentValueName<?> name) {
             Objects.requireNonNull(name, "name");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public TestSpreadsheetFormatterProviderSamplesContextDelegator setLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }
     }

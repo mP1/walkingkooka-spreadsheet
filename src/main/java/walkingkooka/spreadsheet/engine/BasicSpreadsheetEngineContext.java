@@ -62,6 +62,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -467,6 +468,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private final SpreadsheetStoreRepository storeRepository;
 
     // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public SpreadsheetEngineContext setLocale(final Locale locale) {
+        this.localeContext.setLocale(locale);
+        return this;
+    }
 
     @Override
     public LocaleContext localeContext() {
