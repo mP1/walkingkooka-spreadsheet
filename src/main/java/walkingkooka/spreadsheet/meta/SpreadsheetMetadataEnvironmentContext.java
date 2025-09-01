@@ -55,14 +55,8 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         Optional<T> value = Optional.empty();
 
         final String stringName = name.value();
-        SpreadsheetMetadataPropertyName<?> propertyName;
-
-        // will throw IllegalArgumentException if property is unknown.
-        try {
-            propertyName = SpreadsheetMetadataPropertyName.with(stringName);
-        } catch (final IllegalArgumentException invalidNameEtc) {
-            propertyName = null;
-        }
+        SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.tryWith(stringName)
+            .orElse(null);
 
         if (null != propertyName) {
             value = Cast.to(
