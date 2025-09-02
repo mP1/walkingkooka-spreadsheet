@@ -27,6 +27,7 @@ import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.Name;
@@ -759,6 +760,20 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         }
         return converter;
     }
+
+    // toEnvironmentValueName...........................................................................................
+
+    /**
+     * Getter that returns this {@link SpreadsheetMetadataPropertyName} as a {@link EnvironmentValueName}.
+     */
+    public EnvironmentValueName<T> toEnvironmentValueName() {
+        if (null == this.environmentValueName) {
+            this.environmentValueName = EnvironmentValueName.with(this.name);
+        }
+        return this.environmentValueName;
+    }
+
+    private EnvironmentValueName<T> environmentValueName;
 
     // isXXX............................................................................................................
 
