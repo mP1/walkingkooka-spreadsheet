@@ -49,16 +49,6 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
                                                   final EnvironmentContext context) {
         this.metadata = metadata;
         this.context = context;
-
-        final Locale locale = metadata.get(SpreadsheetMetadataPropertyName.LOCALE)
-            .orElse(null);
-
-        if (null != locale) {
-            context.setEnvironmentValue(
-                EnvironmentValueName.LOCALE,
-                locale
-            );
-        }
     }
 
     /**
@@ -66,7 +56,7 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
      */
     @Override
     public Locale locale() {
-        return this.context.locale();
+        return this.environmentValueOrFail(EnvironmentValueName.LOCALE);
     }
 
     @Override

@@ -977,10 +977,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testLocale() {
         final Locale locale = Locale.FRANCE;
 
-        this.checkEquals(
-            locale,
-            this.createContext(locale)
-                .locale()
+        this.localeAndCheck(
+            this.createContext(locale),
+            locale
         );
     }
 
@@ -1122,15 +1121,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final Locale locale) {
         return this.createContext(
-            PROVIDER_CONTEXT.setEnvironmentValue(
-                EnvironmentValueName.LOCALE,
-                locale
+            EnvironmentContexts.empty(
+                locale,
+                NOW,
+                Optional.of(USER)
             )
         );
     }
 
     private BasicSpreadsheetEngineContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
+            LOCALE,
             ProviderContexts.basic(
                 ConverterContexts.fake(),
                 environmentContext,
@@ -1139,7 +1140,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final ProviderContext providerContext) {
+    private BasicSpreadsheetEngineContext createContext(final Locale locale,
+                                                        final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
             SERVER_URL,
             METADATA,
@@ -1172,7 +1174,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     return this;
                 }
 
-                private Locale localLocale = providerContext.locale();
+                private Locale localLocale = locale;
             },
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
