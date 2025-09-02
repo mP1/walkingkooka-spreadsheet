@@ -52,8 +52,8 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.Validator;
+import walkingkooka.validation.expression.ValidatorExpressionEvaluationContext;
 import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContext;
-import walkingkooka.validation.function.ValidatorExpressionEvaluationContext;
 
 import java.util.Locale;
 import java.util.Objects;
