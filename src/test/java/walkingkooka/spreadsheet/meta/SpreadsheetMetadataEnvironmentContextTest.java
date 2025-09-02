@@ -37,8 +37,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting2<SpreadsheetMetadataEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataEnvironmentContext> {
 
-    private final static Locale LOCALE = SpreadsheetMetadataTesting.LOCALE;
-
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
         12,
@@ -50,7 +48,7 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
     private final static EnvironmentContext CONTEXT = EnvironmentContexts.empty(
-        LOCALE,
+        Locale.FRENCH,
         () -> NOW,
         Optional.of(USER)
     );
@@ -85,7 +83,17 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     }
 
     @Test
-    public void testEnvironmentValue() {
+    public void testEnvironmentValueWrappedContextFirst() {
+        final EnvironmentValueName<Locale> name = EnvironmentValueName.LOCALE;
+
+        this.environmentValueAndCheck(
+            name,
+            CONTEXT.locale()
+        );
+    }
+
+    @Test
+    public void testEnvironmentValueDefaultsToSpreadsheetMetadata() {
         final SpreadsheetMetadataPropertyName<Integer> property = SpreadsheetMetadataPropertyName.PRECISION;
 
         this.environmentValueAndCheck(
@@ -96,6 +104,8 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
 
     @Test
     public void testEnvironmentValueNames() {
+        final Locale locale = Locale.GERMAN;
+
         this.environmentValueNamesAndCheck(
             SpreadsheetMetadata.EMPTY
                 .set(
@@ -106,24 +116,18 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
                     SpreadsheetName.with("Hello-spreadsheet-123")
                 ).set(
                     SpreadsheetMetadataPropertyName.LOCALE,
-                    LOCALE
+                    locale
                 ).setDefaults(
                     SpreadsheetMetadata.EMPTY
                         .set(
                             SpreadsheetMetadataPropertyName.LOCALE,
-                            LOCALE
+                            locale
                         ).set(
                             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
                             RoundingMode.FLOOR
                         )
                 ).environmentContext(
-                    EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            LOCALE,
-                            LocalDateTime::now,
-                            EnvironmentContext.ANONYMOUS
-                        )
-                    )
+                    EnvironmentContexts.map(CONTEXT)
                 ),
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.toEnvironmentValueName(),

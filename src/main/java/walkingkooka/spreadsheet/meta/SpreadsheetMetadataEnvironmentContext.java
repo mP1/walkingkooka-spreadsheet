@@ -59,18 +59,22 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         return this.environmentValueOrFail(EnvironmentValueName.LOCALE);
     }
 
+    /**
+     * Try wrapped {@link EnvironmentContext} and then defaulting to given {@link SpreadsheetMetadata}.
+     */
     @Override
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        Optional<T> value = Optional.empty();
+        Optional<T> value = this.context.environmentValue(name);
+        if (value.isEmpty()) {
+            final String stringName = name.value();
+            SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.tryWith(stringName)
+                .orElse(null);
 
-        final String stringName = name.value();
-        SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.tryWith(stringName)
-            .orElse(null);
-
-        if (null != propertyName) {
-            value = Cast.to(
-                this.metadata.get(propertyName)
-            );
+            if (null != propertyName) {
+                value = Cast.to(
+                    this.metadata.get(propertyName)
+                );
+            }
         }
 
         return value;
