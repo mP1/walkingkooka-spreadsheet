@@ -375,6 +375,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
+    public Locale locale() {
+        return this.spreadsheetConverterContext.locale();
+    }
+
+    @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         this.spreadsheetConverterContext.setLocale(locale);
         return this;

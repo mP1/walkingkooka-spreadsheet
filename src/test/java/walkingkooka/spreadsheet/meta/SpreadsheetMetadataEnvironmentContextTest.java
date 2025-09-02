@@ -37,6 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting2<SpreadsheetMetadataEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataEnvironmentContext> {
 
+    private final static Locale LOCALE = SpreadsheetMetadataTesting.LOCALE;
+
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
         12,
@@ -48,6 +50,7 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
     private final static EnvironmentContext CONTEXT = EnvironmentContexts.empty(
+        LOCALE,
         () -> NOW,
         Optional.of(USER)
     );
@@ -105,20 +108,23 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
                     SpreadsheetName.with("Hello-spreadsheet-123")
                 ).set(
                     SpreadsheetMetadataPropertyName.LOCALE,
-                    Locale.forLanguageTag("EN-AU")
+                    LOCALE
                 ).setDefaults(
                     SpreadsheetMetadata.EMPTY
                         .set(
                             SpreadsheetMetadataPropertyName.LOCALE,
-                            Locale.forLanguageTag("EN-AU")
+                            LOCALE
                         ).set(
                             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
                             RoundingMode.FLOOR
                         )
                 ).environmentContext(
-                    EnvironmentContexts.empty(
-                        LocalDateTime::now,
-                        EnvironmentContext.ANONYMOUS
+                    EnvironmentContexts.map(
+                        EnvironmentContexts.empty(
+                            LOCALE,
+                            LocalDateTime::now,
+                            EnvironmentContext.ANONYMOUS
+                        )
                     )
                 ),
             EnvironmentValueName.with("spreadsheetId"),
@@ -145,7 +151,7 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     public SpreadsheetMetadataEnvironmentContext createContext() {
         return SpreadsheetMetadataEnvironmentContext.with(
             SpreadsheetMetadataTesting.METADATA_EN_AU,
-            CONTEXT
+            EnvironmentContexts.map(CONTEXT)
         );
     }
 

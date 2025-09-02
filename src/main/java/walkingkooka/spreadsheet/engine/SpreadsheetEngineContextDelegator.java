@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -41,6 +42,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -149,6 +151,15 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     @Override
     default LocaleContext localeContext() {
         return this.spreadsheetEngineContext();
+    }
+
+    /**
+     * Prefers {@link EnvironmentContext#locale()} over {@link LocaleContext}.
+     */
+    @Override
+    default Locale locale() {
+        return this.environmentContext()
+            .locale();
     }
 
     @Override

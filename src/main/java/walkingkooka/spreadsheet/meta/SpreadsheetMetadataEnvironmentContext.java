@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -48,6 +49,24 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
                                                   final EnvironmentContext context) {
         this.metadata = metadata;
         this.context = context;
+
+        final Locale locale = metadata.get(SpreadsheetMetadataPropertyName.LOCALE)
+            .orElse(null);
+
+        if (null != locale) {
+            context.setEnvironmentValue(
+                EnvironmentValueName.LOCALE,
+                locale
+            );
+        }
+    }
+
+    /**
+     * This always returns the {@link SpreadsheetMetadata#locale()}.
+     */
+    @Override
+    public Locale locale() {
+        return this.context.locale();
     }
 
     @Override

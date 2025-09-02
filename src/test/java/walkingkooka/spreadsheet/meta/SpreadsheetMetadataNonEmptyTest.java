@@ -1806,10 +1806,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.environmentValueAndCheck(
             SpreadsheetMetadata.EMPTY
                 .set(propertyName, precision)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .environmentContext(
-                    EnvironmentContexts.empty(
-                        NOW,
-                        EnvironmentContext.ANONYMOUS
+                    EnvironmentContexts.map(
+                        EnvironmentContexts.empty(
+                            LOCALE_CONTEXT.locale(),
+                            NOW,
+                            EnvironmentContext.ANONYMOUS
+                        )
                     )
                 ),
             EnvironmentValueName.with(

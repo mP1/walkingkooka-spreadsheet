@@ -170,6 +170,11 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     // ProviderContextDelegator.........................................................................................
 
     @Override
+    public Locale locale() {
+        return this.spreadsheetEngineContext.locale();
+    }
+
+    @Override
     public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                             final T value) {
         this.spreadsheetEngineContext.setEnvironmentValue(name, value);

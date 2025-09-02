@@ -35,8 +35,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStores;
-import walkingkooka.props.Properties;
-import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
@@ -379,6 +377,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
     EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.empty(
+        LOCALE,
         NOW,
         Optional.of(USER)
     );
@@ -394,6 +393,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             JSON_NODE_UNMARSHALL_CONTEXT
         ),
         SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            LOCALE
+        ).set(
             SpreadsheetMetadataPropertyName.DATE_FORMATTER,
             METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
         ).set(
@@ -421,13 +423,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.TIME_PARSER,
             METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
         ).environmentContext(
-
-            EnvironmentContexts.properties(
-                Properties.EMPTY.set(
-                    PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
-                    DUMMY_ENVIRONMENTAL_VALUE
-                ),
+            EnvironmentContexts.map(
                 ENVIRONMENT_CONTEXT
+            ).setEnvironmentValue(
+                DUMMY_ENVIRONMENTAL_VALUE_NAME,
+                DUMMY_ENVIRONMENTAL_VALUE
             )
         ),
         LOCALE_CONTEXT
