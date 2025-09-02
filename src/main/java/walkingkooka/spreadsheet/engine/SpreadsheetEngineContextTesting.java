@@ -532,6 +532,14 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Test
+    @Override
+    default void testSetLocaleWithNullFails() {
+        ProviderContextTesting.super.testSetLocaleWithNullFails();
+    }
+
     // TypeNameTesting .................................................................................................
 
     @Override

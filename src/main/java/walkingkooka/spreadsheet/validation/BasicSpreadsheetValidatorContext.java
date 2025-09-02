@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.ValidatorContextDelegator;
 
+import java.util.Locale;
 import java.util.Objects;
 
 final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
@@ -41,6 +42,12 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
         super();
 
         this.context = context;
+    }
+
+    @Override
+    public SpreadsheetValidatorContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
     }
 
     @Override

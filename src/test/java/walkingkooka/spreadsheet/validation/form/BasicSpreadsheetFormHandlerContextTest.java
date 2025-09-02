@@ -51,6 +51,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -506,6 +507,12 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                     );
                 }
 
+                @Override
+                public SpreadsheetEngineContext setLocale(final Locale locale) {
+                    Objects.requireNonNull(locale, "locale");
+
+                    throw new UnsupportedOperationException();
+                }
 
                 @Override
                 public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {

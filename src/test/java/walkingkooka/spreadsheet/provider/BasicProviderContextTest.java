@@ -74,6 +74,13 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         }
 
         @Override
+        public EnvironmentContext setLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public <T> EnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                           final T value) {
             Objects.requireNonNull(name, "name");

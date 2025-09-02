@@ -162,14 +162,12 @@ public interface SpreadsheetEngineContext extends Context,
     // EnvironmentContext...............................................................................................
 
     @Override
+    SpreadsheetEngineContext setLocale(final Locale locale);
+
+    @Override
     <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                      final T value);
 
     @Override
     SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name);
-
-    // LocaleContext....................................................................................................
-
-    @Override
-    SpreadsheetEngineContext setLocale(final Locale locale);
 }

@@ -338,6 +338,14 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Test
+    @Override
+    default void testSetLocaleWithNullFails() {
+        EnvironmentExpressionEvaluationContextTesting.super.testSetLocaleWithNullFails();
+    }
+
     // spreadsheetFormatterContext......................................................................................
 
     @Test

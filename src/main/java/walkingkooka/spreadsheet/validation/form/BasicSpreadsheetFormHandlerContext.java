@@ -44,6 +44,7 @@ import walkingkooka.validation.form.FormFieldList;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -240,6 +241,12 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     }
 
     // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
+    }
 
     @Override
     public <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
