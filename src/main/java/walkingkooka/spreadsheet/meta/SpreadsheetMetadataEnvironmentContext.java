@@ -105,14 +105,14 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
             final SortedSet<EnvironmentValueName<?>> names = metadata.value()
                 .keySet()
                 .stream()
-                .map(m -> EnvironmentValueName.with(m.value()))
+                .map(SpreadsheetMetadataPropertyName::toEnvironmentValueName)
                 .collect(Collectors.toCollection(SortedSets::tree));
 
             metadata.defaults()
                 .value()
                 .keySet()
                 .stream()
-                .map(m -> EnvironmentValueName.with(m.value()))
+                .map(SpreadsheetMetadataPropertyName::toEnvironmentValueName)
                 .forEach(names::add);
 
             this.names = SortedSets.immutable(names);

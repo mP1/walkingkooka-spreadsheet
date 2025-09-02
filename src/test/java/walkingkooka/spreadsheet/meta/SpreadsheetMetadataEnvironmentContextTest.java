@@ -89,9 +89,7 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
         final SpreadsheetMetadataPropertyName<Integer> property = SpreadsheetMetadataPropertyName.PRECISION;
 
         this.environmentValueAndCheck(
-            EnvironmentValueName.with(
-                property.value()
-            ),
+            property.toEnvironmentValueName(),
             SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(property)
         );
     }
@@ -127,10 +125,10 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
                         )
                     )
                 ),
-            EnvironmentValueName.with("spreadsheetId"),
-            EnvironmentValueName.with("spreadsheetName"),
-            EnvironmentValueName.with("locale"),
-            EnvironmentValueName.with("roundingMode")
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.toEnvironmentValueName(),
+            SpreadsheetMetadataPropertyName.LOCALE.toEnvironmentValueName(),
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName()
         );
     }
 
