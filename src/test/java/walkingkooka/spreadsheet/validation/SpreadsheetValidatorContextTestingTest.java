@@ -32,6 +32,7 @@ import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
@@ -67,6 +68,12 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         @Override
         public ConverterContext converterContext() {
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
+        }
+
+        @Override
+        public Locale locale() {
+            return this.environmentContext()
+                .locale();
         }
 
         @Override

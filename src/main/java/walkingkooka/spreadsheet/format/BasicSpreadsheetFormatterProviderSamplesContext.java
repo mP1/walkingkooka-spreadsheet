@@ -109,6 +109,11 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
     // ProviderContext..................................................................................................
 
     @Override
+    public Locale locale() {
+        return this.providerContext.locale();
+    }
+
+    @Override
     public <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                               final T value) {
         this.providerContext.setEnvironmentValue(

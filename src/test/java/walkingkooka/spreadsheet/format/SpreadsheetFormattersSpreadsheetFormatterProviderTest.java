@@ -47,6 +47,7 @@ import walkingkooka.validation.form.FormHandlerContexts;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest implements SpreadsheetFormatterProviderTesting<SpreadsheetFormattersSpreadsheetFormatterProvider>,
@@ -70,6 +71,11 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 value,
                 type
             );
+        }
+
+        @Override
+        public Locale locale() {
+            return SpreadsheetMetadataTesting.LOCALE;
         }
 
         @Override

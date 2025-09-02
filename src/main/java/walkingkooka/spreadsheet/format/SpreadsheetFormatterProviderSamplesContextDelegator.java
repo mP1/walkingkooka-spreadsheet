@@ -22,6 +22,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContextDelegator;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 public interface SpreadsheetFormatterProviderSamplesContextDelegator extends SpreadsheetFormatterProviderSamplesContext,
     SpreadsheetFormatterContextDelegator,
@@ -37,6 +38,12 @@ public interface SpreadsheetFormatterProviderSamplesContextDelegator extends Spr
     SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext();
 
     // ProviderContextDelegator.........................................................................................
+
+    @Override
+    default Locale locale() {
+        return this.environmentContext()
+            .locale();
+    }
 
     @Override
     default <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,

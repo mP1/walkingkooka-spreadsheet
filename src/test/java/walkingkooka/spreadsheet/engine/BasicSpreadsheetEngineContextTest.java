@@ -984,18 +984,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    @Test
-    public void testLocaleContextLocale() {
-        final Locale locale = Locale.GERMANY;
-
-        this.checkEquals(
-            locale,
-            this.createContext(locale)
-                .localeContext()
-                .locale()
-        );
-    }
-
     // environmentContext...............................................................................................
 
     @Test
@@ -1134,14 +1122,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final Locale locale) {
         return this.createContext(
-            locale,
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT.setEnvironmentValue(
+                EnvironmentValueName.LOCALE,
+                locale
+            )
         );
     }
 
     private BasicSpreadsheetEngineContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
-            LOCALE,
             ProviderContexts.basic(
                 ConverterContexts.fake(),
                 environmentContext,
@@ -1150,14 +1139,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final Locale locale,
-                                                        final ProviderContext providerContext) {
+    private BasicSpreadsheetEngineContext createContext(final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                locale
-            ),
+            METADATA,
             SpreadsheetStoreRepositories.basic(
                 SpreadsheetCellStores.treeMap(),
                 SpreadsheetCellReferencesStores.treeMap(),
@@ -1187,7 +1172,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     return this;
                 }
 
-                private Locale localLocale = locale;
+                private Locale localLocale = providerContext.locale();
             },
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,

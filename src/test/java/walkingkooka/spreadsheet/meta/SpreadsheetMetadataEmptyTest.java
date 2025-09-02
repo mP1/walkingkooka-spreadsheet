@@ -135,6 +135,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.environmentValueAndCheck(
             SpreadsheetMetadata.EMPTY.environmentContext(
                 EnvironmentContexts.empty(
+                    LOCALE_CONTEXT.locale(),
                     LocalDateTime::now,
                     EnvironmentContext.ANONYMOUS
                 )
