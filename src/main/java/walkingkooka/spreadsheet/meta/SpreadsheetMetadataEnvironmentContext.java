@@ -59,6 +59,12 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         return this.environmentValueOrFail(EnvironmentValueName.LOCALE);
     }
 
+    @Override
+    public EnvironmentContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
+    }
+
     /**
      * Try wrapped {@link EnvironmentContext} and then defaulting to given {@link SpreadsheetMetadata}.
      */

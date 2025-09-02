@@ -138,6 +138,12 @@ final class BasicProviderContext implements ProviderContext,
     }
 
     @Override
+    public ProviderContext setLocale(final Locale locale) {
+        this.environmentContext.setLocale(locale);
+        return this;
+    }
+
+    @Override
     public <T> ProviderContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                    final T value) {
         this.environmentContext.setEnvironmentValue(

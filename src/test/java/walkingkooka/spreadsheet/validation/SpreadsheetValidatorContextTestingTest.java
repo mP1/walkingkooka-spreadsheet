@@ -77,6 +77,12 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
+        public SpreadsheetValidatorContext setLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public <T> TestSpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                        final T value) {
             Objects.requireNonNull(name, "name");

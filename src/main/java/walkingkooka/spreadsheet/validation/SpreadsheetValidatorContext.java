@@ -25,7 +25,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 
+import java.util.Locale;
+
 public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
+
+    @Override
+    SpreadsheetValidatorContext setLocale(final Locale locale);
 
     @Override
     <T> SpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,

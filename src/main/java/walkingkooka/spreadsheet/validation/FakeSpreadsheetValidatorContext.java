@@ -22,10 +22,17 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.FakeValidatorContext;
 
+import java.util.Locale;
+
 public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<SpreadsheetExpressionReference> implements SpreadsheetValidatorContext {
 
     public FakeSpreadsheetValidatorContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetValidatorContext setLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
