@@ -46,7 +46,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextDelegator;
 import walkingkooka.validation.form.Form;
-import walkingkooka.validation.form.function.FormHandlerExpressionEvaluationContextDelegator;
+import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextDelegator;
 
 import java.util.Locale;
 import java.util.Optional;
