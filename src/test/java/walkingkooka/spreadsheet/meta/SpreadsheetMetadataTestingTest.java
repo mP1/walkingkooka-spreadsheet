@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -26,12 +27,35 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
     TreePrintableTesting {
 
     @Test
     public void testEffectiveStyle() {
         METADATA_EN_AU.effectiveStyle();
+    }
+
+    @Test
+    public void testEnvironmentContextSetEnvironmentValueFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> ENVIRONMENT_CONTEXT.setEnvironmentValue(
+                EnvironmentValueName.with("Hello"),
+                "World"
+            )
+        );
+    }
+
+    @Test
+    public void testEnvironmentContextRemoveEnvironmentValueFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> ENVIRONMENT_CONTEXT.removeEnvironmentValue(
+                EnvironmentValueName.with("Hello")
+            )
+        );
     }
 
     @Test
@@ -79,6 +103,27 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             ),
             SpreadsheetMetadataTesting.parseFormula(
                 "=1"
+            )
+        );
+    }
+
+    @Test
+    public void testProviderContextSetEnvironmentValueFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> PROVIDER_CONTEXT.setEnvironmentValue(
+                EnvironmentValueName.with("Hello"),
+                "World"
+            )
+        );
+    }
+
+    @Test
+    public void testProviderContextRemoveEnvironmentValueFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> PROVIDER_CONTEXT.removeEnvironmentValue(
+                EnvironmentValueName.with("Hello")
             )
         );
     }

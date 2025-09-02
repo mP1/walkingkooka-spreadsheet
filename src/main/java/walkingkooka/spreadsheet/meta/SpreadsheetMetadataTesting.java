@@ -35,6 +35,8 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStores;
+import walkingkooka.props.Properties;
+import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
@@ -423,11 +425,12 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.TIME_PARSER,
             METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
         ).environmentContext(
-            EnvironmentContexts.map(
+            EnvironmentContexts.properties( // properties EnvironmentContext is immutable
+                Properties.EMPTY.set(
+                    PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
+                    DUMMY_ENVIRONMENTAL_VALUE
+                ),
                 ENVIRONMENT_CONTEXT
-            ).setEnvironmentValue(
-                DUMMY_ENVIRONMENTAL_VALUE_NAME,
-                DUMMY_ENVIRONMENTAL_VALUE
             )
         ),
         LOCALE_CONTEXT
