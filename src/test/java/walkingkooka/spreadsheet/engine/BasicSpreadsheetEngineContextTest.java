@@ -364,9 +364,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 LOCALE_CONTEXT,
+                TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -381,9 +381,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 LOCALE_CONTEXT,
+                TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -398,9 +398,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 FUNCTION_ALIASES,
                 LOCALE_CONTEXT,
+                TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -415,9 +415,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 null,
                 LOCALE_CONTEXT,
+                TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -432,43 +432,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 null,
+                TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetProviderFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
-                METADATA,
-                STORE_REPOSITORY,
-                FUNCTION_ALIASES,
-                LOCALE_CONTEXT,
-                null,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullProviderContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
-                METADATA,
-                STORE_REPOSITORY,
-                FUNCTION_ALIASES,
-                LOCALE_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                null,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -483,8 +449,42 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 LOCALE_CONTEXT,
+                null,
                 SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                TERMINAL_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                LOCALE_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
                 null
             )
         );
@@ -1176,6 +1176,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
                 private Locale localLocale = locale;
             },
+            TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -1187,8 +1188,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ),
-            providerContext,
-            TERMINAL_CONTEXT
+            providerContext
         );
     }
 
@@ -1716,6 +1716,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             repository,
             FUNCTION_ALIASES,
             LOCALE_CONTEXT,
+            TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
@@ -1727,8 +1728,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
             ),
-            PROVIDER_CONTEXT,
-            TERMINAL_CONTEXT
+            PROVIDER_CONTEXT
         );
     }
 

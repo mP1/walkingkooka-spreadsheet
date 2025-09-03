@@ -88,17 +88,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final LocaleContext localeContext,
+                                              final TerminalContext terminalContext,
                                               final SpreadsheetProvider spreadsheetProvider,
-                                              final ProviderContext providerContext,
-                                              final TerminalContext terminalContext) {
+                                              final ProviderContext providerContext) {
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
-        Objects.requireNonNull(terminalContext, "terminalContext");
 
         return new BasicSpreadsheetEngineContext(
             serverUrl,
@@ -106,9 +106,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             storeRepository,
             functionAliases,
             localeContext,
+            terminalContext,
             spreadsheetProvider,
-            providerContext,
-            terminalContext
+            providerContext
         );
     }
 
@@ -120,9 +120,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetStoreRepository storeRepository,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                           final LocaleContext localeContext,
+                                          final TerminalContext terminalContext,
                                           final SpreadsheetProvider spreadsheetProvider,
-                                          final ProviderContext providerContext,
-                                          final TerminalContext terminalContext) {
+                                          final ProviderContext providerContext) {
         super();
 
         this.serverUrl = serverUrl;
@@ -138,9 +138,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.functionAliases = functionAliases;
 
         this.localeContext = metadata.localeContext(localeContext);
+        this.terminalContext = terminalContext;
+
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
-        this.terminalContext = terminalContext;
     }
 
     @Override
@@ -180,9 +181,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.storeRepository,
                 functionAliases,
                 this.localeContext,
+                this.terminalContext,
                 this.spreadsheetProvider,
-                this.providerContext,
-                this.terminalContext
+                this.providerContext
             );
     }
 
@@ -471,15 +472,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final LocaleContext localeContext;
 
-    // SpreadsheetProvider..............................................................................................
-
-    @Override
-    public SpreadsheetProvider spreadsheetProvider() {
-        return this.spreadsheetProvider;
-    }
-
-    private final SpreadsheetProvider spreadsheetProvider;
-
     // EnvironmentContextDelegator......................................................................................
 
     @Override
@@ -505,6 +497,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public EnvironmentContext environmentContext() {
         return this.providerContext;
     }
+
+    // SpreadsheetProvider..............................................................................................
+
+    @Override
+    public SpreadsheetProvider spreadsheetProvider() {
+        return this.spreadsheetProvider;
+    }
+
+    private final SpreadsheetProvider spreadsheetProvider;
 
     // ProviderContext..................................................................................................
 
