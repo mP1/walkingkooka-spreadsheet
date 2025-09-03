@@ -108,9 +108,8 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 TERMINAL_CONTEXT
             ),
             SPREADSHEET_LABEL_NAME_RESOLVER,
-            CONVERTER_PROVIDER,
-            SPREADSHEET_FORMATTER_PROVIDER,
             LOCALE_CONTEXT,
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         ),
         PROVIDER_CONTEXT
@@ -2164,9 +2163,8 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
-            CONVERTER_PROVIDER,
-            SPREADSHEET_FORMATTER_PROVIDER,
             LOCALE_CONTEXT,
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
     }

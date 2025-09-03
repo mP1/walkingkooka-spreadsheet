@@ -23,12 +23,14 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -40,6 +42,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -47,6 +50,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
@@ -79,6 +83,8 @@ import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -390,18 +396,27 @@ public class TestGwtTest extends GWTTestCase {
                                 PROVIDER_CONTEXT
                         )
                 ).format(
-                        value,
-                        metadata.spreadsheetFormatterContext(
-                                Optional.of(cell),
-                                (final Optional<Object> v) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                LABEL_NAME_RESOLVER,
-                                converterProvider,
-                                spreadsheetFormatterProvider,
-                                this.localeContext,
-                                PROVIDER_CONTEXT
-                        )
+                    value,
+                    metadata.spreadsheetFormatterContext(
+                        Optional.of(cell),
+                        (final Optional<Object> v) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        LABEL_NAME_RESOLVER,
+                        this.localeContext,
+                        SpreadsheetProviders.basic(
+                            converterProvider,
+                            ExpressionFunctionProviders.fake(),
+                            SpreadsheetComparatorProviders.fake(),
+                            SpreadsheetExporterProviders.fake(),
+                            spreadsheetFormatterProvider,
+                            FormHandlerProviders.fake(),
+                            SpreadsheetImporterProviders.fake(),
+                            SpreadsheetParserProviders.fake(),
+                            ValidatorProviders.fake()
+                        ),
+                        PROVIDER_CONTEXT
+                    )
                 );
             }
 

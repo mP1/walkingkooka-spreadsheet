@@ -57,6 +57,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterAliasSet;
+import walkingkooka.spreadsheet.export.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterSelector;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -73,9 +74,11 @@ import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserT
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
@@ -90,6 +93,7 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -102,8 +106,10 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.WordWrap;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorProviders;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.BigDecimal;
@@ -2012,15 +2018,24 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 LABEL_NAME_RESOLVER,
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    (ProviderContext p) -> metadata.dateTimeConverter(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        p
-                    )
-                ),
-                SPREADSHEET_FORMATTER_PROVIDER,
                 LOCALE_CONTEXT,
+                SpreadsheetProviders.basic(
+                    SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        (ProviderContext p) -> metadata.dateTimeConverter(
+                            SPREADSHEET_FORMATTER_PROVIDER,
+                            SPREADSHEET_PARSER_PROVIDER,
+                            p
+                        )
+                    ),
+                    ExpressionFunctionProviders.fake(),
+                    SpreadsheetComparatorProviders.fake(),
+                    SpreadsheetExporterProviders.fake(),
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SpreadsheetImporterProviders.fake(),
+                    SpreadsheetParserProviders.fake(),
+                    ValidatorProviders.fake()
+                ),
                 PROVIDER_CONTEXT
             )
         );
@@ -2046,15 +2061,24 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 LABEL_NAME_RESOLVER,
-                SpreadsheetConvertersConverterProviders.spreadsheetConverters(
-                    (ProviderContext p) -> metadata.dateTimeConverter(
-                        SPREADSHEET_FORMATTER_PROVIDER,
-                        SPREADSHEET_PARSER_PROVIDER,
-                        p
-                    )
-                ),
-                SPREADSHEET_FORMATTER_PROVIDER,
                 LOCALE_CONTEXT,
+                SpreadsheetProviders.basic(
+                    SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        (ProviderContext p) -> metadata.dateTimeConverter(
+                            SPREADSHEET_FORMATTER_PROVIDER,
+                            SPREADSHEET_PARSER_PROVIDER,
+                            p
+                        )
+                    ),
+                    ExpressionFunctionProviders.fake(),
+                    SpreadsheetComparatorProviders.fake(),
+                    SpreadsheetExporterProviders.fake(),
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SpreadsheetImporterProviders.fake(),
+                    SpreadsheetParserProviders.fake(),
+                    ValidatorProviders.fake()
+                ),
                 PROVIDER_CONTEXT
             )
         );

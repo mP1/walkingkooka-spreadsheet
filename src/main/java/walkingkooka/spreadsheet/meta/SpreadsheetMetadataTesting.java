@@ -456,38 +456,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
         SPREADSHEET_FORMULA_CONVERTER_CONTEXT
     );
 
-    Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
-        (final Optional<Object> value) -> {
-            Objects.requireNonNull(value, "value");
-            throw new UnsupportedOperationException();
-        };
-
-    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
-        SpreadsheetMetadata.NO_CELL,
-        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-        SPREADSHEET_LABEL_NAME_RESOLVER,
-        CONVERTER_PROVIDER,
-        SPREADSHEET_FORMATTER_PROVIDER,
-        LOCALE_CONTEXT,
-        PROVIDER_CONTEXT
-    );
-
-    SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
-        SpreadsheetMetadata.NO_CELL,
-        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-        SPREADSHEET_LABEL_NAME_RESOLVER,
-        CONVERTER_PROVIDER,
-        SPREADSHEET_FORMATTER_PROVIDER,
-        LOCALE_CONTEXT,
-        PROVIDER_CONTEXT
-    );
-
-    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
-        SpreadsheetMetadata.NO_CELL,
-        LOCALE_CONTEXT,
-        NOW
-    );
-
     SpreadsheetProvider SPREADSHEET_PROVIDER = METADATA_EN_AU.spreadsheetProvider(
         SpreadsheetProviders.basic(
             CONVERTER_PROVIDER,
@@ -500,6 +468,36 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SPREADSHEET_PARSER_PROVIDER,
             VALIDATOR_PROVIDER
         )
+    );
+
+    Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION =
+        (final Optional<Object> value) -> {
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
+        };
+
+    SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
+        SpreadsheetMetadata.NO_CELL,
+        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        LOCALE_CONTEXT,
+        SPREADSHEET_PROVIDER,
+        PROVIDER_CONTEXT
+    );
+
+    SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
+        SpreadsheetMetadata.NO_CELL,
+        FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        SPREADSHEET_LABEL_NAME_RESOLVER,
+        LOCALE_CONTEXT,
+        SPREADSHEET_PROVIDER,
+        PROVIDER_CONTEXT
+    );
+
+    SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
+        SpreadsheetMetadata.NO_CELL,
+        LOCALE_CONTEXT,
+        NOW
     );
 
     static SpreadsheetFormula parseFormula(final String text) {
