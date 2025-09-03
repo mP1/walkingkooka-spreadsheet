@@ -238,41 +238,33 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
 
-        {
-            final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
-            final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
+        final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
+        final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
 
-            // lazily create SpreadsheetConverterContext & ExpressionFunctionProvider, these can be shared even when
-            // the $cell changes
-            if (null == this.expressionFunctionProvider) {
-                this.expressionFunctionProvider = metadata.expressionFunctionProvider(
-                    functionAliases,
-                    spreadsheetProvider
-                );
-            }
+        if (null == this.expressionFunctionProvider) {
+            this.expressionFunctionProvider = metadata.expressionFunctionProvider(
+                functionAliases,
+                spreadsheetProvider
+            );
+        }
 
-            if (null == this.spreadsheetConverterContext) {
-                this.spreadsheetConverterContext = metadata.spreadsheetConverterContext(
-                    cell,
-                    SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                    functionAliases.toConverterSelector(),
-                    this, // SpreadsheetLabelNameResolver,
-                    spreadsheetProvider, // SpreadsheetConverterProvider
-                    this, // LocaleContext
-                    this.providerContext
-                );
-            }
+        final SpreadsheetConverterContext spreadsheetConverterContext = metadata.spreadsheetConverterContext(
+            cell,
+            SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+            functionAliases.toConverterSelector(),
+            this, // SpreadsheetLabelNameResolver,
+            spreadsheetProvider, // SpreadsheetConverterProvider
+            this, // LocaleContext
+            this.providerContext
+        );
 
-            if (null == this.formHandlerContext) {
-                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
-                if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
-                    // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
-                    // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
-                    this.formHandlerContext = FormHandlerContexts.fake();
-                } else {
-                    this.formHandlerContext = FormHandlerContexts.fake();
-                }
-            }
+        final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
+        if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
+            // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
+            formHandlerContext = FormHandlerContexts.fake();
+        } else {
+            formHandlerContext = FormHandlerContexts.fake();
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
@@ -281,9 +273,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             this.serverUrl,
             metadata,
             this.storeRepository,
-            this.spreadsheetConverterContext,
+            spreadsheetConverterContext,
             (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
-            this.formHandlerContext,
+            formHandlerContext,
             this.expressionFunctionProvider,
             this.providerContext, // ProviderContext
             this.terminalContext
@@ -292,19 +284,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases;
 
-    /**
-     * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
-     */
-    private SpreadsheetConverterContext spreadsheetConverterContext;
-
-    /**
-     * Cached {@link FormHandlerContext}.
-     */
-    private FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
-
-    /**
-     * Cache and share with all future {@link SpreadsheetExpressionEvaluationContext}.
-     */
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     private final TerminalContext terminalContext;
