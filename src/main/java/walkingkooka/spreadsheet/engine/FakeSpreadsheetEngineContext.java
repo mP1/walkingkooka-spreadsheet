@@ -23,7 +23,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.plugin.store.PluginStore;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -166,7 +166,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    // ProviderContext..................................................................................................
+    // EnvironmentContext...............................................................................................
 
     @Override
     public boolean canConvert(final Object value,
@@ -201,8 +201,10 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    // ProviderContext..................................................................................................
+
     @Override
-    public PluginStore pluginStore() {
+    public ProviderContext providerContext() {
         throw new UnsupportedOperationException();
     }
 

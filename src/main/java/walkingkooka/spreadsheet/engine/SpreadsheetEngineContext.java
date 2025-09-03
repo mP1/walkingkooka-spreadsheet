@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
+import walkingkooka.convert.CanConvert;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -56,14 +58,16 @@ import java.util.Optional;
  * mentioned.
  */
 public interface SpreadsheetEngineContext extends Context,
+    CanConvert,
     ExpressionPurityContext,
     HasSpreadsheetMetadata,
     HasNow,
     LocaleContext,
     SpreadsheetProvider,
-    ProviderContext,
+    EnvironmentContext,
     SpreadsheetLabelNameResolver,
-    HasMissingCellNumberValue {
+    HasMissingCellNumberValue,
+    HasProviderContext {
 
     /**
      * Useful constant for some members that require a {@link SpreadsheetCell}.

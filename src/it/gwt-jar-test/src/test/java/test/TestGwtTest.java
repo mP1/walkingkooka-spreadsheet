@@ -471,6 +471,11 @@ public class TestGwtTest extends GWTTestCase {
                     ),
                     SpreadsheetUserStores.fake()
             );
+
+            @Override
+            public ProviderContext providerContext() {
+                return ProviderContexts.fake();
+            }
         };
     }
 

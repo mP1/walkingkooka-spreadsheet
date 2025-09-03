@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -32,11 +31,6 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
     final static class TestSpreadsheetEngineContextDelegator implements SpreadsheetEngineContextDelegator {
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public PluginStore pluginStore() {
             throw new UnsupportedOperationException();
         }
 

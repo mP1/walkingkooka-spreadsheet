@@ -19,9 +19,10 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
+import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.ProviderContextTesting;
+import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -47,7 +48,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
     ParserTesting,
     LocaleContextTesting2<C>,
-    ProviderContextTesting<C>,
+    EnvironmentContextTesting2<C>,
+    HasProviderContextTesting,
     SpreadsheetProviderTesting<C>,
     SpreadsheetLabelNameResolverTesting<C> {
 
@@ -537,7 +539,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     @Test
     @Override
     default void testSetLocaleWithNullFails() {
-        ProviderContextTesting.super.testSetLocaleWithNullFails();
+        EnvironmentContextTesting2.super.testSetLocaleWithNullFails();
     }
 
     // TypeNameTesting .................................................................................................

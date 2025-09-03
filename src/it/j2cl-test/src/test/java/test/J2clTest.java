@@ -485,6 +485,11 @@ public class J2clTest {
                     ),
                     SpreadsheetUserStores.fake()
             );
+
+            @Override
+            public ProviderContext providerContext() {
+                return ProviderContexts.fake();
+            }
         };
     }
 

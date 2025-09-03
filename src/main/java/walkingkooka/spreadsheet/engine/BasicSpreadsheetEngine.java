@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -764,6 +765,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             throw new IllegalArgumentException("Invalid comparators: " + missing);
         }
 
+        final ProviderContext providerContext = context.providerContext();
+
         final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = columnOrRowAndComparatorNames.stream()
             .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                     n.columnOrRow(),
@@ -775,7 +778,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     context.spreadsheetComparator(
                                         nad.name(),
                                         Lists.empty(),
-                                        context // ProviderContext
+                                        providerContext
                                     )
                                 )
                         ).collect(Collectors.toList())
@@ -789,7 +792,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context, // ConverterProvider
                 context, // SpreadsheetLabelNameResolver
                 context, // LocaleContext
-                context // ProviderContext
+                providerContext// ProviderContext
             )
         );
     }
@@ -1247,7 +1250,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         () -> context.spreadsheetMetadata()
                             .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
                     ),
-                context // ProviderContext
+                context.providerContext()
             );
 
             final SpreadsheetFormHandlerContext formHandlerContext = this.formHandlerContext(
@@ -1356,7 +1359,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         () -> context.spreadsheetMetadata()
                             .getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER)
                     ),
-                context // ProviderContext
+                context.providerContext()
             );
 
             final SpreadsheetFormHandlerContext formHandlerContext = this.formHandlerContext(
@@ -1643,19 +1646,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     .orElse(null);
                 if (null == token) {
                     final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+                    final ProviderContext providerContext = context.providerContext();
 
                     formula = SpreadsheetFormula.parse(
                         TextCursors.charSequence(formulaText),
                         cell.parser()
                             .map(p -> context.spreadsheetParser(
                                     p,
-                                    context
+                                providerContext
                                 )
                             ).orElseGet(
                                 () -> SpreadsheetFormulaParsers.valueOrExpression(
                                     metadata.spreadsheetParser(
                                         context, // SpreadsheetParserProvider
-                                        context // ProviderContext
+                                        providerContext
                                     ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
                                 )
                             ),
@@ -1788,9 +1792,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                              final ValidatorSelector validatorSelector,
                                              final SpreadsheetExpressionReferenceLoader loader,
                                              final SpreadsheetEngineContext context) {
+        final ProviderContext providerContext = context.providerContext();
         final Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext> validator = context.validator(
             validatorSelector,
-            context // providerContext
+            providerContext
         );
 
         final SpreadsheetFormula formula = cell.formula();
@@ -1815,12 +1820,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         value.orElse(null), // unwrap Optionals
                         metadata.spreadsheetValidatorContext(
                             cell.reference(), // reference
-                            (final ValidatorSelector v) -> context.validator(v, context),
+                            (final ValidatorSelector v) -> context.validator(
+                                v,
+                                providerContext
+                            ),
                             referenceToExpressionEvaluationContext,
                             context, // SpreadsheetLabelNameResolver
                             context, // ConverterProvider
                             context, // LocaleContext
-                            context // ProviderContext
+                            providerContext // ProviderContext
                         )
                     )
                 )

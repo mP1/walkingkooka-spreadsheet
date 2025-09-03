@@ -20,12 +20,15 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.CanConvertDelegator;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -73,7 +76,8 @@ import java.util.Set;
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     SpreadsheetProviderDelegator,
-    ProviderContextDelegator,
+    CanConvertDelegator,
+    EnvironmentContextDelegator,
     LocaleContextDelegator {
 
     /**
@@ -155,6 +159,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetMetadata metadata;
 
+    // CanConvertDelegator..............................................................................................
+
+    @Override
+    public CanConvert canConvert() {
+        return this.providerContext;
+    }
+
     // SpreadsheetEngineContext.........................................................................................
 
     @Override
@@ -192,7 +203,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return SpreadsheetFormulaParsers.valueOrExpression(
                 this.metadata.spreadsheetParser(
                     this, // SpreadsheetParserProvider
-                    this // ProviderContext
+                    this.providerContext // ProviderContext
                 )
             )
             .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -274,7 +285,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
             this.formHandlerContext,
             this.expressionFunctionProvider,
-            this, // ProviderContext
+            this.providerContext, // ProviderContext
             this.terminalContext
         );
     }
@@ -303,7 +314,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.spreadsheetProvider.expressionFunction(
             function,
             Lists.empty(),
-            this
+            this.providerContext
         ).isPure(this);
     }
 
@@ -321,12 +332,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetFormatter spreadsheetFormatter = formatter
             .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
                     selector,
-                    this
+                    this.providerContext
                 )
             ).orElseGet(
                 () -> metadata.spreadsheetFormatter(
                     spreadsheetProvider,
-                    this // ProviderContext
+                    this.providerContext
                 )
             );
 
@@ -453,7 +464,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             spreadsheetProvider, // ConverterProvider,
             spreadsheetProvider, // SpreadsheetFormatterProvider,
             this, // LocaleContext
-            this // ProviderContext
+            this.providerContext // ProviderContext
         );
     }
 
@@ -490,7 +501,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetProvider spreadsheetProvider;
 
-    // ProviderContextDelegator.........................................................................................
+    // EnvironmentContextDelegator......................................................................................
 
     @Override
     public Locale locale() {
@@ -510,6 +521,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.providerContext.removeEnvironmentValue(name);
         return this;
     }
+
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.providerContext;
+    }
+
+    // ProviderContext..................................................................................................
 
     @Override
     public ProviderContext providerContext() {
