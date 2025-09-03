@@ -17,12 +17,15 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.CanConvertDelegator;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -50,7 +53,8 @@ import java.util.Optional;
  */
 final class BasicSpreadsheetEngineSpreadsheetEngineContext implements SpreadsheetEngineContext,
     SpreadsheetProviderDelegator,
-    ProviderContextDelegator,
+    CanConvertDelegator,
+    EnvironmentContextDelegator,
     LocaleContextDelegator {
 
     static BasicSpreadsheetEngineSpreadsheetEngineContext with(final SpreadsheetEngineContext spreadsheetEngineContext,
@@ -147,6 +151,13 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         return this.spreadsheetEngineContext.isPure(expressionFunctionName);
     }
 
+    // CanConvertDelegator..............................................................................................
+
+    @Override
+    public CanConvert canConvert() {
+        return this.spreadsheetEngineContext;
+    }
+
     // LocaleContextDelegator...........................................................................................
 
     @Override
@@ -167,7 +178,7 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         return this.spreadsheetEngineContext;
     }
 
-    // ProviderContextDelegator.........................................................................................
+    // EnvironmentContextDelegator......................................................................................
 
     @Override
     public Locale locale() {
@@ -188,11 +199,18 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     @Override
-    public ProviderContext providerContext() {
+    public EnvironmentContext environmentContext() {
         return this.spreadsheetEngineContext;
     }
 
     private final SpreadsheetEngineContext spreadsheetEngineContext;
+
+    // ProviderContext..................................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.spreadsheetEngineContext.providerContext();
+    }
 
     // Object...........................................................................................................
 

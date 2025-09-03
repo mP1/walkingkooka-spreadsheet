@@ -24,6 +24,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -576,6 +577,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                         selector,
                         context
                     );
+            }
+
+            @Override
+            public ProviderContext providerContext() {
+                return ProviderContexts.fake();
             }
         };
     }

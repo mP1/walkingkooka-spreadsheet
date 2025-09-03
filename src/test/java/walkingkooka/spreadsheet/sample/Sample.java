@@ -483,6 +483,11 @@ public final class Sample {
                 ),
                 SpreadsheetUserStores.fake()
             );
+
+            @Override
+            public ProviderContext providerContext() {
+                return ProviderContexts.fake();
+            }
         };
     }
 

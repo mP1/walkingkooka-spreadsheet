@@ -17,13 +17,15 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -50,7 +52,8 @@ import java.util.Optional;
  * Note {@link #resolveLabel(SpreadsheetLabelName)} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
-    ProviderContextDelegator,
+    CanConvertDelegator,
+    EnvironmentContextDelegator,
     SpreadsheetProviderDelegator,
     LocaleContextDelegator {
 
@@ -144,7 +147,12 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default ProviderContext providerContext() {
+    default CanConvert canConvert() {
+        return this.spreadsheetEngineContext();
+    }
+
+    @Override
+    default EnvironmentContext environmentContext() {
         return this.spreadsheetEngineContext();
     }
 
@@ -178,6 +186,12 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
         this.spreadsheetEngineContext()
             .removeEnvironmentValue(name);
         return this;
+    }
+
+    @Override
+    default ProviderContext providerContext() {
+        return this.spreadsheetEngineContext()
+            .providerContext();
     }
 
     SpreadsheetEngineContext spreadsheetEngineContext();

@@ -102,7 +102,10 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         return SpreadsheetValidatorContexts.basic(
             ValidatorContexts.basic(
                 reference,
-                (final ValidatorSelector validatorSelector) -> context.validator(validatorSelector, context),
+                (final ValidatorSelector validatorSelector) -> context.validator(
+                    validatorSelector,
+                    context.providerContext()
+                ),
                 (final Object validatingValue,
                  final SpreadsheetExpressionReference r) -> context.spreadsheetExpressionEvaluationContext(
                     cell,
