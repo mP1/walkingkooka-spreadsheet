@@ -151,7 +151,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final AbsoluteUrl serverUrl;
 
-    // metadata.........................................................................................................
+    // HasSpreadsheetMetadata...........................................................................................
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
