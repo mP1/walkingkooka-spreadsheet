@@ -138,9 +138,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (label) -> {
                 throw new UnsupportedOperationException();
             },
-            CONVERTER_PROVIDER,
-            SPREADSHEET_FORMATTER_PROVIDER,
             LOCALE_CONTEXT,
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
     }

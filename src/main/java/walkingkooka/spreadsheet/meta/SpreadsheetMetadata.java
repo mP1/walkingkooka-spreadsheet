@@ -1183,16 +1183,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                         final ConverterProvider converterProvider,
-                                                                         final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                          final LocaleContext localeContext,
+                                                                         final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
-        Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider");
         Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1200,7 +1198,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         SpreadsheetFormatter spreadsheetFormatter;
         try {
             spreadsheetFormatter = this.spreadsheetFormatter(
-                spreadsheetFormatterProvider,
+                spreadsheetProvider,
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1215,7 +1213,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 labelNameResolver,
-                converterProvider,
+                spreadsheetProvider,
                 localeContext,
                 providerContext
             );
@@ -1238,7 +1236,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             spreadsheetFormatter,
             spreadsheetExpressionEvaluationContext,
             formatSpreadsheetConverterContext,
-            spreadsheetFormatterProvider,
+            spreadsheetProvider,
             providerContext
         );
     }
@@ -1251,18 +1249,16 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
                                                                                                        final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                                                       final ConverterProvider converterProvider,
-                                                                                                       final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                                                                        final LocaleContext localeContext,
+                                                                                                       final SpreadsheetProvider spreadsheetProvider,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
             this.spreadsheetFormatterContext(
                 cell,
                 spreadsheetExpressionEvaluationContext,
                 labelNameResolver,
-                converterProvider,
-                spreadsheetFormatterProvider,
                 localeContext,
+                spreadsheetProvider,
                 providerContext
             ),
             providerContext

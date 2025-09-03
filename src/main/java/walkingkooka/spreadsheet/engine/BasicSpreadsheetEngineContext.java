@@ -446,8 +446,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
-        final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
-
         return this.metadata.spreadsheetFormatterContext(
             cell,
             (final Optional<Object> v) -> this.spreadsheetEngineContext(
@@ -460,9 +458,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 v
             ),
             this, // SpreadsheetLabelNameResolver,
-            spreadsheetProvider, // ConverterProvider,
-            spreadsheetProvider, // SpreadsheetFormatterProvider,
             this, // LocaleContext
+            this.spreadsheetProvider,
             this.providerContext // ProviderContext
         );
     }
