@@ -72,6 +72,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -135,7 +136,6 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
@@ -474,138 +474,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static String TEST_VALUE = "BasicSpreadsheetEngineTestValue";
 
-    private final static ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = new FakeExpressionFunctionProvider<>() {
-
-        @Override
-        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                final List<?> values,
-                                                                                                final ProviderContext context) {
-            switch (name.value()) {
-                case TEST_NUMBER_PARAMETER:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return NUMBER.getOrFail(
-                                parameters,
-                                0
-                            );
-                        }
-
-                        private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("parameters")
-                            .required(ExpressionNumber.class)
-                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(NUMBER);
-                        }
-
-                        @Override
-                        public boolean isPure(final ExpressionPurityContext context) {
-                            return false;
-                        }
-                    };
-                case TEST_STRING_PARAMETER:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return STRING.getOrFail(
-                                parameters,
-                                0
-                            );
-                        }
-
-                        private final ExpressionFunctionParameter<String> STRING = ExpressionFunctionParameterName.with("parameters")
-                            .required(String.class)
-                            .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(STRING);
-                        }
-
-                        @Override
-                        public boolean isPure(final ExpressionPurityContext context) {
-                            return false;
-                        }
-                    };
-                case TEST_SUM:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return parameters.stream()
-                                .filter(Objects::nonNull)
-                                .map(ExpressionNumber.class::cast)
-                                .reduce(
-                                    context.expressionNumberKind()
-                                        .zero(),
-                                    (l, r) -> l.add(r, context)
-                                );
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                ExpressionFunctionParameterName.with("parameters")
-                                    .variable(Object.class)
-                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_FLATTEN_RESOLVE_REFERENCES)
-                            );
-                        }
-                    };
-                case TEST_VALUE:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return VALUE;
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                ExpressionFunctionParameterName.with("parameters")
-                                    .variable(Object.class)
-                            );
-                        }
-
-                        @Override
-                        public boolean isPure(final ExpressionPurityContext context) {
-                            return false;
-                        }
-                    };
-                default:
-                    throw new UnknownExpressionFunctionException(name);
-            }
-        }
-
-        @Override
-        public ExpressionFunctionInfoSet expressionFunctionInfos() {
-            return SpreadsheetExpressionFunctions.infoSet(
-                Sets.of(
-                    info(TEST_NUMBER_PARAMETER),
-                    info(TEST_STRING_PARAMETER),
-                    info(TEST_SUM),
-                    info(TEST_VALUE)
-                )
-            );
-        }
-
-        private ExpressionFunctionInfo info(final String name) {
-            return SpreadsheetExpressionFunctions.info(
-                Url.parseAbsolute("https://example.com/" + name),
-                SpreadsheetExpressionFunctions.name(name)
-            );
-        }
-
-        @Override
-        public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-            return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
-        }
-    };
-
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
@@ -667,6 +535,148 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private static Object VALUE;
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
+    private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
+        CONVERTER_PROVIDER,
+        new FakeExpressionFunctionProvider<>() {
+
+            @Override
+            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                    final List<?> values,
+                                                                                                    final ProviderContext context) {
+                switch (name.value()) {
+                    case TEST_NUMBER_PARAMETER:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return NUMBER.getOrFail(
+                                    parameters,
+                                    0
+                                );
+                            }
+
+                            private final ExpressionFunctionParameter<ExpressionNumber> NUMBER = ExpressionFunctionParameterName.with("parameters")
+                                .required(ExpressionNumber.class)
+                                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(NUMBER);
+                            }
+
+                            @Override
+                            public boolean isPure(final ExpressionPurityContext context) {
+                                return false;
+                            }
+                        };
+                    case TEST_STRING_PARAMETER:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return STRING.getOrFail(
+                                    parameters,
+                                    0
+                                );
+                            }
+
+                            private final ExpressionFunctionParameter<String> STRING = ExpressionFunctionParameterName.with("parameters")
+                                .required(String.class)
+                                .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES);
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(STRING);
+                            }
+
+                            @Override
+                            public boolean isPure(final ExpressionPurityContext context) {
+                                return false;
+                            }
+                        };
+                    case TEST_SUM:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return parameters.stream()
+                                    .filter(Objects::nonNull)
+                                    .map(ExpressionNumber.class::cast)
+                                    .reduce(
+                                        context.expressionNumberKind()
+                                            .zero(),
+                                        (l, r) -> l.add(r, context)
+                                    );
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameterName.with("parameters")
+                                        .variable(Object.class)
+                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_FLATTEN_RESOLVE_REFERENCES)
+                                );
+                            }
+                        };
+                    case TEST_VALUE:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return VALUE;
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameterName.with("parameters")
+                                        .variable(Object.class)
+                                );
+                            }
+
+                            @Override
+                            public boolean isPure(final ExpressionPurityContext context) {
+                                return false;
+                            }
+                        };
+                    default:
+                        throw new UnknownExpressionFunctionException(name);
+                }
+            }
+
+            @Override
+            public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                return SpreadsheetExpressionFunctions.infoSet(
+                    Sets.of(
+                        info(TEST_NUMBER_PARAMETER),
+                        info(TEST_STRING_PARAMETER),
+                        info(TEST_SUM),
+                        info(TEST_VALUE)
+                    )
+                );
+            }
+
+            private ExpressionFunctionInfo info(final String name) {
+                return SpreadsheetExpressionFunctions.info(
+                    Url.parseAbsolute("https://example.com/" + name),
+                    SpreadsheetExpressionFunctions.name(name)
+                );
+            }
+
+            @Override
+            public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
+            }
+        },
+        SPREADSHEET_COMPARATOR_PROVIDER,
+        SPREADSHEET_EXPORTER_PROVIDER,
+        SPREADSHEET_FORMATTER_PROVIDER,
+        FORM_HANDLER_PROVIDER,
+        SPREADSHEET_IMPORTER_PROVIDER,
+        SPREADSHEET_PARSER_PROVIDER,
+        VALIDATOR_PROVIDER
+    );
 
     // loadCells........................................................................................................
 
@@ -23599,17 +23609,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FORM_HANDLER_PROVIDER,
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
 
@@ -23640,17 +23640,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FORM_HANDLER_PROVIDER,
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
 
@@ -24472,17 +24462,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FORM_HANDLER_PROVIDER,
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
 
@@ -24515,17 +24495,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FORM_HANDLER_PROVIDER,
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
 
@@ -25337,17 +25307,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
     }

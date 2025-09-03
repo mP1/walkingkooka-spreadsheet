@@ -66,6 +66,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -148,160 +149,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
 
-    private final static ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> EXPRESSION_FUNCTION_PROVIDER = new ExpressionFunctionProvider<>() {
-
-        @Override
-        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                                final ProviderContext context) {
-            Objects.requireNonNull(selector, "selector");
-            Objects.requireNonNull(context, "context");
-
-            return selector.evaluateValueText(
-                this,
-                context
-            );
-        }
-
-        @Override
-        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                final List<?> values,
-                                                                                                final ProviderContext context) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(values, "values");
-            Objects.requireNonNull(context, "context");
-
-            switch (name.value()) {
-                case "xyz":
-                    return new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
-
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return parameters.stream()
-                                .mapToLong(p -> context.convertOrFail(p, Long.class))
-                                .sum();
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                ExpressionFunctionParameterName.with("parameters")
-                                    .variable(Object.class)
-                                    .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
-                            );
-                        }
-
-                        @Override
-                        public String toString() {
-                            return "xyz";
-                        }
-                    };
-                case TEST_CONTEXT_LOADCELL:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return context.loadCell(
-                                    (SpreadsheetCellReference) parameters.get(0)
-                                ).get()
-                                .formula()
-                                .errorOrValue()
-                                .get();
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                ExpressionFunctionParameterName.with("parameters")
-                                    .variable(Object.class)
-                                    .setKinds(
-                                        Sets.of(ExpressionFunctionParameterKind.EVALUATE)
-                                    )
-                            );
-                        }
-
-                        @Override
-                        public String toString() {
-                            return TEST_CONTEXT_LOADCELL;
-                        }
-                    };
-                case TEST_CONTEXT_SERVER_URL:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return context.serverUrl();
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                ExpressionFunctionParameterName.with("parameters")
-                                    .variable(Object.class)
-                            );
-                        }
-
-                        @Override
-                        public String toString() {
-                            return TEST_CONTEXT_SERVER_URL;
-                        }
-                    };
-                case TEST_CONTEXT_SPREADSHEET_METADATA:
-                    return new FakeExpressionFunction<>() {
-                        @Override
-                        public Object apply(final List<Object> parameters,
-                                            final SpreadsheetExpressionEvaluationContext context) {
-                            return context.spreadsheetMetadata();
-                        }
-
-                        @Override
-                        public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                            return Lists.of(
-                                ExpressionFunctionParameterName.with("parameters")
-                                    .variable(Object.class)
-                            );
-                        }
-
-                        @Override
-                        public String toString() {
-                            return TEST_CONTEXT_SPREADSHEET_METADATA;
-                        }
-                    };
-                default:
-                    throw new UnsupportedOperationException("Unknown function: " + name);
-            }
-        }
-
-        @Override
-        public ExpressionFunctionInfoSet expressionFunctionInfos() {
-            return SpreadsheetExpressionFunctions.infoSet(
-                Sets.of(
-                    SpreadsheetExpressionFunctions.info(
-                        Url.parseAbsolute("https://example.com/test/xyz"),
-                        SpreadsheetExpressionFunctions.name("xyz")
-                    ),
-                    SpreadsheetExpressionFunctions.info(
-                        Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
-                        SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
-                    ),
-                    SpreadsheetExpressionFunctions.info(
-                        Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
-                        SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
-                    ),
-                    SpreadsheetExpressionFunctions.info(
-                        Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
-                        SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
-                    )
-                )
-            );
-        }
-
-        @Override
-        public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-            return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
-        }
-    };
-
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
         .loadFromLocale(
@@ -351,6 +198,170 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     };
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
+    private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
+        CONVERTER_PROVIDER,
+        new ExpressionFunctionProvider<>() {
+
+            @Override
+            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
+                                                                                                    final ProviderContext context) {
+                Objects.requireNonNull(selector, "selector");
+                Objects.requireNonNull(context, "context");
+
+                return selector.evaluateValueText(
+                    this,
+                    context
+                );
+            }
+
+            @Override
+            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                    final List<?> values,
+                                                                                                    final ProviderContext context) {
+                Objects.requireNonNull(name, "name");
+                Objects.requireNonNull(values, "values");
+                Objects.requireNonNull(context, "context");
+
+                switch (name.value()) {
+                    case "xyz":
+                        return new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return parameters.stream()
+                                    .mapToLong(p -> context.convertOrFail(p, Long.class))
+                                    .sum();
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameterName.with("parameters")
+                                        .variable(Object.class)
+                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
+                                );
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "xyz";
+                            }
+                        };
+                    case TEST_CONTEXT_LOADCELL:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return context.loadCell(
+                                        (SpreadsheetCellReference) parameters.get(0)
+                                    ).get()
+                                    .formula()
+                                    .errorOrValue()
+                                    .get();
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameterName.with("parameters")
+                                        .variable(Object.class)
+                                        .setKinds(
+                                            Sets.of(ExpressionFunctionParameterKind.EVALUATE)
+                                        )
+                                );
+                            }
+
+                            @Override
+                            public String toString() {
+                                return TEST_CONTEXT_LOADCELL;
+                            }
+                        };
+                    case TEST_CONTEXT_SERVER_URL:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return context.serverUrl();
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameterName.with("parameters")
+                                        .variable(Object.class)
+                                );
+                            }
+
+                            @Override
+                            public String toString() {
+                                return TEST_CONTEXT_SERVER_URL;
+                            }
+                        };
+                    case TEST_CONTEXT_SPREADSHEET_METADATA:
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                return context.spreadsheetMetadata();
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameterName.with("parameters")
+                                        .variable(Object.class)
+                                );
+                            }
+
+                            @Override
+                            public String toString() {
+                                return TEST_CONTEXT_SPREADSHEET_METADATA;
+                            }
+                        };
+                    default:
+                        throw new UnsupportedOperationException("Unknown function: " + name);
+                }
+            }
+
+            @Override
+            public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                return SpreadsheetExpressionFunctions.infoSet(
+                    Sets.of(
+                        SpreadsheetExpressionFunctions.info(
+                            Url.parseAbsolute("https://example.com/test/xyz"),
+                            SpreadsheetExpressionFunctions.name("xyz")
+                        ),
+                        SpreadsheetExpressionFunctions.info(
+                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
+                            SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
+                        ),
+                        SpreadsheetExpressionFunctions.info(
+                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
+                            SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
+                        ),
+                        SpreadsheetExpressionFunctions.info(
+                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
+                            SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
+                        )
+                    )
+                );
+            }
+
+            @Override
+            public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
+            }
+        },
+        SPREADSHEET_COMPARATOR_PROVIDER,
+        SPREADSHEET_EXPORTER_PROVIDER,
+        SPREADSHEET_FORMATTER_PROVIDER,
+        FORM_HANDLER_PROVIDER,
+        SPREADSHEET_IMPORTER_PROVIDER,
+        SPREADSHEET_PARSER_PROVIDER,
+        VALIDATOR_PROVIDER
+    );
 
     // with.............................................................................................................
 
@@ -1177,17 +1188,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 private Locale localLocale = locale;
             },
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FORM_HANDLER_PROVIDER,
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ),
+            SPREADSHEET_PROVIDER,
             providerContext
         );
     }
@@ -1717,17 +1718,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             FUNCTION_ALIASES,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FORM_HANDLER_PROVIDER,
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ),
+            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
     }
