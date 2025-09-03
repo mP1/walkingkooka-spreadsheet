@@ -103,9 +103,9 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     throw new UnsupportedOperationException();
                 }, // spreadsheetFormatterContextFactory
                 FormHandlerContexts.fake(),
+                TERMINAL_CONTEXT,
                 ExpressionFunctionProviders.fake(),
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             ),
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LOCALE_CONTEXT,

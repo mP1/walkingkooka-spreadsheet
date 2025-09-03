@@ -54,9 +54,9 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetConverterContext spreadsheetConverterContext,
                                                                final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
+                                                               final TerminalContext terminalContext,
                                                                final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                               final ProviderContext providerContext,
-                                                               final TerminalContext terminalContext) {
+                                                               final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             cell,
             spreadsheetExpressionReferenceLoader,
@@ -66,9 +66,9 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
             spreadsheetConverterContext,
             spreadsheetFormatterContextFactory,
             formHandlerContext,
+            terminalContext,
             expressionFunctionProvider,
-            providerContext,
-            terminalContext
+            providerContext
         );
     }
 

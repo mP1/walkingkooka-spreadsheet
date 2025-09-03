@@ -296,9 +296,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             spreadsheetConverterContext,
             (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
             formHandlerContext,
+            this.terminalContext,
             this.expressionFunctionProvider,
-            this.providerContext, // ProviderContext
-            this.terminalContext
+            this.providerContext
         );
     }
 
