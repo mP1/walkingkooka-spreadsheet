@@ -107,6 +107,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                     METADATA_EN_AU,
                     SpreadsheetStoreRepositories.fake(),
                     SPREADSHEET_FORMATTER_CONTEXT,
+                    ENVIRONMENT_CONTEXT,
                     (Optional<SpreadsheetCell> c) -> {
                         throw new UnsupportedOperationException();
                     },

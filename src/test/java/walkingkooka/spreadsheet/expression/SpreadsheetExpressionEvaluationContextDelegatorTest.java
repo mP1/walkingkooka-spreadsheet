@@ -166,6 +166,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                 METADATA_EN_AU,
                 SpreadsheetStoreRepositories.fake(),
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 ((Optional<SpreadsheetCell> c) -> {
                     throw new UnsupportedOperationException();
                 }),

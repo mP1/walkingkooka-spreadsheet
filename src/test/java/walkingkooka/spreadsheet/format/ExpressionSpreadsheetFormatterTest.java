@@ -26,6 +26,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.Url;
@@ -183,6 +184,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                     metadata,
                     SpreadsheetStoreRepositories.fake(),
                     converterContext,
+                    EnvironmentContexts.fake(),
                     ((Optional<SpreadsheetCell> c) -> {
                         throw new UnsupportedOperationException();
                     }),

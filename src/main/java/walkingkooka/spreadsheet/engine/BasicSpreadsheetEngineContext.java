@@ -87,6 +87,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetMetadata metadata,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                              final EnvironmentContext environmentContext,
                                               final LocaleContext localeContext,
                                               final TerminalContext terminalContext,
                                               final SpreadsheetProvider spreadsheetProvider,
@@ -95,6 +96,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
+        Objects.requireNonNull(environmentContext, "environmentContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
@@ -120,6 +122,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 providerContext
             ),
             spreadsheetLabelNameResolver,
+            environmentContext,
             localeContext,
             terminalContext,
             spreadsheetProvider,
@@ -136,6 +139,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetStoreRepository storeRepository,
                                           final CanConvert canConvert,
                                           final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                          final EnvironmentContext environmentContext,
                                           final LocaleContext localeContext,
                                           final TerminalContext terminalContext,
                                           final SpreadsheetProvider spreadsheetProvider,
@@ -151,6 +155,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
+        this.environmentContext = environmentContext;
         this.localeContext = localeContext;
         this.canConvert = canConvert;
         this.terminalContext = terminalContext;
@@ -199,6 +204,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.storeRepository,
                 this.canConvert,
                 this.spreadsheetLabelNameResolver,
+                this.environmentContext,
                 this.localeContext,
                 this.terminalContext,
                 this.spreadsheetProvider,
@@ -294,6 +300,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             metadata,
             this.storeRepository,
             spreadsheetConverterContext,
+            this.environmentContext,
             (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
             formHandlerContext,
             this.terminalContext,
@@ -476,12 +483,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // LocaleContextDelegator...........................................................................................
 
     @Override
-    public SpreadsheetEngineContext setLocale(final Locale locale) {
-        this.localeContext.setLocale(locale);
-        return this;
-    }
-
-    @Override
     public LocaleContext localeContext() {
         return this.localeContext;
     }
@@ -492,27 +493,34 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public Locale locale() {
-        return this.environmentContext()
-            .locale();
+        return this.environmentContext.locale();
+    }
+
+    @Override
+    public SpreadsheetEngineContext setLocale(final Locale locale) {
+        this.environmentContext.setLocale(locale);
+        return this;
     }
 
     @Override
     public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                             final T value) {
-        this.providerContext.setEnvironmentValue(name, value);
+        this.environmentContext.setEnvironmentValue(name, value);
         return this;
     }
 
     @Override
     public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.providerContext.removeEnvironmentValue(name);
+        this.environmentContext.removeEnvironmentValue(name);
         return this;
     }
 
     @Override
     public EnvironmentContext environmentContext() {
-        return this.providerContext;
+        return this.environmentContext;
     }
+
+    private final EnvironmentContext environmentContext;
 
     // SpreadsheetProvider..............................................................................................
 

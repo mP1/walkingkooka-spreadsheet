@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
@@ -37,6 +38,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetMetadata metadata,
                                                  final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                                 final EnvironmentContext environmentContext,
                                                  final LocaleContext localeContext,
                                                  final TerminalContext terminalContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
@@ -46,6 +48,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
             metadata,
             storeRepository,
             functionAliases,
+            environmentContext,
             localeContext,
             terminalContext,
             spreadsheetProvider,
