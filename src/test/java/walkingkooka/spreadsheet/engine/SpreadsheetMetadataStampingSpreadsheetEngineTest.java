@@ -561,9 +561,6 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                         cell,
                         cell.formula()
                             .errorOrValue(),
-//                                formatter.orElse(
-//                                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter()
-//                                )
                         formatter
                     )
                 );
