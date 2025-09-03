@@ -84,9 +84,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                             final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
+                                                            final TerminalContext terminalContext,
                                                             final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                            final ProviderContext providerContext,
-                                                            final TerminalContext terminalContext) {
+                                                            final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(serverUrl, "serverUrl");
@@ -95,9 +95,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(spreadsheetFormatterContextFactory, "spreadsheetFormatterContextFactory");
         Objects.requireNonNull(formHandlerContext, "formHandlerContext");
+        Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(expressionFunctionProvider, "expressionFunctionProvider");
         Objects.requireNonNull(providerContext, "providerContext");
-        Objects.requireNonNull(terminalContext, "terminalContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
             cell,
@@ -108,9 +108,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
             spreadsheetConverterContext,
             spreadsheetFormatterContextFactory,
             formHandlerContext,
+            terminalContext,
             expressionFunctionProvider,
-            providerContext,
-            terminalContext
+            providerContext
         );
     }
 
@@ -122,9 +122,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
+                                                        final TerminalContext terminalContext,
                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                        final ProviderContext providerContext,
-                                                        final TerminalContext terminalContext) {
+                                                        final ProviderContext providerContext) {
         super();
         this.cell = cell;
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
@@ -136,9 +136,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetStoreRepository = spreadsheetStoreRepository;
 
         this.spreadsheetConverterContext = spreadsheetConverterContext;
-        this.expressionFunctionProvider = expressionFunctionProvider;
-        this.providerContext = providerContext;
         this.terminalContext = terminalContext;
+
+        this.expressionFunctionProvider = expressionFunctionProvider;
+
+        this.providerContext = providerContext;
     }
 
     // EnvironmentContext...............................................................................................
@@ -448,9 +450,9 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 ),
                 this.spreadsheetFormatterContextFactory,
                 this.formHandlerContext,
+                this.terminalContext,
                 this.expressionFunctionProvider,
-                this.providerContext,
-                this.terminalContext
+                this.providerContext
             );
     }
 

@@ -200,9 +200,9 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                         throw new UnsupportedOperationException();
                     }
                 },
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             );
         }
 

@@ -111,9 +111,9 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                         throw new UnsupportedOperationException();
                     },
                     FormHandlerContexts.fake(),
+                    TERMINAL_CONTEXT,
                     ExpressionFunctionProviders.fake(),
-                    ProviderContexts.fake(),
-                    TERMINAL_CONTEXT
+                    ProviderContexts.fake()
                 )
             )
         );

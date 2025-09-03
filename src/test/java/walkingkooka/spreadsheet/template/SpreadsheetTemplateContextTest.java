@@ -240,6 +240,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     throw new UnsupportedOperationException();
                 },
                 FormHandlerContexts.fake(),
+                TERMINAL_CONTEXT,
                 new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
                     @Override
                     public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
@@ -284,8 +285,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                         );
                     }
                 },
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             ),
             (t) -> {
                 if (t.equals(TEMPLATE_NAME_1)) {

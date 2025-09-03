@@ -113,9 +113,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -133,9 +133,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -153,9 +153,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -173,9 +173,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -193,9 +193,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -213,9 +213,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -233,9 +233,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -253,49 +253,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 null,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullExpressionFunctionProviderFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
-                null,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullProviderContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                null,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             )
         );
     }
@@ -313,8 +273,48 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                null,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullExpressionFunctionProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_STORE_REPOSITORY,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_STORE_REPOSITORY,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
                 null
             )
         );
@@ -399,9 +399,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             ),
             SpreadsheetSelection.parseRow("1"),
             SpreadsheetSelection.parseColumn("B")
@@ -435,9 +435,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT,
-                TERMINAL_CONTEXT
+                PROVIDER_CONTEXT
             ),
             SpreadsheetSelection.parseColumn("A"),
             SpreadsheetSelection.parseRow("2")
@@ -660,9 +660,9 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
             SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
             FORM_HANDLER_CONTEXT,
+            TERMINAL_CONTEXT,
             EXPRESSION_FUNCTION_PROVIDER,
-            providerContext,
-            TERMINAL_CONTEXT
+            providerContext
         );
     }
 

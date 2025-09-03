@@ -187,6 +187,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                         throw new UnsupportedOperationException();
                     }),
                     FormHandlerContexts.fake(),
+                    TerminalContexts.fake(),
                     ExpressionFunctionProviders.basic(
                         Url.parseAbsolute("https://example.com/function"),
                         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
@@ -221,8 +222,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                             }
                         )
                     ),
-                    ProviderContexts.fake(),
-                    TerminalContexts.fake()
+                    ProviderContexts.fake()
                 ).addLocalVariable(
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     value

@@ -594,6 +594,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         throw new UnsupportedOperationException();
                     }
                 },
+                TERMINAL_CONTEXT,
                 EXPRESSION_FUNCTION_PROVIDER,
                 ProviderContexts.basic(
                     ConverterContexts.fake(),
@@ -601,8 +602,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         ENVIRONMENT_CONTEXT
                     ),
                     PluginStores.fake()
-                ),
-                TERMINAL_CONTEXT
+                )
             )
         );
     }
