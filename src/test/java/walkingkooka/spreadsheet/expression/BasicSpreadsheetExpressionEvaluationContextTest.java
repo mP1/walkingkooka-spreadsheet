@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -27,9 +26,9 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -59,6 +58,7 @@ import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.math.MathContext;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -111,6 +111,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -131,6 +132,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -151,6 +153,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -171,6 +174,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -191,6 +195,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -210,6 +215,28 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
+                null,
+                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullEnvironmentContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_STORE_REPOSITORY,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
@@ -231,6 +258,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 null,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -251,6 +279,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 null,
                 TERMINAL_CONTEXT,
@@ -271,6 +300,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 null,
@@ -291,6 +321,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -311,6 +342,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -397,6 +429,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                     }
                 },
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -433,6 +466,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                     }
                 },
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -538,6 +572,41 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // environmentContext...............................................................................................
 
     @Test
+    public void testLocale() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            Locale.FRANCE,
+            NOW,
+            EnvironmentContext.ANONYMOUS
+        );
+
+        this.localeAndCheck(
+            this.createContext(environmentContext),
+            environmentContext.locale()
+        );
+    }
+
+    @Test
+    public void testSetLocale() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                Locale.FRANCE,
+                NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+
+        final Locale locale = Locale.GERMAN;
+        context.setLocale(locale);
+
+        this.localeAndCheck(
+            context,
+            locale
+        );
+    }
+
+    @Test
     public void testEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             ENVIRONMENT_CONTEXT
@@ -604,6 +673,22 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Test
+    public void testUser() {
+        final EmailAddress user = EmailAddress.parse("user123@example.com");
+
+        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            LOCALE,
+            NOW,
+            Optional.of(user)
+        );
+
+        this.userAndCheck(
+            this.createContext(environmentContext),
+            user
+        );
+    }
+
+    @Test
     public void testReferenceWithEnvironmentValueName() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             ENVIRONMENT_CONTEXT
@@ -634,6 +719,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
             spreadsheetExpressionReferenceLoader,
+            ENVIRONMENT_CONTEXT,
             PROVIDER_CONTEXT
         );
     }
@@ -641,15 +727,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-            ProviderContexts.basic(
-                ConverterContexts.fake(),
-                environmentContext,
-                PluginStores.fake()
-            )
+            environmentContext,
+            ProviderContexts.fake() // ProviderContext#environmentXXX methods will all throw UOE
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final EnvironmentContext environmentContext,
                                                                       final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             CELL,
@@ -658,6 +742,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             METADATA,
             SPREADSHEET_STORE_REPOSITORY,
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            environmentContext,
             SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
             FORM_HANDLER_CONTEXT,
             TERMINAL_CONTEXT,

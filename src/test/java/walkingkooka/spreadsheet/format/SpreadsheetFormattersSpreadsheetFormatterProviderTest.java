@@ -99,6 +99,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 METADATA_EN_AU,
                 SpreadsheetStoreRepositories.fake(),
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
                 (Optional<SpreadsheetCell> cell) -> {
                     throw new UnsupportedOperationException();
                 }, // spreadsheetFormatterContextFactory

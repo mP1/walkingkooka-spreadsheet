@@ -4655,6 +4655,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -4781,6 +4782,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -4916,6 +4918,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -5059,6 +5062,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -16475,6 +16479,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -17586,6 +17591,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -23607,6 +23613,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             METADATA,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
@@ -23638,6 +23645,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             METADATA,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
@@ -23695,6 +23703,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -23779,6 +23788,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -23905,6 +23915,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24034,6 +24045,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24196,6 +24208,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24340,6 +24353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24460,6 +24474,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             METADATA,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
@@ -24493,6 +24508,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             METADATA,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
@@ -24550,6 +24566,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24624,6 +24641,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24740,6 +24758,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24847,6 +24866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -24974,6 +24994,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -25109,6 +25130,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
@@ -25305,6 +25327,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             ),
             storeRepository,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,

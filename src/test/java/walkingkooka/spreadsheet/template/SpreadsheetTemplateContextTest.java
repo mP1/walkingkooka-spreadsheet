@@ -236,6 +236,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
                 },
                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
+                ENVIRONMENT_CONTEXT,
                 (Optional<SpreadsheetCell> cell) -> {
                     throw new UnsupportedOperationException();
                 },
