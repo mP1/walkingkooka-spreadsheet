@@ -100,11 +100,26 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
+        final LocaleContext metadataLocaleContext = metadata.localeContext(localeContext);
+        final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
+            storeRepository.labels()
+        );
+
         return new BasicSpreadsheetEngineContext(
             serverUrl,
             metadata,
-            storeRepository,
             functionAliases,
+            storeRepository,
+            metadata.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                functionAliases.toConverterSelector(),
+                spreadsheetLabelNameResolver,
+                spreadsheetProvider, // SpreadsheetConverterProvider
+                metadataLocaleContext, // LocaleContext
+                providerContext
+            ),
+            spreadsheetLabelNameResolver,
             localeContext,
             terminalContext,
             spreadsheetProvider,
@@ -117,8 +132,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      */
     private BasicSpreadsheetEngineContext(final AbsoluteUrl serverUrl,
                                           final SpreadsheetMetadata metadata,
-                                          final SpreadsheetStoreRepository storeRepository,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                          final SpreadsheetStoreRepository storeRepository,
+                                          final CanConvert canConvert,
+                                          final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                           final LocaleContext localeContext,
                                           final TerminalContext terminalContext,
                                           final SpreadsheetProvider spreadsheetProvider,
@@ -128,16 +145,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.serverUrl = serverUrl;
 
         this.metadata = metadata;
+        this.functionAliases = functionAliases;
 
         this.storeRepository = storeRepository;
 
-        this.labelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
-            storeRepository.labels()
-        );
+        this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
-        this.functionAliases = functionAliases;
-
-        this.localeContext = metadata.localeContext(localeContext);
+        this.localeContext = localeContext;
+        this.canConvert = canConvert;
         this.terminalContext = terminalContext;
 
         this.spreadsheetProvider = spreadsheetProvider;
@@ -164,8 +179,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public CanConvert canConvert() {
-        return this.providerContext;
+        return this.canConvert;
     }
+
+    private final CanConvert canConvert;
 
     // SpreadsheetEngineContext.........................................................................................
 
@@ -178,8 +195,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             new BasicSpreadsheetEngineContext(
                 this.serverUrl,
                 this.metadata,
-                this.storeRepository,
                 functionAliases,
+                this.storeRepository,
+                this.canConvert,
+                this.spreadsheetLabelNameResolver,
                 this.localeContext,
                 this.terminalContext,
                 this.spreadsheetProvider,
@@ -191,10 +210,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        return this.labelNameResolver.resolveLabel(labelName);
+        return this.spreadsheetLabelNameResolver.resolveLabel(labelName);
     }
 
-    private final SpreadsheetLabelNameResolver labelNameResolver;
+    private final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
     // parsing formula and executing....................................................................................
 
