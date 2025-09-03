@@ -38,18 +38,18 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final LocaleContext localeContext,
+                                                 final TerminalContext terminalContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
-                                                 final ProviderContext providerContext,
-                                                 final TerminalContext terminalContext) {
+                                                 final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
             serverUrl,
             metadata,
             storeRepository,
             functionAliases,
             localeContext,
+            terminalContext,
             spreadsheetProvider,
-            providerContext,
-            terminalContext
+            providerContext
         );
     }
 
