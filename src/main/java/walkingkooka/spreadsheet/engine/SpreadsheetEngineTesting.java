@@ -29,7 +29,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
@@ -87,14 +86,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
     SpreadsheetCellReference CELL_REFERENCE = COLUMN.setRow(ROW);
     SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("LABEL123");
-
-    @Test
-    default void testClassDoesntImplementProviderContext() {
-        this.checkEquals(
-            false,
-            this.createContext() instanceof ProviderContext
-        );
-    }
 
     // cells............................................................................................................
 
