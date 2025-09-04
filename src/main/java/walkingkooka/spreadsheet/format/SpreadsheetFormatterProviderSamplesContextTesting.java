@@ -17,10 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.plugin.ProviderContextTesting;
-
-public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends SpreadsheetFormatterProviderSamplesContext> extends SpreadsheetFormatterContextTesting2<C>,
-    ProviderContextTesting<C> {
+public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends SpreadsheetFormatterProviderSamplesContext> extends SpreadsheetFormatterContextTesting2<C> {
 
     @Override
     default C createCanConvert() {

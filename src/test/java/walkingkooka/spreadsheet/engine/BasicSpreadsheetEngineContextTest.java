@@ -979,6 +979,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 }
 
                 private final Converter<ConverterContext> converter = Converters.simple();
+
+                @Override
+                public ProviderContext providerContext() {
+                    return ProviderContexts.fake();
+                }
             },
             SpreadsheetFormatterSample.with(
                 "Default",

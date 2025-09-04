@@ -859,7 +859,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         try {
             final SpreadsheetFormatter formatter = this.spreadsheetFormatter(
                 selector,
-                context
+                context.providerContext()
             );
 
             formatted = formatter.formatOrEmptyText(

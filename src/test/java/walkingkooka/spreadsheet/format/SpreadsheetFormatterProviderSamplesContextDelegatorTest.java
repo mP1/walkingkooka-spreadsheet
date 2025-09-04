@@ -16,9 +16,9 @@
  */
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContextDelegatorTest.TestSpreadsheetFormatterProviderSamplesContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -53,27 +53,13 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
         }
 
         @Override
-        public TestSpreadsheetFormatterProviderSamplesContextDelegator cloneEnvironment() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public <T> TestSpreadsheetFormatterProviderSamplesContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                                               final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public TestSpreadsheetFormatterProviderSamplesContextDelegator removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            Objects.requireNonNull(name, "name");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public TestSpreadsheetFormatterProviderSamplesContextDelegator setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public ProviderContext providerContext() {
             throw new UnsupportedOperationException();
         }
     }
