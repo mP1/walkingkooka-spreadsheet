@@ -24,6 +24,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -293,6 +294,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             formHandlerContext = FormHandlerContexts.fake();
         }
 
+        EnvironmentContext environmentContext = this.environmentContext;
+        if (false == SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS.equals(functionAliases)) {
+            environmentContext = EnvironmentContexts.readOnly(environmentContext);
+        }
+
         return SpreadsheetExpressionEvaluationContexts.basic(
             cell,
             loader,
@@ -300,7 +306,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             metadata,
             this.storeRepository,
             spreadsheetConverterContext,
-            this.environmentContext,
+            environmentContext,
             (Optional<SpreadsheetCell> c) -> this.spreadsheetFormatterContext(c),
             formHandlerContext,
             this.terminalContext,
