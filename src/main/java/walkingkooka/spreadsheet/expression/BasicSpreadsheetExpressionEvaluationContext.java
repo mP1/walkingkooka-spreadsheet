@@ -377,7 +377,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         final EnvironmentContext context = this.environmentContext;
         final EnvironmentContext cloned = context.cloneEnvironment();
 
-        return context.equals(cloned) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return context == cloned ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
                 this.cell,

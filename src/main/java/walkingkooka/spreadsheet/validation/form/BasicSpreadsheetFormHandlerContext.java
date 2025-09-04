@@ -250,7 +250,8 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         final SpreadsheetEngineContext context = this.context;
         final SpreadsheetEngineContext clone = context.cloneEnvironment();
 
-        return context.equals(clone) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return context == clone ?
             this :
             new BasicSpreadsheetFormHandlerContext(
                 this.form,

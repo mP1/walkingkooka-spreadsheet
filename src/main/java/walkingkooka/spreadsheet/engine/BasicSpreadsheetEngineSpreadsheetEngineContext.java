@@ -188,8 +188,9 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = this.spreadsheetExpressionEvaluationContext;
         final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContextClone = spreadsheetExpressionEvaluationContext.cloneEnvironment();
 
-        return spreadsheetEngineContext.equals(spreadsheetEngineContextClone) &&
-            spreadsheetExpressionEvaluationContext.equals(spreadsheetExpressionEvaluationContextClone) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return spreadsheetEngineContext == spreadsheetEngineContextClone &&
+            spreadsheetExpressionEvaluationContext == spreadsheetExpressionEvaluationContextClone ?
             this :
             with(
                 spreadsheetEngineContextClone,

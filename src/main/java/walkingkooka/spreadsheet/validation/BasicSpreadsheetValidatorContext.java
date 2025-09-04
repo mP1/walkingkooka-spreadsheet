@@ -49,7 +49,8 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
         final ValidatorContext<SpreadsheetExpressionReference> context = this.context;
         final ValidatorContext<SpreadsheetExpressionReference> clone = context.cloneEnvironment();
 
-        return context.equals(clone) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return context == clone ?
             this :
             with(clone);
     }

@@ -77,7 +77,8 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         final EnvironmentContext environment = this.context;
         final EnvironmentContext cloned = environment.cloneEnvironment();
 
-        return environment.equals(cloned) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return environment == cloned ?
             this :
             new SpreadsheetMetadataEnvironmentContext(
                 this.metadata,
