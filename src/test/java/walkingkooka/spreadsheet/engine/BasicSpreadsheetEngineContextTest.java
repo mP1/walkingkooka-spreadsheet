@@ -1225,6 +1225,122 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    @Test
+    public void testSpreadsheetExpressionEvaluationContextScriptingFunctionsEnvironmentContextUpdatable() {
+        final BasicSpreadsheetEngineContext context = this.createContext(
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+            )
+        );
+
+        final SpreadsheetEngineContext after = context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS);
+        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
+            SpreadsheetExpressionEvaluationContext.NO_CELL,
+            SpreadsheetExpressionReferenceLoaders.fake()
+        );
+
+        final Locale locale = Locale.GERMAN;
+        spreadsheetExpressionEvaluationContext.setLocale(locale);
+        this.localeAndCheck(
+            spreadsheetExpressionEvaluationContext,
+            locale
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "World111";
+
+        spreadsheetExpressionEvaluationContext.setEnvironmentValue(
+            name,
+            value
+        );
+        this.environmentValueAndCheck(
+            spreadsheetExpressionEvaluationContext,
+            name,
+            value
+        );
+
+        spreadsheetExpressionEvaluationContext.removeEnvironmentValue(name);
+
+        this.environmentValueAndCheck(
+            spreadsheetExpressionEvaluationContext,
+            name
+        );
+    }
+
+    @Test
+    public void testSpreadsheetExpressionEvaluationContextFindFunctionsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.FIND_FUNCTIONS);
+    }
+
+    @Test
+    public void testSpreadsheetExpressionEvaluationContextFormulaFunctionsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+    }
+
+    @Test
+    public void testSpreadsheetExpressionEvaluationContextFormulaFormattingEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS);
+    }
+
+    @Test
+    public void testSpreadsheetExpressionEvaluationContextValidationFunctionsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS);
+    }
+
+    private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functions) {
+        final BasicSpreadsheetEngineContext context = this.createContext(
+            METADATA.set(
+                functions,
+                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+            )
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "World111";
+        context.setEnvironmentValue(
+            name,
+            value
+        );
+
+        final SpreadsheetEngineContext after = context.spreadsheetEngineContext(functions);
+        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
+            SpreadsheetExpressionEvaluationContext.NO_CELL,
+            SpreadsheetExpressionReferenceLoaders.fake()
+        );
+
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> spreadsheetExpressionEvaluationContext.setLocale(
+                Locale.GERMAN
+            )
+        );
+
+        this.localeAndCheck(
+            spreadsheetExpressionEvaluationContext,
+            LOCALE
+        );
+
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> spreadsheetExpressionEvaluationContext.setEnvironmentValue(
+                name,
+                "World222"
+            )
+        );
+
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> spreadsheetExpressionEvaluationContext.removeEnvironmentValue(name)
+        );
+
+        this.environmentValueAndCheck(
+            spreadsheetExpressionEvaluationContext,
+            name,
+            value
+        );
+    }
+
     // createContext....................................................................................................
 
     private BasicSpreadsheetEngineContext createContext(final Locale locale) {
@@ -1234,8 +1350,23 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
+        return this.createContext(
+            metadata,
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LOCALE,
+                    NOW,
+                    Optional.of(USER)
+                )
+            ),
+            PROVIDER_CONTEXT
+        );
+    }
+
     private BasicSpreadsheetEngineContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
+            METADATA,
             environmentContext,
             ProviderContexts.fake()
         );
@@ -1244,6 +1375,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private BasicSpreadsheetEngineContext createContext(final Locale locale,
                                                         final ProviderContext providerContext) {
         return this.createContext(
+            METADATA,
             EnvironmentContexts.empty(
                 locale,
                 NOW,
@@ -1253,11 +1385,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final EnvironmentContext environmentContext,
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final EnvironmentContext environmentContext,
                                                         final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
             SERVER_URL,
-            METADATA,
+            metadata,
             SpreadsheetStoreRepositories.basic(
                 SpreadsheetCellStores.treeMap(),
                 SpreadsheetCellReferencesStores.treeMap(),
@@ -1808,18 +1941,20 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 public StorageStore storage() {
                     return StorageStores.fake();
                 }
-            }
+            },
+            ENVIRONMENT_CONTEXT
         );
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetStoreRepository repository) {
+                                                        final SpreadsheetStoreRepository repository,
+                                                        final EnvironmentContext environmentContext) {
         return BasicSpreadsheetEngineContext.with(
             SERVER_URL,
             metadata,
             repository,
             FUNCTION_ALIASES,
-            ENVIRONMENT_CONTEXT,
+            environmentContext,
             LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
