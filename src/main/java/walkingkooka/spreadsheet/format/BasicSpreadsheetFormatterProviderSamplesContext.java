@@ -19,9 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.convert.CanConvert;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.time.LocalDateTime;
@@ -29,8 +27,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 final class BasicSpreadsheetFormatterProviderSamplesContext implements SpreadsheetFormatterProviderSamplesContext,
-    SpreadsheetFormatterContextDelegator,
-    ProviderContextDelegator {
+    SpreadsheetFormatterContextDelegator {
 
     static BasicSpreadsheetFormatterProviderSamplesContext with(final SpreadsheetFormatterContext spreadsheetFormatterContext,
                                                                 final ProviderContext providerContext) {
@@ -106,33 +103,7 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
 
     private final SpreadsheetFormatterContext spreadsheetFormatterContext;
 
-    // ProviderContext..................................................................................................
-
-    @Override
-    public Locale locale() {
-        return this.providerContext.locale();
-    }
-
-    @Override
-    public SpreadsheetFormatterProviderSamplesContext cloneEnvironment() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                              final T value) {
-        this.providerContext.setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
-
-    @Override
-    public SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.providerContext.removeEnvironmentValue(name);
-        return this;
-    }
+    // HasPluginContext.................................................................................................
 
     @Override
     public ProviderContext providerContext() {

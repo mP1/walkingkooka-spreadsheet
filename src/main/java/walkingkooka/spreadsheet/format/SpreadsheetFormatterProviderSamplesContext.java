@@ -17,24 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Locale;
 
 public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetFormatterContext,
-    ProviderContext {
-
-    @Override
-    SpreadsheetFormatterProviderSamplesContext cloneEnvironment();
-
-    @Override
-    <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                       final T value);
-
-    @Override
-    SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+    HasProviderContext {
 
     @Override
     SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale);

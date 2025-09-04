@@ -17,16 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
-import walkingkooka.plugin.store.PluginStore;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsheetFormatterContext implements SpreadsheetFormatterProviderSamplesContext {
 
@@ -35,58 +29,13 @@ public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsh
         throw new UnsupportedOperationException();
     }
 
-    // ProviderContext..................................................................................................
-
-    @Override
-    public PluginStore pluginStore() {
-        throw new UnsupportedOperationException();
-    }
-
-    // LocaleContext....................................................................................................
-
     @Override
     public SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 
-    // EnvironmentContext...............................................................................................
-
     @Override
-    public SpreadsheetFormatterProviderSamplesContext cloneEnvironment() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> Optional<T> environmentValue(EnvironmentValueName<T> name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> FakeSpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                                  final T value) {
-        Objects.requireNonNull(name, "name");
-        Objects.requireNonNull(value, "value");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        Objects.requireNonNull(name, "name");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<EnvironmentValueName<?>> environmentValueNames() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
+    public ProviderContext providerContext() {
         throw new UnsupportedOperationException();
     }
 }

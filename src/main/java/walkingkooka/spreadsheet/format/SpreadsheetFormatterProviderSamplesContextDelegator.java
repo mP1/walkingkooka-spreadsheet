@@ -17,16 +17,11 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContextDelegator;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 public interface SpreadsheetFormatterProviderSamplesContextDelegator extends SpreadsheetFormatterProviderSamplesContext,
-    SpreadsheetFormatterContextDelegator,
-    ProviderContextDelegator {
+    SpreadsheetFormatterContextDelegator {
 
     // SpreadsheetFormatterContextDelegator.............................................................................
 
@@ -36,37 +31,6 @@ public interface SpreadsheetFormatterProviderSamplesContextDelegator extends Spr
     }
 
     SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext();
-
-    // ProviderContextDelegator.........................................................................................
-
-    @Override
-    default Locale locale() {
-        return this.environmentContext()
-            .locale();
-    }
-
-    @Override
-    default <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                               final T value) {
-        this.environmentContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-        return this;
-    }
-
-    @Override
-    default SpreadsheetFormatterProviderSamplesContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetFormatterProviderSamplesContext()
-            .removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    default ProviderContext providerContext() {
-        return this.spreadsheetFormatterProviderSamplesContext();
-    }
 
     @Override
     default ConverterContext canConvert() {
