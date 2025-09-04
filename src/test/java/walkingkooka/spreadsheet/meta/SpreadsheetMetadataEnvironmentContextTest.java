@@ -76,6 +76,62 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     }
 
     @Test
+    public void testWithUnwrapsSpreadsheetMetadataEnvironmentContext() {
+        final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            Locale.FRENCH
+        );
+        final EnvironmentContext environmentContext = EnvironmentContexts.fake();
+
+        final SpreadsheetMetadataEnvironmentContext wrap = SpreadsheetMetadataEnvironmentContext.with(
+            spreadsheetMetadata,
+            environmentContext
+        );
+
+        final SpreadsheetMetadataEnvironmentContext spreadsheetMetadataEnvironmentContext = SpreadsheetMetadataEnvironmentContext.with(
+            spreadsheetMetadata,
+            wrap
+        );
+
+        this.checkEquals(
+            wrap,
+            spreadsheetMetadataEnvironmentContext
+        );
+    }
+
+    @Test
+    public void testWithSpreadsheetMetadataEnvironmentContextDifferentSpreadsheetMetadata() {
+        final SpreadsheetMetadata spreadsheetMetadata = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            Locale.FRENCH
+        );
+        final EnvironmentContext environmentContext = EnvironmentContexts.fake();
+
+        final SpreadsheetMetadataEnvironmentContext wrap = SpreadsheetMetadataEnvironmentContext.with(
+            spreadsheetMetadata,
+            environmentContext
+        );
+
+        final SpreadsheetMetadata spreadsheetMetadata2 = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            Locale.GERMANY
+        );
+
+        this.checkEquals(
+            SpreadsheetMetadataEnvironmentContext.with(
+                spreadsheetMetadata2,
+                environmentContext
+            ),
+            SpreadsheetMetadataEnvironmentContext.with(
+                spreadsheetMetadata2,
+                wrap
+            )
+        );
+    }
+
+    // environmentValue.................................................................................................
+
+    @Test
     public void testEnvironmentValueWithPrefixButUnknown() {
         this.environmentValueAndCheck(
             EnvironmentValueName.with("missing")
