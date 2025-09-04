@@ -222,7 +222,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     @Override
     SpreadsheetExpressionEvaluationContext cloneEnvironment();
 
-                                                                   @Override
+    @Override
     <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                    final T value);
 
