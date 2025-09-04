@@ -30,6 +30,9 @@ import java.util.Locale;
 public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
 
     @Override
+    SpreadsheetValidatorContext cloneEnvironment();
+
+    @Override
     SpreadsheetValidatorContext setLocale(final Locale locale);
 
     @Override

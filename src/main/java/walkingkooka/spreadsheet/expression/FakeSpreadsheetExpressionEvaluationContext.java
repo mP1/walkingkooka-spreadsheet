@@ -135,6 +135,13 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
         throw new UnsupportedOperationException();
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> environmentValueName) {
         throw new UnsupportedOperationException();

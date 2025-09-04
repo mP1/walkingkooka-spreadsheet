@@ -166,7 +166,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    // EnvironmentContext...............................................................................................
+    // CanConvert.......................................................................................................
 
     @Override
     public boolean canConvert(final Object value,
@@ -177,6 +177,13 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetEngineContext cloneEnvironment() {
         throw new UnsupportedOperationException();
     }
 

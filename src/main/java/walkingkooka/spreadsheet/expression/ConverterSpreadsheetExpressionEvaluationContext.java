@@ -299,6 +299,19 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // EnvironmentContext...............................................................................................
 
     @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        final SpreadsheetExpressionEvaluationContext context = this.context;
+        final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
+
+        return context.equals(cloned) ?
+            this :
+            new ConverterSpreadsheetExpressionEvaluationContext(
+                this.converter,
+                Objects.requireNonNull(cloned, "environmentContext")
+            );
+    }
+
+    @Override
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
         return this.context.environmentValue(name);
     }

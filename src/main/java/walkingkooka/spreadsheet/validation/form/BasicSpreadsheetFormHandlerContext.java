@@ -246,6 +246,21 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     // EnvironmentContext...............................................................................................
 
     @Override
+    public SpreadsheetFormHandlerContext cloneEnvironment() {
+        final SpreadsheetEngineContext context = this.context;
+        final SpreadsheetEngineContext clone = context.cloneEnvironment();
+
+        return context.equals(clone) ?
+            this :
+            new BasicSpreadsheetFormHandlerContext(
+                this.form,
+                this.loader,
+                this.cellsSaver,
+                clone
+            );
+    }
+
+    @Override
     public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
         this.context.setLocale(locale);
         return this;

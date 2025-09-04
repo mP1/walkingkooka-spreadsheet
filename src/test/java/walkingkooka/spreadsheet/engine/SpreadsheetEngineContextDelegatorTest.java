@@ -40,6 +40,11 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
         }
 
         @Override
+        public SpreadsheetEngineContext cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetEngineContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();

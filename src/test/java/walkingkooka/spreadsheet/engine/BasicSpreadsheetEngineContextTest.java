@@ -1046,6 +1046,50 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // environmentContext...............................................................................................
 
     @Test
+    public void testCloneEnvironment() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+
+        this.environmentValueAndCheck(
+            environmentContext,
+            name,
+            value
+        );
+
+        final SpreadsheetEngineContext clone = context.cloneEnvironment();
+        this.environmentValueAndCheck(
+            clone,
+            name,
+            value
+        );
+
+        // remove name and verify gone from $context
+        context.removeEnvironmentValue(name);
+        this.environmentValueAndCheck(
+            context,
+            name
+        );
+
+        // $name should remain set in $clone
+        this.environmentValueAndCheck(
+            clone,
+            name,
+            value
+        );
+    }
+
+    @Test
     public void testEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             ENVIRONMENT_CONTEXT

@@ -224,6 +224,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
+        public TestSpreadsheetExpressionEvaluationContextDelegator cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public <T> TestSpreadsheetExpressionEvaluationContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                                            final T value) {
             Objects.requireNonNull(name, "name");

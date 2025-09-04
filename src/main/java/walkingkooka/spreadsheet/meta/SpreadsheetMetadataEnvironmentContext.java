@@ -51,6 +51,21 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         this.context = context;
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public EnvironmentContext cloneEnvironment() {
+        final EnvironmentContext environment = this.context;
+        final EnvironmentContext cloned = environment.cloneEnvironment();
+
+        return environment.equals(cloned) ?
+            this :
+            new SpreadsheetMetadataEnvironmentContext(
+                this.metadata,
+                cloned
+            );
+    }
+
     /**
      * This always returns the {@link SpreadsheetMetadata#locale()}.
      */

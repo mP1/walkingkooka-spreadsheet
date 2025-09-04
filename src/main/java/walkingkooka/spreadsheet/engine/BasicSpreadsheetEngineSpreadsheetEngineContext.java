@@ -178,6 +178,25 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         return this.spreadsheetEngineContext;
     }
 
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetEngineContext cloneEnvironment() {
+        final SpreadsheetEngineContext spreadsheetEngineContext = this.spreadsheetEngineContext;
+        final SpreadsheetEngineContext spreadsheetEngineContextClone = spreadsheetEngineContext.cloneEnvironment();
+
+        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = this.spreadsheetExpressionEvaluationContext;
+        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContextClone = spreadsheetExpressionEvaluationContext.cloneEnvironment();
+
+        return spreadsheetEngineContext.equals(spreadsheetEngineContextClone) &&
+            spreadsheetExpressionEvaluationContext.equals(spreadsheetExpressionEvaluationContextClone) ?
+            this :
+            with(
+                spreadsheetEngineContextClone,
+                spreadsheetExpressionEvaluationContextClone
+            );
+    }
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override

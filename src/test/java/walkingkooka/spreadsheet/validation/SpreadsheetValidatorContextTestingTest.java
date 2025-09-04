@@ -83,6 +83,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
+        public TestSpreadsheetValidatorContext cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public <T> TestSpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                        final T value) {
             Objects.requireNonNull(name, "name");

@@ -373,6 +373,29 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // EnvironmentContext...............................................................................................
 
     @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        final EnvironmentContext context = this.environmentContext;
+        final EnvironmentContext cloned = context.cloneEnvironment();
+
+        return context.equals(cloned) ?
+            this :
+            new BasicSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
+                this.serverUrl,
+                this.spreadsheetMetadata,
+                this.spreadsheetStoreRepository,
+                this.spreadsheetConverterContext,
+                Objects.requireNonNull(cloned, "environmentContext"),
+                this.spreadsheetFormatterContextFactory,
+                this.formHandlerContext,
+                this.terminalContext,
+                this.expressionFunctionProvider,
+                this.providerContext
+            );
+    }
+
+    @Override
     public Locale locale() {
         return this.environmentContext.locale();
     }
