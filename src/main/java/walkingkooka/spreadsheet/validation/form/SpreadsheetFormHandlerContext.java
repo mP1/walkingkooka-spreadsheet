@@ -40,6 +40,9 @@ public interface SpreadsheetFormHandlerContext extends FormHandlerContext<Spread
     <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                           final T value);
 
+    @Override
+    SpreadsheetFormHandlerContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
     /**
      * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}
      */
