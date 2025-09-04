@@ -23,8 +23,8 @@ import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.HasProviderContextTesting;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -52,15 +52,8 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     EnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     SpreadsheetProviderTesting<C>,
-    SpreadsheetLabelNameResolverTesting<C> {
-
-    @Test
-    default void testClassDoesntImplementProviderContext() {
-        this.checkEquals(
-            false,
-            this.createContext() instanceof ProviderContext
-        );
-    }
+    SpreadsheetLabelNameResolverTesting<C>,
+    SpreadsheetContextTesting<C> {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
 

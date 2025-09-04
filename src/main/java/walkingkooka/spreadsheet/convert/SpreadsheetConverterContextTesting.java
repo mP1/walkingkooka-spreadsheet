@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.locale.convert.LocaleConverterContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
 public interface SpreadsheetConverterContextTesting<C extends SpreadsheetConverterContext> extends JsonNodeConverterContextTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
-    LocaleConverterContextTesting<C> {
+    LocaleConverterContextTesting<C>,
+    SpreadsheetContextTesting<C> {
 
     @Override
     default C createSpreadsheetLabelNameResolver() {

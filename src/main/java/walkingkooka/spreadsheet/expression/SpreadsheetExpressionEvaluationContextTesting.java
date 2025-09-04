@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -49,7 +50,8 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     EnvironmentExpressionEvaluationContextTesting<C>,
     HasSpreadsheetCellTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
-    ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C> {
+    ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C>,
+    SpreadsheetContextTesting<C> {
 
     // parseExpression......................................................................................................
 
