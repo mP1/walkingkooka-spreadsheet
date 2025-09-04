@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.plugin.ProviderContext;
 
 import java.time.LocalDateTime;
 
@@ -41,5 +42,11 @@ public interface SpreadsheetFormatterProviderSamplesContextDelegator extends Spr
     default LocalDateTime now() {
         return this.spreadsheetFormatterProviderSamplesContext()
             .now();
+    }
+
+    @Override
+    default ProviderContext providerContext() {
+        return this.spreadsheetFormatterProviderSamplesContext()
+            .providerContext();
     }
 }
