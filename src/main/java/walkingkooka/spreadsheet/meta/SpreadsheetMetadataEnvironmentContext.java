@@ -39,10 +39,29 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
 
     static SpreadsheetMetadataEnvironmentContext with(final SpreadsheetMetadata metadata,
                                                       final EnvironmentContext context) {
-        return new SpreadsheetMetadataEnvironmentContext(
-            Objects.requireNonNull(metadata, "metadata"),
-            Objects.requireNonNull(context, "context")
-        );
+        Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(context, "context");
+
+        SpreadsheetMetadataEnvironmentContext spreadsheetMetadataEnvironmentContext = null;
+
+        EnvironmentContext wrap = context;
+        if (context instanceof SpreadsheetMetadataEnvironmentContext) {
+            spreadsheetMetadataEnvironmentContext = (SpreadsheetMetadataEnvironmentContext) context;
+            wrap = spreadsheetMetadataEnvironmentContext.context;
+
+            if (false == metadata.equals(spreadsheetMetadataEnvironmentContext.metadata) || false == wrap.equals(spreadsheetMetadataEnvironmentContext.context)) {
+                spreadsheetMetadataEnvironmentContext = null;
+            }
+        }
+
+        if (null == spreadsheetMetadataEnvironmentContext) {
+            spreadsheetMetadataEnvironmentContext = new SpreadsheetMetadataEnvironmentContext(
+                metadata,
+                wrap
+            );
+        }
+
+        return spreadsheetMetadataEnvironmentContext;
     }
 
     private SpreadsheetMetadataEnvironmentContext(final SpreadsheetMetadata metadata,
@@ -160,6 +179,28 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
     }
 
     private final EnvironmentContext context;
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.metadata,
+            this.context
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            other instanceof SpreadsheetMetadataEnvironmentContext &&
+                this.equals0((SpreadsheetMetadataEnvironmentContext) other);
+    }
+
+    private boolean equals0(final SpreadsheetMetadataEnvironmentContext other) {
+        return this.metadata.equals(other.metadata) &&
+            this.context.equals(other.context);
+    }
 
     @Override
     public String toString() {
