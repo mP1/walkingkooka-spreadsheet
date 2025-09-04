@@ -296,41 +296,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context;
     }
 
-    // EnvironmentContext...............................................................................................
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
-        final SpreadsheetExpressionEvaluationContext context = this.context;
-        final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
-
-        return context.equals(cloned) ?
-            this :
-            new ConverterSpreadsheetExpressionEvaluationContext(
-                this.converter,
-                Objects.requireNonNull(cloned, "environmentContext")
-            );
-    }
-
-    @Override
-    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        return this.context.environmentValue(name);
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<EnvironmentValueName<?>> environmentValueNames() {
-        return this.context.environmentValueNames();
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        return this.context.user();
-    }
-
     // FormHandlerContext...............................................................................................
 
     @Override
@@ -513,6 +478,24 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // EnvironmentContext...............................................................................................
 
     @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        final SpreadsheetExpressionEvaluationContext context = this.context;
+        final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
+
+        return context.equals(cloned) ?
+            this :
+            new ConverterSpreadsheetExpressionEvaluationContext(
+                this.converter,
+                Objects.requireNonNull(cloned, "environmentContext")
+            );
+    }
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        return this.context.environmentValue(name);
+    }
+
+    @Override
     public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                           final T value) {
         this.context.setEnvironmentValue(
@@ -520,6 +503,21 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
             value
         );
         return this;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        return this.context.environmentValueNames();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        return this.context.user();
     }
 
     // Object...........................................................................................................
