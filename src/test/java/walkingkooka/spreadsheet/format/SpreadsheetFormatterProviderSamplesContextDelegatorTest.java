@@ -53,6 +53,11 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
         }
 
         @Override
+        public TestSpreadsheetFormatterProviderSamplesContextDelegator cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public <T> TestSpreadsheetFormatterProviderSamplesContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                                                final T value) {
             Objects.requireNonNull(name, "name");

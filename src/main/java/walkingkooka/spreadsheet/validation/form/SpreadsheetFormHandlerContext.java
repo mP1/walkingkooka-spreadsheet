@@ -34,6 +34,9 @@ import java.util.Comparator;
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     @Override
+    SpreadsheetFormHandlerContext cloneEnvironment();
+
+    @Override
     <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                           final T value);
 

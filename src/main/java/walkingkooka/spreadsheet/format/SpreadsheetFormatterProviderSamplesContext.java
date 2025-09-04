@@ -27,6 +27,9 @@ public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetF
     ProviderContext {
 
     @Override
+    SpreadsheetFormatterProviderSamplesContext cloneEnvironment();
+
+    @Override
     <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                        final T value);
 

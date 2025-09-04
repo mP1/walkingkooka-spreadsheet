@@ -31,6 +31,11 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
     }
 
     @Override
+    public SpreadsheetValidatorContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetValidatorContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }

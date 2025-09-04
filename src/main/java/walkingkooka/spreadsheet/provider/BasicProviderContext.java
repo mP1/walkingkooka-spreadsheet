@@ -125,6 +125,13 @@ final class BasicProviderContext implements ProviderContext,
 
     private final ConverterContext converterContext;
 
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public BasicProviderContext cloneEnvironment() {
+        return this; // ProviderContext always return this
+    }
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override

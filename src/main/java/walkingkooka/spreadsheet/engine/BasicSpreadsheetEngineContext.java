@@ -492,6 +492,28 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // EnvironmentContextDelegator......................................................................................
 
     @Override
+    public SpreadsheetEngineContext cloneEnvironment() {
+        final EnvironmentContext environment = this.environmentContext;
+        final EnvironmentContext clone = environment.cloneEnvironment();
+
+        return environment.equals(clone) ?
+            this :
+            new BasicSpreadsheetEngineContext(
+                this.serverUrl,
+                this.metadata,
+                this.functionAliases,
+                this.storeRepository,
+                this.canConvert,
+                this.spreadsheetLabelNameResolver,
+                Objects.requireNonNull(clone, "environmentContext"),
+                this.localeContext,
+                this.terminalContext,
+                this.spreadsheetProvider,
+                this.providerContext
+            );
+    }
+
+    @Override
     public Locale locale() {
         return this.environmentContext.locale();
     }

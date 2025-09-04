@@ -114,6 +114,19 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     }
 
     @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        final SpreadsheetExpressionEvaluationContext context = this.context;
+        final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
+
+        return context.equals(cloned) ?
+            this :
+            new CellSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                Objects.requireNonNull(cloned, "environmentContext")
+            );
+    }
+
+    @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         this.context.setLocale(locale);
         return this;

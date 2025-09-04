@@ -52,6 +52,11 @@ public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsh
     // EnvironmentContext...............................................................................................
 
     @Override
+    public SpreadsheetFormatterProviderSamplesContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public <T> Optional<T> environmentValue(EnvironmentValueName<T> name) {
         throw new UnsupportedOperationException();
     }

@@ -381,6 +381,19 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     // EnvironmentContext...............................................................................................
 
     @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        final SpreadsheetExpressionEvaluationContext context = this.context;
+        final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
+
+        return context.equals(cloned) ?
+            this :
+            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+                this.localReferenceToValues,
+                Objects.requireNonNull(cloned, "environmentContext")
+            );
+    }
+
+    @Override
     public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                           final T value) {
         this.context.setEnvironmentValue(

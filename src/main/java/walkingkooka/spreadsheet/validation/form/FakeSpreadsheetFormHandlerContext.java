@@ -31,6 +31,11 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
     }
 
     @Override
+    public SpreadsheetFormHandlerContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                  final T value) {
         throw new UnsupportedOperationException();

@@ -114,6 +114,11 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
     }
 
     @Override
+    public SpreadsheetFormatterProviderSamplesContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public <T> SpreadsheetFormatterProviderSamplesContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                               final T value) {
         this.providerContext.setEnvironmentValue(

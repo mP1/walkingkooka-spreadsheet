@@ -45,6 +45,16 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     }
 
     @Override
+    public SpreadsheetValidatorContext cloneEnvironment() {
+        final ValidatorContext<SpreadsheetExpressionReference> context = this.context;
+        final ValidatorContext<SpreadsheetExpressionReference> clone = context.cloneEnvironment();
+
+        return context.equals(clone) ?
+            this :
+            with(clone);
+    }
+
+    @Override
     public SpreadsheetValidatorContext setLocale(final Locale locale) {
         this.context.setLocale(locale);
         return this;

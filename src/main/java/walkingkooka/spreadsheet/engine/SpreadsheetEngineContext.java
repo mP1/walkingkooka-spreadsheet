@@ -166,6 +166,9 @@ public interface SpreadsheetEngineContext extends Context,
     // EnvironmentContext...............................................................................................
 
     @Override
+    SpreadsheetEngineContext cloneEnvironment();
+
+    @Override
     SpreadsheetEngineContext setLocale(final Locale locale);
 
     @Override
