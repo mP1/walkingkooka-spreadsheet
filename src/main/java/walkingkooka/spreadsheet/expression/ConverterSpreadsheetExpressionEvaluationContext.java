@@ -482,7 +482,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         final SpreadsheetExpressionEvaluationContext context = this.context;
         final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
 
-        return context.equals(cloned) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return context == cloned ?
             this :
             new ConverterSpreadsheetExpressionEvaluationContext(
                 this.converter,

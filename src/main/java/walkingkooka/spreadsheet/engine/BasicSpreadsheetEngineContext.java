@@ -496,7 +496,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final EnvironmentContext environment = this.environmentContext;
         final EnvironmentContext clone = environment.cloneEnvironment();
 
-        return environment.equals(clone) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return environment == clone ?
             this :
             new BasicSpreadsheetEngineContext(
                 this.serverUrl,

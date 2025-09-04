@@ -118,7 +118,8 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
         final SpreadsheetExpressionEvaluationContext context = this.context;
         final SpreadsheetExpressionEvaluationContext cloned = context.cloneEnvironment();
 
-        return context.equals(cloned) ?
+        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
+        return context == cloned ?
             this :
             new CellSpreadsheetExpressionEvaluationContext(
                 this.cell,
