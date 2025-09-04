@@ -15,20 +15,20 @@
  *
  */
 
-package walkingkooka.spreadsheet.export;
+package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.Context;
 import walkingkooka.ContextTesting;
-import walkingkooka.spreadsheet.SpreadsheetContextTesting;
-import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
+import walkingkooka.plugin.ProviderContext;
 
-public interface SpreadsheetExporterContextTesting<C extends SpreadsheetExporterContext> extends ContextTesting<C>,
-    JsonNodeMarshallContextTesting<C>,
-    SpreadsheetContextTesting<C>,
-    TreePrintableTesting {
+public interface SpreadsheetContextTesting<C extends Context> extends ContextTesting<C> {
 
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetExporterContext.class.getSimpleName();
+    @Test
+    default void testClassDoesntImplementProviderContext() {
+        this.checkEquals(
+            false,
+            this.createContext() instanceof ProviderContext
+        );
     }
 }
