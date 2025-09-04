@@ -42,6 +42,11 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
     }
 
     @Override
+    public SpreadsheetFormHandlerContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
         throw new UnsupportedOperationException();
     }
