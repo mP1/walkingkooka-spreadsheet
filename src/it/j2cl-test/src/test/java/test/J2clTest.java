@@ -85,7 +85,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
-import walkingkooka.storage.FakeStorageStoreContext;
+import walkingkooka.storage.FakeStorageContext;
 import walkingkooka.storage.StorageStores;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
@@ -485,7 +485,7 @@ public class J2clTest {
                     SpreadsheetCellRangeStores.treeMap(),
                     SpreadsheetRowStores.treeMap(),
                     StorageStores.tree(
-                            new FakeStorageStoreContext() {
+                            new FakeStorageContext() {
                                 @Override
                                 public LocalDateTime now() {
                                     return NOW.now();

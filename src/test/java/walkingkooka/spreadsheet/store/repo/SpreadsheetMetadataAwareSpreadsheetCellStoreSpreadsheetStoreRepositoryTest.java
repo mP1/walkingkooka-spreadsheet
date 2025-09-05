@@ -257,7 +257,7 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetRowStores.treeMap(),
-                StorageStores.tree(STORAGE_STORE_CONTEXT),
+                StorageStores.tree(STORAGE_CONTEXT),
                 SpreadsheetUserStores.treeMap()
             ),
             SPREADSHEET_PARSER_PROVIDER,
