@@ -233,7 +233,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                         return this.storage;
                     }
 
-                    private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
+                    private final StorageStore storage = StorageStores.tree(STORAGE_CONTEXT);
                 },
                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                 ENVIRONMENT_CONTEXT,

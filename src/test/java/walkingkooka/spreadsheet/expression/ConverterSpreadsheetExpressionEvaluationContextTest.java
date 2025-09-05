@@ -89,7 +89,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CONTEXT;
-import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_STORE_CONTEXT;
+import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.TERMINAL_CONTEXT;
 
 public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
@@ -548,7 +548,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                         return this.storage;
                     }
 
-                    private final StorageStore storage = StorageStores.tree(STORAGE_STORE_CONTEXT);
+                    private final StorageStore storage = StorageStores.tree(STORAGE_CONTEXT);
                 },
                 METADATA.spreadsheetConverterContext(
                     CELL,

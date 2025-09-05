@@ -68,8 +68,8 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.storage.FakeStorageStoreContext;
-import walkingkooka.storage.StorageStoreContext;
+import walkingkooka.storage.FakeStorageContext;
+import walkingkooka.storage.StorageContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.test.Testing;
@@ -172,7 +172,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         new DecimalFormatSymbols(LOCALE)
     );
 
-    StorageStoreContext STORAGE_STORE_CONTEXT = new FakeStorageStoreContext() {
+    StorageContext STORAGE_CONTEXT = new FakeStorageContext() {
         @Override
         public LocalDateTime now() {
             return NOW.now();
