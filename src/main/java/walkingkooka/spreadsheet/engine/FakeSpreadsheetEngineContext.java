@@ -66,16 +66,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public LocalDateTime now() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        throw new UnsupportedOperationException();
-    }
-
     // SpreadsheetEngineContext.........................................................................................
 
     @Override
@@ -127,6 +117,20 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    // CanConvert.......................................................................................................
+
+    @Override
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        throw new UnsupportedOperationException();
+    }
+
     // LocaleContext....................................................................................................
 
     @Override
@@ -166,20 +170,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    // CanConvert.......................................................................................................
-
-    @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> type) {
-        throw new UnsupportedOperationException();
-    }
-
     // EnvironmentContext...............................................................................................
 
     @Override
@@ -205,6 +195,16 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public Set<EnvironmentValueName<?>> environmentValueNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public LocalDateTime now() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
         throw new UnsupportedOperationException();
     }
 
