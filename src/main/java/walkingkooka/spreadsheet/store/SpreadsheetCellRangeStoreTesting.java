@@ -48,7 +48,10 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     @Test
     default void testLoadUnknownFails() {
-        this.loadFailCheck(RANGE);
+        this.loadAndCheck(
+            this.createStore(),
+            RANGE
+        );
     }
 
     @Override

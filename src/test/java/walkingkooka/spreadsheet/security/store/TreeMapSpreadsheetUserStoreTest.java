@@ -70,7 +70,10 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         final UserId id = this.userId1().get();
         store.delete(id);
 
-        this.loadFailCheck(store, id);
+        this.loadAndCheck(
+            store,
+            id
+        );
     }
 
     @Test

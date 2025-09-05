@@ -37,7 +37,10 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
     @Test
     public final void testLoadUnknownFails() {
-        this.loadFailCheck(this.id());
+        this.loadAndCheck(
+            this.createStore(),
+            this.id()
+        );
     }
 
     @Test
@@ -59,7 +62,10 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         //noinspection OptionalGetWithoutIsPresent
         store.delete(metadata.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID).get());
 
-        this.loadFailCheck(store, this.id());
+        this.loadAndCheck(
+            store,
+            this.id()
+        );
     }
 
     @Test

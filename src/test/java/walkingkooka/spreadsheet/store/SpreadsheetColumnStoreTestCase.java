@@ -38,7 +38,10 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
 
     @Test
     public final void testLoadUnknown() {
-        this.loadFailCheck(REFERENCE);
+        this.loadAndCheck(
+            this.createStore(),
+            REFERENCE
+        );
     }
 
     @Test
@@ -76,7 +79,10 @@ public abstract class SpreadsheetColumnStoreTestCase<S extends SpreadsheetColumn
         store.save(column);
         store.delete(reference);
 
-        this.loadFailCheck(store, reference);
+        this.loadAndCheck(
+            store,
+            reference
+        );
     }
 
     @Test
