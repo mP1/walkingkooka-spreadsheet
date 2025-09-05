@@ -36,7 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.storage.StorageStore;
+import walkingkooka.storage.Storage;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -194,7 +194,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public StorageStore storage() {
+    public Storage storage() {
         throw new UnsupportedOperationException();
     }
 

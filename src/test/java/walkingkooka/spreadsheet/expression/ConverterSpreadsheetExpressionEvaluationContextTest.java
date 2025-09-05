@@ -58,8 +58,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.storage.StorageStore;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
@@ -89,7 +90,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CONTEXT;
-import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.STORAGE_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.TERMINAL_CONTEXT;
 
 public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
@@ -543,12 +543,13 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 SERVER_URL,
                 METADATA,
                 new FakeSpreadsheetStoreRepository() {
+
                     @Override
-                    public StorageStore storage() {
+                    public Storage<StorageExpressionEvaluationContext> storage() {
                         return this.storage;
                     }
 
-                    private final StorageStore storage = StorageStores.tree(STORAGE_CONTEXT);
+                    private final Storage<StorageExpressionEvaluationContext> storage = Storages.tree();
                 },
                 METADATA.spreadsheetConverterContext(
                     CELL,

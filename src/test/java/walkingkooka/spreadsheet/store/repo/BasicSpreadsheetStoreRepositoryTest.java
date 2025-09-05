@@ -42,8 +42,9 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
-import walkingkooka.storage.StorageStore;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -303,7 +304,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                            final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetRowStore rows,
-                           final StorageStore storage,
+                           final Storage storage,
                            final SpreadsheetUserStore users) {
         assertThrows(
             NullPointerException.class,
@@ -338,7 +339,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetMetadataStore metadatas = this.metadatas();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetRowStore rows = this.rows();
-        final StorageStore storage = this.storage();
+        final Storage storage = this.storage();
         final SpreadsheetUserStore users = this.users();
 
         this.toStringAndCheck(
@@ -423,8 +424,8 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         return SpreadsheetRowStores.fake();
     }
 
-    private StorageStore storage() {
-        return StorageStores.fake();
+    private Storage<StorageExpressionEvaluationContext> storage() {
+        return Storages.fake();
     }
 
     private SpreadsheetUserStore users() {

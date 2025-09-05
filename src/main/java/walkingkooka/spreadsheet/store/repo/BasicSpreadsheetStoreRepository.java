@@ -30,7 +30,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
-import walkingkooka.storage.StorageStore;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -51,7 +52,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                                 final SpreadsheetRowStore rows,
-                                                final StorageStore storage,
+                                                final Storage<StorageExpressionEvaluationContext> storage,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
@@ -95,7 +96,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                             final SpreadsheetRowStore rows,
-                                            final StorageStore storage,
+                                            final Storage<StorageExpressionEvaluationContext> storage,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
@@ -190,11 +191,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetRowStore rows;
 
     @Override
-    public StorageStore storage() {
+    public Storage<StorageExpressionEvaluationContext> storage() {
         return this.storage;
     }
 
-    private final StorageStore storage;
+    private final Storage<StorageExpressionEvaluationContext> storage;
 
     @Override
     public SpreadsheetUserStore users() {

@@ -88,8 +88,8 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
-import walkingkooka.storage.StorageStore;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -1403,7 +1403,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetRowStores.treeMap(),
-                StorageStores.fake(),
+                Storages.fake(),
                 SpreadsheetUserStores.fake()
             ),
             FUNCTION_ALIASES,
@@ -1938,8 +1938,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 }
 
                 @Override
-                public StorageStore storage() {
-                    return StorageStores.fake();
+                public Storage storage() {
+                    return Storages.fake();
                 }
             },
             ENVIRONMENT_CONTEXT

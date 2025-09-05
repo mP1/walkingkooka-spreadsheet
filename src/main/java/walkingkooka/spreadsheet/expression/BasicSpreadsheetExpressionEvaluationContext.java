@@ -49,7 +49,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.storage.StorageStore;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
@@ -274,7 +275,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override
-    public StorageStore storage() {
+    public Storage<StorageExpressionEvaluationContext> storage() {
         return this.spreadsheetStoreRepository.storage();
     }
 

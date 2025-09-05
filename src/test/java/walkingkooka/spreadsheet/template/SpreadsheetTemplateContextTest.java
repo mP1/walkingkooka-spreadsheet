@@ -29,8 +29,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.storage.StorageStore;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
@@ -228,12 +229,13 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                 Url.parseAbsolute("https://example.com"), // serverUrl
                 SpreadsheetMetadata.EMPTY,
                 new FakeSpreadsheetStoreRepository() {
+
                     @Override
-                    public StorageStore storage() {
+                    public Storage<StorageExpressionEvaluationContext> storage() {
                         return this.storage;
                     }
 
-                    private final StorageStore storage = StorageStores.tree(STORAGE_CONTEXT);
+                    private final Storage<StorageExpressionEvaluationContext> storage = Storages.tree();
                 },
                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                 ENVIRONMENT_CONTEXT,

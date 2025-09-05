@@ -36,7 +36,8 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
-import walkingkooka.storage.StorageStore;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 import java.util.Objects;
 
@@ -175,7 +176,7 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     }
 
     @Override
-    public StorageStore storage() {
+    public Storage<StorageExpressionEvaluationContext> storage() {
         return this.repository.storage();
     }
 

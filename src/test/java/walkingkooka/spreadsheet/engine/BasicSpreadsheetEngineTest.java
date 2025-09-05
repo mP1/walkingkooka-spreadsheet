@@ -116,7 +116,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationList;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
-import walkingkooka.storage.StorageStores;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -18429,7 +18429,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetCellRangeStores.treeMap(),
                                 SpreadsheetCellRangeStores.treeMap(),
                                 SpreadsheetRowStores.treeMap(),
-                                StorageStores.empty(),
+                                Storages.empty(),
                                 SpreadsheetUserStores.fake()
                             );
                         }
@@ -25301,7 +25301,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetRowStores.treeMap(),
-                StorageStores.fake(),
+                Storages.fake(),
                 SpreadsheetUserStores.fake()
             )
         );
@@ -25697,7 +25697,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetCellRangeStores.treeMap(),
             SpreadsheetCellRangeStores.treeMap(),
             SpreadsheetRowStores.treeMap(),
-            StorageStores.fake(),
+            Storages.fake(),
             SpreadsheetUserStores.fake()
         );
     }
