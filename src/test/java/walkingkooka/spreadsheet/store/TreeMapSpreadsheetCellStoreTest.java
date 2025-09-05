@@ -589,8 +589,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
             store.count()
         );
 
-        this.loadFailCheck(store, b2);
-        this.loadFailCheck(store, c3);
+        this.loadAndCheck(store, b2);
+        this.loadAndCheck(store, c3);
     }
 
     @Test

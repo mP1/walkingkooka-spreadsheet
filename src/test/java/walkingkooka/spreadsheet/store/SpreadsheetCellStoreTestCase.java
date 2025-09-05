@@ -68,7 +68,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testLoadUnknown() {
-        this.loadFailCheck(REFERENCE);
+        this.loadAndCheck(
+            this.createStore(),
+            REFERENCE
+        );
     }
 
     @Test
@@ -102,7 +105,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(cell);
         store.delete(reference);
 
-        this.loadFailCheck(store, reference);
+        this.loadAndCheck(
+            store,
+            reference
+        );
     }
 
     @Test
@@ -114,7 +120,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(cell);
         store.delete(reference.toAbsolute());
 
-        this.loadFailCheck(store, reference);
+        this.loadAndCheck(
+            store,
+            reference
+        );
     }
 
     @Test

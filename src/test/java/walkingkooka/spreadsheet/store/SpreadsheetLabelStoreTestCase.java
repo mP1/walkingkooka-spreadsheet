@@ -33,7 +33,10 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
 
     @Test
     public final void testLoadUnknownFails() {
-        this.loadFailCheck(LABEL);
+        this.loadAndCheck(
+            this.createStore(),
+            LABEL
+        );
     }
 
     @Test
@@ -54,7 +57,10 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(mapping);
         store.delete(mapping.label());
 
-        this.loadFailCheck(store, LABEL);
+        this.loadAndCheck(
+            store,
+            LABEL
+        );
     }
 
     @Test

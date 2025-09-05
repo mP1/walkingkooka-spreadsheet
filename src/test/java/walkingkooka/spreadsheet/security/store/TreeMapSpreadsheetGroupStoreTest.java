@@ -74,7 +74,10 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         final GroupId id = this.groupId1().get();
         store.delete(id);
 
-        this.loadFailCheck(store, id);
+        this.loadAndCheck(
+            store,
+            id
+        );
     }
 
     @Test

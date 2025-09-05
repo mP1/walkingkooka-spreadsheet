@@ -144,7 +144,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
                                                                           final TT id,
                                                                           final Set<SpreadsheetCellReference> expected) {
         if (expected.isEmpty()) {
-            this.loadFailCheck(store, id);
+            this.loadAndCheck(store, id);
         } else {
             StoreTesting.super.loadAndCheck(store, id, expected);
 
