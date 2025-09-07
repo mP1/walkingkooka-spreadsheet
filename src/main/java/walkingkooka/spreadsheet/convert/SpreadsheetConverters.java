@@ -271,12 +271,19 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetParserSelector() {
         return SpreadsheetConverterHasOptionalSpreadsheetParserSelector.INSTANCE;
     }
-    
+
     /**
      * {@see TreeTextConverters#hasTextStyle}
      */
     public static Converter<SpreadsheetConverterContext> hasStyle() {
         return TreeTextConverters.hasTextStyle();
+    }
+
+    /**
+     * {@see SpreadsheetConverterHasSpreadsheetSelection}
+     */
+    public static Converter<SpreadsheetConverterContext> hasSpreadsheetSelection() {
+        return SpreadsheetConverterHasSpreadsheetSelection.INSTANCE;
     }
 
     /**
@@ -465,6 +472,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToValueType(),
         hasSpreadsheetFormatterSelector(),
         hasSpreadsheetParserSelector(),
+        hasSpreadsheetSelection(),
         hasValidatorSelector(),
         spreadsheetCellSet()
     );

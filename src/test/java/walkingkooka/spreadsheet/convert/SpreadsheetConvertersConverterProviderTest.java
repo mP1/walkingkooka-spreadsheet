@@ -282,6 +282,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasSpreadsheetSelection() {
+        this.converterAndCheck(
+            "has-spreadsheet-selection",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasSpreadsheetSelection()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithHasStyleToStyle() {
         this.converterAndCheck(
             "has-style",
