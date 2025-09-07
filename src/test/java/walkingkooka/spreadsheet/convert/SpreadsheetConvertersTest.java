@@ -47,12 +47,14 @@ import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
+import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
@@ -1957,6 +1959,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             validator
         );
     }
+
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetCellSet() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            SpreadsheetCellSet.class,
+            SpreadsheetCellSet.EMPTY.concat(cell)
+        );
+    }
+
 
     @Test
     public void testSpreadsheetValueConvertStringToValueType() {
