@@ -1973,6 +1973,18 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetCellReference() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            cell,
+            SpreadsheetCellReference.class,
+            cell.reference()
+        );
+    }
 
     @Test
     public void testSpreadsheetValueConvertStringToValueType() {
