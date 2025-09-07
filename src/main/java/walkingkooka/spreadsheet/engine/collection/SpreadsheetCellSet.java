@@ -44,6 +44,10 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
+/**
+ * An immutable {@link Set} of unique {@link SpreadsheetCell}, with the {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}
+ * ignored.
+ */
 public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> implements ImmutableSortedSetDefaults<SpreadsheetCellSet, SpreadsheetCell>,
     HasUrlFragment,
     TreePrintable {
