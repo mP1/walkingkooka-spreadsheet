@@ -411,6 +411,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@see SpreadsheetConverterSpreadsheetCellSet}
+     */
+    public static Converter<SpreadsheetConverterContext> spreadsheetCellSet() {
+        return SpreadsheetConverterSpreadsheetCellSet.INSTANCE;
+    }
+
+    /**
      * A converter that involves {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} data types.
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetMetadata() {
@@ -458,7 +465,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToValueType(),
         hasSpreadsheetFormatterSelector(),
         hasSpreadsheetParserSelector(),
-        hasValidatorSelector()
+        hasValidatorSelector(),
+        spreadsheetCellSet()
     );
 
     /**
