@@ -43,15 +43,30 @@ final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserT
         visitor.accept(token);
 
         final ExpressionNumberKind kind = context.expressionNumberKind();
-        final ExpressionNumber number = kind.parse(visitor.number.toString());
-        return visitor.percentage ?
-            number.divide(kind.create(100), context) :
-            number;
+
+        ExpressionNumber number = kind.parse(visitor.number.toString());
+
+        final int percentage = visitor.percentageSymbolCounter;
+        if (0 != percentage) {
+            // percentage = 1 = 100%
+            // percentage = 2 = 100% * 100%
+            number = number.divide(
+                kind.create(10)
+                    .power(
+                        kind.create(percentage * 2),
+                        context
+                    ),
+                context
+            );
+        }
+
+        return number;
     }
 
     // @VisibleForTesting
     NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserTokenVisitor() {
         super();
+        this.percentageSymbolCounter = 0;
     }
 
     // visit....................................................................................................
@@ -84,10 +99,12 @@ final class NumberSpreadsheetFormulaParserTokenToNumberSpreadsheetFormulaParserT
 
     @Override
     protected void visit(final PercentSymbolSpreadsheetFormulaParserToken token) {
-        this.percentage = true;
+        // count all the percent symbols in the number
+        this.percentageSymbolCounter += token.text()
+            .length();
     }
 
-    private boolean percentage = false;
+    private int percentageSymbolCounter;
 
     /**
      * Aggregates all the number important characters digits, signs, exponent etc, this will be parsed by {@link BigDecimal}.

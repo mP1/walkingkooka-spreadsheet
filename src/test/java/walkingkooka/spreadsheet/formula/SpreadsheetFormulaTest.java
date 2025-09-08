@@ -1484,6 +1484,96 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testParseExpressionWithNumberPercent() {
+        final String text = "=1+200%";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("1", "1")
+                                            ),
+                                            "1"
+                                        ),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("200", "200"),
+                                                SpreadsheetFormulaParserToken.percentSymbol("%", "%")
+                                            ),
+                                            "200%"
+                                        )
+                                    ),
+                                    "1+200%"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testParseExpressionWithNumberPercentPercent() {
+        final String text = "=100%%+2";
+
+        this.parseAndCheck(
+            text,
+            SpreadsheetFormulaParsers.valueOrExpression(
+                SpreadsheetParsers.parser(
+                    Parsers.never(),
+                    Optional.empty()
+                )
+            ),
+            SpreadsheetFormula.EMPTY.setText(text)
+                .setToken(
+                    Optional.of(
+                        SpreadsheetFormulaParserToken.expression(
+                            Lists.of(
+                                SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                                SpreadsheetFormulaParserToken.addition(
+                                    Lists.of(
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("100", "100"),
+                                                SpreadsheetFormulaParserToken.percentSymbol("%%", "%%")
+                                            ),
+                                            "100%%"
+                                        ),
+                                        SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetFormulaParserToken.number(
+                                            Lists.of(
+                                                SpreadsheetFormulaParserToken.digits("2", "2")
+                                            ),
+                                            "2"
+                                        )
+                                    ),
+                                    "100%%+2"
+                                )
+                            ),
+                            text
+                        )
+                    )
+                )
+        );
+    }
+
+    @Test
     public void testParseExpressionWithNumbersWithDecimalsAndCustomDecimalSeparator() {
         final String text = "=1@5+2";
 

@@ -301,6 +301,27 @@ public final class NumberSpreadsheetFormulaParserTokenTest extends ValueSpreadsh
     }
 
     @Test
+    public void testToExpressionNumber50PercentPercent() {
+        this.toExpressionAndCheck2(
+            0.5 / 100,
+            digit("50"),
+            percent(),
+            percent()
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber50PercentPercentPercent() {
+        this.toExpressionAndCheck2(
+            0.5 / 100 / 100,
+            digit("50"),
+            percent(),
+            percent(),
+            percent()
+        );
+    }
+
+    @Test
     public void testToExpressionNumber200Percent() {
         this.toExpressionAndCheck2(
             2.0,

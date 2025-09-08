@@ -1033,9 +1033,40 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     @Test
     public void testConvertPatternHashDecimalPercentBigDecimalDigitDigitDigitPercent() {
-        this.parsePatternConvertAndCheck("#.#%",
-            "45" + DECIMAL + "6" + PERCENT,
-            BigDecimal.valueOf(0.456));
+        this.parsePatternConvertAndCheck(
+            "#.#%",
+            "123" + DECIMAL + "5" + PERCENT,
+            BigDecimal.valueOf(123.5)
+                .divide(
+                    BigDecimal.valueOf(100)
+                )
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashDecimalPercentBigDecimalDigitDigitDigitPercentPercent() {
+        this.parsePatternConvertAndCheck(
+            "#.#%",
+            "123" + DECIMAL + "5" + PERCENT + PERCENT,
+            BigDecimal.valueOf(
+                123.5
+            ).divide(
+                BigDecimal.valueOf(100 * 100)
+            )
+        );
+    }
+
+    @Test
+    public void testConvertPatternHashDecimalPercentBigDecimalDigitDigitDigitPercentPercentPercent() {
+        this.parsePatternConvertAndCheck(
+            "#.#%",
+            "123" + DECIMAL + "5" + PERCENT + PERCENT + PERCENT,
+            BigDecimal.valueOf(
+                123.5
+            ).divide(
+                BigDecimal.valueOf(100 * 100 * 100)
+            )
+        );
     }
 
     // several patterns.................................................................................................
