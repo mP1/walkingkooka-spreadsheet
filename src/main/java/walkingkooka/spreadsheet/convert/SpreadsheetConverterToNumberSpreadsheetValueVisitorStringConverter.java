@@ -21,8 +21,6 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -42,21 +40,10 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
     /**
      * Singleton
      */
-    static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter with(final boolean ignoreDecimalNumberContextSymbols) {
-        return ignoreDecimalNumberContextSymbols ?
-            TRUE :
-            FALSE;
-    }
+    final static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter INSTANCE = new SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter();
 
-    private final static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter TRUE = new SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter(
-        (SpreadsheetConverterContext c) -> DecimalNumberContexts.american(c.mathContext())
-    );
 
-    private final static SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter FALSE = new SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter(
-        (SpreadsheetConverterContext c) -> c // DecimalNumberContext
-    );
-
-    private SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter(final Function<SpreadsheetConverterContext, DecimalNumberContext> decimalNumberContextProvider) {
+    private SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter() {
         super();
         this.parser = Converters.parser(
             BigDecimal.class,
@@ -64,7 +51,7 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
             (final SpreadsheetConverterContext c) -> ParserContexts.basic(
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
-                decimalNumberContextProvider.apply(c)
+                c
             ),
             (ParserToken t, SpreadsheetConverterContext c) -> t.cast(BigDecimalParserToken.class).value()
         );
