@@ -48,6 +48,12 @@ public interface SpreadsheetParserContextDelegator extends SpreadsheetParserCont
     }
 
     @Override
+    default boolean isGroupSeparatorWithinNumbersSupported() {
+        return this.spreadsheetParserContext()
+            .isGroupSeparatorWithinNumbersSupported();
+    }
+
+    @Override
     default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                 final TextCursor cursor) {
         return this.spreadsheetParserContext()

@@ -49,6 +49,7 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
             BigDecimal.class,
             Parsers.bigDecimal(), // parser
             (final SpreadsheetConverterContext c) -> ParserContexts.basic(
+                false, // isGroupSeparatorWithinNumbersSupported
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 c

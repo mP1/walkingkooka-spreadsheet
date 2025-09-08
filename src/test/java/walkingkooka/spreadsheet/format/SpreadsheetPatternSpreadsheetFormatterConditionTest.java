@@ -341,6 +341,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                 BigDecimal.class,
                 Parsers.bigDecimal(),
                 (c) -> ParserContexts.basic(
+                    false, // isGroupSeparatorWithinNumbersSupported
                     InvalidCharacterExceptionFactory.POSITION,
                     c,
                     c

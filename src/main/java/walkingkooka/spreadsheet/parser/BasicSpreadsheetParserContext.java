@@ -74,6 +74,11 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     private final char valueSeparator;
 
     @Override
+    public boolean isGroupSeparatorWithinNumbersSupported() {
+        return false;
+    }
+
+    @Override
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
         return this.invalidCharacterExceptionFactory.apply(
