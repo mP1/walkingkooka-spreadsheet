@@ -24,13 +24,21 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Internal enum that is used hen creating a {@link SpreadsheetNumberParsePatternSpreadsheetParser} to differentiate between
+ * Internal enum that is used when creating a {@link SpreadsheetNumberParsePatternSpreadsheetParser} to differentiate between
  * a number that parses a value and numbers within an expression.
  */
 enum SpreadsheetNumberParsePatternMode {
+
+    /**
+     * Parsing a number within an expression.
+     * <pre>
+     * =1+2
+     * </pre>
+     */
     EXPRESSION {
         @Override
-        boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
+        boolean isGroupSeparator(final char c,
+                                 final DecimalNumberContext context) {
             return false;
         }
 
@@ -47,14 +55,26 @@ enum SpreadsheetNumberParsePatternMode {
                 .filter(SpreadsheetNumberParsePatternComponent::isNotExpressionCompatible)
                 .findFirst()
                 .ifPresent(p -> {
-                    throw new IllegalStateException("Invalid component " + p + " within " + patterns.stream().map(Objects::toString).collect(Collectors.joining()));
+                    throw new IllegalStateException(
+                        "Invalid component " + p + " within " +
+                            patterns.stream()
+                                .map(Objects::toString)
+                                .collect(Collectors.joining())
+                    );
                 });
         }
     },
 
+    /**
+     * Parsing a number outside an expression.
+     * <pre>
+     * 123.50
+     * </pre>
+     */
     VALUE {
         @Override
-        boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
+        boolean isGroupSeparator(final char c,
+                                 final DecimalNumberContext context) {
             return c == context.groupSeparator();
         }
 
@@ -64,7 +84,8 @@ enum SpreadsheetNumberParsePatternMode {
         }
     };
 
-    abstract boolean isGroupSeparator(final char c, final DecimalNumberContext context);
+    abstract boolean isGroupSeparator(final char c,
+                                      final DecimalNumberContext context);
 
     abstract void checkCompatible(final SpreadsheetNumberParsePattern patterns);
 }
