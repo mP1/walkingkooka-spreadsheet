@@ -25,7 +25,8 @@ import walkingkooka.text.cursor.TextCursorSavePoint;
 import java.util.function.BiFunction;
 
 /**
- * An individual component with a larger pattern. Each component parses one or more characters and possibly contributes values to the {@link Number}.
+ * An individual component with a larger pattern.
+ * Each component parses one or more characters and possibly contributes values to the {@link Number}.
  */
 abstract class SpreadsheetNumberParsePatternComponent {
 
@@ -122,7 +123,7 @@ abstract class SpreadsheetNumberParsePatternComponent {
 
     // used within Streams as a method reference
     final boolean isNotExpressionCompatible() {
-        return !this.isExpressionCompatible();
+        return false == this.isExpressionCompatible();
     }
 
     /**
@@ -159,16 +160,23 @@ abstract class SpreadsheetNumberParsePatternComponent {
             }
             // failed!
             final char c = cursor.at();
-            if (!caseSensitivity.isEqual(c, token.charAt(i))) {
+            if (false == caseSensitivity.isEqual(c, token.charAt(i))) {
                 save.restore();
                 break;
             }
             cursor.next();
             i++;
             if (i == length) {
-                final String text = save.textBetween().toString();
-                request.add(factory.apply(text, text));
+                final String text = save.textBetween()
+                    .toString();
+                request.add(
+                    factory.apply(
+                        text,
+                        text
+                    )
+                );
 
+                // not all components update the digitMode
                 if (null != mode) {
                     request.setDigitMode(mode);
                 }
