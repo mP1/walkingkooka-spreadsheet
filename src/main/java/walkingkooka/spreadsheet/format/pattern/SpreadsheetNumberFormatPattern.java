@@ -276,8 +276,4 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetNumberFormatPattern;
-    }
 }

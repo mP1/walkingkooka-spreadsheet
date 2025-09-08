@@ -79,11 +79,6 @@ public final class SpreadsheetNumberParsePattern extends SpreadsheetParsePattern
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetNumberParsePattern;
-    }
-
     // HasConverter.....................................................................................................
 
     @Override

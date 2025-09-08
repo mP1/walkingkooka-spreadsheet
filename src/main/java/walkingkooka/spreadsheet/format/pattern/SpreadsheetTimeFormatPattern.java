@@ -107,8 +107,4 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetTimeFormatPattern;
-    }
 }

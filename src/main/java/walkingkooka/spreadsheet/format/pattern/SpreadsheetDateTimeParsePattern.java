@@ -113,8 +113,4 @@ public final class SpreadsheetDateTimeParsePattern extends SpreadsheetNonNumberP
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetDateTimeParsePattern;
-    }
 }
