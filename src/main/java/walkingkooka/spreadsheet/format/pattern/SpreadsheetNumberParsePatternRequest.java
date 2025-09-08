@@ -57,9 +57,7 @@ final class SpreadsheetNumberParsePatternRequest {
     final SpreadsheetNumberParsePatternMode mode;
 
     void setDigitMode(final SpreadsheetNumberParsePatternComponentDigitMode digitMode) {
-        if (digitMode != this.digitMode) {
-            this.digitMode = digitMode;
-        }
+        this.digitMode = digitMode;
     }
 
     /**
