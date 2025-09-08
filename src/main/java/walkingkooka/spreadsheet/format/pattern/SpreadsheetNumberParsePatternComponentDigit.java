@@ -37,11 +37,6 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
     }
 
     @Override //
-    final boolean isExpressionCompatible() {
-        return true;
-    }
-
-    @Override //
     final boolean parse(final TextCursor cursor,
                         final SpreadsheetNumberParsePatternRequest request) {
         if (cursor.isNotEmpty()) {

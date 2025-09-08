@@ -58,12 +58,7 @@ public abstract class SpreadsheetNumberParsePatternComponentTestCase<C extends S
     private Iterator<SpreadsheetNumberParsePatternComponent> next() {
         return Iterators.one(
             new SpreadsheetNumberParsePatternComponent() {
-
-                @Override
-                boolean isExpressionCompatible() {
-                    return true;
-                }
-
+                
                 @Override
                 SpreadsheetNumberParsePatternComponent lastDigit(final SpreadsheetNumberParsePatternComponentDigitMode mode) {
                     throw new UnsupportedOperationException();

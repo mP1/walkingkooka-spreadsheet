@@ -35,11 +35,6 @@ final class SpreadsheetNumberParsePatternComponentDecimalSeparator extends Sprea
     }
 
     @Override
-    boolean isExpressionCompatible() {
-        return true;
-    }
-
-    @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         boolean completed = false;

@@ -36,11 +36,6 @@ final class SpreadsheetNumberParsePatternComponentCurrency extends SpreadsheetNu
     }
 
     @Override
-    boolean isExpressionCompatible() {
-        return true;
-    }
-
-    @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         return this.parseToken(
