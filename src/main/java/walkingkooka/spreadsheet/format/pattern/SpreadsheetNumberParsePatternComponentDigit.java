@@ -36,12 +36,14 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
         this.max = max;
     }
 
-    @Override final boolean isExpressionCompatible() {
+    @Override //
+    final boolean isExpressionCompatible() {
         return true;
     }
 
-    @Override final boolean parse(final TextCursor cursor,
-                                  final SpreadsheetNumberParsePatternRequest request) {
+    @Override //
+    final boolean parse(final TextCursor cursor,
+                        final SpreadsheetNumberParsePatternRequest request) {
         if (cursor.isNotEmpty()) {
             final SpreadsheetNumberParsePatternComponentDigitMode digitMode = request.digitMode;
             digitMode.tryParseSign(cursor, request);
@@ -68,11 +70,7 @@ abstract class SpreadsheetNumberParsePatternComponentDigit extends SpreadsheetNu
         final int max = this.max;
         int count = 0;
 
-        for (; ; ) {
-            if (cursor.isEmpty()) {
-                break;
-            }
-
+        while (cursor.isNotEmpty()) {
             final char c = cursor.at();
             final int digit = context.digit(c);
             if (-1 != digit) {
