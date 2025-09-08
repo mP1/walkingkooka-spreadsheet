@@ -362,9 +362,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         nullToNumber(),
         numberToNumber(),
         toNumber(),
-        numberToText(
-            true // ignoreDecimalNumberContextSymbols
-        )
+        numberToText()
     );
     
     /**
@@ -384,8 +382,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetConverterNumberToText}
      */
-    public static Converter<SpreadsheetConverterContext> numberToText(final boolean ignoreDecimalNumberContextSymbols) {
-        return SpreadsheetConverterNumberToText.with(ignoreDecimalNumberContextSymbols);
+    public static Converter<SpreadsheetConverterContext> numberToText() {
+        return SpreadsheetConverterNumberToText.INSTANCE;
     }
 
     /**
