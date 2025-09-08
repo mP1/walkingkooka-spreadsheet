@@ -59,7 +59,10 @@ public final class SpreadsheetNumberParsePatternComponentPercentTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createComponent(), ".");
+        this.toStringAndCheck(
+            this.createComponent(),
+            "%"
+        );
     }
 
     @Override
