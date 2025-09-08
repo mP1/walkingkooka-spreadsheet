@@ -57,6 +57,6 @@ final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNum
 
     @Override
     public String toString() {
-        return ".";
+        return "%";
     }
 }
