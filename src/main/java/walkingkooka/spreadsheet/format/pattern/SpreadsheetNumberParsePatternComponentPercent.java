@@ -37,11 +37,6 @@ final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNum
     }
 
     @Override
-    boolean isExpressionCompatible() {
-        return true;
-    }
-
-    @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         boolean completed = false;

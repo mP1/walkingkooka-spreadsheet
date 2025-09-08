@@ -123,13 +123,17 @@ abstract class SpreadsheetNumberParsePatternComponent {
 
     // used within Streams as a method reference
     final boolean isNotExpressionCompatible() {
-        return false == this.isExpressionCompatible();
+        return this instanceof SpreadsheetNumberParsePatternComponentGroupSeparator ||
+            this instanceof SpreadsheetNumberParsePatternComponentTextLiteral ||
+            this instanceof SpreadsheetNumberParsePatternComponentWhitespace;
     }
 
     /**
      * Some tokens (group separator) are not valid within an expression but are valid as a number literal.
      */
-    abstract boolean isExpressionCompatible();
+    final boolean isExpressionCompatible() {
+        return false == this.isNotExpressionCompatible();
+    }
 
     /**
      * Each component in turn is asked to consume and possibly update the number value in the context.

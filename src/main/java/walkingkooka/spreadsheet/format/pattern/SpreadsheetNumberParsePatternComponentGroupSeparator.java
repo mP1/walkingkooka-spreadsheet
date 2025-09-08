@@ -34,11 +34,6 @@ final class SpreadsheetNumberParsePatternComponentGroupSeparator extends Spreads
     }
 
     @Override
-    boolean isExpressionCompatible() {
-        return false;
-    }
-
-    @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
         return request.nextComponent(cursor);
