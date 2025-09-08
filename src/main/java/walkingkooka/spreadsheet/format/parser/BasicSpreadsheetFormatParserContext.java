@@ -61,6 +61,11 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
+    public boolean isGroupSeparatorWithinNumbersSupported() {
+        return false;
+    }
+
+    @Override
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
         return this.invalidCharacterExceptionFactory.apply(
