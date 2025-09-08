@@ -108,8 +108,4 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetTextFormatPattern;
-    }
 }
