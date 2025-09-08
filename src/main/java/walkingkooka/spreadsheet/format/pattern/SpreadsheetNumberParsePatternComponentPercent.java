@@ -18,11 +18,12 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
 
 /**
- * A {@link SpreadsheetNumberParsePatternComponent} that matches any percent symbol.
+ * A {@link SpreadsheetNumberParsePatternComponent} that matches one or more percent symbol(s).
+ * Each percent symbol that appears within a numerical value will scale the value by 100%.
  */
 final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNumberParsePatternComponentNonDigit {
 
@@ -43,16 +44,36 @@ final class SpreadsheetNumberParsePatternComponentPercent extends SpreadsheetNum
     @Override
     boolean parse(final TextCursor cursor,
                   final SpreadsheetNumberParsePatternRequest request) {
-        final char percentSymbol = request.context.percentSymbol();
+        boolean completed = false;
 
-        return this.parseToken(
-            cursor,
-            Character.toString(percentSymbol),
-            CaseSensitivity.SENSITIVE,
-            SpreadsheetFormulaParserToken::percentSymbol,
-            null, // dont update mode
-            request
-        );
+        if(cursor.isNotEmpty()) {
+            final char percentSymbol = request.context.percentSymbol();
+            if(cursor.at() == percentSymbol) {
+                final TextCursorSavePoint save = cursor.save();
+                cursor.next();
+
+                while(cursor.isNotEmpty()) {
+                    if(cursor.at() != percentSymbol) {
+                        break;
+                    }
+
+                    cursor.next();
+                }
+
+                final String text = save.textBetween()
+                    .toString();
+                request.add(
+                    SpreadsheetFormulaParserToken.percentSymbol(
+                        text,
+                        text
+                    )
+                );
+
+                completed = request.nextComponent(cursor);
+            }
+        }
+
+        return completed;
     }
 
     @Override
