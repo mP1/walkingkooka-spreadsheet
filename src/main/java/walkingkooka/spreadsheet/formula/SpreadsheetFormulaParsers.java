@@ -715,11 +715,11 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
      * Handles matching boolean literals "true" or "false".
      */
     private final static Parser<SpreadsheetParserContext> BOOLEAN = symbol(
-        "true",
+        SpreadsheetStrings.BOOLEAN_TRUE,
         SpreadsheetFormulaParsers::transformBoolean
     ).or(
         symbol(
-            "false",
+            SpreadsheetStrings.BOOLEAN_FALSE,
             SpreadsheetFormulaParsers::transformBoolean
         )
     ).setToString(BOOLEAN_IDENTIFIER.toString());
