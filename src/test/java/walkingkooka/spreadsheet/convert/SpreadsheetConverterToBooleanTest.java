@@ -574,8 +574,33 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
             );
 
             @Override
+            public char decimalSeparator() {
+                return '.';
+            }
+
+            @Override
+            public String exponentSymbol() {
+                return "E";
+            }
+
+            @Override
             public MathContext mathContext() {
                 return MathContext.DECIMAL32;
+            }
+
+            @Override
+            public char negativeSign() {
+                return '-';
+            }
+
+            @Override
+            public char positiveSign() {
+                return '+';
+            }
+
+            @Override
+            public char zeroDigit() {
+                return '0';
             }
         };
     }

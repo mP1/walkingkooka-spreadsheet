@@ -692,9 +692,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
         this.converterAndCheck(
             "to-number",
             PROVIDER_CONTEXT,
-            SpreadsheetConverters.toNumber(
-                true // ignoreDecimalNumberContextSymbols
-            )
+            SpreadsheetConverters.toNumber()
         );
     }
 
