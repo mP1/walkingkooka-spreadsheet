@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-final class SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
+final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
     static SpreadsheetSelection convert(final SpreadsheetSelection selection,
                                         final Class<?> target) {
-        final SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor visitor = new SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(selection);
+        final SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor visitor = new SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor(selection);
         visitor.accept(target);
         final SpreadsheetSelection result = visitor.value;
         if(null == result) {
@@ -34,7 +34,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueT
     }
 
     // @VisibleForTesting
-    SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(final SpreadsheetSelection selection) {
+    SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor(final SpreadsheetSelection selection) {
         super();
         this.selection = selection;
     }

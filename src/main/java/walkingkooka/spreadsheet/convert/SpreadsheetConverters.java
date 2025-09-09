@@ -436,10 +436,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {@see SpreadsheetSelectionToSpreadsheetSelectionConverter}
+     * {@see SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetSelectionToSpreadsheetSelection() {
-        return SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE;
+        return SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.INSTANCE;
     }
 
     /**
