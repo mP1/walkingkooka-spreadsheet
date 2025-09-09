@@ -39,14 +39,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
  * Attempts to convert from a {@link SpreadsheetLabelName} will attempt to resolve it to a {@link SpreadsheetCellReferenceOrRange},
  * and then the target type.
  */
-final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
+final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection extends SpreadsheetConverter
+    implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetSelectionToSpreadsheetSelectionConverter INSTANCE = new SpreadsheetSelectionToSpreadsheetSelectionConverter();
+    final static SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection INSTANCE = new SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection();
 
-    private SpreadsheetSelectionToSpreadsheetSelectionConverter() {
+    private SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection() {
         super();
     }
 
@@ -102,7 +103,7 @@ final class SpreadsheetSelectionToSpreadsheetSelectionConverter implements Tryin
     public SpreadsheetSelection tryConvertOrFail(final Object value,
                                                  final Class<?> type,
                                                  final SpreadsheetConverterContext context) {
-        return SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor.convert(
+        return SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor.convert(
             context.resolveIfLabelOrFail(
                 (SpreadsheetSelection) value
             ),

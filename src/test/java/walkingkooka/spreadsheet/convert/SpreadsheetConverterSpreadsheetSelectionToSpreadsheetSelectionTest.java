@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.ToStringTesting;
-import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -37,8 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest implements ConverterTesting2<SpreadsheetSelectionToSpreadsheetSelectionConverter, SpreadsheetConverterContext>,
-    ToStringTesting<SpreadsheetSelectionToSpreadsheetSelectionConverter> {
+public final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection> {
 
     // cell.............................................................................................................
 
@@ -731,8 +728,8 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     // Converter........................................................................................................
 
     @Override
-    public SpreadsheetSelectionToSpreadsheetSelectionConverter createConverter() {
-        return SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE;
+    public SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection createConverter() {
+        return SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.INSTANCE;
     }
 
     @Override
@@ -745,7 +742,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetSelectionToSpreadsheetSelectionConverter.INSTANCE,
+            SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.INSTANCE,
             "selection to selection"
         );
     }
@@ -753,7 +750,7 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterTest imple
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetSelectionToSpreadsheetSelectionConverter> type() {
-        return SpreadsheetSelectionToSpreadsheetSelectionConverter.class;
+    public Class<SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection> type() {
+        return SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.class;
     }
 }

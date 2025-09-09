@@ -20,16 +20,16 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitorTesting;
 
-public final class SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor> {
+public final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor> {
 
     @Override
-    public SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor createVisitor() {
-        return new SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor(null);
+    public SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor createVisitor() {
+        return new SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor(null);
     }
 
     @Override
-    public Class<SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor> type() {
-        return SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadsheetValueTypeVisitor.class;
+    public Class<SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor> type() {
+        return SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor.class;
     }
 
     @Override
@@ -39,6 +39,6 @@ public final class SpreadsheetSelectionToSpreadsheetSelectionConverterSpreadshee
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetSelectionToSpreadsheetSelectionConverter.class.getSimpleName();
+        return SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.class.getSimpleName();
     }
 }
