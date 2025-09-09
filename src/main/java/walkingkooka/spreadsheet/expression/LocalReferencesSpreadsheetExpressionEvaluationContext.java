@@ -17,17 +17,15 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.Converter;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -52,7 +50,6 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -75,8 +72,7 @@ import java.util.function.Function;
  * has a local value.
  */
 final class LocalReferencesSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
-    DateTimeContextDelegator,
-    DecimalNumberContextDelegator,
+    ConverterContextDelegator,
     FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
@@ -278,21 +274,16 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
             .orElse(Optional.empty());
     }
 
-    // ConverterContext.................................................................................................
+    // ConverterContextDelegator........................................................................................
 
     @Override
-    public boolean canConvert(final Object value,
-                              final Class<?> type) {
-        return this.context.canConvert(
-            value,
-            type
-        );
+    public CanConvert canConvert() {
+        return ConverterContextDelegator.super.canConvert();
     }
 
     @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> target) {
-        return this.context.convert(value, target);
+    public ConverterContext converterContext() {
+        return this.context;
     }
 
     @Override
@@ -301,45 +292,16 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     }
 
     @Override
-    public boolean canNumbersHaveGroupSeparator() {
-        return this.context.canNumbersHaveGroupSeparator();
-    }
-
-    @Override
-    public long dateOffset() {
-        return this.context.dateOffset();
-    }
-
-    @Override
-    public ExpressionNumberKind expressionNumberKind() {
-        return this.context.expressionNumberKind();
-    }
-
-    // DateTimeContext.................................................................................................
-
-    @Override
-    public DateTimeContext dateTimeContext() {
-        return this.context;
-    }
-
-    // DecimalNumberContext.............................................................................................
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        return this.context;
-    }
-
-    @Override
     public MathContext mathContext() {
         return this.context.mathContext();
     }
-
-    // FormHandlerContextDelegator......................................................................................
 
     @Override
     public LocalDateTime now() {
         return this.context.now();
     }
+
+    // FormHandlerContextDelegator......................................................................................
 
     @Override
     public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
