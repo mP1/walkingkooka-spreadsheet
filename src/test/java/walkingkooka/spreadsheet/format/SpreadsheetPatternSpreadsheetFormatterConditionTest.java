@@ -345,6 +345,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                 (c) -> ParserContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     InvalidCharacterExceptionFactory.POSITION,
+                    ',', // valueSeparator
                     c,
                     c
                 ),

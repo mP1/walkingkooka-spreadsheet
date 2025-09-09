@@ -24,9 +24,4 @@ import walkingkooka.tree.expression.ExpressionNumberContext;
  * A {@link ParserContext} for all spreadsheet parsers.
  */
 public interface SpreadsheetParserContext extends ParserContext, ExpressionNumberContext {
-
-    /**
-     * The character that separates multiple values, such as an expression with multiple parameters.
-     */
-    char valueSeparator();
 }

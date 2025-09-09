@@ -581,6 +581,11 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
             }
 
             @Override
+            public char valueSeparator() {
+                return ',';
+            }
+
+            @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return EXPRESSION_NUMBER_KIND;
             }

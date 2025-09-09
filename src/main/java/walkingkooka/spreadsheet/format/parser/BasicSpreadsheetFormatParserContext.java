@@ -77,6 +77,11 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     private final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory;
 
     @Override
+    public char valueSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Locale locale() {
         return this.context.locale();
     }

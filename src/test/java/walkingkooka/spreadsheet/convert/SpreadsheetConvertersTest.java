@@ -1522,6 +1522,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
 
         @Override
+        public char valueSeparator() {
+            return ',';
+        }
+
+        @Override
         public String currencySymbol() {
             return this.decimalNumberContext.currencySymbol();
         }
@@ -2430,6 +2435,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 @Override
                 public boolean canNumbersHaveGroupSeparator() {
                     return false;
+                }
+
+                @Override
+                public char valueSeparator() {
+                    return ',';
                 }
 
                 @Override

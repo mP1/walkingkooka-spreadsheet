@@ -548,6 +548,11 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
             }
 
             @Override
+            public char valueSeparator() {
+                return ',';
+            }
+
+            @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return EXPRESSION_NUMBER_KIND;
             }
