@@ -61,7 +61,7 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
-    public boolean isGroupSeparatorWithinNumbersSupported() {
+    public boolean canNumbersHaveGroupSeparator() {
         return false;
     }
 
