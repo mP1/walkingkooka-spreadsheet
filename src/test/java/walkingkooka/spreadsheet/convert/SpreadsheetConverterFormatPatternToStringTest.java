@@ -304,6 +304,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         converter.cast(ConverterContext.class),
                         DateTimeContexts.basic(

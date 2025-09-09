@@ -84,6 +84,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
+    public boolean canNumbersHaveGroupSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public long dateOffset() {
         throw new UnsupportedOperationException();
     }

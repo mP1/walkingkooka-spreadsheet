@@ -1254,6 +1254,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 ExpressionNumberConverterContexts.basic(
                     Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                     ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         Converters.fake(),
                         DateTimeContexts.fake(), // DateTimeContext unused

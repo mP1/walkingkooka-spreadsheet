@@ -267,6 +267,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         );
 
         @Override
+        public boolean canNumbersHaveGroupSeparator() {
+            return false;
+        }
+
+        @Override
         public long dateOffset() {
             return 0;
         }

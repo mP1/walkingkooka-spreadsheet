@@ -4199,6 +4199,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                         ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Converters.fake(),
                             dateTimeContext(),
