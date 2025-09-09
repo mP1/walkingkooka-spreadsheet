@@ -94,6 +94,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
+    public char valueSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetExpressionReference validationReference() {
         throw new UnsupportedOperationException();
     }

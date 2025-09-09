@@ -173,6 +173,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(
                                 localeContext.dateTimeSymbolsForLocale(locale)

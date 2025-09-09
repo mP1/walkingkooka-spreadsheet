@@ -181,6 +181,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    ',', // valueSeparator
                     Converters.fake(),
                     DateTimeContexts.basic(
                         LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)

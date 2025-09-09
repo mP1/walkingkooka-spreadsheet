@@ -2832,6 +2832,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        ',', // valueSeparator
                         Converters.fake(),
                         DateTimeContexts.basic(
                             DateTimeSymbols.fromDateFormatSymbols(
@@ -3058,8 +3059,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     Converters.fake(), // not used
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        ',', // valueSeparator
                         Converters.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
                         DecimalNumberContexts.american(MathContext.DECIMAL32)

@@ -93,6 +93,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(

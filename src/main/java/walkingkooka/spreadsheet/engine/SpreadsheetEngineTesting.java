@@ -2883,6 +2883,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             ConverterContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
+                ',', // valueSeparator
                 Converters.fake(),
                 this.dateTimeContext(),
                 this.decimalNumberContext()

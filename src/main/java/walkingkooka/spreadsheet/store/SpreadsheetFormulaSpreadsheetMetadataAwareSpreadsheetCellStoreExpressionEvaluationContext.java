@@ -139,6 +139,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public char valueSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
     // DateTimeContext..................................................................................................
 
     @Override

@@ -173,6 +173,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        ',', // valueSeparator
                         Converters.fake(),
                         dateTimeContext(),
                         decimalNumberContext()
