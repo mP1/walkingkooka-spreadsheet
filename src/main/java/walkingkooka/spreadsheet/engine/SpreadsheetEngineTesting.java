@@ -2881,6 +2881,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return ExpressionNumberConverterContexts.basic(
             this.converter(),
             ConverterContexts.basic(
+                false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
                 Converters.fake(),
                 this.dateTimeContext(),

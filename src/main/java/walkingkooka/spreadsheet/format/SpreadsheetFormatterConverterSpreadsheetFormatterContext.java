@@ -74,6 +74,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
+    public boolean canNumbersHaveGroupSeparator() {
+        return this.context.canNumbersHaveGroupSeparator();
+    }
+
+    @Override
     public Optional<SpreadsheetCell> cell() {
         return HasSpreadsheetCell.NO_CELL;
     }

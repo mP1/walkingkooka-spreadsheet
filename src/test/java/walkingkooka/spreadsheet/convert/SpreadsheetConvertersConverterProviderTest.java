@@ -156,6 +156,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                            false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Converters.fake(),
                             DateTimeContexts.basic(

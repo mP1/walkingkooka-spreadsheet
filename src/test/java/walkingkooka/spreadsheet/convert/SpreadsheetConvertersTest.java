@@ -2820,6 +2820,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         Converters.fake(),
                         DateTimeContexts.basic(
@@ -3046,6 +3047,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
+
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         Converters.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers

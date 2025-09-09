@@ -84,6 +84,7 @@ final class BasicProviderContext implements ProviderContext,
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
                     ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
                         converter.cast(ConverterContext.class),
                         DateTimeContexts.basic(

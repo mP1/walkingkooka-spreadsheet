@@ -1128,6 +1128,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
                         dateOffset,
                         Converters.fake(),
                         dateTimeContext,
