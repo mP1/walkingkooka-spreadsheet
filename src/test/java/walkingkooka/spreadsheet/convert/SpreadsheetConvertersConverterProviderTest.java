@@ -158,6 +158,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(
                                 LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)

@@ -202,6 +202,11 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context.mathContext();
     }
 
+    @Override
+    public char valueSeparator() {
+        return this.context.valueSeparator();
+    }
+
     // SpreadsheetExpressionEvaluationContext delegate..................................................................
 
     @Override

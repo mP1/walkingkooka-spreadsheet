@@ -277,6 +277,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
+        public char valueSeparator() {
+            return ',';
+        }
+
+        @Override
         public Converter<SpreadsheetConverterContext> converter() {
             return this.converter;
         }

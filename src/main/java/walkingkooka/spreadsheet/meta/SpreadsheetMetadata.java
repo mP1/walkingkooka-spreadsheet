@@ -1116,6 +1116,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final Long dateOffset = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET);
         final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        final Character valueSeparator = missing.getOrNull(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR);
 
         missing.reportIfMissing();
 
@@ -1130,6 +1131,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
+                        valueSeparator, // valueSeparator
                         Converters.fake(),
                         dateTimeContext,
                         decimalNumberContext

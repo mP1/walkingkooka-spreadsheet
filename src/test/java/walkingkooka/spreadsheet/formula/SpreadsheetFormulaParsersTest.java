@@ -4201,6 +4201,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
                             Converters.fake(),
                             dateTimeContext(),
                             decimalNumberContext()

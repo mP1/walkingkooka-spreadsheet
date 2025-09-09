@@ -1413,6 +1413,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(
@@ -2009,7 +2010,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
-            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
+            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
+            .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
         this.checkNotEquals(
             null,
@@ -2052,7 +2054,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
-            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
+            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
+            .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
         this.checkNotEquals(
             null,
@@ -2377,6 +2380,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             ).set(
                 SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                 ValidatorAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.VALUE_SEPARATOR,
+                ','
             ).spreadsheetValidatorContext(
                 cellOrLabel,
                 (final ValidatorSelector validatorSelector) -> {

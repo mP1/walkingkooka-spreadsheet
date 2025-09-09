@@ -935,7 +935,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-            "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, findConverter, locale, precision, roundingMode, twoDigitYear",
+            "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, findConverter, locale, precision, roundingMode, twoDigitYear, valueSeparator",
             thrown.getMessage(),
             "message"
         );

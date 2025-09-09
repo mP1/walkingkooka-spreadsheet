@@ -102,6 +102,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    ',', // valueSeparator
                     Converters.objectToString(),
                     DateTimeContexts.basic(
                         LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE_CONTEXT.locale())
