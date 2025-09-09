@@ -4067,7 +4067,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(
-            false, // isGroupSeparatorWithinNumbersSupported
+            false, // canNumbersHaveGroupSeparator
             InvalidCharacterExceptionFactory.POSITION,
             c,
             c

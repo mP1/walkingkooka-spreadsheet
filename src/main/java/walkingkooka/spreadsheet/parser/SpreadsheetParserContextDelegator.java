@@ -48,9 +48,9 @@ public interface SpreadsheetParserContextDelegator extends SpreadsheetParserCont
     }
 
     @Override
-    default boolean isGroupSeparatorWithinNumbersSupported() {
+    default boolean canNumbersHaveGroupSeparator() {
         return this.spreadsheetParserContext()
-            .isGroupSeparatorWithinNumbersSupported();
+            .canNumbersHaveGroupSeparator();
     }
 
     @Override

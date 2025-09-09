@@ -183,7 +183,7 @@ final class SpreadsheetSelectionCsvParser<S extends SpreadsheetSelection> implem
     }
 
     private final static ParserContext CONTEXT = ParserContexts.basic(
-        false, // isGroupSeparatorWithinNumbersSupported
+        false, // canNumbersHaveGroupSeparator
         InvalidCharacterExceptionFactory.POSITION,
         DateTimeContexts.fake(),
         DecimalNumberContexts.fake()

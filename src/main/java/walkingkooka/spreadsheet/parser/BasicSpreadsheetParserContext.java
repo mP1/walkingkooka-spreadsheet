@@ -74,7 +74,7 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext,
     private final char valueSeparator;
 
     @Override
-    public boolean isGroupSeparatorWithinNumbersSupported() {
+    public boolean canNumbersHaveGroupSeparator() {
         return false;
     }
 

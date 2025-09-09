@@ -100,7 +100,7 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
     }
 
     @Override
-    public boolean isGroupSeparatorWithinNumbersSupported() {
+    public boolean canNumbersHaveGroupSeparator() {
         throw new UnsupportedOperationException();
     }
 
