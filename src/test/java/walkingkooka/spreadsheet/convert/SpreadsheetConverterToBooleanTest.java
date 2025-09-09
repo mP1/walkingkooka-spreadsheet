@@ -536,6 +536,12 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
     @Override
     public SpreadsheetConverterContext createContext() {
         return new FakeSpreadsheetConverterContext() {
+
+            @Override
+            public boolean canNumbersHaveGroupSeparator() {
+                return false;
+            }
+
             @Override
             public long dateOffset() {
                 return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
