@@ -4069,6 +4069,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(
             false, // canNumbersHaveGroupSeparator
             InvalidCharacterExceptionFactory.POSITION,
+            ',', // valueSeparator
             c,
             c
         );

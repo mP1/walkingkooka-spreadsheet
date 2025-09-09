@@ -51,6 +51,7 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
             (final SpreadsheetConverterContext c) -> ParserContexts.basic(
                 c.canNumbersHaveGroupSeparator(), // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                c.valueSeparator(),
                 DateTimeContexts.fake(),
                 c
             ),
