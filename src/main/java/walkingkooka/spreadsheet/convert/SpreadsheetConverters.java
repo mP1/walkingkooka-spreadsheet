@@ -48,7 +48,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverters;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.convert.TreeTextConverters;
-import walkingkooka.validation.convert.ValidatorConvertConverters;
+import walkingkooka.validation.convert.ValidationConvertConverters;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -294,10 +294,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link ValidatorConvertConverters#hasOptionalValidatorSelector}
+     * {@link ValidationConvertConverters#hasOptionalValidatorSelector}
      */
     public static Converter<SpreadsheetConverterContext> hasValidatorSelector() {
-        return ValidatorConvertConverters.hasOptionalValidatorSelector();
+        return ValidationConvertConverters.hasOptionalValidatorSelector();
     }
 
     /**
@@ -616,10 +616,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ValidatorConvertConverters.textToFormName}
+     * {@see ValidationConvertConverters.textToFormName}
      */
     public static Converter<SpreadsheetConverterContext> textToFormName() {
-        return ValidatorConvertConverters.textToFormName();
+        return ValidationConvertConverters.textToFormName();
     }
 
     /**
@@ -783,17 +783,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ValidatorConvertConverters.textToValidatorSelector}
+     * {@see ValidationConvertConverters.textToValidatorSelector}
      */
     public static Converter<SpreadsheetConverterContext> textToValidatorSelector() {
-        return ValidatorConvertConverters.textToValidatorSelector();
+        return ValidationConvertConverters.textToValidatorSelector();
     }
 
     /**
-     * {@see ValidatorConvertConverters.textToValidationValueTypeName}
+     * {@see ValidationConvertConverters.textToValidationValueTypeName}
      */
     public static Converter<SpreadsheetConverterContext> textToValueType() {
-        return ValidatorConvertConverters.textToValidationValueTypeName();
+        return ValidationConvertConverters.textToValidationValueTypeName();
     }
 
     /**
@@ -825,10 +825,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ValidatorConvertConverters#toValidationErrorList}
+     * {@see ValidationConvertConverters#toValidationErrorList}
      */
     public static Converter<SpreadsheetConverterContext> toValidationErrorList() {
-        return ValidatorConvertConverters.toValidationErrorList();
+        return ValidationConvertConverters.toValidationErrorList();
     }
 
     /**
