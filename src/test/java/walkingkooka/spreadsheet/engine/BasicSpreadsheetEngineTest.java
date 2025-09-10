@@ -4694,7 +4694,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                     final ProviderContext context) {
                         if (validatorSelector.equals(selector)) {
                             return Cast.to(
-                                new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
                                     @Override
                                     public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
                                                                                                           final SpreadsheetValidatorContext context) {
@@ -4815,7 +4815,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                     final ProviderContext context) {
                         if (validatorSelector.equals(selector)) {
                             return Cast.to(
-                                new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
                                     @Override
                                     public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
                                                                                                           final SpreadsheetValidatorContext context) {
@@ -4964,7 +4964,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                     final ProviderContext context) {
                         if (validatorSelector.equals(selector)) {
                             return Cast.to(
-                                new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
                                     @Override
                                     public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
                                                                                                           final SpreadsheetValidatorContext context) {
@@ -5109,7 +5109,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                     final ProviderContext context) {
                         if (validatorSelector.equals(selector)) {
                             return Cast.to(
-                                new Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
                                     @Override
                                     public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
                                                                                                           final SpreadsheetValidatorContext context) {
