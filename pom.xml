@@ -153,12 +153,6 @@
 
     <dependency>
       <groupId>walkingkooka</groupId>
-      <artifactId>walkingkooka-net-convert</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>walkingkooka</groupId>
       <artifactId>walkingkooka-net-http-server-hateos</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
