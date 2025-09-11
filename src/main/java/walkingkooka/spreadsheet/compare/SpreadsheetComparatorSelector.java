@@ -137,7 +137,7 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
     public <C extends SpreadsheetComparatorContext> SpreadsheetComparator<C> evaluateValueText(final SpreadsheetComparatorProvider provider,
                                                                                                final ProviderContext context) {
         Objects.requireNonNull(provider, "provider");
-        Objects.requireNonNull(provider, "context");
+        Objects.requireNonNull(context, "context");
 
         return this.selector.evaluateValueText(
             SpreadsheetComparatorPluginHelper.INSTANCE::parseName,
