@@ -1638,7 +1638,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"twoDigitYear\": 20,\n" +
                 "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
-                "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
+                "  \"validationValidators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
                 "  \"validators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
                 "  \"valueSeparator\": \",\",\n" +
                 "  \"viewportHome\": \"A1\"\n" +
@@ -1862,7 +1862,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"twoDigitYear\": 20,\n" +
                 "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
-                "  \"validationValidators\": \"collection, expression, non-null, text-length\",\n" +
+                "  \"validationValidators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
                 "  \"validators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
                 "  \"valueSeparator\": \",\",\n" +
                 "  \"viewportHome\": \"A1\"\n" +
