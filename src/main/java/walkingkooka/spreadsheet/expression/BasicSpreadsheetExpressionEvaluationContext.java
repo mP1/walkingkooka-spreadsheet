@@ -320,6 +320,14 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return SpreadsheetErrorKind.translate(exception);
     }
 
+    /**
+     * Resolves several types of {@link ExpressionReference} into values.
+     * <ul>
+     * <li>Resolves {@link SpreadsheetLabelName} to a {@link SpreadsheetCell} returning its value.</li>
+     * <li>Loads a {@link SpreadsheetCell} to a {@link SpreadsheetCell} returning its value.</li>
+     * <li>For {@link EnvironmentValueName} loads the {@link EnvironmentContext#environmentValue(EnvironmentValueName)}.</li>
+     * </ul>
+     */
     @Override
     public Optional<Optional<Object>> reference(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
