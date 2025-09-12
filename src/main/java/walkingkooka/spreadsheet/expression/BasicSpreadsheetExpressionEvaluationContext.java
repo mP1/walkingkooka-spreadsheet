@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
@@ -334,32 +335,46 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
         Optional<Optional<Object>> value = Optional.empty();
 
-        if (reference instanceof SpreadsheetExpressionReference) {
-            SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) reference;
-            final SpreadsheetSelection selection = this.resolveIfLabel(reference)
-                .orElse(null);
+        final Set<Object> cycle = Sets.ordered();
 
-            if (null != selection) {
-                spreadsheetExpressionReference = selection.toExpressionReference();
+        Object temp = reference;
+
+        while (temp instanceof ExpressionReference) {
+            // cycle detection
+            if (false == cycle.add(temp)) {
+                throw new IllegalArgumentException("Cycle detected from " + reference + " with " + temp);
             }
-            //}
-            if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
-                value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
-                    (SpreadsheetExpressionReference) reference,
-                    this.spreadsheetExpressionReferenceLoader,
-                    this
-                );
-            }
-        } else {
-            if (reference instanceof EnvironmentValueName) {
-                value = Optional.ofNullable(
-                    Cast.to(
-                        this.environmentValue(
-                            (EnvironmentValueName<?>) reference
+
+            if (temp instanceof SpreadsheetExpressionReference) {
+                SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) temp;
+                final SpreadsheetSelection selection = this.resolveIfLabel(
+                    (ExpressionReference) temp
+                ).orElse(null);
+
+                if (null != selection) {
+                    spreadsheetExpressionReference = selection.toExpressionReference();
+                }
+                if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
+                    value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+                        spreadsheetExpressionReference,
+                        this.spreadsheetExpressionReferenceLoader,
+                        this
+                    );
+                }
+            } else {
+                if (temp instanceof EnvironmentValueName) {
+                    value = Optional.ofNullable(
+                        Cast.to(
+                            this.environmentValue(
+                                (EnvironmentValueName<?>) temp
+                            )
                         )
-                    )
-                );
+                    );
+                }
             }
+
+            temp = value.map(v -> v.orElse(null))
+                .orElse(null);
         }
 
         return value;

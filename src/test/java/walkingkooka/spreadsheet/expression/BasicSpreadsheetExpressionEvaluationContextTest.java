@@ -31,6 +31,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -43,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -709,6 +712,110 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    @Test
+    public void testReferenceWithEnvironmentValueNameCycle() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        environmentContext.setEnvironmentValue(
+            name,
+            label
+        );
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final String value = "Hello World123";
+
+        this.referenceFails(
+            this.createContext(
+                new FakeSpreadsheetExpressionReferenceLoader() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference c,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        return Optional.ofNullable(
+                            cell.equalsIgnoreReferenceKind(c) ?
+                                cell.setFormula(
+                                    SpreadsheetFormula.EMPTY.setValue(
+                                        Optional.of(name)
+                                    )
+                                ) :
+                                null
+                        );
+                    }
+                },
+                new FakeSpreadsheetConverterContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
+                        return Optional.ofNullable(
+                            label.equals(l) ?
+                                cell :
+                                null
+                        );
+                    }
+                },
+                environmentContext
+            ),
+            name,
+            new IllegalArgumentException("Cycle detected from Hello with Hello")
+        );
+    }
+
+    @Test
+    public void testReferenceWithEnvironmentValueNameEqualsLabel() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        environmentContext.setEnvironmentValue(
+            name,
+            label
+        );
+
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final String value = "Hello World123";
+
+        this.referenceAndCheck(
+            this.createContext(
+                new FakeSpreadsheetExpressionReferenceLoader() {
+
+                    @Override
+                    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference c,
+                                                              final SpreadsheetExpressionEvaluationContext context) {
+                        return Optional.ofNullable(
+                            cell.equalsIgnoreReferenceKind(c) ?
+                                cell.setFormula(
+                                    SpreadsheetFormula.EMPTY.setValue(
+                                        Optional.of(value)
+                                    )
+                                ) :
+                                null
+                        );
+                    }
+                },
+                new FakeSpreadsheetConverterContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
+                        return Optional.ofNullable(
+                            label.equals(l) ?
+                                cell :
+                                null
+                        );
+                    }
+                },
+                environmentContext
+            ),
+            name,
+            value
+        );
+    }
+
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
@@ -719,20 +826,32 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
             spreadsheetExpressionReferenceLoader,
-            ENVIRONMENT_CONTEXT,
-            PROVIDER_CONTEXT
+            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            ENVIRONMENT_CONTEXT
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-            environmentContext,
-            ProviderContexts.fake() // ProviderContext#environmentXXX methods will all throw UOE
+            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            environmentContext
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final SpreadsheetConverterContext converterContext,
+                                                                      final EnvironmentContext environmentContext) {
+        return createContext(
+            spreadsheetExpressionReferenceLoader,
+            converterContext,
+            environmentContext,
+            ProviderContexts.fake()
+        );
+    }
+
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final SpreadsheetConverterContext converterContext,
                                                                       final EnvironmentContext environmentContext,
                                                                       final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
@@ -741,7 +860,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             SERVER_URL,
             METADATA,
             SPREADSHEET_STORE_REPOSITORY,
-            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            converterContext,
             environmentContext,
             SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
             FORM_HANDLER_CONTEXT,
