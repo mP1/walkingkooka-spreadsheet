@@ -29,6 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
         SortedSets.empty()
     );
 
-    public static MissingConverterSet with(final Set<MissingConverter> missing) {
+    public static MissingConverterSet with(final Collection<MissingConverter> missing) {
         MissingConverterSet with;
 
         if (missing instanceof MissingConverterSet) {
@@ -132,8 +133,9 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     }
 
     @Override
-    public MissingConverterSet setElements(final SortedSet<MissingConverter> missings) {
+    public MissingConverterSet setElements(final Collection<MissingConverter> missings) {
         MissingConverterSet missingConverterSet;
+
         if (missings instanceof MissingConverterSet) {
             missingConverterSet = (MissingConverterSet) missings;
         } else {

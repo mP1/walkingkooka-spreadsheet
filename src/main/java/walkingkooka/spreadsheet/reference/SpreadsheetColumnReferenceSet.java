@@ -26,6 +26,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -49,7 +50,7 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
     /**
      * Factory that creates {@link SpreadsheetColumnReferenceSet} with the given columns.
      */
-    public static SpreadsheetColumnReferenceSet with(final SortedSet<SpreadsheetColumnReference> columns) {
+    public static SpreadsheetColumnReferenceSet with(final Collection<SpreadsheetColumnReference> columns) {
         return EMPTY.setElements(columns);
     }
 
@@ -80,7 +81,7 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
     // SpreadsheetSelectionSet..........................................................................................
 
     @Override
-    public SpreadsheetColumnReferenceSet setElements(final SortedSet<SpreadsheetColumnReference> columns) {
+    public SpreadsheetColumnReferenceSet setElements(final Collection<SpreadsheetColumnReference> columns) {
         final SpreadsheetColumnReferenceSet spreadsheetColumnReferenceSet;
 
         if (columns instanceof SpreadsheetColumnReferenceSet) {

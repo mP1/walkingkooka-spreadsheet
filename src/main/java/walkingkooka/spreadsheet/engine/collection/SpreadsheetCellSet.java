@@ -60,7 +60,7 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
     /**
      * Factory that creates a {@link SpreadsheetCellSet} after taking a copy.
      */
-    public static SpreadsheetCellSet with(final Set<SpreadsheetCell> cells) {
+    public static SpreadsheetCellSet with(final Collection<SpreadsheetCell> cells) {
         SpreadsheetCellSet with;
 
         if (cells instanceof SpreadsheetCellSet) {
@@ -149,7 +149,7 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
     }
 
     @Override
-    public SpreadsheetCellSet setElements(final SortedSet<SpreadsheetCell> cells) {
+    public SpreadsheetCellSet setElements(final Collection<SpreadsheetCell> cells) {
         final TreeSet<SpreadsheetCell> copy = new TreeSet<>(COMPARATOR);
         copy.addAll(cells);
 

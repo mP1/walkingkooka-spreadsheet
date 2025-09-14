@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 
 import java.util.AbstractSet;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
@@ -36,7 +37,7 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
     implements ImmutableSetDefaults<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
 
     @SuppressWarnings("lgtm[java/abstract-to-concrete-cast]")
-    static SpreadsheetDeltaWindowSet with(final Set<SpreadsheetCellRangeReference> window) {
+    static SpreadsheetDeltaWindowSet with(final Collection<SpreadsheetCellRangeReference> window) {
         return window instanceof SpreadsheetDeltaWindowSet ?
             (SpreadsheetDeltaWindowSet) window :
             new SpreadsheetDeltaWindowSet(
@@ -117,7 +118,7 @@ final class SpreadsheetDeltaWindowSet extends AbstractSet<SpreadsheetCellRangeRe
     }
 
     @Override
-    public SpreadsheetDeltaWindowSet setElements(final Set<SpreadsheetCellRangeReference> elements) {
+    public SpreadsheetDeltaWindowSet setElements(final Collection<SpreadsheetCellRangeReference> elements) {
         final SpreadsheetDeltaWindowSet copy = with(elements);
         return this.equals(copy) ?
             this :

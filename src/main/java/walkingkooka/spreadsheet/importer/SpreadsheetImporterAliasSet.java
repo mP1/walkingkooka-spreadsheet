@@ -66,7 +66,7 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     /**
      * Factory that creates {@link SpreadsheetImporterAliasSet} with the given aliases.
      */
-    public static SpreadsheetImporterAliasSet with(final SortedSet<SpreadsheetImporterAlias> aliases) {
+    public static SpreadsheetImporterAliasSet with(final Collection<SpreadsheetImporterAlias> aliases) {
         return EMPTY.setElements(aliases);
     }
 
@@ -186,7 +186,7 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SpreadsheetImporterAliasSet setElementsFailIfDifferent(final SortedSet<SpreadsheetImporterAlias> aliases) {
+    public SpreadsheetImporterAliasSet setElementsFailIfDifferent(final Collection<SpreadsheetImporterAlias> aliases) {
         final SpreadsheetImporterAliasSet after = new SpreadsheetImporterAliasSet(
             this.pluginAliasSet.setElementsFailIfDifferent(aliases)
         );
@@ -196,7 +196,7 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
     }
 
     @Override
-    public SpreadsheetImporterAliasSet setElements(final SortedSet<SpreadsheetImporterAlias> aliases) {
+    public SpreadsheetImporterAliasSet setElements(final Collection<SpreadsheetImporterAlias> aliases) {
         final SpreadsheetImporterAliasSet after;
 
         if (aliases instanceof SpreadsheetImporterAliasSet) {

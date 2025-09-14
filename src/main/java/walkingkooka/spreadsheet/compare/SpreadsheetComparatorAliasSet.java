@@ -63,13 +63,6 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetComparatorAliasSet} with the given aliases.
-     */
-    public static SpreadsheetComparatorAliasSet with(final SortedSet<SpreadsheetComparatorAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     public static SpreadsheetComparatorAliasSet parse(final String text) {
         return new SpreadsheetComparatorAliasSet(
             PluginAliasSet.parse(
@@ -77,6 +70,13 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
                 SpreadsheetComparatorPluginHelper.INSTANCE
             )
         );
+    }
+
+    /**
+     * Factory that creates {@link SpreadsheetComparatorAliasSet} with the given aliases.
+     */
+    public static SpreadsheetComparatorAliasSet with(final Collection<SpreadsheetComparatorAlias> aliases) {
+        return EMPTY.setElements(aliases);
     }
 
     private SpreadsheetComparatorAliasSet(final PluginAliasSet<SpreadsheetComparatorName, SpreadsheetComparatorInfo, SpreadsheetComparatorInfoSet, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias, SpreadsheetComparatorAliasSet> pluginAliasSet) {
@@ -186,7 +186,7 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
     }
 
     @Override
-    public SpreadsheetComparatorAliasSet setElements(final SortedSet<SpreadsheetComparatorAlias> aliases) {
+    public SpreadsheetComparatorAliasSet setElements(final Collection<SpreadsheetComparatorAlias> aliases) {
         final SpreadsheetComparatorAliasSet after;
 
         if (aliases instanceof SpreadsheetComparatorAliasSet) {
@@ -205,7 +205,7 @@ public final class SpreadsheetComparatorAliasSet extends AbstractSet<Spreadsheet
     }
 
     @Override
-    public SpreadsheetComparatorAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetComparatorAlias> elements) {
+    public SpreadsheetComparatorAliasSet setElementsFailIfDifferent(final Collection<SpreadsheetComparatorAlias> elements) {
         return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);
     }
 

@@ -26,6 +26,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -47,19 +48,6 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
     public final static CharacterConstant SEPARATOR = SpreadsheetSelectionSet.SEPARATOR;
 
     /**
-     * Factory that creates {@link SpreadsheetLabelNameSet} with the given labels.
-     */
-    public static SpreadsheetLabelNameSet with(final SortedSet<SpreadsheetLabelName> labels) {
-        return EMPTY.setElements(labels);
-    }
-
-    private static SpreadsheetLabelNameSet withCopy(final SortedSet<SpreadsheetLabelName> labels) {
-        return labels.isEmpty() ?
-            EMPTY :
-            new SpreadsheetLabelNameSet(labels);
-    }
-
-    /**
      * Accepts a string of csv {@link SpreadsheetLabelName} with optional whitespace around labels ignored.
      */
     public static SpreadsheetLabelNameSet parse(final String text) {
@@ -73,6 +61,19 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
         );
     }
 
+    /**
+     * Factory that creates {@link SpreadsheetLabelNameSet} with the given labels.
+     */
+    public static SpreadsheetLabelNameSet with(final Collection<SpreadsheetLabelName> labels) {
+        return EMPTY.setElements(labels);
+    }
+
+    private static SpreadsheetLabelNameSet withCopy(final SortedSet<SpreadsheetLabelName> labels) {
+        return labels.isEmpty() ?
+            EMPTY :
+            new SpreadsheetLabelNameSet(labels);
+    }
+
     private SpreadsheetLabelNameSet(final SortedSet<SpreadsheetLabelName> labels) {
         super(labels);
     }
@@ -80,7 +81,7 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
     // SpreadsheetSelectionSet..........................................................................................
 
     @Override
-    public SpreadsheetLabelNameSet setElements(final SortedSet<SpreadsheetLabelName> labels) {
+    public SpreadsheetLabelNameSet setElements(final Collection<SpreadsheetLabelName> labels) {
         final SpreadsheetLabelNameSet spreadsheetLabelNameSet;
 
         if (labels instanceof SpreadsheetLabelNameSet) {

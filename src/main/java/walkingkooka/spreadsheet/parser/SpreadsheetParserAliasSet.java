@@ -63,13 +63,6 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetParserAliasSet} with the given aliases.
-     */
-    public static SpreadsheetParserAliasSet with(final SortedSet<SpreadsheetParserAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     public static SpreadsheetParserAliasSet parse(final String text) {
         return new SpreadsheetParserAliasSet(
             PluginAliasSet.parse(
@@ -77,6 +70,13 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
                 SpreadsheetParserPluginHelper.INSTANCE
             )
         );
+    }
+
+    /**
+     * Factory that creates {@link SpreadsheetParserAliasSet} with the given aliases.
+     */
+    public static SpreadsheetParserAliasSet with(final Collection<SpreadsheetParserAlias> aliases) {
+        return EMPTY.setElements(aliases);
     }
 
     private SpreadsheetParserAliasSet(final PluginAliasSet<SpreadsheetParserName, SpreadsheetParserInfo, SpreadsheetParserInfoSet, SpreadsheetParserSelector, SpreadsheetParserAlias, SpreadsheetParserAliasSet> pluginAliasSet) {
@@ -186,7 +186,7 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     }
 
     @Override
-    public SpreadsheetParserAliasSet setElements(final SortedSet<SpreadsheetParserAlias> aliases) {
+    public SpreadsheetParserAliasSet setElements(final Collection<SpreadsheetParserAlias> aliases) {
         final SpreadsheetParserAliasSet after;
 
         if (aliases instanceof SpreadsheetParserAliasSet) {
@@ -205,8 +205,8 @@ public final class SpreadsheetParserAliasSet extends AbstractSet<SpreadsheetPars
     }
 
     @Override
-    public SpreadsheetParserAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetParserAlias> elements) {
-        return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);
+    public SpreadsheetParserAliasSet setElementsFailIfDifferent(final Collection<SpreadsheetParserAlias> aliases) {
+        return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(aliases);
     }
 
     @Override

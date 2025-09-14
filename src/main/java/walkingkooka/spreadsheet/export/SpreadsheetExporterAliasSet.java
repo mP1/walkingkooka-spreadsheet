@@ -66,7 +66,7 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     /**
      * Factory that creates {@link SpreadsheetExporterAliasSet} with the given aliases.
      */
-    public static SpreadsheetExporterAliasSet with(final SortedSet<SpreadsheetExporterAlias> aliases) {
+    public static SpreadsheetExporterAliasSet with(final Collection<SpreadsheetExporterAlias> aliases) {
         return EMPTY.setElements(aliases);
     }
 
@@ -186,7 +186,7 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetExporterAliasSet setElements(final SortedSet<SpreadsheetExporterAlias> aliases) {
+    public SpreadsheetExporterAliasSet setElements(final Collection<SpreadsheetExporterAlias> aliases) {
         final SpreadsheetExporterAliasSet after;
 
         if (aliases instanceof SpreadsheetExporterAliasSet) {
@@ -205,7 +205,7 @@ public final class SpreadsheetExporterAliasSet extends AbstractSet<SpreadsheetEx
     }
 
     @Override
-    public SpreadsheetExporterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetExporterAlias> elements) {
+    public SpreadsheetExporterAliasSet setElementsFailIfDifferent(final Collection<SpreadsheetExporterAlias> elements) {
         return ImmutableSortedSetDefaults.super.setElementsFailIfDifferent(elements);
     }
 

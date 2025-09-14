@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoSet;
@@ -55,7 +54,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
         );
     }
 
-    public static SpreadsheetParserInfoSet with(final Set<SpreadsheetParserInfo> infos) {
+    public static SpreadsheetParserInfoSet with(final Collection<SpreadsheetParserInfo> infos) {
         SpreadsheetParserInfoSet with;
 
         if (infos instanceof SpreadsheetParserInfoSet) {
@@ -158,7 +157,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     }
 
     @Override
-    public ImmutableSet<SpreadsheetParserInfo> setElementsFailIfDifferent(final Set<SpreadsheetParserInfo> infos) {
+    public SpreadsheetParserInfoSet setElementsFailIfDifferent(final Collection<SpreadsheetParserInfo> infos) {
         return this.setElements(
             this.pluginInfoSet.setElementsFailIfDifferent(
                 infos
@@ -167,7 +166,7 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     }
 
     @Override
-    public SpreadsheetParserInfoSet setElements(final Set<SpreadsheetParserInfo> infos) {
+    public SpreadsheetParserInfoSet setElements(final Collection<SpreadsheetParserInfo> infos) {
         final SpreadsheetParserInfoSet after;
 
         if (infos instanceof SpreadsheetParserInfoSet) {

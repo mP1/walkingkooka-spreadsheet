@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.compare;
 
-import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoSet;
@@ -55,7 +54,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
         );
     }
 
-    public static SpreadsheetComparatorInfoSet with(final Set<SpreadsheetComparatorInfo> infos) {
+    public static SpreadsheetComparatorInfoSet with(final Collection<SpreadsheetComparatorInfo> infos) {
         SpreadsheetComparatorInfoSet with;
 
         if (infos instanceof SpreadsheetComparatorInfoSet) {
@@ -158,7 +157,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     @Override
-    public ImmutableSet<SpreadsheetComparatorInfo> setElementsFailIfDifferent(final Set<SpreadsheetComparatorInfo> infos) {
+    public SpreadsheetComparatorInfoSet setElementsFailIfDifferent(final Collection<SpreadsheetComparatorInfo> infos) {
         return this.setElements(
             this.pluginInfoSet.setElementsFailIfDifferent(
                 infos
@@ -167,7 +166,7 @@ public final class SpreadsheetComparatorInfoSet extends AbstractSet<SpreadsheetC
     }
 
     @Override
-    public SpreadsheetComparatorInfoSet setElements(final Set<SpreadsheetComparatorInfo> aliases) {
+    public SpreadsheetComparatorInfoSet setElements(final Collection<SpreadsheetComparatorInfo> aliases) {
         final SpreadsheetComparatorInfoSet after;
 
         if (aliases instanceof SpreadsheetComparatorInfoSet) {
