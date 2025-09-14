@@ -58,6 +58,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.math.MathContext;
 import java.util.AbstractList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -85,14 +86,14 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         new SpreadsheetViewportNavigation[0]
     );
 
-    private static SpreadsheetViewportNavigationList with(final List<SpreadsheetViewportNavigation> list) {
-        Objects.requireNonNull(list, "list");
+    private static SpreadsheetViewportNavigationList with(final Collection<SpreadsheetViewportNavigation> navigations) {
+        Objects.requireNonNull(navigations, "navigations");
 
-        final int size = list.size();
-        final SpreadsheetViewportNavigation[] copy = new SpreadsheetViewportNavigation[list.size()];
+        final int size = navigations.size();
+        final SpreadsheetViewportNavigation[] copy = new SpreadsheetViewportNavigation[navigations.size()];
 
         int i = 0;
-        for (final SpreadsheetViewportNavigation navigation : list) {
+        for (final SpreadsheetViewportNavigation navigation : navigations) {
             copy[i++] = Objects.requireNonNull(navigation, "includes null navigation");
         }
 
@@ -129,8 +130,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     @Override
-    public SpreadsheetViewportNavigationList setElements(final List<SpreadsheetViewportNavigation> list) {
-        final SpreadsheetViewportNavigationList copy = with(list);
+    public SpreadsheetViewportNavigationList setElements(final Collection<SpreadsheetViewportNavigation> navigations) {
+        final SpreadsheetViewportNavigationList copy = with(navigations);
         return this.equals(copy) ?
             this :
             copy;

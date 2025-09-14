@@ -31,6 +31,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -50,7 +51,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.parseList(text);
     }
 
-    public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+    public static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         Objects.requireNonNull(comparatorNames, "comparatorNames");
 
         return comparatorNames instanceof SpreadsheetColumnOrRowSpreadsheetComparatorNamesList ?
@@ -58,7 +59,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
             copyAndCreate(comparatorNames);
     }
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copyAndCreate(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copyAndCreate(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> comparatorNames) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames[] copy = comparatorNames.toArray(
             new SpreadsheetColumnOrRowSpreadsheetComparatorNames[comparatorNames.size()]
         );
@@ -170,7 +171,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     }
 
     @Override
-    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNamesList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparatorNames> names) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNamesList copy = with(names);
         return this.equals(copy) ?
             this :

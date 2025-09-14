@@ -25,6 +25,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +63,7 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
 
     public final static SpreadsheetParserSelectorTokenList EMPTY = new SpreadsheetParserSelectorTokenList(Lists.empty());
 
-    public static SpreadsheetParserSelectorTokenList with(final List<SpreadsheetParserSelectorToken> tokens) {
+    public static SpreadsheetParserSelectorTokenList with(final Collection<SpreadsheetParserSelectorToken> tokens) {
         Objects.requireNonNull(tokens, "tokens");
 
         SpreadsheetParserSelectorTokenList spreadsheetParserSelectorTokens;
@@ -108,7 +109,7 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     }
 
     @Override
-    public SpreadsheetParserSelectorTokenList setElements(final List<SpreadsheetParserSelectorToken> tokens) {
+    public SpreadsheetParserSelectorTokenList setElements(final Collection<SpreadsheetParserSelectorToken> tokens) {
         final SpreadsheetParserSelectorTokenList copy = with(tokens);
         return this.equals(copy) ?
             this :
