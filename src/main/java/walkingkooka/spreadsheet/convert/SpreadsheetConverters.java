@@ -135,6 +135,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ConverterCollectionToList}
+     */
+    public static <C extends ConverterContext> Converter<C> collectionToList() {
+        return Converters.collectionToList();
+    }
+
+    /**
      * A converter that involves color as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> color() {
