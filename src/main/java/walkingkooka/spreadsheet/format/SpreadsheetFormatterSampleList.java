@@ -27,6 +27,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,7 +60,7 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
 
     public final static SpreadsheetFormatterSampleList EMPTY = new SpreadsheetFormatterSampleList(Lists.empty());
 
-    public static SpreadsheetFormatterSampleList with(final List<SpreadsheetFormatterSample> samples) {
+    public static SpreadsheetFormatterSampleList with(final Collection<SpreadsheetFormatterSample> samples) {
         Objects.requireNonNull(samples, "samples");
 
         SpreadsheetFormatterSampleList spreadsheetFormatterSampleList;
@@ -109,7 +110,7 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     }
 
     @Override
-    public SpreadsheetFormatterSampleList setElements(final List<SpreadsheetFormatterSample> samples) {
+    public SpreadsheetFormatterSampleList setElements(final Collection<SpreadsheetFormatterSample> samples) {
         final SpreadsheetFormatterSampleList copy = with(samples);
         return this.equals(copy) ?
             this :

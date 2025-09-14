@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange
 import walkingkooka.text.HasText;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     implements ImmutableListDefaults<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
     HasText {
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorsList with(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         Objects.requireNonNull(columnOrRows, "columnOrRows");
 
         return columnOrRows instanceof SpreadsheetColumnOrRowSpreadsheetComparatorsList ?
@@ -42,7 +43,7 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
             copyAndCreate(columnOrRows);
     }
 
-    static SpreadsheetColumnOrRowSpreadsheetComparatorsList copyAndCreate(final List<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
+    static SpreadsheetColumnOrRowSpreadsheetComparatorsList copyAndCreate(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> columnOrRows) {
         final SpreadsheetColumnOrRowSpreadsheetComparators[] copy = columnOrRows.toArray(
             new SpreadsheetColumnOrRowSpreadsheetComparators[columnOrRows.size()]
         );
@@ -103,7 +104,7 @@ final class SpreadsheetColumnOrRowSpreadsheetComparatorsList extends AbstractLis
     }
 
     @Override
-    public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
+    public SpreadsheetColumnOrRowSpreadsheetComparatorsList setElements(final Collection<SpreadsheetColumnOrRowSpreadsheetComparators> comparators) {
         final SpreadsheetColumnOrRowSpreadsheetComparatorsList copy = with(comparators);
         return this.equals(copy) ?
             this :

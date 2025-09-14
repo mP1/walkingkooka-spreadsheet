@@ -26,6 +26,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -63,7 +64,7 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
 
     public final static SpreadsheetFormatterSelectorTokenList EMPTY = new SpreadsheetFormatterSelectorTokenList(Lists.empty());
 
-    public static SpreadsheetFormatterSelectorTokenList with(final List<SpreadsheetFormatterSelectorToken> tokens) {
+    public static SpreadsheetFormatterSelectorTokenList with(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
         Objects.requireNonNull(tokens, "tokens");
 
         SpreadsheetFormatterSelectorTokenList spreadsheetFormatterSelectorTokens;
@@ -109,7 +110,7 @@ public final class SpreadsheetFormatterSelectorTokenList extends AbstractList<Sp
     }
 
     @Override
-    public SpreadsheetFormatterSelectorTokenList setElements(final List<SpreadsheetFormatterSelectorToken> tokens) {
+    public SpreadsheetFormatterSelectorTokenList setElements(final Collection<SpreadsheetFormatterSelectorToken> tokens) {
         final SpreadsheetFormatterSelectorTokenList copy = with(tokens);
         return this.equals(copy) ?
             this :

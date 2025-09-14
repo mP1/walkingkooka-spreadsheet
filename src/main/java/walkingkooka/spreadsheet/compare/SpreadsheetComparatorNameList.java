@@ -30,6 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,7 +65,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     /**
      * Factory that creates a {@link SpreadsheetComparatorNameList} from the list of {@link SpreadsheetComparatorName names}.
      */
-    public static SpreadsheetComparatorNameList with(final List<SpreadsheetComparatorName> names) {
+    public static SpreadsheetComparatorNameList with(final Collection<SpreadsheetComparatorName> names) {
         Objects.requireNonNull(names, "names");
 
         SpreadsheetComparatorNameList spreadsheetComparatorNameList;
@@ -114,7 +115,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     }
 
     @Override
-    public SpreadsheetComparatorNameList setElements(final List<SpreadsheetComparatorName> names) {
+    public SpreadsheetComparatorNameList setElements(final Collection<SpreadsheetComparatorName> names) {
         final SpreadsheetComparatorNameList copy = with(names);
         return this.equals(copy) ?
             this :
