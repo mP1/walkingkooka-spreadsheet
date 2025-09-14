@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.export;
 
-import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoSet;
@@ -55,7 +54,7 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
         );
     }
 
-    public static SpreadsheetExporterInfoSet with(final Set<SpreadsheetExporterInfo> infos) {
+    public static SpreadsheetExporterInfoSet with(final Collection<SpreadsheetExporterInfo> infos) {
         SpreadsheetExporterInfoSet with;
 
         if (infos instanceof SpreadsheetExporterInfoSet) {
@@ -158,7 +157,7 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     @Override
-    public ImmutableSet<SpreadsheetExporterInfo> setElementsFailIfDifferent(final Set<SpreadsheetExporterInfo> infos) {
+    public SpreadsheetExporterInfoSet setElementsFailIfDifferent(final Collection<SpreadsheetExporterInfo> infos) {
         return this.setElements(
             this.pluginInfoSet.setElementsFailIfDifferent(
                 infos
@@ -167,7 +166,7 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     @Override
-    public SpreadsheetExporterInfoSet setElements(final Set<SpreadsheetExporterInfo> aliases) {
+    public SpreadsheetExporterInfoSet setElements(final Collection<SpreadsheetExporterInfo> aliases) {
         final SpreadsheetExporterInfoSet after;
 
         if (aliases instanceof SpreadsheetExporterInfoSet) {

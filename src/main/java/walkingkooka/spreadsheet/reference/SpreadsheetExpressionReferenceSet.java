@@ -27,6 +27,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -47,19 +48,6 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
     public final static CharacterConstant SEPARATOR = SpreadsheetSelectionSet.SEPARATOR;
 
     /**
-     * Factory that creates {@link SpreadsheetExpressionReferenceSet} with the given references.
-     */
-    public static SpreadsheetExpressionReferenceSet with(final SortedSet<SpreadsheetExpressionReference> references) {
-        return EMPTY.setElements(references);
-    }
-
-    private static SpreadsheetExpressionReferenceSet withCopy(final SortedSet<SpreadsheetExpressionReference> references) {
-        return references.isEmpty() ?
-            EMPTY :
-            new SpreadsheetExpressionReferenceSet(references);
-    }
-
-    /**
      * Accepts a string of csv {@link SpreadsheetExpressionReference} with optional whitespace around references ignored.
      */
     public static SpreadsheetExpressionReferenceSet parse(final String text) {
@@ -78,6 +66,19 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
             SpreadsheetFormulaParsers.cell()
         );
 
+    /**
+     * Factory that creates {@link SpreadsheetExpressionReferenceSet} with the given references.
+     */
+    public static SpreadsheetExpressionReferenceSet with(final Collection<SpreadsheetExpressionReference> references) {
+        return EMPTY.setElements(references);
+    }
+
+    private static SpreadsheetExpressionReferenceSet withCopy(final SortedSet<SpreadsheetExpressionReference> references) {
+        return references.isEmpty() ?
+            EMPTY :
+            new SpreadsheetExpressionReferenceSet(references);
+    }
+
     private SpreadsheetExpressionReferenceSet(final SortedSet<SpreadsheetExpressionReference> references) {
         super(references);
     }
@@ -85,7 +86,7 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
     // SpreadsheetSelectionSet..........................................................................................
 
     @Override
-    public SpreadsheetExpressionReferenceSet setElements(final SortedSet<SpreadsheetExpressionReference> references) {
+    public SpreadsheetExpressionReferenceSet setElements(final Collection<SpreadsheetExpressionReference> references) {
         final SpreadsheetExpressionReferenceSet spreadsheetExpressionReferenceSet;
 
         if (references instanceof SpreadsheetExpressionReferenceSet) {

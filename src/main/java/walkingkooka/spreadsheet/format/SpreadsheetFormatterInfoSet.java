@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.PluginInfoSet;
@@ -55,7 +54,7 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
         );
     }
 
-    public static SpreadsheetFormatterInfoSet with(final Set<SpreadsheetFormatterInfo> infos) {
+    public static SpreadsheetFormatterInfoSet with(final Collection<SpreadsheetFormatterInfo> infos) {
         SpreadsheetFormatterInfoSet with;
 
         if (infos instanceof SpreadsheetFormatterInfoSet) {
@@ -158,7 +157,7 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     @Override
-    public ImmutableSet<SpreadsheetFormatterInfo> setElementsFailIfDifferent(final Set<SpreadsheetFormatterInfo> infos) {
+    public SpreadsheetFormatterInfoSet setElementsFailIfDifferent(final Collection<SpreadsheetFormatterInfo> infos) {
         return this.setElements(
             this.pluginInfoSet.setElementsFailIfDifferent(
                 infos
@@ -167,7 +166,7 @@ public final class SpreadsheetFormatterInfoSet extends AbstractSet<SpreadsheetFo
     }
 
     @Override
-    public SpreadsheetFormatterInfoSet setElements(final Set<SpreadsheetFormatterInfo> aliases) {
+    public SpreadsheetFormatterInfoSet setElements(final Collection<SpreadsheetFormatterInfo> aliases) {
         final SpreadsheetFormatterInfoSet after;
 
         if (aliases instanceof SpreadsheetFormatterInfoSet) {

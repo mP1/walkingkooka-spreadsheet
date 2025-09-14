@@ -60,13 +60,6 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetFormatterAliasSet} with the given aliases.
-     */
-    public static SpreadsheetFormatterAliasSet with(final SortedSet<SpreadsheetFormatterAlias> aliases) {
-        return EMPTY.setElements(aliases);
-    }
-
     public static SpreadsheetFormatterAliasSet parse(final String text) {
         return new SpreadsheetFormatterAliasSet(
             PluginAliasSet.parse(
@@ -74,6 +67,13 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
                 SpreadsheetFormatterPluginHelper.INSTANCE
             )
         );
+    }
+
+    /**
+     * Factory that creates {@link SpreadsheetFormatterAliasSet} with the given aliases.
+     */
+    public static SpreadsheetFormatterAliasSet with(final Collection<SpreadsheetFormatterAlias> aliases) {
+        return EMPTY.setElements(aliases);
     }
 
     private SpreadsheetFormatterAliasSet(final PluginAliasSet<SpreadsheetFormatterName, SpreadsheetFormatterInfo, SpreadsheetFormatterInfoSet, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias, SpreadsheetFormatterAliasSet> pluginAliasSet) {
@@ -144,7 +144,7 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     }
 
     @Override
-    public SpreadsheetFormatterAliasSet setElements(final SortedSet<SpreadsheetFormatterAlias> aliases) {
+    public SpreadsheetFormatterAliasSet setElements(final Collection<SpreadsheetFormatterAlias> aliases) {
         final SpreadsheetFormatterAliasSet after;
 
         if (aliases instanceof SpreadsheetFormatterAliasSet) {
@@ -163,8 +163,12 @@ public final class SpreadsheetFormatterAliasSet extends AbstractSet<SpreadsheetF
     }
 
     @Override
-    public SpreadsheetFormatterAliasSet setElementsFailIfDifferent(SortedSet<SpreadsheetFormatterAlias> sortedSet) {
-        return null;
+    public SpreadsheetFormatterAliasSet setElementsFailIfDifferent(final Collection<SpreadsheetFormatterAlias> aliases) {
+        return this.setElements(
+            this.pluginAliasSet.setElementsFailIfDifferent(
+                aliases
+            )
+        );
     }
 
     @Override
