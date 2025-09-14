@@ -116,6 +116,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithCollectionToList() {
+        this.converterAndCheck(
+            "collection-to-list",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.collectionToList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithColor() {
         this.converterAndCheck(
             "color",
