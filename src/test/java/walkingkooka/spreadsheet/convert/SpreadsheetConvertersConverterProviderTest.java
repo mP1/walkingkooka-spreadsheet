@@ -530,6 +530,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToDateList() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToDateList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToEnvironmentValueName() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME + "",
