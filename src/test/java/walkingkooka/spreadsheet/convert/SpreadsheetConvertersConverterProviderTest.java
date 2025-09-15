@@ -640,6 +640,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToStringList() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToStringList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToTemplateValueName() {
         this.converterAndCheck(
             "text-to-template-value-name",
