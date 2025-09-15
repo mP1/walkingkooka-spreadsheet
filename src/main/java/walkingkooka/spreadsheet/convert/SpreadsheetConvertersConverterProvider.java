@@ -313,6 +313,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToColor();
                 break;
+            case TEXT_TO_CSV_STRING_LIST_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToCsvStringList();
+                break;
             case TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING:
                 noParameterCheck(copy);
 
@@ -679,6 +684,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
 
+    private final static String TEXT_TO_CSV_STRING_LIST_STRING = "text-to-csv-string-list";
+
+    final static ConverterName TEXT_TO_CSV_STRING_LIST = ConverterName.with(TEXT_TO_CSV_STRING_LIST_STRING);
+
     private final static String TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING = "text-to-environment-value-name";
 
     final static ConverterName TEXT_TO_ENVIRONMENT_VALUE_NAME = ConverterName.with(TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING);
@@ -860,6 +869,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_NODE),
             converterInfo(TEXT_TO_BOOLEAN_LIST),
             converterInfo(TEXT_TO_COLOR),
+            converterInfo(TEXT_TO_CSV_STRING_LIST),
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),
             converterInfo(TEXT_TO_EXPRESSION),
