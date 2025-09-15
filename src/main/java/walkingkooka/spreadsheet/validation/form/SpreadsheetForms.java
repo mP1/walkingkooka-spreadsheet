@@ -53,7 +53,8 @@ public final class SpreadsheetForms implements PublicStaticHelper {
      * {@see ValidationError}
      */
     public static ValidationErrorList<SpreadsheetExpressionReference> errorList(final List<ValidationError<SpreadsheetExpressionReference>> errors) {
-        return ValidationErrorList.with(errors);
+        return ValidationErrorList.<SpreadsheetExpressionReference>empty()
+            .setElements(errors);
     }
 
     /**
