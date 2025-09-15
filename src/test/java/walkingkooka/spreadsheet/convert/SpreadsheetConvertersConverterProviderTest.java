@@ -676,6 +676,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToTimeList() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToTimeList()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToUrl() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_URL,

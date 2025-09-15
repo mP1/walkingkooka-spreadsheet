@@ -805,6 +805,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToLocalTimeList()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToTimeList() {
+        return Converters.textToLocalTimeList();
+    }
+
+    /**
      * {@see NetConverters#textToUrl()}
      */
     public static Converter<SpreadsheetConverterContext> textToUrl() {
