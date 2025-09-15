@@ -478,7 +478,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         hasSpreadsheetSelection(),
         hasValidatorSelector(),
         spreadsheetCellSet(),
-        collectionToList()
+        collectionToList(),
+        textToBooleanList(),
+        textToCsvStringList(),
+        textToDateList(),
+        textToDateTimeList(),
+        textToNumberList(),
+        textToTimeList(),
+        textToStringList()
     );
 
     /**
