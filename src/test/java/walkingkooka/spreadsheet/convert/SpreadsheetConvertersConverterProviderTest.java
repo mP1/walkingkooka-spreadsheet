@@ -621,6 +621,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToNumberList() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToNumberList()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToSpreadsheetSelection() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_SELECTION,

@@ -363,6 +363,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToLocale();
                 break;
+            case TEXT_TO_NUMBER_LIST_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToNumberList();
+                break;
             case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
                 noParameterCheck(copy);
 
@@ -740,6 +745,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_LOCALE = ConverterName.with(TEXT_TO_LOCALE_STRING);
 
+    private final static String TEXT_TO_NUMBER_LIST_STRING = "text-to-number-list";
+
+    final static ConverterName TEXT_TO_NUMBER_LIST = ConverterName.with(TEXT_TO_NUMBER_LIST_STRING);
+
     private final static String TEXT_TO_SPREADSHEET_COLOR_NAME_STRING = "text-to-spreadsheet-color-name";
 
     final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
@@ -914,6 +923,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_FORM_NAME),
             converterInfo(TEXT_TO_JSON),
             converterInfo(TEXT_TO_LOCALE),
+            converterInfo(TEXT_TO_NUMBER_LIST),
             converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
             converterInfo(TEXT_TO_SPREADSHEET_ID),
