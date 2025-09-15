@@ -612,6 +612,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToLocalDateList()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToDateList() {
+        return Converters.textToLocalDateList();
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link DateTimeSpreadsheetFormulaParserToken} and converting
      * that into a {@link LocalDateTime}.
      */
