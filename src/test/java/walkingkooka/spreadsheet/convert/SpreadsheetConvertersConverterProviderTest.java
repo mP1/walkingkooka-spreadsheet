@@ -521,6 +521,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToCsvStringList() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToCsvStringList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToEnvironmentValueName() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME + "",
