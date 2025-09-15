@@ -328,11 +328,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToDateTimeList();
                 break;
-            case TEXT_TO_TIME_LIST_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.textToTimeList();
-                break;
             case TEXT_TO_ENVIRONMENT_VALUE_NAME_STRING:
                 noParameterCheck(copy);
 
@@ -442,6 +437,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToTextStylePropertyName();
+                break;
+            case TEXT_TO_TIME_LIST_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToTimeList();
                 break;
             case TEXT_TO_URL_STRING:
                 noParameterCheck(copy);
