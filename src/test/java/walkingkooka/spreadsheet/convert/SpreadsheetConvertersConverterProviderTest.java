@@ -539,6 +539,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToDateTimeList() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToDateTimeList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToEnvironmentValueName() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_ENVIRONMENT_VALUE_NAME + "",
