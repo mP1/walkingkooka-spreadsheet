@@ -21,7 +21,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.collect.list.BooleanList;
+import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringList;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.Converter;
@@ -33,6 +36,9 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasDateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbols;
+import walkingkooka.datetime.LocalDateList;
+import walkingkooka.datetime.LocalDateTimeList;
+import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -42,6 +48,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasDecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbols;
+import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.ClassTesting2;
@@ -2003,6 +2010,136 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.spreadsheetValueConvertAndCheck(
             type.toString(),
             type
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfBooleanToBooleanList() {
+        final List<Boolean> booleans = Lists.of(
+            true,
+            false,
+            true,
+            null
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            booleans,
+            BooleanList.EMPTY.setElements(booleans)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfStringsToCsvStringList() {
+        final List<String> strings = Lists.of(
+            "Apple",
+            "Banana",
+            "333"
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            strings,
+            CsvStringList.EMPTY.setElements(strings)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfDateToLocalDateList() {
+        final List<LocalDate> dates = Lists.of(
+            LocalDate.of(
+                1999,
+                12,
+                31
+            ),
+            LocalDate.of(
+                2000,
+                2,
+                2
+            ),
+            null
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            dates,
+            LocalDateList.EMPTY.setElements(dates)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfDateTimeToLocalDateTimeList() {
+        final List<LocalDateTime> datesTimes = Lists.of(
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                0,
+                0
+            ),
+            LocalDateTime.of(
+                2000,
+                2,
+                2,
+                2,
+                22,
+                22
+            ),
+            null
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            datesTimes,
+            LocalDateTimeList.EMPTY.setElements(datesTimes)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfTimeToLocalTimeList() {
+        final List<LocalTime> times = Lists.of(
+            LocalTime.of(
+                12,
+                58,
+                59
+            ),
+            LocalTime.of(
+                2,
+                22,
+                22
+            ),
+            null
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            times,
+            LocalTimeList.EMPTY.setElements(times)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfNumbersToNumberList() {
+        final List<Number> numbers = Lists.of(
+            EXPRESSION_NUMBER_KIND.create(1),
+            EXPRESSION_NUMBER_KIND.create(22),
+            EXPRESSION_NUMBER_KIND.create(333.5),
+            null
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            numbers,
+            NumberList.EMPTY.setElements(numbers)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertListOfStringsToStringList() {
+        final List<String> strings = Lists.of(
+            "Apple",
+            "Banana",
+            null
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            strings,
+            StringList.EMPTY.setElements(strings)
         );
     }
 
