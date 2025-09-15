@@ -758,6 +758,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToStringList()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToStringList() {
+        return Converters.textToStringList();
+    }
+
+    /**
      * {@see TemplateConverters#textToTemplateValueName()}
      */
     public static Converter<SpreadsheetConverterContext> textToTemplateValueName() {

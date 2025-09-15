@@ -166,6 +166,7 @@ eg
 - [text-to-spreadsheet-name](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetName.java)
 - [text-to-spreadsheet-selection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetSelection.java)
 - [text-to-spreadsheet-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/textToSpreadsheetText.java)
+- [text-to-string-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToListStringList.java)
 - [text-to-template-value-name](https://github.com/mP1/walkingkooka-template/blob/master/src/main/java/walkingkooka/template/convert/StringToTemplateValueNameConverter.java)
 - [text-to-text](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/CharacterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrStringConverter.java)
 - [text-to-text-node](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TextToTextNodeConverter.java)
