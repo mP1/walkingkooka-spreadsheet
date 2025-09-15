@@ -17,7 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.collect.list.BooleanList;
+import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
@@ -28,7 +31,10 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.LocalDateList;
+import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.NumberList;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -273,6 +279,116 @@ final class MissingConverterVerifier {
             String.class,
             SpreadsheetConvertersConverterProvider.BOOLEAN
         );
+
+        // collection-to-list...........................................................................................
+        {
+            // The List is the value not a List of values.
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                    true,
+                    false
+                ),
+                BooleanList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                    "Apple 1",
+                    "Banana 2"
+                    ),
+                CsvStringList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalDate.of(
+                            1999,
+                            12,
+                            31
+                        ),
+                        LocalDate.of(
+                            2000,
+                            2,
+                            2
+                        ),
+                        null
+                    ),
+                LocalDateList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalDateTime.of(
+                            1999,
+                            12,
+                            31,
+                            12,
+                            0,
+                            0
+                        ),
+                        LocalDateTime.of(
+                            2000,
+                            2,
+                            2,
+                            2,
+                            22,
+                            22
+                        ),
+                        null
+                    ),
+                LocalDateTimeList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalTime.of(
+                            12,
+                            58,
+                            59
+                        ),
+                        LocalTime.of(
+                            2,
+                            22,
+                            22
+                        ),
+                        null
+                    ),
+                LocalDateTimeList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        kind.create(1),
+                        kind.create(22),
+                        kind.create(333.5),
+                        null
+                    ),
+                NumberList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        "Apple",
+                        "Banana",
+                        null
+                    ),
+                StringList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+        }
 
         // color........................................................................................................
         {

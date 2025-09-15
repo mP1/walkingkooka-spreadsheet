@@ -477,7 +477,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         hasSpreadsheetParserSelector(),
         hasSpreadsheetSelection(),
         hasValidatorSelector(),
-        spreadsheetCellSet()
+        spreadsheetCellSet(),
+        collectionToList()
     );
 
     /**
