@@ -688,6 +688,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToNumberList()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToNumberList() {
+        return Converters.textToNumberList();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetColorName}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
