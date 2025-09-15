@@ -2143,6 +2143,131 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testSpreadsheetValueConvertStringToBooleanList() {
+        this.spreadsheetValueConvertAndCheck(
+            "TRUE, FALSE, true",
+            BooleanList.EMPTY.setElements(
+                Lists.of(
+                    true,
+                    false,
+                    true
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToCsvStringList() {
+        this.spreadsheetValueConvertAndCheck(
+            "Apple, Banana, \"333 444\"",
+            CsvStringList.EMPTY.setElements(
+                Lists.of(
+                    "Apple",
+                    "Banana",
+                    "333 444"
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToLocalDateList() {
+        this.spreadsheetValueConvertAndCheck(
+            "1999/12/31, 2000/2/2",
+            LocalDateList.EMPTY.setElements(
+                Lists.of(
+                    LocalDate.of(
+                        1999,
+                        12,
+                        31
+                    ),
+                    LocalDate.of(
+                        2000,
+                        2,
+                        2
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToLocalDateTimeList() {
+        this.spreadsheetValueConvertAndCheck(
+            "1999/12/31 12:0:0, 2000/2/2 2:22:22",
+            LocalDateTimeList.EMPTY.setElements(
+                Lists.of(
+                    LocalDateTime.of(
+                        1999,
+                        12,
+                        31,
+                        12,
+                        0,
+                        0
+                    ),
+                    LocalDateTime.of(
+                        2000,
+                        2,
+                        2,
+                        2,
+                        22,
+                        22
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToLocalTimeList() {
+        this.spreadsheetValueConvertAndCheck(
+            "12:58:59,2:22:22",
+            LocalTimeList.EMPTY.setElements(
+                Lists.of(
+                    LocalTime.of(
+                        12,
+                        58,
+                        59
+                    ),
+                    LocalTime.of(
+                        2,
+                        22,
+                        22
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToNumberList() {
+        this.spreadsheetValueConvertAndCheck(
+            "1,22,333.5",
+            NumberList.EMPTY.setElements(
+                Lists.of(
+                    EXPRESSION_NUMBER_KIND.create(1),
+                    EXPRESSION_NUMBER_KIND.create(22),
+                    EXPRESSION_NUMBER_KIND.create(333.5)
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToStringList() {
+        this.spreadsheetValueConvertAndCheck(
+            "Apple, Banana, Carrot ",
+            StringList.EMPTY.setElements(
+                Lists.of(
+                    "Apple",
+                    "Banana",
+                    "Carrot"
+                )
+            )
+        );
+    }
+
     private void spreadsheetValueConvertAndCheck(final Object value,
                                                     final Object expected) {
         this.spreadsheetValueConvertAndCheck(
@@ -2189,7 +2314,24 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             Lists.of(
                 SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text(),
-                SpreadsheetConverters.numberToNumber()
+                SpreadsheetConverters.numberToNumber(),
+                SpreadsheetConverters.toBoolean(),
+                SpreadsheetConverters.textToNumber(
+                    SpreadsheetPattern.parseNumberParsePattern("#.##;#")
+                        .parser()
+                ),
+                SpreadsheetConverters.textToDate(
+                    SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
+                        .parser()
+                ),
+                SpreadsheetConverters.textToDateTime(
+                    SpreadsheetPattern.parseDateTimeParsePattern("yyyy/mm/dd hh:mm:ss")
+                        .parser()
+                ),
+                SpreadsheetConverters.textToTime(
+                    SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                        .parser()
+                )
             )
         );
 
@@ -2197,6 +2339,175 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         public ExpressionNumberKind expressionNumberKind() {
             return EXPRESSION_NUMBER_KIND;
         }
+
+        @Override
+        public boolean canNumbersHaveGroupSeparator() {
+            return false;
+        }
+
+        @Override
+        public char valueSeparator() {
+            return ',';
+        }
+
+        @Override
+        public String currencySymbol() {
+            return this.decimalNumberContext.currencySymbol();
+        }
+
+        @Override
+        public char decimalSeparator() {
+            return this.decimalNumberContext.decimalSeparator();
+        }
+
+        @Override
+        public String exponentSymbol() {
+            return this.decimalNumberContext.exponentSymbol();
+        }
+
+        @Override
+        public char groupSeparator() {
+            return this.decimalNumberContext.groupSeparator();
+        }
+
+        @Override
+        public String infinitySymbol() {
+            return this.decimalNumberContext.infinitySymbol();
+        }
+
+        @Override
+        public char monetaryDecimalSeparator() {
+            return this.decimalNumberContext.monetaryDecimalSeparator();
+        }
+
+        @Override
+        public String nanSymbol() {
+            return this.decimalNumberContext.nanSymbol();
+        }
+
+        @Override
+        public char negativeSign() {
+            return this.decimalNumberContext.negativeSign();
+        }
+
+        @Override
+        public char percentSymbol() {
+            return this.decimalNumberContext.percentSymbol();
+        }
+
+        @Override
+        public char permillSymbol() {
+            return this.decimalNumberContext.permillSymbol();
+        }
+
+        @Override
+        public char positiveSign() {
+            return this.decimalNumberContext.positiveSign();
+        }
+
+        @Override
+        public char zeroDigit() {
+            return this.decimalNumberContext.zeroDigit();
+        }
+
+        @Override
+        public DecimalNumberSymbols decimalNumberSymbols() {
+            return this.decimalNumberContext.decimalNumberSymbols();
+        }
+
+        @Override
+        public Locale locale() {
+            return this.decimalNumberContext.locale();
+        }
+
+        @Override
+        public MathContext mathContext() {
+            return this.decimalNumberContext.mathContext();
+        }
+
+        private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
+
+        @Override
+        public List<String> ampms() {
+            return this.dateTimeContext.ampms();
+        }
+
+        @Override
+        public String ampm(final int hourOfDay) {
+            return this.dateTimeContext.ampm(hourOfDay);
+        }
+
+        @Override
+        public int defaultYear() {
+            return this.dateTimeContext.defaultYear();
+        }
+
+        @Override
+        public List<String> monthNames() {
+            return this.dateTimeContext.ampms();
+        }
+
+        @Override
+        public String monthName(final int month) {
+            return this.dateTimeContext.monthName(month);
+        }
+
+        @Override
+        public List<String> monthNameAbbreviations() {
+            return this.dateTimeContext.monthNameAbbreviations();
+        }
+
+        @Override
+        public String monthNameAbbreviation(final int month) {
+            return this.dateTimeContext.monthNameAbbreviation(month);
+        }
+
+        @Override
+        public int twoDigitYear() {
+            return this.dateTimeContext.twoDigitYear();
+        }
+
+        @Override
+        public List<String> weekDayNames() {
+            return this.dateTimeContext.weekDayNames();
+        }
+
+        @Override
+        public String weekDayName(final int day) {
+            return this.dateTimeContext.weekDayName(day);
+        }
+
+        @Override
+        public List<String> weekDayNameAbbreviations() {
+            return this.dateTimeContext.weekDayNameAbbreviations();
+        }
+
+        @Override
+        public String weekDayNameAbbreviation(final int day) {
+            return this.dateTimeContext.weekDayNameAbbreviation(day);
+        }
+
+        @Override
+        public DateTimeSymbols dateTimeSymbols() {
+            return this.dateTimeContext.dateTimeSymbols();
+        }
+
+        @Override
+        public long dateOffset() {
+            return Converters.EXCEL_1900_DATE_SYSTEM_OFFSET;
+        }
+
+        private final DateTimeContext dateTimeContext = DateTimeContexts.basic(
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(LOCALE)
+            ),
+            LOCALE,
+            1980, // defaultYear
+            50, // twoDigitYear,
+            () -> {
+                throw new UnsupportedOperationException();
+            }
+        );
     };
     
     // style............................................................................................................

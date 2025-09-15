@@ -33,6 +33,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
+import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.Url;
@@ -1008,6 +1009,58 @@ final class MissingConverterVerifier {
                     ),
                     TextNode.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_TEXT_NODE
+                );
+            }
+
+            // text-to-XXX-list.........................................................................................
+            {
+                // text-to-boolean-list.................................................................................
+                finder.addIfConversionFail(
+                    "TRUE, FALSE, true",
+                    BooleanList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST
+                );
+
+                // text-to-csv-string-list..............................................................................
+                finder.addIfConversionFail(
+                    "apple, banana, \"333 444\"",
+                    CsvStringList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
+                );
+
+                // text-to-date-list....................................................................................
+                finder.addIfConversionFail(
+                    "1999/12/31",
+                    LocalDateList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST
+                );
+
+                // text-to-date-time-list...............................................................................
+                finder.addIfConversionFail(
+                    "1999/12/31 12:58",
+                    LocalDateTimeList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST
+                );
+
+                // text-to-number-list..................................................................................
+                finder.addIfConversionFail(
+                    "1, 22, 333.5",
+                    NumberList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST
+                );
+
+                // text-to-string-list..................................................................................
+                finder.addIfConversionFail(
+                    "apple, banana, 333",
+                    StringList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST
+                );
+
+                // text-to-time-list....................................................................................
+                finder.addIfConversionFail(
+                    "12:58:59",
+                    LocalTimeList.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
                 );
             }
 
