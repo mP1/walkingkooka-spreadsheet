@@ -579,6 +579,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@link Converters#textToBooleanList()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToBooleanList() {
+        return Converters.textToBooleanList();
+    }
+
+    /**
      * {@see ColorConverters#textToColor}
      */
     public static Converter<SpreadsheetConverterContext> textToColor() {
