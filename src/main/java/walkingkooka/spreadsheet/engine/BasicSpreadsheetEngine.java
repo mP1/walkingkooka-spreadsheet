@@ -1653,7 +1653,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         cell.parser()
                             .map(p -> context.spreadsheetParser(
                                     p,
-                                providerContext
+                                    providerContext
                                 )
                             ).orElseGet(
                                 () -> SpreadsheetFormulaParsers.valueOrExpression(
@@ -1698,8 +1698,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     Optional.empty()
                 );
             }
-
-        } catch (final Exception failed) {
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException failed) {
             result = context.formatThrowableAndStyle(
                 failed,
                 cell.setFormula(formula)
@@ -1753,7 +1754,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 result,
                 cell.formatter()
             );
-        } catch (final Exception cause) {
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException cause) {
             result = context.formatThrowableAndStyle(
                 cause,
                 cell
