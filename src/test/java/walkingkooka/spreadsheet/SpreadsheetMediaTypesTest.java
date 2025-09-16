@@ -116,6 +116,32 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
         );
     }
 
+    // object...........................................................................................................
+
+    @Test
+    public void testObjectCell() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.OBJECT_CELL,
+            "application/walkingkooka-spreadsheet-Cell+object"
+        );
+    }
+
+    @Test
+    public void testObjectLabel() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.OBJECT_LABEL,
+            "application/walkingkooka-spreadsheet-Label+object"
+        );
+    }
+
+    @Test
+    public void testObjectMetadata() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.OBJECT_SPREADSHEET_METADATA,
+            "application/walkingkooka-spreadsheet-Metadata+object"
+        );
+    }
+
     // helper...........................................................................................................
 
     private void mediaTypeAndCheck(final MediaType mediaType,

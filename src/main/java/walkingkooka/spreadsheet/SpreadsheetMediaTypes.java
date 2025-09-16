@@ -23,7 +23,9 @@ import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.validation.Validator;
 
 import java.util.Locale;
@@ -77,6 +79,31 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
             "json"
         );
     }
+    
+    // object...........................................................................................................
+
+    public static final MediaType OBJECT_CELL = object(SpreadsheetCell.class);
+
+    public static final MediaType OBJECT_LABEL = object(SpreadsheetLabelName.class);
+
+    public static final MediaType OBJECT_SPREADSHEET_METADATA = object(SpreadsheetMetadata.class);
+
+    private static MediaType object(final Class<?> type) {
+        return object(
+            type.getSimpleName()
+                .replace("Spreadsheet", "")
+                .replace("Name", "")
+        );
+    }
+
+    private static MediaType object(final String value) {
+        return mediaType(
+            value,
+            "object"
+        );
+    }
+
+    // common...........................................................................................................
 
     private static MediaType mediaType(final String value,
                                        final String contentType) {
