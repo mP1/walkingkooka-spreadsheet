@@ -77,7 +77,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
-            case SpreadsheetFormatterName.BADGE_ERROR_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
@@ -85,6 +84,23 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 formatter = selector.evaluateValueText(
                     this,
                     context
+                );
+                break;
+            case SpreadsheetFormatterName.BADGE_ERROR_STRING:
+                final String badgeErrorText = selector.valueText();
+
+                formatter = SpreadsheetFormatters.badgeError(
+                    spreadsheetFormatter(
+                        SpreadsheetFormatterSelector.parse(
+                            badgeErrorText.startsWith("(") && badgeErrorText.endsWith(")") ?
+                                badgeErrorText.substring(
+                                    1,
+                                    badgeErrorText.length() - 1
+                                ) :
+                                badgeErrorText
+                        ),
+                        context
+                    )
                 );
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
