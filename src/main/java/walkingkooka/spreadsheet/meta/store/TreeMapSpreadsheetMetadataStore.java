@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
@@ -25,6 +26,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
+import walkingkooka.text.CaseSensitivity;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -175,6 +177,29 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
             from,
             to
         );
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findByName(final String name,
+                                                final int offset,
+                                                final int count) {
+        Objects.requireNonNull(name, "name");
+        Store.checkOffsetAndCount(
+            offset,
+            count
+        );
+
+        return this.store.all()
+            .stream()
+            .filter(m -> m.name()
+                .map(n -> CaseSensitivity.INSENSITIVE.startsWith(
+                        n.value(),
+                        name
+                    )
+                ).orElse(false)
+            ).skip(offset)
+            .limit(count)
+            .collect(ImmutableList.collector());
     }
 
     private final Store<SpreadsheetId, SpreadsheetMetadata> store;

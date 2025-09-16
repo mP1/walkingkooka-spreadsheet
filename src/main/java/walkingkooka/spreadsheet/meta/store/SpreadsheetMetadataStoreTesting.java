@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.TypeNameTesting;
@@ -25,8 +26,10 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.store.StoreTesting;
+import walkingkooka.text.CharSequences;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -65,6 +68,77 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
                     EmailAddress.parse("creator@example.com"),
                     null
                 )
+        );
+    }
+
+    // findByName.......................................................................................................
+
+    @Test
+    default void testFindByNameWithNullNameFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createStore()
+                .findByName(
+                    null,
+                    0, // offset
+                    1 // count
+                )
+        );
+    }
+
+    @Test
+    default void testFindByNameWithNegativeOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findByName(
+                    "Hello",
+                    -1, // offset
+                    1 // count
+                )
+        );
+    }
+
+    @Test
+    default void testFindByNameWithNegativeCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createStore()
+                .findByName(
+                    "Hello",
+                    0, // offset
+                    -1 // count
+                )
+        );
+    }
+
+    default void findByNameAndCheck(final SpreadsheetMetadataStore store,
+                                    final String name,
+                                    final int offset,
+                                    final int count,
+                                    final SpreadsheetMetadata ... expected) {
+        this.findByNameAndCheck(
+            store,
+            name,
+            offset,
+            count,
+            Lists.of(expected)
+        );
+    }
+
+    default void findByNameAndCheck(final SpreadsheetMetadataStore store,
+                                    final String name,
+                                    final int offset,
+                                    final int count,
+                                    final List<SpreadsheetMetadata> expected) {
+        this.checkEquals(
+            expected,
+            store.findByName(
+                name,
+                offset,
+                count
+            ),
+            () -> "findByName " + CharSequences.quoteAndEscape(name) + " offset=" + offset + " count=" + count
         );
     }
 
