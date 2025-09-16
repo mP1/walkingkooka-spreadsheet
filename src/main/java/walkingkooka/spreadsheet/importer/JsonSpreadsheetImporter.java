@@ -63,12 +63,12 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
             .orElse(null);
 
         return null != contentType &&
-            (SpreadsheetMediaTypes.JSON_CELLS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_PARSERS.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_STYLES.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType) ||
+            (SpreadsheetMediaTypes.JSON_CELL.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_FORMULA.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_FORMATTER.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_PARSER.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_STYLE.test(contentType) ||
+                SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType) ||
                 SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)
             );
     }
@@ -84,7 +84,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
         final MediaType contentType = cells.contentType()
             .orElseThrow(() -> new IllegalArgumentException("Missing content-type"));
 
-        if (SpreadsheetMediaTypes.JSON_CELLS.test(contentType)) {
+        if (SpreadsheetMediaTypes.JSON_CELL.test(contentType)) {
             value = (j) -> SpreadsheetImporterCellValue.cell(
                 context.unmarshall(
                     JsonNode.object()
@@ -93,7 +93,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                 )
             );
         } else {
-            if (SpreadsheetMediaTypes.JSON_FORMULAS.test(contentType)) {
+            if (SpreadsheetMediaTypes.JSON_FORMULA.test(contentType)) {
                 value = (j) -> SpreadsheetImporterCellValue.formula(
                     cell(j),
                     SpreadsheetFormula.EMPTY.setText(
@@ -101,7 +101,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                     )
                 );
             } else {
-                if (SpreadsheetMediaTypes.JSON_FORMATTERS.test(contentType)) {
+                if (SpreadsheetMediaTypes.JSON_FORMATTER.test(contentType)) {
                     value = (j) -> SpreadsheetImporterCellValue.formatter(
                         cell(j),
                         OptionalSpreadsheetFormatterSelector.with(
@@ -112,7 +112,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                         )
                     );
                 } else {
-                    if (SpreadsheetMediaTypes.JSON_PARSERS.test(contentType)) {
+                    if (SpreadsheetMediaTypes.JSON_PARSER.test(contentType)) {
                         value = (j) -> SpreadsheetImporterCellValue.parser(
                             cell(j),
                             OptionalSpreadsheetParserSelector.with(
@@ -123,7 +123,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                             )
                         );
                     } else {
-                        if (SpreadsheetMediaTypes.JSON_STYLES.test(contentType)) {
+                        if (SpreadsheetMediaTypes.JSON_STYLE.test(contentType)) {
                             value = (j) -> SpreadsheetImporterCellValue.textStyle(
                                 cell(j),
                                 context.unmarshall(
@@ -132,7 +132,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                                 )
                             );
                         } else {
-                            if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUES.test(contentType)) {
+                            if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType)) {
                                 value = (j) -> SpreadsheetImporterCellValue.formattedValue(
                                     cell(j),
                                     OptionalTextNode.with(

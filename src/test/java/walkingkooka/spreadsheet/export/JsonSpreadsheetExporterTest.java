@@ -71,7 +71,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.CELL,
             "A1-XFD1048576.cell.json.txt",
-            SpreadsheetMediaTypes.JSON_CELLS,
+            SpreadsheetMediaTypes.JSON_CELL,
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"formula\": {\n" +
@@ -115,7 +115,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.FORMULA,
             "A1-XFD1048576.formula.json.txt",
-            SpreadsheetMediaTypes.JSON_FORMULAS,
+            SpreadsheetMediaTypes.JSON_FORMULA,
             "{\n" +
                 "  \"A1\": \"=1+2\",\n" +
                 "  \"A2\": \"=333\"\n" +
@@ -142,7 +142,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.FORMATTER,
             "A1-XFD1048576.formatter.json.txt",
-            SpreadsheetMediaTypes.JSON_FORMATTERS,
+            SpreadsheetMediaTypes.JSON_FORMATTER,
             "{\n" +
                 "  \"A1\": \"text-format-pattern @\",\n" +
                 "  \"A2\": null\n" +
@@ -169,7 +169,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.PARSER,
             "A1-XFD1048576.parser.json.txt",
-            SpreadsheetMediaTypes.JSON_PARSERS,
+            SpreadsheetMediaTypes.JSON_PARSER,
             "{\n" +
                 "  \"A1\": \"test-parser-123 @@@\",\n" +
                 "  \"A2\": null\n" +
@@ -199,7 +199,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.STYLE,
             "A1-XFD1048576.style.json.txt",
-            SpreadsheetMediaTypes.JSON_STYLES,
+            SpreadsheetMediaTypes.JSON_STYLE,
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"color\": \"black\"\n" +
@@ -230,7 +230,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.VALUE,
             "A1-XFD1048576.value.json.txt",
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"type\": \"text\",\n" +
@@ -258,7 +258,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.VALUE,
             "A1-XFD1048576.value.json.txt",
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
             "{\n" +
                 "  \"A1\": null,\n" +
                 "  \"A2\": null\n" +
