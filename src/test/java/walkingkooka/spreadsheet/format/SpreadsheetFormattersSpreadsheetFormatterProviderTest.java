@@ -2113,7 +2113,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testToString() {
         this.toStringAndCheck(
             this.createSpreadsheetFormatterProvider(),
-            "SpreadsheetFormatPattern.spreadsheetFormatter"
+            "SpreadsheetFormattersSpreadsheetFormatterProvider"
         );
     }
 
