@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -36,4 +38,12 @@ public interface SpreadsheetMetadataStore extends Store<SpreadsheetId, Spreadshe
      */
     SpreadsheetMetadata create(final EmailAddress user,
                                final Optional<Locale> locale);
+
+
+    /**
+     * Finds all {@link SpreadsheetMetadata} using the text to match {@link SpreadsheetName}.
+     */
+    List<SpreadsheetMetadata> findByName(final String name,
+                                         final int offset,
+                                         final int count);
 }

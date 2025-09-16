@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
@@ -48,13 +49,13 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
         58
     );
 
+    private final static EmailAddress CREATOR = EmailAddress.parse("creator1@example.com");
+    private final static Optional<Locale> LOCALE = Optional.of(
+        Locale.forLanguageTag("EN-AU")
+    );
+
     @Test
     public void testCreate() {
-        final EmailAddress creator = EmailAddress.parse("creator1@example.com");
-        final Optional<Locale> locale = Optional.of(
-            Locale.forLanguageTag("EN-AU")
-        );
-
         this.checkEquals(
             CREATE_TEMPLATE.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
@@ -62,26 +63,25 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
             ).set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.with(
-                    creator,
+                    CREATOR,
                     NOW,
-                    creator,
+                    CREATOR,
                     NOW
                 )
             ).set(
                 SpreadsheetMetadataPropertyName.LOCALE,
-                locale.get()
+                LOCALE.get()
             ),
             this.createStore()
                 .create(
-                    creator,
-                    locale
+                    CREATOR,
+                    LOCALE
                 )
         );
     }
 
     @Test
     public void testCreateWithoutLocale() {
-        final EmailAddress creator = EmailAddress.parse("creator1@example.com");
         final Optional<Locale> locale = Optional.empty();
 
         this.checkEquals(
@@ -91,17 +91,117 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
             ).set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AuditInfo.with(
-                    creator,
+                    CREATOR,
                     NOW,
-                    creator,
+                    CREATOR,
                     NOW
                 )
             ),
             this.createStore()
                 .create(
-                    creator,
+                    CREATOR,
                     locale
                 )
+        );
+    }
+
+    // findByName.......................................................................................................
+
+    @Test
+    public void testFindByNameWithExactNameMatch() {
+        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+
+        final SpreadsheetMetadata metadata1 = store.save(
+            createMetadata("Hello1")
+        );
+
+        final SpreadsheetMetadata metadata2 = store.save(
+            createMetadata("Different2")
+        );
+
+        this.findByNameAndCheck(
+            store,
+            "Hello1",
+            0,
+            10,
+            metadata1
+        );
+    }
+
+    @Test
+    public void testFindByNameWithMultipleCommonPrefix() {
+        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+
+        final SpreadsheetMetadata metadata1 = store.save(
+            createMetadata("Hello1")
+        );
+
+        final SpreadsheetMetadata metadata2 = store.save(
+            createMetadata("Different2")
+        );
+
+        final SpreadsheetMetadata metadata3 = store.save(
+            createMetadata("Hello2")
+        );
+
+        final SpreadsheetMetadata metadata4 = store.save(
+            createMetadata("Hello3")
+        );
+
+        this.findByNameAndCheck(
+            store,
+            "Hello",
+            0,
+            10,
+            metadata1,
+            metadata3,
+            metadata4
+        );
+    }
+
+    @Test
+    public void testFindByNameWithMultipleCommonPrefixAndOffsetAndCount() {
+        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+
+        final SpreadsheetMetadata metadata1 = store.save(
+            createMetadata("Hello1")
+        );
+
+        final SpreadsheetMetadata metadata2 = store.save(
+            createMetadata("Different2")
+        );
+
+        final SpreadsheetMetadata metadata3 = store.save(
+            createMetadata("Hello2")
+        );
+
+        final SpreadsheetMetadata metadata4 = store.save(
+            createMetadata("Hello3")
+        );
+
+        this.findByNameAndCheck(
+            store,
+            "Hello",
+            1,
+            1,
+            //metadata1,
+            metadata3
+            //metadata4
+        );
+    }
+
+    private static SpreadsheetMetadata createMetadata(final String name) {
+        return CREATE_TEMPLATE.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with(name)
+        ).set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.with(
+                CREATOR,
+                NOW,
+                CREATOR,
+                NOW
+            )
         );
     }
 

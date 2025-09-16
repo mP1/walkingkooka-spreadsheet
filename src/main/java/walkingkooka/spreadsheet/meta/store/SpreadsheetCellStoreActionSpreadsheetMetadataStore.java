@@ -194,6 +194,17 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
         );
     }
 
+    @Override
+    public List<SpreadsheetMetadata> findByName(final String name,
+                                                final int offset,
+                                                final int count) {
+        return this.metadataStore.findByName(
+            name,
+            offset,
+            count
+        );
+    }
+
     private final SpreadsheetMetadataStore metadataStore;
 
     @Override

@@ -114,6 +114,17 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
         );
     }
 
+    @Override
+    public List<SpreadsheetMetadata> findByName(final String name,
+                                                final int offset,
+                                                final int count) {
+        return this.store.findByName(
+            name,
+            offset,
+            count
+        );
+    }
+
     private final SpreadsheetMetadataStore store;
 
     @Override

@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -31,6 +32,13 @@ public class FakeSpreadsheetMetadataStore extends FakeStore<SpreadsheetId, Sprea
     @Override
     public SpreadsheetMetadata create(final EmailAddress creator,
                                       final Optional<Locale> locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findByName(final String name,
+                                                final int offset,
+                                                final int count) {
         throw new UnsupportedOperationException();
     }
 }
