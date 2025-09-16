@@ -46,13 +46,6 @@ public enum SpreadsheetCellValueKind {
         }
     },
 
-    LOCALE {
-        @Override
-        public Object cellValue(final SpreadsheetCell cell) {
-            return cell.locale();
-        }
-    },
-
     FORMULA {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
@@ -64,6 +57,13 @@ public enum SpreadsheetCellValueKind {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
             return cell.formatter();
+        }
+    },
+
+    LOCALE {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.locale();
         }
     },
 
