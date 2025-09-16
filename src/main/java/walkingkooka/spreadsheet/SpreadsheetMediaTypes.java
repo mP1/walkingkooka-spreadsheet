@@ -17,9 +17,16 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserSelector;
+import walkingkooka.validation.Validator;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -34,19 +41,35 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     // json.............................................................................................................
 
-    public static final MediaType JSON_CELL = json("Cell");
+    public static final MediaType JSON_CELL = json(SpreadsheetCell.class);
 
-    public static final MediaType JSON_FORMULA = json("Formula");
+    public static final MediaType JSON_DATE_TIME_SYMBOLS = json(DateTimeSymbols.class);
 
-    public static final MediaType JSON_FORMATTER = json("Formatter");
+    public static final MediaType JSON_DECIMAL_NUMBER_SYMBOLS = json(DecimalNumberSymbols.class);
 
-    public static final MediaType JSON_PARSER = json("Parser");
+    public static final MediaType JSON_FORMULA = json(SpreadsheetFormula.class);
+
+    public static final MediaType JSON_FORMATTER = json(SpreadsheetFormatterSelector.class);
+
+    public static final MediaType JSON_LOCALE = json(Locale.class);
+
+    public static final MediaType JSON_PARSER = json(SpreadsheetParserSelector.class);
 
     public static final MediaType JSON_STYLE = json("Style");
 
     public static final MediaType JSON_FORMATTED_VALUE = json("Formatted-Value");
 
+    public static final MediaType JSON_VALIDATOR = json(Validator.class);
+
     public static final MediaType JSON_VALUE_TYPE = json("Value-Type");
+
+    private static MediaType json(final Class<?> type) {
+        return json(
+            type.getSimpleName()
+                .replace("Spreadsheet", "")
+                .replace("Selector", "")
+        );
+    }
 
     private static MediaType json(final String value) {
         return mediaType(
