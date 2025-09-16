@@ -201,6 +201,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String DATE_PATTERN = "yyyy/mm/dd";
     private final static String TIME_PATTERN = "hh:mm";
     private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
+    private final static String ERROR_PATTERN = "@";
     private final static String NUMBER_PATTERN = "#";
     private final static String TEXT_PATTERN = "@";
 
@@ -519,6 +520,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern(DATETIME_PATTERN).spreadsheetParserSelector())
+            .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(ERROR_PATTERN + suffix).spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern(NUMBER_PATTERN).spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).spreadsheetFormatterSelector())

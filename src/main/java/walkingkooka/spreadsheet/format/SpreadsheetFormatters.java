@@ -49,12 +49,14 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      */
     public static SpreadsheetFormatter automatic(final SpreadsheetFormatter date,
                                                  final SpreadsheetFormatter dateTime,
+                                                 final SpreadsheetFormatter error,
                                                  final SpreadsheetFormatter number,
                                                  final SpreadsheetFormatter text,
                                                  final SpreadsheetFormatter time) {
         return AutomaticSpreadsheetFormatter.with(
             date,
             dateTime,
+            error,
             number,
             text,
             time

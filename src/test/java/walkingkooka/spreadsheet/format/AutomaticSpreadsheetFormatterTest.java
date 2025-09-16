@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
@@ -73,6 +75,20 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         }
     };
 
+    private final static SpreadsheetError ERROR = SpreadsheetErrorKind.ERROR.setMessage("*error message 123*");
+
+    private final static Optional<TextNode> ERROR_FORMATTED = Optional.of(
+        TextNode.text("error-formatted " + ERROR)
+    );
+
+    private final SpreadsheetFormatter ERROR_FORMATTER = new FakeSpreadsheetFormatter() {
+        @Override
+        public Optional<TextNode> format(final Optional<Object> value,
+                                         final SpreadsheetFormatterContext converter) {
+            return ERROR_FORMATTED;
+        }
+    };
+
     private final SpreadsheetFormatter NUMBER_FORMATTER = new FakeSpreadsheetFormatter() {
         @Override
         public Optional<TextNode> format(final Optional<Object> value,
@@ -124,6 +140,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         return AutomaticSpreadsheetFormatter.with(
             DATE_FORMATTER,
             DATE_TIME_FORMATTER,
+            ERROR_FORMATTER,
             NUMBER_FORMATTER,
             TEXT_FORMATTER,
             TIME_FORMATTER
@@ -137,6 +154,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
             () -> AutomaticSpreadsheetFormatter.with(
                 null,
                 DATE_TIME_FORMATTER,
+                ERROR_FORMATTER,
                 NUMBER_FORMATTER,
                 TEXT_FORMATTER,
                 TIME_FORMATTER
@@ -156,6 +174,22 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
             () -> AutomaticSpreadsheetFormatter.with(
                 DATE_FORMATTER,
                 null,
+                ERROR_FORMATTER,
+                NUMBER_FORMATTER,
+                TEXT_FORMATTER,
+                TIME_FORMATTER
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullErrorFormatterFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> AutomaticSpreadsheetFormatter.with(
+                DATE_FORMATTER,
+                DATE_TIME_FORMATTER,
+                null,
                 NUMBER_FORMATTER,
                 TEXT_FORMATTER,
                 TIME_FORMATTER
@@ -170,6 +204,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
             () -> AutomaticSpreadsheetFormatter.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
+                ERROR_FORMATTER,
                 null,
                 TEXT_FORMATTER,
                 TIME_FORMATTER
@@ -184,6 +219,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
             () -> AutomaticSpreadsheetFormatter.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
+                ERROR_FORMATTER,
                 NUMBER_FORMATTER,
                 null,
                 TIME_FORMATTER
@@ -198,6 +234,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
             () -> AutomaticSpreadsheetFormatter.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
+                ERROR_FORMATTER,
                 NUMBER_FORMATTER,
                 TEXT_FORMATTER,
                 null
@@ -370,6 +407,14 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
         this.formatAndCheck(
             TIME,
             TIME_FORMATTED
+        );
+    }
+
+    @Test
+    public void testFormatSpreadsheetError() {
+        this.formatAndCheck(
+            ERROR,
+            ERROR_FORMATTED
         );
     }
 

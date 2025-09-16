@@ -32,12 +32,14 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
 
     static AutomaticSpreadsheetFormatter with(final SpreadsheetFormatter date,
                                               final SpreadsheetFormatter dateTime,
+                                              final SpreadsheetFormatter error,
                                               final SpreadsheetFormatter number,
                                               final SpreadsheetFormatter text,
                                               final SpreadsheetFormatter time) {
         return new AutomaticSpreadsheetFormatter(
             Objects.requireNonNull(date, "date"),
             Objects.requireNonNull(dateTime, "dateTime"),
+            Objects.requireNonNull(error, "error"),
             Objects.requireNonNull(number, "number"),
             Objects.requireNonNull(text, "text"),
             Objects.requireNonNull(time, "time")
@@ -46,11 +48,13 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
 
     private AutomaticSpreadsheetFormatter(final SpreadsheetFormatter date,
                                           final SpreadsheetFormatter dateTime,
+                                          final SpreadsheetFormatter error,
                                           final SpreadsheetFormatter number,
                                           final SpreadsheetFormatter text,
                                           final SpreadsheetFormatter time) {
         this.date = date;
         this.dateTime = dateTime;
+        this.error = error;
         this.number = number;
         this.text = text;
         this.time = time;
@@ -86,6 +90,7 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
 
     final SpreadsheetFormatter date;
     final SpreadsheetFormatter dateTime;
+    final SpreadsheetFormatter error;
     final SpreadsheetFormatter number;
     final SpreadsheetFormatter text;
     final SpreadsheetFormatter time;
@@ -104,6 +109,7 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
         return Objects.hash(
             this.date,
             this.dateTime,
+            this.error,
             this.number,
             this.text,
             this.time
@@ -120,6 +126,7 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     private boolean equals0(final AutomaticSpreadsheetFormatter other) {
         return this.date.equals(other.date) &&
             this.dateTime.equals(other.dateTime) &&
+            this.error.equals(other.error) &&
             this.number.equals(other.number) &&
             this.text.equals(other.text) &&
             this.time.equals(other.time);
@@ -127,6 +134,6 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
 
     @Override
     public String toString() {
-        return this.date + " | " + this.dateTime + " | " + this.number + " | " + this.text + " | " + this.time;
+        return this.date + " | " + this.dateTime + " | " + this.error + " | " + this.number + " | " + this.text + " | " + this.time;
     }
 }

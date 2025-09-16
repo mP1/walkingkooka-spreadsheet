@@ -729,7 +729,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
             thrown,
-            "Metadata missing: dateFormatter, dateTimeFormatter, numberFormatter, textFormatter, timeFormatter"
+            "Metadata missing: dateFormatter, dateTimeFormatter, errorFormatter, numberFormatter, textFormatter, timeFormatter"
         );
     }
 
