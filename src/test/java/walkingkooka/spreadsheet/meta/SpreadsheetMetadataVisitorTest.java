@@ -335,6 +335,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitErrorFormatter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitErrorFormatter(final SpreadsheetFormatterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            SpreadsheetFormatterSelector.parse("hello-error-formatter")
+        );
+    }
+
+    @Test
     public void testVisitFindConverter() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
