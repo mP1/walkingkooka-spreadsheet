@@ -77,6 +77,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
+            case SpreadsheetFormatterName.BADGE_ERROR_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
@@ -154,6 +155,15 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     default:
                         throw new IllegalArgumentException("Expected 0 or 5 value(s) got " + count);
                 }
+                break;
+            case SpreadsheetFormatterName.BADGE_ERROR_STRING:
+                if (1 != count) {
+                    throw new IllegalArgumentException("Expected 1 value(s) got " + count);
+                }
+
+                formatter = SpreadsheetFormatters.badgeError(
+                    (SpreadsheetFormatter) copy.get(0)
+                );
                 break;
             case SpreadsheetFormatterName.COLLECTION_STRING:
                 formatter = SpreadsheetFormatters.collection(
@@ -249,6 +259,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.BADGE_ERROR_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.COLLECTION_STRING:
@@ -366,6 +379,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
+            case SpreadsheetFormatterName.BADGE_ERROR_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
                 break;
             case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
@@ -914,6 +928,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private final static SpreadsheetFormatterInfoSet INFOS = SpreadsheetFormatterInfoSet.with(
         Sets.of(
             spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.BADGE_ERROR),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
