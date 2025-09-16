@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderSamplesContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.SpreadsheetImporterProvider;
@@ -245,6 +246,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
         ).set(
             SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
             2000
+        ).set(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            SpreadsheetFormatterSelector.parse(
+                "badge-error " + SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+            )
         ).set(
             SpreadsheetMetadataPropertyName.EXPORTERS,
             SPREADSHEET_EXPORTER_PROVIDER.spreadsheetExporterInfos()
