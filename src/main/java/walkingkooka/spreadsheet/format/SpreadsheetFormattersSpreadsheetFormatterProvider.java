@@ -951,6 +951,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     @Override
     public String toString() {
-        return "SpreadsheetFormatPattern.spreadsheetFormatter";
+        return this.getClass().getSimpleName();
     }
 }
