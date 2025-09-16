@@ -20,24 +20,49 @@ package walkingkooka.spreadsheet;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.PublicStaticHelper;
 
+import java.util.Optional;
+
 /**
  * A collection of {@link MediaType} for cells. This will be mostly used by {@link walkingkooka.spreadsheet.importer.SpreadsheetImporter} and {@link walkingkooka.spreadsheet.export.SpreadsheetExporter}.
  */
 public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
-    public static final MediaType JSON_CELLS = MediaType.parse("application/cells+json");
+    /**
+     * The base {@link MediaType} that is common to all application media types.
+     */
+    private final static MediaType SPREADSHEET = MediaType.parse("application/spreadsheet");
 
-    public static final MediaType JSON_FORMULAS = MediaType.parse("application/formulas+json");
+    // json.............................................................................................................
 
-    public static final MediaType JSON_FORMATTERS = MediaType.parse("application/formatters+json");
+    public static final MediaType JSON_CELLS = json("cell");
 
-    public static final MediaType JSON_PARSERS = MediaType.parse("application/parsers+json");
+    public static final MediaType JSON_FORMULAS = json("formula");
 
-    public static final MediaType JSON_STYLES = MediaType.parse("application/styles+json");
+    public static final MediaType JSON_FORMATTERS = json("formatter");
 
-    public static final MediaType JSON_FORMATTED_VALUES = MediaType.parse("application/formatted-values+json");
+    public static final MediaType JSON_PARSERS = json("parser");
 
-    public static final MediaType JSON_VALUE_TYPE = MediaType.parse("application/value-types+json");
+    public static final MediaType JSON_STYLES = json("style");
+
+    public static final MediaType JSON_FORMATTED_VALUES = json("formatted-value");
+
+    public static final MediaType JSON_VALUE_TYPE = json("value-type");
+
+    private static MediaType json(final String value) {
+        return mediaType(
+            value,
+            "json"
+        );
+    }
+
+    private static MediaType mediaType(final String value,
+                                       final String contentType) {
+        return SPREADSHEET.setSubType(
+            SPREADSHEET.subType() + "-" + value
+        ).setSuffix(
+            Optional.of(contentType)
+        );
+    }
 
     private SpreadsheetMediaTypes() {
         throw new UnsupportedOperationException();
