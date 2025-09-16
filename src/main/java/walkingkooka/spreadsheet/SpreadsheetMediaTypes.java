@@ -30,23 +30,23 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     /**
      * The base {@link MediaType} that is common to all application media types.
      */
-    private final static MediaType SPREADSHEET = MediaType.parse("application/spreadsheet");
+    private final static MediaType APPLICATION = MediaType.parse("application/walkingkooka-spreadsheet");
 
     // json.............................................................................................................
 
-    public static final MediaType JSON_CELLS = json("cell");
+    public static final MediaType JSON_CELLS = json("Cell");
 
-    public static final MediaType JSON_FORMULAS = json("formula");
+    public static final MediaType JSON_FORMULAS = json("Formula");
 
-    public static final MediaType JSON_FORMATTERS = json("formatter");
+    public static final MediaType JSON_FORMATTERS = json("Formatter");
 
-    public static final MediaType JSON_PARSERS = json("parser");
+    public static final MediaType JSON_PARSERS = json("Parser");
 
-    public static final MediaType JSON_STYLES = json("style");
+    public static final MediaType JSON_STYLES = json("Style");
 
-    public static final MediaType JSON_FORMATTED_VALUES = json("formatted-value");
+    public static final MediaType JSON_FORMATTED_VALUES = json("Formatted-Value");
 
-    public static final MediaType JSON_VALUE_TYPE = json("value-type");
+    public static final MediaType JSON_VALUE_TYPE = json("Value-Type");
 
     private static MediaType json(final String value) {
         return mediaType(
@@ -57,8 +57,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     private static MediaType mediaType(final String value,
                                        final String contentType) {
-        return SPREADSHEET.setSubType(
-            SPREADSHEET.subType() + "-" + value
+        return APPLICATION.setSubType(
+            APPLICATION.subType() + "-" + value
         ).setSuffix(
             Optional.of(contentType)
         );
