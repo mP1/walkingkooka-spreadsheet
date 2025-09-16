@@ -66,6 +66,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
+    final static String BADGE_ERROR_STRING = "badge-error";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName BADGE_ERROR = new SpreadsheetFormatterName(
+        BADGE_ERROR_STRING,
+        null
+    );
+
     final static String COLLECTION_STRING = "collection";
 
     /**
@@ -176,6 +186,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         switch (name) {
             case AUTOMATIC_STRING:
                 spreadsheetFormatterName = AUTOMATIC;
+                break;
+            case BADGE_ERROR_STRING:
+                spreadsheetFormatterName = BADGE_ERROR;
                 break;
             case COLLECTION_STRING:
                 spreadsheetFormatterName = COLLECTION;

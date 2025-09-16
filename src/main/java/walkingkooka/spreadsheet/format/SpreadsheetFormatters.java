@@ -62,6 +62,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see BadgeErrorSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter badgeError(final SpreadsheetFormatter formatter) {
+        return BadgeErrorSpreadsheetFormatter.with(formatter);
+    }
+
+    /**
      * {@see SpreadsheetFormatterCollection}
      */
     public static SpreadsheetFormatter collection(final List<SpreadsheetFormatter> formatters) {
