@@ -171,6 +171,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitErrorFormatter(final SpreadsheetFormatterSelector selector) {
+        // nop
+    }
+
     protected void visitExporters(final SpreadsheetExporterAliasSet aliases) {
         // nop
     }

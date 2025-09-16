@@ -198,6 +198,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>errorFormatter</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> ERROR_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorError.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exporters</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetExporterAliasSet> EXPORTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetExporters.instance());

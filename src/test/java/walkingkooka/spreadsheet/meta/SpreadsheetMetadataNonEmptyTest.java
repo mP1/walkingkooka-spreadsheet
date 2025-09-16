@@ -2663,6 +2663,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             FormHandlerSelector.parse("hello-form-handler")
         );
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
+        properties.put(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            SpreadsheetPattern.parseTextFormatPattern("\"ERROR\" @").spreadsheetFormatterSelector()
+        );
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(
             SpreadsheetMetadataPropertyName.EXPORTERS,
