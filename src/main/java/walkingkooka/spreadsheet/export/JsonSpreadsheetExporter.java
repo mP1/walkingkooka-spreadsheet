@@ -76,7 +76,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 value = (c) -> context.marshall(c)
                     .children()
                     .get(0);
-                contentType = SpreadsheetMediaTypes.JSON_CELLS;
+                contentType = SpreadsheetMediaTypes.JSON_CELL;
                 break;
             case FORMULA:
                 value = (c) -> context.marshall(
@@ -85,7 +85,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 ).setName(
                     name(c)
                 );
-                contentType = SpreadsheetMediaTypes.JSON_FORMULAS;
+                contentType = SpreadsheetMediaTypes.JSON_FORMULA;
                 break;
             case FORMATTER:
                 value = (c) -> context.marshallOptional(
@@ -93,7 +93,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 ).setName(
                     name(c)
                 );
-                contentType = SpreadsheetMediaTypes.JSON_FORMATTERS;
+                contentType = SpreadsheetMediaTypes.JSON_FORMATTER;
                 break;
             case STYLE:
                 value = (c) -> context.marshall(
@@ -101,7 +101,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 ).setName(
                     name(c)
                 );
-                contentType = SpreadsheetMediaTypes.JSON_STYLES;
+                contentType = SpreadsheetMediaTypes.JSON_STYLE;
                 break;
             case PARSER:
                 value = (c) -> context.marshallOptional(
@@ -109,7 +109,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 ).setName(
                     name(c)
                 );
-                contentType = SpreadsheetMediaTypes.JSON_PARSERS;
+                contentType = SpreadsheetMediaTypes.JSON_PARSER;
                 break;
             case VALUE:
                 value = (c) -> context.marshallOptionalWithType(
@@ -117,7 +117,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 ).setName(
                     name(c)
                 );
-                contentType = SpreadsheetMediaTypes.JSON_FORMATTED_VALUES;
+                contentType = SpreadsheetMediaTypes.JSON_FORMATTED_VALUE;
                 break;
             case VALUE_TYPE:
                 value = (c) -> context.marshall(

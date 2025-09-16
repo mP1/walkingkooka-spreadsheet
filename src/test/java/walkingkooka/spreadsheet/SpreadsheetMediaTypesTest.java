@@ -31,7 +31,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonCells() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_CELLS,
+            SpreadsheetMediaTypes.JSON_CELL,
             "application/walkingkooka-spreadsheet-Cell+json"
         );
     }
@@ -39,7 +39,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonFormulas() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_FORMULAS,
+            SpreadsheetMediaTypes.JSON_FORMULA,
             "application/walkingkooka-spreadsheet-Formula+json"
         );
     }
@@ -47,7 +47,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonFormatters() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_FORMATTERS,
+            SpreadsheetMediaTypes.JSON_FORMATTER,
             "application/walkingkooka-spreadsheet-Formatter+json"
         );
     }
@@ -55,7 +55,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonParsers() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_PARSERS,
+            SpreadsheetMediaTypes.JSON_PARSER,
             "application/walkingkooka-spreadsheet-Parser+json"
         );
     }
@@ -63,7 +63,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonStyles() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_STYLES,
+            SpreadsheetMediaTypes.JSON_STYLE,
             "application/walkingkooka-spreadsheet-Style+json"
         );
     }
@@ -71,7 +71,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testJsonFormattedValue() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
             "application/walkingkooka-spreadsheet-Formatted-Value+json"
         );
     }

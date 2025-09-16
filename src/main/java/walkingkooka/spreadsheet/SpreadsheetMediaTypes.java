@@ -34,17 +34,17 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     // json.............................................................................................................
 
-    public static final MediaType JSON_CELLS = json("Cell");
+    public static final MediaType JSON_CELL = json("Cell");
 
-    public static final MediaType JSON_FORMULAS = json("Formula");
+    public static final MediaType JSON_FORMULA = json("Formula");
 
-    public static final MediaType JSON_FORMATTERS = json("Formatter");
+    public static final MediaType JSON_FORMATTER = json("Formatter");
 
-    public static final MediaType JSON_PARSERS = json("Parser");
+    public static final MediaType JSON_PARSER = json("Parser");
 
-    public static final MediaType JSON_STYLES = json("Style");
+    public static final MediaType JSON_STYLE = json("Style");
 
-    public static final MediaType JSON_FORMATTED_VALUES = json("Formatted-Value");
+    public static final MediaType JSON_FORMATTED_VALUE = json("Formatted-Value");
 
     public static final MediaType JSON_VALUE_TYPE = json("Value-Type");
 
