@@ -32,7 +32,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonCells() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_CELLS,
-            "application/Spreadsheet-cell+json"
+            "application/walkingkooka-spreadsheet-Cell+json"
         );
     }
 
@@ -40,7 +40,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormulas() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMULAS,
-            "application/Spreadsheet-formula+json"
+            "application/walkingkooka-spreadsheet-Formula+json"
         );
     }
 
@@ -48,7 +48,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormatters() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMATTERS,
-            "application/Spreadsheet-formatter+json"
+            "application/walkingkooka-spreadsheet-Formatter+json"
         );
     }
 
@@ -56,7 +56,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonParsers() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_PARSERS,
-            "application/Spreadsheet-parser+json"
+            "application/walkingkooka-spreadsheet-Parser+json"
         );
     }
 
@@ -64,7 +64,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonStyles() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_STYLES,
-            "application/Spreadsheet-style+json"
+            "application/walkingkooka-spreadsheet-Style+json"
         );
     }
 
@@ -72,7 +72,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormattedValue() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMATTED_VALUES,
-            "application/Spreadsheet-formatted-value+json"
+            "application/walkingkooka-spreadsheet-Formatted-Value+json"
         );
     }
 
@@ -80,7 +80,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonValueTypes() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
-            "application/Spreadsheet-value-type+json"
+            "application/walkingkooka-spreadsheet-Value-Type+json"
         );
     }
 
