@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
+import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -164,11 +165,51 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorBadgeError() {
         this.spreadsheetFormatterAndCheck(
-            "badge-error (text-format-pattern(\"@@\"))",
+            "badge-error text-format-pattern \"Hello \"@@",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.badgeError(
-                SpreadsheetPattern.parseTextFormatPattern("@@")
+                SpreadsheetPattern.parseTextFormatPattern("\"Hello \"@@")
                     .formatter()
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorBadgeError2() {
+        this.spreadsheetFormatterAndCheck(
+            "badge-error(text-format-pattern \"Hello \"@@)",
+            PROVIDER_CONTEXT,
+            SpreadsheetFormatters.badgeError(
+                SpreadsheetPattern.parseTextFormatPattern("\"Hello \"@@")
+                    .formatter()
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorBadgeError3() {
+        this.spreadsheetFormatterAndCheck(
+            "badge-error text-format-pattern(\"Hello \"@@)",
+            PROVIDER_CONTEXT,
+            SpreadsheetFormatters.badgeError(
+                SpreadsheetFormatters.text(
+                    SpreadsheetPattern.parseTextFormatPattern("(\"Hello \"@@)").value()
+                        .cast(TextSpreadsheetFormatParserToken.class)
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorBadgeError4() {
+        this.spreadsheetFormatterAndCheck(
+            "badge-error (text-format-pattern(\"Hello \"@@))",
+            PROVIDER_CONTEXT,
+            SpreadsheetFormatters.badgeError(
+                SpreadsheetFormatters.text(
+                    SpreadsheetPattern.parseTextFormatPattern("(\"Hello \"@@)").value()
+                        .cast(TextSpreadsheetFormatParserToken.class)
+                )
             )
         );
     }
