@@ -4752,6 +4752,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
+        final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
@@ -4762,14 +4763,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetMetadataPropertyName.CONVERTERS,
                 ConverterAliasSet.EMPTY
                     .concat(
-                        ConverterAlias.parse(formulaConverterSelector.text())
+                        ConverterAlias.parse("null-to-number")
+                    ).concat(
+                        ConverterAlias.parse("text")
                     )
             ).set(
                 SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                 formulaConverterSelector
             ).set(
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                formulaConverterSelector
+                formattingConverterSelector
             ).set(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 validationConverterSelector
@@ -4792,9 +4795,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                final List<?> values,
                                                                                final ProviderContext context) {
                         if (formulaConverterSelector.name().equals(name)) {
-                            return Cast.to(
-                                SpreadsheetConverters.nullToNumber()
-                            );
+                            return CONVERTER_PROVIDER.converter(name, values, context);
+                        }
+                        if (formattingConverterSelector.name().equals(name)) {
+                            return CONVERTER_PROVIDER.converter(name, values, context);
                         }
                         if (validationConverterSelector.name().equals(name)) {
                             return Converters.fake();
@@ -4847,10 +4851,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         ).setFormattedValue(
             Optional.of(
-                TextNode.text(
-                    SpreadsheetError.formatterNotFound(null)
-                        .text()
-                )
+                TextNode.text("#ERROR " + FORMATTED_PATTERN_SUFFIX)
+                    .setTextStyle(STYLE)
             )
         );
 
@@ -4886,6 +4888,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
+        final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("TestValidationConverter");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
@@ -4894,9 +4897,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SERVER_URL,
             METADATA.set(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.EMPTY
-                    .concat(
+                ConverterAliasSet.EMPTY.concat(
                         ConverterAlias.parse(formulaConverterSelector.text())
+                    ).concat(
+                        ConverterAlias.parse(formattingConverterSelector.text())
                     ).concat(
                         ConverterAlias.parse(validationConverterSelector.text())
                     )
@@ -4905,7 +4909,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 formulaConverterSelector
             ).set(
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                formulaConverterSelector
+                formattingConverterSelector
             ).set(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 validationConverterSelector
@@ -4928,9 +4932,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                final List<?> values,
                                                                                final ProviderContext context) {
                         if (formulaConverterSelector.name().equals(name)) {
-                            return Cast.to(
-                                SpreadsheetConverters.nullToNumber()
-                            );
+                            return CONVERTER_PROVIDER.converter(name, values, context);
+                        }
+                        if (formattingConverterSelector.name().equals(name)) {
+                            return CONVERTER_PROVIDER.converter(name, values, context);
                         }
                         if (validationConverterSelector.name().equals(name)) {
                             return new FakeConverter<>() {
@@ -5001,9 +5006,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         ).setFormattedValue(
             Optional.of(
                 TextNode.text(
-                    SpreadsheetError.formatterNotFound(null)
-                        .text()
-                )
+                    "#ERROR " + FORMATTED_PATTERN_SUFFIX
+                ).setTextStyle(STYLE)
             )
         );
 
