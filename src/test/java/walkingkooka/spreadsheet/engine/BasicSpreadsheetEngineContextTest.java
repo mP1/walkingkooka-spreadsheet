@@ -45,6 +45,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -835,7 +836,43 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    // formatValueAndStyle...................................................................................................
+    // formatValueAndStyle..............................................................................................
+
+    @Test
+    public void testFormatValueAndStyleWithUnknownFormatterFails() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("1")
+                .setValue(
+                    Optional.of(1)
+                )
+        );
+
+        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("unknown-formatter-404 param1");
+
+        this.formatAndStyleAndCheck(
+            this.createContext(
+                METADATA,
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetCellRangeStores.treeMap()
+            ),
+            cell,
+            formatter,
+            cell.setFormula(
+                cell.formula()
+                    .setError(
+                        Optional.of(
+                            SpreadsheetError.formatterNotFound(
+                                formatter.name()
+                            )
+                        )
+                    )
+            ).setFormattedValue(
+                Optional.of(
+                    TextNode.text("#ERROR")
+                )
+            )
+        );
+    }
 
     @Test
     public void testFormatValueAndStyle() {

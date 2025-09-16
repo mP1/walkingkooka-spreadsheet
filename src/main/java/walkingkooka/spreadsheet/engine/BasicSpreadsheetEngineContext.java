@@ -377,31 +377,28 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final Optional<Object> value = formula.errorOrValue();
 
         SpreadsheetCell formattedCell = cell;
-        Optional<TextNode> formatted = this.formatValue(
-            cell,
-            value,
-            formatter
-        ).map(
-            f -> cell.style()
-                .replace(f)
-        );
+        Optional<TextNode> formatted;
 
-
-        SpreadsheetError error = null;
-
-        // if format was unsuccessful probably "formatter not found" and there is no error replace error
-        if (false == formatted.isPresent()) {
-            error = SpreadsheetError.formatterNotFound(
+        try {
+            formatted = this.formatValue(
+                cell,
+                value,
+                formatter
+            ).map(
+                f -> cell.style()
+                    .replace(f)
+            );
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException cause) {
+            final SpreadsheetError error = SpreadsheetError.formatterNotFound(
                 formatter.map(SpreadsheetFormatterSelector::name)
                     .orElse(null)
             );
             formatted = Optional.of(
                 TextNode.text(error.text())
             );
-        }
 
-        // if no ERROR save new "formatted not found" ERROR if no error was present.
-        if (null != error && false == formula.error().isPresent()) {
             formattedCell = formattedCell.setFormula(
                 formula.setError(
                     Optional.of(error)
