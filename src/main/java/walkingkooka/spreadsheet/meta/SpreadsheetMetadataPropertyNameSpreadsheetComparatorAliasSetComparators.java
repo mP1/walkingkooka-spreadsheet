@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorAliasSet;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 
 final class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSetComparators extends SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet {
 

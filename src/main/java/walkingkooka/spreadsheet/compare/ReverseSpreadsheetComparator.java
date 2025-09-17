@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Comparators;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 
 import java.util.Objects;
 

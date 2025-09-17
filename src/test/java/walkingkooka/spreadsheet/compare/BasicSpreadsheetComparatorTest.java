@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.compare.DateTimeComparators;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 
 import java.time.temporal.Temporal;
 import java.util.Comparator;

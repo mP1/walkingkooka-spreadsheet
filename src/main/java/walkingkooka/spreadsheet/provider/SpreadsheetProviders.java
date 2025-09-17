@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProvider;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;

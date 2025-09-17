@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 
 import java.util.Locale;
 

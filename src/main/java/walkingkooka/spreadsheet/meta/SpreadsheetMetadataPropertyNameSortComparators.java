@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 
 import java.util.Optional;
 
