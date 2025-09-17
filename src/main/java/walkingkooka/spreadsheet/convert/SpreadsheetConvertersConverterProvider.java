@@ -146,6 +146,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.environment();
                 break;
+            case ERROR_TO_ERROR_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.errorToError();
+                break;
             case ERROR_THROWING_STRING:
                 noParameterCheck(copy);
 
@@ -577,6 +582,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName ENVIRONMENT = ConverterName.with(ENVIRONMENT_STRING);
 
+    private final static String ERROR_TO_ERROR_STRING = "error-to-error";
+
+    final static ConverterName ERROR_TO_ERROR = ConverterName.with(ERROR_TO_ERROR_STRING);
+    
     private final static String ERROR_THROWING_STRING = "error-throwing";
 
     final static ConverterName ERROR_THROWING = ConverterName.with(ERROR_THROWING_STRING);
@@ -881,6 +890,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(DATE_TIME_SYMBOLS),
             converterInfo(DECIMAL_NUMBER_SYMBOLS),
             converterInfo(ENVIRONMENT),
+            converterInfo(ERROR_TO_ERROR),
             converterInfo(ERROR_THROWING),
             converterInfo(ERROR_TO_NUMBER),
             converterInfo(EXPRESSION),
