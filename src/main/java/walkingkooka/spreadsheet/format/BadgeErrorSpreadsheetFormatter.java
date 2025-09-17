@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.Either;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.Badge;
 import walkingkooka.tree.text.TextNode;
 
@@ -54,23 +56,39 @@ final class BadgeErrorSpreadsheetFormatter implements SpreadsheetFormatter {
 
         final Object valueOrNull = value.orElse(null);
 
-        final Either<String, String> text = null != valueOrNull ?
+        final Either<SpreadsheetError, String> spreadsheetError = null != valueOrNull ?
             context.convert(
                 valueOrNull,
-                String.class
+                SpreadsheetError.class
             ) :
             null;
 
         return Optional.ofNullable(
-            null != text && text.isLeft() ?
-                TextNode.badge(text.leftValue())
-                    .appendChild(
-                        this.formatter.format(
-                            value,
-                            context
-                        ).orElse(TextNode.EMPTY_TEXT)
-                    ) :
+            null != spreadsheetError && spreadsheetError.isLeft() ?
+                this.formatSpreadsheetError(
+                    spreadsheetError.leftValue(),
+                    context
+                ) :
                 null
+        );
+    }
+
+    private TextNode formatSpreadsheetError(final SpreadsheetError error,
+                                            final SpreadsheetFormatterContext context) {
+        String text = error.text();
+
+        String badgeText = error.message();
+        if (CharSequences.isNullOrEmpty(badgeText)) {
+            badgeText = text;
+        }
+
+        return TextNode.badge(
+            badgeText
+        ).appendChild(
+            this.formatter.format(
+                Optional.of(text),
+                context
+            ).orElse(TextNode.EMPTY_TEXT)
         );
     }
 
