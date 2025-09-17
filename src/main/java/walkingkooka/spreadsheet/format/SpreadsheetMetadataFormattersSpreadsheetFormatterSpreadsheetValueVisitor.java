@@ -137,7 +137,7 @@ final class SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVis
 
     @Override
     protected void visit(final SpreadsheetError error) {
-        this.text();
+        this.formatter = this.automaticSpreadsheetFormatter.error;
     }
 
     @Override

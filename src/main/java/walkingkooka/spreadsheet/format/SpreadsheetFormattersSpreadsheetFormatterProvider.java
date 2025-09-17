@@ -146,6 +146,10 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                                 context
                             ),
                             this.spreadsheetFormatter(
+                                ERROR_FORMATTER,
+                                context
+                            ),
+                            this.spreadsheetFormatter(
                                 NUMBER_FORMATTER,
                                 context
                             ),
@@ -159,17 +163,18 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                             )
                         );
                         break;
-                    case 5:
+                    case 6:
                         formatter = SpreadsheetFormatters.automatic(
                             (SpreadsheetFormatter) copy.get(0), // date
                             (SpreadsheetFormatter) copy.get(1), // date-time
-                            (SpreadsheetFormatter) copy.get(2), // number
-                            (SpreadsheetFormatter) copy.get(3), // text
-                            (SpreadsheetFormatter) copy.get(4) // time
+                            (SpreadsheetFormatter) copy.get(2), // error
+                            (SpreadsheetFormatter) copy.get(3), // number
+                            (SpreadsheetFormatter) copy.get(4), // text
+                            (SpreadsheetFormatter) copy.get(5) // time
                         );
                         break;
                     default:
-                        throw new IllegalArgumentException("Expected 0 or 5 value(s) got " + count);
+                        throw new IllegalArgumentException("Expected 0 or 6 value(s) got " + count);
                 }
                 break;
             case SpreadsheetFormatterName.BADGE_ERROR_STRING:
@@ -253,6 +258,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private final static EnvironmentValueName<SpreadsheetFormatterSelector> DATE_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
 
     private final static EnvironmentValueName<SpreadsheetFormatterSelector> DATE_TIME_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+
+    private final static EnvironmentValueName<SpreadsheetFormatterSelector> ERROR_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.ERROR_FORMATTER);
 
     private final static EnvironmentValueName<SpreadsheetFormatterSelector> NUMBER_FORMATTER = environmentValueName(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
 

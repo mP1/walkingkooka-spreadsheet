@@ -1163,6 +1163,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetFormatterSelector date = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMATTER);
         final SpreadsheetFormatterSelector dateTime = missing.getOrNull(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER);
+        final SpreadsheetFormatterSelector error = missing.getOrNull(SpreadsheetMetadataPropertyName.ERROR_FORMATTER);
         final SpreadsheetFormatterSelector number = missing.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER);
         final SpreadsheetFormatterSelector text = missing.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMATTER);
         final SpreadsheetFormatterSelector time = missing.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMATTER);
@@ -1172,6 +1173,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return SpreadsheetFormatters.automatic(
             spreadsheetFormatterProvider.spreadsheetFormatter(date, context),
             spreadsheetFormatterProvider.spreadsheetFormatter(dateTime, context),
+            spreadsheetFormatterProvider.spreadsheetFormatter(error, context),
             spreadsheetFormatterProvider.spreadsheetFormatter(number, context),
             spreadsheetFormatterProvider.spreadsheetFormatter(text, context),
             spreadsheetFormatterProvider.spreadsheetFormatter(time, context)
@@ -1657,6 +1659,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             SpreadsheetComparatorProviders.spreadsheetComparators()
                 .spreadsheetComparatorInfos()
                 .aliasSet()
+        ).set(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            SpreadsheetFormatterSelector.parse(
+                "badge-error default-text"
+            )
         ).set(
             SpreadsheetMetadataPropertyName.EXPORTERS,
             SpreadsheetExporterProviders.spreadsheetExport()

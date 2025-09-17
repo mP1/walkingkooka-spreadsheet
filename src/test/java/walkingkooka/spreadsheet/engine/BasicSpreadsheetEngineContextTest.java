@@ -1617,6 +1617,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  },\n" +
                 "  \"defaultFormHandler\": \"non-null\",\n" +
                 "  \"defaultYear\": 1900,\n" +
+                "  \"errorFormatter\": \"badge-error default-text\",\n" +
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                 "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)\",\n" +
@@ -1841,6 +1842,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  },\n" +
                 "  \"defaultFormHandler\": \"non-null\",\n" +
                 "  \"defaultYear\": 1900,\n" +
+                "  \"errorFormatter\": \"badge-error default-text\",\n" +
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                 "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)\",\n" +

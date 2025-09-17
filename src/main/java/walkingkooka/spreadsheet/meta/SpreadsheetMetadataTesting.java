@@ -418,6 +418,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
             METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
         ).set(
+            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
+        ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
             METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
         ).set(

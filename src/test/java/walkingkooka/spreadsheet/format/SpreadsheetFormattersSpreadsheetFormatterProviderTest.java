@@ -118,13 +118,14 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     );
 
     @Test
-    public void testSpreadsheetFormatterSelectorAutomaticFiveParameters() {
+    public void testSpreadsheetFormatterSelectorAutomaticSixParameters() {
         this.spreadsheetFormatterAndCheck(
-            "automatic (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "automatic (date-format-pattern(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), text-format-pattern(\"\\\"Error\\\" @\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
                 SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yy hh:mm").formatter(),
+                SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").formatter(),
                 SpreadsheetPattern.parseNumberFormatPattern("0.00").formatter(),
                 SpreadsheetPattern.parseTextFormatPattern("@@").formatter(),
                 SpreadsheetPattern.parseTimeFormatPattern("hh:mm").formatter()
@@ -146,6 +147,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     .spreadsheetFormatPattern()
                     .get()
                     .formatter(),
+                SpreadsheetFormattersSpreadsheetFormatterProvider.INSTANCE.spreadsheetFormatter(
+                    METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER),
+                    PROVIDER_CONTEXT
+                ),
+//
+//                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
+//                    .spreadsheetFormatPattern()
+//                    .get()
+//                    .formatter(),
+//                SpreadsheetFormatters.badgeError(
+//                    SpreadsheetFormatters.p
+//                ),
                 METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
                     .spreadsheetFormatPattern()
                     .get()
