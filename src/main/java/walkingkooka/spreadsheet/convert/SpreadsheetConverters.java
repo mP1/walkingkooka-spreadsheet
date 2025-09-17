@@ -30,6 +30,7 @@ import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
@@ -544,7 +545,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     // @VisibleForTesting
-    final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
+    public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
         "collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)"
     );
 

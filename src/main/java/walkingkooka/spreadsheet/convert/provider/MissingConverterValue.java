@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.convert;
+package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.Value;
 import walkingkooka.text.CharSequences;
