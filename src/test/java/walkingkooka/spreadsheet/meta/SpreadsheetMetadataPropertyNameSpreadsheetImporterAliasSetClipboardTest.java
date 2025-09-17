@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboardTest extends SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetTestCase<SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSetClipboard> {
 
