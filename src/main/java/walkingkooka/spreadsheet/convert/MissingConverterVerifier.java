@@ -689,6 +689,15 @@ final class MissingConverterVerifier {
 
         // spreadsheetValue.............................................................................................
         {
+            // error-to-error...........................................................................................
+            if (formula) {
+                finder.addIfConversionFail(
+                    error,
+                    SpreadsheetError.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_ERROR
+                );
+            }
+
             // error-to-number..........................................................................................
             if (formula) {
                 finder.addIfConversionFail(

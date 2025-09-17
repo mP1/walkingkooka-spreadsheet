@@ -1795,6 +1795,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testSpreadsheetValueConvertSpreadsheetErrorToSpreadsheetError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero is not allowed 123");
+
+        this.spreadsheetValueConvertAndCheck(
+            error,
+            SpreadsheetError.class,
+            error
+        );
+    }
+
+    @Test
     public void testSpreadsheetValueConvertStringToSpreadsheetSelectionFails() {
         this.convertFails(
             SpreadsheetConverters.spreadsheetValue(),
