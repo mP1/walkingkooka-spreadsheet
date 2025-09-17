@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link SpreadsheetParserAliasSet}. These aliases will

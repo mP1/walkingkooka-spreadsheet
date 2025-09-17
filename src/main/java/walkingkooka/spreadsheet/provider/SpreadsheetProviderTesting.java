@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderTe
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserProviderTesting;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviderTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;
 import walkingkooka.validation.form.provider.FormHandlerProviderTesting;

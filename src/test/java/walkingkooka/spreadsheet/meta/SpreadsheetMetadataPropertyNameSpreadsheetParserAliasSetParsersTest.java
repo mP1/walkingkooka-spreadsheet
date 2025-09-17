@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetParserAliasSet;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetParsersTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetParsers> {
 

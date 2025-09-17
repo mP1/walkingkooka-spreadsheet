@@ -24,9 +24,9 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorTokenAlternative;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorTokenAlternative;
 
 public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
     ClassTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,

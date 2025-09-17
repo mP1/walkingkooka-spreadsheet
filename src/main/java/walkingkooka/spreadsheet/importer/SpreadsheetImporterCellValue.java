@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.OptionalSpreadsheetValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.parser.OptionalSpreadsheetParserSelector;
+import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.CharSequences;
