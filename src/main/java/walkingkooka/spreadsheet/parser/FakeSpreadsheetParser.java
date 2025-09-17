@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.parser.FakeParser;
 import walkingkooka.validation.ValidationValueTypeName;
 

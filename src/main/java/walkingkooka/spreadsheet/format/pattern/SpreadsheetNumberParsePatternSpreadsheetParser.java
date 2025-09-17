@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserSelectorToken;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.ParserToken;
