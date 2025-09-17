@@ -219,6 +219,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@see SpreadsheetConverterSpreadsheetErrorToSpreadsheetError}
+     */
+    public static Converter<SpreadsheetConverterContext> errorToError() {
+        return SpreadsheetConverterSpreadsheetErrorToSpreadsheetError.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetErrorThrowing}
      */
     public static Converter<SpreadsheetConverterContext> errorThrowing() {
