@@ -15,17 +15,27 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet.export.provider;
 
-import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicStaticHelperTesting;
 
-public abstract class SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetTestCase<N extends SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSet> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetExporterAliasSet> {
+import java.lang.reflect.Method;
 
-    SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSetTestCase() {
-        super();
+public final class SpreadsheetExporterProvidersTest implements PublicStaticHelperTesting<SpreadsheetExporterProviders> {
+
+    @Override
+    public Class<SpreadsheetExporterProviders> type() {
+        return SpreadsheetExporterProviders.class;
     }
 
-    @Override final String propertyValueType() {
-        return SpreadsheetExporterAliasSet.class.getSimpleName();
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
+    }
+
+    @Override
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
     }
 }
