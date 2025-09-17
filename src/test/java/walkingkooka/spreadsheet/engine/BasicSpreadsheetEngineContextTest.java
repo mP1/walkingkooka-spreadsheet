@@ -1380,13 +1380,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     // createContext....................................................................................................
 
-    private BasicSpreadsheetEngineContext createContext(final Locale locale) {
-        return this.createContext(
-            locale,
-            PROVIDER_CONTEXT
-        );
-    }
-
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
             metadata,
