@@ -73,9 +73,9 @@ import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken
 import walkingkooka.spreadsheet.formula.parser.DateTimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterSelector;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;

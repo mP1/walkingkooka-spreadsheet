@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.spreadsheet.importer.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 
 import java.util.Optional;
 
