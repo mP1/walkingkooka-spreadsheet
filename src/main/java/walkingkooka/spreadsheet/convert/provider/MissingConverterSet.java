@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.convert;
+package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.set.ImmutableSortedSet;

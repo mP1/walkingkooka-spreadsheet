@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.convert;
+package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterAliasSet;
@@ -23,6 +23,8 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 
 import java.util.function.Function;
 

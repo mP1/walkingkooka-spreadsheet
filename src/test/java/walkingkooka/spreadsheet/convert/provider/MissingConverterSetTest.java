@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  */
-package walkingkooka.spreadsheet.convert;
+package walkingkooka.spreadsheet.convert.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.ImmutableSortedSetTesting;

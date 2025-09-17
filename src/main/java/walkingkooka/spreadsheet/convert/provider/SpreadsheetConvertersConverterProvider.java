@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.convert;
+package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
@@ -32,6 +32,8 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 
 import java.util.List;
 import java.util.Objects;
