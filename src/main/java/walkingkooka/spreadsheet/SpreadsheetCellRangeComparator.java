@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.compare.Comparators;
-import walkingkooka.spreadsheet.compare.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparators;
 
 import java.util.Comparator;
 import java.util.List;

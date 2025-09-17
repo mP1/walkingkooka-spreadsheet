@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.compare.Comparators;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameAndDirection;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -41,7 +42,7 @@ public enum SpreadsheetComparatorDirection {
         }
 
         @Override
-        String toStringWithEmptyDefault() {
+        public String toStringWithEmptyDefault() {
             return "";
         }
     },
@@ -63,7 +64,7 @@ public enum SpreadsheetComparatorDirection {
         }
 
         @Override
-        String toStringWithEmptyDefault() {
+        public String toStringWithEmptyDefault() {
             return SpreadsheetComparatorNameAndDirection.SEPARATOR + this.name();
         }
     },
@@ -85,7 +86,7 @@ public enum SpreadsheetComparatorDirection {
         }
 
         @Override
-        String toStringWithEmptyDefault() {
+        public String toStringWithEmptyDefault() {
             return SpreadsheetComparatorNameAndDirection.SEPARATOR + this.name();
         }
     };
@@ -103,5 +104,5 @@ public enum SpreadsheetComparatorDirection {
      */
     abstract public int fixCompareResult(final int value);
 
-    abstract String toStringWithEmptyDefault();
+    abstract public String toStringWithEmptyDefault();
 }

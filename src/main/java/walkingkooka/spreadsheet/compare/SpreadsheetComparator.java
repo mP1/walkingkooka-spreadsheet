@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.naming.HasName;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 
 import java.util.Comparator;
 

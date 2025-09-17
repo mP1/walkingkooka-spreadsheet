@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.provider;
 
 import walkingkooka.convert.provider.ConverterProviderTesting;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorProviderTesting;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
