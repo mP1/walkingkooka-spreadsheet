@@ -50,12 +50,36 @@ public final class BadgeErrorSpreadsheetFormatterTest implements SpreadsheetForm
     }
 
     @Test
-    public void testFormatNonNull() {
+    public void testFormatSpreadsheetErrorWithDiv0() {
         this.formatAndCheck(
-            "Hello2",
-            TextNode.badge("Hello2")
+            SpreadsheetErrorKind.DIV0.toError(),
+            TextNode.badge("#DIV/0!")
                 .appendChild(
-                    TextNode.text("Hello2Hello2")
+                    TextNode.text("#DIV/0!#DIV/0!")
+                )
+        );
+    }
+
+    @Test
+    public void testFormatSpreadsheetErrorWithError() {
+        this.formatAndCheck(
+            SpreadsheetErrorKind.ERROR.toError(),
+            TextNode.badge("#ERROR")
+                .appendChild(
+                    TextNode.text("#ERROR#ERROR")
+                )
+        );
+    }
+
+    @Test
+    public void testFormatSpreadsheetErrorWithMessage() {
+        final String message = "Error message 123";
+
+        this.formatAndCheck(
+            SpreadsheetErrorKind.ERROR.setMessage(message),
+            TextNode.badge(message)
+                .appendChild(
+                    TextNode.text("#ERROR#ERROR")
                 )
         );
     }
@@ -105,7 +129,12 @@ public final class BadgeErrorSpreadsheetFormatterTest implements SpreadsheetForm
                 );
             }
 
-            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.text();
+            private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                Lists.of(
+                    SpreadsheetConverters.text(),
+                    SpreadsheetConverters.spreadsheetValue()
+                )
+            );
         };
     }
 
