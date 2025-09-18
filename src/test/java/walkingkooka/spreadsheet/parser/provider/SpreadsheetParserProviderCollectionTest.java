@@ -23,8 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

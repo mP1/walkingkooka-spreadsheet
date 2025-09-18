@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.parser.provider;
 
 import walkingkooka.plugin.FilteredProviderMapper;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 
 import java.util.List;

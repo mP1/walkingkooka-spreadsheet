@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;

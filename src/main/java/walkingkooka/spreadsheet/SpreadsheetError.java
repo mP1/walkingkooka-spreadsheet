@@ -23,7 +23,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
 import walkingkooka.convert.HasConvertError;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.HasNotFoundText;

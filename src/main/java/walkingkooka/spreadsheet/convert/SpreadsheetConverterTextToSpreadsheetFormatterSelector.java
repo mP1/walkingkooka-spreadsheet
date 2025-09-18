@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 /**
  * A {@link Converter} that converts an SpreadsheetFormatterSelector as a {@link String} into a {@link SpreadsheetFormatterSelector}.

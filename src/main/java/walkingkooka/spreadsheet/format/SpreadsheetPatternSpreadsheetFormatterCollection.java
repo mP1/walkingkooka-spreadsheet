@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 
 import java.util.List;
 import java.util.Objects;

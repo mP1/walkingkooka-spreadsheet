@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePattern;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 import java.time.LocalTime;
 import java.util.Locale;

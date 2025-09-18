@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 

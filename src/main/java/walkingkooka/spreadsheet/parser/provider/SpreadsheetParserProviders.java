@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser.provider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.text.cursor.parser.Parser;
 

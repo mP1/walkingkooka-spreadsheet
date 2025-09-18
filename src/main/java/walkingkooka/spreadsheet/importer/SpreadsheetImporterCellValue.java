@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.spreadsheet.OptionalSpreadsheetValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.format.OptionalSpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.HasSpreadsheetReference;

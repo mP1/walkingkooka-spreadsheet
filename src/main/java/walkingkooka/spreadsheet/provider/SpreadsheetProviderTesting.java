@@ -21,7 +21,7 @@ import walkingkooka.convert.provider.ConverterProviderTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderTesting;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderTesting;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviderTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviderTesting;

@@ -25,8 +25,8 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviderDe
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviderDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProvider;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterProviderDelegator;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderDelegator;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviderDelegator;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;

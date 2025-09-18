@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
