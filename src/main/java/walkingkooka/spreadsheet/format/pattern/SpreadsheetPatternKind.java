@@ -33,14 +33,12 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * The different types of {@link SpreadsheetPattern}. While this kind is named after a {@link SpreadsheetPattern} it is also used to
@@ -384,34 +382,4 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
             .orElseThrow(() -> new IllegalArgumentException("Unknown typeName " + CharSequences.quoteAndEscape(typeName)));
 
     }
-
-    /**
-     * Equivalent to {@link #values()} but with only {@link SpreadsheetPatternKind#isFormatPattern()}.
-     */
-    public static SpreadsheetPatternKind[] formatValues() {
-        return FORMAT_VALUES.toArray(
-            new SpreadsheetPatternKind[
-                FORMAT_VALUES.size()
-                ]
-        );
-    }
-
-    private final static List<SpreadsheetPatternKind> FORMAT_VALUES = Arrays.stream(values())
-        .filter(SpreadsheetPatternKind::isFormatPattern)
-        .collect(Collectors.toList());
-
-    /**
-     * Equivalent to {@link #values()} but with only {@link SpreadsheetPatternKind#isParsePattern()}.
-     */
-    public static SpreadsheetPatternKind[] parseValues() {
-        return PARSE_VALUES.toArray(
-            new SpreadsheetPatternKind[
-                PARSE_VALUES.size()
-                ]
-        );
-    }
-
-    private final static List<SpreadsheetPatternKind> PARSE_VALUES = Arrays.stream(values())
-        .filter(SpreadsheetPatternKind::isParsePattern)
-        .collect(Collectors.toList());
 }
