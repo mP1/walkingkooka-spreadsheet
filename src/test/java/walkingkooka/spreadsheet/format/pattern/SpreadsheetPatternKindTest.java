@@ -56,7 +56,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTesting,
     HasUrlFragmentTesting,
@@ -109,37 +108,6 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
             kind.typeName(),
             kind::toString
         );
-    }
-
-    @Test
-    public void testFromTypeNameFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetPatternKind.fromTypeName("???")
-        );
-    }
-
-    @Test
-    public void testFromTypeName() {
-        this.checkEquals(
-            SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
-            SpreadsheetPatternKind.fromTypeName(
-                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN.typeName()
-            )
-        );
-    }
-
-    @Test
-    public void testFromTypeNameAll() {
-        for (final SpreadsheetPatternKind kind : SpreadsheetPatternKind.values()) {
-
-            this.checkEquals(
-                kind,
-                SpreadsheetPatternKind.fromTypeName(
-                    kind.typeName()
-                )
-            );
-        }
     }
 
     // parse............................................................................................................

@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.text.CaseKind;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.text.DecimalFormat;
@@ -355,18 +354,5 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
      */
     public boolean isParsePattern() {
         return false == this.isFormatPattern();
-    }
-
-    /**
-     * Tries to find the matching {@link SpreadsheetPatternKind} given its {@link SpreadsheetPatternKind#typeName()}
-     */
-    public static SpreadsheetPatternKind fromTypeName(final String typeName) {
-        Objects.requireNonNull(typeName, "typeName");
-
-        return Arrays.stream(values())
-            .filter(e -> e.typeName().equals(typeName))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Unknown typeName " + CharSequences.quoteAndEscape(typeName)));
-
     }
 }
