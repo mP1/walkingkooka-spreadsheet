@@ -37,9 +37,9 @@ import java.util.Optional;
 public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     /**
-     * The base {@link MediaType} that is common to all application media types.
+     * The base {@link MediaType#suffix()} that is common to all media types.
      */
-    private final static MediaType APPLICATION = MediaType.parse("application/walkingkooka-spreadsheet");
+    private final static String SPREADSHEET = "walkingkooka-spreadsheet-";
 
     // json.............................................................................................................
 
@@ -76,13 +76,17 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     }
 
     private static MediaType json(final String value) {
-        return mediaType(
-            value,
-            "json"
+        return MediaType.APPLICATION_JSON.setSuffix(
+            Optional.of(
+                SPREADSHEET +
+                value
+            )
         );
     }
     
     // object...........................................................................................................
+
+    private final static MediaType OBJECT = MediaType.parse("application/memory");
 
     public static final MediaType OBJECT_CELL = object(SpreadsheetCell.class);
 
@@ -99,20 +103,11 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     }
 
     private static MediaType object(final String value) {
-        return mediaType(
-            value,
-            "object"
-        );
-    }
-
-    // common...........................................................................................................
-
-    private static MediaType mediaType(final String value,
-                                       final String contentType) {
-        return APPLICATION.setSubType(
-            APPLICATION.subType() + "-" + value
-        ).setSuffix(
-            Optional.of(contentType)
+        return OBJECT.setSuffix(
+            Optional.of(
+                SPREADSHEET +
+                    value
+            )
         );
     }
 
