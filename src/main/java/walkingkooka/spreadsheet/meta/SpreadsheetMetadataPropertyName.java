@@ -461,6 +461,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     /**
+     * Getter that returns all {@link SpreadsheetMetadataPropertyName} that return {@link SpreadsheetParserSelector}.
+     */
+    public static List<SpreadsheetMetadataPropertyName<SpreadsheetParserSelector>> parsers() {
+        return CONSTANTS.values()
+            .stream()
+            .filter(SpreadsheetMetadataPropertyName::isSpreadsheetParserSelector)
+            .map(p -> (SpreadsheetMetadataPropertyNameSpreadsheetParser)p)
+            .collect(ImmutableList.collector());
+    }
+
+    /**
      * Tries to locate a {@link SpreadsheetMetadataPropertyName} with the given name returning empty if unknown.
      */
     public static Optional<SpreadsheetMetadataPropertyName<?>> tryWith(final String name) {
