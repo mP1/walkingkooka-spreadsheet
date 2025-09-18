@@ -28,19 +28,19 @@ import java.util.Optional;
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds the default parser for {@link java.time.LocalDateTime} values.
  */
-final class SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime extends SpreadsheetMetadataPropertyNameSpreadsheetParser {
+final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDateTime extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime instance() {
-        return new SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime();
+    static SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDateTime instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDateTime();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameSpreadsheetParserDateTime() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDateTime() {
         super(
             "dateTimeParser",
             SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN

@@ -42,7 +42,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserNumber>
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber>
     implements SpreadsheetMetadataTesting {
 
     @Test
@@ -69,7 +69,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
     private void extractLocaleValueAndCheck2(final String text,
                                              final ExpressionNumberKind kind) throws ParseException {
         final Locale locale = Locale.ENGLISH;
-        final SpreadsheetParserSelector parserSelector = SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance()
+        final SpreadsheetParserSelector parserSelector = SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber.instance()
             .extractLocaleAwareValue(
                 LocaleContexts.jre(locale)
             ).get();
@@ -128,14 +128,14 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance(),
+            SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber.instance(),
             "numberParser"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameSpreadsheetParserNumber createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.instance();
+    SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber.instance();
     }
 
     @Override
@@ -147,7 +147,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserNumberTest ex
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParserNumber> type() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetParserNumber.class;
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber.class;
     }
 }
