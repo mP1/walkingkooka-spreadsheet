@@ -96,7 +96,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValidationValueTypeName ROW_RANGE = ValidationValueTypeName.with(ROW_RANGE_STRING);
 
-    public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
+    public static final String TEMPLATE_VALUE_NAME_STRING = "templateValueName";
 
     public static final ValidationValueTypeName TEMPLATE_VALUE_NAME = ValidationValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
 
