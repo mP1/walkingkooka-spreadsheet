@@ -61,6 +61,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_FORMATTED_VALUE = json("Formatted-Value");
 
+    public static final MediaType JSON_VALUE = json("Value");
+
     public static final MediaType JSON_VALIDATOR = json(Validator.class);
 
     public static final MediaType JSON_VALUE_TYPE = json("Value-Type");
