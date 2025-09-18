@@ -467,7 +467,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         return CONSTANTS.values()
             .stream()
             .filter(SpreadsheetMetadataPropertyName::isSpreadsheetParserSelector)
-            .map(p -> (SpreadsheetMetadataPropertyNameSpreadsheetParser)p)
+            .map(p -> (SpreadsheetMetadataPropertyNameSpreadsheetParserSelector)p)
             .collect(ImmutableList.collector());
     }
 
