@@ -26,6 +26,9 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.Validator;
 
 import java.util.Locale;
@@ -35,11 +38,6 @@ import java.util.Optional;
  * A collection of {@link MediaType} for cells. This will be mostly used by {@link walkingkooka.spreadsheet.importer.SpreadsheetImporter} and {@link walkingkooka.spreadsheet.export.SpreadsheetExporter}.
  */
 public final class SpreadsheetMediaTypes implements PublicStaticHelper {
-
-    /**
-     * The base {@link MediaType#suffix()} that is common to all media types.
-     */
-    private final static String SPREADSHEET = "walkingkooka-spreadsheet-";
 
     // json.............................................................................................................
 
@@ -57,30 +55,19 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_PARSER = json(SpreadsheetParserSelector.class);
 
-    public static final MediaType JSON_STYLE = json("Style");
+    public static final MediaType JSON_STYLE = json(TextStyle.class);
 
-    public static final MediaType JSON_FORMATTED_VALUE = json("Formatted-Value");
+    public static final MediaType JSON_FORMATTED_VALUE = json(TextNode.class);
 
-    public static final MediaType JSON_VALUE = json("Value");
+    public static final MediaType JSON_VALUE = json(Object.class);
 
     public static final MediaType JSON_VALIDATOR = json(Validator.class);
 
-    public static final MediaType JSON_VALUE_TYPE = json("Value-Type");
+    public static final MediaType JSON_VALUE_TYPE = json(ValidationValueTypeName.class);
 
     private static MediaType json(final Class<?> type) {
-        return json(
-            type.getSimpleName()
-                .replace("Spreadsheet", "")
-                .replace("Selector", "")
-        );
-    }
-
-    private static MediaType json(final String value) {
         return MediaType.APPLICATION_JSON.setSuffix(
-            Optional.of(
-                SPREADSHEET +
-                value
-            )
+            Optional.of(type.getName())
         );
     }
     
@@ -95,18 +82,9 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     public static final MediaType OBJECT_SPREADSHEET_METADATA = object(SpreadsheetMetadata.class);
 
     private static MediaType object(final Class<?> type) {
-        return object(
-            type.getSimpleName()
-                .replace("Spreadsheet", "")
-                .replace("Name", "")
-        );
-    }
-
-    private static MediaType object(final String value) {
         return OBJECT.setSuffix(
             Optional.of(
-                SPREADSHEET +
-                    value
+                type.getName()
             )
         );
     }
