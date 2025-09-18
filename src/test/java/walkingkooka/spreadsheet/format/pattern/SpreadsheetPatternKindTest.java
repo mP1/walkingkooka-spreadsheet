@@ -55,7 +55,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -1121,57 +1120,6 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         this.checkEquals(
             expected,
             kind.spreadsheetMetadataPropertyName()
-        );
-    }
-
-    // formatValues.....................................................................................................
-
-    @Test
-    public void testFormatValues() {
-        this.checkEquals(
-            Lists.of(
-                SpreadsheetPatternKind.DATE_FORMAT_PATTERN,
-                SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN,
-                SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN,
-                SpreadsheetPatternKind.TEXT_FORMAT_PATTERN,
-                SpreadsheetPatternKind.TIME_FORMAT_PATTERN
-            ),
-            List.of(
-                SpreadsheetPatternKind.formatValues()
-            )
-        );
-    }
-
-    @Test
-    public void testFormatValuesCloned() {
-        assertNotSame(
-            SpreadsheetPatternKind.formatValues(),
-            SpreadsheetPatternKind.formatValues()
-        );
-    }
-
-    // parseValues.....................................................................................................
-
-    @Test
-    public void testParseValues() {
-        this.checkEquals(
-            Lists.of(
-                SpreadsheetPatternKind.DATE_PARSE_PATTERN,
-                SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN,
-                SpreadsheetPatternKind.NUMBER_PARSE_PATTERN,
-                SpreadsheetPatternKind.TIME_PARSE_PATTERN
-            ),
-            List.of(
-                SpreadsheetPatternKind.parseValues()
-            )
-        );
-    }
-
-    @Test
-    public void testParseValuesCloned() {
-        assertNotSame(
-            SpreadsheetPatternKind.parseValues(),
-            SpreadsheetPatternKind.parseValues()
         );
     }
 
