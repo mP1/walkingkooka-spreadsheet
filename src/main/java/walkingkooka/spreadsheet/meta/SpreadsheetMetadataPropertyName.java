@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.HasId;
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
@@ -83,6 +84,7 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -446,6 +448,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
             CONSTANTS.values()
         )
     );
+
+    /**
+     * Getter that returns all {@link SpreadsheetMetadataPropertyName} that return {@link SpreadsheetFormatterSelector}.
+     */
+    public static List<SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector>> formatters() {
+        return CONSTANTS.values()
+            .stream()
+            .filter(SpreadsheetMetadataPropertyName::isSpreadsheetFormatterSelector)
+            .map(p -> (SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector)p)
+            .collect(ImmutableList.collector());
+    }
 
     /**
      * Tries to locate a {@link SpreadsheetMetadataPropertyName} with the given name returning empty if unknown.
