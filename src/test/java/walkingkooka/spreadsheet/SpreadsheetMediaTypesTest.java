@@ -109,6 +109,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
+    public void testJsonValue() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.JSON_VALUE,
+            "application/walkingkooka-spreadsheet-Value+json"
+        );
+    }
+
+    @Test
     public void testJsonValueTypes() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
