@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 public abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<N extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetFormatterSelector> {
 

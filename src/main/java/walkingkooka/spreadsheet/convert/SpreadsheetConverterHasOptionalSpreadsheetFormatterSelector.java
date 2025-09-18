@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
-import walkingkooka.spreadsheet.format.HasOptionalSpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 final class SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector extends SpreadsheetConverter {
 

@@ -22,7 +22,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 public final class SpreadsheetConverterTextToSpreadsheetFormatterSelectorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetFormatterSelector> {
 

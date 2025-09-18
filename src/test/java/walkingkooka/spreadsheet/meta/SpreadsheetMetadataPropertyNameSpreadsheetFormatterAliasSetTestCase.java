@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterAliasSet;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 
 public abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetTestCase<N extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSet> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetFormatterAliasSet> {
 

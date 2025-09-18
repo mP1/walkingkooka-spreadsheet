@@ -64,7 +64,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormatters() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMATTER,
-            "application/json+walkingkooka.spreadsheet.format.SpreadsheetFormatterSelector"
+            "application/json+walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector"
         );
     }
 

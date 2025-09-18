@@ -25,6 +25,7 @@ import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.FractionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 
