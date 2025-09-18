@@ -2180,49 +2180,6 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
         );
     }
 
-    // kind & HasSpreadsheetPatterKind..................................................................................
-
-    @Test
-    public void testPatternKindDateParsePattern() {
-        this.patternKindAndCheck(
-            SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy"),
-            SpreadsheetPatternKind.DATE_PARSE_PATTERN
-        );
-    }
-
-    @Test
-    public void testPatternKindDateTimeParsePattern() {
-        this.patternKindAndCheck(
-            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss"),
-            SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
-        );
-    }
-
-    @Test
-    public void testPatternKindNumberFormatPattern() {
-        this.patternKindAndCheck(
-            SpreadsheetPattern.parseNumberFormatPattern("#.###"),
-            SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
-        );
-    }
-
-    @Test
-    public void testPatternKindTextFormatPattern() {
-        this.patternKindAndCheck(
-            SpreadsheetPattern.parseTextFormatPattern("@"),
-            SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
-        );
-    }
-
-    private void patternKindAndCheck(final SpreadsheetPattern pattern,
-                                     final SpreadsheetPatternKind expected) {
-        this.checkEquals(
-            expected,
-            pattern.patternKind(),
-            () -> pattern + " kind"
-        );
-    }
-
     // HasText..........................................................................................................
 
     @Test

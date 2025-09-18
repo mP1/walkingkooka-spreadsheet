@@ -760,17 +760,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     abstract SpreadsheetPatternSpreadsheetFormatter createFormatter();
 
-    // patternKind......................................................................................................
-
-    /**
-     * Returns the matching {@link SpreadsheetPatternKind}
-     */
-    public final SpreadsheetPatternKind patternKind() {
-        return SpreadsheetPatternKind.fromTypeName(
-            "spreadsheet-" + this.printTreeTypeName()
-        );
-    }
-
     // HasUrlFragment...................................................................................................
 
     /**

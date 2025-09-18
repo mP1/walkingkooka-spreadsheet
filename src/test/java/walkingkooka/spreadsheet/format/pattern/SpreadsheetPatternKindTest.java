@@ -1067,36 +1067,6 @@ public final class SpreadsheetPatternKindTest implements SpreadsheetFormatterTes
         );
     }
 
-    // checkSameOrFail..................................................................................................
-
-    @Test
-    public void testCheckSameOrFailWithNull() {
-        SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(null);
-    }
-
-    @Test
-    public void testCheckSameOrFail() {
-        SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(
-            SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
-        );
-    }
-
-    @Test
-    public void testCheckSameOrFailInvalidThrows() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetPatternKind.DATE_FORMAT_PATTERN.checkSameOrFail(
-                SpreadsheetPattern.parseTimeParsePattern("hh:mm")
-            )
-        );
-
-        this.checkEquals(
-            "Pattern \"hh:mm\" is not a TIME_PARSE_PATTERN.",
-            thrown.getMessage(),
-            "message"
-        );
-    }
-
     // spreadsheetMetadataPropertyName..................................................................................
 
     @Test
