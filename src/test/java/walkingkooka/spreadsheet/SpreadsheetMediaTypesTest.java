@@ -32,7 +32,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonCells() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_CELL,
-            "application/walkingkooka-spreadsheet-Cell+json"
+            "application/json+walkingkooka-spreadsheet-Cell"
         );
     }
 
@@ -40,7 +40,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonDateTimeSymbols() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS,
-            "application/walkingkooka-spreadsheet-DateTimeSymbols+json"
+            "application/json+walkingkooka-spreadsheet-DateTimeSymbols"
         );
     }
 
@@ -48,7 +48,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonDecimalNumberSymbols() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS,
-            "application/walkingkooka-spreadsheet-DecimalNumberSymbols+json"
+            "application/json+walkingkooka-spreadsheet-DecimalNumberSymbols"
         );
     }
 
@@ -56,7 +56,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormulas() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMULA,
-            "application/walkingkooka-spreadsheet-Formula+json"
+            "application/json+walkingkooka-spreadsheet-Formula"
         );
     }
 
@@ -64,7 +64,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormatters() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMATTER,
-            "application/walkingkooka-spreadsheet-Formatter+json"
+            "application/json+walkingkooka-spreadsheet-Formatter"
         );
     }
 
@@ -72,7 +72,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonLocale() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_LOCALE,
-            "application/walkingkooka-spreadsheet-Locale+json"
+            "application/json+walkingkooka-spreadsheet-Locale"
         );
     }
 
@@ -80,7 +80,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonParsers() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_PARSER,
-            "application/walkingkooka-spreadsheet-Parser+json"
+            "application/json+walkingkooka-spreadsheet-Parser"
         );
     }
 
@@ -88,7 +88,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonStyles() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_STYLE,
-            "application/walkingkooka-spreadsheet-Style+json"
+            "application/json+walkingkooka-spreadsheet-Style"
         );
     }
 
@@ -96,7 +96,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonFormattedValue() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
-            "application/walkingkooka-spreadsheet-Formatted-Value+json"
+            "application/json+walkingkooka-spreadsheet-Formatted-Value"
         );
     }
 
@@ -104,7 +104,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonValidator() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALIDATOR,
-            "application/walkingkooka-spreadsheet-Validator+json"
+            "application/json+walkingkooka-spreadsheet-Validator"
         );
     }
 
@@ -112,7 +112,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonValue() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALUE,
-            "application/walkingkooka-spreadsheet-Value+json"
+            "application/json+walkingkooka-spreadsheet-Value"
         );
     }
 
@@ -120,7 +120,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonValueTypes() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
-            "application/walkingkooka-spreadsheet-Value-Type+json"
+            "application/json+walkingkooka-spreadsheet-Value-Type"
         );
     }
 
@@ -130,7 +130,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testObjectCell() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.OBJECT_CELL,
-            "application/walkingkooka-spreadsheet-Cell+object"
+            "application/memory+walkingkooka-spreadsheet-Cell"
         );
     }
 
@@ -138,7 +138,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testObjectLabel() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.OBJECT_LABEL,
-            "application/walkingkooka-spreadsheet-Label+object"
+            "application/memory+walkingkooka-spreadsheet-Label"
         );
     }
 
@@ -146,7 +146,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testObjectMetadata() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.OBJECT_SPREADSHEET_METADATA,
-            "application/walkingkooka-spreadsheet-Metadata+object"
+            "application/memory+walkingkooka-spreadsheet-Metadata"
         );
     }
 
