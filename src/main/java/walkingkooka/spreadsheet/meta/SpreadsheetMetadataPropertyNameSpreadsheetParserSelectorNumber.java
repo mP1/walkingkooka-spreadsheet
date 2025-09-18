@@ -17,46 +17,61 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Optional;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds the default parser for {@link java.time.LocalDate} values.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default parser for {@link walkingkooka.tree.expression.ExpressionNumber} values.
  */
-final class SpreadsheetMetadataPropertyNameSpreadsheetParserDate extends SpreadsheetMetadataPropertyNameSpreadsheetParser {
+final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameSpreadsheetParserDate instance() {
-        return new SpreadsheetMetadataPropertyNameSpreadsheetParserDate();
+    static SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameSpreadsheetParserDate() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber() {
         super(
-            "dateParser",
-            SpreadsheetPatternKind.DATE_PARSE_PATTERN
+            "numberParser",
+            SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
         );
     }
 
     @Override
     void accept(final SpreadsheetParserSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitDateParser(value);
+        visitor.visitNumberParser(value);
     }
 
     @Override
     Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale) {
+        final SpreadsheetNumberParsePattern number = SpreadsheetPattern.decimalFormat(
+            (DecimalFormat) DecimalFormat.getInstance(locale)
+        );
+        final SpreadsheetNumberParsePattern integer = SpreadsheetPattern.decimalFormat(
+            (DecimalFormat) DecimalFormat.getIntegerInstance(locale)
+        );
+
         return Optional.of(
-            SpreadsheetPattern.dateParsePatternLocale(locale)
+            number.equals(integer) ?
+                number :
+                SpreadsheetPattern.parseNumberParsePattern(
+                    number.text() +
+                        SpreadsheetPattern.SEPARATOR.string() +
+                        integer.text()
+                )
         );
     }
 }

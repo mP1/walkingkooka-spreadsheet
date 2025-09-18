@@ -26,37 +26,37 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds the default parser for {@link java.time.LocalTime} values.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default parser for {@link java.time.LocalDate} values.
  */
-final class SpreadsheetMetadataPropertyNameSpreadsheetParserTime extends SpreadsheetMetadataPropertyNameSpreadsheetParser {
+final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDate extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelector {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameSpreadsheetParserTime instance() {
-        return new SpreadsheetMetadataPropertyNameSpreadsheetParserTime();
+    static SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDate instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDate();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameSpreadsheetParserTime() {
+    private SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorDate() {
         super(
-            "timeParser",
-            SpreadsheetPatternKind.TIME_PARSE_PATTERN
+            "dateParser",
+            SpreadsheetPatternKind.DATE_PARSE_PATTERN
         );
     }
 
     @Override
     void accept(final SpreadsheetParserSelector value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitTimeParser(value);
+        visitor.visitDateParser(value);
     }
 
     @Override
     Optional<SpreadsheetParsePattern> extractLocaleAwareValueSpreadsheetParsePattern(final Locale locale) {
         return Optional.of(
-            SpreadsheetPattern.timeParsePatternLocale(locale)
+            SpreadsheetPattern.dateParsePatternLocale(locale)
         );
     }
 }

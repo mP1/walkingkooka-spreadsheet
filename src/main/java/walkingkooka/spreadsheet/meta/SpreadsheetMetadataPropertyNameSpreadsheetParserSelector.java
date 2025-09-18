@@ -28,13 +28,13 @@ import java.util.Optional;
 /**
  * Base class for any property that holds a {@link SpreadsheetParserSelector}.
  */
-abstract class SpreadsheetMetadataPropertyNameSpreadsheetParser extends SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> {
+abstract class SpreadsheetMetadataPropertyNameSpreadsheetParserSelector extends SpreadsheetMetadataPropertyName<SpreadsheetParserSelector> {
 
     /**
      * Package private to limit subclassing.
      */
-    SpreadsheetMetadataPropertyNameSpreadsheetParser(final String name,
-                                                     final SpreadsheetPatternKind spreadsheetPatternKind) {
+    SpreadsheetMetadataPropertyNameSpreadsheetParserSelector(final String name,
+                                                             final SpreadsheetPatternKind spreadsheetPatternKind) {
         super(name);
         this.spreadsheetPatternKind = spreadsheetPatternKind;
     }
