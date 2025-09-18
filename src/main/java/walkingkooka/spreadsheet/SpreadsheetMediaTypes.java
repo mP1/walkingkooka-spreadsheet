@@ -73,16 +73,16 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     
     // object...........................................................................................................
 
-    private final static MediaType OBJECT = MediaType.parse("application/memory");
+    private final static MediaType MEMORY = MediaType.parse("application/memory");
 
-    public static final MediaType OBJECT_CELL = object(SpreadsheetCell.class);
+    public static final MediaType MEMORY_CELL = object(SpreadsheetCell.class);
 
-    public static final MediaType OBJECT_LABEL = object(SpreadsheetLabelName.class);
+    public static final MediaType MEMORY_LABEL = object(SpreadsheetLabelName.class);
 
-    public static final MediaType OBJECT_SPREADSHEET_METADATA = object(SpreadsheetMetadata.class);
+    public static final MediaType MEMORY_SPREADSHEET_METADATA = object(SpreadsheetMetadata.class);
 
     private static MediaType object(final Class<?> type) {
-        return OBJECT.setSuffix(
+        return MEMORY.setSuffix(
             Optional.of(
                 type.getName()
             )

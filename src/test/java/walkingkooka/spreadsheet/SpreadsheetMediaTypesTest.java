@@ -129,7 +129,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testObjectCell() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.OBJECT_CELL,
+            SpreadsheetMediaTypes.MEMORY_CELL,
             "application/memory+walkingkooka.spreadsheet.SpreadsheetCell"
         );
     }
@@ -137,7 +137,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testObjectLabel() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.OBJECT_LABEL,
+            SpreadsheetMediaTypes.MEMORY_LABEL,
             "application/memory+walkingkooka.spreadsheet.reference.SpreadsheetLabelName"
         );
     }
@@ -145,7 +145,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     @Test
     public void testObjectMetadata() {
         this.mediaTypeAndCheck(
-            SpreadsheetMediaTypes.OBJECT_SPREADSHEET_METADATA,
+            SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA,
             "application/memory+walkingkooka.spreadsheet.meta.SpreadsheetMetadata"
         );
     }
