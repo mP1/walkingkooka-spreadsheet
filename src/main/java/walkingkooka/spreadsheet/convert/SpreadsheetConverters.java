@@ -711,6 +711,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link JsonNodeConverters#textToObject()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToObject() {
+        return JsonNodeConverters.textToObject();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetColorName}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
