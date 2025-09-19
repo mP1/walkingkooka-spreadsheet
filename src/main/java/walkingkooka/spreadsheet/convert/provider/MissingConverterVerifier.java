@@ -547,7 +547,18 @@ final class MissingConverterVerifier {
                         JsonString.class,
                         JsonObject.class
                     ),
-                    SpreadsheetConvertersConverterProvider.TO_JSON
+                    SpreadsheetConvertersConverterProvider.JSON // TO_JSON
+                );
+            }
+
+            if (scripting) {
+                finder.addIfConversionFail(
+                    context.marshall(spreadsheetCell)
+                        .toString(),
+                    Lists.of(
+                        SpreadsheetCell.class
+                    ),
+                    SpreadsheetConvertersConverterProvider.JSON // textToObject
                 );
             }
         }

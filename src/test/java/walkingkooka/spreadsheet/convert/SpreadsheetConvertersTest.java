@@ -94,6 +94,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.Styleable;
@@ -905,6 +906,25 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testJsonConvertStringWithJsonToSpreadsheetCell() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        ).setStyle(
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.COLOR,
+                Color.BLACK
+            )
+        );
+
+        this.jsonConvertAndCheck(
+            JsonNodeMarshallContexts.basic()
+                .marshall(cell)
+                .toString(),
+            cell
+        );
+    }
+    
     private void jsonConvertAndCheck(final Object value,
                                      final Object expected) {
         this.jsonConvertAndCheck(
@@ -3067,6 +3087,25 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
                     );
                 }
+
+                @Override
+                public <T> T unmarshall(final JsonNode json,
+                                        final Class<T> type) {
+                    return this.jsonNodeUnmarshallContext.unmarshall(
+                        json,
+                        type
+                    );
+                }
+
+                @Override
+                public Optional<JsonString> typeName(final Class<?> type) {
+                    return this.jsonNodeUnmarshallContext.typeName(type);
+                }
+
+                private final JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
+                    ExpressionNumberKind.BIG_DECIMAL,
+                    MathContext.DECIMAL32
+                );
             },
             Cast.to(expected)
         );
