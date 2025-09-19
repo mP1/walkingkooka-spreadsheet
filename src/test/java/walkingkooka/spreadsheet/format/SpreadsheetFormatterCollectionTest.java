@@ -114,7 +114,7 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
                 return Optional.ofNullable(
                     value.equals(v.orElse(null)) ?
                         SpreadsheetText.with(text)
-                            .toTextNode()
+                            .textNode()
                         :
                         null
                 );

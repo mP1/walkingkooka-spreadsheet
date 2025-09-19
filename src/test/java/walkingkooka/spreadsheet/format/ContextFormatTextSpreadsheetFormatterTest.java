@@ -171,7 +171,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
                         null == text ?
                             "" :
                             text
-                    ).toTextNode()
+                    ).textNode()
                 );
             }
         };

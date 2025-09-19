@@ -122,7 +122,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         .format(
                             value.orElse(null)
                         )
-                ).toTextNode()
+                ).textNode()
             );
         }
 

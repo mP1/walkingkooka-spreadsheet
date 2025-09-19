@@ -118,23 +118,23 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         this.checkEquals(text, formatted.text(), "text");
     }
 
-    // ToTextNode.... ..................................................................................................
+    // HasTextNode......................................................................................................
 
     @Test
-    public void testToTextNodeWithoutColor() {
+    public void testTextNodeWithoutColor() {
         final String text = "abc123";
 
-        this.toTextNodeAndCheck(
+        this.textNodeAndCheck(
             SpreadsheetText.with(text),
             TextNode.text(text));
     }
 
     @Test
-    public void testToTextNodeWithColor() {
+    public void testTextNodeWithColor() {
         final String text = "abc123";
         final Color color = Color.fromRgb(0x123456);
 
-        this.toTextNodeAndCheck(
+        this.textNodeAndCheck(
             SpreadsheetText.with(text)
                 .setColor(Optional.of(color)),
             TextNode.text(text)

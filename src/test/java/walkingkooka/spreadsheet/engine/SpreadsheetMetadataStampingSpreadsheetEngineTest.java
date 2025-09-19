@@ -549,7 +549,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                 );
                 return Optional.of(
                     SpreadsheetText.with(FORMULA_VALUE)
-                        .toTextNode()
+                        .textNode()
                 );
             }
 

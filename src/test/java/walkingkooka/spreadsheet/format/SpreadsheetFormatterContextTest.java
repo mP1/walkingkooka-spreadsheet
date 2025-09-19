@@ -49,7 +49,7 @@ public final class SpreadsheetFormatterContextTest implements ClassTesting<Sprea
                 Optional.of(
                     Color.parse("#234")
                 )
-            ).toTextNode();
+            ).textNode();
 
         this.checkEquals(
             expected,

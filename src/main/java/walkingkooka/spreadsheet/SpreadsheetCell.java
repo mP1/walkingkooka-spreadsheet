@@ -1437,7 +1437,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     // HasTextNode......................................................................................................
 
     @Override
-    public TextNode toTextNode() {
+    public TextNode textNode() {
         return this.formattedValue()
             .orElse(null);
     }

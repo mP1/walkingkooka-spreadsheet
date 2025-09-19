@@ -358,7 +358,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
             cell,
             value,
             formatter,
-            expected.toTextNode()
+            expected.textNode()
         );
     }
 

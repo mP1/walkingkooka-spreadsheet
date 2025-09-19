@@ -253,7 +253,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterColorTest extends Sprea
             formatter,
             value,
             context,
-            formattedText.toTextNode()
+            formattedText.textNode()
         );
     }
 

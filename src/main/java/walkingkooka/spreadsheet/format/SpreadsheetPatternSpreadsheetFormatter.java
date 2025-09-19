@@ -33,7 +33,7 @@ public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetForma
         return this.formatSpreadsheetText(
             value,
             context
-        ).map(SpreadsheetText::toTextNode);
+        ).map(SpreadsheetText::textNode);
     }
 
     /**
