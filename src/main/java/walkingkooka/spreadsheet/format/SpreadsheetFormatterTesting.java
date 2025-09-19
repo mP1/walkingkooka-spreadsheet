@@ -100,7 +100,9 @@ public interface SpreadsheetFormatterTesting extends TreePrintableTesting,
             formatter,
             value,
             context,
-            Optional.of(text.toTextNode())
+            Optional.of(
+                text.textNode()
+            )
         );
     }
 

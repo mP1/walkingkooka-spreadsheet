@@ -1214,7 +1214,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             Optional.of(
                                 Color.parse("#123456")
                             )
-                        ).toTextNode()
+                        ).textNode()
                 )
             ),
             "A1,,text,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",,,,,,,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\","
@@ -1262,7 +1262,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             Optional.of(
                                 Color.parse("#123456")
                             )
-                        ).toTextNode()
+                        ).textNode()
                 )
             ),
             "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
@@ -1347,7 +1347,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                             Optional.of(
                                 Color.parse("#123456")
                             )
-                        ).toTextNode()
+                        ).textNode()
                 )
             )
         );
@@ -3250,7 +3250,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     public void testHasTextNode() {
         final TextNode textNode = TextNode.text("Hello World 123");
 
-        this.toTextNodeAndCheck(
+        this.textNodeAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .setFormattedValue(
                     Optional.of(textNode)
@@ -3261,7 +3261,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testHasTextNodeWhenMissing() {
-        this.toTextNodeAndCheck(
+        this.textNodeAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY),
             null
         );

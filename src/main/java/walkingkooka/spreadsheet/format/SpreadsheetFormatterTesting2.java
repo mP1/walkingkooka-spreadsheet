@@ -104,7 +104,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         this.formatAndCheck(
             this.createFormatter(),
             value,
-            text.toTextNode()
+            text.textNode()
         );
     }
 
@@ -177,7 +177,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         this.formatAndCheck(
             formatter,
             value,
-            text.toTextNode()
+            text.textNode()
         );
     }
 

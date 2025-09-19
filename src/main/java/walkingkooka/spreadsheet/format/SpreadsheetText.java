@@ -123,9 +123,13 @@ public final class SpreadsheetText implements HasText,
     // HasTextNode......................................................................................................
 
     @Override
-    public TextNode toTextNode() {
-        return this.color.map(c -> TextStyle.EMPTY.set(TextStylePropertyName.COLOR, c))
-            .orElse(TextStyle.EMPTY)
+    public TextNode textNode() {
+        return this.color.map(
+                c -> TextStyle.EMPTY.set(
+                    TextStylePropertyName.COLOR,
+                    c
+                )
+            ).orElse(TextStyle.EMPTY)
             .replace(TextNode.text(this.text));
     }
 

@@ -53,16 +53,16 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
         );
         return Optional.ofNullable(
             converted.isLeft() ?
-                toTextNode(converted.leftValue()) :
+                textNode(converted.leftValue()) :
                 null
         );
     }
 
-    private TextNode toTextNode(final String value) {
+    private TextNode textNode(final String value) {
         return CharSequences.isNullOrEmpty(value) ?
             null :
             SpreadsheetText.with(value)
-                .toTextNode();
+                .textNode();
     }
 
     @Override

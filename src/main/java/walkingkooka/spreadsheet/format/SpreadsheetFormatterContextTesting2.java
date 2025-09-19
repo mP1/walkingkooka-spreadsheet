@@ -45,7 +45,7 @@ public interface SpreadsheetFormatterContextTesting2<C extends SpreadsheetFormat
                                      final SpreadsheetText expected) {
         this.formatValueAndCheck(
             value,
-            expected.toTextNode()
+            expected.textNode()
         );
     }
 

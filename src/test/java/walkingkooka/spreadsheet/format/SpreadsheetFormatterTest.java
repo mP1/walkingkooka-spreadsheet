@@ -35,7 +35,7 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
                 text + text + text
             ).setColor(
                 Optional.of(red)
-            ).toTextNode(),
+            ).textNode(),
             new FakeSpreadsheetFormatter() {
                 @Override
                 public Optional<TextNode> format(final Optional<Object> value,
@@ -45,7 +45,7 @@ public final class SpreadsheetFormatterTest implements SpreadsheetFormatterTesti
                             .setText(text + text + text)
                             .setColor(
                                 Optional.of(red)
-                            ).toTextNode()
+                            ).textNode()
                     );
                 }
             }.formatOrEmptyText(
