@@ -587,6 +587,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToObject() {
+        this.converterAndCheck(
+            "text-to-object",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToObject()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadata() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA + "",
