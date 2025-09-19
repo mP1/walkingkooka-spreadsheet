@@ -3114,9 +3114,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // textNode.........................................................................................................
 
     private final static String TEXT = "Hello World 123!";
-
-    private final static TextNode TEXTNODE = TextNode.text("Hello World 123!");
-
+    
     @Test
     public void testTextNodeConvertStringToColorFails() {
         this.convertFails(
