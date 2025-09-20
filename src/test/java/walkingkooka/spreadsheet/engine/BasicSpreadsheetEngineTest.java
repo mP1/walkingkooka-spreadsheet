@@ -24110,7 +24110,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 public List<ValidationError<R>> validate(final Object value,
                                                                          final C context) {
                                     return Lists.of(
-                                        context.validationError(message)
+                                        context.validationError()
+                                            .setMessage(message)
                                             .setValue(
                                                 Optional.of(value)
                                             )
