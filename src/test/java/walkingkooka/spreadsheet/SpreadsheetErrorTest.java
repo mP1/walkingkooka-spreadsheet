@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -262,7 +263,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
 
         this.validationErrorsAndCheck(
             Lists.of(
-                ValidationError.with(
+                SpreadsheetForms.error(
                     SpreadsheetSelection.A1,
                     "#VALUE! Message Hello 123"
                 )
@@ -486,10 +487,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.checkEquals(
-            ValidationError.with(
-                cell,
-                message
-            ).setValue(value),
+            ValidationError.with(cell)
+                .setMessage(message)
+                .setValue(value),
             error.toValidationError(cell)
         );
     }

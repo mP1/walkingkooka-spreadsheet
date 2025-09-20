@@ -385,10 +385,9 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
             throw new IllegalArgumentException("ValidationErrors only accept cell or label but got cell-range");
         }
 
-        return ValidationError.with(
-            cellOrLabel,
-            this.message
-        ).setValue(this.value);
+        return ValidationError.with(cellOrLabel)
+            .setMessage(this.message)
+            .setValue(this.value);
     }
 
     // HasSpreadsheetErrorKind ........................................................................................
