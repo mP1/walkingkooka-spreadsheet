@@ -1152,7 +1152,7 @@ final class MissingConverterVerifier {
 
                         // text-to-validation-error.....................................................................
                         finder.addIfConversionFail(
-                            ValidationError.with(cell)
+                            SpreadsheetForms.error(cell)
                                 .setMessage("Error message 123")
                                 .text(),
                             ValidationError.class,

@@ -485,7 +485,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         this.checkEquals(
-            ValidationError.with(cell)
+            SpreadsheetForms.error(cell)
                 .setMessage(message)
                 .setValue(value),
             error.toValidationError(cell)
