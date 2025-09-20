@@ -24164,12 +24164,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                     ).setErrors(
                         Lists.of(
-                            ValidationError.<SpreadsheetExpressionReference>with(
-                                SpreadsheetSelection.A1,
-                                message
-                            ).setValue(
-                                Optional.of(cellValue)
-                            )
+                            ValidationError.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
+                                .setMessage(message)
+                                .setValue(
+                                    Optional.of(cellValue)
+                                )
                         )
                     )
                 )
