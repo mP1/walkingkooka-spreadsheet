@@ -263,10 +263,8 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
 
         this.validationErrorsAndCheck(
             Lists.of(
-                SpreadsheetForms.error(
-                    SpreadsheetSelection.A1,
-                    "#VALUE! Message Hello 123"
-                )
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setMessage("#VALUE! Message Hello 123")
             ),
             Optional.of(error)
         );
