@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
@@ -379,13 +380,14 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     // toValidationError....... ........................................................................................
 
-    public <R extends SpreadsheetExpressionReference> ValidationError<R> toValidationError(final R cellOrLabel) {
+    public ValidationError<SpreadsheetExpressionReference> toValidationError(final SpreadsheetExpressionReference cellOrLabel) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
+
         if (cellOrLabel.isCellRange()) {
             throw new IllegalArgumentException("ValidationErrors only accept cell or label but got cell-range");
         }
 
-        return ValidationError.with(cellOrLabel)
+        return SpreadsheetForms.error(cellOrLabel)
             .setMessage(this.message)
             .setValue(this.value);
     }

@@ -41,10 +41,8 @@ public final class SpreadsheetForms implements PublicStaticHelper {
     /**
      * {@see ValidationError}
      */
-    public static ValidationError<SpreadsheetExpressionReference> error(final SpreadsheetExpressionReference reference,
-                                                                        final String message) {
-        return ValidationError.with(reference)
-            .setMessage(message);
+    public static ValidationError<SpreadsheetExpressionReference> error(final SpreadsheetExpressionReference reference) {
+        return ValidationError.with(reference);
     }
 
     /**

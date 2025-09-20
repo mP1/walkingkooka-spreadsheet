@@ -1166,10 +1166,8 @@ final class MissingConverterVerifier {
                     finder.addIfConversionFail(
                         Lists.of(
                             "Validation error message 1",
-                            SpreadsheetForms.error(
-                                SpreadsheetSelection.A1,
-                                "Validation error message2"
-                            )
+                            SpreadsheetForms.error(SpreadsheetSelection.A1)
+                                .setMessage("Validation error message2")
                         ),
                         ValidationErrorList.class,
                         SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST

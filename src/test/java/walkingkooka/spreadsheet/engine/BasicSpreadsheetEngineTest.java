@@ -4746,10 +4746,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithValueValidatorFails() {
         final ValidationErrorList<SpreadsheetExpressionReference> validationError = SpreadsheetForms.errorList(
             Lists.of(
-                SpreadsheetForms.error(
-                    SpreadsheetSelection.A1,
-                    "ValidationConverterErrorMessage"
-                )
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setMessage("ValidationConverterErrorMessage")
             )
         );
 
@@ -4882,10 +4880,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Object converterInput = this;
         final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = SpreadsheetForms.errorList(
             Lists.of(
-                SpreadsheetForms.error(
-                    SpreadsheetSelection.A1,
-                    "ValidationConverterErrorMessage"
-                )
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setMessage("ValidationConverterErrorMessage")
             )
         );
 
@@ -5036,10 +5032,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellWithValueValidatorUsesValidationFunction() {
         final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = SpreadsheetForms.errorList(
             Lists.of(
-                SpreadsheetForms.error(
-                    SpreadsheetSelection.A1,
-                    "ValidationConverterErrorMessage"
-                )
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setMessage("ValidationConverterErrorMessage")
             )
         );
 
@@ -24717,10 +24711,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList(
             Lists.of(
-                SpreadsheetForms.error(
-                    cellReference,
-                    "ValidationError1"
-                )
+                SpreadsheetForms.error(cellReference)
+                    .setMessage("ValidationError1")
             )
         );
 
