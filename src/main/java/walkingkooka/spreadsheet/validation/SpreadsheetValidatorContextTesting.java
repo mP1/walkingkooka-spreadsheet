@@ -41,7 +41,8 @@ public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidat
             error.toValidationError(cell),
             this.createContext()
                 .setValidationReference(cell)
-                .validationError(message)
+                .validationError()
+                .setMessage(message)
         );
     }
 
@@ -56,7 +57,8 @@ public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidat
             error.toValidationError(label),
             this.createContext()
                 .setValidationReference(label)
-                .validationError(message)
+                .validationError()
+                .setMessage(message)
         );
     }
 
