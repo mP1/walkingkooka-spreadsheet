@@ -286,7 +286,70 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testValidationErrorWithValidationChoiceList() {
+    public void testValidationErrorWithSpreadsheetErrorKindValidatorAndValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(1)
+            )
+        ).concat(
+            ValidationChoice.with(
+                "Label22",
+                Optional.of(22)
+            )
+        );
+
+        this.validationErrorsAndCheck(
+            Lists.of(
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setValue(
+                        Optional.of(choices)
+                    )
+            ),
+            Optional.of(
+                SpreadsheetErrorKind.VALIDATION.toError()
+                    .setValue(
+                        Optional.of(
+                            choices
+                        )
+                    )
+            )
+        );
+    }
+
+    @Test
+    public void testValidationErrorWithSpreadsheetErrorKindErrorAndValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(1)
+            )
+        ).concat(
+            ValidationChoice.with(
+                "Label22",
+                Optional.of(22)
+            )
+        );
+
+        this.validationErrorsAndCheck(
+            Lists.of(
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setMessage("#ERROR Message Hello 123")
+                    .setValue(
+                        Optional.of(choices)
+                    )
+            ),
+            Optional.of(
+                SpreadsheetErrorKind.ERROR.setMessageAndValue(
+                    "Message Hello 123",
+                    choices
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValidationErrorWithSpreadsheetErrorKindValueAndValidationChoiceList() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
             ValidationChoice.with(
                 "Label1",
@@ -454,6 +517,27 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.valueAndCheck(different, VALUE);
 
         this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, MESSAGE);
+        this.valueAndCheck(error, VALUE);
+    }
+
+    @Test
+    public void testSetMessageWithDifferentWhenKindEqualsValidation() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.VALIDATION;
+        final SpreadsheetError error = SpreadsheetError.with(
+            kind,
+            MESSAGE,
+            VALUE
+        );
+
+        final String differentMessage = "different";
+        final SpreadsheetError different = error.setMessage(differentMessage);
+
+        this.kindAndCheck(different, SpreadsheetErrorKind.ERROR);
+        this.messageAndCheck(different, differentMessage);
+        this.valueAndCheck(different, VALUE);
+
+        this.kindAndCheck(error, kind);
         this.messageAndCheck(error, MESSAGE);
         this.valueAndCheck(error, VALUE);
     }
@@ -941,6 +1025,22 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             SpreadsheetError.with(
                 KIND,
                 MESSAGE,
+                VALUE
+            )
+        );
+    }
+
+    @Test
+    public void testUnmarshallWithSpreadsheetErrorKindValidator() {
+        final SpreadsheetErrorKind kind = SpreadsheetErrorKind.VALIDATION;
+
+        this.unmarshallAndCheck(
+            JsonNode.object()
+                .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(kind.name()))
+                .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get())),
+            SpreadsheetError.with(
+                kind,
+                "", // no message
                 VALUE
             )
         );

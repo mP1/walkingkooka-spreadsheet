@@ -451,10 +451,12 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     }
 
     @Test
-    public void testParseAll() {
+    public void testParseEachValue() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
             switch (kind) {
                 case NAME_STRING:
+                    break;
+                case VALIDATION:
                     break;
                 default:
                     this.parseStringAndCheck(
