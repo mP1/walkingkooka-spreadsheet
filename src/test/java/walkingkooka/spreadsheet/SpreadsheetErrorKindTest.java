@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import java.math.MathContext;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
@@ -378,6 +379,18 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                     Optional.empty()
                 ),
                 error
+            );
+        }
+    }
+
+    @Test
+    public void testToErrorCached() {
+        for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
+            final SpreadsheetError error = kind.toError();
+            assertSame(
+                error,
+                kind.toError(),
+                () -> kind + ".toError not cached"
             );
         }
     }
