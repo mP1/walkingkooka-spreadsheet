@@ -169,15 +169,17 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      * #DIV Error123
      * </pre>
      * becomes {@link SpreadsheetErrorKind#DIV0} and a {@link String} of <code>Error123</code>.
+     * <br>
+     * Parsing empty text returns an {@link SpreadsheetError} with {@link SpreadsheetErrorKind#MISSING_PREFIX}.
      */
     public static SpreadsheetError parse(final String text) {
-        CharSequences.failIfNullOrEmpty(text, "text");
+        Objects.requireNonNull(text, "text");
 
         final SpreadsheetErrorKind kind;
         final String message;
 
         // missing prefix text is the message
-        if (text.charAt(0) == SpreadsheetErrorKind.PREFIX) {
+        if (text.length() > 1 && text.charAt(0) == SpreadsheetErrorKind.PREFIX) {
             final int nextToken = text.indexOf(' ');
             final String kindText = -1 == nextToken ?
                 text :

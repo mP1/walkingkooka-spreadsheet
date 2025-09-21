@@ -259,6 +259,18 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
+    public void testValidationErrorWithEmptyMessageAndNoValue() {
+        final SpreadsheetError error = SpreadsheetErrorKind.MISSING_PREFIX.toError();
+
+        this.validationErrorsAndCheck(
+            Lists.of(
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+            ),
+            Optional.of(error)
+        );
+    }
+
+    @Test
     public void testValidationErrorWithManyErrorsAllWithoutValues() {
         final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Message Hello 123");
 
@@ -558,6 +570,19 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     // parseString......................................................................................................
+
+    @Override
+    public void testParseStringEmptyFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testParseEmptyString() {
+        this.parseStringAndCheck(
+            "",
+            SpreadsheetErrorKind.MISSING_PREFIX.toError()
+        );
+    }
 
     @Test
     public void testParseMissingPrefix() {

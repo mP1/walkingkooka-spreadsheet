@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.validation.ValidationError;
 
 public final class SpreadsheetConverterTextToValidationErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToValidationError>
@@ -34,12 +35,14 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
 
     @Test
     public void testConvertEmptyString() {
-        this.convertFails(
+        final SpreadsheetCellReference selection = SpreadsheetSelection.A1;
+
+        this.convertAndCheck(
             SpreadsheetConverterTextToValidationError.INSTANCE,
             "",
             ValidationError.class,
-            this.createContext(SpreadsheetSelection.A1),
-            "Empty \"text\""
+            this.createContext(selection),
+            SpreadsheetForms.error(selection)
         );
     }
 
