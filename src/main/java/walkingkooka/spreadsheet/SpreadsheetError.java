@@ -236,9 +236,10 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     /**
      * Generic factory that creates a new {@link SpreadsheetError} with the provided details.
      */
-    public static SpreadsheetError with(final SpreadsheetErrorKind kind,
-                                        final String message,
-                                        final Optional<Object> value) {
+    // @VisibleForTesting
+    static SpreadsheetError with(final SpreadsheetErrorKind kind,
+                                 final String message,
+                                 final Optional<Object> value) {
         Objects.requireNonNull(kind, "kind");
         Objects.requireNonNull(message, "message");
         Objects.requireNonNull(value, "value");
