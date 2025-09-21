@@ -47,7 +47,6 @@ import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
 import walkingkooka.text.cursor.parser.ebnf.GrammarEbnfParserToken;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -299,7 +298,8 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
     private static SpreadsheetParser errorParser() {
         return SpreadsheetParsers.parser(
             Parsers.alternatives(
-                Arrays.stream(SpreadsheetErrorKind.values())
+                SpreadsheetErrorKind.expression()
+                    .stream()
                     .map(SpreadsheetFormulaParsers::errorParser0)
                     .collect(Collectors.toList())
             ),

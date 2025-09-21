@@ -27,7 +27,9 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.TextException;
 import walkingkooka.Value;
+import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.convert.ConversionException;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -37,6 +39,7 @@ import walkingkooka.tree.expression.HasExpressionReference;
 import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -104,7 +107,14 @@ public enum SpreadsheetErrorKind implements HasText {
 
     SPILL("#SPILL!", 9),
 
-    CALC("#CALC!", 14);
+    CALC("#CALC!", 14),
+
+    /**
+     * Used to mark a {@link SpreadsheetError} as an error only holding {@link walkingkooka.validation.ValidationChoiceList}
+     * and must not be returned by {@link SpreadsheetFormula#errorOrValue()}.
+     * Errors of this kind should never be visible or available to Expressions.
+     */
+    VALIDATION("#VALIDATOR!", -1);
 
     /**
      * A prefix character that precedes all {@link SpreadsheetErrorKind}.
@@ -117,6 +127,17 @@ public enum SpreadsheetErrorKind implements HasText {
      * {@link SpreadsheetErrorKind}
      */
     public final static SpreadsheetErrorKind MISSING_PREFIX = SpreadsheetErrorKind.ERROR;
+
+    /**
+     * Returns only {@link SpreadsheetErrorKind} that can appear within {@link walkingkooka.tree.expression.Expression}.
+     */
+    public static List<SpreadsheetErrorKind> expression() {
+        return EXPRESSION;
+    }
+
+    private final static List<SpreadsheetErrorKind> EXPRESSION = Arrays.stream(values())
+        .filter(k -> k != VALIDATION)
+        .collect(ImmutableList.collector());
 
     SpreadsheetErrorKind(final String text,
                          final int value) {
@@ -327,7 +348,7 @@ public enum SpreadsheetErrorKind implements HasText {
     public static SpreadsheetErrorKind parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        for (final SpreadsheetErrorKind possible : values()) {
+        for (final SpreadsheetErrorKind possible : expression()) {
             if (possible.text().equals(text)) {
                 return possible;
             }

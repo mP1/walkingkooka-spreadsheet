@@ -151,6 +151,18 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
+     * Factory that creates a {@link SpreadsheetError} without any message only holding {@link ValidationChoiceList}.
+     */
+    public static SpreadsheetError validationChoiceList(final ValidationChoiceList choices) {
+        Objects.requireNonNull(choices, "choices");
+
+        return SpreadsheetErrorKind.VALIDATION.toError()
+            .setValue(
+                Optional.of(choices)
+            );
+    }
+
+    /**
      * Accepts potentially a list of {@link ValidationError errors} and returns a {@link SpreadsheetError}.
      */
     public static Optional<SpreadsheetError> validationErrors(final List<ValidationError<SpreadsheetExpressionReference>> errors) {
@@ -160,12 +172,16 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
         if (false == errors.isEmpty()) {
             final ValidationError<SpreadsheetExpressionReference> firstValidationError = errors.get(0);
+            final Optional<Object> value = firstValidationError.value();
+            final Object valueOrNull = value.orElse(null);
 
-            spreadsheetError = SpreadsheetError.parse(
-                firstValidationError.text()
-            ).setValue(
-                firstValidationError.value()
-            );
+            spreadsheetError = firstValidationError.text()
+                .isEmpty() &&
+                valueOrNull instanceof ValidationChoiceList ?
+                validationChoiceList((ValidationChoiceList) valueOrNull) :
+                SpreadsheetError.parse(
+                    firstValidationError.text()
+                ).setValue(value);
         }
 
         return Optional.ofNullable(spreadsheetError);
@@ -267,13 +283,23 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     public SpreadsheetError setMessage(final String message) {
-        return this.message.equals(message) ?
-            this :
-            new SpreadsheetError(
-                this.kind,
+        SpreadsheetError error = this;
+
+        if (false == this.message.equals(message)) {
+            // if message is not empty and kind is SpreadsheetErrorKind#VALIDATION
+            SpreadsheetErrorKind kind = this.kind;
+            if (false == message.isEmpty() && SpreadsheetErrorKind.VALIDATION == kind) {
+                kind = SpreadsheetErrorKind.ERROR;
+            }
+
+            error = new SpreadsheetError(
+                kind,
                 Objects.requireNonNull(message, "message"),
                 this.value
             );
+        }
+
+        return error;
     }
 
     private final String message;

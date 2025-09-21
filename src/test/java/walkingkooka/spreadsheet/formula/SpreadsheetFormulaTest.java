@@ -2278,7 +2278,34 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testValidationChoiceListWithErrorWithValidationChoiceList() {
+    public void testValidationChoiceListWithSpreadsheetErrorTypeValidatorWithValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(
+                    111
+                )
+            )
+        );
+
+        this.validationChoiceListAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1")
+                .setValue(
+                    Optional.of(111)
+                ).setError(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALIDATION.toError()
+                            .setValue(
+                                Optional.of(choices)
+                            )
+                    )
+                ),
+            choices
+        );
+    }
+
+    @Test
+    public void testValidationChoiceListWithSpreadsheetErrorTypeErrorWithValidationChoiceList() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
             ValidationChoice.with(
                 "Label1",
