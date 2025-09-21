@@ -355,7 +355,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      */
     public boolean isMissingCell() {
         return this.kind() == SpreadsheetErrorKind.NAME &&
-            this.value().orElse(null) instanceof SpreadsheetCellReference;
+            this.value()
+                .orElse(null) instanceof SpreadsheetCellReference;
     }
 
     // HasText..........................................................................................................
@@ -470,7 +471,10 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println(this.kind().text());
+        printer.println(
+            this.kind()
+                .text()
+        );
 
         printer.indent();
 
@@ -551,13 +555,19 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                     value = context.unmarshallWithType(child);
                     break;
                 default:
-                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(
+                        name,
+                        node
+                    );
                     break;
             }
         }
 
         if (null == kind) {
-            JsonNodeUnmarshallContext.missingProperty(KIND_PROPERTY, node);
+            JsonNodeUnmarshallContext.missingProperty(
+                KIND_PROPERTY,
+                node
+            );
         }
 
         return new SpreadsheetError(
@@ -569,7 +579,12 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject json = JsonNode.object()
-            .set(KIND_PROPERTY, JsonNode.string(this.kind.name()));
+            .set(
+                KIND_PROPERTY,
+                JsonNode.string(
+                    this.kind.name()
+                )
+            );
 
         final String message = this.message();
         if (false == message.isEmpty()) {
