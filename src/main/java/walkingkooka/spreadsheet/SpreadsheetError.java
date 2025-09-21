@@ -48,6 +48,7 @@ import java.util.Optional;
 
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
+ * Note the message may be empty but the {@link SpreadsheetErrorKind} is always required.
  */
 public final class SpreadsheetError implements Value<Optional<Object>>,
     HasText,
