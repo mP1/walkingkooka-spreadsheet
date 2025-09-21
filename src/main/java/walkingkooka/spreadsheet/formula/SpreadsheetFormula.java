@@ -199,15 +199,17 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * and {@link #error()}.
      */
     public SpreadsheetFormula setText(final String text) {
-        return this.text().equals(text) ? this : checkText(text)
-            .isEmpty() ? EMPTY : new SpreadsheetFormula(
-            text,
-            NO_TOKEN,
-            NO_EXPRESSION,
-            NO_VALUE_TYPE,
-            NO_VALUE,
-            NO_ERROR
-        );
+        return this.text().equals(text) ?
+            this :
+            checkText(text)
+                .isEmpty() ? EMPTY : new SpreadsheetFormula(
+                text,
+                NO_TOKEN,
+                NO_EXPRESSION,
+                NO_VALUE_TYPE,
+                NO_VALUE,
+                NO_ERROR
+            );
     }
 
     /**
@@ -275,14 +277,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Would be setter that sets or replaces the {@link Expression}, also clearing any {@link #value()} and {@link #error()}.
      */
     public SpreadsheetFormula setExpression(final Optional<Expression> expression) {
-        return this.expression.equals(expression) ? this : new SpreadsheetFormula(
-            this.text,
-            this.token,
-            Objects.requireNonNull(expression, "expression"),
-            NO_VALUE_TYPE,
-            NO_VALUE,
-            NO_ERROR
-        );
+        return this.expression.equals(expression) ?
+            this :
+            new SpreadsheetFormula(
+                this.text,
+                this.token,
+                Objects.requireNonNull(expression, "expression"),
+                NO_VALUE_TYPE,
+                NO_VALUE,
+                NO_ERROR
+            );
     }
 
     /**
@@ -304,14 +308,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Would be setter that returns a {@link SpreadsheetFormula} with the input value hint.
      */
     public SpreadsheetFormula setValueType(final Optional<ValidationValueTypeName> valueType) {
-        return this.valueType.equals(valueType) ? this : new SpreadsheetFormula(
-            NO_TEXT,
-            NO_TOKEN,
-            NO_EXPRESSION,
-            Objects.requireNonNull(valueType, "valueType"),
-            NO_VALUE,
-            NO_ERROR
-        );
+        return this.valueType.equals(valueType) ?
+            this :
+            new SpreadsheetFormula(
+                NO_TEXT,
+                NO_TOKEN,
+                NO_EXPRESSION,
+                Objects.requireNonNull(valueType, "valueType"),
+                NO_VALUE,
+                NO_ERROR
+            );
     }
 
     /**
@@ -334,14 +340,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Would be setter that returns a {@link SpreadsheetFormula} with the given value and also clears any error.
      */
     public SpreadsheetFormula setValue(final Optional<Object> value) {
-        return this.value.equals(value) ? this : new SpreadsheetFormula(
-            this.text,
-            this.token,
-            this.expression,
-            this.valueType,
-            Objects.requireNonNull(value, "value"),
-            NO_ERROR
-        );
+        return this.value.equals(value) ?
+            this :
+            new SpreadsheetFormula(
+                this.text,
+                this.token,
+                this.expression,
+                this.valueType,
+                Objects.requireNonNull(value, "value"),
+                NO_ERROR
+            );
     }
 
     /**
@@ -390,14 +398,16 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * only the error is possibly updated if different.
      */
     public SpreadsheetFormula setError(final Optional<SpreadsheetError> error) {
-        return this.error.equals(error) ? this : new SpreadsheetFormula(
-            this.text,
-            this.token,
-            this.expression,
-            this.valueType,
-            this.value,
-            Objects.requireNonNull(error, "error")
-        );
+        return this.error.equals(error) ?
+            this :
+            new SpreadsheetFormula(
+                this.text,
+                this.token,
+                this.expression,
+                this.valueType,
+                this.value,
+                Objects.requireNonNull(error, "error")
+            );
     }
 
     private final Optional<SpreadsheetError> error;
