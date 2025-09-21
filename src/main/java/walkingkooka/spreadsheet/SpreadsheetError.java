@@ -147,19 +147,19 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     public static Optional<SpreadsheetError> validationErrors(final List<ValidationError<SpreadsheetExpressionReference>> errors) {
         Objects.requireNonNull(errors, "errors");
 
-        SpreadsheetError error = null;
+        SpreadsheetError spreadsheetError = null;
 
         if (false == errors.isEmpty()) {
-            final ValidationError<SpreadsheetExpressionReference> firstError = errors.get(0);
+            final ValidationError<SpreadsheetExpressionReference> firstValidationError = errors.get(0);
 
-            error = SpreadsheetError.parse(
-                firstError.text()
+            spreadsheetError = SpreadsheetError.parse(
+                firstValidationError.text()
             ).setValue(
-                Optional.of(firstError.reference())
+                firstValidationError.value()
             );
         }
 
-        return Optional.ofNullable(error);
+        return Optional.ofNullable(spreadsheetError);
     }
 
     /**
