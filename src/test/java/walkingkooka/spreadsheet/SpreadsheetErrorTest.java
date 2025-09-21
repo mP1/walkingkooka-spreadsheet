@@ -64,6 +64,8 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         123
     );
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullMessageFails() {
         assertThrows(
@@ -83,17 +85,17 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testWith() {
         final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
-        this.checkKind(error, KIND);
-        this.checkMessage(error, MESSAGE);
-        this.checkValue(error, VALUE);
+        this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, MESSAGE);
+        this.valueAndCheck(error, VALUE);
     }
 
     @Test
     public void testWithEmptyMessage() {
         final SpreadsheetError error = SpreadsheetError.with(KIND, "", VALUE);
-        this.checkKind(error, KIND);
-        this.checkMessage(error, "");
-        this.checkValue(error, VALUE);
+        this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, "");
+        this.valueAndCheck(error, VALUE);
     }
 
     // cycle............................................................................................................
@@ -101,9 +103,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testCycle() {
         final SpreadsheetError error = SpreadsheetError.cycle(SpreadsheetSelection.A1);
-        this.checkKind(error, SpreadsheetErrorKind.REF);
-        this.checkMessage(error, "Cycle involving \"A1\"");
-        this.checkValue(
+        this.kindAndCheck(error, SpreadsheetErrorKind.REF);
+        this.messageAndCheck(error, "Cycle involving \"A1\"");
+        this.valueAndCheck(
             error,
             Optional.of(
                 SpreadsheetSelection.A1
@@ -116,15 +118,15 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
 
         final SpreadsheetError error = SpreadsheetError.cycle(b2);
-        this.checkKind(
+        this.kindAndCheck(
             error,
             SpreadsheetErrorKind.REF
         );
-        this.checkMessage(
+        this.messageAndCheck(
             error,
             "Cycle involving \"$B$2\""
         );
-        this.checkValue(
+        this.valueAndCheck(
             error,
             Optional.of(
                 b2
@@ -137,9 +139,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testSelectionDeleted() {
         final SpreadsheetError error = SpreadsheetError.selectionDeleted();
-        this.checkKind(error, SpreadsheetErrorKind.REF);
-        this.checkMessage(error, "");
-        this.checkValue(error, SpreadsheetError.NO_VALUE);
+        this.kindAndCheck(error, SpreadsheetErrorKind.REF);
+        this.messageAndCheck(error, "");
+        this.valueAndCheck(error, SpreadsheetError.NO_VALUE);
     }
 
     // selectionNotFound................................................................................................
@@ -149,9 +151,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
 
         final SpreadsheetError error = SpreadsheetError.selectionNotFound(cell);
-        this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Cell not found: \"A99\"");
-        this.checkValue(error, Optional.of(cell));
+        this.kindAndCheck(error, SpreadsheetErrorKind.NAME);
+        this.messageAndCheck(error, "Cell not found: \"A99\"");
+        this.valueAndCheck(error, Optional.of(cell));
     }
 
     @Test
@@ -159,9 +161,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         final SpreadsheetError error = SpreadsheetError.selectionNotFound(label);
-        this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Label not found: \"Label123\"");
-        this.checkValue(error, Optional.of(label));
+        this.kindAndCheck(error, SpreadsheetErrorKind.NAME);
+        this.messageAndCheck(error, "Label not found: \"Label123\"");
+        this.valueAndCheck(error, Optional.of(label));
     }
 
     // formatterNotFound................................................................................................
@@ -169,9 +171,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testFormatterNotFoundAndNullSpreadsheetFormatterName() {
         final SpreadsheetError error = SpreadsheetError.formatterNotFound(null);
-        this.checkKind(error, SpreadsheetErrorKind.ERROR);
-        this.checkMessage(error, "Formatter not found");
-        this.checkValue(error, Optional.empty());
+        this.kindAndCheck(error, SpreadsheetErrorKind.ERROR);
+        this.messageAndCheck(error, "Formatter not found");
+        this.valueAndCheck(error, Optional.empty());
     }
 
     @Test
@@ -179,9 +181,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetFormatterName name = SpreadsheetFormatterName.DEFAULT_TEXT;
 
         final SpreadsheetError error = SpreadsheetError.formatterNotFound(name);
-        this.checkKind(error, SpreadsheetErrorKind.ERROR);
-        this.checkMessage(error, "Formatter not found");
-        this.checkValue(error, Optional.ofNullable(name));
+        this.kindAndCheck(error, SpreadsheetErrorKind.ERROR);
+        this.messageAndCheck(error, "Formatter not found");
+        this.valueAndCheck(error, Optional.ofNullable(name));
     }
 
     // functionNotFound.................................................................................................
@@ -191,9 +193,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final ExpressionFunctionName function = SpreadsheetExpressionFunctions.name("function123");
 
         final SpreadsheetError error = SpreadsheetError.functionNotFound(function);
-        this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, function.notFoundText());
-        this.checkValue(error, Optional.of(function));
+        this.kindAndCheck(error, SpreadsheetErrorKind.NAME);
+        this.messageAndCheck(error, function.notFoundText());
+        this.valueAndCheck(error, Optional.of(function));
     }
 
     // referenceNotFound................................................................................................
@@ -203,9 +205,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("A99");
 
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(cell);
-        this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Cell not found: \"A99\"");
-        this.checkValue(error, Optional.of(cell));
+        this.kindAndCheck(error, SpreadsheetErrorKind.NAME);
+        this.messageAndCheck(error, "Cell not found: \"A99\"");
+        this.valueAndCheck(error, Optional.of(cell));
     }
 
     @Test
@@ -213,9 +215,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(label);
-        this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Label not found: \"Label123\"");
-        this.checkValue(error, Optional.of(label));
+        this.kindAndCheck(error, SpreadsheetErrorKind.NAME);
+        this.messageAndCheck(error, "Label not found: \"Label123\"");
+        this.valueAndCheck(error, Optional.of(label));
     }
 
     @Test
@@ -228,9 +230,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         };
 
         final SpreadsheetError error = SpreadsheetError.referenceNotFound(reference);
-        this.checkKind(error, SpreadsheetErrorKind.NAME);
-        this.checkMessage(error, "Missing \"123\"");
-        this.checkValue(
+        this.kindAndCheck(error, SpreadsheetErrorKind.NAME);
+        this.messageAndCheck(error, "Missing \"123\"");
+        this.valueAndCheck(
             error,
             Optional.of(reference)
         );
@@ -403,13 +405,13 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final String differentMessage = "different";
         final SpreadsheetError different = error.setMessage(differentMessage);
 
-        this.checkKind(different, KIND);
-        this.checkMessage(different, differentMessage);
-        this.checkValue(different, VALUE);
+        this.kindAndCheck(different, KIND);
+        this.messageAndCheck(different, differentMessage);
+        this.valueAndCheck(different, VALUE);
 
-        this.checkKind(error, KIND);
-        this.checkMessage(error, MESSAGE);
-        this.checkValue(error, VALUE);
+        this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, MESSAGE);
+        this.valueAndCheck(error, VALUE);
     }
 
     // setValue.........................................................................................................
@@ -439,13 +441,13 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         final Optional<Object> differentValue = Optional.of("different");
         final SpreadsheetError different = error.setValue(differentValue);
 
-        this.checkKind(different, KIND);
-        this.checkMessage(different, MESSAGE);
-        this.checkValue(different, differentValue);
+        this.kindAndCheck(different, KIND);
+        this.messageAndCheck(different, MESSAGE);
+        this.valueAndCheck(different, differentValue);
 
-        this.checkKind(error, KIND);
-        this.checkMessage(error, MESSAGE);
-        this.checkValue(error, VALUE);
+        this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, MESSAGE);
+        this.valueAndCheck(error, VALUE);
     }
 
     // clearValue.......................................................................................................
@@ -460,13 +462,46 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             cleared
         );
 
-        this.checkKind(cleared, KIND);
-        this.checkMessage(cleared, MESSAGE);
-        this.checkValue(cleared, SpreadsheetError.NO_VALUE);
+        this.kindAndCheck(cleared, KIND);
+        this.messageAndCheck(cleared, MESSAGE);
+        this.valueAndCheck(cleared, SpreadsheetError.NO_VALUE);
 
-        this.checkKind(error, KIND);
-        this.checkMessage(error, MESSAGE);
-        this.checkValue(error, VALUE);
+        this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, MESSAGE);
+        this.valueAndCheck(error, VALUE);
+    }
+
+    private void kindAndCheck(final SpreadsheetError error,
+                              final SpreadsheetErrorKind kind) {
+        this.checkEquals(
+            kind,
+            error.kind(),
+            "kind"
+        );
+
+        this.checkEquals(
+            kind,
+            error.spreadsheetErrorKind(),
+            "spreadsheetErrorKind"
+        );
+    }
+
+    private void messageAndCheck(final SpreadsheetError error,
+                                 final String message) {
+        this.checkEquals(
+            message,
+            error.message(),
+            "message"
+        );
+    }
+
+    private void valueAndCheck(final SpreadsheetError error,
+                               final Optional<?> value) {
+        this.checkEquals(
+            value,
+            error.value(),
+            "value"
+        );
     }
 
     // toValidationError................................................................................................
@@ -702,7 +737,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    // TreePrintable...................................................................................................
+    // TreePrintable....................................................................................................
 
     @Test
     public void testTreePrintOnlyKind() {
@@ -768,7 +803,16 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    // JsonNodeMarshallingTesting.......................................................................................
+    @Override
+    public SpreadsheetError createObject() {
+        return SpreadsheetError.with(
+            KIND,
+            MESSAGE,
+            VALUE
+        );
+    }
+
+    // json.............................................................................................................
 
     @Test
     public void testUnmarshallStringInvalidFails() {
@@ -824,70 +868,6 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    // toString...............................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-            this.createObject(),
-            KIND + " \"" + MESSAGE + "\" " + VALUE.get()
-        );
-    }
-
-    @Override
-    public SpreadsheetError createObject() {
-        return SpreadsheetError.with(
-            KIND,
-            MESSAGE,
-            VALUE
-        );
-    }
-
-    private void checkKind(final SpreadsheetError error,
-                           final SpreadsheetErrorKind kind) {
-        this.checkEquals(
-            kind,
-            error.kind(),
-            "kind"
-        );
-
-        this.checkEquals(
-            kind,
-            error.spreadsheetErrorKind(),
-            "spreadsheetErrorKind"
-        );
-    }
-
-    private void checkMessage(final SpreadsheetError error,
-                              final String message) {
-        this.checkEquals(
-            message,
-            error.message(),
-            "message"
-        );
-    }
-
-    private void checkValue(final SpreadsheetError error,
-                            final Optional<?> value) {
-        this.checkEquals(
-            value,
-            error.value(),
-            "value"
-        );
-    }
-
-    @Override
-    public Class<SpreadsheetError> type() {
-        return SpreadsheetError.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
-
     @Override
     public SpreadsheetError createJsonNodeMarshallingValue() {
         return this.createObject();
@@ -897,5 +877,27 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     public SpreadsheetError unmarshall(final JsonNode jsonNode,
                                        final JsonNodeUnmarshallContext context) {
         return SpreadsheetError.unmarshall(jsonNode, context);
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createObject(),
+            KIND + " \"" + MESSAGE + "\" " + VALUE.get()
+        );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetError> type() {
+        return SpreadsheetError.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
