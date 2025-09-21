@@ -238,11 +238,15 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return new SpreadsheetErrorException(this);
     }
 
+    // kind.............................................................................................................
+
     public SpreadsheetErrorKind kind() {
         return this.kind;
     }
 
     private final SpreadsheetErrorKind kind;
+
+    // message..........................................................................................................
 
     /**
      * The error message text.
@@ -277,6 +281,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         );
     }
 
+    // Value............................................................................................................
+
     @Override
     public Optional<Object> value() {
         return this.value;
@@ -286,14 +292,12 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
      * Would be setter that returns a {@link SpreadsheetError} with the given value, creating a new instance if necessary.
      */
     public SpreadsheetError setValue(final Optional<Object> value) {
-        Objects.requireNonNull(value, "value");
-
         return this.value.equals(value) ?
             this :
             new SpreadsheetError(
                 this.kind,
                 this.message,
-                value
+                Objects.requireNonNull(value, "value")
             );
     }
 
@@ -378,7 +382,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         );
     }
 
-    // toValidationError....... ........................................................................................
+    // toValidationError................................................................................................
 
     public ValidationError<SpreadsheetExpressionReference> toValidationError(final SpreadsheetExpressionReference cellOrLabel) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
@@ -392,7 +396,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
             .setValue(this.value);
     }
 
-    // HasSpreadsheetErrorKind ........................................................................................
+    // HasSpreadsheetErrorKind .........................................................................................
 
     @Override
     public SpreadsheetErrorKind spreadsheetErrorKind() {
@@ -474,7 +478,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return ToStringBuilder.buildFrom(this);
     }
 
-    // JsonNodeContext..................................................................................................
+    // json.............................................................................................................
 
     static SpreadsheetError unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
