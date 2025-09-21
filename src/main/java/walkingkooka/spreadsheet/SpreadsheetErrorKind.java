@@ -144,8 +144,14 @@ public enum SpreadsheetErrorKind implements HasText {
      * Returns a {@link SpreadsheetError} with this {@link SpreadsheetErrorKind} but no message or value.
      */
     public SpreadsheetError toError() {
-        return this.setMessage(SpreadsheetError.NO_MESSAGE);
+        if (null == this.spreadsheetError) {
+            this.spreadsheetError = this.setMessage(SpreadsheetError.NO_MESSAGE);
+        }
+        return this.spreadsheetError;
     }
+
+    // lazy cache
+    private SpreadsheetError spreadsheetError;
 
     public SpreadsheetError setMessage(final String message) {
         return this.setMessageAndValue(
