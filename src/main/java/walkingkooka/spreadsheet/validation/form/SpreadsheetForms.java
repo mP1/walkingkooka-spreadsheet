@@ -26,8 +26,6 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 import walkingkooka.validation.form.FormName;
 
-import java.util.List;
-
 /**
  * Type safe factory methods for creating forms and fields.
  */
@@ -46,11 +44,10 @@ public final class SpreadsheetForms implements PublicStaticHelper {
     }
 
     /**
-     * {@see ValidationError}
+     * {@see ValidationErrorList}
      */
-    public static ValidationErrorList<SpreadsheetExpressionReference> errorList(final List<ValidationError<SpreadsheetExpressionReference>> errors) {
-        return ValidationErrorList.<SpreadsheetExpressionReference>empty()
-            .setElements(errors);
+    public static ValidationErrorList<SpreadsheetExpressionReference> errorList() {
+        return ValidationErrorList.empty();
     }
 
     /**

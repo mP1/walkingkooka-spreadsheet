@@ -4744,12 +4744,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellWithValueValidatorFails() {
-        final ValidationErrorList<SpreadsheetExpressionReference> validationError = SpreadsheetForms.errorList(
-            Lists.of(
+        final ValidationErrorList<SpreadsheetExpressionReference> validationError = SpreadsheetForms.errorList()
+            .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
                     .setMessage("ValidationConverterErrorMessage")
-            )
-        );
+            );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
@@ -4878,12 +4877,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellWithValueValidatorUsesValidationConverter() {
         final Object converterInput = this;
-        final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = SpreadsheetForms.errorList(
-            Lists.of(
+        final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = SpreadsheetForms.errorList()
+            .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
                     .setMessage("ValidationConverterErrorMessage")
-            )
-        );
+            );
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
@@ -5030,12 +5028,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellWithValueValidatorUsesValidationFunction() {
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = SpreadsheetForms.errorList(
-            Lists.of(
+        final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = SpreadsheetForms.errorList()
+            .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
                     .setMessage("ValidationConverterErrorMessage")
-            )
-        );
+            );
 
         final String functionName = "TestvalidationFunction";
         final ExpressionFunctionSelector validationFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
@@ -24710,12 +24707,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String formHandler = "TestFormHandler";
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
-        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList(
-            Lists.of(
+        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
+            .concat(
                 SpreadsheetForms.error(cellReference)
                     .setMessage("ValidationError1")
-            )
-        );
+            );
 
         final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field1")
