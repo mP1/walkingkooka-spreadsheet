@@ -60,6 +60,11 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     HasConvertError,
     HasValidationChoiceList {
 
+    /**
+     * The message component is optional.
+     */
+    public static final String NO_MESSAGE = "";
+
     public static final Optional<Object> NO_VALUE = Optional.empty();
 
     /**
@@ -503,7 +508,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     static SpreadsheetError unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
         SpreadsheetErrorKind kind = null;
-        String message = "";
+        String message = NO_MESSAGE;
         Object value = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
