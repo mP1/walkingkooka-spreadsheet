@@ -353,9 +353,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     public Optional<Object> errorOrValue() {
         // GWT's Optional#or is not implemented.
-        Optional<SpreadsheetError> errorOrValue = this.error;
-        return errorOrValue.isPresent() ?
-            Cast.to(errorOrValue) :
+        final Optional<SpreadsheetError> error = this.error;
+        return error.isPresent() ?
+            Cast.to(error) :
             this.value;
     }
 
