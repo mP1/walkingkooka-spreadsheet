@@ -40,6 +40,8 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.HasValidationChoiceList;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 
 import java.util.List;
@@ -55,7 +57,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     TreePrintable,
     HasSpreadsheetErrorKind,
     UsesToStringBuilder,
-    HasConvertError {
+    HasConvertError,
+    HasValidationChoiceList {
 
     public static final Optional<Object> NO_VALUE = Optional.empty();
 
@@ -413,6 +416,20 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return Optional.ofNullable(
             SpreadsheetErrorKind.VALUE == this.kind && false == CharSequences.isNullOrEmpty(this.message) ?
                 this.message :
+                null
+        );
+    }
+
+    // HasValidationChoiceList..........................................................................................
+
+    @Override
+    public Optional<ValidationChoiceList> validationChoiceList() {
+        final Object value = this.value()
+            .orElse(null);
+
+        return Optional.ofNullable(
+            value instanceof ValidationChoiceList ?
+                (ValidationChoiceList) value :
                 null
         );
     }
