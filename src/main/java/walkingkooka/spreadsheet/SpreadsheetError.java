@@ -503,7 +503,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     static SpreadsheetError unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
         SpreadsheetErrorKind kind = null;
-        String message = null;
+        String message = "";
         Object value = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
@@ -527,9 +527,6 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         if (null == kind) {
             JsonNodeUnmarshallContext.missingProperty(KIND_PROPERTY, node);
         }
-        if (null == message) {
-            JsonNodeUnmarshallContext.missingProperty(MESSAGE_PROPERTY, node);
-        }
 
         return new SpreadsheetError(
             kind,
@@ -540,8 +537,15 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject json = JsonNode.object()
-            .set(KIND_PROPERTY, JsonNode.string(this.kind.name()))
-            .set(MESSAGE_PROPERTY, JsonNode.string(this.message));
+            .set(KIND_PROPERTY, JsonNode.string(this.kind.name()));
+
+        final String message = this.message();
+        if (false == message.isEmpty()) {
+            json = json.set(
+                MESSAGE_PROPERTY,
+                JsonNode.string(message)
+            );
+        }
 
         final Object value = this.value()
             .orElse(null);
