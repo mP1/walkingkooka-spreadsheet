@@ -79,6 +79,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
+import walkingkooka.validation.HasValidationChoiceListTesting;
+import walkingkooka.validation.ValidationChoice;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationValueTypeName;
 
 import java.math.MathContext;
@@ -95,6 +98,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
     CanBeEmptyTesting,
     CanReplaceReferencesTesting<SpreadsheetFormula>,
+    HasValidationChoiceListTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
     JsonNodeMarshallingTesting<SpreadsheetFormula>,
     PatchableTesting<SpreadsheetFormula>,
@@ -2252,6 +2256,52 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Override
     public SpreadsheetFormula createReplaceReference() {
         return this.createObject();
+    }
+
+    // HasValidationChoiceList..........................................................................................
+
+    @Test
+    public void testValidationChoiceListWhenEmpty() {
+        this.validationChoiceListAndCheck(
+            SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testValidationChoiceListWithValueWithoutError() {
+        this.validationChoiceListAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1")
+                .setValue(
+                    Optional.of(111)
+                )
+        );
+    }
+
+    @Test
+    public void testValidationChoiceListWithErrorWithValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(
+                    111
+                )
+            )
+        );
+
+        this.validationChoiceListAndCheck(
+            SpreadsheetFormula.EMPTY.setText("=1")
+                .setValue(
+                    Optional.of(111)
+                ).setError(
+                    Optional.of(
+                        SpreadsheetErrorKind.ERROR.toError()
+                            .setValue(
+                                Optional.of(choices)
+                            )
+                    )
+                ),
+            choices
+        );
     }
 
     // TreePrintable.....................................................................................................
