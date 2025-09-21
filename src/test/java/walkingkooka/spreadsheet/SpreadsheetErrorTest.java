@@ -783,8 +783,6 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     private void textAndParseStringAndTextCheck(final SpreadsheetError error) {
-        System.out.println(error.text());
-
         this.parseStringAndCheck(
             error.text(),
             error.kind()
@@ -840,8 +838,6 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     private void textIncludingMessageAndParseStringAndTextIncludingMessageCheck(final SpreadsheetError error) {
-        System.out.println(error.textIncludingMessage());
-
         this.parseStringAndCheck(
             error.textIncludingMessage(),
             SpreadsheetError.with(
