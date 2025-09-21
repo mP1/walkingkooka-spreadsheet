@@ -62,6 +62,8 @@ import walkingkooka.tree.text.HasTextStyle;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.HasOptionalLocale;
+import walkingkooka.validation.HasValidationChoiceList;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.HasOptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -94,6 +96,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasTextNode,
     HasTextStyle,
     HasText,
+    HasValidationChoiceList,
     TreePrintable,
     UsesToStringBuilder {
 
@@ -560,6 +563,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public Optional<ValidatorSelector> validatorSelector() {
         return this.validator;
+    }
+
+    // HasValidationChoiceList..........................................................................................
+
+    @Override
+    public Optional<ValidationChoiceList> validationChoiceList() {
+        return this.formula.validationChoiceList();
     }
 
     // replace..........................................................................................................
