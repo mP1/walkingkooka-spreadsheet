@@ -40,6 +40,7 @@ import walkingkooka.tree.expression.FakeExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.HasValidationChoiceListTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
@@ -57,6 +58,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     JsonNodeMarshallingTesting<SpreadsheetError>,
     HasTextTesting,
     HasConvertErrorTesting,
+    HasValidationChoiceListTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError> {
 
@@ -789,6 +791,61 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.convertErrorMessageAndCheck(
             SpreadsheetErrorKind.VALUE.setMessage(message),
             message
+        );
+    }
+
+    // HasValidationChoiceList..........................................................................................
+
+    @Test
+    public void testValidationChoiceListWithEmptyValue() {
+        this.validationChoiceListAndCheck(
+            SpreadsheetErrorKind.VALUE.setMessage("No message")
+        );
+    }
+
+    @Test
+    public void testValidationChoiceListWithNonValidationChoiceListValue() {
+        this.validationChoiceListAndCheck(
+            SpreadsheetErrorKind.VALUE.setMessage("No message")
+                .setValue(
+                    Optional.of(
+                        "@Not " + ValidationChoiceList.class.getSimpleName()
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testValidationChoiceListWithValidationErrorListMissingChoices() {
+        this.validationChoiceListAndCheck(
+            SpreadsheetError.validationErrors(
+                SpreadsheetForms.errorList()
+                    .concat(SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    )
+            ).get()
+        );
+    }
+
+    @Test
+    public void testValidationChoiceListWithValidationChoiceListValue() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of("Value1")
+            )
+        );
+
+        this.validationChoiceListAndCheck(
+            SpreadsheetError.validationErrors(
+                SpreadsheetForms.errorList()
+                    .concat(
+                        SpreadsheetForms.error(SpreadsheetSelection.A1)
+                            .setValue(
+                                Optional.of(choices)
+                            )
+                    )
+            ).get(),
+            choices
         );
     }
 
