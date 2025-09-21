@@ -70,6 +70,9 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasOptionalLocaleTesting;
+import walkingkooka.validation.HasValidationChoiceListTesting;
+import walkingkooka.validation.ValidationChoice;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -99,6 +102,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasOptionalSpreadsheetFormatterSelectorTesting,
     HasOptionalSpreadsheetParserSelectorTesting,
     HasOptionalValidatorSelectorTesting,
+    HasValidationChoiceListTesting,
     ParseStringTesting<SpreadsheetCell>,
     JsonNodeMarshallingTesting<SpreadsheetCell>,
     HasSpreadsheetReferenceTesting,
@@ -1266,6 +1270,37 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 )
             ),
             "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
+        );
+    }
+
+    // HasValidationChoiceList..........................................................................................
+
+    @Test
+    public void testValidationChoiceListWithErrorWithValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(
+                    111
+                )
+            )
+        );
+
+        this.validationChoiceListAndCheck(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+                    .setValue(
+                        Optional.of(111)
+                    ).setError(
+                        Optional.of(
+                            SpreadsheetErrorKind.ERROR.toError()
+                                .setValue(
+                                    Optional.of(choices)
+                                )
+                        )
+                    )
+            ),
+            choices
         );
     }
 
