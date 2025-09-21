@@ -40,6 +40,8 @@ import walkingkooka.tree.expression.FakeExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.validation.ValidationChoice;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 
 import java.util.List;
@@ -257,11 +259,8 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testValidationErrorWithManyErrors() {
-        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessageAndValue(
-            "Message Hello 123",
-            SpreadsheetSelection.A1
-        );
+    public void testValidationErrorWithManyErrorsAllWithoutValues() {
+        final SpreadsheetError error = SpreadsheetErrorKind.VALUE.setMessage("Message Hello 123");
 
         this.validationErrorsAndCheck(
             Lists.of(
@@ -269,6 +268,37 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                     .setMessage("#VALUE! Message Hello 123")
             ),
             Optional.of(error)
+        );
+    }
+
+    @Test
+    public void testValidationErrorWithValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(1)
+            )
+        ).concat(
+            ValidationChoice.with(
+                "Label22",
+                Optional.of(22)
+            )
+        );
+
+        this.validationErrorsAndCheck(
+            Lists.of(
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setMessage("#VALUE! Message Hello 123")
+                    .setValue(
+                        Optional.of(choices)
+                    )
+            ),
+            Optional.of(
+                SpreadsheetErrorKind.VALUE.setMessageAndValue(
+                    "Message Hello 123",
+                    choices
+                )
+            )
         );
     }
 
