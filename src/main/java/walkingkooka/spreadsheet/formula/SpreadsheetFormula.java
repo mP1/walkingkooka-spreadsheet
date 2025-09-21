@@ -59,6 +59,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
+import walkingkooka.validation.HasValidationChoiceList;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationValueTypeName;
 
 import java.util.Objects;
@@ -76,7 +78,8 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     Patchable<SpreadsheetFormula>,
     TreePrintable,
     UsesToStringBuilder,
-    HasUrlFragment {
+    HasUrlFragment,
+    HasValidationChoiceList {
 
     /**
      * A constant for an absent formula text.
@@ -345,6 +348,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * A value that is entered by the user not using a expression but probably via a picker.
      */
     private final Optional<Object> value;
+
+    // HasValidationChoiceList..........................................................................................
+
+    @Override
+    public Optional<ValidationChoiceList> validationChoiceList() {
+        return this.error.flatMap(SpreadsheetError::validationChoiceList);
+    }
+
 
     // errorOrValue ....................................................................................................
 
