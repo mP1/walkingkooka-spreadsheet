@@ -547,10 +547,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
                 return Optional.ofNullable(
-                    this.metadata.get(
+                    this.last.get(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_ID
                     ).equals(Optional.of(id)) ?
-                        this.metadata :
+                        this.last :
                         null
                 );
             }
@@ -559,11 +559,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
                 Objects.requireNonNull(metadata, "metadata");
 
-                this.metadata = metadata;
+                this.last = metadata;
                 return metadata;
             }
 
-            private SpreadsheetMetadata metadata;
+            private SpreadsheetMetadata last = metadata;
         };
     }
 
