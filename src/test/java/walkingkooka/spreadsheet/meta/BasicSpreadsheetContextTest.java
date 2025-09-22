@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -44,6 +46,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA = (e, dl) -> SpreadsheetMetadata.EMPTY;
     private final static SpreadsheetMetadataStore STORE = SpreadsheetMetadataStores.fake();
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
@@ -53,6 +56,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 null,
                 STORE,
+                LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -64,6 +68,20 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
+                null,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                CREATE_METADATA,
+                STORE,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -77,6 +95,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
                 STORE,
+                LOCALE_CONTEXT,
                 null
             )
         );
@@ -93,6 +112,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ),
                 () -> NOW
             ),
+            LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );
     }
