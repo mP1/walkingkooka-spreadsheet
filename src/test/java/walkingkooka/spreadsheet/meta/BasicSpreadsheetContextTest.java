@@ -17,9 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -39,21 +37,13 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public BasicSpreadsheetContext createContext() {
         return BasicSpreadsheetContext.with(
             (e, l) -> SpreadsheetMetadata.EMPTY,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap(
-                    SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.LOCALE,
-                        Locale.ENGLISH
-                    ),
-                    () -> NOW
-                );
-            }
+            SpreadsheetMetadataStores.treeMap(
+                SpreadsheetMetadata.EMPTY.set(
+                    SpreadsheetMetadataPropertyName.LOCALE,
+                    Locale.ENGLISH
+                ),
+                () -> NOW
+            )
         );
     }
 

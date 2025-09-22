@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -29,19 +29,19 @@ import java.util.function.BiFunction;
 final class BasicSpreadsheetContext implements SpreadsheetContext {
 
     static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                        final SpreadsheetStoreRepository repository) {
+                                        final SpreadsheetMetadataStore store) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
-            Objects.requireNonNull(repository, "repository")
+            Objects.requireNonNull(store, "store")
         );
     }
 
     private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                    final SpreadsheetStoreRepository repository) {
+                                    final SpreadsheetMetadataStore store) {
         super();
 
         this.createMetadata = createMetadata;
-        this.repository = repository;
+        this.store = store;
     }
 
     @Override
@@ -62,32 +62,29 @@ final class BasicSpreadsheetContext implements SpreadsheetContext {
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
-        return this.repository.metadatas()
-            .load(id);
+        return this.store.load(id);
     }
 
     @Override
     public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
-        return this.repository.metadatas()
-            .save(metadata);
+        return this.store.save(metadata);
     }
 
     @Override
     public void deleteMetadata(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
-        this.repository.metadatas()
-            .delete(id);
+        this.store.delete(id);
     }
 
-    private final SpreadsheetStoreRepository repository;
+    private final SpreadsheetMetadataStore store;
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.repository.toString();
+        return this.store.toString();
     }
 }
