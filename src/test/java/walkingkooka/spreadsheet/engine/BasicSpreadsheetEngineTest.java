@@ -564,6 +564,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             private SpreadsheetMetadata last = metadata;
+            
+            @Override
+            public ProviderContext providerContext() {
+                return PROVIDER_CONTEXT;
+            }
         };
     }
 
@@ -4690,7 +4695,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetContext(
+                metadata
+            ),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 new FakeConverterProvider() {
@@ -4740,8 +4747,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
                 }
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final Object value = "Value123";
@@ -4865,8 +4871,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
                 }
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final Object value = "Value123";
@@ -5018,8 +5023,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
                 }
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final Object value = "Value123";
@@ -5169,8 +5173,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
                 }
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final Object value = "Value123";
@@ -16566,8 +16569,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         this.filterCellsAndCheck(
@@ -17681,8 +17683,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -23661,8 +23662,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             LOCALE_CONTEXT,
             spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
+            SPREADSHEET_PROVIDER
         );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -23694,8 +23694,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             LOCALE_CONTEXT,
             spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
+            SPREADSHEET_PROVIDER
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23783,8 +23782,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23896,8 +23894,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24024,8 +24021,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24180,8 +24176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         throw new IllegalArgumentException("Unknown Validator " + selector);
                     }
                 }
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24327,8 +24322,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24475,8 +24469,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24542,8 +24535,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             LOCALE_CONTEXT,
             spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
+            SPREADSHEET_PROVIDER
         );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -24577,8 +24569,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             LOCALE_CONTEXT,
             spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
+            SPREADSHEET_PROVIDER
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24666,8 +24657,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final Form<SpreadsheetExpressionReference> form = Form.with(
@@ -24744,8 +24734,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
@@ -24881,8 +24870,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         context.storeRepository()
@@ -24993,8 +24981,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         context.storeRepository()
@@ -25125,8 +25112,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         context.storeRepository()
@@ -25268,8 +25254,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SPREADSHEET_IMPORTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 VALIDATOR_PROVIDER
-            ), // SpreadsheetProvider
-            PROVIDER_CONTEXT
+            ) // SpreadsheetProvider
         );
 
         engine.saveCells(
@@ -25418,8 +25403,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             LOCALE_CONTEXT,
             spreadsheetContext(metadata2),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
+            SPREADSHEET_PROVIDER
         );
     }
 

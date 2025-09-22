@@ -383,8 +383,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -402,8 +401,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -421,8 +419,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -440,8 +437,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -459,8 +455,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -478,8 +473,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -497,8 +491,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 null,
                 TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -516,8 +509,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 null,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SPREADSHEET_PROVIDER
             )
         );
     }
@@ -535,26 +527,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
-                null,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullProviderContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
-                METADATA,
-                STORE_REPOSITORY,
-                FUNCTION_ALIASES,
-                ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
-                SPREADSHEET_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
                 null
             )
         );
@@ -1479,10 +1451,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
                 private Locale localLocale = environmentContext.locale();
             },
-            this.spreadsheetContext(metadata),
+            this.spreadsheetContext(
+                metadata,
+                providerContext
+            ),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            providerContext
+            SPREADSHEET_PROVIDER
         );
     }
 
@@ -1567,10 +1541,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             FUNCTION_ALIASES,
             environmentContext,
             LOCALE_CONTEXT,
-            this.spreadsheetContext(metadata),
+            this.spreadsheetContext(
+                metadata,
+                PROVIDER_CONTEXT
+            ),
             TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
+            SPREADSHEET_PROVIDER
         );
     }
 
@@ -1620,8 +1596,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private SpreadsheetContext spreadsheetContext(final SpreadsheetMetadata metadata) {
+    private SpreadsheetContext spreadsheetContext(final SpreadsheetMetadata metadata,
+                                                  final ProviderContext providerContext) {
         Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(providerContext, "providerContext");
 
         return new FakeSpreadsheetContext() {
 
@@ -1660,6 +1638,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             public void deleteMetadata(final SpreadsheetId id) {
                 Objects.requireNonNull(metadata, "metadata");
                 throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public ProviderContext providerContext() {
+                return providerContext;
             }
         };
     }
