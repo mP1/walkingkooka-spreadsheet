@@ -2132,7 +2132,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JsonObject.object()
                         .set(
                             JsonPropertyName.with("text"),
-                            JsonNode.string(text)
+                            text
                         )
                 )
         );
@@ -2154,7 +2154,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                     JsonObject.object()
                         .set(
                             JsonPropertyName.with("text"),
-                            JsonNode.string(text)
+                            text
                         )
                 ),
             SpreadsheetCell.with(
@@ -2337,28 +2337,34 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Test
     public void testPatchCellReferenceFails() {
         final JsonPropertyName name = SpreadsheetCell.REFERENCE_PROPERTY;
-        final JsonNode value = JsonNode.string("A1");
+        final String value = "A1";
 
         this.patchInvalidPropertyFails(
             this.createPatchable(),
             JsonNode.object()
-                .set(name, value),
+                .set(
+                    name,
+                    value
+                ),
             name,
-            value
+            JsonNode.string(value)
         );
     }
 
     @Test
     public void testPatchFormattedFails() {
         final JsonPropertyName name = SpreadsheetCell.FORMATTED_VALUE_PROPERTY;
-        final JsonNode value = JsonNode.string("@");
+        final String value = "@";
 
         this.patchInvalidPropertyFails(
             this.createPatchable(),
             JsonNode.object()
-                .set(name, value),
+                .set(
+                    name,
+                    value
+                ),
             name,
-            value
+            JsonNode.string(value)
         );
     }
 

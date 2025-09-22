@@ -1015,9 +1015,17 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     public void testUnmarshallString() {
         this.unmarshallAndCheck(
             JsonNode.object()
-                .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
-                .set(SpreadsheetError.MESSAGE_PROPERTY, JsonNode.string(MESSAGE))
-                .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get())),
+                .set(
+                    SpreadsheetError.KIND_PROPERTY,
+                    KIND.name()
+                ).set(
+                    SpreadsheetError.MESSAGE_PROPERTY,
+                    MESSAGE
+                ).set(
+                    SpreadsheetError.VALUE_PROPERTY,
+                    this.marshallContext().
+                        marshallWithType(VALUE.get())
+                ),
             SpreadsheetError.with(
                 KIND,
                 MESSAGE,
@@ -1032,8 +1040,14 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
 
         this.unmarshallAndCheck(
             JsonNode.object()
-                .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(kind.name()))
-                .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get())),
+                .set(
+                    SpreadsheetError.KIND_PROPERTY,
+                    kind.name()
+                ).set(
+                    SpreadsheetError.VALUE_PROPERTY,
+                    this.marshallContext()
+                        .marshallWithType(VALUE.get())
+                ),
             SpreadsheetError.with(
                 kind,
                 "", // no message
@@ -1046,9 +1060,14 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     public void testUnmarshallWithoutMessage() {
         this.unmarshallAndCheck(
             JsonNode.object()
-                .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
-                .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext()
-                    .marshallWithType(VALUE.get())),
+                .set(
+                    SpreadsheetError.KIND_PROPERTY,
+                    KIND.name()
+                ).set(
+                    SpreadsheetError.VALUE_PROPERTY,
+                    this.marshallContext()
+                        .marshallWithType(VALUE.get())
+                ),
             SpreadsheetError.with(
                 KIND,
                 "", // no message
@@ -1062,9 +1081,17 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         this.marshallAndCheck(
             this.createObject(),
             JsonNode.object()
-                .set(SpreadsheetError.KIND_PROPERTY, JsonNode.string(KIND.name()))
-                .set(SpreadsheetError.MESSAGE_PROPERTY, JsonNode.string(MESSAGE))
-                .set(SpreadsheetError.VALUE_PROPERTY, this.marshallContext().marshallWithType(VALUE.get()))
+                .set(
+                    SpreadsheetError.KIND_PROPERTY,
+                    KIND.name()
+                ).set(
+                    SpreadsheetError.MESSAGE_PROPERTY,
+                    MESSAGE
+                ).set(
+                    SpreadsheetError.VALUE_PROPERTY,
+                    this.marshallContext()
+                        .marshallWithType(VALUE.get())
+                )
         );
     }
 

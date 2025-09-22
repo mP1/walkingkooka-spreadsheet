@@ -581,16 +581,14 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         JsonObject json = JsonNode.object()
             .set(
                 KIND_PROPERTY,
-                JsonNode.string(
-                    this.kind.name()
-                )
+                this.kind.name()
             );
 
         final String message = this.message();
         if (false == message.isEmpty()) {
             json = json.set(
                 MESSAGE_PROPERTY,
-                JsonNode.string(message)
+                message
             );
         }
 

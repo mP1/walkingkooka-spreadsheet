@@ -2538,7 +2538,7 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
             ) // unnecessary to include type.
             .set(
                 TEXT_PROPERTY,
-                JsonNode.string(this.text())
+                this.text()
             );
     }
 

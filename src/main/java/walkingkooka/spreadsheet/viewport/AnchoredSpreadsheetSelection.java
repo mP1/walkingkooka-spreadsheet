@@ -219,7 +219,7 @@ public final class AnchoredSpreadsheetSelection implements HasUrlFragment,
         if (SpreadsheetViewportAnchor.NONE != anchor) {
             object = object.set(
                 ANCHOR_PROPERTY,
-                JsonNode.string(anchor.toString())
+                anchor.toString()
             );
         }
 

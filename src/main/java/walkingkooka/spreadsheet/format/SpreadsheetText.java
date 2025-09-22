@@ -212,7 +212,10 @@ public final class SpreadsheetText implements HasText,
             );
         }
 
-        return object.set(TEXT_PROPERTY, JsonNode.string(this.text));
+        return object.set(
+            TEXT_PROPERTY,
+            this.text
+        );
     }
 
     private final static String COLOR_PROPERTY_STRING = "color";
