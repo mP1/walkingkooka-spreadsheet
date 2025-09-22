@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -61,6 +62,9 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.FakeSpreadsheetContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -197,6 +201,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     };
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
+    private final static SpreadsheetContext SPREADSHEET_CONTEXT = SpreadsheetContexts.fake();
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         CONVERTER_PROVIDER,
@@ -375,6 +381,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -393,6 +400,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -411,6 +419,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -429,6 +438,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -447,6 +457,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 null,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -464,6 +475,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
+                null,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetEngineContext.with(
+                SERVER_URL,
+                METADATA,
+                STORE_REPOSITORY,
+                FUNCTION_ALIASES,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
                 null,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -483,6 +514,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -501,6 +533,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -519,6 +552,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 null
@@ -1445,6 +1479,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
                 private Locale localLocale = environmentContext.locale();
             },
+            this.spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             providerContext
@@ -1532,6 +1567,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             FUNCTION_ALIASES,
             environmentContext,
             LOCALE_CONTEXT,
+            this.spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
@@ -1582,6 +1618,50 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 RoundingMode.HALF_UP
             )
         );
+    }
+
+    private SpreadsheetContext spreadsheetContext(final SpreadsheetMetadata metadata) {
+        Objects.requireNonNull(metadata, "metadata");
+
+        return new FakeSpreadsheetContext() {
+
+            @Override
+            public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                      final Optional<Locale> locale) {
+                Objects.requireNonNull(user, "user");
+                Objects.requireNonNull(locale, "locale");
+
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+                return Optional.ofNullable(
+                    this.metadata.get(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+                    ).equals(Optional.of(id)) ?
+                        this.metadata :
+                        null
+                );
+            }
+
+            @Override
+            public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+                Objects.requireNonNull(metadata, "metadata");
+
+                this.metadata = metadata;
+                return metadata;
+            }
+
+            private SpreadsheetMetadata metadata;
+
+
+            @Override
+            public void deleteMetadata(final SpreadsheetId id) {
+                Objects.requireNonNull(metadata, "metadata");
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     // SpreadsheetProviderTesting.......................................................................................
