@@ -2692,10 +2692,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testValueTypePatchWithEmpty() {
         this.checkEquals(
             JsonNode.object()
-                .set(
-                    SpreadsheetFormula.VALUE_TYPE_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetFormula.VALUE_TYPE_PROPERTY),
             SpreadsheetFormula.valueTypePatch(
                 Optional.empty(),
                 JsonNodeMarshallContexts.basic()
@@ -2718,10 +2715,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.patchInvalidPropertyFails(
             this.formula("=1"),
             JsonNode.object()
-                .set(
-                    SpreadsheetFormula.ERROR_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetFormula.ERROR_PROPERTY),
             SpreadsheetFormula.ERROR_PROPERTY,
             JsonNode.nullNode()
         );
@@ -2755,10 +2749,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.patchAndCheck(
             formula,
             JsonNode.object()
-                .set(
-                    SpreadsheetFormula.VALUE_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetFormula.VALUE_PROPERTY),
             formula.setValue(
                 Optional.empty()
             )

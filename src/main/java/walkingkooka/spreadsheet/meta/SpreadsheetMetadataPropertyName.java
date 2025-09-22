@@ -569,9 +569,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         this.jsonPropertyName = JsonPropertyName.with(finalName);
 
         this.patchRemove = JsonNode.object()
-            .set(
-                this.jsonPropertyName,
-                JsonNode.nullNode()
+            .setNull(
+                this.jsonPropertyName
             );
 
         this.urlFragment = UrlFragment.parse(finalName);

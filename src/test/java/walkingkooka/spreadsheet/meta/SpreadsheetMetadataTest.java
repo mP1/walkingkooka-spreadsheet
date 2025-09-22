@@ -1184,10 +1184,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         this.patchAndCheck(
             SpreadsheetMetadata.EMPTY,
             JsonNode.object()
-                .set(JsonPropertyName.with(
+                .setNull(
+                    JsonPropertyName.with(
                         SpreadsheetMetadataPropertyName.ROUNDING_MODE.value()
-                    ),
-                    JsonNode.nullNode()
+                    )
                 )
         );
     }
@@ -1201,11 +1201,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                     RoundingMode.HALF_UP
                 ),
             JsonNode.object()
-                .set(
+                .setNull(
                     JsonPropertyName.with(
                         SpreadsheetMetadataPropertyName.PRECISION.value()
-                    ),
-                    JsonNode.nullNode()
+                    )
                 )
         );
     }
@@ -1319,11 +1318,10 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         SpreadsheetMetadataPropertyName.PRECISION.value()
                     ),
                     marshall(2)
-                ).set(
+                ).setNull(
                     JsonPropertyName.with(
                         SpreadsheetMetadataPropertyName.ROUNDING_MODE.value()
-                    ),
-                    JsonNode.nullNode()
+                    )
                 ),
             before.set(SpreadsheetMetadataPropertyName.PRECISION, 2)
                 .remove(SpreadsheetMetadataPropertyName.ROUNDING_MODE)
