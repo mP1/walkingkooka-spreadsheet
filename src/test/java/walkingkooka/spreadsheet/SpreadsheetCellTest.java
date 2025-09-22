@@ -2252,9 +2252,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.patchAndCheck(
             cell,
             JsonNode.object()
-                .set(
-                    SpreadsheetCell.FORMATTER_PROPERTY,
-                    JsonNode.nullNode()
+                .setNull(
+                    SpreadsheetCell.FORMATTER_PROPERTY
                 ),
             cell.setFormatter(
                 SpreadsheetCell.NO_FORMATTER

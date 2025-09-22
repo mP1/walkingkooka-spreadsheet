@@ -2150,9 +2150,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testFormatterPatchWithEmptyFormatter() {
         this.checkEquals(
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.FORMATTER_PROPERTY,
-                    JsonNode.nullNode()
+                .setNull(
+                    SpreadsheetDelta.FORMATTER_PROPERTY
                 )
             ,
             SpreadsheetDelta.formatterPatch(
@@ -2210,9 +2209,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testLocalePatchWithEmptyLocale() {
         this.checkEquals(
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.LOCALE_PROPERTY,
-                    JsonNode.nullNode()
+                .setNull(
+                    SpreadsheetDelta.LOCALE_PROPERTY
                 )
             ,
             SpreadsheetDelta.localePatch(
@@ -2272,9 +2270,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testParserPatchWithEmptySelector() {
         this.checkEquals(
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.PARSER_PROPERTY,
-                    JsonNode.nullNode()
+                .setNull(
+                    SpreadsheetDelta.PARSER_PROPERTY
                 )
             ,
             SpreadsheetDelta.parserPatch(
@@ -2453,9 +2450,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testValidatorPatchWithEmptyPattern() {
         this.checkEquals(
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.VALIDATOR_PROPERTY,
-                    JsonNode.nullNode()
+                .setNull(
+                    SpreadsheetDelta.VALIDATOR_PROPERTY
                 )
             ,
             SpreadsheetDelta.validatorPatch(
@@ -2689,9 +2685,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
             ,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                    JsonNode.nullNode()
+                .setNull(
+                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY
                 ),
             SpreadsheetDelta.EMPTY
         );
@@ -2773,10 +2768,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             )
             ,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.CELLS_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.CELLS_PROPERTY),
             without
         );
     }
@@ -3614,10 +3606,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ,
             SpreadsheetSelection.A1,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY),
             SpreadsheetDelta.EMPTY
         );
     }
@@ -3710,10 +3699,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ),
             SpreadsheetSelection.parseCellOrCellRange("B2"),
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.CELLS_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.CELLS_PROPERTY),
             without
         );
     }
@@ -4976,10 +4962,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
             ,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY),
             SpreadsheetDelta.EMPTY
         );
     }
@@ -5090,10 +5073,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             )
             ,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.COLUMNS_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.COLUMNS_PROPERTY),
             without
         );
     }
@@ -5303,10 +5283,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
             ,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.VIEWPORT_SELECTION_PROPERTY),
             SpreadsheetDelta.EMPTY
         );
     }
@@ -5419,10 +5396,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             )
             ,
             JsonNode.object()
-                .set(
-                    SpreadsheetDelta.ROWS_PROPERTY,
-                    JsonNode.nullNode()
-                ),
+                .setNull(SpreadsheetDelta.ROWS_PROPERTY),
             without
         );
     }
@@ -5529,7 +5503,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     public void testResolveLabelsCellPropertyNull() {
         this.resolveCellLabelsAndCheck(
             JsonNode.object()
-                .set(SpreadsheetDelta.CELLS_PROPERTY, JsonNode.nullNode()),
+                .setNull(SpreadsheetDelta.CELLS_PROPERTY),
             LABEL_TO_CELL
         );
     }

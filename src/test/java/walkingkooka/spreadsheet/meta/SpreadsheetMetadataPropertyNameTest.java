@@ -271,9 +271,8 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             null,
             JsonNode.object()
-                .set(
-                    JsonPropertyName.with("auditInfo"),
-                    JsonNode.nullNode()
+                .setNull(
+                    JsonPropertyName.with("auditInfo")
                 )
         );
     }
