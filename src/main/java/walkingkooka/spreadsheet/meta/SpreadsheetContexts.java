@@ -22,6 +22,13 @@ import walkingkooka.reflect.PublicStaticHelper;
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
     /**
+     * {@see FakeSpreadsheetContext}
+     */
+    public static SpreadsheetContext fake() {
+        return new FakeSpreadsheetContext();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetContexts() {
