@@ -127,7 +127,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             ),
             spreadsheetLabelNameResolver,
             environmentContext,
-            localeContext,
+            metadataLocaleContext,
             spreadsheetContext,
             terminalContext,
             spreadsheetProvider
