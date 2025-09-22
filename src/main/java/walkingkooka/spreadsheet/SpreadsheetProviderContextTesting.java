@@ -22,7 +22,7 @@ import walkingkooka.Context;
 import walkingkooka.ContextTesting;
 import walkingkooka.plugin.ProviderContext;
 
-public interface SpreadsheetContextTesting<C extends Context> extends ContextTesting<C> {
+public interface SpreadsheetProviderContextTesting<C extends Context> extends ContextTesting<C> {
 
     @Test
     default void testClassDoesntImplementProviderContext() {

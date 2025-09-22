@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.ContextTesting;
-import walkingkooka.spreadsheet.SpreadsheetContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 
 public interface SpreadsheetExporterContextTesting<C extends SpreadsheetExporterContext> extends ContextTesting<C>,
     JsonNodeMarshallContextTesting<C>,
-    SpreadsheetContextTesting<C>,
+    SpreadsheetProviderContextTesting<C>,
     TreePrintableTesting {
 
     @Override
