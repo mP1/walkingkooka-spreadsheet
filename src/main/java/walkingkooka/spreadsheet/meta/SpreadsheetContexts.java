@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 
@@ -31,10 +32,12 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetContext}
      */
     public static SpreadsheetContext basic(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                           final SpreadsheetMetadataStore store) {
+                                           final SpreadsheetMetadataStore store,
+                                           final ProviderContext providerContext) {
         return BasicSpreadsheetContext.with(
             createMetadata,
-            store
+            store,
+            providerContext
         );
     }
 

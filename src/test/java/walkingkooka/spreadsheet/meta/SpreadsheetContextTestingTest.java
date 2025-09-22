@@ -32,7 +32,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         throw new UnsupportedOperationException();
     }
 
-    static class TestSpreadsheetContext implements SpreadsheetContext {
+    static class TestSpreadsheetContext extends FakeSpreadsheetContext {
 
         @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 
@@ -29,19 +30,23 @@ import java.util.function.BiFunction;
 final class BasicSpreadsheetContext implements SpreadsheetContext {
 
     static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                        final SpreadsheetMetadataStore store) {
+                                        final SpreadsheetMetadataStore store,
+                                        final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
-            Objects.requireNonNull(store, "store")
+            Objects.requireNonNull(store, "store"),
+            Objects.requireNonNull(providerContext, "providerContext")
         );
     }
 
     private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                    final SpreadsheetMetadataStore store) {
+                                    final SpreadsheetMetadataStore store,
+                                    final ProviderContext providerContext) {
         super();
 
         this.createMetadata = createMetadata;
         this.store = store;
+        this.providerContext = providerContext;
     }
 
     @Override
@@ -80,6 +85,15 @@ final class BasicSpreadsheetContext implements SpreadsheetContext {
     }
 
     private final SpreadsheetMetadataStore store;
+
+    // HasProviderContext...............................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.providerContext;
+    }
+
+    private final ProviderContext providerContext;
 
     // Object...........................................................................................................
 

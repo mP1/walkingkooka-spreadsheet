@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
 
@@ -29,7 +30,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends ContextTesting<C>,
-    SpreadsheetProviderContextTesting<C> {
+    SpreadsheetProviderContextTesting<C>,
+    HasProviderContextTesting {
 
     // createMetadata...................................................................................................
 

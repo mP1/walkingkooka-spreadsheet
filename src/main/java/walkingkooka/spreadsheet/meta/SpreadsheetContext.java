@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Context;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
 import java.util.Locale;
@@ -27,7 +28,8 @@ import java.util.Optional;
 /**
  * A context containing CRUD operations for a {@link SpreadsheetMetadata}.
  */
-public interface SpreadsheetContext extends Context {
+public interface SpreadsheetContext extends Context,
+    HasProviderContext {
 
     /**
      * Creates a new {@link SpreadsheetMetadata}
