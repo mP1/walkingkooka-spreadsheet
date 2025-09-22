@@ -131,7 +131,10 @@ public abstract class SpreadsheetColumnOrRow<R extends SpreadsheetSelection & Co
             .set(
                 JsonPropertyName.with(this.reference.toString()),
                 JsonNode.object()
-                    .set(HIDDEN_PROPERTY, JsonNode.booleanNode(this.hidden))
+                    .set(
+                        HIDDEN_PROPERTY,
+                        this.hidden
+                    )
             );
     }
 
