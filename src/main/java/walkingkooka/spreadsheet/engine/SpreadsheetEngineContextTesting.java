@@ -24,7 +24,7 @@ import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -53,7 +53,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     HasProviderContextTesting,
     SpreadsheetProviderTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
-    SpreadsheetContextTesting<C> {
+    SpreadsheetProviderContextTesting<C> {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
 

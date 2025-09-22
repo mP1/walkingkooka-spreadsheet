@@ -17,14 +17,14 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.SpreadsheetContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
 import walkingkooka.text.cursor.parser.ParserContextTesting;
 
 /**
  * Mixing testing interface for {@link SpreadsheetParserContext}
  */
 public interface SpreadsheetParserContextTesting<C extends SpreadsheetParserContext> extends ParserContextTesting<C>,
-    SpreadsheetContextTesting<C> {
+    SpreadsheetProviderContextTesting<C> {
 
     @Override
     default String typeNameSuffix() {
