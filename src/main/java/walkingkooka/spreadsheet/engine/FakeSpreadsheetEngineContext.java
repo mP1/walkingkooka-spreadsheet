@@ -25,6 +25,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -114,6 +115,29 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                final Optional<SpreadsheetFormatterSelector> formatter) {
+        throw new UnsupportedOperationException();
+    }
+
+    // SpreadsheetContext...............................................................................................
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                              final Optional<Locale> locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteMetadata(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

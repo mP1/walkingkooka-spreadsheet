@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
@@ -65,6 +66,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.meta.FakeSpreadsheetContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -537,6 +540,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private static Object VALUE;
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
+    private static SpreadsheetContext spreadsheetContext(final SpreadsheetMetadata metadata) {
+        return new FakeSpreadsheetContext() {
+
+            @Override
+            public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+                return Optional.ofNullable(
+                    this.metadata.get(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+                    ).equals(Optional.of(id)) ?
+                        this.metadata :
+                        null
+                );
+            }
+
+            @Override
+            public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+                Objects.requireNonNull(metadata, "metadata");
+
+                this.metadata = metadata;
+                return metadata;
+            }
+
+            private SpreadsheetMetadata metadata;
+        };
+    }
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         CONVERTER_PROVIDER,
@@ -4633,32 +4662,35 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            ConverterAliasSet.EMPTY
+                .concat(
+                    ConverterAlias.parse(formulaConverterSelector.text())
+                )
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            formulaConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            validationConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.parse(validatorSelector.valueText())
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.parse(validatorSelector.valueText())
+        );
+
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.EMPTY
-                    .concat(
-                        ConverterAlias.parse(formulaConverterSelector.text())
-                    )
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                formulaConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                validationConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.parse(validatorSelector.valueText())
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                ValidatorAliasSet.parse(validatorSelector.valueText())
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 new FakeConverterProvider() {
@@ -4755,37 +4787,40 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            ConverterAliasSet.EMPTY
+                .concat(
+                    ConverterAlias.parse("null-to-number")
+                ).concat(
+                    ConverterAlias.parse("text")
+                )
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            formulaConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            formattingConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            validationConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.parse(validatorSelector.valueText())
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.parse(validatorSelector.valueText())
+        );
+        
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.EMPTY
-                    .concat(
-                        ConverterAlias.parse("null-to-number")
-                    ).concat(
-                        ConverterAlias.parse("text")
-                    )
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                formulaConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                formattingConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                validationConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.parse(validatorSelector.valueText())
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                ValidatorAliasSet.parse(validatorSelector.valueText())
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 new FakeConverterProvider() {
@@ -4888,38 +4923,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("TestValidationConverter");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            ConverterAliasSet.EMPTY.concat(
+                ConverterAlias.parse(formulaConverterSelector.text())
+            ).concat(
+                ConverterAlias.parse(formattingConverterSelector.text())
+            ).concat(
+                ConverterAlias.parse(validationConverterSelector.text())
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            formulaConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            formattingConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            validationConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.parse(validatorSelector.valueText())
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.parse(validatorSelector.valueText())
+        );
+        
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.EMPTY.concat(
-                        ConverterAlias.parse(formulaConverterSelector.text())
-                    ).concat(
-                        ConverterAlias.parse(formattingConverterSelector.text())
-                    ).concat(
-                        ConverterAlias.parse(validationConverterSelector.text())
-                    )
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                formulaConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                formattingConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                validationConverterSelector
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.parse(validatorSelector.valueText())
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                ValidatorAliasSet.parse(validatorSelector.valueText())
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 new FakeConverterProvider() {
@@ -5038,29 +5076,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ExpressionFunctionSelector validationFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+            )
+            .set(
+                SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet(
+                    validationFunctionSelector.text()
+                )
+            ).set(
+                SpreadsheetMetadataPropertyName.VALIDATORS,
+                ValidatorAliasSet.parse(validatorSelector.valueText())
+            ).set(
+                SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+                ValidatorAliasSet.parse(validatorSelector.valueText())
+            );
+        
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                    SpreadsheetMetadataPropertyName.FUNCTIONS,
-                    SpreadsheetExpressionFunctions.parseAliasSet(functionName)
-                )
-                .set(
-                    SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
-                    SpreadsheetExpressionFunctions.parseAliasSet(
-                        validationFunctionSelector.text()
-                    )
-                ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATORS,
-                    ValidatorAliasSet.parse(validatorSelector.valueText())
-                ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                    ValidatorAliasSet.parse(validatorSelector.valueText())
-                ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -16462,22 +16503,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String functionName = "TestQuery";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+        );
+
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -17573,23 +17617,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testFindCellsWithFunction() {
         final String functionName = "TestFindFunction";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet(functionName)
+        );
+
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet(functionName)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -23612,6 +23659,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
@@ -23644,6 +23692,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
@@ -23689,19 +23738,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "UnknownFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -23774,19 +23826,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "TestFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -23892,6 +23947,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "TestFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("UnknownLabel404")
             ).setLabel("TextLabel111")
@@ -23903,17 +23966,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24018,6 +24076,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String formHandler = "TestFormHandler";
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidatorSelector");
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("UnknownLabel404")
             ).setLabel("TextLabel111")
@@ -24033,17 +24099,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24178,6 +24239,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "TestFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("FormField1")
             ).setLabel("TextLabel111")
@@ -24196,17 +24265,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24323,6 +24387,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "TestFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("FormField1")
             ).setLabel("TextLabel111")
@@ -24341,17 +24413,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24473,6 +24540,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
@@ -24507,6 +24575,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
@@ -24552,19 +24621,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "UnknownDefaultFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24627,19 +24699,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String formHandler = "UnknownFormHandler";
 
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24705,6 +24780,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final String formHandler = "TestFormHandler";
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
         final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
@@ -24743,17 +24827,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24824,6 +24903,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final String formHandler = "TestFormHandler";
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
         final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
@@ -24851,17 +24939,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24940,6 +25023,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final String formHandler = "TestFormHandler";
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
         final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
@@ -24979,17 +25071,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -25068,6 +25155,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final String formHandler = "TestFormHandler";
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.parse(formHandler)
+        ).set(
+            SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
+            FormHandlerSelector.parse(formHandler)
+        );
+
         final SpreadsheetCellReference cellReference1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference cellReference2 = SpreadsheetSelection.parseCell("B1");
 
@@ -25115,17 +25211,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            METADATA.set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse(formHandler)
-            ).set(
-                SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse(formHandler)
-            ),
+            metadata,
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -25313,16 +25404,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetEngineContext createContext(final int defaultYear,
                                                    final SpreadsheetMetadata metadata, // required by ranges tests with frozen columns/rows.
                                                    final SpreadsheetStoreRepository storeRepository) {
+        final SpreadsheetMetadata metadata2 = metadata.set(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
+            defaultYear
+        );
+
         return SpreadsheetEngineContexts.basic(
             SERVER_URL,
-            metadata.set(
-                SpreadsheetMetadataPropertyName.DEFAULT_YEAR,
-                defaultYear
-            ),
+            metadata2,
             storeRepository,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
+            spreadsheetContext(metadata2),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
