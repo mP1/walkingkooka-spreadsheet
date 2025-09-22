@@ -3042,7 +3042,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                     TEXT
                 ).set(
                     SpreadsheetFormula.VALUE_PROPERTY,
-                    JsonNode.number(EXPRESSION_VALUE)
+                    EXPRESSION_VALUE
                 ),
             this.formula(TEXT)
                 .setValue(
