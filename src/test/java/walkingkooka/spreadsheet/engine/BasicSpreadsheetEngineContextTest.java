@@ -1380,6 +1380,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     // createContext....................................................................................................
 
+    @Override
+    public BasicSpreadsheetEngineContext createContext() {
+        return this.createContext(SpreadsheetLabelStores.treeMap());
+    }
+
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
             metadata,
@@ -1457,6 +1462,146 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             SPREADSHEET_PROVIDER,
             providerContext
         );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
+        return this.createContext(
+            METADATA,
+            labelStore
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetLabelStore labelStore) {
+        return this.createContext(
+            metadata,
+            labelStore,
+            SpreadsheetCellRangeStores.fake()
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetLabelStore labelStore,
+                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
+        final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
+        cells.save(
+            LOAD_CELL_REFERENCE.setFormula(
+                SpreadsheetFormula.EMPTY
+                    .setText("'" + LOAD_CELL_VALUE)
+                    .setValue(
+                        Optional.of(LOAD_CELL_VALUE)
+                    )
+            )
+        );
+
+        return this.createContext(
+            metadata,
+            cells,
+            labelStore,
+            rangeToConditionalFormattingRules
+        );
+    }
+
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetCellStore cellStore,
+                                                        final SpreadsheetLabelStore labelStore,
+                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
+        return this.createContext(
+            metadata,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetCellStore cells() {
+                    return cellStore;
+                }
+
+                @Override
+                public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
+                    return rangeToConditionalFormattingRules;
+                }
+
+                @Override
+                public SpreadsheetLabelStore labels() {
+                    return labelStore;
+                }
+
+                @Override
+                public Storage storage() {
+                    return Storages.fake();
+                }
+            },
+            ENVIRONMENT_CONTEXT
+        );
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
+                                                        final SpreadsheetStoreRepository repository,
+                                                        final EnvironmentContext environmentContext) {
+        return BasicSpreadsheetEngineContext.with(
+            SERVER_URL,
+            metadata,
+            repository,
+            FUNCTION_ALIASES,
+            environmentContext,
+            LOCALE_CONTEXT,
+            TERMINAL_CONTEXT,
+            SPREADSHEET_PROVIDER,
+            PROVIDER_CONTEXT
+        );
+    }
+
+    private ExpressionNumber number(final Number value) {
+        return EXPRESSION_NUMBER_KIND.create(value);
+    }
+
+    private ValueExpression<?> expression(final Number value) {
+        return Expression.value(
+            this.number(value)
+        );
+    }
+
+    @Override
+    public DateTimeContext dateTimeContext() {
+        return new FakeDateTimeContext() {
+
+            @Override
+            public String toString() {
+                return "DateTimeContext123";
+            }
+        };
+    }
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return DecimalNumberContexts.basic(
+            DecimalNumberSymbols.with(
+                MINUS,
+                PLUS,
+                ZERO_DIGIT,
+                CURRENCY,
+                DECIMAL,
+                EXPONENT,
+                GROUP_SEPARATOR,
+                INFINITY,
+                MONETARY_DECIMAL_SEPARATOR,
+                NAN,
+                PERCENT,
+                PERMILL_SYMBOL
+            ),
+            LOCALE,
+            new MathContext(
+                MathContext.DECIMAL32.getPrecision(),
+                RoundingMode.HALF_UP
+            )
+        );
+    }
+
+    // SpreadsheetProviderTesting.......................................................................................
+
+    @Override
+    public BasicSpreadsheetEngineContext createSpreadsheetProvider() {
+        return this.createContext();
     }
 
     // toString.........................................................................................................
@@ -1900,151 +2045,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"viewportHome\": \"A1\"\n" +
                 "}"
         );
-    }
-
-    @Override
-    public BasicSpreadsheetEngineContext createContext() {
-        return this.createContext(SpreadsheetLabelStores.treeMap());
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
-        return this.createContext(
-            METADATA,
-            labelStore
-        );
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetLabelStore labelStore) {
-        return this.createContext(
-            metadata,
-            labelStore,
-            SpreadsheetCellRangeStores.fake()
-        );
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetLabelStore labelStore,
-                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
-        final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
-        cells.save(
-            LOAD_CELL_REFERENCE.setFormula(
-                SpreadsheetFormula.EMPTY
-                    .setText("'" + LOAD_CELL_VALUE)
-                    .setValue(
-                        Optional.of(LOAD_CELL_VALUE)
-                    )
-            )
-        );
-
-        return this.createContext(
-            metadata,
-            cells,
-            labelStore,
-            rangeToConditionalFormattingRules
-        );
-    }
-
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetCellStore cellStore,
-                                                        final SpreadsheetLabelStore labelStore,
-                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
-        return this.createContext(
-            metadata,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetCellStore cells() {
-                    return cellStore;
-                }
-
-                @Override
-                public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
-                    return rangeToConditionalFormattingRules;
-                }
-
-                @Override
-                public SpreadsheetLabelStore labels() {
-                    return labelStore;
-                }
-
-                @Override
-                public Storage storage() {
-                    return Storages.fake();
-                }
-            },
-            ENVIRONMENT_CONTEXT
-        );
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetStoreRepository repository,
-                                                        final EnvironmentContext environmentContext) {
-        return BasicSpreadsheetEngineContext.with(
-            SERVER_URL,
-            metadata,
-            repository,
-            FUNCTION_ALIASES,
-            environmentContext,
-            LOCALE_CONTEXT,
-            TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
-        );
-    }
-
-    private ExpressionNumber number(final Number value) {
-        return EXPRESSION_NUMBER_KIND.create(value);
-    }
-
-    private ValueExpression<?> expression(final Number value) {
-        return Expression.value(
-            this.number(value)
-        );
-    }
-
-    @Override
-    public DateTimeContext dateTimeContext() {
-        return new FakeDateTimeContext() {
-
-            @Override
-            public String toString() {
-                return "DateTimeContext123";
-            }
-        };
-    }
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic(
-            DecimalNumberSymbols.with(
-                MINUS,
-                PLUS,
-                ZERO_DIGIT,
-                CURRENCY,
-                DECIMAL,
-                EXPONENT,
-                GROUP_SEPARATOR,
-                INFINITY,
-                MONETARY_DECIMAL_SEPARATOR,
-                NAN,
-                PERCENT,
-                PERMILL_SYMBOL
-            ),
-            LOCALE,
-            new MathContext(
-                MathContext.DECIMAL32.getPrecision(),
-                RoundingMode.HALF_UP
-            )
-        );
-    }
-
-    // SpreadsheetProviderTesting.......................................................................................
-
-    @Override
-    public BasicSpreadsheetEngineContext createSpreadsheetProvider() {
-        return this.createContext();
     }
 
     // ClassTesting.....................................................................................................
