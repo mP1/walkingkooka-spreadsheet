@@ -1407,19 +1407,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final Locale locale,
-                                                        final ProviderContext providerContext) {
-        return this.createContext(
-            METADATA,
-            EnvironmentContexts.empty(
-                locale,
-                NOW,
-                Optional.of(USER)
-            ),
-            providerContext
-        );
-    }
-
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final EnvironmentContext environmentContext,
                                                         final ProviderContext providerContext) {
