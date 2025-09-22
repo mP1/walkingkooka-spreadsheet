@@ -2599,7 +2599,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string(text)
+                    text
                 ),
             SpreadsheetFormula.textPatch(text)
         );
@@ -2677,7 +2677,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_TYPE_PROPERTY,
-                    JsonNode.string("text123")
+                    "text123"
                 ),
             SpreadsheetFormula.valueTypePatch(
                 Optional.of(
@@ -2766,7 +2766,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_PROPERTY,
-                    JsonNode.string(inputValue)
+                    inputValue
                 ),
             formula.setValue(
                 Optional.of(inputValue)
@@ -2935,7 +2935,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string(TEXT)
+                    TEXT
                 ),
             this.formula(TEXT)
         );
@@ -2949,7 +2949,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string(TEXT)
+                    TEXT
                 ).set(
                     SpreadsheetFormula.TOKEN_PROPERTY,
                     this.marshallContext()
@@ -2970,7 +2970,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string("Different text parse token")
+                    "Different text parse token"
                 ).set(
                     SpreadsheetFormula.TOKEN_PROPERTY,
                     this.marshallContext()
@@ -2989,8 +2989,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.unmarshallAndCheck(
             JsonNode.object()
-                .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
                 .set(
+                    SpreadsheetFormula.TEXT_PROPERTY,
+                    TEXT
+                ).set(
                     SpreadsheetFormula.EXPRESSION_PROPERTY,
                     this.marshallContext()
                         .marshallWithType(
@@ -3011,7 +3013,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string(TEXT)
+                    TEXT
                 ).set(
                     SpreadsheetFormula.TOKEN_PROPERTY,
                     this.marshallContext()
@@ -3037,7 +3039,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string(TEXT)
+                    TEXT
                 ).set(
                     SpreadsheetFormula.VALUE_PROPERTY,
                     JsonNode.number(EXPRESSION_VALUE)
@@ -3055,7 +3057,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_PROPERTY,
-                    JsonNode.string(VALUE)
+                    VALUE
                 ),
             SpreadsheetFormula.EMPTY.setValue(
                 Optional.of(VALUE)
@@ -3069,10 +3071,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.VALUE_TYPE_PROPERTY,
-                    JsonNode.string(VALUE_TYPE.value())
+                    VALUE_TYPE.value()
                 ).set(
                     SpreadsheetFormula.VALUE_PROPERTY,
-                    JsonNode.string(VALUE)
+                    VALUE
                 ),
             SpreadsheetFormula.EMPTY.setValueType(
                 Optional.of(VALUE_TYPE)
@@ -3093,7 +3095,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     SpreadsheetFormula.TEXT_PROPERTY,
-                    JsonNode.string(TEXT)
+                    TEXT
                 ).set(
                     SpreadsheetFormula.ERROR_PROPERTY,
                     this.marshallContext()
@@ -3183,7 +3185,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             JsonNode.object()
                 .set(
                     JsonPropertyName.with("text"),
-                    JsonNode.string("1+2")
+                    "1+2"
                 ).set(
                     JsonPropertyName.with("value"),
                     this.marshallContext()

@@ -1822,7 +1822,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
             ) // unnecessary to include type.
             .set(
                 TEXT_PROPERTY,
-                JsonNode.string(this.text())
+                this.text()
             );
     }
 
@@ -1849,8 +1849,14 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
      */
     private JsonNode marshallLeafParserToken(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-            .set(VALUE_PROPERTY, context.marshall(this.value())) // unnecessary to include type.
-            .set(TEXT_PROPERTY, JsonNode.string(this.text()));
+            .set(
+                VALUE_PROPERTY,
+                context.marshall(this.value())
+            ) // unnecessary to include type.
+            .set(
+                TEXT_PROPERTY,
+                this.text()
+            );
     }
 
     private static <T extends SpreadsheetFormatParserToken> void register(final Class<T> type,

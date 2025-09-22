@@ -757,7 +757,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         if (false == text.isEmpty()) {
             object = object.set(
                 TEXT_PROPERTY,
-                JsonNode.string(text)
+                text
             );
         }
 
