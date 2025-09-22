@@ -80,7 +80,19 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
                 throw new UnsupportedOperationException();
             }
+
+            @Override
+            public SpreadsheetContext setLocale(final Locale locale) {
+                Objects.requireNonNull(locale, "locale");
+                throw new UnsupportedOperationException();
+            }
         };
+
+        @Override
+        public SpreadsheetContext setLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public String toString() {

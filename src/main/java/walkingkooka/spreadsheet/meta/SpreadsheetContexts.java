@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -33,10 +34,12 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      */
     public static SpreadsheetContext basic(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                            final SpreadsheetMetadataStore store,
+                                           final LocaleContext localeContext,
                                            final ProviderContext providerContext) {
         return BasicSpreadsheetContext.with(
             createMetadata,
             store,
+            localeContext,
             providerContext
         );
     }

@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -27,25 +29,30 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-final class BasicSpreadsheetContext implements SpreadsheetContext {
+final class BasicSpreadsheetContext implements SpreadsheetContext,
+    LocaleContextDelegator {
 
     static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                         final SpreadsheetMetadataStore store,
+                                        final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(store, "store"),
+            Objects.requireNonNull(localeContext, "localeContext"),
             Objects.requireNonNull(providerContext, "providerContext")
         );
     }
 
     private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                     final SpreadsheetMetadataStore store,
+                                    final LocaleContext localeContext,
                                     final ProviderContext providerContext) {
         super();
 
         this.createMetadata = createMetadata;
         this.store = store;
+        this.localeContext = localeContext;
         this.providerContext = providerContext;
     }
 
@@ -85,6 +92,30 @@ final class BasicSpreadsheetContext implements SpreadsheetContext {
     }
 
     private final SpreadsheetMetadataStore store;
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    private final LocaleContext localeContext;
+
+    @Override
+    public SpreadsheetContext setLocale(final Locale locale) {
+        final LocaleContext before = this.localeContext;
+        final LocaleContext after = before.setLocale(locale);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetContext(
+                this.createMetadata,
+                this.store,
+                after,
+                this.providerContext
+            );
+    }
 
     // HasProviderContext...............................................................................................
 
