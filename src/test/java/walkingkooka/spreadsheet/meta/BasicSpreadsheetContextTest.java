@@ -17,10 +17,19 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.function.BiFunction;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetContextTest implements SpreadsheetContextTesting<BasicSpreadsheetContext> {
 
@@ -33,17 +42,58 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         59
     );
 
+    private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA = (e, dl) -> SpreadsheetMetadata.EMPTY;
+    private final static SpreadsheetMetadataStore STORE = SpreadsheetMetadataStores.fake();
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+
+    @Test
+    public void testWithNullCreateMetadataFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                null,
+                STORE,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullStoreFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                CREATE_METADATA,
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                CREATE_METADATA,
+                STORE,
+                null
+            )
+        );
+    }
+
     @Override
     public BasicSpreadsheetContext createContext() {
         return BasicSpreadsheetContext.with(
-            (e, l) -> SpreadsheetMetadata.EMPTY,
+            CREATE_METADATA,
             SpreadsheetMetadataStores.treeMap(
                 SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     Locale.ENGLISH
                 ),
                 () -> NOW
-            )
+            ),
+            PROVIDER_CONTEXT
         );
     }
 

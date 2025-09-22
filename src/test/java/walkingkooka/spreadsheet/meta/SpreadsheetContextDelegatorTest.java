@@ -49,7 +49,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             return this.context;
         }
 
-        private final SpreadsheetContext context = new SpreadsheetContext() {
+        private final SpreadsheetContext context = new FakeSpreadsheetContext() {
 
             @Override
             public SpreadsheetMetadata createMetadata(final EmailAddress user,
