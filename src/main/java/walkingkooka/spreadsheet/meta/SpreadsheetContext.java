@@ -22,6 +22,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.store.MissingStoreException;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -43,6 +44,15 @@ public interface SpreadsheetContext extends Context,
      * Loads the {@link SpreadsheetMetadata} for the given {@link SpreadsheetId}
      */
     Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id);
+
+    /**
+     * Attempts to load the {@link SpreadsheetMetadata} with the given {@link SpreadsheetId}, throwing
+     * {@link MissingStoreException} if not found.
+     */
+    default SpreadsheetMetadata loadMetadataOrFail(final SpreadsheetId id) {
+        return this.loadMetadata(id)
+            .orElseThrow(() -> new MissingStoreException("SpreadsheetMetadata: Missing " + id));
+    }
 
     /**
      * Updates the given {@link SpreadsheetMetadata}
