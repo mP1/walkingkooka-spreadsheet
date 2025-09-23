@@ -91,10 +91,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
         final AtomicInteger cleared = new AtomicInteger();
 
         final SpreadsheetCellStoreActionSpreadsheetMetadataStore store = SpreadsheetCellStoreActionSpreadsheetMetadataStore.with(
-            SpreadsheetMetadataStores.treeMap(
-                CREATE_TEMPLATE,
-                LocalDateTime::now
-            ),
+            SpreadsheetMetadataStores.treeMap(),
             (id) -> new FakeSpreadsheetCellStore() {
                 @Override
                 public void clearParsedFormulaExpressions() {
@@ -551,10 +548,7 @@ public final class SpreadsheetCellStoreActionSpreadsheetMetadataStoreTest extend
     }
 
     private SpreadsheetMetadataStore createTreeMap() {
-        return SpreadsheetMetadataStores.treeMap(
-            CREATE_TEMPLATE,
-            LocalDateTime::now
-        );
+        return SpreadsheetMetadataStores.treeMap();
     }
 
     // class............................................................................................................

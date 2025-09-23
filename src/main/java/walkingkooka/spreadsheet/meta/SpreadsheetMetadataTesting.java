@@ -58,9 +58,6 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProvider;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStoreTesting;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
@@ -108,17 +105,6 @@ import java.util.function.Function;
  */
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends Testing {
-
-    /**
-     * Creates a {@link SpreadsheetMetadataStore} with {@link SpreadsheetMetadataStoreTesting#CREATE_TEMPLATE} and a
-     * fixed timestamp of {@link #NOW}.
-     */
-    static SpreadsheetMetadataStore spreadsheetMetadataStore() {
-        return SpreadsheetMetadataStores.treeMap(
-            SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
-            SpreadsheetMetadataTesting.NOW
-        );
-    }
 
     ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
