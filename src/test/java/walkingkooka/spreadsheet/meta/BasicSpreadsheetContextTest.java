@@ -147,13 +147,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public BasicSpreadsheetContext createContext() {
         return BasicSpreadsheetContext.with(
             CREATE_METADATA,
-            SpreadsheetMetadataStores.treeMap(
-                SpreadsheetMetadata.EMPTY.set(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    Locale.ENGLISH
-                ),
-                () -> NOW
-            ),
+            SpreadsheetMetadataStores.treeMap(),
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );

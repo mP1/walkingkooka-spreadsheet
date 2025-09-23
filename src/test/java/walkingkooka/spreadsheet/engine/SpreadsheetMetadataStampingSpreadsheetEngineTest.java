@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStoreTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
@@ -418,10 +417,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetColumnStore columns = SpreadsheetColumnStores.treeMap();
         final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
         final SpreadsheetLabelReferencesStore labelReferences = SpreadsheetLabelReferencesStores.treeMap();
-        final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap(
-            SpreadsheetMetadataStoreTesting.CREATE_TEMPLATE,
-            LocalDateTime::now
-        );
+        final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap();
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = SpreadsheetCellRangeStores.treeMap();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
         final SpreadsheetRowStore rows = SpreadsheetRowStores.treeMap();

@@ -18,9 +18,6 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.collect.list.ImmutableList;
-import walkingkooka.datetime.HasNow;
-import walkingkooka.environment.AuditInfo;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -28,10 +25,8 @@ import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
 import walkingkooka.text.CaseSensitivity;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,30 +42,17 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetMetadataStore}
      */
-    static TreeMapSpreadsheetMetadataStore with(final SpreadsheetMetadata createTemplate,
-                                                final HasNow now) {
-        Objects.requireNonNull(createTemplate, "createTemplate");
-
-        if (false == createTemplate.get(SpreadsheetMetadataPropertyName.LOCALE).isPresent()) {
-            throw new IllegalArgumentException("Metadata missing: " + SpreadsheetMetadataPropertyName.LOCALE);
-        }
-
-        return new TreeMapSpreadsheetMetadataStore(
-            createTemplate,
-            Objects.requireNonNull(now, "now")
-        );
+    static TreeMapSpreadsheetMetadataStore empty() {
+        return new TreeMapSpreadsheetMetadataStore();
     }
 
     /**
      * Private ctor.
      */
-    private TreeMapSpreadsheetMetadataStore(final SpreadsheetMetadata createTemplate,
-                                            final HasNow now) {
+    private TreeMapSpreadsheetMetadataStore() {
         super();
 
         this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::idSetter);
-        this.createTemplate = createTemplate;
-        this.now = now;
 
     }
 
@@ -79,36 +61,6 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         return spreadsheetMetadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SpreadsheetId.with(null == id ? 1 : id.value() + 1));
     }
-
-    @Override
-    public SpreadsheetMetadata create(final EmailAddress creator,
-                                      final Optional<Locale> locale) {
-        Objects.requireNonNull(creator, "creator");
-        Objects.requireNonNull(locale, "locale");
-
-        final LocalDateTime timestamp = this.now.now();
-
-        SpreadsheetMetadata unsaved = this.createTemplate.set(
-            SpreadsheetMetadataPropertyName.AUDIT_INFO,
-            AuditInfo.with(
-                creator,
-                timestamp,
-                creator,
-                timestamp
-            )
-        );
-        if (locale.isPresent()) {
-            unsaved = unsaved.set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                locale.orElse(null)
-            );
-        }
-
-        // assumes that the template has a default Locale in "defaults"
-        return this.save(unsaved);
-    }
-
-    private final SpreadsheetMetadata createTemplate;
 
     @Override
     public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
@@ -203,11 +155,6 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     }
 
     private final Store<SpreadsheetId, SpreadsheetMetadata> store;
-
-    /**
-     * Used to provide the current time to timestamp operations.
-     */
-    private final HasNow now;
 
     @Override
     public String toString() {

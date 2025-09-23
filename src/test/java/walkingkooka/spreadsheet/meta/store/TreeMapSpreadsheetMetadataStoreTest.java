@@ -20,26 +20,15 @@ package walkingkooka.spreadsheet.meta.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<TreeMapSpreadsheetMetadataStore> {
-
-    private final static Locale DEFAULT_LOCALE = Locale.forLanguageTag("FR");
-
-    private final static SpreadsheetMetadata CREATE_TEMPLATE = SpreadsheetMetadata.EMPTY.setDefaults(
-        SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            DEFAULT_LOCALE
-        )
-    );
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -50,60 +39,6 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     );
 
     private final static EmailAddress CREATOR = EmailAddress.parse("creator1@example.com");
-    private final static Optional<Locale> LOCALE = Optional.of(
-        Locale.forLanguageTag("EN-AU")
-    );
-
-    @Test
-    public void testCreate() {
-        this.checkEquals(
-            CREATE_TEMPLATE.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SpreadsheetId.with(1)
-            ).set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                    CREATOR,
-                    NOW,
-                    CREATOR,
-                    NOW
-                )
-            ).set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                LOCALE.get()
-            ),
-            this.createStore()
-                .create(
-                    CREATOR,
-                    LOCALE
-                )
-        );
-    }
-
-    @Test
-    public void testCreateWithoutLocale() {
-        final Optional<Locale> locale = Optional.empty();
-
-        this.checkEquals(
-            CREATE_TEMPLATE.set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                SpreadsheetId.with(1)
-            ).set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                    CREATOR,
-                    NOW,
-                    CREATOR,
-                    NOW
-                )
-            ),
-            this.createStore()
-                .create(
-                    CREATOR,
-                    locale
-                )
-        );
-    }
 
     // findByName.......................................................................................................
 
@@ -213,7 +148,12 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     }
 
     private static SpreadsheetMetadata createMetadata(final String name) {
-        return CREATE_TEMPLATE.set(
+        return SpreadsheetMetadata.EMPTY.setDefaults(
+            SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("EN-AU")
+            )
+        ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
             SpreadsheetName.with(name)
         ).set(
@@ -229,10 +169,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
 
     @Override
     public TreeMapSpreadsheetMetadataStore createStore() {
-        return TreeMapSpreadsheetMetadataStore.with(
-            CREATE_TEMPLATE,
-            () -> NOW
-        );
+        return TreeMapSpreadsheetMetadataStore.empty();
     }
 
     // toString.........................................................................................................

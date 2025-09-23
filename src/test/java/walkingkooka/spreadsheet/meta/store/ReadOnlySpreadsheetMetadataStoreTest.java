@@ -22,8 +22,6 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
-import java.time.LocalDateTime;
-
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -154,10 +152,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     }
 
     private SpreadsheetMetadataStore createTreeMap() {
-        return SpreadsheetMetadataStores.treeMap(
-            CREATE_TEMPLATE,
-            LocalDateTime::now
-        );
+        return SpreadsheetMetadataStores.treeMap();
     }
 
     @Override

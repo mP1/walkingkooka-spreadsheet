@@ -17,12 +17,10 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -40,15 +38,6 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
 
     private ReadOnlySpreadsheetMetadataStore(SpreadsheetMetadataStore store) {
         this.store = store;
-    }
-
-    @Override
-    public SpreadsheetMetadata create(final EmailAddress creator,
-                                      final Optional<Locale> locale) {
-        Objects.requireNonNull(creator, "creator");
-        Objects.requireNonNull(locale, "locale");
-
-        throw new UnsupportedOperationException();
     }
 
     // Store............................................................................................................
