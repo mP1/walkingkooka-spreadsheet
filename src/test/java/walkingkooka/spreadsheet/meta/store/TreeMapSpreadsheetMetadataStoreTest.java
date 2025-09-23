@@ -108,6 +108,28 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     // findByName.......................................................................................................
 
     @Test
+    public void testFindByNameWithEmpty() {
+        final TreeMapSpreadsheetMetadataStore store = this.createStore();
+
+        final SpreadsheetMetadata metadata1 = store.save(
+            createMetadata("Hello1")
+        );
+
+        final SpreadsheetMetadata metadata2 = store.save(
+            createMetadata("Different2")
+        );
+
+        this.findByNameAndCheck(
+            store,
+            "",
+            0,
+            10,
+            metadata1,
+            metadata2
+        );
+    }
+
+    @Test
     public void testFindByNameWithExactNameMatch() {
         final TreeMapSpreadsheetMetadataStore store = this.createStore();
 
