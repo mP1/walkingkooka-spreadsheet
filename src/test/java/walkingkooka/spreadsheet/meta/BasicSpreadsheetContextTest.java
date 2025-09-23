@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
@@ -44,7 +45,20 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         59
     );
 
-    private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA = (e, dl) -> SpreadsheetMetadata.EMPTY;
+    private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA =
+        (e, dl) ->
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.with(
+                    e,
+                    NOW,
+                    e,
+                    NOW
+                )
+            ).set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                dl.get()
+            );
     private final static SpreadsheetMetadataStore STORE = SpreadsheetMetadataStores.fake();
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
@@ -98,6 +112,34 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 LOCALE_CONTEXT,
                 null
             )
+        );
+    }
+
+    // createMetadata...................................................................................................
+
+    @Test
+    public void testCreateMetadata() {
+        final BasicSpreadsheetContext context = this.createContext();
+
+        final EmailAddress user = EmailAddress.parse("user@example.com");
+        final Optional<Locale> locale = Optional.of(Locale.FRENCH);
+
+        final SpreadsheetMetadata metadata = context.createMetadata(
+            user,
+            locale
+        );
+
+        this.checkNotEquals(
+            Optional.empty(),
+            metadata.id(),
+            "id"
+        );
+
+        this.checkEquals(
+            user,
+            metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
+                .createdBy(),
+            "createdBy"
         );
     }
 

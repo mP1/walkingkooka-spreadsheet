@@ -62,9 +62,11 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         Objects.requireNonNull(user, "user");
         Objects.requireNonNull(locale, "locale");
 
-        return this.createMetadata.apply(
-            user,
-            locale
+        return this.saveMetadata(
+            this.createMetadata.apply(
+                user,
+                locale
+            )
         );
     }
 
