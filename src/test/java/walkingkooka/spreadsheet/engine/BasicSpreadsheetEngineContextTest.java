@@ -30,8 +30,8 @@ import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.FakeLocaleContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -62,7 +62,6 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSample;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -380,7 +379,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER
@@ -398,7 +396,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER
@@ -416,7 +413,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER
@@ -434,7 +430,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 null,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER
@@ -451,25 +446,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 METADATA,
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
-                null,
-                LOCALE_CONTEXT,
-                SPREADSHEET_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullLocaleContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
-                METADATA,
-                STORE_REPOSITORY,
-                FUNCTION_ALIASES,
-                ENVIRONMENT_CONTEXT,
                 null,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -488,7 +464,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 null,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER
@@ -506,7 +481,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER
@@ -524,7 +498,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 STORE_REPOSITORY,
                 FUNCTION_ALIASES,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT,
                 null
@@ -1436,21 +1409,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             ),
             FUNCTION_ALIASES,
             environmentContext,
-            new FakeLocaleContext() {
-                @Override
-                public Locale locale() {
-                    return this.localLocale;
-                }
-
-                @Override
-                public LocaleContext setLocale(final Locale locale) {
-                    Objects.requireNonNull(locale, "locale");
-                    this.localLocale = locale;
-                    return this;
-                }
-
-                private Locale localLocale = environmentContext.locale();
-            },
             this.spreadsheetContext(
                 metadata,
                 providerContext
@@ -1540,7 +1498,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             repository,
             FUNCTION_ALIASES,
             environmentContext,
-            LOCALE_CONTEXT,
             this.spreadsheetContext(
                 metadata,
                 PROVIDER_CONTEXT
@@ -1601,50 +1558,83 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        return new FakeSpreadsheetContext() {
+        return new TestSpreadsheetContext(
+            metadata,
+            LOCALE_CONTEXT,
+            providerContext
+        );
+    }
 
-            @Override
-            public SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                                      final Optional<Locale> locale) {
-                Objects.requireNonNull(user, "user");
-                Objects.requireNonNull(locale, "locale");
+    private final static class TestSpreadsheetContext implements SpreadsheetContext,
+        LocaleContextDelegator{
 
-                throw new UnsupportedOperationException();
-            }
+        TestSpreadsheetContext(final SpreadsheetMetadata metadata,
+                               final LocaleContext localeContext,
+                               final ProviderContext providerContext) {
+            this.metadata = metadata;
+            this.localeContext = localeContext;
+            this.providerContext = providerContext;
+        }
 
-            @Override
-            public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-                return Optional.ofNullable(
-                    this.metadata.get(
-                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID
-                    ).equals(Optional.of(id)) ?
-                        this.metadata :
-                        null
-                );
-            }
+        @Override
+        public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                                  final Optional<Locale> locale) {
+            Objects.requireNonNull(user, "user");
+            Objects.requireNonNull(locale, "locale");
 
-            @Override
-            public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
-                Objects.requireNonNull(metadata, "metadata");
+            throw new UnsupportedOperationException();
+        }
 
-                this.metadata = metadata;
-                return metadata;
-            }
+        @Override
+        public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+            return Optional.ofNullable(
+                this.metadata.get(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID
+                ).equals(Optional.of(id)) ?
+                    this.metadata :
+                    null
+            );
+        }
 
-            private SpreadsheetMetadata metadata;
+        @Override
+        public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+            Objects.requireNonNull(metadata, "metadata");
+
+            this.metadata = metadata;
+            return metadata;
+        }
+
+        private SpreadsheetMetadata metadata;
 
 
-            @Override
-            public void deleteMetadata(final SpreadsheetId id) {
-                Objects.requireNonNull(metadata, "metadata");
-                throw new UnsupportedOperationException();
-            }
+        @Override
+        public void deleteMetadata(final SpreadsheetId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
 
-            @Override
-            public ProviderContext providerContext() {
-                return providerContext;
-            }
-        };
+        @Override
+        public ProviderContext providerContext() {
+            return providerContext;
+        }
+
+        private final ProviderContext providerContext;
+
+        @Override
+        public LocaleContext localeContext() {
+            return this.localeContext;
+        }
+
+        @Override
+        public SpreadsheetContext setLocale(final Locale locale) {
+            return new TestSpreadsheetContext(
+                this.metadata,
+                this.localeContext.setLocale(locale),
+                this.providerContext
+            );
+        }
+
+        private final LocaleContext localeContext;
     }
 
     // SpreadsheetProviderTesting.......................................................................................

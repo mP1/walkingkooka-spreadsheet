@@ -92,7 +92,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final EnvironmentContext environmentContext,
-                                              final LocaleContext localeContext,
                                               final SpreadsheetContext spreadsheetContext,
                                               final TerminalContext terminalContext,
                                               final SpreadsheetProvider spreadsheetProvider) {
@@ -101,12 +100,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(environmentContext, "environmentContext");
-        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
 
-        final LocaleContext metadataLocaleContext = metadata.localeContext(localeContext);
+        final LocaleContext metadataLocaleContext = metadata.localeContext(spreadsheetContext);
         final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
             storeRepository.labels()
         );

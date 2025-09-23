@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetContext;
@@ -39,7 +38,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final EnvironmentContext environmentContext,
-                                                 final LocaleContext localeContext,
                                                  final SpreadsheetContext spreadsheetContext,
                                                  final TerminalContext terminalContext,
                                                  final SpreadsheetProvider spreadsheetProvider) {
@@ -49,7 +47,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
             storeRepository,
             functionAliases,
             environmentContext,
-            localeContext,
             spreadsheetContext,
             terminalContext,
             spreadsheetProvider
