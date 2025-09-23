@@ -347,7 +347,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         private final DateTimeSymbols dateTimeSymbols;
     }
 
-    private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new TestSpreadsheetFormatterContext(
+    private final static SpreadsheetFormatterContext TEXT_FORMATTER_CONTEXT = new TestSpreadsheetFormatterContext(
         DateTimeSymbols.fromDateFormatSymbols(
             new DateFormatSymbols(LOCALE)
         ),
@@ -4560,7 +4560,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetFormula.EMPTY.setText(formula)
             ).setStyle(STYLE),
             value,
-            SPREADSHEET_TEXT_FORMAT_CONTEXT
+            TEXT_FORMATTER_CONTEXT
         );
     }
 
@@ -4682,7 +4682,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             PROVIDER_CONTEXT
         ).format(
             value,
-            SPREADSHEET_TEXT_FORMAT_CONTEXT
+            TEXT_FORMATTER_CONTEXT
         ).get();
 
         final SpreadsheetDelta expected = SpreadsheetDelta.EMPTY
@@ -25542,7 +25542,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             cell,
             value,
             style,
-            SPREADSHEET_TEXT_FORMAT_CONTEXT
+            TEXT_FORMATTER_CONTEXT
         );
     }
 
