@@ -23,6 +23,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -55,6 +56,18 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default void deleteMetadata(final SpreadsheetId id) {
         this.spreadsheetContext()
             .deleteMetadata(id);
+    }
+
+    @Override
+    default List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                    final int offset,
+                                                                    final int count) {
+        return this.spreadsheetContext()
+            .findMetadataBySpreadsheetName(
+                name,
+                offset,
+                count
+            );
     }
 
     // LocaleContext....................................................................................................

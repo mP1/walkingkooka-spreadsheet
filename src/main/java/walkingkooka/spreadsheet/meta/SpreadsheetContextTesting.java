@@ -19,11 +19,14 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
+import walkingkooka.text.CharSequences;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -142,6 +145,77 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
             NullPointerException.class,
             () -> this.createContext()
                 .deleteMetadata(null)
+        );
+    }
+
+    // findMetadataBySpreadsheetName....................................................................................
+
+    @Test
+    default void testFindMetadataBySpreadsheetNameWithNullNameFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .findMetadataBySpreadsheetName(
+                    null,
+                    0, // offset
+                    1 // count
+                )
+        );
+    }
+
+    @Test
+    default void testFindMetadataBySpreadsheetNameWithNegativeOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .findMetadataBySpreadsheetName(
+                    "Hello",
+                    -1, // offset
+                    1 // count
+                )
+        );
+    }
+
+    @Test
+    default void testFindMetadataBySpreadsheetNameWithNegativeCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .findMetadataBySpreadsheetName(
+                    "Hello",
+                    0, // offset
+                    -1 // count
+                )
+        );
+    }
+
+    default void findMetadataBySpreadsheetNameAndCheck(final SpreadsheetContext context,
+                                                       final String name,
+                                                       final int offset,
+                                                       final int count,
+                                                       final SpreadsheetMetadata... expected) {
+        this.findMetadataBySpreadsheetNameAndCheck(
+            context,
+            name,
+            offset,
+            count,
+            Lists.of(expected)
+        );
+    }
+
+    default void findMetadataBySpreadsheetNameAndCheck(final SpreadsheetContext context,
+                                                       final String name,
+                                                       final int offset,
+                                                       final int count,
+                                                       final List<SpreadsheetMetadata> expected) {
+        this.checkEquals(
+            expected,
+            context.findMetadataBySpreadsheetName(
+                name,
+                offset,
+                count
+            ),
+            () -> "findMetadataBySpreadsheetName " + CharSequences.quoteAndEscape(name) + " offset=" + offset + " count=" + count
         );
     }
 
