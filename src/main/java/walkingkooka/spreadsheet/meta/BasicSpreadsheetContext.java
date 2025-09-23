@@ -24,6 +24,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -91,6 +92,17 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         Objects.requireNonNull(id, "id");
 
         this.store.delete(id);
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                   final int offset,
+                                                                   final int count) {
+        return this.store.findByName(
+            name,
+            offset,
+            count
+        );
     }
 
     private final SpreadsheetMetadataStore store;

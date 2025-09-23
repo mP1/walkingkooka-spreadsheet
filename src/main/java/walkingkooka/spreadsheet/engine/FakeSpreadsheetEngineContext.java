@@ -44,6 +44,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -138,6 +139,13 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public void deleteMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                   final int offset,
+                                                                   final int count) {
         throw new UnsupportedOperationException();
     }
 

@@ -20,7 +20,9 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
+import walkingkooka.store.Store;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -77,6 +79,16 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public void deleteMetadata(final SpreadsheetId id) {
                 Objects.requireNonNull(id, "id");
+
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                           final int offset,
+                                                                           final int count) {
+                Objects.requireNonNull(name, "name");
+                Store.checkOffsetAndCount(offset, count);
 
                 throw new UnsupportedOperationException();
             }

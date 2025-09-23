@@ -94,6 +94,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.store.Store;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -1610,6 +1611,16 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         @Override
         public void deleteMetadata(final SpreadsheetId id) {
             Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                       final int offset,
+                                                                       final int count) {
+            Objects.requireNonNull(name, "name");
+            Store.checkOffsetAndCount(offset, count);
+
             throw new UnsupportedOperationException();
         }
 

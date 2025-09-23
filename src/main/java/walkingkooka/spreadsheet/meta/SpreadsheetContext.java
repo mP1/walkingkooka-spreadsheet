@@ -24,6 +24,7 @@ import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.store.MissingStoreException;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -63,6 +64,13 @@ public interface SpreadsheetContext extends Context,
      * Deletes an existing {@link SpreadsheetMetadata}
      */
     void deleteMetadata(final SpreadsheetId id);
+
+    /**
+     * Finds all {@link SpreadsheetMetadata} with names that match name.
+     */
+    List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                            final int offset,
+                                                            final int count);
 
     // LocaleContext....................................................................................................
 

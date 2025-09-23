@@ -22,6 +22,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -49,6 +50,13 @@ public class FakeSpreadsheetContext extends FakeLocaleContext implements Spreads
 
     @Override
     public void deleteMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                   final int offset,
+                                                                   final int count) {
         throw new UnsupportedOperationException();
     }
 
