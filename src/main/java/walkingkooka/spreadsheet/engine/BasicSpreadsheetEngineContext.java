@@ -119,7 +119,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 functionAliases.toConverterSelector(),
                 spreadsheetLabelNameResolver,
-                spreadsheetProvider, // SpreadsheetConverterProvider
+                spreadsheetProvider,
                 metadataLocaleContext, // LocaleContext
                 spreadsheetContext.providerContext()
             ),
