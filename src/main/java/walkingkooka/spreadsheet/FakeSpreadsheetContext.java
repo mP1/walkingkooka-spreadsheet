@@ -21,6 +21,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
 
 import java.time.LocalDateTime;
@@ -108,6 +109,13 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetMetadataContext imple
 
     @Override
     public Locale locale() {
+        throw new UnsupportedOperationException();
+    }
+
+    // HasProviderContext...............................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
         throw new UnsupportedOperationException();
     }
 }

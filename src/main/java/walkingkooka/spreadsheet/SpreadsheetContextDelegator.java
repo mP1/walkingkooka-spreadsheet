@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 
@@ -71,6 +72,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     }
 
     // SpreadsheetMetadataContext.......................................................................................
+
+    @Override
+    default ProviderContext providerContext() {
+        return this.spreadsheetContext()
+            .providerContext();
+    }
 
     @Override
     default SpreadsheetMetadataContext spreadsheetMetadataContext() {

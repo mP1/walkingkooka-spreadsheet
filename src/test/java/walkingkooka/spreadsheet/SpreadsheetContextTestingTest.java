@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextTestingTest.TestSpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -26,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public final class SpreadsheetContextTestingTest implements SpreadsheetContextTesting<TestSpreadsheetContext> {
 
@@ -35,6 +39,59 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
     }
 
     static class TestSpreadsheetContext extends FakeSpreadsheetContext {
+
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            Objects.requireNonNull(name, "name");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                          final T value) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+            Objects.requireNonNull(name, "name");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<Locale> findByLocaleText(final String text,
+                                            final int offset,
+                                            final int count) {
+            Objects.requireNonNull(text, "text");
+            Store.checkOffsetAndCount(offset, count);
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<String> localeText(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetContext setLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -74,6 +131,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
             Store.checkOffsetAndCount(offset, count);
 
             throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<EmailAddress> user() {
+            return Optional.empty();
         }
     }
 

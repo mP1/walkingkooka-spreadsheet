@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 
 import java.util.Locale;
@@ -29,6 +30,7 @@ import java.util.Locale;
  * A {@link Context} for a single spreadsheet.
  */
 public interface SpreadsheetContext extends EnvironmentContext,
+    HasProviderContext,
     LocaleContext,
     SpreadsheetMetadataContext {
 
