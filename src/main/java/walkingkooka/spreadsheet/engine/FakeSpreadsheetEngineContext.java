@@ -119,7 +119,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    // SpreadsheetContext...............................................................................................
+    // SpreadsheetGlobalContext.........................................................................................
 
     @Override
     public SpreadsheetMetadata createMetadata(final EmailAddress user,
