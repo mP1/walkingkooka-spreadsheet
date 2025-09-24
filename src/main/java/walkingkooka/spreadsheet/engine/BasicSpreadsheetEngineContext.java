@@ -104,7 +104,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
 
-        final LocaleContext metadataLocaleContext = metadata.localeContext(spreadsheetGlobalContext);
+        final LocaleContext metadataLocaleContext = spreadsheetGlobalContext.setLocale(metadata.locale());
         final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
             storeRepository.labels()
         );

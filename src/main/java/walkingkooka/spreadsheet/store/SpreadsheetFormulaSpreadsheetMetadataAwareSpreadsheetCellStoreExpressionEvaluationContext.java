@@ -73,7 +73,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         this.cell = cell;
         this.metadata = metadata;
         this.now = now;
-        this.localeContext = metadata.localeContext(localeContext);
+        this.localeContext = localeContext.setLocale(metadata.locale());
     }
 
     @Override

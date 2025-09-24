@@ -876,9 +876,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetMetadata loadFromLocale(final LocaleContext context) {
         return loadFromLocale0(
-            this.localeContext(
-                Objects.requireNonNull(context, "context")
-            )
+            Objects.requireNonNull(context, "context")
+                .setLocale(this.locale())
         );
     }
 
@@ -903,17 +902,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     @Override
     public final Locale locale() {
         return this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
-    }
-
-    // LocaleContext....................................................................................................
-
-    /**
-     * Returns a {@link LocaleContext}, with the given {@link SpreadsheetMetadataPropertyName#LOCALE}.
-     */
-    public final LocaleContext localeContext(final LocaleContext context) {
-        return context.setLocale(
-            this.locale()
-        );
     }
 
     // HasMathContext...................................................................................................
