@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
@@ -60,6 +62,13 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 dl.get()
             );
     private final static SpreadsheetMetadataStore STORE = SpreadsheetMetadataStores.fake();
+    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.map(
+        EnvironmentContexts.empty(
+            Locale.forLanguageTag("en-AU"),
+            LocalDateTime::now,
+            Optional.empty() // no user
+        )
+    );
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
 
     @Test
@@ -69,6 +78,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 null,
                 STORE,
+                ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT
             )
         );
@@ -80,6 +90,20 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
+                null,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullEnvironmentContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                CREATE_METADATA,
+                STORE,
                 null,
                 LOCALE_CONTEXT
             )
@@ -93,6 +117,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
                 STORE,
+                ENVIRONMENT_CONTEXT,
                 null
             )
         );
@@ -131,6 +156,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         return BasicSpreadsheetContext.with(
             CREATE_METADATA,
             SpreadsheetMetadataStores.treeMap(),
+            ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT
         );
     }

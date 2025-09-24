@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 
@@ -26,7 +28,20 @@ import java.util.Locale;
 /**
  * A {@link Context} for a single spreadsheet.
  */
-public interface SpreadsheetContext extends SpreadsheetMetadataContext, LocaleContext {
+public interface SpreadsheetContext extends EnvironmentContext,
+    LocaleContext,
+    SpreadsheetMetadataContext {
+
+    @Override
+    SpreadsheetContext cloneEnvironment();
+
+    @Override
+    <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                               final T value);
+
+    @Override
+    SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
 
     @Override
     SpreadsheetContext setLocale(final Locale locale);

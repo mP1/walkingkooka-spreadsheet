@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
@@ -30,25 +33,30 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 
 final class BasicSpreadsheetContext implements SpreadsheetContext,
+    EnvironmentContextDelegator,
     LocaleContextDelegator {
 
     static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                         final SpreadsheetMetadataStore store,
+                                        final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(store, "store"),
+            Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext")
         );
     }
 
     private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                     final SpreadsheetMetadataStore store,
+                                    final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext) {
         super();
 
         this.createMetadata = createMetadata;
         this.store = store;
+        this.environmentContext = environmentContext;
         this.localeContext = localeContext;
     }
 
@@ -101,6 +109,51 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private final SpreadsheetMetadataStore store;
+
+    // EnvironmentContextDelegator......................................................................................
+
+    @Override
+    public SpreadsheetContext cloneEnvironment() {
+        final EnvironmentContext before = this.environmentContext;
+        final EnvironmentContext cloned = before.cloneEnvironment();
+
+        return before.equals(cloned) ?
+            this :
+            with(
+                this.createMetadata,
+                this.store,
+                cloned,
+                this.localeContext
+            );
+    }
+
+    @Override
+    public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                      final T value) {
+        this.environmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+        return this;
+    }
+
+    @Override
+    public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.environmentContext.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
+    public Locale locale() {
+        return this.environmentContext.locale();
+    }
+
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.environmentContext;
+    }
+
+    private final EnvironmentContext environmentContext;
 
     // LocaleContext....................................................................................................
 
