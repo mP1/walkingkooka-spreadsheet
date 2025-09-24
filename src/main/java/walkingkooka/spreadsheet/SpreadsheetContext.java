@@ -18,10 +18,16 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+
+import java.util.Locale;
 
 /**
  * A {@link Context} for a single spreadsheet.
  */
-public interface SpreadsheetContext extends SpreadsheetMetadataContext {
+public interface SpreadsheetContext extends SpreadsheetMetadataContext, LocaleContext {
+
+    @Override
+    SpreadsheetContext setLocale(final Locale locale);
 }

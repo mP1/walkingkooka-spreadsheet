@@ -17,10 +17,21 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 
-public interface SpreadsheetContextDelegator extends SpreadsheetContext, SpreadsheetMetadataContextDelegator {
+public interface SpreadsheetContextDelegator extends SpreadsheetContext,
+    LocaleContextDelegator,
+    SpreadsheetMetadataContextDelegator {
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    default LocaleContext localeContext() {
+        return this.spreadsheetContext();
+    }
 
     // SpreadsheetMetadataContext.......................................................................................
 
