@@ -199,6 +199,12 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 .createdBy(),
             "createdBy"
         );
+
+        this.loadMetadataAndCheck(
+            context,
+            metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
+            metadata
+        );
     }
 
     @Override
