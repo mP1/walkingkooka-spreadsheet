@@ -24,6 +24,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.util.Locale;
 
@@ -35,6 +36,8 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     HasProviderContext,
     LocaleContext,
     SpreadsheetMetadataContext {
+
+    SpreadsheetStoreRepository storeRepository();
 
     @Override
     SpreadsheetContext cloneEnvironment();

@@ -25,9 +25,9 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,14 +41,14 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     SpreadsheetProviderDelegator {
 
     static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                        final SpreadsheetMetadataStore store,
+                                        final SpreadsheetStoreRepository storeRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
-            Objects.requireNonNull(store, "store"),
+            Objects.requireNonNull(storeRepository, "storeRepository"),
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext"),
@@ -57,7 +57,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                    final SpreadsheetMetadataStore store,
+                                    final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext,
@@ -65,13 +65,22 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         super();
 
         this.createMetadata = createMetadata;
-        this.store = store;
+        this.storeRepository = storeRepository;
         this.spreadsheetProvider = spreadsheetProvider;
         
         this.environmentContext = environmentContext;
         this.localeContext = localeContext;
         this.providerContext = providerContext;
     }
+
+    @Override
+    public SpreadsheetStoreRepository storeRepository() {
+        return this.storeRepository;
+    }
+
+    private final SpreadsheetStoreRepository storeRepository;
+
+    // SpreadsheetContext...............................................................................................
 
     @Override
     public SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -93,35 +102,40 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
-        return this.store.load(id);
+        return this.storeRepository.metadatas()
+            .load(id);
     }
 
     @Override
     public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
-        return this.store.save(metadata);
+        return this.storeRepository
+            .metadatas()
+            .save(metadata);
     }
 
     @Override
     public void deleteMetadata(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
-        this.store.delete(id);
+        this.storeRepository
+            .metadatas()
+            .delete(id);
     }
 
     @Override
     public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
                                                                    final int offset,
                                                                    final int count) {
-        return this.store.findByName(
-            name,
-            offset,
-            count
-        );
+        return this.storeRepository
+            .metadatas()
+            .findByName(
+                name,
+                offset,
+                count
+            );
     }
-
-    private final SpreadsheetMetadataStore store;
 
     // EnvironmentContextDelegator......................................................................................
 
@@ -134,7 +148,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             this :
             with(
                 this.createMetadata,
-                this.store,
+                this.storeRepository,
                 this.spreadsheetProvider,
                 cloned,
                 this.localeContext,
@@ -208,6 +222,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public String toString() {
-        return this.store.toString();
+        return this.storeRepository.toString();
     }
 }

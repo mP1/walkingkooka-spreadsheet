@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.util.Locale;
 
@@ -35,6 +36,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetProviderDelegator {
+
+    @Override
+    default SpreadsheetStoreRepository storeRepository() {
+        return this.spreadsheetContext()
+            .storeRepository();
+    }
 
     // EnvironmentContextDelegator......................................................................................
 

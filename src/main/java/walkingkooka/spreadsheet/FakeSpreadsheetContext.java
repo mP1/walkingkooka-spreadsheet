@@ -24,6 +24,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,6 +36,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     public FakeSpreadsheetContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetStoreRepository storeRepository() {
+        throw new UnsupportedOperationException();
     }
 
     // EnvironmentContext...............................................................................................
