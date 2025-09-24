@@ -17,11 +17,54 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
+
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
 
 public class FakeSpreadsheetContext extends FakeSpreadsheetMetadataContext implements SpreadsheetContext {
 
     public FakeSpreadsheetContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetContext setLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Locale> availableLocales() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Locale> findByLocaleText(final String text,
+                                        final int offset,
+                                        final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<String> localeText(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Locale locale() {
+        throw new UnsupportedOperationException();
     }
 }
