@@ -37,8 +37,12 @@ import walkingkooka.convert.provider.FakeConverterProvider;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -49,9 +53,9 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
@@ -76,6 +80,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
@@ -540,23 +545,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private static Object VALUE;
 
-    private SpreadsheetGlobalContext spreadsheetGlobalContext(final SpreadsheetMetadata metadata) {
-        Objects.requireNonNull(metadata, "metadata");
+    private final static class TestSpreadsheetContext implements SpreadsheetContext,
+        EnvironmentContextDelegator,
+        LocaleContextDelegator,
+        SpreadsheetProviderDelegator {
 
-        return new TestSpreadsheetGlobalContext(
-            metadata,
-            LOCALE_CONTEXT
-        );
-    }
-
-    private final static class TestSpreadsheetGlobalContext implements SpreadsheetGlobalContext,
-        LocaleContextDelegator {
-
-        TestSpreadsheetGlobalContext(final SpreadsheetMetadata metadata,
-                                     final LocaleContext localeContext) {
+        TestSpreadsheetContext(final SpreadsheetMetadata metadata,
+                               final SpreadsheetStoreRepository spreadsheetStoreRepository,
+                               final SpreadsheetProvider spreadsheetProvider) {
             this.metadata = metadata;
-            this.localeContext = localeContext;
+            this.spreadsheetStoreRepository = spreadsheetStoreRepository;
+            this.spreadsheetProvider = spreadsheetProvider;
         }
+
+        @Override
+        public SpreadsheetStoreRepository storeRepository() {
+            return this.spreadsheetStoreRepository;
+        }
+
+        private final SpreadsheetStoreRepository spreadsheetStoreRepository;
+
+        // SpreadsheetMetadataContext...................................................................................
 
         @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -606,24 +615,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public ProviderContext providerContext() {
-            return PROVIDER_CONTEXT;
-        }
-
-        @Override
         public LocaleContext localeContext() {
             return this.localeContext;
         }
 
         @Override
-        public SpreadsheetGlobalContext setLocale(final Locale locale) {
-            return new TestSpreadsheetGlobalContext(
-                this.metadata,
-                this.localeContext.setLocale(locale)
-            );
+        public Locale locale() {
+            return this.localeContext.locale();
         }
 
-        private final LocaleContext localeContext;
+        @Override
+        public SpreadsheetContext setLocale(final Locale locale) {
+            this.localeContext.setLocale(locale);
+            return this;
+        }
+
+        private final static LocaleContext localeContext = LocaleContexts.jre(LOCALE);
+
+        // EnvironmentContextDelegator..................................................................................
+
+        @Override
+        public SpreadsheetContext cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                          final T value) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public EnvironmentContext environmentContext() {
+            return ENVIRONMENT_CONTEXT;
+        }
+
+        // HasProviderContext...........................................................................................
+
+        @Override
+        public ProviderContext providerContext() {
+            return PROVIDER_CONTEXT;
+        }
+
+        // SpreadsheetProviderDelegator.................................................................................
+
+        @Override
+        public SpreadsheetProvider spreadsheetProvider() {
+            return this.spreadsheetProvider;
+        }
+
+        private final SpreadsheetProvider spreadsheetProvider;
     }
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
@@ -4745,62 +4791,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(
-                metadata
-            ),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                new FakeConverterProvider() {
-                    @Override
-                    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                               final List<?> values,
-                                                                               final ProviderContext context) {
-                        if (formulaConverterSelector.name().equals(name)) {
-                            return Cast.to(
-                                SpreadsheetConverters.nullToNumber()
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    new FakeConverterProvider() {
+                        @Override
+                        public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                   final List<?> values,
+                                                                                   final ProviderContext context) {
+                            if (formulaConverterSelector.name().equals(name)) {
+                                return Cast.to(
+                                    SpreadsheetConverters.nullToNumber()
+                                );
+                            }
+                            if (validationConverterSelector.name().equals(name)) {
+                                return Cast.to(
+                                    Converters.fake()
+                                );
+                            }
+                            return CONVERTER_PROVIDER.converter(
+                                name,
+                                values,
+                                context
                             );
                         }
-                        if (validationConverterSelector.name().equals(name)) {
-                            return Cast.to(
-                                Converters.fake()
-                            );
-                        }
-                        return CONVERTER_PROVIDER.converter(
-                            name,
-                            values,
-                            context
-                        );
-                    }
-                },
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                new FakeValidatorProvider() {
-                    @Override
-                    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
-                                                                                                                    final ProviderContext context) {
-                        if (validatorSelector.equals(selector)) {
-                            return Cast.to(
-                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
-                                                                                                          final SpreadsheetValidatorContext context) {
-                                        return this.noValidationErrors();
+                    },
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    new FakeValidatorProvider() {
+                        @Override
+                        public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                        final ProviderContext context) {
+                            if (validatorSelector.equals(selector)) {
+                                return Cast.to(
+                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                              final SpreadsheetValidatorContext context) {
+                                            return this.noValidationErrors();
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+                            throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                         }
-                        throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
-                }
-            ) // SpreadsheetProvider
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -4870,60 +4915,61 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
             ValidatorAliasSet.parse(validatorSelector.valueText())
         );
-        
+
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                new FakeConverterProvider() {
-                    @Override
-                    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                               final List<?> values,
-                                                                               final ProviderContext context) {
-                        if (formulaConverterSelector.name().equals(name)) {
-                            return CONVERTER_PROVIDER.converter(name, values, context);
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    new FakeConverterProvider() {
+                        @Override
+                        public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                   final List<?> values,
+                                                                                   final ProviderContext context) {
+                            if (formulaConverterSelector.name().equals(name)) {
+                                return CONVERTER_PROVIDER.converter(name, values, context);
+                            }
+                            if (formattingConverterSelector.name().equals(name)) {
+                                return CONVERTER_PROVIDER.converter(name, values, context);
+                            }
+                            if (validationConverterSelector.name().equals(name)) {
+                                return Converters.fake();
+                            }
+                            throw new IllegalArgumentException("Unknown converter " + name);
                         }
-                        if (formattingConverterSelector.name().equals(name)) {
-                            return CONVERTER_PROVIDER.converter(name, values, context);
-                        }
-                        if (validationConverterSelector.name().equals(name)) {
-                            return Converters.fake();
-                        }
-                        throw new IllegalArgumentException("Unknown converter " + name);
-                    }
-                },
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                new FakeValidatorProvider() {
-                    @Override
-                    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
-                                                                                                                    final ProviderContext context) {
-                        if (validatorSelector.equals(selector)) {
-                            return Cast.to(
-                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
-                                                                                                          final SpreadsheetValidatorContext context) {
-                                        return validationError;
+                    },
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    new FakeValidatorProvider() {
+                        @Override
+                        public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                        final ProviderContext context) {
+                            if (validatorSelector.equals(selector)) {
+                                return Cast.to(
+                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                              final SpreadsheetValidatorContext context) {
+                                            return validationError;
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+                            throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                         }
-                        throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
-                }
-            ) // SpreadsheetProvider
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -5005,76 +5051,77 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
             ValidatorAliasSet.parse(validatorSelector.valueText())
         );
-        
+
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                new FakeConverterProvider() {
-                    @Override
-                    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
-                                                                               final List<?> values,
-                                                                               final ProviderContext context) {
-                        if (formulaConverterSelector.name().equals(name)) {
-                            return CONVERTER_PROVIDER.converter(name, values, context);
-                        }
-                        if (formattingConverterSelector.name().equals(name)) {
-                            return CONVERTER_PROVIDER.converter(name, values, context);
-                        }
-                        if (validationConverterSelector.name().equals(name)) {
-                            return new FakeConverter<>() {
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    new FakeConverterProvider() {
+                        @Override
+                        public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                   final List<?> values,
+                                                                                   final ProviderContext context) {
+                            if (formulaConverterSelector.name().equals(name)) {
+                                return CONVERTER_PROVIDER.converter(name, values, context);
+                            }
+                            if (formattingConverterSelector.name().equals(name)) {
+                                return CONVERTER_PROVIDER.converter(name, values, context);
+                            }
+                            if (validationConverterSelector.name().equals(name)) {
+                                return new FakeConverter<>() {
 
-                                @Override
-                                public <T> Either<T, String> convert(final Object value,
-                                                                     final Class<T> type,
-                                                                     final C context) {
-
-
-                                    return this.successfulConversion(
-                                        type.cast(converterOutput),
-                                        type
-                                    );
-                                }
-                            };
-                        }
-                        throw new IllegalArgumentException("Unknown converter " + name);
-                    }
-                },
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                new FakeValidatorProvider() {
-                    @Override
-                    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
-                                                                                                                    final ProviderContext context) {
-                        if (validatorSelector.equals(selector)) {
-                            return Cast.to(
-                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
                                     @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
-                                                                                                          final SpreadsheetValidatorContext context) {
-                                        return context.convertOrFail(
-                                            converterInput,
-                                            ValidationErrorList.class
+                                    public <T> Either<T, String> convert(final Object value,
+                                                                         final Class<T> type,
+                                                                         final C context) {
+
+
+                                        return this.successfulConversion(
+                                            type.cast(converterOutput),
+                                            type
                                         );
                                     }
-                                }
-                            );
+                                };
+                            }
+                            throw new IllegalArgumentException("Unknown converter " + name);
                         }
-                        throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                    },
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    new FakeValidatorProvider() {
+                        @Override
+                        public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                        final ProviderContext context) {
+                            if (validatorSelector.equals(selector)) {
+                                return Cast.to(
+                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                              final SpreadsheetValidatorContext context) {
+                                            return context.convertOrFail(
+                                                converterInput,
+                                                ValidationErrorList.class
+                                            );
+                                        }
+                                    }
+                                );
+                            }
+                            throw new IllegalArgumentException("Unknown validator " + validatorSelector);
+                        }
                     }
-                }
-            ) // SpreadsheetProvider
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -5147,83 +5194,84 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
                 ValidatorAliasSet.parse(validatorSelector.valueText())
             );
-        
+
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                ExpressionFunctionProviders.basic(
-                    Url.parseAbsolute("https://example.com/functions"),
-                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
-                    Sets.of(
-                        new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return validationErrors;
-                            }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    ExpressionFunctionProviders.basic(
+                        Url.parseAbsolute("https://example.com/functions"),
+                        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
+                        Sets.of(
+                            new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionEvaluationContext context) {
+                                    return validationErrors;
+                                }
 
-                            @Override
-                            public Class<Object> returnType() {
-                                return Object.class;
-                            }
+                                @Override
+                                public Class<Object> returnType() {
+                                    return Object.class;
+                                }
 
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(int count) {
-                                return NO_PARAMETERS;
-                            }
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                                    return NO_PARAMETERS;
+                                }
 
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    SpreadsheetExpressionFunctions.name(functionName)
+                                @Override
+                                public Optional<ExpressionFunctionName> name() {
+                                    return Optional.of(
+                                        SpreadsheetExpressionFunctions.name(functionName)
+                                    );
+                                }
+                            }
+                        )
+                    ),
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    new FakeValidatorProvider() {
+                        @Override
+                        public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                        final ProviderContext context) {
+                            if (validatorSelector.equals(selector)) {
+                                return Cast.to(
+                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                              final SpreadsheetValidatorContext context) {
+                                            return Cast.to(
+                                                context.expressionEvaluationContext(value)
+                                                    .evaluateExpression(
+                                                        Expression.call(
+                                                            Expression.namedFunction(
+                                                                SpreadsheetExpressionFunctions.name(functionName)
+                                                            ),
+                                                            Lists.empty()
+                                                        )
+                                                    )
+                                            );
+                                        }
+                                    }
                                 );
                             }
+                            throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                         }
-                    )
-                ),
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                new FakeValidatorProvider() {
-                    @Override
-                    public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
-                                                                                                                    final ProviderContext context) {
-                        if (validatorSelector.equals(selector)) {
-                            return Cast.to(
-                                new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
-                                                                                                          final SpreadsheetValidatorContext context) {
-                                        return Cast.to(
-                                            context.expressionEvaluationContext(value)
-                                                .evaluateExpression(
-                                                    Expression.call(
-                                                        Expression.namedFunction(
-                                                            SpreadsheetExpressionFunctions.name(functionName)
-                                                        ),
-                                                        Lists.empty()
-                                                    )
-                                                )
-                                        );
-                                    }
-                                }
-                            );
-                        }
-                        throw new IllegalArgumentException("Unknown validator " + validatorSelector);
                     }
-                }
-            ) // SpreadsheetProvider
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final Object value = "Value123";
@@ -16570,55 +16618,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                ExpressionFunctionProviders.basic(
-                    Url.parseAbsolute("https://example.com/functions"),
-                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
-                    Sets.of(
-                        new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return Boolean.parseBoolean(
-                                    context.cell()
-                                        .map(c -> c.formula().text())
-                                        .orElse(null)
-                                );
-                            }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    ExpressionFunctionProviders.basic(
+                        Url.parseAbsolute("https://example.com/functions"),
+                        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
+                        Sets.of(
+                            new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionEvaluationContext context) {
+                                    return Boolean.parseBoolean(
+                                        context.cell()
+                                            .map(c -> c.formula().text())
+                                            .orElse(null)
+                                    );
+                                }
 
-                            @Override
-                            public Class<Object> returnType() {
-                                return Object.class;
-                            }
+                                @Override
+                                public Class<Object> returnType() {
+                                    return Object.class;
+                                }
 
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(int count) {
-                                return NO_PARAMETERS;
-                            }
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                                    return NO_PARAMETERS;
+                                }
 
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    SpreadsheetExpressionFunctions.name(functionName)
-                                );
+                                @Override
+                                public Optional<ExpressionFunctionName> name() {
+                                    return Optional.of(
+                                        SpreadsheetExpressionFunctions.name(functionName)
+                                    );
+                                }
                             }
-                        }
-                    )
-                ),
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                        )
+                    ),
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         this.filterCellsAndCheck(
@@ -17683,55 +17732,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                ExpressionFunctionProviders.basic(
-                    Url.parseAbsolute("https://example.com/functions"),
-                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
-                    Sets.of(
-                        new FakeExpressionFunction<>() {
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return SpreadsheetSelection.A1.equalsIgnoreReferenceKind(
-                                    context.cell()
-                                        .map(SpreadsheetCell::reference)
-                                        .orElse(null)
-                                );
-                            }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    ExpressionFunctionProviders.basic(
+                        Url.parseAbsolute("https://example.com/functions"),
+                        SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
+                        Sets.of(
+                            new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final SpreadsheetExpressionEvaluationContext context) {
+                                    return SpreadsheetSelection.A1.equalsIgnoreReferenceKind(
+                                        context.cell()
+                                            .map(SpreadsheetCell::reference)
+                                            .orElse(null)
+                                    );
+                                }
 
-                            @Override
-                            public Class<Object> returnType() {
-                                return Object.class;
-                            }
+                                @Override
+                                public Class<Object> returnType() {
+                                    return Object.class;
+                                }
 
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(int count) {
-                                return NO_PARAMETERS;
-                            }
+                                @Override
+                                public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                                    return NO_PARAMETERS;
+                                }
 
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    SpreadsheetExpressionFunctions.name(functionName)
-                                );
+                                @Override
+                                public Optional<ExpressionFunctionName> name() {
+                                    return Optional.of(
+                                        SpreadsheetExpressionFunctions.name(functionName)
+                                    );
+                                }
                             }
-                        }
-                    )
-                ),
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                FormHandlerProviders.fake(),
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                        )
+                    ),
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -23704,12 +23754,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             METADATA,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(METADATA),
-            TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER
+            new TestSpreadsheetContext(
+                METADATA,
+                spreadsheetStoreRepository(),
+                SPREADSHEET_PROVIDER
+            ),
+            TERMINAL_CONTEXT
         );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -23735,12 +23786,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             METADATA,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(METADATA),
-            TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER
+            new TestSpreadsheetContext(
+                METADATA,
+                spreadsheetStoreRepository(),
+                SPREADSHEET_PROVIDER
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23794,40 +23846,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
+                        }
 
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -23880,65 +23933,66 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return new FakeFormHandler<>() {
-                                @Override
-                                public Form<R> prepareForm(final Form<R> form,
-                                                           final C context) {
-                                    return form.setFields(
-                                        form.fields()
-                                            .stream()
-                                            .map(f -> {
-                                                final Optional<Object> value = context.loadFormFieldValue(f.reference());
-                                                return value.isPresent() ?
-                                                    f.setValue(value) :
-                                                    f;
-                                            }).collect(Collectors.toList())
-                                    );
-                                }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return new FakeFormHandler<>() {
+                                    @Override
+                                    public Form<R> prepareForm(final Form<R> form,
+                                                               final C context) {
+                                        return form.setFields(
+                                            form.fields()
+                                                .stream()
+                                                .map(f -> {
+                                                    final Optional<Object> value = context.loadFormFieldValue(f.reference());
+                                                    return value.isPresent() ?
+                                                        f.setValue(value) :
+                                                        f;
+                                                }).collect(Collectors.toList())
+                                        );
+                                    }
 
-                                @Override
-                                public List<ValidationError<R>> validateForm(final Form<R> form,
-                                                                             final C context) {
-                                    return ValidationErrorList.empty();
-                                }
-                            };
+                                    @Override
+                                    public List<ValidationError<R>> validateForm(final Form<R> form,
+                                                                                 final C context) {
+                                        return ValidationErrorList.empty();
+                                    }
+                                };
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24008,63 +24062,64 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
-                                    @Override
-                                    public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                            final SpreadsheetFormHandlerContext context) {
-                                        return form.setFields(
-                                            form.fields()
-                                                .stream()
-                                                .map(f -> f.setValue(cellValue))
-                                                .collect(Collectors.toList())
-                                        );
-                                    }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                        @Override
+                                        public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                final SpreadsheetFormHandlerContext context) {
+                                            return form.setFields(
+                                                form.fields()
+                                                    .stream()
+                                                    .map(f -> f.setValue(cellValue))
+                                                    .collect(Collectors.toList())
+                                            );
+                                        }
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return ValidationErrorList.empty();
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return ValidationErrorList.empty();
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24139,12 +24194,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
                 EXPRESSION_FUNCTION_PROVIDER,
                 SPREADSHEET_COMPARATOR_PROVIDER,
@@ -24218,7 +24272,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         throw new IllegalArgumentException("Unknown Validator " + selector);
                     }
                 }
-            ) // SpreadsheetProvider
+            )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24303,67 +24359,68 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
-                                    @Override
-                                    public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                            final SpreadsheetFormHandlerContext context) {
-                                        return form.setFields(
-                                            form.fields()
-                                                .stream()
-                                                .map(f -> f.setValue(
-                                                        f.value().toString().contains("1") ?
-                                                            cellValue1 :
-                                                            f.value()
-                                                    )
-                                                ).collect(Collectors.toList())
-                                        );
-                                    }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                        @Override
+                                        public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                final SpreadsheetFormHandlerContext context) {
+                                            return form.setFields(
+                                                form.fields()
+                                                    .stream()
+                                                    .map(f -> f.setValue(
+                                                            f.value().toString().contains("1") ?
+                                                                cellValue1 :
+                                                                f.value()
+                                                        )
+                                                    ).collect(Collectors.toList())
+                                            );
+                                        }
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return ValidationErrorList.empty();
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return ValidationErrorList.empty();
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24449,67 +24506,68 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
-                                    @Override
-                                    public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                            final SpreadsheetFormHandlerContext context) {
-                                        return form.setFields(
-                                            form.fields()
-                                                .stream()
-                                                .map(f -> f.setValue(
-                                                        f.value().toString().contains("1") ?
-                                                            cellValue1 :
-                                                            f.value()
-                                                    )
-                                                ).collect(Collectors.toList())
-                                        );
-                                    }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                        @Override
+                                        public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                final SpreadsheetFormHandlerContext context) {
+                                            return form.setFields(
+                                                form.fields()
+                                                    .stream()
+                                                    .map(f -> f.setValue(
+                                                            f.value().toString().contains("1") ?
+                                                                cellValue1 :
+                                                                f.value()
+                                                        )
+                                                    ).collect(Collectors.toList())
+                                            );
+                                        }
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return ValidationErrorList.empty();
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return ValidationErrorList.empty();
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24569,12 +24627,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             METADATA,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(METADATA),
-            TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER
+            new TestSpreadsheetContext(
+                METADATA,
+                spreadsheetStoreRepository(),
+                SPREADSHEET_PROVIDER
+            ),
+            TERMINAL_CONTEXT
         );
 
         final IllegalArgumentException thrown = assertThrows(
@@ -24602,12 +24661,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             METADATA,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(METADATA),
-            TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER
+            new TestSpreadsheetContext(
+                METADATA,
+                spreadsheetStoreRepository(),
+                SPREADSHEET_PROVIDER
+            ),
+            TERMINAL_CONTEXT
         );
 
         final FormName formName = FormName.with("Form123");
@@ -24661,40 +24721,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
+                        }
 
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final Form<SpreadsheetExpressionReference> form = Form.with(
@@ -24737,40 +24798,41 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
+                        }
 
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
@@ -24853,59 +24915,60 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return errors;
-                                    }
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return errors;
+                                        }
 
-                                    @Override
-                                    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
-                                                                       final SpreadsheetFormHandlerContext context) {
-                                        return expected;
+                                        @Override
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                           final SpreadsheetFormHandlerContext context) {
+                                            return expected;
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         context.storeRepository()
@@ -24963,59 +25026,60 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return Lists.empty(); // no errors
-                                    }
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return Lists.empty(); // no errors
+                                        }
 
-                                    @Override
-                                    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
-                                                                       final SpreadsheetFormHandlerContext context) {
-                                        return expected;
+                                        @Override
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                           final SpreadsheetFormHandlerContext context) {
+                                            return expected;
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         context.storeRepository()
@@ -25093,59 +25157,60 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return Lists.empty(); // no errors
-                                    }
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return Lists.empty(); // no errors
+                                        }
 
-                                    @Override
-                                    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
-                                                                       final SpreadsheetFormHandlerContext context) {
-                                        return expected;
+                                        @Override
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                           final SpreadsheetFormHandlerContext context) {
+                                            return expected;
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         context.storeRepository()
@@ -25231,62 +25296,63 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata,
-            spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata),
-            TERMINAL_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                EXPRESSION_FUNCTION_PROVIDER,
-                SPREADSHEET_COMPARATOR_PROVIDER,
-                SPREADSHEET_EXPORTER_PROVIDER,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                new FakeFormHandlerProvider() {
-                    @Override
-                    public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
-                                                                                                                                   final ProviderContext context) {
-                        if (formHandler.equals(selector.toString())) {
-                            return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    CONVERTER_PROVIDER,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    new FakeFormHandlerProvider() {
+                        @Override
+                        public <R extends ValidationReference, S, C extends FormHandlerContext<R, S>> FormHandler<R, S, C> formHandler(final FormHandlerSelector selector,
+                                                                                                                                       final ProviderContext context) {
+                            if (formHandler.equals(selector.toString())) {
+                                return Cast.to(
+                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
-                                    @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
-                                                                                                              final SpreadsheetFormHandlerContext context) {
-                                        return Lists.empty(); // no errors
-                                    }
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                                                                                                  final SpreadsheetFormHandlerContext context) {
+                                            return Lists.empty(); // no errors
+                                        }
 
-                                    @Override
-                                    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
-                                                                       final SpreadsheetFormHandlerContext context) {
-                                        return context.saveFormFieldValues(
-                                            form.fields()
-                                        );
-                                        //return expected;
+                                        @Override
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                                                           final SpreadsheetFormHandlerContext context) {
+                                            return context.saveFormFieldValues(
+                                                form.fields()
+                                            );
+                                            //return expected;
+                                        }
                                     }
-                                }
-                            );
+                                );
+                            }
+
+                            throw new IllegalArgumentException("Unknown form handler " + selector);
                         }
 
-                        throw new IllegalArgumentException("Unknown form handler " + selector);
-                    }
-
-                    @Override
-                    public FormHandlerInfoSet formHandlerInfos() {
-                        return FormHandlerInfoSet.with(
-                            Sets.of(
-                                FormHandlerInfo.with(
-                                    Url.parseAbsolute("https://example.com/FormHandler"),
-                                    FormHandlerName.with(formHandler)
+                        @Override
+                        public FormHandlerInfoSet formHandlerInfos() {
+                            return FormHandlerInfoSet.with(
+                                Sets.of(
+                                    FormHandlerInfo.with(
+                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        FormHandlerName.with(formHandler)
+                                    )
                                 )
-                            )
-                        );
-                    }
-                },
-                SPREADSHEET_IMPORTER_PROVIDER,
-                SPREADSHEET_PARSER_PROVIDER,
-                VALIDATOR_PROVIDER
-            ) // SpreadsheetProvider
+                            );
+                        }
+                    },
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    VALIDATOR_PROVIDER
+                )
+            ),
+            TERMINAL_CONTEXT
         );
 
         engine.saveCells(
@@ -25429,12 +25495,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return SpreadsheetEngineContexts.basic(
             SERVER_URL,
             metadata2,
-            storeRepository,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            ENVIRONMENT_CONTEXT,
-            spreadsheetGlobalContext(metadata2),
-            TERMINAL_CONTEXT,
-            SPREADSHEET_PROVIDER
+            new TestSpreadsheetContext(
+                metadata2,
+                storeRepository,
+                SPREADSHEET_PROVIDER
+            ),
+            TERMINAL_CONTEXT
         );
     }
 

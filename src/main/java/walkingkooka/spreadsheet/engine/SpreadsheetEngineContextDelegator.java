@@ -19,34 +19,24 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
-import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContextDelegator;
+import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -54,11 +44,8 @@ import java.util.Optional;
  * Note {@link #resolveLabel(SpreadsheetLabelName)} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
-    SpreadsheetGlobalContextDelegator,
     CanConvertDelegator,
-    EnvironmentContextDelegator,
-    SpreadsheetProviderDelegator,
-    LocaleContextDelegator {
+    SpreadsheetContextDelegator {
 
     @Override
     default AbsoluteUrl serverUrl() {
@@ -127,50 +114,14 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default LocalDateTime now() {
-        return this.spreadsheetEngineContext()
-            .now();
-    }
-
-    @Override
     default SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetEngineContext()
             .spreadsheetMetadata();
     }
 
     @Override
-    default SpreadsheetStoreRepository storeRepository() {
-        return this.spreadsheetEngineContext()
-            .storeRepository();
-    }
-
-    @Override
-    default SpreadsheetProvider spreadsheetProvider() {
-        return this.spreadsheetEngineContext();
-    }
-
-    @Override
     default CanConvert canConvert() {
         return this.spreadsheetEngineContext();
-    }
-
-    @Override
-    default EnvironmentContext environmentContext() {
-        return this.spreadsheetEngineContext();
-    }
-
-    @Override
-    default LocaleContext localeContext() {
-        return this.spreadsheetEngineContext();
-    }
-
-    /**
-     * Prefers {@link EnvironmentContext#locale()} over {@link LocaleContext}.
-     */
-    @Override
-    default Locale locale() {
-        return this.environmentContext()
-            .locale();
     }
 
     @Override
@@ -192,13 +143,7 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default ProviderContext providerContext() {
-        return this.spreadsheetEngineContext()
-            .providerContext();
-    }
-
-    @Override
-    default SpreadsheetGlobalContext spreadsheetGlobalContext() {
+    default SpreadsheetContext spreadsheetContext() {
         return this.spreadsheetEngineContext();
     }
 
