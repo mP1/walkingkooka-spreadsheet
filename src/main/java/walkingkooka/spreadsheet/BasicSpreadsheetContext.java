@@ -26,6 +26,8 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 
 import java.util.List;
 import java.util.Locale;
@@ -35,16 +37,19 @@ import java.util.function.BiFunction;
 
 final class BasicSpreadsheetContext implements SpreadsheetContext,
     EnvironmentContextDelegator,
-    LocaleContextDelegator {
+    LocaleContextDelegator,
+    SpreadsheetProviderDelegator {
 
     static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                         final SpreadsheetMetadataStore store,
+                                        final SpreadsheetProvider spreadsheetProvider,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(store, "store"),
+            Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext"),
             Objects.requireNonNull(providerContext, "providerContext")
@@ -53,6 +58,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                     final SpreadsheetMetadataStore store,
+                                    final SpreadsheetProvider spreadsheetProvider,
                                     final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext,
                                     final ProviderContext providerContext) {
@@ -60,6 +66,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.createMetadata = createMetadata;
         this.store = store;
+        this.spreadsheetProvider = spreadsheetProvider;
+        
         this.environmentContext = environmentContext;
         this.localeContext = localeContext;
         this.providerContext = providerContext;
@@ -127,6 +135,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             with(
                 this.createMetadata,
                 this.store,
+                this.spreadsheetProvider,
                 cloned,
                 this.localeContext,
                 this.providerContext
@@ -185,6 +194,15 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private final ProviderContext providerContext;
+
+    // HasSpreadsheetProvider...........................................................................................
+
+    @Override
+    public SpreadsheetProvider spreadsheetProvider() {
+        return this.spreadsheetProvider;
+    }
+
+    private final SpreadsheetProvider spreadsheetProvider;
 
     // Object...........................................................................................................
 

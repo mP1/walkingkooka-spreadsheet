@@ -23,13 +23,15 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 
 import java.util.Locale;
 
 /**
  * A {@link Context} for a single spreadsheet.
  */
-public interface SpreadsheetContext extends EnvironmentContext,
+public interface SpreadsheetContext extends SpreadsheetProvider,
+    EnvironmentContext,
     HasProviderContext,
     LocaleContext,
     SpreadsheetMetadataContext {

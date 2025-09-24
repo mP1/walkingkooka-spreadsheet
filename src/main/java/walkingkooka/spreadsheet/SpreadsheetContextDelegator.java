@@ -25,13 +25,16 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 
 import java.util.Locale;
 
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     EnvironmentContextDelegator,
     LocaleContextDelegator,
-    SpreadsheetMetadataContextDelegator {
+    SpreadsheetMetadataContextDelegator,
+    SpreadsheetProviderDelegator {
 
     // EnvironmentContextDelegator......................................................................................
 
@@ -79,6 +82,13 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
             .providerContext();
     }
 
+    // SpreadsheetProvider..............................................................................................
+
+    @Override
+    default SpreadsheetProvider spreadsheetProvider() {
+        return this.spreadsheetContext();
+    }
+    
     @Override
     default SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.spreadsheetContext();
