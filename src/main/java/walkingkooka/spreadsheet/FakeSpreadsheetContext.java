@@ -22,14 +22,16 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
-public class FakeSpreadsheetContext extends FakeSpreadsheetMetadataContext implements SpreadsheetContext {
+public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements SpreadsheetContext {
 
     public FakeSpreadsheetContext() {
         super();
@@ -109,6 +111,36 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetMetadataContext imple
 
     @Override
     public Locale locale() {
+        throw new UnsupportedOperationException();
+    }
+
+    // SpreadsheetMetadataContext.......................................................................................
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                              final Optional<Locale> locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteMetadata(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                   final int offset,
+                                                                   final int count) {
         throw new UnsupportedOperationException();
     }
 

@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -64,6 +66,9 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 dl.get()
             );
     private final static SpreadsheetMetadataStore STORE = SpreadsheetMetadataStores.fake();
+
+    private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.fake();
+
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.map(
         EnvironmentContexts.empty(
             Locale.forLanguageTag("en-AU"),
@@ -82,6 +87,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 null,
                 STORE,
+                SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -95,6 +101,22 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
+                null,
+                SPREADSHEET_PROVIDER,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                CREATE_METADATA,
+                STORE,
                 null,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -110,6 +132,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
                 STORE,
+                SPREADSHEET_PROVIDER,
                 null,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -124,6 +147,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
                 STORE,
+                SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -138,6 +162,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             () -> BasicSpreadsheetContext.with(
                 CREATE_METADATA,
                 STORE,
+                SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 null
@@ -178,6 +203,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         return BasicSpreadsheetContext.with(
             CREATE_METADATA,
             SpreadsheetMetadataStores.treeMap(),
+            SPREADSHEET_PROVIDER,
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT
