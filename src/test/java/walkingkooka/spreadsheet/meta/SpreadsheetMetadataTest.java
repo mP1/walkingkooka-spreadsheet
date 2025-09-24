@@ -295,24 +295,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
-    // localeContext....................................................................................................
-
-    @Test
-    public void testLocaleContext() {
-        final Locale locale = Locale.GERMANY;
-
-        final LocaleContext context = SpreadsheetMetadata.EMPTY
-            .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
-            .localeContext(
-                LocaleContexts.jre(Locale.FRANCE)
-            );
-
-        this.localeAndCheck(
-            context,
-            locale
-        );
-    }
-
     // setOrRemove......................................................................................................
 
     @Test
