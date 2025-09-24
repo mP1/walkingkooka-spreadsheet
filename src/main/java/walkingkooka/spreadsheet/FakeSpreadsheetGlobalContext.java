@@ -15,20 +15,20 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.locale.FakeLocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-public class FakeSpreadsheetContext extends FakeLocaleContext implements SpreadsheetContext {
+public class FakeSpreadsheetGlobalContext extends FakeLocaleContext implements SpreadsheetGlobalContext {
 
-    public FakeSpreadsheetContext() {
+    public FakeSpreadsheetGlobalContext() {
         super();
     }
 
@@ -61,7 +61,7 @@ public class FakeSpreadsheetContext extends FakeLocaleContext implements Spreads
     }
 
     @Override
-    public SpreadsheetContext setLocale(final Locale locale) {
+    public SpreadsheetGlobalContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

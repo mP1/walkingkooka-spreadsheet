@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
@@ -24,6 +24,8 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 
@@ -34,7 +36,7 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetContextTest implements SpreadsheetContextTesting<BasicSpreadsheetContext> {
+public final class BasicSpreadsheetGlobalContextTest implements SpreadsheetGlobalContextTesting<BasicSpreadsheetGlobalContext> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -67,7 +69,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testWithNullCreateMetadataFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
+            () -> BasicSpreadsheetGlobalContext.with(
                 null,
                 STORE,
                 LOCALE_CONTEXT,
@@ -80,7 +82,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testWithNullStoreFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
+            () -> BasicSpreadsheetGlobalContext.with(
                 CREATE_METADATA,
                 null,
                 LOCALE_CONTEXT,
@@ -93,7 +95,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testWithNullLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
+            () -> BasicSpreadsheetGlobalContext.with(
                 CREATE_METADATA,
                 STORE,
                 null,
@@ -106,7 +108,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testWithNullProviderContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
+            () -> BasicSpreadsheetGlobalContext.with(
                 CREATE_METADATA,
                 STORE,
                 LOCALE_CONTEXT,
@@ -119,7 +121,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testCreateMetadata() {
-        final BasicSpreadsheetContext context = this.createContext();
+        final BasicSpreadsheetGlobalContext context = this.createContext();
 
         final EmailAddress user = EmailAddress.parse("user@example.com");
         final Optional<Locale> locale = Optional.of(Locale.FRENCH);
@@ -144,8 +146,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     }
 
     @Override
-    public BasicSpreadsheetContext createContext() {
-        return BasicSpreadsheetContext.with(
+    public BasicSpreadsheetGlobalContext createContext() {
+        return BasicSpreadsheetGlobalContext.with(
             CREATE_METADATA,
             SpreadsheetMetadataStores.treeMap(),
             LOCALE_CONTEXT,
@@ -156,7 +158,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetContext> type() {
-        return BasicSpreadsheetContext.class;
+    public Class<BasicSpreadsheetGlobalContext> type() {
+        return BasicSpreadsheetGlobalContext.class;
     }
 }

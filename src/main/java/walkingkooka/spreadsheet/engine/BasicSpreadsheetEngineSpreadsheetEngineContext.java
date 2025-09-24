@@ -27,11 +27,11 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -54,7 +54,7 @@ import java.util.Optional;
  * methods using an existing
  */
 final class BasicSpreadsheetEngineSpreadsheetEngineContext implements SpreadsheetEngineContext,
-    SpreadsheetContextDelegator,
+    SpreadsheetGlobalContextDelegator,
     SpreadsheetProviderDelegator,
     CanConvertDelegator,
     EnvironmentContextDelegator,
@@ -154,17 +154,17 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         return this.spreadsheetEngineContext.isPure(expressionFunctionName);
     }
 
-    // SpreadsheetContextDelegator......................................................................................
-
-    @Override
-    public SpreadsheetContext spreadsheetContext() {
-        return this.spreadsheetEngineContext;
-    }
-
     // CanConvertDelegator..............................................................................................
 
     @Override
     public CanConvert canConvert() {
+        return this.spreadsheetEngineContext;
+    }
+
+    // SpreadsheetGlobalContextDelegator................................................................................
+
+    @Override
+    public SpreadsheetGlobalContext spreadsheetGlobalContext() {
         return this.spreadsheetEngineContext;
     }
 

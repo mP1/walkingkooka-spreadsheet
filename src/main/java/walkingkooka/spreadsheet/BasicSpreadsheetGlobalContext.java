@@ -15,13 +15,13 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 
 import java.util.List;
@@ -30,14 +30,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-final class BasicSpreadsheetContext implements SpreadsheetContext,
+final class BasicSpreadsheetGlobalContext implements SpreadsheetGlobalContext,
     LocaleContextDelegator {
 
-    static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                        final SpreadsheetMetadataStore store,
-                                        final LocaleContext localeContext,
-                                        final ProviderContext providerContext) {
-        return new BasicSpreadsheetContext(
+    static BasicSpreadsheetGlobalContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+                                              final SpreadsheetMetadataStore store,
+                                              final LocaleContext localeContext,
+                                              final ProviderContext providerContext) {
+        return new BasicSpreadsheetGlobalContext(
             Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(store, "store"),
             Objects.requireNonNull(localeContext, "localeContext"),
@@ -45,10 +45,10 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         );
     }
 
-    private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                    final SpreadsheetMetadataStore store,
-                                    final LocaleContext localeContext,
-                                    final ProviderContext providerContext) {
+    private BasicSpreadsheetGlobalContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+                                          final SpreadsheetMetadataStore store,
+                                          final LocaleContext localeContext,
+                                          final ProviderContext providerContext) {
         super();
 
         this.createMetadata = createMetadata;
@@ -117,13 +117,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     private final LocaleContext localeContext;
 
     @Override
-    public SpreadsheetContext setLocale(final Locale locale) {
+    public SpreadsheetGlobalContext setLocale(final Locale locale) {
         final LocaleContext before = this.localeContext;
         final LocaleContext after = before.setLocale(locale);
 
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetContext(
+            new BasicSpreadsheetGlobalContext(
                 this.createMetadata,
                 this.store,
                 after,

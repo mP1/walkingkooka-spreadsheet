@@ -15,25 +15,25 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-public interface SpreadsheetContextDelegator extends SpreadsheetContext,
+public interface SpreadsheetGlobalContextDelegator extends SpreadsheetGlobalContext,
     LocaleContextDelegator {
 
     @Override
     default SpreadsheetMetadata createMetadata(final EmailAddress user,
                                                final Optional<Locale> locale) {
-        return this.spreadsheetContext()
+        return this.spreadsheetGlobalContext()
             .createMetadata(
                 user,
                 locale
@@ -42,19 +42,19 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
 
     @Override
     default Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-        return this.spreadsheetContext()
+        return this.spreadsheetGlobalContext()
             .loadMetadata(id);
     }
 
     @Override
     default SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
-        return this.spreadsheetContext()
+        return this.spreadsheetGlobalContext()
             .saveMetadata(metadata);
     }
 
     @Override
     default void deleteMetadata(final SpreadsheetId id) {
-        this.spreadsheetContext()
+        this.spreadsheetGlobalContext()
             .deleteMetadata(id);
     }
 
@@ -62,7 +62,7 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
                                                                     final int offset,
                                                                     final int count) {
-        return this.spreadsheetContext()
+        return this.spreadsheetGlobalContext()
             .findMetadataBySpreadsheetName(
                 name,
                 offset,
@@ -74,16 +74,16 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
 
     @Override
     default LocaleContext localeContext() {
-        return this.spreadsheetContext();
+        return this.spreadsheetGlobalContext();
     }
 
     // HasProviderContext...............................................................................................
 
     @Override
     default ProviderContext providerContext() {
-        return this.spreadsheetContext()
+        return this.spreadsheetGlobalContext()
             .providerContext();
     }
 
-    SpreadsheetContext spreadsheetContext();
+    SpreadsheetGlobalContext spreadsheetGlobalContext();
 }

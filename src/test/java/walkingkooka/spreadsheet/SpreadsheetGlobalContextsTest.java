@@ -15,22 +15,22 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetContextsTest implements PublicStaticHelperTesting<SpreadsheetContexts> {
+public final class SpreadsheetGlobalContextsTest implements PublicStaticHelperTesting<SpreadsheetGlobalContexts> {
     @Override
     public boolean canHavePublicTypes(final Method method) {
         return false;
     }
 
     @Override
-    public Class<SpreadsheetContexts> type() {
-        return SpreadsheetContexts.class;
+    public Class<SpreadsheetGlobalContexts> type() {
+        return SpreadsheetGlobalContexts.class;
     }
 
     @Override

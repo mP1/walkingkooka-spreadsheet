@@ -15,11 +15,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.meta.SpreadsheetContextTestingTest.TestSpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContextTestingTest.TestSpreadsheetGlobalContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
 
 import java.util.List;
@@ -27,18 +27,18 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetContextTestingTest implements SpreadsheetContextTesting<TestSpreadsheetContext> {
+public final class SpreadsheetGlobalContextTestingTest implements SpreadsheetGlobalContextTesting<TestSpreadsheetGlobalContext> {
 
     @Override
     public void testCheckToStringOverridden() {
         throw new UnsupportedOperationException();
     }
 
-    static class TestSpreadsheetContext extends FakeSpreadsheetContext {
+    static class TestSpreadsheetGlobalContext extends FakeSpreadsheetGlobalContext {
 
         @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                           final Optional<Locale> locale) {
+                                                  final Optional<Locale> locale) {
             Objects.requireNonNull(user, "user");
             Objects.requireNonNull(locale, "locale");
 
@@ -78,12 +78,12 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
     }
 
     @Override
-    public TestSpreadsheetContext createContext() {
-        return new TestSpreadsheetContext();
+    public TestSpreadsheetGlobalContext createContext() {
+        return new TestSpreadsheetGlobalContext();
     }
 
     @Override
-    public Class<TestSpreadsheetContext> type() {
-        return TestSpreadsheetContext.class;
+    public Class<TestSpreadsheetGlobalContext> type() {
+        return TestSpreadsheetGlobalContext.class;
     }
 }

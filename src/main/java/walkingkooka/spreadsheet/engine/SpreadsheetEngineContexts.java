@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.meta.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -38,7 +38,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final EnvironmentContext environmentContext,
-                                                 final SpreadsheetContext spreadsheetContext,
+                                                 final SpreadsheetGlobalContext spreadsheetGlobalContext,
                                                  final TerminalContext terminalContext,
                                                  final SpreadsheetProvider spreadsheetProvider) {
         return BasicSpreadsheetEngineContext.with(
@@ -47,7 +47,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
             storeRepository,
             functionAliases,
             environmentContext,
-            spreadsheetContext,
+            spreadsheetGlobalContext,
             terminalContext,
             spreadsheetProvider
         );
