@@ -17,21 +17,11 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.Context;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 
-public final class SpreadsheetContexts implements PublicStaticHelper {
-
-    /**
-     * {@see FakeSpreadsheetContext}
-     */
-    public static SpreadsheetContext fake() {
-        return new FakeSpreadsheetContext();
-    }
-
-    /**
-     * Stop creation
-     */
-    private SpreadsheetContexts() {
-        throw new UnsupportedOperationException();
-    }
+/**
+ * A {@link Context} for a single spreadsheet.
+ */
+public interface SpreadsheetContext extends SpreadsheetMetadataContext {
 }
