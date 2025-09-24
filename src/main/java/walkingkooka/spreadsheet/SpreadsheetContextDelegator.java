@@ -17,16 +17,53 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 
+import java.util.Locale;
+
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
+    EnvironmentContextDelegator,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator {
 
+    // EnvironmentContextDelegator......................................................................................
+
+    @Override
+    default <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                       final T value) {
+        this.spreadsheetContext()
+            .setEnvironmentValue(
+                name,
+                value
+            );
+        return this;
+    }
+
+    @Override
+    default SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.spreadsheetContext()
+            .removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
+    default EnvironmentContext environmentContext() {
+        return this.spreadsheetContext();
+    }
+
     // LocaleContext....................................................................................................
+
+    @Override
+    default Locale locale() {
+        return this.environmentContext()
+            .locale();
+    }
 
     @Override
     default LocaleContext localeContext() {

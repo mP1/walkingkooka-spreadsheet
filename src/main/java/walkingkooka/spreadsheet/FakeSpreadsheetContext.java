@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -30,6 +33,46 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetMetadataContext imple
     public FakeSpreadsheetContext() {
         super();
     }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<EnvironmentValueName<?>> environmentValueNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                      final T value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public LocalDateTime now() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        throw new UnsupportedOperationException();
+    }
+
+    // LocaleContext....................................................................................................
 
     @Override
     public SpreadsheetContext setLocale(final Locale locale) {
