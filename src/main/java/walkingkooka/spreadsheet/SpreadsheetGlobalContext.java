@@ -15,13 +15,13 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.HasProviderContext;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.MissingStoreException;
 
 import java.util.List;
@@ -29,9 +29,9 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * A context containing CRUD operations for a {@link SpreadsheetMetadata}.
+ * A global singleton context containing CRUD operations for a {@link SpreadsheetMetadata} and other global state.
  */
-public interface SpreadsheetContext extends Context,
+public interface SpreadsheetGlobalContext extends Context,
     LocaleContext,
     HasProviderContext {
 
@@ -75,5 +75,5 @@ public interface SpreadsheetContext extends Context,
     // LocaleContext....................................................................................................
 
     @Override
-    SpreadsheetContext setLocale(final Locale locale);
+    SpreadsheetGlobalContext setLocale(final Locale locale);
 }

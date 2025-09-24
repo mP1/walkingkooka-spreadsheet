@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
@@ -67,7 +68,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -540,20 +540,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private static Object VALUE;
 
-    private SpreadsheetContext spreadsheetContext(final SpreadsheetMetadata metadata) {
+    private SpreadsheetGlobalContext spreadsheetGlobalContext(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
-        return new TestSpreadsheetContext(
+        return new TestSpreadsheetGlobalContext(
             metadata,
             LOCALE_CONTEXT
         );
     }
 
-    private final static class TestSpreadsheetContext implements SpreadsheetContext,
+    private final static class TestSpreadsheetGlobalContext implements SpreadsheetGlobalContext,
         LocaleContextDelegator {
 
-        TestSpreadsheetContext(final SpreadsheetMetadata metadata,
-                               final LocaleContext localeContext) {
+        TestSpreadsheetGlobalContext(final SpreadsheetMetadata metadata,
+                                     final LocaleContext localeContext) {
             this.metadata = metadata;
             this.localeContext = localeContext;
         }
@@ -616,8 +616,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public SpreadsheetContext setLocale(final Locale locale) {
-            return new TestSpreadsheetContext(
+        public SpreadsheetGlobalContext setLocale(final Locale locale) {
+            return new TestSpreadsheetGlobalContext(
                 this.metadata,
                 this.localeContext.setLocale(locale)
             );
@@ -4748,7 +4748,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(
+            spreadsheetGlobalContext(
                 metadata
             ),
             TERMINAL_CONTEXT,
@@ -4878,7 +4878,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 new FakeConverterProvider() {
@@ -5013,7 +5013,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 new FakeConverterProvider() {
@@ -5155,7 +5155,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -16573,7 +16573,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -17686,7 +17686,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -23707,7 +23707,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(METADATA),
+            spreadsheetGlobalContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER
         );
@@ -23738,7 +23738,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(METADATA),
+            spreadsheetGlobalContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER
         );
@@ -23797,7 +23797,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -23883,7 +23883,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24011,7 +24011,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24142,7 +24142,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24306,7 +24306,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24452,7 +24452,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24572,7 +24572,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(METADATA),
+            spreadsheetGlobalContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER
         );
@@ -24605,7 +24605,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(METADATA),
+            spreadsheetGlobalContext(METADATA),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER
         );
@@ -24664,7 +24664,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24740,7 +24740,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24856,7 +24856,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -24966,7 +24966,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -25096,7 +25096,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -25234,7 +25234,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetStoreRepository(),
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata),
+            spreadsheetGlobalContext(metadata),
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,
@@ -25432,7 +25432,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             storeRepository,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             ENVIRONMENT_CONTEXT,
-            spreadsheetContext(metadata2),
+            spreadsheetGlobalContext(metadata2),
             TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER
         );

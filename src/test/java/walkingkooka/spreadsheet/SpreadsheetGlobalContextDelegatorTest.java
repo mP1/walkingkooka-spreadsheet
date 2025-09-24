@@ -15,11 +15,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.meta.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContextDelegatorTest.TestSpreadsheetGlobalContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting<TestSpreadsheetContextDelegator> {
+public final class SpreadsheetGlobalContextDelegatorTest implements SpreadsheetGlobalContextTesting<TestSpreadsheetGlobalContextDelegator> {
 
     @Override
     public void testTypeNaming() {
@@ -35,23 +35,23 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
     }
 
     @Override
-    public TestSpreadsheetContextDelegator createContext() {
-        return new TestSpreadsheetContextDelegator();
+    public TestSpreadsheetGlobalContextDelegator createContext() {
+        return new TestSpreadsheetGlobalContextDelegator();
     }
 
     @Override
-    public Class<TestSpreadsheetContextDelegator> type() {
-        return TestSpreadsheetContextDelegator.class;
+    public Class<TestSpreadsheetGlobalContextDelegator> type() {
+        return TestSpreadsheetGlobalContextDelegator.class;
     }
 
-    static class TestSpreadsheetContextDelegator implements SpreadsheetContextDelegator {
+    static class TestSpreadsheetGlobalContextDelegator implements SpreadsheetGlobalContextDelegator {
 
         @Override
-        public SpreadsheetContext spreadsheetContext() {
+        public SpreadsheetGlobalContext spreadsheetGlobalContext() {
             return this.context;
         }
 
-        private final SpreadsheetContext context = new FakeSpreadsheetContext() {
+        private final SpreadsheetGlobalContext context = new FakeSpreadsheetGlobalContext() {
 
             @Override
             public SpreadsheetMetadata createMetadata(final EmailAddress user,
@@ -94,14 +94,14 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
-            public SpreadsheetContext setLocale(final Locale locale) {
+            public SpreadsheetGlobalContext setLocale(final Locale locale) {
                 Objects.requireNonNull(locale, "locale");
                 throw new UnsupportedOperationException();
             }
         };
 
         @Override
-        public SpreadsheetContext setLocale(final Locale locale) {
+        public SpreadsheetGlobalContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }

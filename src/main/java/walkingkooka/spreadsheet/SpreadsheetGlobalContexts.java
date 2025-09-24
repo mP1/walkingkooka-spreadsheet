@@ -15,28 +15,29 @@
  *
  */
 
-package walkingkooka.spreadsheet.meta;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-public final class SpreadsheetContexts implements PublicStaticHelper {
+public final class SpreadsheetGlobalContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetContext}
+     * {@see BasicSpreadsheetGlobalContext}
      */
-    public static SpreadsheetContext basic(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                           final SpreadsheetMetadataStore store,
-                                           final LocaleContext localeContext,
-                                           final ProviderContext providerContext) {
-        return BasicSpreadsheetContext.with(
+    public static SpreadsheetGlobalContext basic(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+                                                 final SpreadsheetMetadataStore store,
+                                                 final LocaleContext localeContext,
+                                                 final ProviderContext providerContext) {
+        return BasicSpreadsheetGlobalContext.with(
             createMetadata,
             store,
             localeContext,
@@ -45,16 +46,16 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     }
 
     /**
-     * {@see FakeSpreadsheetContext}
+     * {@see FakeSpreadsheetGlobalContext}
      */
-    public static SpreadsheetContext fake() {
-        return new FakeSpreadsheetContext();
+    public static SpreadsheetGlobalContext fake() {
+        return new FakeSpreadsheetGlobalContext();
     }
 
     /**
      * Stop creation
      */
-    private SpreadsheetContexts() {
+    private SpreadsheetGlobalContexts() {
         throw new UnsupportedOperationException();
     }
 }

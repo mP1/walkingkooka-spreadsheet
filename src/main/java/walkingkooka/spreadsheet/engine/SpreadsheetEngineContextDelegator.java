@@ -27,11 +27,11 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -54,7 +54,7 @@ import java.util.Optional;
  * Note {@link #resolveLabel(SpreadsheetLabelName)} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
-    SpreadsheetContextDelegator,
+    SpreadsheetGlobalContextDelegator,
     CanConvertDelegator,
     EnvironmentContextDelegator,
     SpreadsheetProviderDelegator,
@@ -198,7 +198,7 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default SpreadsheetContext spreadsheetContext() {
+    default SpreadsheetGlobalContext spreadsheetGlobalContext() {
         return this.spreadsheetEngineContext();
     }
 

@@ -32,6 +32,8 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
+import walkingkooka.spreadsheet.SpreadsheetGlobalContextDelegator;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -42,8 +44,6 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -78,7 +78,7 @@ import java.util.Set;
  * public methods requests.
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
-    SpreadsheetContextDelegator,
+    SpreadsheetGlobalContextDelegator,
     SpreadsheetProviderDelegator,
     CanConvertDelegator,
     EnvironmentContextDelegator,
@@ -92,7 +92,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                               final SpreadsheetStoreRepository storeRepository,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final EnvironmentContext environmentContext,
-                                              final SpreadsheetContext spreadsheetContext,
+                                              final SpreadsheetGlobalContext spreadsheetGlobalContext,
                                               final TerminalContext terminalContext,
                                               final SpreadsheetProvider spreadsheetProvider) {
         Objects.requireNonNull(serverUrl, "serverUrl");
@@ -100,11 +100,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(environmentContext, "environmentContext");
-        Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
+        Objects.requireNonNull(spreadsheetGlobalContext, "spreadsheetGlobalContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
 
-        final LocaleContext metadataLocaleContext = metadata.localeContext(spreadsheetContext);
+        final LocaleContext metadataLocaleContext = metadata.localeContext(spreadsheetGlobalContext);
         final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
             storeRepository.labels()
         );
@@ -121,12 +121,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 spreadsheetLabelNameResolver,
                 spreadsheetProvider,
                 metadataLocaleContext, // LocaleContext
-                spreadsheetContext.providerContext()
+                spreadsheetGlobalContext.providerContext()
             ),
             spreadsheetLabelNameResolver,
             environmentContext,
             metadataLocaleContext,
-            spreadsheetContext,
+            spreadsheetGlobalContext,
             terminalContext,
             spreadsheetProvider
         );
@@ -143,7 +143,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                                           final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                           final EnvironmentContext environmentContext,
                                           final LocaleContext localeContext,
-                                          final SpreadsheetContext spreadsheetContext,
+                                          final SpreadsheetGlobalContext spreadsheetGlobalContext,
                                           final TerminalContext terminalContext,
                                           final SpreadsheetProvider spreadsheetProvider) {
         super();
@@ -160,7 +160,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.environmentContext = environmentContext;
         this.localeContext = localeContext;
         this.canConvert = canConvert;
-        this.spreadsheetContext = spreadsheetContext;
+        this.spreadsheetGlobalContext = spreadsheetGlobalContext;
         this.terminalContext = terminalContext;
 
         this.spreadsheetProvider = spreadsheetProvider;
@@ -208,7 +208,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.spreadsheetLabelNameResolver,
                 this.environmentContext,
                 this.localeContext,
-                this.spreadsheetContext,
+                this.spreadsheetGlobalContext,
                 this.terminalContext,
                 this.spreadsheetProvider
             );
@@ -231,7 +231,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return SpreadsheetFormulaParsers.valueOrExpression(
                 this.metadata.spreadsheetParser(
                     this, // SpreadsheetParserProvider
-                    this.spreadsheetContext.providerContext()
+                    this.spreadsheetGlobalContext.providerContext()
                 )
             )
             .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -276,7 +276,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             );
         }
 
-        final ProviderContext providerContext = this.spreadsheetContext.providerContext();
+        final ProviderContext providerContext = this.spreadsheetGlobalContext.providerContext();
 
         final SpreadsheetConverterContext spreadsheetConverterContext = metadata.spreadsheetConverterContext(
             cell,
@@ -329,7 +329,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.spreadsheetProvider.expressionFunction(
             function,
             Lists.empty(),
-            this.spreadsheetContext.providerContext()
+            this.spreadsheetGlobalContext.providerContext()
         ).isPure(this);
     }
 
@@ -343,7 +343,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
         final SpreadsheetProvider spreadsheetProvider = this.spreadsheetProvider;
-        final ProviderContext providerContext = this.spreadsheetContext.providerContext();
+        final ProviderContext providerContext = this.spreadsheetGlobalContext.providerContext();
 
         final SpreadsheetFormatter spreadsheetFormatter = formatter
             .map((SpreadsheetFormatterSelector selector) -> spreadsheetProvider.spreadsheetFormatter(
@@ -474,7 +474,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             this, // SpreadsheetLabelNameResolver,
             this, // LocaleContext
             this.spreadsheetProvider,
-            this.spreadsheetContext.providerContext() // ProviderContext
+            this.spreadsheetGlobalContext.providerContext() // ProviderContext
         );
     }
 
@@ -487,14 +487,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetStoreRepository storeRepository;
 
-    // SpreadsheetContextDelegator......................................................................................
+    // SpreadsheetGlobalContextDelegator................................................................................
 
     @Override
-    public SpreadsheetContext spreadsheetContext() {
-        return this.spreadsheetContext;
+    public SpreadsheetGlobalContext spreadsheetGlobalContext() {
+        return this.spreadsheetGlobalContext;
     }
 
-    private final SpreadsheetContext spreadsheetContext;
+    private final SpreadsheetGlobalContext spreadsheetGlobalContext;
 
     // LocaleContextDelegator...........................................................................................
 
@@ -524,7 +524,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 this.spreadsheetLabelNameResolver,
                 Objects.requireNonNull(clone, "environmentContext"),
                 this.localeContext,
-                this.spreadsheetContext,
+                this.spreadsheetGlobalContext,
                 this.terminalContext,
                 this.spreadsheetProvider
             );
