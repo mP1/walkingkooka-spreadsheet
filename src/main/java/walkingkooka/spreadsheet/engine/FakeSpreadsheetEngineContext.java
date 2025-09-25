@@ -119,7 +119,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    // SpreadsheetGlobalContext.........................................................................................
+    // SpreadsheetContext...............................................................................................
 
     @Override
     public SpreadsheetId spreadsheetId() {
