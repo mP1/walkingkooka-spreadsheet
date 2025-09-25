@@ -21,12 +21,16 @@ import walkingkooka.Context;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.HasProviderContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link Context} holding state including {@link EnvironmentContext} for a single spreadsheet.
@@ -36,6 +40,14 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     HasProviderContext,
     LocaleContext,
     SpreadsheetMetadataContext {
+
+    @Override
+    default SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                               final Optional<Locale> locale) {
+        Objects.requireNonNull(user, "user");
+        Objects.requireNonNull(locale, "locale");
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * The {@link SpreadsheetId} that identifies this spreadsheet.
