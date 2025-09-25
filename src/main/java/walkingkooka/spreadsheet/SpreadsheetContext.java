@@ -37,6 +37,11 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     LocaleContext,
     SpreadsheetMetadataContext {
 
+    /**
+     * The {@link SpreadsheetId} that identifies this spreadsheet.
+     */
+    SpreadsheetId spreadsheetId();
+
     SpreadsheetStoreRepository storeRepository();
 
     @Override

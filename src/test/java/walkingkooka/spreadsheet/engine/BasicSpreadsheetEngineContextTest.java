@@ -1540,6 +1540,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
+        public SpreadsheetId spreadsheetId() {
+            return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+        }
+
+        @Override
         public SpreadsheetStoreRepository storeRepository() {
             return this.storeRepository;
         }
