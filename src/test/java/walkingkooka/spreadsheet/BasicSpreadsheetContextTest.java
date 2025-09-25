@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
@@ -170,6 +171,71 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 LOCALE_CONTEXT,
                 null
             )
+        );
+    }
+
+    // setEnvironment...................................................................................................
+
+    @Test
+    public void testSetEnvironmentLocaleDifferent() {
+        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            CREATE_METADATA,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetMetadataStore metadatas() {
+                    return this.store;
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
+            SPREADSHEET_PROVIDER,
+            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            LocaleContexts.fake(),
+            PROVIDER_CONTEXT
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+        this.localeAndCheck(
+            context.setEnvironmentValue(
+                EnvironmentValueName.LOCALE,
+                locale
+            ),
+            locale
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.LOCALE,
+            locale
+        );
+    }
+
+    // setLocale........................................................................................................
+
+    @Test
+    public void testSetLocaleDifferent() {
+        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            CREATE_METADATA,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetMetadataStore metadatas() {
+                    return this.store;
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
+            SPREADSHEET_PROVIDER,
+            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            LocaleContexts.fake(),
+            PROVIDER_CONTEXT
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+        this.localeAndCheck(
+            context.setLocale(locale),
+            locale
         );
     }
 

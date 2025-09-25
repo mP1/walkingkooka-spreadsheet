@@ -178,6 +178,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     @Override
+    public SpreadsheetContext setLocale(final Locale locale) {
+        this.environmentContext.setLocale(locale);
+
+        return this;
+    }
+
+    @Override
     public EnvironmentContext environmentContext() {
         return this.environmentContext;
     }
@@ -192,13 +199,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private LocaleContext localeContext;
-
-    @Override
-    public SpreadsheetContext setLocale(final Locale locale) {
-        this.localeContext.setLocale(locale);
-
-        return this;
-    }
 
     // HasProviderContext...............................................................................................
 
