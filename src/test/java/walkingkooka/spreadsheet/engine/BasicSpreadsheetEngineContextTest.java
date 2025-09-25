@@ -997,6 +997,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             context,
             locale
         );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.LOCALE,
+            locale
+        );
     }
 
     // environmentContext...............................................................................................
@@ -1084,6 +1090,33 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.environmentValueAndCheck(
             context,
             name,
+            value
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentValueWithLocale() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentValueName<Locale> name = EnvironmentValueName.LOCALE;
+        final Locale value = Locale.FRANCE;
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        context.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            name,
+            value
+        );
+
+        this.localeAndCheck(
+            context,
             value
         );
     }
