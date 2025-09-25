@@ -23,14 +23,18 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
-import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -52,6 +56,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -64,6 +69,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -74,7 +80,8 @@ import java.util.Set;
  * public methods requests.
  */
 final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
-    SpreadsheetContextDelegator,
+    EnvironmentContextDelegator,
+    LocaleContextDelegator,
     CanConvertDelegator,
     SpreadsheetProviderDelegator {
 
@@ -155,7 +162,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.metadata;
     }
 
-    private final SpreadsheetMetadata metadata;
+    /**
+     * Will be updated whenever a new metadata is saved.
+     */
+    private SpreadsheetMetadata metadata;
 
     // CanConvertDelegator..............................................................................................
 
@@ -455,8 +465,60 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // SpreadsheetContextDelegator......................................................................................
 
     @Override
-    public SpreadsheetContext spreadsheetContext() {
-        return this.spreadsheetContext;
+    public SpreadsheetId spreadsheetId() {
+        return this.spreadsheetContext.spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetStoreRepository storeRepository() {
+        return this.spreadsheetContext.storeRepository();
+    }
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                              final Optional<Locale> locale) {
+        return this.spreadsheetContext.createMetadata(
+            user,
+            locale
+        );
+    }
+
+    @Override
+    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+        return this.spreadsheetContext.loadMetadata(id);
+    }
+
+    @Override
+    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+        final SpreadsheetMetadata saved = this.spreadsheetContext.saveMetadata(metadata);
+        if (this.spreadsheetId().equals(saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
+            this.metadata = saved;
+        }
+        return saved;
+    }
+
+    @Override
+    public void deleteMetadata(final SpreadsheetId id) {
+        this.spreadsheetContext.deleteMetadata(id);
+        if (this.spreadsheetId().equals(id)) {
+            this.metadata = null;
+        }
+    }
+
+    @Override
+    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                   final int offset,
+                                                                   final int count) {
+        return this.spreadsheetContext.findMetadataBySpreadsheetName(
+            name,
+            offset,
+            count
+        );
+    }
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.spreadsheetContext.providerContext();
     }
 
     private final SpreadsheetContext spreadsheetContext;
@@ -504,6 +566,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.spreadsheetContext.removeEnvironmentValue(name);
         return this;
+    }
+
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.spreadsheetContext;
+    }
+
+    // LocaleContext....................................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.spreadsheetContext;
     }
 
     // SpreadsheetProvider..............................................................................................

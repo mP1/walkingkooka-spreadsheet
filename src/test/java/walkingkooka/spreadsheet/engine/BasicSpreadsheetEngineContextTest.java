@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
@@ -153,6 +154,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static String TEST_CONTEXT_SERVER_URL = "test-context-serverUrl";
 
     private final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
+
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -1325,6 +1328,55 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    // saveMetadata.....................................................................................................
+
+    @Test
+    public void testSaveMetadata() {
+        final BasicSpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetMetadata saved = context.saveMetadata(
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                SpreadsheetName.with(this.getClass().getName())
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                context.spreadsheetId()
+            )
+        );
+
+        this.checkEquals(
+            saved,
+            context.spreadsheetMetadata()
+        );
+    }
+
+    @Test
+    public void testSaveMetadataDifferent() {
+        final BasicSpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(999);
+
+        this.checkNotEquals(
+            spreadsheetId,
+            context.spreadsheetId()
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                SpreadsheetName.with(this.getClass().getName())
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                spreadsheetId
+            )
+        );
+
+        this.checkNotEquals(
+            saved,
+            context.spreadsheetMetadata()
+        );
+    }
+
     // createContext....................................................................................................
 
     @Override
@@ -1541,7 +1593,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         @Override
         public SpreadsheetId spreadsheetId() {
-            return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+            return SPREADSHEET_ID;
         }
 
         @Override
