@@ -19,17 +19,13 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -41,7 +37,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -50,29 +45,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static SpreadsheetId ID = SpreadsheetId.with(1);
 
-    private final static LocalDateTime NOW = LocalDateTime.of(
-        1999,
-        12,
-        31,
-        12,
-        58,
-        59
-    );
-
-    private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA =
-        (e, dl) ->
-            SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                    e,
-                    NOW,
-                    e,
-                    NOW
-                )
-            ).set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                dl.get()
-            );
     private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.fake();
@@ -94,23 +66,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 null,
-                CREATE_METADATA,
-                REPO,
-                SPREADSHEET_PROVIDER,
-                ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullCreateMetadataFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
-                ID,
-                null,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
@@ -126,7 +81,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 ID,
-                CREATE_METADATA,
                 null,
                 SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
@@ -142,7 +96,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 ID,
-                CREATE_METADATA,
                 REPO,
                 null,
                 ENVIRONMENT_CONTEXT,
@@ -158,7 +111,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 ID,
-                CREATE_METADATA,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 null,
@@ -174,7 +126,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 ID,
-                CREATE_METADATA,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
@@ -190,7 +141,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
                 ID,
-                CREATE_METADATA,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 ENVIRONMENT_CONTEXT,
@@ -216,7 +166,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testSetEnvironmentLocaleDifferent() {
         final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
             ID,
-            CREATE_METADATA,
             new FakeSpreadsheetStoreRepository() {
 
                 @Override
@@ -254,7 +203,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testSetLocaleDifferent() {
         final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
             ID,
-            CREATE_METADATA,
             new FakeSpreadsheetStoreRepository() {
 
                 @Override
@@ -277,45 +225,10 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         );
     }
 
-    // createMetadata...................................................................................................
-
-    @Test
-    public void testCreateMetadata() {
-        final BasicSpreadsheetContext context = this.createContext();
-
-        final EmailAddress user = EmailAddress.parse("user@example.com");
-        final Optional<Locale> locale = Optional.of(Locale.FRENCH);
-
-        final SpreadsheetMetadata metadata = context.createMetadata(
-            user,
-            locale
-        );
-
-        this.checkNotEquals(
-            Optional.empty(),
-            metadata.id(),
-            "id"
-        );
-
-        this.checkEquals(
-            user,
-            metadata.getOrFail(SpreadsheetMetadataPropertyName.AUDIT_INFO)
-                .createdBy(),
-            "createdBy"
-        );
-
-        this.loadMetadataAndCheck(
-            context,
-            metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID),
-            metadata
-        );
-    }
-
     @Override
     public BasicSpreadsheetContext createContext() {
         return BasicSpreadsheetContext.with(
             ID,
-            CREATE_METADATA,
             new FakeSpreadsheetStoreRepository() {
 
                 @Override

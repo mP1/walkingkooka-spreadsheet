@@ -22,7 +22,9 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -30,6 +32,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.util.Locale;
+import java.util.Optional;
 
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     EnvironmentContextDelegator,
@@ -100,6 +103,15 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     @Override
     default SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetContext();
+    }
+
+    @Override
+    default SpreadsheetMetadata createMetadata(final EmailAddress user,
+                                               final Optional<Locale> locale) {
+        return SpreadsheetContext.super.createMetadata(
+            user,
+            locale
+        );
     }
     
     @Override

@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiFunction;
 
 final class BasicSpreadsheetContext implements SpreadsheetContext,
     EnvironmentContextDelegator,
@@ -42,7 +41,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     SpreadsheetProviderDelegator {
 
     static BasicSpreadsheetContext with(final SpreadsheetId spreadsheetId,
-                                        final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                         final SpreadsheetStoreRepository storeRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final EnvironmentContext environmentContext,
@@ -50,7 +48,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                         final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
-            Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(storeRepository, "storeRepository"),
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
@@ -60,7 +57,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private BasicSpreadsheetContext(final SpreadsheetId spreadsheetId,
-                                    final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                     final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final EnvironmentContext environmentContext,
@@ -70,7 +66,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.spreadsheetId = spreadsheetId;
 
-        this.createMetadata = createMetadata;
         this.storeRepository = storeRepository;
         this.spreadsheetProvider = spreadsheetProvider;
         
@@ -101,15 +96,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         Objects.requireNonNull(user, "user");
         Objects.requireNonNull(locale, "locale");
 
-        return this.saveMetadata(
-            this.createMetadata.apply(
-                user,
-                locale
-            )
-        );
+        throw new UnsupportedOperationException();
     }
-
-    private final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata;
 
     @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
@@ -161,7 +149,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             this :
             with(
                 this.spreadsheetId,
-                this.createMetadata,
                 this.storeRepository,
                 this.spreadsheetProvider,
                 cloned,

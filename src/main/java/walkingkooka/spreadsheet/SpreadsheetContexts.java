@@ -19,16 +19,10 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-
-import java.util.Locale;
-import java.util.Optional;
-import java.util.function.BiFunction;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
@@ -36,7 +30,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetContext}
      */
     public static SpreadsheetContext basic(final SpreadsheetId spreadsheetId,
-                                           final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                            final SpreadsheetStoreRepository storeRepository,
                                            final SpreadsheetProvider spreadsheetProvider,
                                            final EnvironmentContext environmentContext,
@@ -44,7 +37,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                            final ProviderContext providerContext) {
         return BasicSpreadsheetContext.with(
             spreadsheetId,
-            createMetadata,
             storeRepository,
             spreadsheetProvider,
             environmentContext,
