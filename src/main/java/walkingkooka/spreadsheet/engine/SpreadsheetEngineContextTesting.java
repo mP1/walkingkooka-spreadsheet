@@ -19,13 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
-import walkingkooka.environment.EnvironmentContextTesting2;
-import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContextTesting;
-import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -48,14 +44,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
-    SpreadsheetGlobalContextTesting<C>,
+    SpreadsheetContextTesting<C>,
     ParserTesting,
-    LocaleContextTesting2<C>,
-    EnvironmentContextTesting2<C>,
-    HasProviderContextTesting,
-    SpreadsheetProviderTesting<C>,
     SpreadsheetLabelNameResolverTesting<C>,
-    SpreadsheetProviderContextTesting<C> {
+    SpreadsheetProviderTesting<C> {
 
     // SpreadsheetLabelNameResolverTesting..............................................................................
 
@@ -536,14 +528,6 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
             ),
             () -> "formatValueAndStyle " + cell + " " + formatter
         );
-    }
-
-    // EnvironmentContext...............................................................................................
-
-    @Test
-    @Override
-    default void testSetLocaleWithNullFails() {
-        EnvironmentContextTesting2.super.testSetLocaleWithNullFails();
     }
 
     // TypeNameTesting .................................................................................................

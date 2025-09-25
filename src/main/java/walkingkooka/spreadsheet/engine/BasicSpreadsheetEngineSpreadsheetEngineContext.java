@@ -19,27 +19,19 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
-import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContextDelegator;
+import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -54,11 +46,8 @@ import java.util.Optional;
  * methods using an existing
  */
 final class BasicSpreadsheetEngineSpreadsheetEngineContext implements SpreadsheetEngineContext,
-    SpreadsheetGlobalContextDelegator,
-    SpreadsheetProviderDelegator,
-    CanConvertDelegator,
-    EnvironmentContextDelegator,
-    LocaleContextDelegator {
+    SpreadsheetContextDelegator,
+    CanConvertDelegator {
 
     static BasicSpreadsheetEngineSpreadsheetEngineContext with(final SpreadsheetEngineContext spreadsheetEngineContext,
                                                                final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext) {
@@ -135,11 +124,6 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     @Override
-    public SpreadsheetStoreRepository storeRepository() {
-        return this.spreadsheetEngineContext.storeRepository();
-    }
-
-    @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetEngineContext.spreadsheetMetadata();
     }
@@ -158,33 +142,6 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
 
     @Override
     public CanConvert canConvert() {
-        return this.spreadsheetEngineContext;
-    }
-
-    // SpreadsheetGlobalContextDelegator................................................................................
-
-    @Override
-    public SpreadsheetGlobalContext spreadsheetGlobalContext() {
-        return this.spreadsheetEngineContext;
-    }
-
-    // LocaleContextDelegator...........................................................................................
-
-    @Override
-    public SpreadsheetEngineContext setLocale(final Locale locale) {
-        this.spreadsheetEngineContext.setLocale(locale);
-        return this;
-    }
-
-    @Override
-    public LocaleContext localeContext() {
-        return this.spreadsheetEngineContext;
-    }
-
-    // SpreadsheetProviderDelegator.....................................................................................
-
-    @Override
-    public SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetEngineContext;
     }
 
@@ -208,17 +165,13 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
             );
     }
 
-    // EnvironmentContextDelegator......................................................................................
-
-    @Override
-    public Locale locale() {
-        return this.spreadsheetEngineContext.locale();
-    }
-
     @Override
     public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                             final T value) {
-        this.spreadsheetEngineContext.setEnvironmentValue(name, value);
+        this.spreadsheetEngineContext.setEnvironmentValue(
+            name,
+            value
+        );
         return this;
     }
 
@@ -228,19 +181,20 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         return this;
     }
 
+    // SpreadsheetContextDelegator......................................................................................
+
     @Override
-    public EnvironmentContext environmentContext() {
+    public SpreadsheetEngineContext setLocale(final Locale locale) {
+        this.spreadsheetEngineContext.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public SpreadsheetContext spreadsheetContext() {
         return this.spreadsheetEngineContext;
     }
 
     private final SpreadsheetEngineContext spreadsheetEngineContext;
-
-    // ProviderContext..................................................................................................
-
-    @Override
-    public ProviderContext providerContext() {
-        return this.spreadsheetEngineContext.providerContext();
-    }
 
     // Object...........................................................................................................
 

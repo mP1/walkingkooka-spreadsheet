@@ -19,26 +19,20 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.convert.CanConvert;
-import walkingkooka.datetime.HasNow;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -61,15 +55,10 @@ import java.util.Optional;
 public interface SpreadsheetEngineContext extends Context,
     CanConvert,
     ExpressionPurityContext,
-    SpreadsheetGlobalContext,
     HasSpreadsheetMetadata,
-    HasNow,
-    LocaleContext,
-    SpreadsheetProvider,
-    EnvironmentContext,
+    SpreadsheetContext,
     SpreadsheetLabelNameResolver,
-    HasMissingCellNumberValue,
-    HasProviderContext {
+    HasMissingCellNumberValue {
 
     /**
      * Useful constant for some members that require a {@link SpreadsheetCell}.
@@ -149,13 +138,6 @@ public interface SpreadsheetEngineContext extends Context,
             Optional.empty() // ignore cell formatter
         );
     }
-
-    // stores...........................................................................................................
-
-    /**
-     * Getter that returns the {@link SpreadsheetStoreRepository} for this spreadsheet.
-     */
-    SpreadsheetStoreRepository storeRepository();
 
     // HasMissingCellNumberValue........................................................................................
 

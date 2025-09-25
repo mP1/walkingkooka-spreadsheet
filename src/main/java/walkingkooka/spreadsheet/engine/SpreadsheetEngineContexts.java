@@ -17,14 +17,11 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.SpreadsheetGlobalContext;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
@@ -35,21 +32,15 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      */
     public static SpreadsheetEngineContext basic(final AbsoluteUrl serverUrl,
                                                  final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetStoreRepository storeRepository,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
-                                                 final EnvironmentContext environmentContext,
-                                                 final SpreadsheetGlobalContext spreadsheetGlobalContext,
-                                                 final TerminalContext terminalContext,
-                                                 final SpreadsheetProvider spreadsheetProvider) {
+                                                 final SpreadsheetContext spreadsheetContext,
+                                                 final TerminalContext terminalContext) {
         return BasicSpreadsheetEngineContext.with(
             serverUrl,
             metadata,
-            storeRepository,
             functionAliases,
-            environmentContext,
-            spreadsheetGlobalContext,
-            terminalContext,
-            spreadsheetProvider
+            spreadsheetContext,
+            terminalContext
         );
     }
 
