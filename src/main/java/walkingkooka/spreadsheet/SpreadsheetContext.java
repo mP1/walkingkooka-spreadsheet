@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.util.Locale;
 
 /**
- * A {@link Context} for a single spreadsheet.
+ * A {@link Context} holding state including {@link EnvironmentContext} for a single spreadsheet.
  */
 public interface SpreadsheetContext extends SpreadsheetProvider,
     EnvironmentContext,
