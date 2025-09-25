@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -44,7 +45,10 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetContextTest implements SpreadsheetContextTesting<BasicSpreadsheetContext> {
+public final class BasicSpreadsheetContextTest implements SpreadsheetContextTesting<BasicSpreadsheetContext>,
+    ToStringTesting<BasicSpreadsheetContext> {
+
+    private final static SpreadsheetId ID = SpreadsheetId.with(1);
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -85,10 +89,27 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
+    public void testWithNullSpreadsheetIdFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                null,
+                CREATE_METADATA,
+                REPO,
+                SPREADSHEET_PROVIDER,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullCreateMetadataFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                ID,
                 null,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -104,6 +125,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                ID,
                 CREATE_METADATA,
                 null,
                 SPREADSHEET_PROVIDER,
@@ -119,6 +141,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                ID,
                 CREATE_METADATA,
                 REPO,
                 null,
@@ -134,6 +157,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                ID,
                 CREATE_METADATA,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -149,6 +173,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                ID,
                 CREATE_METADATA,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -164,6 +189,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                ID,
                 CREATE_METADATA,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -174,11 +200,22 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         );
     }
 
+    // spreadsheetId....................................................................................................
+
+    @Test
+    public void testSpreadsheetId() {
+        this.spreadsheetIdAndCheck(
+            this.createContext(),
+            ID
+        );
+    }
+
     // setEnvironment...................................................................................................
 
     @Test
     public void testSetEnvironmentLocaleDifferent() {
         final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            ID,
             CREATE_METADATA,
             new FakeSpreadsheetStoreRepository() {
 
@@ -216,6 +253,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     @Test
     public void testSetLocaleDifferent() {
         final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            ID,
             CREATE_METADATA,
             new FakeSpreadsheetStoreRepository() {
 
@@ -276,6 +314,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     @Override
     public BasicSpreadsheetContext createContext() {
         return BasicSpreadsheetContext.with(
+            ID,
             CREATE_METADATA,
             new FakeSpreadsheetStoreRepository() {
 
@@ -290,6 +329,16 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             ENVIRONMENT_CONTEXT,
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "spreadsheetId=1"
         );
     }
 

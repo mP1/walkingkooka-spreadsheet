@@ -38,6 +38,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     SpreadsheetProviderDelegator {
 
     @Override
+    default SpreadsheetId spreadsheetId() {
+        return this.spreadsheetContext()
+            .spreadsheetId();
+    }
+
+    @Override
     default SpreadsheetStoreRepository storeRepository() {
         return this.spreadsheetContext()
             .storeRepository();

@@ -39,6 +39,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
+    public SpreadsheetId spreadsheetId() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetStoreRepository storeRepository() {
         throw new UnsupportedOperationException();
     }

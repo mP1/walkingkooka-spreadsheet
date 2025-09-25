@@ -25,6 +25,7 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -40,13 +41,15 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    static BasicSpreadsheetContext with(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+    static BasicSpreadsheetContext with(final SpreadsheetId spreadsheetId,
+                                        final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                         final SpreadsheetStoreRepository storeRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
+            Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
             Objects.requireNonNull(createMetadata, "createMetadata"),
             Objects.requireNonNull(storeRepository, "storeRepository"),
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
@@ -56,13 +59,16 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         );
     }
 
-    private BasicSpreadsheetContext(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+    private BasicSpreadsheetContext(final SpreadsheetId spreadsheetId,
+                                    final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                     final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext,
                                     final ProviderContext providerContext) {
         super();
+
+        this.spreadsheetId = spreadsheetId;
 
         this.createMetadata = createMetadata;
         this.storeRepository = storeRepository;
@@ -72,6 +78,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.localeContext = localeContext;
         this.providerContext = providerContext;
     }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.spreadsheetId;
+    }
+
+    private final SpreadsheetId spreadsheetId;
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
@@ -147,6 +160,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         return before.equals(cloned) ?
             this :
             with(
+                this.spreadsheetId,
                 this.createMetadata,
                 this.storeRepository,
                 this.spreadsheetProvider,
@@ -222,6 +236,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public String toString() {
-        return this.storeRepository.toString();
+        return SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this.spreadsheetId.toString();
     }
 }

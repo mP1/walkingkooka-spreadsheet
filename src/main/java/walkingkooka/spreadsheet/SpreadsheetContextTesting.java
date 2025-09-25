@@ -28,6 +28,14 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     LocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 
+    default void spreadsheetIdAndCheck(final C context,
+                                       final SpreadsheetId expected) {
+        this.checkEquals(
+            expected,
+            context.spreadsheetId()
+        );
+    }
+
     @Test
     @Override
     default void testSetLocaleWithNullFails() {

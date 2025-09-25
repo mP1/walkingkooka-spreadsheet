@@ -35,13 +35,15 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetContext}
      */
-    public static SpreadsheetContext basic(final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
+    public static SpreadsheetContext basic(final SpreadsheetId spreadsheetId,
+                                           final BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                            final SpreadsheetStoreRepository storeRepository,
                                            final SpreadsheetProvider spreadsheetProvider,
                                            final EnvironmentContext environmentContext,
                                            final LocaleContext localeContext,
                                            final ProviderContext providerContext) {
         return BasicSpreadsheetContext.with(
+            spreadsheetId,
             createMetadata,
             storeRepository,
             spreadsheetProvider,
