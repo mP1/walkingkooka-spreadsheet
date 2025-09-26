@@ -73,6 +73,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.environmentContext = environmentContext;
         this.localeContext = LocaleContexts.readOnly(localeContext);
         this.providerContext = providerContext;
+
+        this.metadata = this.loadMetadataOrFail(spreadsheetId);
     }
 
     @Override

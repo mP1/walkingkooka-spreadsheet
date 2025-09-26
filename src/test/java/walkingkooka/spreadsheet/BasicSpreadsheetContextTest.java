@@ -88,7 +88,9 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             Optional.empty() // no user
         )
     );
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
+        LocaleContexts.jre(Locale.ENGLISH)
+    );
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -196,22 +198,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSaveMetadataWithSameId() {
-        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
-            ID,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
-            SPREADSHEET_PROVIDER,
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
-            LocaleContexts.fake(),
-            PROVIDER_CONTEXT
-        );
+        final BasicSpreadsheetContext context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
 
@@ -249,22 +236,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSaveMetadataWithDifferentId() {
-        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
-            ID,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
-            SPREADSHEET_PROVIDER,
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
-            LocaleContexts.fake(),
-            PROVIDER_CONTEXT
-        );
+        final BasicSpreadsheetContext context = this.createContext();
 
         final SpreadsheetId id = SpreadsheetId.with(999);
         this.checkNotEquals(
@@ -310,22 +282,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSetEnvironmentLocaleDifferent() {
-        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
-            ID,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
-            SPREADSHEET_PROVIDER,
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
-            LocaleContexts.fake(),
-            PROVIDER_CONTEXT
-        );
+        final BasicSpreadsheetContext context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
         this.localeAndCheck(
@@ -347,22 +304,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSetLocaleDifferent() {
-        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
-            ID,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
-            SPREADSHEET_PROVIDER,
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
-            LocaleContexts.fake(),
-            PROVIDER_CONTEXT
-        );
+        final BasicSpreadsheetContext context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
         this.localeAndCheck(
@@ -375,76 +317,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSpreadsheetProvider() {
-        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
-            ID,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
-            SpreadsheetProviders.basic(
-                ConverterProviders.empty(),
-                ExpressionFunctionProviders.empty(
-                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
-                ),
-                SpreadsheetComparatorProviders.empty(),
-                SpreadsheetExporterProviders.empty(),
-                SpreadsheetFormatterProviders.empty(),
-                FormHandlerProviders.empty(),
-                SpreadsheetImporterProviders.empty(),
-                SpreadsheetParserProviders.empty(),
-                ValidatorProviders.empty()
-            ),
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
-            LocaleContexts.fake(),
-            PROVIDER_CONTEXT
-        );
-
-        final SpreadsheetMetadata saved = context.saveMetadata(
-            SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.LOCALE,
-                LOCALE
-            ).loadFromLocale(
-                LocaleContexts.jre(LOCALE)
-            ).set(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                ID
-            ).set(
-                SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AUDIT_INFO
-            ).set(
-                SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.FORMATTERS,
-                SpreadsheetFormatterAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
-                SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.PARSERS,
-                SpreadsheetParserAliasSet.EMPTY
-            ).set(
-                SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.EMPTY
-            )
-        );
+        final BasicSpreadsheetContext context = this.createContext();
 
         final SpreadsheetProvider spreadsheetProvider = context.spreadsheetProvider();
         assertSame(
@@ -455,34 +328,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSpreadsheetProviderAfterSpreadsheetMetadataDelete() {
-        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
-            ID,
-            new FakeSpreadsheetStoreRepository() {
-
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
-                }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-            },
-            SpreadsheetProviders.basic(
-                ConverterProviders.empty(),
-                ExpressionFunctionProviders.empty(
-                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
-                ),
-                SpreadsheetComparatorProviders.empty(),
-                SpreadsheetExporterProviders.empty(),
-                SpreadsheetFormatterProviders.empty(),
-                FormHandlerProviders.empty(),
-                SpreadsheetImporterProviders.empty(),
-                SpreadsheetParserProviders.empty(),
-                ValidatorProviders.empty()
-            ),
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
-            LocaleContexts.fake(),
-            PROVIDER_CONTEXT
-        );
+        final BasicSpreadsheetContext context = this.createContext();
 
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
@@ -543,19 +389,78 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Override
     public BasicSpreadsheetContext createContext() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            LOCALE
+        ).loadFromLocale(
+            LocaleContexts.jre(LOCALE)
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            ID
+        ).set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AUDIT_INFO
+        ).set(
+            SpreadsheetMetadataPropertyName.COMPARATORS,
+            SpreadsheetComparatorAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            ConverterAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.EXPORTERS,
+            SpreadsheetExporterAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+            FormHandlerAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTERS,
+            SpreadsheetFormatterAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+        ).set(
+            SpreadsheetMetadataPropertyName.IMPORTERS,
+            SpreadsheetImporterAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.PARSERS,
+            SpreadsheetParserAliasSet.EMPTY
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.EMPTY
+        );
+
+        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+        store.save(metadata);
+
         return BasicSpreadsheetContext.with(
             ID,
             new FakeSpreadsheetStoreRepository() {
 
                 @Override
                 public SpreadsheetMetadataStore metadatas() {
-                    return this.store;
+                    return store;
                 }
-
-                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
             },
-            SPREADSHEET_PROVIDER,
-            ENVIRONMENT_CONTEXT,
+            SpreadsheetProviders.basic(
+                ConverterProviders.empty(),
+                ExpressionFunctionProviders.empty(
+                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
+                ),
+                SpreadsheetComparatorProviders.empty(),
+                SpreadsheetExporterProviders.empty(),
+                SpreadsheetFormatterProviders.empty(),
+                FormHandlerProviders.empty(),
+                SpreadsheetImporterProviders.empty(),
+                SpreadsheetParserProviders.empty(),
+                ValidatorProviders.empty()
+            ),
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LOCALE,
+                    LocalDateTime::now,
+                    Optional.empty() // no user
+                )
+            ),
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );
