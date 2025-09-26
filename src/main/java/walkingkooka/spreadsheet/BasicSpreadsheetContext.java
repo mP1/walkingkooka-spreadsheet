@@ -112,9 +112,15 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
-        return this.storeRepository
+        final SpreadsheetMetadata saved = this.storeRepository
             .metadatas()
             .save(metadata);
+        // sync Locale
+        if(this.spreadsheetId().equals(saved.id().orElse(null))) {
+            this.setLocale(saved.locale());
+        }
+
+        return saved;
     }
 
     @Override
