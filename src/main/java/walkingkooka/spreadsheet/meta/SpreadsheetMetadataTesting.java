@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.props.Properties;
 import walkingkooka.props.PropertiesPath;
@@ -382,55 +383,57 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext();
 
-    ProviderContext PROVIDER_CONTEXT = SpreadsheetProviderContexts.basic(
-        PluginStores.fake(),
-        JsonNodeMarshallUnmarshallContexts.basic(
-            JSON_NODE_MARSHALL_CONTEXT,
-            JSON_NODE_UNMARSHALL_CONTEXT
-        ),
-        SpreadsheetMetadata.EMPTY.set(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            LOCALE
-        ).set(
-            SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
-        ).set(
-            SpreadsheetMetadataPropertyName.DATE_PARSER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_PARSER)
-        ).set(
-            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
-        ).set(
-            SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
-        ).set(
-            SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
-        ).set(
-            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
-        ).set(
-            SpreadsheetMetadataPropertyName.NUMBER_PARSER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_PARSER)
-        ).set(
-            SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
-        ).set(
-            SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
-        ).set(
-            SpreadsheetMetadataPropertyName.TIME_PARSER,
-            METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
-        ).environmentContext(
-            EnvironmentContexts.properties( // properties EnvironmentContext is immutable
-                Properties.EMPTY.set(
-                    PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
-                    DUMMY_ENVIRONMENTAL_VALUE
-                ),
-                ENVIRONMENT_CONTEXT
-            )
-        ),
-        LOCALE_CONTEXT
+    ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
+        SpreadsheetProviderContexts.basic(
+            PluginStores.fake(),
+            JsonNodeMarshallUnmarshallContexts.basic(
+                JSON_NODE_MARSHALL_CONTEXT,
+                JSON_NODE_UNMARSHALL_CONTEXT
+            ),
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_PARSER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.ERROR_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.NUMBER_PARSER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TEXT_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_FORMATTER)
+            ).set(
+                SpreadsheetMetadataPropertyName.TIME_PARSER,
+                METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
+            ).environmentContext(
+                EnvironmentContexts.properties( // properties EnvironmentContext is immutable
+                    Properties.EMPTY.set(
+                        PropertiesPath.parse(DUMMY_ENVIRONMENTAL_VALUE_NAME.value()),
+                        DUMMY_ENVIRONMENTAL_VALUE
+                    ),
+                    ENVIRONMENT_CONTEXT
+                )
+            ),
+            LOCALE_CONTEXT
+        )
     );
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
