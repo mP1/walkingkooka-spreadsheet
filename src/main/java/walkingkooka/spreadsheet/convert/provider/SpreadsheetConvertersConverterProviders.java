@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterAliasSet;
+import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
@@ -38,6 +39,11 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
      * converter will be appended to this base.
      */
     public final static AbsoluteUrl BASE_URL = SpreadsheetConvertersConverterProvider.BASE_URL;
+
+    /**
+     * Convenient {@link ConverterInfoSet} containing all {@link Converter}.
+     */
+    public final static ConverterInfoSet ALL = SpreadsheetConvertersConverterProvider.INFOS;
 
     public final static ConverterAliasSet FIND = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
