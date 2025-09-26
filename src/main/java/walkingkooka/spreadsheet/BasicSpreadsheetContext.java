@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -70,7 +71,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.spreadsheetProvider = spreadsheetProvider;
         
         this.environmentContext = environmentContext;
-        this.localeContext = localeContext;
+        this.localeContext = LocaleContexts.readOnly(localeContext);
         this.providerContext = providerContext;
     }
 
