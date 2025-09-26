@@ -19,13 +19,17 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -49,9 +53,18 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.fake();
 
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    private final static AuditInfo AUDIT_INFO = AuditInfo.with(
+        EmailAddress.parse("creator@example.com"),
+        LocalDateTime.MIN,
+        EmailAddress.parse("modified@example.com"),
+        LocalDateTime.MIN
+    );
+
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.map(
         EnvironmentContexts.empty(
-            Locale.forLanguageTag("en-AU"),
+            LOCALE,
             LocalDateTime::now,
             Optional.empty() // no user
         )
@@ -157,6 +170,120 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         this.spreadsheetIdAndCheck(
             this.createContext(),
             ID
+        );
+    }
+
+    // saveMetadata.....................................................................................................
+
+    @Test
+    public void testSaveMetadataWithSameId() {
+        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            ID,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetMetadataStore metadatas() {
+                    return this.store;
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
+            SPREADSHEET_PROVIDER,
+            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            LocaleContexts.fake(),
+            PROVIDER_CONTEXT
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+
+        final SpreadsheetMetadata saved = context.saveMetadata(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale
+            ).loadFromLocale(
+                LocaleContexts.jre(locale)
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                ID
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AUDIT_INFO
+            )
+        );
+
+        this.checkEquals(
+            locale,
+            saved.locale()
+        );
+
+        this.localeAndCheck(
+            context,
+            locale
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.LOCALE,
+            locale
+        );
+    }
+
+    @Test
+    public void testSaveMetadataWithDifferentId() {
+        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            ID,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetMetadataStore metadatas() {
+                    return this.store;
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
+            SPREADSHEET_PROVIDER,
+            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            LocaleContexts.fake(),
+            PROVIDER_CONTEXT
+        );
+
+        final SpreadsheetId id = SpreadsheetId.with(999);
+        this.checkNotEquals(
+            ID,
+            id
+        );
+
+        final Locale locale = Locale.forLanguageTag("FR");
+
+        final SpreadsheetMetadata saved = context.saveMetadata(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                locale
+            ).loadFromLocale(
+                LocaleContexts.jre(locale)
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                id
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AUDIT_INFO
+            )
+        );
+
+        this.checkEquals(
+            locale,
+            saved.locale()
+        );
+
+        this.localeAndCheck(
+            context,
+            LOCALE
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.LOCALE,
+            LOCALE
         );
     }
 
