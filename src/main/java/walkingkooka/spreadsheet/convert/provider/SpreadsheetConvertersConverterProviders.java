@@ -45,7 +45,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
      */
     public final static ConverterInfoSet ALL = SpreadsheetConvertersConverterProvider.INFOS;
 
-    public final static ConverterAliasSet FIND = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+    public final static ConverterAliasSet FIND = ALL.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
@@ -54,11 +54,11 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
-    public final static ConverterAliasSet FORMATTING = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+    public final static ConverterAliasSet FORMATTING = ALL.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATION_ERROR);
 
-    public final static ConverterAliasSet FORMULA = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+    public final static ConverterAliasSet FORMULA = ALL.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
@@ -67,9 +67,9 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
-    public final static ConverterAliasSet SCRIPTING = SpreadsheetConvertersConverterProvider.INFOS.aliasSet();
+    public final static ConverterAliasSet SCRIPTING = ALL.aliasSet();
 
-    public final static ConverterAliasSet SORT = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+    public final static ConverterAliasSet SORT = ALL.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_STYLE)
@@ -83,7 +83,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_HYPERLINK)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.URL_TO_IMAGE);
 
-    public final static ConverterAliasSet VALIDATOR = SpreadsheetConvertersConverterProvider.INFOS.aliasSet()
+    public final static ConverterAliasSet VALIDATOR = ALL.aliasSet()
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.COLOR_TO_NUMBER)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.HAS_STYLE)
