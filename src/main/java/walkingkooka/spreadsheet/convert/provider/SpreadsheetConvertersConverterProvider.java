@@ -887,7 +887,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     }
 
     // @see SpreadsheetConverters constants
-    public final static ConverterInfoSet INFOS = ConverterInfoSet.with(
+    final static ConverterInfoSet INFOS = ConverterInfoSet.with(
         Sets.of(
             converterInfo(BASIC),
             converterInfo(BOOLEAN),
