@@ -116,8 +116,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             .metadatas()
             .save(metadata);
         // sync Locale
-        if(this.spreadsheetId().equals(saved.id().orElse(null))) {
-            this.setLocale(saved.locale());
+        final SpreadsheetId id = saved.id()
+            .orElse(null);
+        if(this.spreadsheetId().equals(id)) {
+            this.setSpreadsheetMetadata(
+                id,
+                saved
+            );
         }
 
         return saved;
@@ -130,7 +135,25 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.storeRepository
             .metadatas()
             .delete(id);
+
+        this.setSpreadsheetMetadata(
+            id,
+            null
+        );
     }
+
+    private void setSpreadsheetMetadata(final SpreadsheetId id,
+                                        final SpreadsheetMetadata metadata) {
+        if(this.spreadsheetId().equals(id)) {
+            this.metadata = metadata;
+
+            if(null != metadata) {
+                this.setLocale(metadata.locale());
+            }
+        }
+    }
+
+    private SpreadsheetMetadata metadata;
 
     @Override
     public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
@@ -221,10 +244,19 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public SpreadsheetProvider spreadsheetProvider() {
-        return this.spreadsheetProvider;
+        if(null == this.metadataSpreadsheetProvider) {
+            this.setSpreadsheetProvider(this.metadata);
+        }
+        return this.metadataSpreadsheetProvider;
     }
 
     private final SpreadsheetProvider spreadsheetProvider;
+
+    private void setSpreadsheetProvider(final SpreadsheetMetadata metadata) {
+        this.metadataSpreadsheetProvider = metadata.spreadsheetProvider(this.spreadsheetProvider);
+    }
+
+    private SpreadsheetProvider metadataSpreadsheetProvider;
 
     // Object...........................................................................................................
 

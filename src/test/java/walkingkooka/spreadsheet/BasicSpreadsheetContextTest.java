@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.convert.provider.ConverterAliasSet;
+import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -28,20 +30,37 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.validation.form.provider.FormHandlerAliasSet;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.provider.ValidatorAliasSet;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetContextTest implements SpreadsheetContextTesting<BasicSpreadsheetContext>,
@@ -349,6 +368,88 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         this.localeAndCheck(
             context.setLocale(locale),
             locale
+        );
+    }
+
+    // spreadsheetProvider..............................................................................................
+
+    @Test
+    public void testSpreadsheetProvider() {
+        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            ID,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetMetadataStore metadatas() {
+                    return this.store;
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
+            SpreadsheetProviders.basic(
+                ConverterProviders.empty(),
+                ExpressionFunctionProviders.empty(
+                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
+                ),
+                SpreadsheetComparatorProviders.empty(),
+                SpreadsheetExporterProviders.empty(),
+                SpreadsheetFormatterProviders.empty(),
+                FormHandlerProviders.empty(),
+                SpreadsheetImporterProviders.empty(),
+                SpreadsheetParserProviders.empty(),
+                ValidatorProviders.empty()
+            ),
+            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            LocaleContexts.fake(),
+            PROVIDER_CONTEXT
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            ).loadFromLocale(
+                LocaleContexts.jre(LOCALE)
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                ID
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AUDIT_INFO
+            ).set(
+                SpreadsheetMetadataPropertyName.COMPARATORS,
+                SpreadsheetComparatorAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.CONVERTERS,
+                ConverterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.EXPORTERS,
+                SpreadsheetExporterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                FormHandlerAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FORMATTERS,
+                SpreadsheetFormatterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+            ).set(
+                SpreadsheetMetadataPropertyName.IMPORTERS,
+                SpreadsheetImporterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.PARSERS,
+                SpreadsheetParserAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.VALIDATORS,
+                ValidatorAliasSet.EMPTY
+            )
+        );
+
+        final SpreadsheetProvider spreadsheetProvider = context.spreadsheetProvider();
+        assertSame(
+            spreadsheetProvider,
+            context.spreadsheetProvider()
         );
     }
 
