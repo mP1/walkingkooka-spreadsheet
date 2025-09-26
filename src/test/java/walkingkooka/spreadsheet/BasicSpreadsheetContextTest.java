@@ -453,6 +453,94 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         );
     }
 
+    @Test
+    public void testSpreadsheetProviderAfterSpreadsheetMetadataDelete() {
+        final BasicSpreadsheetContext context = BasicSpreadsheetContext.with(
+            ID,
+            new FakeSpreadsheetStoreRepository() {
+
+                @Override
+                public SpreadsheetMetadataStore metadatas() {
+                    return this.store;
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
+            SpreadsheetProviders.basic(
+                ConverterProviders.empty(),
+                ExpressionFunctionProviders.empty(
+                    SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY
+                ),
+                SpreadsheetComparatorProviders.empty(),
+                SpreadsheetExporterProviders.empty(),
+                SpreadsheetFormatterProviders.empty(),
+                FormHandlerProviders.empty(),
+                SpreadsheetImporterProviders.empty(),
+                SpreadsheetParserProviders.empty(),
+                ValidatorProviders.empty()
+            ),
+            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            LocaleContexts.fake(),
+            PROVIDER_CONTEXT
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            ).loadFromLocale(
+                LocaleContexts.jre(LOCALE)
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                ID
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AUDIT_INFO
+            ).set(
+                SpreadsheetMetadataPropertyName.COMPARATORS,
+                SpreadsheetComparatorAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.CONVERTERS,
+                ConverterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.EXPORTERS,
+                SpreadsheetExporterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                FormHandlerAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FORMATTERS,
+                SpreadsheetFormatterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+            ).set(
+                SpreadsheetMetadataPropertyName.IMPORTERS,
+                SpreadsheetImporterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.PARSERS,
+                SpreadsheetParserAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.VALIDATORS,
+                ValidatorAliasSet.EMPTY
+            )
+        );
+
+        context.deleteMetadata(
+            saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+        );
+
+        final IllegalStateException expected = assertThrows(
+            IllegalStateException.class,
+            () -> context.spreadsheetProvider()
+        );
+
+        this.checkEquals(
+            "SpreadsheetMetadata 1 deleted",
+            expected.getMessage()
+        );
+    }
+
     @Override
     public BasicSpreadsheetContext createContext() {
         return BasicSpreadsheetContext.with(
