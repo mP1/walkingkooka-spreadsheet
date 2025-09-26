@@ -246,6 +246,10 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     public SpreadsheetProvider spreadsheetProvider() {
         if(null == this.metadataSpreadsheetProvider) {
             this.setSpreadsheetProvider(this.metadata);
+
+            if(null == this.metadataSpreadsheetProvider) {
+                throw new IllegalStateException("SpreadsheetMetadata " + this.spreadsheetId + " deleted");
+            }
         }
         return this.metadataSpreadsheetProvider;
     }
@@ -253,7 +257,9 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     private final SpreadsheetProvider spreadsheetProvider;
 
     private void setSpreadsheetProvider(final SpreadsheetMetadata metadata) {
-        this.metadataSpreadsheetProvider = metadata.spreadsheetProvider(this.spreadsheetProvider);
+        this.metadataSpreadsheetProvider = null != metadata ?
+            metadata.spreadsheetProvider(this.spreadsheetProvider) :
+            null;
     }
 
     private SpreadsheetProvider metadataSpreadsheetProvider;
