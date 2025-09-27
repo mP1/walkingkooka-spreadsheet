@@ -531,6 +531,12 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context.user();
     }
 
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
+        return this;
+    }
+
     // Object...........................................................................................................
 
     @Override

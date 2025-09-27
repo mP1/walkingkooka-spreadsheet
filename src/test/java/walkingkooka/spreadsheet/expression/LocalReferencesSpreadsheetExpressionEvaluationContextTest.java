@@ -464,6 +464,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                 }
 
                 @Override
+                public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+                    Objects.requireNonNull(user, "user");
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
                 public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
                     Objects.requireNonNull(locale, "locale");
                     throw new UnsupportedOperationException();

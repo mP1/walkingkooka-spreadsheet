@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -83,6 +84,12 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public Optional<EmailAddress> user() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+        Objects.requireNonNull(user, "user");
         throw new UnsupportedOperationException();
     }
 

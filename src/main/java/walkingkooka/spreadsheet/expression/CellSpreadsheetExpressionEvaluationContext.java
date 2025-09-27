@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -130,6 +131,12 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         this.context.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
         return this;
     }
 

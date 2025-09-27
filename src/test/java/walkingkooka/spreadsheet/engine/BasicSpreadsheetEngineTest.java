@@ -640,6 +640,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // EnvironmentContextDelegator..................................................................................
 
         @Override
+        public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+            Objects.requireNonNull(user, "user");
+            throw new UnsupportedOperationException();
+        }
+        
+        @Override
         public SpreadsheetContext cloneEnvironment() {
             throw new UnsupportedOperationException();
         }

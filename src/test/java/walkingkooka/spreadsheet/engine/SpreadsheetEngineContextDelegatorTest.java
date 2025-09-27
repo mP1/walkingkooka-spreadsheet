@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -47,6 +48,12 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
         @Override
         public SpreadsheetEngineContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+            Objects.requireNonNull(user, "user");
             throw new UnsupportedOperationException();
         }
     }

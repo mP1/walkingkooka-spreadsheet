@@ -100,6 +100,12 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         public Optional<EmailAddress> user() {
             return Optional.empty();
         }
+
+        @Override
+        public EnvironmentContext setUser(final Optional<EmailAddress> user) {
+            Objects.requireNonNull(user, "user");
+            throw new UnsupportedOperationException();
+        }
     };
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);

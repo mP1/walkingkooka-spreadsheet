@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -154,6 +155,9 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext setLocale(final Locale locale);
+
+    @Override
+    SpreadsheetEngineContext setUser(final Optional<EmailAddress> user);
 
     @Override
     <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,

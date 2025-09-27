@@ -218,6 +218,12 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     @Override
+    public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+        this.environmentContext.setUser(user);
+        return this;
+    }
+
+    @Override
     public EnvironmentContext environmentContext() {
         return this.environmentContext;
     }

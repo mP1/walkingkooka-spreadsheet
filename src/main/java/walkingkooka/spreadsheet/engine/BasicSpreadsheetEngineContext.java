@@ -556,6 +556,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
+    public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+        this.spreadsheetContext.setUser(user);
+        return this;
+    }
+
+    @Override
     public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                             final T value) {
         this.spreadsheetContext.setEnvironmentValue(name, value);

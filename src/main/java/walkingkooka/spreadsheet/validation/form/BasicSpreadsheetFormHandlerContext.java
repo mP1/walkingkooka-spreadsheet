@@ -24,6 +24,7 @@ import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -264,6 +265,12 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     @Override
     public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
         this.context.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
         return this;
     }
 

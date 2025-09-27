@@ -18,16 +18,24 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FakeFormHandlerContext;
+
+import java.util.Optional;
 
 public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta>
     implements SpreadsheetFormHandlerContext {
 
     public FakeSpreadsheetFormHandlerContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

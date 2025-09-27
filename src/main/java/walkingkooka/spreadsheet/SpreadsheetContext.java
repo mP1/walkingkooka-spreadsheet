@@ -69,4 +69,7 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
 
     @Override
     SpreadsheetContext setLocale(final Locale locale);
+
+    @Override
+    SpreadsheetContext setUser(final Optional<EmailAddress> user);
 }

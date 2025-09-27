@@ -29,6 +29,7 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -45,6 +46,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link ProviderContext} that may be used as the system {@link ProviderContext}.
@@ -149,6 +151,12 @@ final class BasicProviderContext implements ProviderContext,
     @Override
     public ProviderContext setLocale(final Locale locale) {
         this.environmentContext.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public ProviderContext setUser(final Optional<EmailAddress> user) {
+        this.environmentContext.setUser(user);
         return this;
     }
 

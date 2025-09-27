@@ -245,6 +245,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+        throw new UnsupportedOperationException();
+    }
+
     // ProviderContext..................................................................................................
 
     @Override
