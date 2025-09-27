@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FormHandlerContext;
 
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -36,10 +37,13 @@ import java.util.Optional;
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     @Override
-    SpreadsheetFormHandlerContext cloneEnvironment();
+    SpreadsheetFormHandlerContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user);
+
+    @Override
+    SpreadsheetFormHandlerContext cloneEnvironment();
 
     @Override
     <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,

@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FakeFormHandlerContext;
 
+import java.util.Locale;
 import java.util.Optional;
 
 public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta>
@@ -31,6 +32,11 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
 
     public FakeSpreadsheetFormHandlerContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
