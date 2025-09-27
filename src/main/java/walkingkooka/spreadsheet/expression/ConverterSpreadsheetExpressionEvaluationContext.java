@@ -59,6 +59,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -442,6 +443,19 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     // JsonNodeMarshallContextDelegator.................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = this.context.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new ConverterSpreadsheetExpressionEvaluationContext(
+                this.converter,
+                after
+            );
+    }
 
     @Override
     public JsonNodeMarshallContext jsonNodeMarshallContext() {

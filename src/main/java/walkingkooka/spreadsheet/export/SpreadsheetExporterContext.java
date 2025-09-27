@@ -19,7 +19,11 @@ package walkingkooka.spreadsheet.export;
 
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 
 public interface SpreadsheetExporterContext extends JsonNodeMarshallContext,
     HasSpreadsheetMetadata {
+
+    @Override
+    SpreadsheetExporterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor);
 }

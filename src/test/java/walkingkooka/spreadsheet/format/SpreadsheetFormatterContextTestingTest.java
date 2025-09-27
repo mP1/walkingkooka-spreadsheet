@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextTestingTest.Te
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -162,6 +163,11 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
 
         @Override
         public SpreadsheetFormatterContext setLocale(final Locale locale) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
             throw new UnsupportedOperationException();
         }
 

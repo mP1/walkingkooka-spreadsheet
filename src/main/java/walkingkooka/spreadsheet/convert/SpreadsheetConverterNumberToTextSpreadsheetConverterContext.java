@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -100,6 +101,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
 
     @Override
     public SpreadsheetExpressionReference validationReference() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetConverterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
         throw new UnsupportedOperationException();
     }
 

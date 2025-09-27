@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 /**
@@ -46,6 +47,9 @@ public interface SpreadsheetComparatorContext extends SpreadsheetConverterContex
     }
 
     // SpreadsheetConverterContext......................................................................................
+
+    @Override
+    SpreadsheetComparatorContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor);
 
     @Override
     SpreadsheetComparatorContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);

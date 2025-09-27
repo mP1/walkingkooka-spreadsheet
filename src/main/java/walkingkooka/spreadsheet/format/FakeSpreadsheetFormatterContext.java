@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -78,6 +79,11 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
 
     @Override
     public SpreadsheetFormatterContext setLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
         throw new UnsupportedOperationException();
     }
 

@@ -36,6 +36,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -151,6 +152,16 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     @Override
     public JsonNodeContext jsonNodeContext() {
         return this.context;
+    }
+
+    @Override
+    public SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetConverterContext before = this.context;
+        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
     }
 
     @Override

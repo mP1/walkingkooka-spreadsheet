@@ -64,6 +64,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -499,6 +500,32 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
 
     // JsonNodeUnmarshallContext........................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
+        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
+                this.serverUrl,
+                this.spreadsheetMetadata,
+                this.spreadsheetStoreRepository,
+                Objects.requireNonNull(
+                    after,
+                    "spreadsheetConverterContext.setObjectPostProcessor returned null"
+                ),
+                this.environmentContext,
+                this.spreadsheetFormatterContextFactory,
+                this.formHandlerContext,
+                this.terminalContext,
+                this.expressionFunctionProvider,
+                this.providerContext
+            );
+    }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {

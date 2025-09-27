@@ -54,6 +54,7 @@ import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -319,6 +320,19 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
         return this.context;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+                this.localReferenceToValues,
+                after
+            );
     }
 
     @Override

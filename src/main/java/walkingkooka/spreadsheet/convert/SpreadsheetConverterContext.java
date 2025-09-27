@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Locale;
@@ -57,6 +58,9 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     SpreadsheetExpressionReference validationReference();
 
     // JsonNodeConverterContext.........................................................................................
+
+    @Override
+    SpreadsheetConverterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor);
 
     @Override
     SpreadsheetConverterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);
