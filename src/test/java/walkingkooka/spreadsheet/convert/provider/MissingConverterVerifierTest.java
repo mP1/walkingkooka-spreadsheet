@@ -185,7 +185,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             converter,
             propertyName,
             new TestSpreadsheetConverterContext(converter),
-            Sets.of(expected)
+            expected
         );
     }
 
