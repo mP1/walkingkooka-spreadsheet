@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.Form;
 
@@ -138,6 +139,19 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
         this.context.setUser(user);
         return this;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new CellSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                after
+            );
     }
 
     @Override

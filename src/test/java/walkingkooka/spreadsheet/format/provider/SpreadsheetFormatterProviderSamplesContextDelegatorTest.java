@@ -22,6 +22,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviderSamplesContextDelegatorTest.TestSpreadsheetFormatterProviderSamplesContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
@@ -38,6 +39,11 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
     }
 
     final static class TestSpreadsheetFormatterProviderSamplesContextDelegator implements SpreadsheetFormatterProviderSamplesContextDelegator {
+
+        @Override
+        public SpreadsheetFormatterProviderSamplesContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {

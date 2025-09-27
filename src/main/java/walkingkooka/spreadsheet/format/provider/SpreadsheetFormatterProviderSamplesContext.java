@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Locale;
@@ -28,6 +29,9 @@ public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetF
 
     @Override
     SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale);
+
+    @Override
+    SpreadsheetFormatterProviderSamplesContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor);
 
     @Override
     SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);

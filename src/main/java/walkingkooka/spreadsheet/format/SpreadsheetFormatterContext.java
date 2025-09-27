@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -100,6 +101,9 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     SpreadsheetFormatterContext setLocale(final Locale locale);
 
     // SpreadsheetConverterContext......................................................................................
+
+    @Override
+    SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor);
 
     @Override
     SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);

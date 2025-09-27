@@ -22,6 +22,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.time.LocalDateTime;
@@ -47,6 +48,19 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
                                                             final ProviderContext providerContext) {
         this.spreadsheetFormatterContext = spreadsheetFormatterContext;
         this.providerContext = providerContext;
+    }
+
+    @Override
+    public SpreadsheetFormatterProviderSamplesContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetFormatterContext before = this.spreadsheetFormatterContext;
+        final SpreadsheetFormatterContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetFormatterProviderSamplesContext(
+                after,
+                this.providerContext
+            );
     }
 
     @Override

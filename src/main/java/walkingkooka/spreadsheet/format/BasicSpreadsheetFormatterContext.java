@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -230,9 +231,30 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     @Override
+    public SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
+        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetFormatterContext(
+                this.cell,
+                this.numberToColor,
+                this.nameToColor,
+                this.cellCharacterWidth,
+                this.generalFormatNumberDigitCount,
+                this.formatter,
+                this.spreadsheetExpressionEvaluationContext,
+                after,
+                this.spreadsheetFormatterProvider,
+                this.providerContext
+            );
+    }
+
+    @Override
     public SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
         final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
-        final SpreadsheetConverterContext after = this.spreadsheetConverterContext.setPreProcessor(processor);
+        final SpreadsheetConverterContext after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
             this :

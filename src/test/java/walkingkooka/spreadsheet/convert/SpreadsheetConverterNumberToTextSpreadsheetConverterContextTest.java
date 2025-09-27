@@ -141,6 +141,21 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
     }
 
     @Override
+    public void testSetObjectPostProcessor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetObjectPostProcessorNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetObjectPostProcessorSame() {
+        throw new UnsupportedOperationException();
+    }
+    
+    @Override
     public void testSetPreProcessor() {
         throw new UnsupportedOperationException();
     }

@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.util.Locale;
@@ -76,6 +77,22 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.jsonNodeConverterContext = jsonNodeConverterContext;
         this.localeContext = localeContext;
+    }
+
+    @Override
+    public SpreadsheetConverterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final JsonNodeConverterContext before = this.jsonNodeConverterContext;
+        final JsonNodeConverterContext after = before.setObjectPostProcessor(processor);
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetConverterContext(
+                this.spreadsheetMetadata,
+                this.validationReference,
+                this.converter,
+                this.spreadsheetLabelNameResolver,
+                after,
+                this.localeContext
+            );
     }
 
     @Override
