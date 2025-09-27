@@ -22,6 +22,7 @@ import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -34,6 +35,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class SpreadsheetValidatorContextTestingTest implements SpreadsheetValidatorContextTesting<SpreadsheetValidatorContextTestingTest.TestSpreadsheetValidatorContext>,
     SpreadsheetMetadataTesting {
@@ -79,6 +81,12 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         @Override
         public SpreadsheetValidatorContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetValidatorContext setUser(final Optional<EmailAddress> user) {
+            Objects.requireNonNull(user, "user");
             throw new UnsupportedOperationException();
         }
 

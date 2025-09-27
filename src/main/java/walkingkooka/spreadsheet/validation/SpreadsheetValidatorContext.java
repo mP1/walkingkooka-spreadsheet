@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -26,6 +27,7 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 
 import java.util.Locale;
+import java.util.Optional;
 
 public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
 
@@ -34,6 +36,9 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
 
     @Override
     SpreadsheetValidatorContext setLocale(final Locale locale);
+
+    @Override
+    SpreadsheetValidatorContext setUser(final Optional<EmailAddress> user);
 
     @Override
     <T> SpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,

@@ -249,6 +249,12 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
+        public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+            Objects.requireNonNull(user, "user");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public String toString() {
             return this.getClass().getSimpleName();
         }

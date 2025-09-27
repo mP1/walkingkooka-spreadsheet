@@ -169,6 +169,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }

@@ -27,6 +27,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -347,6 +348,12 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     }
 
     // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
+        return this;
+    }
 
     @Override
     public SpreadsheetExpressionEvaluationContext cloneEnvironment() {

@@ -21,6 +21,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContext;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -218,6 +219,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell);
 
     // EnvironmentContext...............................................................................................
+
+    @Override
+    SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user);
 
     @Override
     SpreadsheetExpressionEvaluationContext cloneEnvironment();

@@ -100,6 +100,12 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
         return this;
     }
 
+    @Override
+    public EnvironmentContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
+        return this;
+    }
+
     /**
      * Try wrapped {@link EnvironmentContext} and then defaulting to given {@link SpreadsheetMetadata}.
      */

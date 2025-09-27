@@ -62,6 +62,12 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         }
 
         @Override
+        public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+            Objects.requireNonNull(user, "user");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetContext spreadsheetContext() {
             return this.context;
         }
@@ -164,6 +170,12 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public Optional<EmailAddress> user() {
                 return Optional.empty();
+            }
+
+            @Override
+            public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+                Objects.requireNonNull(user, "user");
+                throw new UnsupportedOperationException();
             }
         };
 

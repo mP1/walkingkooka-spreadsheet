@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -511,6 +512,12 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 public SpreadsheetEngineContext setLocale(final Locale locale) {
                     Objects.requireNonNull(locale, "locale");
 
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+                    Objects.requireNonNull(user, "user");
                     throw new UnsupportedOperationException();
                 }
 

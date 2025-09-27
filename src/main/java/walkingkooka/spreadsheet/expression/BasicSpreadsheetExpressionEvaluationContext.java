@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
@@ -428,6 +429,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         this.environmentContext.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.environmentContext.setUser(user);
         return this;
     }
 

@@ -21,6 +21,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
@@ -146,6 +147,12 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+        this.spreadsheetEngineContext.setUser(user);
+        return this;
+    }
 
     @Override
     public SpreadsheetEngineContext cloneEnvironment() {
