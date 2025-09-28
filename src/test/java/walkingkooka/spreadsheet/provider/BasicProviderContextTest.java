@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.FakeEnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
@@ -37,8 +37,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -54,59 +54,26 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         )
     );
 
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    private final static EmailAddress USER = EmailAddress.parse("user@example.com");
+
     private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with("Hello");
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
-    private final static EnvironmentContext ENVIRONMENT_CONTEXT = new FakeEnvironmentContext() {
-
-        @Override
-        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-            Objects.requireNonNull(name, "name");
-
-            if (ENVIRONMENT_VALUE_NAME.equals(name)) {
-                return Optional.of(
-                    (T) ENVIRONMENT_VALUE
-                );
-            }
-
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public EnvironmentContext setLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public <T> EnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                          final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
-
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public EnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            Objects.requireNonNull(name, "name");
-
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<EmailAddress> user() {
-            return Optional.empty();
-        }
-
-        @Override
-        public EnvironmentContext setUser(final Optional<EmailAddress> user) {
-            Objects.requireNonNull(user, "user");
-            throw new UnsupportedOperationException();
-        }
-    };
+    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
+        EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LOCALE,
+                () -> LocalDateTime.MIN,
+                Optional.of(USER)
+            )
+        ).setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
+        )
+    );
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
 
@@ -151,6 +118,62 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         );
     }
 
+    // environment......................................................................................................
+
+    @Test
+    public void testEnvironmentValueName() {
+        this.environmentValueAndCheck(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
+        );
+    }
+
+    @Test
+    public void testCloneEnvironmentContextAndSetLocale() {
+        final BasicProviderContext context = this.createContext();
+
+        final Locale locale = Locale.FRENCH;
+
+        this.localeAndCheck(
+            context.cloneEnvironment()
+                .setLocale(locale),
+            locale
+        );
+    }
+
+    @Test
+    public void testCloneEnvironmentContextAndSetUser() {
+        final BasicProviderContext context = this.createContext();
+
+        final EmailAddress user = EmailAddress.parse("different@example.com");
+
+        this.userAndCheck(
+            context.cloneEnvironment()
+                .setUser(
+                    Optional.of(user)
+                ),
+            user
+        );
+    }
+
+    @Test
+    public void testCloneEnvironmentContextAndSetEnvironmentValue() {
+        final BasicProviderContext context = this.createContext();
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "World456";
+
+        this.environmentValueAndCheck(
+            context.cloneEnvironment()
+                .setEnvironmentValue(
+                    name,
+                    value
+                ),
+            name,
+            value
+        );
+    }
+
     @Override
     public BasicProviderContext createContext() {
         return BasicProviderContext.with(
@@ -180,16 +203,6 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             text,
             ExpressionNumber.class,
             ExpressionNumber.with(123)
-        );
-    }
-
-    // environment......................................................................................................
-
-    @Test
-    public void testEnvironment() {
-        this.environmentValueAndCheck(
-            ENVIRONMENT_VALUE_NAME,
-            ENVIRONMENT_VALUE
         );
     }
 

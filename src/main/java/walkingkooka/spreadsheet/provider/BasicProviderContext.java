@@ -72,6 +72,9 @@ final class BasicProviderContext implements ProviderContext,
                                  final EnvironmentContext environmentContext,
                                  final LocaleContext localeContext) {
         this.pluginStore = pluginStore;
+        this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
+        this.environmentContext = environmentContext;
+        this.localeContext = localeContext;
 
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
 
@@ -108,7 +111,6 @@ final class BasicProviderContext implements ProviderContext,
             ),
             localeContext
         );
-        this.environmentContext = environmentContext;
     }
 
     // PluginStore......................................................................................................
@@ -133,8 +135,22 @@ final class BasicProviderContext implements ProviderContext,
 
     @Override
     public BasicProviderContext cloneEnvironment() {
-        return this; // ProviderContext always return this
+        final EnvironmentContext before = this.environmentContext;
+        final EnvironmentContext after = before.cloneEnvironment();
+
+        return before.equals(after) ?
+            this :
+            new BasicProviderContext(
+                this.pluginStore,
+                this.jsonNodeMarshallUnmarshallContext,
+                after,
+                this.localeContext
+            );
     }
+
+    private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
+
+    private final LocaleContext localeContext;
 
     // EnvironmentContextDelegator......................................................................................
 
