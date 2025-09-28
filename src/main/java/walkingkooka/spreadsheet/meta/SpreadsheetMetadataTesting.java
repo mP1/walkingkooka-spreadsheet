@@ -79,6 +79,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.Length;
@@ -383,13 +384,15 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext();
 
+    JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
+        JSON_NODE_MARSHALL_CONTEXT,
+        JSON_NODE_UNMARSHALL_CONTEXT
+    );
+
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.basic(
             PluginStores.fake(),
-            JsonNodeMarshallUnmarshallContexts.basic(
-                JSON_NODE_MARSHALL_CONTEXT,
-                JSON_NODE_UNMARSHALL_CONTEXT
-            ),
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
