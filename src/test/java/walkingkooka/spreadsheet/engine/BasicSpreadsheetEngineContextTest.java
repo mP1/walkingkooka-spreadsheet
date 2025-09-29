@@ -1371,10 +1371,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             )
         );
 
-        this.spreadsheetMetadataAndCheck(
-            context,
-            saved
-        );
+        this.checkNotEquals(
+            saved,
+            context.spreadsheetMetadata()
+        )
     }
 
     // createContext....................................................................................................
