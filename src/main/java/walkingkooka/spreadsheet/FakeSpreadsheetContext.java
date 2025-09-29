@@ -168,4 +168,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     public ProviderContext providerContext() {
         throw new UnsupportedOperationException();
     }
+
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
 }
