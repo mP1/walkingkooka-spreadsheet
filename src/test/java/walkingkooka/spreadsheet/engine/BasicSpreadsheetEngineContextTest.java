@@ -1604,6 +1604,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         private final SpreadsheetStoreRepository storeRepository;
 
         @Override
+        public SpreadsheetMetadata spreadsheetMetadata() {
+            return this.loadMetadataOrFail(this.spreadsheetId());
+        }
+
+        @Override
         public SpreadsheetMetadata createMetadata(final EmailAddress user,
                                                   final Optional<Locale> locale) {
             Objects.requireNonNull(user, "user");

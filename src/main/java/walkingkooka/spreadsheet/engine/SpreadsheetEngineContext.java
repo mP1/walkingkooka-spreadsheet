@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -56,7 +55,6 @@ import java.util.Optional;
 public interface SpreadsheetEngineContext extends Context,
     CanConvert,
     ExpressionPurityContext,
-    HasSpreadsheetMetadata,
     SpreadsheetContext,
     SpreadsheetLabelNameResolver,
     HasMissingCellNumberValue {

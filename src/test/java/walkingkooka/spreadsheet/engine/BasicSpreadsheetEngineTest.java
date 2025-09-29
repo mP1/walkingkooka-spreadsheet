@@ -570,6 +570,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         private final SpreadsheetStoreRepository spreadsheetStoreRepository;
 
+        // HasSpreadsheetMetadata.......................................................................................
+
+        @Override
+        public SpreadsheetMetadata spreadsheetMetadata() {
+            return this.loadMetadataOrFail(this.spreadsheetId());
+        }
+        
         // SpreadsheetMetadataContext...................................................................................
 
         @Override

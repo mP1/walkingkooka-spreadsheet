@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.HasProviderContext;
+import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -38,6 +39,7 @@ import java.util.Optional;
 public interface SpreadsheetContext extends SpreadsheetProvider,
     EnvironmentContext,
     HasProviderContext,
+    HasSpreadsheetMetadata,
     LocaleContext,
     SpreadsheetMetadataContext {
 

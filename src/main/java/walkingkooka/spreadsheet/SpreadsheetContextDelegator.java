@@ -77,6 +77,14 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
         return this.spreadsheetContext();
     }
 
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    default SpreadsheetMetadata spreadsheetMetadata() {
+        return this.spreadsheetContext()
+            .spreadsheetMetadata();
+    }
+
     // LocaleContext....................................................................................................
 
     @Override

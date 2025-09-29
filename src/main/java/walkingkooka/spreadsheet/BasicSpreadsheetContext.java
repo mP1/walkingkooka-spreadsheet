@@ -91,6 +91,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     private final SpreadsheetStoreRepository storeRepository;
 
+    // HasSpreadsheetMetadata...........................................................................................
+
+    @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        return this.loadMetadataOrFail(this.spreadsheetId);
+    }
+
     // SpreadsheetContext...............................................................................................
 
     @Override
