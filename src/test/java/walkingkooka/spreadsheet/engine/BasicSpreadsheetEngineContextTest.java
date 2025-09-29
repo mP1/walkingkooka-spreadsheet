@@ -1374,7 +1374,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.checkNotEquals(
             saved,
             context.spreadsheetMetadata()
-        )
+        );
     }
 
     // createContext....................................................................................................
