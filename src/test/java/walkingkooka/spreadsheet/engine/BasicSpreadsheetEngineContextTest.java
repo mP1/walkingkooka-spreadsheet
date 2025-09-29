@@ -1344,9 +1344,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             )
         );
 
-        this.checkEquals(
-            saved,
-            context.spreadsheetMetadata()
+        this.spreadsheetMetadataAndCheck(
+            context,
+            saved
         );
     }
 
@@ -1371,9 +1371,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             )
         );
 
-        this.checkNotEquals(
-            saved,
-            context.spreadsheetMetadata()
+        this.spreadsheetMetadataAndCheck(
+            context,
+            saved
         );
     }
 
