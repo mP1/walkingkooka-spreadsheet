@@ -58,7 +58,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -88,12 +87,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final AbsoluteUrl serverUrl,
-                                              final SpreadsheetMetadata metadata,
+    static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
                                               final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                               final SpreadsheetContext spreadsheetContext,
                                               final TerminalContext terminalContext) {
-        Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(functionAliases, "functionAliases");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
@@ -106,7 +103,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
 
         return new BasicSpreadsheetEngineContext(
-            serverUrl,
             metadata,
             functionAliases,
             metadata.spreadsheetConverterContext(
@@ -127,16 +123,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final AbsoluteUrl serverUrl,
-                                          final SpreadsheetMetadata metadata,
+    private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
                                           final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                           final CanConvert canConvert,
                                           final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                           final SpreadsheetContext spreadsheetContext,
                                           final TerminalContext terminalContext) {
         super();
-
-        this.serverUrl = serverUrl;
 
         this.metadata = metadata;
         this.functionAliases = functionAliases;
@@ -148,12 +141,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.terminalContext = terminalContext;
     }
 
+    // HasSpreadsheetServerUrl..........................................................................................
+
     @Override
     public AbsoluteUrl serverUrl() {
-        return this.serverUrl;
+        return this.spreadsheetContext.serverUrl();
     }
-
-    private final AbsoluteUrl serverUrl;
 
     // HasSpreadsheetMetadata...........................................................................................
 
@@ -185,7 +178,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.functionAliases.equals(functionAliases) ?
             this :
             new BasicSpreadsheetEngineContext(
-                this.serverUrl,
                 this.metadata,
                 functionAliases,
                 this.canConvert,
@@ -279,7 +271,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             formHandlerContext = FormHandlerContexts.fake();
         }
 
-        EnvironmentContext environmentContext = this.spreadsheetContext;
+        EnvironmentContext environmentContext = spreadsheetContext;
         if (false == SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS.equals(functionAliases)) {
             environmentContext = EnvironmentContexts.readOnly(environmentContext);
         }
@@ -287,7 +279,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return SpreadsheetExpressionEvaluationContexts.basic(
             cell,
             loader,
-            this.serverUrl,
+            spreadsheetContext.serverUrl(),
             metadata,
             spreadsheetContext.storeRepository(),
             spreadsheetConverterContext,
@@ -525,7 +517,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return before.equals(after) ?
             this :
             new BasicSpreadsheetEngineContext(
-                this.serverUrl,
                 this.metadata,
                 this.functionAliases,
                 this.canConvert,
@@ -591,8 +582,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return ToStringBuilder.empty()
             .globalLength(Integer.MAX_VALUE)
             .valueLength(Integer.MAX_VALUE)
-            .label("serverUrl").value(this.serverUrl)
-            .value(LineEnding.NL)
             .label("metadata")
             .value(this.metadata)
             .build();
