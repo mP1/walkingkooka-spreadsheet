@@ -360,6 +360,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToFormName();
                 break;
+            case TEXT_TO_HAS_HOST_ADDRESS_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToHasHostAddress();
+                break;
             case TEXT_TO_JSON_STRING:
                 noParameterCheck(copy);
 
@@ -762,6 +767,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_FORM_NAME = ConverterName.with(TEXT_TO_FORM_NAME_STRING);
 
+    private final static String TEXT_TO_HAS_HOST_ADDRESS_STRING = "text-to-has-host-address";
+
+    final static ConverterName TEXT_TO_HAS_HOST_ADDRESS = ConverterName.with(TEXT_TO_HAS_HOST_ADDRESS_STRING);
+
     private final static String TEXT_TO_JSON_STRING = "text-to-json";
 
     final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
@@ -952,6 +961,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_ERROR),
             converterInfo(TEXT_TO_EXPRESSION),
             converterInfo(TEXT_TO_FORM_NAME),
+            converterInfo(TEXT_TO_HAS_HOST_ADDRESS),
             converterInfo(TEXT_TO_JSON),
             converterInfo(TEXT_TO_LOCALE),
             converterInfo(TEXT_TO_NUMBER_LIST),
