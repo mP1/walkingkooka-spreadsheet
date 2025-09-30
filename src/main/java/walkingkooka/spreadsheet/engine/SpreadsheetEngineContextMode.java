@@ -59,4 +59,11 @@ public enum SpreadsheetEngineContextMode {
     }
 
     private final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> function;
+
+    /**
+     * All modes have read only context except for {@link #SCRIPTING}.
+     */
+    public boolean isReadOnlyEnvironmentContext() {
+        return SCRIPTING != this;
+    }
 }
