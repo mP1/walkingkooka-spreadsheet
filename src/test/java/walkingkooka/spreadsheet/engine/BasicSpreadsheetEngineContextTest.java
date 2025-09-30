@@ -109,7 +109,6 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
@@ -183,8 +182,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
         .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
         .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, SpreadsheetExpressionFunctions.parseAliasSet("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
-
-    private final static SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTION_ALIASES = SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS;
 
     private final static SpreadsheetExpressionReferenceLoader LOADER = new FakeSpreadsheetExpressionReferenceLoader() {
         @Override
@@ -377,7 +374,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
                 null,
-                FUNCTION_ALIASES,
+                SpreadsheetEngineContextMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -385,7 +382,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testWithNullFunctionAliasesFails() {
+    public void testWithNullSpredsheetEngineContextModeFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
@@ -403,7 +400,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
                 METADATA,
-                FUNCTION_ALIASES,
+                SpreadsheetEngineContextMode.FORMULA,
                 null,
                 TERMINAL_CONTEXT
             )
@@ -416,7 +413,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
                 METADATA,
-                FUNCTION_ALIASES,
+                SpreadsheetEngineContextMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 null
             )
@@ -1195,15 +1192,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testSpreadsheetExpressionEvaluationContextScriptingFunctionsEnvironmentContextUpdatable() {
+    public void testSpreadsheetExpressionEvaluationContextWithScriptingIsEnvironmentContextUpdatable() {
+        final SpreadsheetEngineContextMode mode = SpreadsheetEngineContextMode.SCRIPTING;
+
         final BasicSpreadsheetEngineContext context = this.createContext(
             METADATA.set(
-                SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
+                mode.function(),
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
             )
         );
 
-        final SpreadsheetEngineContext after = context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS);
+        final SpreadsheetEngineContext after = context.setSpreadsheetEngineContextMode(mode);
         final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
             SpreadsheetExpressionEvaluationContext.NO_CELL,
             SpreadsheetExpressionReferenceLoaders.fake()
@@ -1238,29 +1237,29 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testSpreadsheetExpressionEvaluationContextFindFunctionsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.FIND_FUNCTIONS);
+    public void testSpreadsheetExpressionEvaluationContextWithFindIsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.FIND);
     }
 
     @Test
-    public void testSpreadsheetExpressionEvaluationContextFormulaFunctionsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS);
+    public void testSpreadsheetExpressionEvaluationContextWithFormulaIsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.FORMULA);
     }
 
     @Test
-    public void testSpreadsheetExpressionEvaluationContextFormulaFormattingEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS);
+    public void testSpreadsheetExpressionEvaluationContextWithFormattingIsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.FORMATTING);
     }
 
     @Test
-    public void testSpreadsheetExpressionEvaluationContextValidationFunctionsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS);
+    public void testSpreadsheetExpressionEvaluationContextWithValidationIsEnvironmentContextReadOnly() {
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.VALIDATION);
     }
 
-    private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functions) {
+    private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetEngineContextMode mode) {
         final BasicSpreadsheetEngineContext context = this.createContext(
             METADATA.set(
-                functions,
+                mode.function(),
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
             )
         );
@@ -1272,7 +1271,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             value
         );
 
-        final SpreadsheetEngineContext after = context.spreadsheetEngineContext(functions);
+        final SpreadsheetEngineContext after = context.setSpreadsheetEngineContextMode(mode);
         final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
             SpreadsheetExpressionEvaluationContext.NO_CELL,
             SpreadsheetExpressionReferenceLoaders.fake()
@@ -1388,7 +1387,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return BasicSpreadsheetEngineContext.with(
 
             metadata,
-            FUNCTION_ALIASES,
+            SpreadsheetEngineContextMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 SpreadsheetStoreRepositories.basic(
@@ -1496,7 +1495,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final EnvironmentContext environmentContext) {
         return BasicSpreadsheetEngineContext.with(
             metadata,
-            FUNCTION_ALIASES,
+            SpreadsheetEngineContextMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 storeRepository,

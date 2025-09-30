@@ -20,9 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
 
@@ -30,12 +28,12 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                                 final SpreadsheetEngineContextMode mode,
                                                  final SpreadsheetContext spreadsheetContext,
                                                  final TerminalContext terminalContext) {
         return BasicSpreadsheetEngineContext.with(
             metadata,
-            functionAliases,
+            mode,
             spreadsheetContext,
             terminalContext
         );

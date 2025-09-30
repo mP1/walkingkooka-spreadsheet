@@ -427,9 +427,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     BasicSpreadsheetEngineFilterCellsPredicate.with(
                         valueType,
                         expression,
-                        context.spreadsheetEngineContext(
-                            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
-                        ),
+                        context.setSpreadsheetEngineContextMode(SpreadsheetEngineContextMode.FIND),
                         changes
                     )
                 ).collect(Collectors.toCollection(Sets::ordered));
@@ -472,8 +470,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterCellsPredicate.with(
                 valueType,
                 expression,
-                context.spreadsheetEngineContext(
-                    SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
+                context.setSpreadsheetEngineContextMode(
+                    SpreadsheetEngineContextMode.FIND
                 ),
                 changes
             );
@@ -1783,7 +1781,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     cell,
                     validatorSelector,
                     loader,
-                    context.spreadsheetEngineContext(SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS)
+                    context.setSpreadsheetEngineContextMode(SpreadsheetEngineContextMode.VALIDATION)
                 );
             }
         }

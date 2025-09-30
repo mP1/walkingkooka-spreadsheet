@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
@@ -35,7 +34,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Optional;
@@ -165,24 +163,24 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
-    // SpreadsheetEngineContext.........................................................................................
+    // setSpreadsheetEngineContextMode..................................................................................
 
     @Test
-    default void testSpreadsheetEngineContextWithNullFunctionAliasesFails() {
+    default void testSetSpreadsheetEngineContextModeWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .spreadsheetEngineContext(null)
+                .setSpreadsheetEngineContextMode(null)
         );
     }
 
-    default void spreadsheetEngineContextAndCheck(final SpreadsheetEngineContext context,
-                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> aliases,
-                                                  final SpreadsheetEngineContext expected) {
+    default void setSpreadsheetEngineContextModeAndCheck(final SpreadsheetEngineContext context,
+                                                         final SpreadsheetEngineContextMode mode,
+                                                         final SpreadsheetEngineContext expected) {
         this.checkEquals(
             expected,
-            context.spreadsheetEngineContext(aliases),
-            () -> "expressionEvaluationContext " + aliases
+            context.setSpreadsheetEngineContextMode(mode),
+            () -> "setSpreadsheetEngineContextMode " + mode
         );
     }
 
