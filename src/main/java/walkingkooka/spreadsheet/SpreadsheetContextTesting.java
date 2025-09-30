@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends EnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
+    HasSpreadsheetServerUrlTesting,
     LocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 

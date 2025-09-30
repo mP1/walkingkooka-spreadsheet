@@ -559,6 +559,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
+        public AbsoluteUrl serverUrl() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetId spreadsheetId() {
             throw new UnsupportedOperationException();
         }

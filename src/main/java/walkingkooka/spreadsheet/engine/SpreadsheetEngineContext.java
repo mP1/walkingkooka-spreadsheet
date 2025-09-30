@@ -22,7 +22,6 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
-import walkingkooka.spreadsheet.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -55,7 +54,6 @@ import java.util.Optional;
 public interface SpreadsheetEngineContext extends Context,
     CanConvert,
     ExpressionPurityContext,
-    HasSpreadsheetServerUrl,
     SpreadsheetContext,
     SpreadsheetLabelNameResolver,
     HasMissingCellNumberValue {

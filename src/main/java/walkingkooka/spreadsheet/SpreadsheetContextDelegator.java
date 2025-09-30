@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -39,6 +40,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetProviderDelegator {
+
+    @Override
+    default AbsoluteUrl serverUrl() {
+        return this.spreadsheetContext()
+            .serverUrl();
+    }
 
     @Override
     default SpreadsheetId spreadsheetId() {
