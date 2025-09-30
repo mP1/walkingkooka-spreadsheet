@@ -1592,6 +1592,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
+        public AbsoluteUrl serverUrl() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetId spreadsheetId() {
             return SPREADSHEET_ID;
         }

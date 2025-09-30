@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
-import walkingkooka.spreadsheet.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -44,7 +43,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
-    HasSpreadsheetServerUrlTesting,
     SpreadsheetContextTesting<C>,
     ParserTesting,
     SpreadsheetLabelNameResolverTesting<C>,

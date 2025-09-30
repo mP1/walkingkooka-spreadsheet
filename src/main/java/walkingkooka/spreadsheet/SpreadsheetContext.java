@@ -40,6 +40,7 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     EnvironmentContext,
     HasProviderContext,
     HasSpreadsheetMetadata,
+    HasSpreadsheetServerUrl,
     LocaleContext,
     SpreadsheetMetadataContext {
 

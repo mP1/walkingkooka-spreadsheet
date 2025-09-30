@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -29,13 +30,15 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetContext}
      */
-    public static SpreadsheetContext basic(final SpreadsheetId spreadsheetId,
+    public static SpreadsheetContext basic(final AbsoluteUrl serverUrl,
+                                           final SpreadsheetId spreadsheetId,
                                            final SpreadsheetStoreRepository storeRepository,
                                            final SpreadsheetProvider spreadsheetProvider,
                                            final EnvironmentContext environmentContext,
                                            final LocaleContext localeContext,
                                            final ProviderContext providerContext) {
         return BasicSpreadsheetContext.with(
+            serverUrl,
             spreadsheetId,
             storeRepository,
             spreadsheetProvider,

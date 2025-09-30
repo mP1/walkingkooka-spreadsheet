@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -41,13 +42,15 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    static BasicSpreadsheetContext with(final SpreadsheetId spreadsheetId,
+    static BasicSpreadsheetContext with(final AbsoluteUrl serverUrl,
+                                        final SpreadsheetId spreadsheetId,
                                         final SpreadsheetStoreRepository storeRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
         return new BasicSpreadsheetContext(
+            Objects.requireNonNull(serverUrl, "serverUrl"),
             Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
             Objects.requireNonNull(storeRepository, "storeRepository"),
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
@@ -57,7 +60,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         );
     }
 
-    private BasicSpreadsheetContext(final SpreadsheetId spreadsheetId,
+    private BasicSpreadsheetContext(final AbsoluteUrl serverUrl,
+                                    final SpreadsheetId spreadsheetId,
                                     final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final EnvironmentContext environmentContext,
@@ -65,9 +69,12 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                     final ProviderContext providerContext) {
         super();
 
+        this.serverUrl = serverUrl;
+
         this.spreadsheetId = spreadsheetId;
 
         this.storeRepository = storeRepository;
+
         this.spreadsheetProvider = spreadsheetProvider;
         
         this.environmentContext = environmentContext;
@@ -76,6 +83,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.metadata = this.loadMetadataOrFail(spreadsheetId);
     }
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.serverUrl;
+    }
+
+    private final AbsoluteUrl serverUrl;
 
     @Override
     public SpreadsheetId spreadsheetId() {
@@ -178,6 +192,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         return before.equals(cloned) ?
             this :
             with(
+                this.serverUrl,
                 this.spreadsheetId,
                 this.storeRepository,
                 this.spreadsheetProvider,

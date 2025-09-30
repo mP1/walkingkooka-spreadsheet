@@ -27,6 +27,8 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -66,6 +68,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetContextTest implements SpreadsheetContextTesting<BasicSpreadsheetContext>,
     ToStringTesting<BasicSpreadsheetContext> {
 
+    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
+
     private final static SpreadsheetId ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
@@ -95,10 +99,27 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     @Test
+    public void testWithNullServerUrlFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                null,
+                ID,
+                REPO,
+                SPREADSHEET_PROVIDER,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullSpreadsheetIdFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
                 null,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -114,6 +135,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
                 ID,
                 null,
                 SPREADSHEET_PROVIDER,
@@ -129,6 +151,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
                 ID,
                 REPO,
                 null,
@@ -144,6 +167,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -159,6 +183,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -174,6 +199,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
@@ -181,6 +207,16 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 LOCALE_CONTEXT,
                 null
             )
+        );
+    }
+
+    // serverUrl........................................................................................................
+
+    @Test
+    public void testServerUrl() {
+        this.serverUrlAndCheck(
+            this.createContext(),
+            SERVER_URL
         );
     }
 
@@ -433,6 +469,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         store.save(metadata);
 
         return BasicSpreadsheetContext.with(
+            SERVER_URL,
             ID,
             new FakeSpreadsheetStoreRepository() {
 
