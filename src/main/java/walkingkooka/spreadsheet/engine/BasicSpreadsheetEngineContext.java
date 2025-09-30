@@ -104,15 +104,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return new BasicSpreadsheetEngineContext(
             metadata,
             mode,
-            metadata.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                mode.converter(),
-                spreadsheetLabelNameResolver,
-                spreadsheetContext, // SpreadsheetProvider
-                spreadsheetContext, // LocaleContext
-                spreadsheetContext.providerContext()
-            ),
+            null, // force cnConvert to be created.
             spreadsheetLabelNameResolver,
             spreadsheetContext,
             terminalContext
@@ -135,7 +127,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
-        this.canConvert = canConvert;
+        // canConvert will be null when this ctor is called by #setSpreadsheetEngineContextMode
+        this.canConvert = null == canConvert ?
+            metadata.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                mode.converter(),
+                spreadsheetLabelNameResolver,
+                spreadsheetContext, // SpreadsheetProvider
+                spreadsheetContext, // LocaleContext
+                spreadsheetContext.providerContext()
+            ) :
+            canConvert;
         this.spreadsheetContext = spreadsheetContext;
         this.terminalContext = terminalContext;
     }
@@ -179,7 +182,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             new BasicSpreadsheetEngineContext(
                 this.metadata,
                 mode,
-                this.canConvert,
+                null,
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetContext,
                 this.terminalContext
