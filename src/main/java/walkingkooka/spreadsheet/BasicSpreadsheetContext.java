@@ -101,15 +101,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     // SpreadsheetContext...............................................................................................
 
     @Override
-    public SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                              final Optional<Locale> locale) {
-        Objects.requireNonNull(user, "user");
-        Objects.requireNonNull(locale, "locale");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 

@@ -135,12 +135,6 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     // SpreadsheetMetadataContext.......................................................................................
 
     @Override
-    public SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                              final Optional<Locale> locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
