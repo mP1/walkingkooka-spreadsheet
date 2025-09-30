@@ -475,15 +475,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
-    public SpreadsheetMetadata createMetadata(final EmailAddress user,
-                                              final Optional<Locale> locale) {
-        return this.spreadsheetContext.createMetadata(
-            user,
-            locale
-        );
-    }
-
-    @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
         return this.spreadsheetContext.loadMetadata(id);
     }
