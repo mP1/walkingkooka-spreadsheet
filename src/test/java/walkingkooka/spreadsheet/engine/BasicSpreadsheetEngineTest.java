@@ -560,7 +560,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public AbsoluteUrl serverUrl() {
-            throw new UnsupportedOperationException();
+            return SERVER_URL;
         }
 
         @Override
@@ -4812,7 +4812,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -4941,7 +4940,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -5077,7 +5075,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -5220,7 +5217,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -16639,7 +16635,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -17753,7 +17748,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -23775,7 +23769,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             METADATA,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -23807,7 +23800,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             METADATA,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -23867,7 +23859,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -23954,7 +23945,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24083,7 +24073,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Optional<Object> cellValue = Optional.of("CellValue1");
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24215,7 +24204,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String message = "ValidationErrorMessage1";
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24380,7 +24368,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Optional<Object> cellValue1 = Optional.of("CellValue1");
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24527,7 +24514,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Optional<Object> cellValue1 = Optional.of("CellValue1");
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24648,7 +24634,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             METADATA,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24682,7 +24667,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             METADATA,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24742,7 +24726,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24819,7 +24802,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -24936,7 +24918,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -25047,7 +25028,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -25178,7 +25158,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -25317,7 +25296,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(
@@ -25516,7 +25494,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         return SpreadsheetEngineContexts.basic(
-            SERVER_URL,
             metadata2,
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             new TestSpreadsheetContext(

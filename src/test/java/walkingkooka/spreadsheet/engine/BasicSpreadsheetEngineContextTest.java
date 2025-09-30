@@ -372,25 +372,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // with.............................................................................................................
 
     @Test
-    public void testWithNullServerUrlFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
-                null,
-                METADATA,
-                FUNCTION_ALIASES,
-                SPREADSHEET_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullMetadataFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
                 null,
                 FUNCTION_ALIASES,
                 SPREADSHEET_CONTEXT,
@@ -404,7 +389,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
                 METADATA,
                 null,
                 SPREADSHEET_CONTEXT,
@@ -418,7 +402,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
                 METADATA,
                 FUNCTION_ALIASES,
                 null,
@@ -432,7 +415,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                SERVER_URL,
                 METADATA,
                 FUNCTION_ALIASES,
                 SPREADSHEET_CONTEXT,
@@ -1404,7 +1386,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final EnvironmentContext environmentContext,
                                                         final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
-            SERVER_URL,
+
             metadata,
             FUNCTION_ALIASES,
             new TestSpreadsheetContext(
@@ -1513,7 +1495,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final EnvironmentContext environmentContext) {
         return BasicSpreadsheetEngineContext.with(
-            SERVER_URL,
             metadata,
             FUNCTION_ALIASES,
             new TestSpreadsheetContext(
@@ -1593,7 +1574,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         @Override
         public AbsoluteUrl serverUrl() {
-            throw new UnsupportedOperationException();
+            return SERVER_URL;
         }
 
         @Override
@@ -1744,215 +1725,214 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "serverUrl=https://example.com/path123 \"\n" +
-                "\" metadata={\n" +
-                "  \"autoHideScrollbars\": false,\n" +
-                "  \"cellCharacterWidth\": 1,\n" +
-                "  \"clipboardExporter\": \"json\",\n" +
-                "  \"clipboardImporter\": \"json\",\n" +
-                "  \"color1\": \"black\",\n" +
-                "  \"color2\": \"white\",\n" +
-                "  \"color3\": \"red\",\n" +
-                "  \"color4\": \"lime\",\n" +
-                "  \"color5\": \"blue\",\n" +
-                "  \"color6\": \"yellow\",\n" +
-                "  \"color7\": \"magenta\",\n" +
-                "  \"color8\": \"cyan\",\n" +
-                "  \"color9\": \"maroon\",\n" +
-                "  \"color10\": \"green\",\n" +
-                "  \"color11\": \"navy\",\n" +
-                "  \"color12\": \"olive\",\n" +
-                "  \"color13\": \"purple\",\n" +
-                "  \"color14\": \"teal\",\n" +
-                "  \"color15\": \"silver\",\n" +
-                "  \"color16\": \"grey\",\n" +
-                "  \"color17\": \"#99f\",\n" +
-                "  \"color18\": \"#936\",\n" +
-                "  \"color19\": \"#ffc\",\n" +
-                "  \"color20\": \"#cff\",\n" +
-                "  \"color21\": \"#606\",\n" +
-                "  \"color22\": \"#ff8080\",\n" +
-                "  \"color23\": \"#06c\",\n" +
-                "  \"color24\": \"#ccf\",\n" +
-                "  \"color25\": \"navy\",\n" +
-                "  \"color26\": \"magenta\",\n" +
-                "  \"color27\": \"yellow\",\n" +
-                "  \"color28\": \"cyan\",\n" +
-                "  \"color29\": \"purple\",\n" +
-                "  \"color30\": \"maroon\",\n" +
-                "  \"color31\": \"teal\",\n" +
-                "  \"color32\": \"blue\",\n" +
-                "  \"color33\": \"#0cf\",\n" +
-                "  \"color34\": \"#cff\",\n" +
-                "  \"color35\": \"#cfc\",\n" +
-                "  \"color36\": \"#ff9\",\n" +
-                "  \"color37\": \"#9cf\",\n" +
-                "  \"color38\": \"#f9c\",\n" +
-                "  \"color39\": \"#c9f\",\n" +
-                "  \"color40\": \"#fc9\",\n" +
-                "  \"color41\": \"#36f\",\n" +
-                "  \"color42\": \"#3cc\",\n" +
-                "  \"color43\": \"#9c0\",\n" +
-                "  \"color44\": \"#fc0\",\n" +
-                "  \"color45\": \"#f90\",\n" +
-                "  \"color46\": \"#f60\",\n" +
-                "  \"color47\": \"#669\",\n" +
-                "  \"color48\": \"#969696\",\n" +
-                "  \"color49\": \"#036\",\n" +
-                "  \"color50\": \"#396\",\n" +
-                "  \"color51\": \"#030\",\n" +
-                "  \"color52\": \"#330\",\n" +
-                "  \"color53\": \"#930\",\n" +
-                "  \"color54\": \"#936\",\n" +
-                "  \"color55\": \"#339\",\n" +
-                "  \"color56\": \"#333\",\n" +
-                "  \"colorBlack\": 1,\n" +
-                "  \"colorBlue\": 5,\n" +
-                "  \"colorCyan\": 8,\n" +
-                "  \"colorGreen\": 4,\n" +
-                "  \"colorMagenta\": 7,\n" +
-                "  \"colorRed\": 3,\n" +
-                "  \"colorWhite\": 2,\n" +
-                "  \"colorYellow\": 6,\n" +
-                "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
-                "  \"converters\": \"basic, boolean, boolean-to-text, collection, collection-to-list, color, color-to-color, color-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, has-formatter-selector, has-parser-selector, has-spreadsheet-selection, has-style, has-text-node, has-validator-selector, json, jsonTo, locale, locale-to-text, null-to-number, number, number-to-color, number-to-number, number-to-text, plugins, spreadsheet-cell-set, spreadsheet-metadata, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, spreadsheet-value, style, system, template, text, text-node, text-to-boolean-list, text-to-color, text-to-csv-string-list, text-to-date-list, text-to-date-time-list, text-to-environment-value-name, text-to-error, text-to-expression, text-to-form-name, text-to-json, text-to-locale, text-to-number-list, text-to-object, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-url, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-boolean, to-json, to-number, to-styleable, to-validation-error-list, url, url-to-hyperlink, url-to-image\",\n" +
-                "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
-                "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
-                "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
-                "  \"dateTimeOffset\": \"-25569\",\n" +
-                "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
-                "  \"dateTimeSymbols\": {\n" +
-                "    \"ampms\": [\n" +
-                "      \"am\",\n" +
-                "      \"pm\"\n" +
-                "    ],\n" +
-                "    \"monthNames\": [\n" +
-                "      \"January\",\n" +
-                "      \"February\",\n" +
-                "      \"March\",\n" +
-                "      \"April\",\n" +
-                "      \"May\",\n" +
-                "      \"June\",\n" +
-                "      \"July\",\n" +
-                "      \"August\",\n" +
-                "      \"September\",\n" +
-                "      \"October\",\n" +
-                "      \"November\",\n" +
-                "      \"December\"\n" +
-                "    ],\n" +
-                "    \"monthNameAbbreviations\": [\n" +
-                "      \"Jan.\",\n" +
-                "      \"Feb.\",\n" +
-                "      \"Mar.\",\n" +
-                "      \"Apr.\",\n" +
-                "      \"May\",\n" +
-                "      \"Jun.\",\n" +
-                "      \"Jul.\",\n" +
-                "      \"Aug.\",\n" +
-                "      \"Sep.\",\n" +
-                "      \"Oct.\",\n" +
-                "      \"Nov.\",\n" +
-                "      \"Dec.\"\n" +
-                "    ],\n" +
-                "    \"weekDayNames\": [\n" +
-                "      \"Sunday\",\n" +
-                "      \"Monday\",\n" +
-                "      \"Tuesday\",\n" +
-                "      \"Wednesday\",\n" +
-                "      \"Thursday\",\n" +
-                "      \"Friday\",\n" +
-                "      \"Saturday\"\n" +
-                "    ],\n" +
-                "    \"weekDayNameAbbreviations\": [\n" +
-                "      \"Sun.\",\n" +
-                "      \"Mon.\",\n" +
-                "      \"Tue.\",\n" +
-                "      \"Wed.\",\n" +
-                "      \"Thu.\",\n" +
-                "      \"Fri.\",\n" +
-                "      \"Sat.\"\n" +
-                "    ]\n" +
-                "  },\n" +
-                "  \"decimalNumberSymbols\": {\n" +
-                "    \"negativeSign\": \"!\",\n" +
-                "    \"positiveSign\": \"@\",\n" +
-                "    \"zeroDigit\": \"0\",\n" +
-                "    \"currencySymbol\": \"CURR\",\n" +
-                "    \"decimalSeparator\": \".\",\n" +
-                "    \"exponentSymbol\": \"e\",\n" +
-                "    \"groupSeparator\": \",\",\n" +
-                "    \"infinitySymbol\": \"Infinity!\",\n" +
-                "    \"monetaryDecimalSeparator\": \":\",\n" +
-                "    \"nanSymbol\": \"Nan!\",\n" +
-                "    \"percentSymbol\": \"#\",\n" +
-                "    \"permillSymbol\": \"^\"\n" +
-                "  },\n" +
-                "  \"defaultFormHandler\": \"non-null\",\n" +
-                "  \"defaultYear\": 1900,\n" +
-                "  \"errorFormatter\": \"badge-error default-text\",\n" +
-                "  \"exporters\": \"collection, empty, json\",\n" +
-                "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)\",\n" +
-                "  \"findFunctions\": \"@\",\n" +
-                "  \"findHighlighting\": false,\n" +
-                "  \"formHandlers\": \"basic\",\n" +
-                "  \"formatters\": \"automatic, badge-error, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
-                "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, url)\",\n" +
-                "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
-                "  \"functions\": \"@\",\n" +
-                "  \"generalNumberFormatDigitCount\": 9,\n" +
-                "  \"hideZeroValues\": false,\n" +
-                "  \"importers\": \"collection, empty, json\",\n" +
-                "  \"locale\": \"en-AU\",\n" +
-                "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
-                "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
-                "  \"plugins\": \"\",\n" +
-                "  \"precision\": 10,\n" +
-                "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
-                "  \"showFormulaEditor\": true,\n" +
-                "  \"showFormulas\": false,\n" +
-                "  \"showGridLines\": true,\n" +
-                "  \"showHeadings\": true,\n" +
-                "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
-                "  \"sortConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, locale, url)\",\n" +
-                "  \"style\": {\n" +
-                "    \"backgroundColor\": \"white\",\n" +
-                "    \"color\": \"black\",\n" +
-                "    \"fontFamily\": \"MS Sans Serif\",\n" +
-                "    \"fontSize\": 11,\n" +
-                "    \"fontStyle\": \"NORMAL\",\n" +
-                "    \"fontVariant\": \"NORMAL\",\n" +
-                "    \"height\": \"30px\",\n" +
-                "    \"hyphens\": \"NONE\",\n" +
-                "    \"marginBottom\": \"none\",\n" +
-                "    \"marginLeft\": \"none\",\n" +
-                "    \"marginRight\": \"none\",\n" +
-                "    \"marginTop\": \"none\",\n" +
-                "    \"paddingBottom\": \"none\",\n" +
-                "    \"paddingLeft\": \"none\",\n" +
-                "    \"paddingRight\": \"none\",\n" +
-                "    \"paddingTop\": \"none\",\n" +
-                "    \"textAlign\": \"LEFT\",\n" +
-                "    \"textJustify\": \"NONE\",\n" +
-                "    \"verticalAlign\": \"TOP\",\n" +
-                "    \"width\": \"100px\",\n" +
-                "    \"wordBreak\": \"NORMAL\",\n" +
-                "    \"wordWrap\": \"NORMAL\"\n" +
-                "  },\n" +
-                "  \"textFormatter\": \"text-format-pattern @\",\n" +
-                "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
-                "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
-                "  \"twoDigitYear\": 20,\n" +
-                "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
-                "  \"validationFunctions\": \"@\",\n" +
-                "  \"validationValidators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
-                "  \"validators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
-                "  \"valueSeparator\": \",\",\n" +
-                "  \"viewportHome\": \"A1\"\n" +
-                "}"
+                "metadata={\n" +
+                    "  \"autoHideScrollbars\": false,\n" +
+                    "  \"cellCharacterWidth\": 1,\n" +
+                    "  \"clipboardExporter\": \"json\",\n" +
+                    "  \"clipboardImporter\": \"json\",\n" +
+                    "  \"color1\": \"black\",\n" +
+                    "  \"color2\": \"white\",\n" +
+                    "  \"color3\": \"red\",\n" +
+                    "  \"color4\": \"lime\",\n" +
+                    "  \"color5\": \"blue\",\n" +
+                    "  \"color6\": \"yellow\",\n" +
+                    "  \"color7\": \"magenta\",\n" +
+                    "  \"color8\": \"cyan\",\n" +
+                    "  \"color9\": \"maroon\",\n" +
+                    "  \"color10\": \"green\",\n" +
+                    "  \"color11\": \"navy\",\n" +
+                    "  \"color12\": \"olive\",\n" +
+                    "  \"color13\": \"purple\",\n" +
+                    "  \"color14\": \"teal\",\n" +
+                    "  \"color15\": \"silver\",\n" +
+                    "  \"color16\": \"grey\",\n" +
+                    "  \"color17\": \"#99f\",\n" +
+                    "  \"color18\": \"#936\",\n" +
+                    "  \"color19\": \"#ffc\",\n" +
+                    "  \"color20\": \"#cff\",\n" +
+                    "  \"color21\": \"#606\",\n" +
+                    "  \"color22\": \"#ff8080\",\n" +
+                    "  \"color23\": \"#06c\",\n" +
+                    "  \"color24\": \"#ccf\",\n" +
+                    "  \"color25\": \"navy\",\n" +
+                    "  \"color26\": \"magenta\",\n" +
+                    "  \"color27\": \"yellow\",\n" +
+                    "  \"color28\": \"cyan\",\n" +
+                    "  \"color29\": \"purple\",\n" +
+                    "  \"color30\": \"maroon\",\n" +
+                    "  \"color31\": \"teal\",\n" +
+                    "  \"color32\": \"blue\",\n" +
+                    "  \"color33\": \"#0cf\",\n" +
+                    "  \"color34\": \"#cff\",\n" +
+                    "  \"color35\": \"#cfc\",\n" +
+                    "  \"color36\": \"#ff9\",\n" +
+                    "  \"color37\": \"#9cf\",\n" +
+                    "  \"color38\": \"#f9c\",\n" +
+                    "  \"color39\": \"#c9f\",\n" +
+                    "  \"color40\": \"#fc9\",\n" +
+                    "  \"color41\": \"#36f\",\n" +
+                    "  \"color42\": \"#3cc\",\n" +
+                    "  \"color43\": \"#9c0\",\n" +
+                    "  \"color44\": \"#fc0\",\n" +
+                    "  \"color45\": \"#f90\",\n" +
+                    "  \"color46\": \"#f60\",\n" +
+                    "  \"color47\": \"#669\",\n" +
+                    "  \"color48\": \"#969696\",\n" +
+                    "  \"color49\": \"#036\",\n" +
+                    "  \"color50\": \"#396\",\n" +
+                    "  \"color51\": \"#030\",\n" +
+                    "  \"color52\": \"#330\",\n" +
+                    "  \"color53\": \"#930\",\n" +
+                    "  \"color54\": \"#936\",\n" +
+                    "  \"color55\": \"#339\",\n" +
+                    "  \"color56\": \"#333\",\n" +
+                    "  \"colorBlack\": 1,\n" +
+                    "  \"colorBlue\": 5,\n" +
+                    "  \"colorCyan\": 8,\n" +
+                    "  \"colorGreen\": 4,\n" +
+                    "  \"colorMagenta\": 7,\n" +
+                    "  \"colorRed\": 3,\n" +
+                    "  \"colorWhite\": 2,\n" +
+                    "  \"colorYellow\": 6,\n" +
+                    "  \"comparators\": \"date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\",\n" +
+                    "  \"converters\": \"basic, boolean, boolean-to-text, collection, collection-to-list, color, color-to-color, color-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, has-formatter-selector, has-parser-selector, has-spreadsheet-selection, has-style, has-text-node, has-validator-selector, json, jsonTo, locale, locale-to-text, null-to-number, number, number-to-color, number-to-number, number-to-text, plugins, spreadsheet-cell-set, spreadsheet-metadata, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, spreadsheet-value, style, system, template, text, text-node, text-to-boolean-list, text-to-color, text-to-csv-string-list, text-to-date-list, text-to-date-time-list, text-to-environment-value-name, text-to-error, text-to-expression, text-to-form-name, text-to-json, text-to-locale, text-to-number-list, text-to-object, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-url, text-to-validation-error, text-to-validator-selector, text-to-value-type, to-boolean, to-json, to-number, to-styleable, to-validation-error-list, url, url-to-hyperlink, url-to-image\",\n" +
+                    "  \"dateFormatter\": \"date-format-pattern dddd, d mmmm yyyy\",\n" +
+                    "  \"dateParser\": \"date-parse-pattern dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
+                    "  \"dateTimeFormatter\": \"date-time-format-pattern dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
+                    "  \"dateTimeOffset\": \"-25569\",\n" +
+                    "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                    "  \"dateTimeSymbols\": {\n" +
+                    "    \"ampms\": [\n" +
+                    "      \"am\",\n" +
+                    "      \"pm\"\n" +
+                    "    ],\n" +
+                    "    \"monthNames\": [\n" +
+                    "      \"January\",\n" +
+                    "      \"February\",\n" +
+                    "      \"March\",\n" +
+                    "      \"April\",\n" +
+                    "      \"May\",\n" +
+                    "      \"June\",\n" +
+                    "      \"July\",\n" +
+                    "      \"August\",\n" +
+                    "      \"September\",\n" +
+                    "      \"October\",\n" +
+                    "      \"November\",\n" +
+                    "      \"December\"\n" +
+                    "    ],\n" +
+                    "    \"monthNameAbbreviations\": [\n" +
+                    "      \"Jan.\",\n" +
+                    "      \"Feb.\",\n" +
+                    "      \"Mar.\",\n" +
+                    "      \"Apr.\",\n" +
+                    "      \"May\",\n" +
+                    "      \"Jun.\",\n" +
+                    "      \"Jul.\",\n" +
+                    "      \"Aug.\",\n" +
+                    "      \"Sep.\",\n" +
+                    "      \"Oct.\",\n" +
+                    "      \"Nov.\",\n" +
+                    "      \"Dec.\"\n" +
+                    "    ],\n" +
+                    "    \"weekDayNames\": [\n" +
+                    "      \"Sunday\",\n" +
+                    "      \"Monday\",\n" +
+                    "      \"Tuesday\",\n" +
+                    "      \"Wednesday\",\n" +
+                    "      \"Thursday\",\n" +
+                    "      \"Friday\",\n" +
+                    "      \"Saturday\"\n" +
+                    "    ],\n" +
+                    "    \"weekDayNameAbbreviations\": [\n" +
+                    "      \"Sun.\",\n" +
+                    "      \"Mon.\",\n" +
+                    "      \"Tue.\",\n" +
+                    "      \"Wed.\",\n" +
+                    "      \"Thu.\",\n" +
+                    "      \"Fri.\",\n" +
+                    "      \"Sat.\"\n" +
+                    "    ]\n" +
+                    "  },\n" +
+                    "  \"decimalNumberSymbols\": {\n" +
+                    "    \"negativeSign\": \"!\",\n" +
+                    "    \"positiveSign\": \"@\",\n" +
+                    "    \"zeroDigit\": \"0\",\n" +
+                    "    \"currencySymbol\": \"CURR\",\n" +
+                    "    \"decimalSeparator\": \".\",\n" +
+                    "    \"exponentSymbol\": \"e\",\n" +
+                    "    \"groupSeparator\": \",\",\n" +
+                    "    \"infinitySymbol\": \"Infinity!\",\n" +
+                    "    \"monetaryDecimalSeparator\": \":\",\n" +
+                    "    \"nanSymbol\": \"Nan!\",\n" +
+                    "    \"percentSymbol\": \"#\",\n" +
+                    "    \"permillSymbol\": \"^\"\n" +
+                    "  },\n" +
+                    "  \"defaultFormHandler\": \"non-null\",\n" +
+                    "  \"defaultYear\": 1900,\n" +
+                    "  \"errorFormatter\": \"badge-error default-text\",\n" +
+                    "  \"exporters\": \"collection, empty, json\",\n" +
+                    "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
+                    "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                    "  \"findFunctions\": \"@\",\n" +
+                    "  \"findHighlighting\": false,\n" +
+                    "  \"formHandlers\": \"basic\",\n" +
+                    "  \"formatters\": \"automatic, badge-error, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                    "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                    "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, url)\",\n" +
+                    "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
+                    "  \"functions\": \"@\",\n" +
+                    "  \"generalNumberFormatDigitCount\": 9,\n" +
+                    "  \"hideZeroValues\": false,\n" +
+                    "  \"importers\": \"collection, empty, json\",\n" +
+                    "  \"locale\": \"en-AU\",\n" +
+                    "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                    "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
+                    "  \"parsers\": \"date-parse-pattern, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
+                    "  \"plugins\": \"\",\n" +
+                    "  \"precision\": 10,\n" +
+                    "  \"roundingMode\": \"HALF_UP\",\n" +
+                    "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                    "  \"showFormulaEditor\": true,\n" +
+                    "  \"showFormulas\": false,\n" +
+                    "  \"showGridLines\": true,\n" +
+                    "  \"showHeadings\": true,\n" +
+                    "  \"sortComparators\": \"date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\",\n" +
+                    "  \"sortConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, locale, url)\",\n" +
+                    "  \"style\": {\n" +
+                    "    \"backgroundColor\": \"white\",\n" +
+                    "    \"color\": \"black\",\n" +
+                    "    \"fontFamily\": \"MS Sans Serif\",\n" +
+                    "    \"fontSize\": 11,\n" +
+                    "    \"fontStyle\": \"NORMAL\",\n" +
+                    "    \"fontVariant\": \"NORMAL\",\n" +
+                    "    \"height\": \"30px\",\n" +
+                    "    \"hyphens\": \"NONE\",\n" +
+                    "    \"marginBottom\": \"none\",\n" +
+                    "    \"marginLeft\": \"none\",\n" +
+                    "    \"marginRight\": \"none\",\n" +
+                    "    \"marginTop\": \"none\",\n" +
+                    "    \"paddingBottom\": \"none\",\n" +
+                    "    \"paddingLeft\": \"none\",\n" +
+                    "    \"paddingRight\": \"none\",\n" +
+                    "    \"paddingTop\": \"none\",\n" +
+                    "    \"textAlign\": \"LEFT\",\n" +
+                    "    \"textJustify\": \"NONE\",\n" +
+                    "    \"verticalAlign\": \"TOP\",\n" +
+                    "    \"width\": \"100px\",\n" +
+                    "    \"wordBreak\": \"NORMAL\",\n" +
+                    "    \"wordWrap\": \"NORMAL\"\n" +
+                    "  },\n" +
+                    "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                    "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
+                    "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
+                    "  \"twoDigitYear\": 20,\n" +
+                    "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
+                    "  \"validationFunctions\": \"@\",\n" +
+                    "  \"validationValidators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
+                    "  \"validators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression\",\n" +
+                    "  \"valueSeparator\": \",\",\n" +
+                    "  \"viewportHome\": \"A1\"\n" +
+                    "}"
         );
     }
 
@@ -1969,8 +1949,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 metadata,
                 SpreadsheetLabelStores.treeMap()
             ),
-            "serverUrl=https://example.com/path123 \"\n" +
-                "\" metadata={\n" +
+            "metadata={\n" +
                 "  \"autoHideScrollbars\": false,\n" +
                 "  \"cellCharacterWidth\": 1,\n" +
                 "  \"clipboardExporter\": \"json\",\n" +

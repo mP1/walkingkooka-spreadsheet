@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -30,13 +29,11 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final AbsoluteUrl serverUrl,
-                                                 final SpreadsheetMetadata metadata,
+    public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
                                                  final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
                                                  final SpreadsheetContext spreadsheetContext,
                                                  final TerminalContext terminalContext) {
         return BasicSpreadsheetEngineContext.with(
-            serverUrl,
             metadata,
             functionAliases,
             spreadsheetContext,
