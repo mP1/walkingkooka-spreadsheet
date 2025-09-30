@@ -160,7 +160,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
         .loadFromLocale(
             LocaleContexts.jre(LOCALE)
-        ).set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
+        ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SPREADSHEET_ID)
+        .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
         .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
         .set(
             SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
@@ -369,24 +370,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // with.............................................................................................................
 
     @Test
-    public void testWithNullMetadataFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
-                null,
-                SpreadsheetEngineContextMode.FORMULA,
-                SPREADSHEET_CONTEXT,
-                TERMINAL_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullSpredsheetEngineContextModeFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                METADATA,
                 null,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
@@ -399,7 +386,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                METADATA,
                 SpreadsheetEngineContextMode.FORMULA,
                 null,
                 TERMINAL_CONTEXT
@@ -412,7 +398,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                METADATA,
                 SpreadsheetEngineContextMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 null
@@ -1385,8 +1370,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final EnvironmentContext environmentContext,
                                                         final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
-
-            metadata,
             SpreadsheetEngineContextMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -1494,7 +1477,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final EnvironmentContext environmentContext) {
         return BasicSpreadsheetEngineContext.with(
-            metadata,
             SpreadsheetEngineContextMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -1553,7 +1535,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private final static class TestSpreadsheetContext implements SpreadsheetContext,
+    private final class TestSpreadsheetContext implements SpreadsheetContext,
         EnvironmentContextDelegator,
         LocaleContextDelegator,
         SpreadsheetProviderDelegator {
@@ -1563,6 +1545,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                final EnvironmentContext environmentContext,
                                final LocaleContext localeContext,
                                final ProviderContext providerContext) {
+            checkEquals(SPREADSHEET_ID, metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID));
             this.metadata = metadata;
             this.storeRepository = storeRepository;
 
@@ -1725,6 +1708,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.toStringAndCheck(
             this.createContext(),
                 "metadata={\n" +
+                    "  \"spreadsheetId\": \"7b\",\n" +
                     "  \"autoHideScrollbars\": false,\n" +
                     "  \"cellCharacterWidth\": 1,\n" +
                     "  \"clipboardExporter\": \"json\",\n" +
@@ -1949,6 +1933,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 SpreadsheetLabelStores.treeMap()
             ),
             "metadata={\n" +
+                "  \"spreadsheetId\": \"7b\",\n" +
                 "  \"autoHideScrollbars\": false,\n" +
                 "  \"cellCharacterWidth\": 1,\n" +
                 "  \"clipboardExporter\": \"json\",\n" +
