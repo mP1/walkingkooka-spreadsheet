@@ -655,17 +655,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterTextToExpression}
-     */
-    public static Converter<SpreadsheetConverterContext> textToExpression() {
-        return SpreadsheetConverterTextToExpression.INSTANCE;
-    }
-
-    /**
      * {@see EnvironmentConverters#textToEnvironmentValueName}
      */
     public static Converter<SpreadsheetConverterContext> textToEnvironmentValueName() {
         return EnvironmentConverters.textToEnvironmentValueName();
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToExpression}
+     */
+    public static Converter<SpreadsheetConverterContext> textToExpression() {
+        return SpreadsheetConverterTextToExpression.INSTANCE;
     }
 
     /**
@@ -754,17 +754,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterTextToSpreadsheetMetadataPropertyName}
-     */
-    public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataPropertyName() {
-        return SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetConverterTextToSpreadsheetMetadataColor}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataColor() {
         return SpreadsheetConverterTextToSpreadsheetMetadataColor.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetMetadataPropertyName}
+     */
+    public static Converter<SpreadsheetConverterContext> textToSpreadsheetMetadataPropertyName() {
+        return SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE;
     }
 
     /**
