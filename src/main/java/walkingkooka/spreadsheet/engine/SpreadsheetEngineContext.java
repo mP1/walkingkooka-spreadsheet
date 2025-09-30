@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Context;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
+import walkingkooka.spreadsheet.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -55,6 +55,7 @@ import java.util.Optional;
 public interface SpreadsheetEngineContext extends Context,
     CanConvert,
     ExpressionPurityContext,
+    HasSpreadsheetServerUrl,
     SpreadsheetContext,
     SpreadsheetLabelNameResolver,
     HasMissingCellNumberValue {
@@ -63,12 +64,6 @@ public interface SpreadsheetEngineContext extends Context,
      * Useful constant for some members that require a {@link SpreadsheetCell}.
      */
     Optional<SpreadsheetCell> NO_CELL = Optional.empty();
-
-    /**
-     * Returns the base server url, which can then be used to create links to cells and more.
-     * This is necessary for functions such as hyperlink which creates a link to a cell.
-     */
-    AbsoluteUrl serverUrl();
 
     /**
      * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.
