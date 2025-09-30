@@ -655,6 +655,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link NetConverters#textToEmailAddress}
+     */
+    public static Converter<SpreadsheetConverterContext> textToEmailAddress() {
+        return NetConverters.textToEmailAddress();
+    }
+
+    /**
      * {@see EnvironmentConverters#textToEnvironmentValueName}
      */
     public static Converter<SpreadsheetConverterContext> textToEnvironmentValueName() {

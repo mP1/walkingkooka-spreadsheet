@@ -211,6 +211,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithEmailAddress() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_EMAIL_ADDRESS + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToEmailAddress()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithEnvironment() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.ENVIRONMENT + "",
