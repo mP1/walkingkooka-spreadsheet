@@ -62,7 +62,6 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.FormHandlerContext;
@@ -88,11 +87,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
-                                              final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                              final SpreadsheetEngineContextMode mode,
                                               final SpreadsheetContext spreadsheetContext,
                                               final TerminalContext terminalContext) {
         Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(functionAliases, "functionAliases");
+        Objects.requireNonNull(mode, "mode");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
 
@@ -104,11 +103,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return new BasicSpreadsheetEngineContext(
             metadata,
-            functionAliases,
+            mode,
             metadata.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                functionAliases.toConverterSelector(),
+                mode.converter(),
                 spreadsheetLabelNameResolver,
                 spreadsheetContext, // SpreadsheetProvider
                 spreadsheetContext, // LocaleContext
@@ -124,7 +123,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
-                                          final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases,
+                                          final SpreadsheetEngineContextMode mode,
                                           final CanConvert canConvert,
                                           final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                           final SpreadsheetContext spreadsheetContext,
@@ -132,7 +131,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         super();
 
         this.metadata = metadata;
-        this.functionAliases = functionAliases;
+        this.mode = mode;
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
@@ -169,17 +168,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final CanConvert canConvert;
 
-    // SpreadsheetEngineContext.........................................................................................
+    // setSpreadsheetEngineContextMode..................................................................................
 
     @Override
-    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
-        Objects.requireNonNull(functionAliases, "functionAliases");
+    public SpreadsheetEngineContext setSpreadsheetEngineContextMode(final SpreadsheetEngineContextMode mode) {
+        Objects.requireNonNull(mode, "mode");
 
-        return this.functionAliases.equals(functionAliases) ?
+        return this.mode == mode ?
             this :
             new BasicSpreadsheetEngineContext(
                 this.metadata,
-                functionAliases,
+                mode,
                 this.canConvert,
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetContext,
@@ -237,15 +236,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(loader, "loader");
 
+        final SpreadsheetEngineContextMode mode = this.mode;
         final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
-
-        final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases = this.functionAliases;
-
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
         if (null == this.expressionFunctionProvider) {
             this.expressionFunctionProvider = metadata.expressionFunctionProvider(
-                functionAliases,
+                mode.function(),
                 spreadsheetContext // spreadsheetProvider
             );
         }
@@ -255,7 +252,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetConverterContext spreadsheetConverterContext = metadata.spreadsheetConverterContext(
             cell,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-            functionAliases.toConverterSelector(),
+            mode.converter(),
             this, // SpreadsheetLabelNameResolver,
             spreadsheetContext, // SpreadsheetConverterProvider
             this, // LocaleContext
@@ -263,7 +260,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
 
         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
-        if (SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS.equals(functionAliases)) {
+        if (SpreadsheetEngineContextMode.VALIDATION.equals(mode)) {
             // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
             // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
             formHandlerContext = FormHandlerContexts.fake();
@@ -272,7 +269,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         }
 
         EnvironmentContext environmentContext = spreadsheetContext;
-        if (false == SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS.equals(functionAliases)) {
+        if (mode.isReadOnlyEnvironmentContext()) {
             environmentContext = EnvironmentContexts.readOnly(environmentContext);
         }
 
@@ -292,7 +289,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
     }
 
-    private final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases;
+    private final SpreadsheetEngineContextMode mode;
 
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
@@ -438,8 +435,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return this.metadata.spreadsheetFormatterContext(
             cell,
-            (final Optional<Object> v) -> this.spreadsheetEngineContext(
-                SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS
+            (final Optional<Object> v) -> this.setSpreadsheetEngineContextMode(
+                SpreadsheetEngineContextMode.FORMATTING
             ).spreadsheetExpressionEvaluationContext(
                 cell,
                 SpreadsheetExpressionReferenceLoaders.fake()
@@ -518,7 +515,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             this :
             new BasicSpreadsheetEngineContext(
                 this.metadata,
-                this.functionAliases,
+                this.mode,
                 this.canConvert,
                 this.spreadsheetLabelNameResolver,
                 after,

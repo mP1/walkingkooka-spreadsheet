@@ -29,14 +29,12 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Locale;
@@ -72,9 +70,9 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     }
 
     @Override
-    public SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases) {
+    public SpreadsheetEngineContext setSpreadsheetEngineContextMode(final SpreadsheetEngineContextMode mode) {
         return with(
-            this.spreadsheetEngineContext.spreadsheetEngineContext(functionAliases),
+            this.spreadsheetEngineContext.setSpreadsheetEngineContextMode(mode),
             this.spreadsheetExpressionEvaluationContext
         );
     }

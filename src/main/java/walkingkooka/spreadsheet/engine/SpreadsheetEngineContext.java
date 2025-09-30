@@ -29,14 +29,12 @@ import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionPurityContext;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Locale;
@@ -64,9 +62,10 @@ public interface SpreadsheetEngineContext extends Context,
     Optional<SpreadsheetCell> NO_CELL = Optional.empty();
 
     /**
-     * Returns a {@link SpreadsheetEngineContext} which will use the {@link ExpressionFunctionAliasSet} when fetching functions.
+     * Returns a {@link SpreadsheetEngineContext} which will use the {@link SpreadsheetEngineContextMode} when fetching functions
+     * and a converter.
      */
-    SpreadsheetEngineContext spreadsheetEngineContext(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> functionAliases);
+    SpreadsheetEngineContext setSpreadsheetEngineContextMode(final SpreadsheetEngineContextMode mode);
 
     // parseFormula.....................................................................................................
 
