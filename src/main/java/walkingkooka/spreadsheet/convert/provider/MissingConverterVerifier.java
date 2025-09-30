@@ -994,6 +994,33 @@ final class MissingConverterVerifier {
 
         // text-node....................................................................................................
         {
+            // text-to-url..............................................................................................
+            if (formatting || scripting) {
+                final Url url = Url.parse("https://example.com/123");
+
+                if (formatting) {
+                    finder.addIfConversionFail(
+                        url.text(),
+                        String.class,
+                        SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_URL
+                    );
+                }
+
+                // url-to-hyperlink.....................................................................................
+                finder.addIfConversionFail(
+                    url.text(),
+                    Hyperlink.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
+                );
+
+                // url-to-image.........................................................................................
+                finder.addIfConversionFail(
+                    url.text(),
+                    Image.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
+                );
+            }
+
             if (formatting || scripting) {
                 // has-text-node........................................................................................
                 finder.addIfConversionFail(
