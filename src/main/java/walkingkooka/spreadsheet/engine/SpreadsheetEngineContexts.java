@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.terminal.TerminalContext;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
@@ -27,12 +26,10 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetEngineContextMode mode,
+    public static SpreadsheetEngineContext basic(final SpreadsheetEngineContextMode mode,
                                                  final SpreadsheetContext spreadsheetContext,
                                                  final TerminalContext terminalContext) {
         return BasicSpreadsheetEngineContext.with(
-            metadata,
             mode,
             spreadsheetContext,
             terminalContext

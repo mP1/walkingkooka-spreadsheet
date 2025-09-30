@@ -86,23 +86,19 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final SpreadsheetMetadata metadata,
-                                              final SpreadsheetEngineContextMode mode,
+    static BasicSpreadsheetEngineContext with(final SpreadsheetEngineContextMode mode,
                                               final SpreadsheetContext spreadsheetContext,
                                               final TerminalContext terminalContext) {
-        Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(mode, "mode");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
 
-        spreadsheetContext.setLocale(metadata.locale());
         final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver = SpreadsheetLabelNameResolvers.labelStore(
             spreadsheetContext.storeRepository()
                 .labels()
         );
 
         return new BasicSpreadsheetEngineContext(
-            metadata,
             mode,
             null, // force cnConvert to be created.
             spreadsheetLabelNameResolver,
@@ -114,16 +110,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final SpreadsheetMetadata metadata,
-                                          final SpreadsheetEngineContextMode mode,
+    private BasicSpreadsheetEngineContext(final SpreadsheetEngineContextMode mode,
                                           final CanConvert canConvert,
                                           final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                           final SpreadsheetContext spreadsheetContext,
                                           final TerminalContext terminalContext) {
         super();
 
+        final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadata();
         this.metadata = metadata;
         this.mode = mode;
+
+        spreadsheetContext.setLocale(metadata.locale());
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
@@ -154,6 +152,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
+        if(null == this.metadata) {
+            this.metadata = this.spreadsheetContext.spreadsheetMetadata();
+        }
+
         return this.metadata;
     }
 
@@ -180,7 +182,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.mode == mode ?
             this :
             new BasicSpreadsheetEngineContext(
-                this.metadata,
                 mode,
                 null,
                 this.spreadsheetLabelNameResolver,
@@ -517,7 +518,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return before.equals(after) ?
             this :
             new BasicSpreadsheetEngineContext(
-                this.metadata,
                 this.mode,
                 this.canConvert,
                 this.spreadsheetLabelNameResolver,
