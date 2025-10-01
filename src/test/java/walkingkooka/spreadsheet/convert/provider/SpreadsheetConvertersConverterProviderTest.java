@@ -596,6 +596,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToHostAddress() {
+        this.converterAndCheck(
+            "text-to-host-address",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToHostAddress()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToJson() {
         this.converterAndCheck(
             "text-to-json",

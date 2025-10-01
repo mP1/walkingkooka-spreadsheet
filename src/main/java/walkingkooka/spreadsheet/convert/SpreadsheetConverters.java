@@ -697,6 +697,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link NetConverters#textToHostAddress}
+     */
+    public static Converter<SpreadsheetConverterContext> textToHostAddress() {
+        return NetConverters.textToHostAddress();
+    }
+
+    /**
      * {@see JsonNodeConverters#textToJsonNode}
      */
     public static Converter<SpreadsheetConverterContext> textToJson() {
