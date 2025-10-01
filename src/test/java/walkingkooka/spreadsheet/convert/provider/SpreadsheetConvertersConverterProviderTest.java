@@ -296,6 +296,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasHostAddress() {
+        this.converterAndCheck(
+            "has-host-address",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasHostAddress()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithHasParserSelector() {
         this.converterAndCheck(
             "has-parser-selector",

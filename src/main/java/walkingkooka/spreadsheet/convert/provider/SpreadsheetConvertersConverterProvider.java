@@ -185,6 +185,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
                 break;
+            case HAS_HOST_ADDRESS_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasHostAddress();
+                break;
             case HAS_PARSER_SELECTOR_STRING:
                 noParameterCheck(copy);
 
@@ -627,6 +632,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_FORMATTER_SELECTOR = ConverterName.with(HAS_FORMATTER_SELECTOR_STRING);
 
+    private final static String HAS_HOST_ADDRESS_STRING = "has-host-address";
+
+    final static ConverterName HAS_HOST_ADDRESS = ConverterName.with(HAS_HOST_ADDRESS_STRING);
+
     private final static String HAS_PARSER_SELECTOR_STRING = "has-parser-selector";
 
     final static ConverterName HAS_PARSER_SELECTOR = ConverterName.with(HAS_PARSER_SELECTOR_STRING);
@@ -926,6 +935,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
             converterInfo(HAS_FORMATTER_SELECTOR),
+            converterInfo(HAS_HOST_ADDRESS),
             converterInfo(HAS_PARSER_SELECTOR),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(HAS_STYLE),
