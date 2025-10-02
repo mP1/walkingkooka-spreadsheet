@@ -232,31 +232,20 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public SpreadsheetFormatterContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
-        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
-
-        return before.equals(after) ?
-            this :
-            new BasicSpreadsheetFormatterContext(
-                this.cell,
-                this.numberToColor,
-                this.nameToColor,
-                this.cellCharacterWidth,
-                this.generalFormatNumberDigitCount,
-                this.formatter,
-                this.spreadsheetExpressionEvaluationContext,
-                after,
-                this.spreadsheetFormatterProvider,
-                this.providerContext
-            );
+        return this.setConverterContext(
+            this.spreadsheetConverterContext.setObjectPostProcessor(processor)
+        );
     }
 
     @Override
     public SpreadsheetFormatterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetConverterContext before = this.spreadsheetConverterContext;
-        final SpreadsheetConverterContext after = before.setPreProcessor(processor);
+        return this.setConverterContext(
+            this.spreadsheetConverterContext.setPreProcessor(processor)
+        );
+    }
 
-        return before.equals(after) ?
+    private SpreadsheetFormatterContext setConverterContext(final SpreadsheetConverterContext context) {
+        return this.spreadsheetConverterContext.equals(context) ?
             this :
             new BasicSpreadsheetFormatterContext(
                 this.cell,
@@ -266,7 +255,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 this.generalFormatNumberDigitCount,
                 this.formatter,
                 this.spreadsheetExpressionEvaluationContext,
-                after,
+                context,
                 this.spreadsheetFormatterProvider,
                 this.providerContext
             );
