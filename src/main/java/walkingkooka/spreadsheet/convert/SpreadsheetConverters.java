@@ -561,7 +561,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     // @VisibleForTesting
     public final static ConverterSelector SYSTEM_CONVERTER_SELECTOR = ConverterSelector.parse(
-        "collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)"
+        "collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, net)"
     );
 
     private final static Converter<SpreadsheetConverterContext> SYSTEM_CONVERTER = SpreadsheetConvertersConverterProviders.spreadsheetConverters(

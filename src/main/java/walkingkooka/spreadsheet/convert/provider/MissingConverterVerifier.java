@@ -36,7 +36,12 @@ import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.HasHostAddress;
+import walkingkooka.net.MailToUrl;
+import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorException;
@@ -250,6 +255,11 @@ final class MissingConverterVerifier {
             Optional.of(locale)
         ).setStyle(style);
 
+        final AbsoluteUrl absoluteUrl = Url.parseAbsolute("https://example.com/123");
+        final EmailAddress emailAddress = EmailAddress.parse("user@example.com");
+        final MailToUrl mailToUrl = Url.parseMailTo("mailto:user@example.com");
+        final RelativeUrl relativeUrl = Url.parseRelative("/path1/path2?k1=v1#fragment111");
+
         // basic........................................................................................................
         finder.addIfConversionFail(
             Lists.of(
@@ -289,9 +299,9 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 (Object)
                     Lists.of(
-                    true,
-                    false
-                ),
+                        true,
+                        false
+                    ),
                 BooleanList.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
@@ -299,8 +309,8 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 (Object)
                     Lists.of(
-                    "Apple 1",
-                    "Banana 2"
+                        "Apple 1",
+                        "Banana 2"
                     ),
                 CsvStringList.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
@@ -604,6 +614,39 @@ final class MissingConverterVerifier {
                     ),
                     Locale.class,
                     SpreadsheetConvertersConverterProvider.LOCALE // TEXT_TO_LOCALE
+                );
+            }
+        }
+
+        // net..........................................................................................................
+        {
+            if (find | formula | scripting) {
+                finder.addIfConversionFail(
+                    Lists.of(
+                        absoluteUrl.text(),
+                        mailToUrl.text(),
+                        relativeUrl.text()
+                    ),
+                    Url.class,
+                    SpreadsheetConvertersConverterProvider.NET
+                );
+
+                finder.addIfConversionFail(
+                    emailAddress.text(),
+                    EmailAddress.class,
+                    SpreadsheetConvertersConverterProvider.NET
+                );
+
+                finder.addIfConversionFail(
+                    Lists.of(
+                        absoluteUrl.text(),
+                        emailAddress.text(),
+                        mailToUrl.text()
+                    ),
+                    Lists.of(
+                        HasHostAddress.class
+                    ),
+                    SpreadsheetConvertersConverterProvider.NET
                 );
             }
         }
@@ -996,11 +1039,9 @@ final class MissingConverterVerifier {
         {
             // text-to-url..............................................................................................
             if (formatting || scripting) {
-                final Url url = Url.parse("https://example.com/123");
-
                 if (formatting) {
                     finder.addIfConversionFail(
-                        url.text(),
+                        absoluteUrl.text(),
                         String.class,
                         SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_URL
                     );
@@ -1008,14 +1049,14 @@ final class MissingConverterVerifier {
 
                 // url-to-hyperlink.....................................................................................
                 finder.addIfConversionFail(
-                    url.text(),
+                    absoluteUrl.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
                 finder.addIfConversionFail(
-                    url.text(),
+                    absoluteUrl.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
                 );
@@ -1058,6 +1099,20 @@ final class MissingConverterVerifier {
                     ),
                     TextNode.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_TEXT_NODE
+                );
+
+                // url-to-hyperlink.....................................................................................
+                finder.addIfConversionFail(
+                    absoluteUrl.text(),
+                    Hyperlink.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
+                );
+
+                // url-to-image.........................................................................................
+                finder.addIfConversionFail(
+                    absoluteUrl.text(),
+                    Image.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
                 );
             }
 
@@ -1110,60 +1165,6 @@ final class MissingConverterVerifier {
                     "12:58:59",
                     LocalTimeList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
-                );
-            }
-
-            // text-to-url..............................................................................................
-            if (formatting || scripting) {
-                final Url url = Url.parse("https://example.com/123");
-
-                if (formatting) {
-                    finder.addIfConversionFail(
-                        url.text(),
-                        String.class,
-                        SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_URL
-                    );
-                }
-
-                // url-to-hyperlink.....................................................................................
-                finder.addIfConversionFail(
-                    url.text(),
-                    Hyperlink.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
-                );
-
-                // url-to-image.........................................................................................
-                finder.addIfConversionFail(
-                    url.text(),
-                    Image.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
-                );
-            }
-
-            // url......................................................................................................
-            if (formatting || scripting) {
-                final Url url = Url.parse("https://example.com/123");
-
-                if (formatting) {
-                    finder.addIfConversionFail(
-                        url.text(),
-                        String.class,
-                        SpreadsheetConvertersConverterProvider.URL // TEXT_TO_URL
-                    );
-                }
-
-                // url-to-hyperlink.....................................................................................
-                finder.addIfConversionFail(
-                    url.text(),
-                    Hyperlink.class,
-                    SpreadsheetConvertersConverterProvider.URL // URL_TO_HYPERLINK
-                );
-
-                // url-to-image.........................................................................................
-                finder.addIfConversionFail(
-                    url.text(),
-                    Image.class,
-                    SpreadsheetConvertersConverterProvider.URL // URL_TO_IMAGE
                 );
             }
 

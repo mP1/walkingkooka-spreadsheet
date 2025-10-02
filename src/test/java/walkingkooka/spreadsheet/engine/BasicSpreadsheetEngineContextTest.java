@@ -1855,13 +1855,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"errorFormatter\": \"badge-error default-text\",\n" +
                     "  \"exporters\": \"collection, empty, json\",\n" +
                     "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                    "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                    "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                     "  \"findFunctions\": \"@\",\n" +
                     "  \"findHighlighting\": false,\n" +
                     "  \"formHandlers\": \"basic\",\n" +
                     "  \"formatters\": \"automatic, badge-error, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                    "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
-                    "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, url)\",\n" +
+                    "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                    "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                     "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                     "  \"functions\": \"@\",\n" +
                     "  \"generalNumberFormatDigitCount\": 9,\n" +
@@ -1874,7 +1874,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"plugins\": \"\",\n" +
                     "  \"precision\": 10,\n" +
                     "  \"roundingMode\": \"HALF_UP\",\n" +
-                    "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                    "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                     "  \"showFormulaEditor\": true,\n" +
                     "  \"showFormulas\": false,\n" +
                     "  \"showGridLines\": true,\n" +
@@ -2080,13 +2080,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"errorFormatter\": \"badge-error default-text\",\n" +
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                "  \"findConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
                 "  \"formatters\": \"automatic, badge-error, collection, date-format-pattern, date-time-format-pattern, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
-                "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
-                "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, url)\",\n" +
+                "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"generalNumberFormatDigitCount\": 9,\n" +
@@ -2099,7 +2099,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, url)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +
