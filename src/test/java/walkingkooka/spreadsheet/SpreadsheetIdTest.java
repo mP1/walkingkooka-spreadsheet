@@ -44,8 +44,16 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testWith() {
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
-        this.checkEquals(VALUE, id.value(), "value");
-        this.checkEquals(VALUE, id.id(), "id");
+        this.checkEquals(
+            VALUE,
+            id.value(),
+            "value"
+        );
+        this.checkEquals(
+            VALUE,
+            id.id(),
+            "id"
+        );
     }
 
     // HasNotFoundText..................................................................................................
@@ -68,109 +76,23 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         );
     }
 
-    // ParseString............................................................................................................
+    // ParseString......................................................................................................
 
     @Test
     public void testParseInvalidFails() {
-        this.parseStringFails("XYZ", IllegalArgumentException.class);
+        this.parseStringFails(
+            "XYZ",
+            IllegalArgumentException.class
+        );
     }
 
     @Test
     public void testParse() {
-        this.parseStringAndCheck("1A", SpreadsheetId.with(0x1a));
+        this.parseStringAndCheck(
+            "1A",
+            SpreadsheetId.with(0x1a)
+        );
     }
-
-    @Test
-    public void testEqualsDifferentSpreadsheetId() {
-        this.checkNotEquals(SpreadsheetId.with(999));
-    }
-
-    // Compare..........................................................................................................
-
-    @Test
-    public void testCompareLess() {
-        this.compareToAndCheckLess(SpreadsheetId.with(VALUE * 2));
-    }
-
-    @Test
-    public void testArraySort() {
-        final SpreadsheetId id1 = SpreadsheetId.with(1);
-        final SpreadsheetId id2 = SpreadsheetId.with(2);
-        final SpreadsheetId id3 = SpreadsheetId.with(3);
-
-        this.compareToArraySortAndCheck(id3, id1, id2,
-            id1, id2, id3);
-    }
-
-    // JsonNodeMarshallingTesting.......................................................................................
-
-    @Test
-    public void testUnmarshallInvalidStringFails() {
-        this.unmarshallFails(JsonNode.string("123xyz"));
-    }
-
-    @Test
-    public void testUnmarshall() {
-        this.unmarshallAndCheck(JsonNode.string("1f"), SpreadsheetId.with(0x1f));
-    }
-
-    @Test
-    public void testMarshall() {
-        this.marshallAndCheck(SpreadsheetId.with(0x1f), JsonNode.string("1f"));
-    }
-
-    @Test
-    public void testMarshallJsonNodeUnmarshallRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(VALUE));
-    }
-
-    @Test
-    public void testMarshallJsonNodeUnmarshallRoundtrip2() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(0xabcd));
-    }
-
-    // ToString..........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(SpreadsheetId.with(VALUE),
-            Long.toHexString(VALUE));
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
-    public SpreadsheetId createComparable() {
-        return this.createObject();
-    }
-
-    @Override
-    public SpreadsheetId createObject() {
-        return SpreadsheetId.with(VALUE);
-    }
-
-    @Override
-    public Class<SpreadsheetId> type() {
-        return SpreadsheetId.class;
-    }
-
-    // JsonNodeMarshallingTesting...............................................................................................
-
-    @Override
-    public SpreadsheetId createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    @Override
-    public SpreadsheetId unmarshall(final JsonNode node,
-                                    final JsonNodeUnmarshallContext context) {
-        return SpreadsheetId.unmarshall(node, context);
-    }
-
-    // ParseStringStringTesting...............................................................................................
 
     @Override
     public SpreadsheetId parseString(final String text) {
@@ -185,6 +107,103 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // equals...........................................................................................................
+
+    @Test
+    public void testEqualsDifferentSpreadsheetId() {
+        this.checkNotEquals(SpreadsheetId.with(999));
+    }
+
+    // Compare..........................................................................................................
+
+    @Test
+    public void testCompareLess() {
+        this.compareToAndCheckLess(SpreadsheetId.with(VALUE * 2));
+    }
+
+    @Test
+    public void testCompareArraySort() {
+        final SpreadsheetId id1 = SpreadsheetId.with(1);
+        final SpreadsheetId id2 = SpreadsheetId.with(2);
+        final SpreadsheetId id3 = SpreadsheetId.with(3);
+
+        this.compareToArraySortAndCheck(id3, id1, id2,
+            id1, id2, id3);
+    }
+
+    @Override
+    public SpreadsheetId createComparable() {
+        return SpreadsheetId.with(VALUE);
+    }
+
+    // ToString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(SpreadsheetId.with(VALUE),
+            Long.toHexString(VALUE));
+    }
+
+    // JsonNodeMarshallingTesting.......................................................................................
+
+    @Test
+    public void testUnmarshallInvalidStringFails() {
+        this.unmarshallFails(
+            JsonNode.string("123xyz")
+        );
+    }
+
+    @Test
+    public void testUnmarshall() {
+        this.unmarshallAndCheck(
+            JsonNode.string("1f"),
+            SpreadsheetId.with(0x1f)
+        );
+    }
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+            SpreadsheetId.with(0x1f),
+            JsonNode.string("1f")
+        );
+    }
+
+    @Test
+    public void testMarshallJsonNodeUnmarshallRoundtrip() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(VALUE));
+    }
+
+    @Test
+    public void testMarshallJsonNodeUnmarshallRoundtrip2() {
+        this.marshallRoundTripTwiceAndCheck(
+            SpreadsheetId.with(0xabcd)
+        );
+    }
+
+    @Override
+    public SpreadsheetId createJsonNodeMarshallingValue() {
+        return this.createObject();
+    }
+
+    @Override
+    public SpreadsheetId unmarshall(final JsonNode node,
+                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetId.unmarshall(node, context);
+    }
+
+    // Class............................................................................................................
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
+    }
+
+    @Override
+    public Class<SpreadsheetId> type() {
+        return SpreadsheetId.class;
     }
 
     // TreePrintable....................................................................................................
