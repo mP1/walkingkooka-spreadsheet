@@ -761,6 +761,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithTextToUrlFragment() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_URL_FRAGMENT,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToUrlFragment()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToValidationSelector() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATOR_SELECTOR,
