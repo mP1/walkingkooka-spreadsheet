@@ -386,6 +386,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithNet() {
+        this.converterAndCheck(
+            "net",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.net()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithNumber() {
         this.converterAndCheck(
             "number",
