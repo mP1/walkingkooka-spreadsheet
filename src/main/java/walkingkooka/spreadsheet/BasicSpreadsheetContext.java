@@ -174,6 +174,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
             if(null != metadata) {
                 this.setLocale(metadata.locale());
+
             }
         }
     }
