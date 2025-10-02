@@ -59,6 +59,8 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
 
     SpreadsheetStoreRepository storeRepository();
 
+    // EnvironmentContext...............................................................................................
+
     @Override
     SpreadsheetContext cloneEnvironment();
 
