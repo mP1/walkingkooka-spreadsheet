@@ -576,6 +576,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         private final SpreadsheetStoreRepository spreadsheetStoreRepository;
 
+        @Override
+        public SpreadsheetEngineContext spreadsheetEngineContext() {
+            throw new UnsupportedOperationException();
+        }
+
         // HasSpreadsheetMetadata.......................................................................................
 
         @Override

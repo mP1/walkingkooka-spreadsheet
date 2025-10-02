@@ -22,8 +22,11 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+
+import java.util.function.Function;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
@@ -34,6 +37,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                            final SpreadsheetId spreadsheetId,
                                            final SpreadsheetStoreRepository storeRepository,
                                            final SpreadsheetProvider spreadsheetProvider,
+                                           final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                            final EnvironmentContext environmentContext,
                                            final LocaleContext localeContext,
                                            final ProviderContext providerContext) {
@@ -42,6 +46,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
             spreadsheetId,
             storeRepository,
             spreadsheetProvider,
+            spreadsheetEngineContextFactory,
             environmentContext,
             localeContext,
             providerContext

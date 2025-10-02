@@ -1572,6 +1572,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         private final SpreadsheetStoreRepository storeRepository;
 
         @Override
+        public SpreadsheetEngineContext spreadsheetEngineContext() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
             return this.loadMetadataOrFail(this.spreadsheetId());
         }

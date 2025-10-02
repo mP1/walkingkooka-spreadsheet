@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.HasProviderContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -58,6 +59,11 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     SpreadsheetId spreadsheetId();
 
     SpreadsheetStoreRepository storeRepository();
+
+    /**
+     * Getter that returns a cached {@link SpreadsheetEngineContext}, belonging to this {@link SpreadsheetId}.
+     */
+    SpreadsheetEngineContext spreadsheetEngineContext();
 
     // EnvironmentContext...............................................................................................
 

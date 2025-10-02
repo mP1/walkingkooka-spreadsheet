@@ -61,6 +61,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "label");
         throw new UnsupportedOperationException();
