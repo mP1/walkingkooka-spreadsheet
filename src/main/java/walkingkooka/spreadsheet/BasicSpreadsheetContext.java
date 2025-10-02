@@ -88,11 +88,11 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.localeContext = LocaleContexts.readOnly(localeContext);
         this.providerContext = providerContext;
 
+        this.metadata = this.loadMetadataOrFail(spreadsheetId);
+
         this.spreadsheetEngineContext = null != spreadsheetEngineContextFactory ?
             spreadsheetEngineContextFactory.apply(this) :
             spreadsheetEngineContext;
-
-        this.metadata = this.loadMetadataOrFail(spreadsheetId);
     }
 
     @Override
