@@ -892,6 +892,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see NetConverters#textToUrlQueryString()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToUrlQueryString() {
+        return NetConverters.textToUrlQueryString();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToValidationError}
      */
     public static Converter<SpreadsheetConverterContext> textToValidationError() {
