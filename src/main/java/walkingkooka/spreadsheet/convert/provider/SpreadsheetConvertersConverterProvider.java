@@ -235,6 +235,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.locale();
                 break;
+            case NET_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.net();
+                break;
             case NUMBER_STRING:
                 noParameterCheck(copy);
 
@@ -687,6 +692,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName LOCALE_TO_TEXT = ConverterName.with(LOCALE_TO_TEXT_STRING);
 
+    private final static String NET_STRING = "net";
+
+    final static ConverterName NET = ConverterName.with(NET_STRING);
+
     private final static String NULL_TO_NUMBER_STRING = "null-to-number";
 
     final static ConverterName NULL_TO_NUMBER = ConverterName.with(NULL_TO_NUMBER_STRING);
@@ -972,6 +981,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
             converterInfo(LOCALE_TO_TEXT),
+            converterInfo(NET),
             converterInfo(NULL_TO_NUMBER),
             converterInfo(NUMBER),
             converterInfo(NUMBER_TO_COLOR),

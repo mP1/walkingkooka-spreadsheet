@@ -367,6 +367,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link NetConverters#net()}
+     */
+    public static Converter<SpreadsheetConverterContext> net() {
+        return NetConverters.net();
+    }
+
+    /**
      * {@see SpreadsheetConverterNullToNumber}
      */
     public static Converter<SpreadsheetConverterContext> nullToNumber() {
