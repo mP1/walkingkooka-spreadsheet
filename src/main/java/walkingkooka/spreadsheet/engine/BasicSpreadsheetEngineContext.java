@@ -173,10 +173,25 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public CanConvert canConvert() {
+        if(null == this.canConvert) {
+            final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+
+            this.spreadsheetMetadata()
+                .spreadsheetConverterContext(
+                    SpreadsheetMetadata.NO_CELL,
+                    SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                    this.mode.converter(),
+                    this.spreadsheetLabelNameResolver,
+                    spreadsheetContext, // SpreadsheetProvider
+                    spreadsheetContext, // LocaleContext
+                    spreadsheetContext.providerContext()
+                );
+        }
+
         return this.canConvert;
     }
 
-    private final CanConvert canConvert;
+    private CanConvert canConvert;
 
     // setSpreadsheetEngineContextMode..................................................................................
 
@@ -483,10 +498,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         if (this.spreadsheetId().equals(saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
             this.metadata = saved;
 
-            // https://github.com/mP1/walkingkooka-spreadsheet/issues/7808
+            // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, CanConvert
             this.expressionFunctionProvider = null;
-
-            // TODO recreate #canConvert
+            this.canConvert = null;
         }
         return saved;
     }
@@ -496,6 +510,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.spreadsheetContext.deleteMetadata(id);
         if (this.spreadsheetId().equals(id)) {
             this.metadata = null;
+            this.expressionFunctionProvider = null;
+            this.canConvert = null;
         }
     }
 
