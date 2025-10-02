@@ -475,6 +475,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToTimeList();
                 break;
+            case TEXT_TO_URL_FRAGMENT_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToUrlFragment();
+                break;
             case TEXT_TO_URL_STRING:
                 noParameterCheck(copy);
 
@@ -869,6 +874,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_TIME_LIST = ConverterName.with(TEXT_TO_TIME_LIST_STRING);
 
+    private final static String TEXT_TO_URL_FRAGMENT_STRING = "text-to-url-fragment";
+
+    final static ConverterName TEXT_TO_URL_FRAGMENT = ConverterName.with(TEXT_TO_URL_FRAGMENT_STRING);
+
     private final static String TEXT_TO_URL_STRING = "text-to-url";
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
@@ -1003,6 +1012,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_TEXT_STYLE_PROPERTY_NAME),
             converterInfo(TEXT_TO_TIME_LIST),
             converterInfo(TEXT_TO_URL),
+            converterInfo(TEXT_TO_URL_FRAGMENT),
             converterInfo(TEXT_TO_VALIDATION_ERROR),
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),

@@ -885,6 +885,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see NetConverters#textToUrlFragment()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToUrlFragment() {
+        return NetConverters.textToUrlFragment();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToValidationError}
      */
     public static Converter<SpreadsheetConverterContext> textToValidationError() {
