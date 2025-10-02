@@ -771,6 +771,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterNameWithTextToUrlQueryString() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_URL_QUERY_STRING,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToUrlQueryString()
+        );
+    }
+
+    @Test
     public void testConverterNameWithTextToValidationSelector() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_VALIDATOR_SELECTOR,

@@ -480,6 +480,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToUrlFragment();
                 break;
+            case TEXT_TO_URL_QUERY_STRING_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToUrlQueryString();
+                break;
             case TEXT_TO_URL_STRING:
                 noParameterCheck(copy);
 
@@ -878,6 +883,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_URL_FRAGMENT = ConverterName.with(TEXT_TO_URL_FRAGMENT_STRING);
 
+    private final static String TEXT_TO_URL_QUERY_STRING_STRING = "text-to-url-query-string";
+
+    final static ConverterName TEXT_TO_URL_QUERY_STRING = ConverterName.with(TEXT_TO_URL_QUERY_STRING_STRING);
+
     private final static String TEXT_TO_URL_STRING = "text-to-url";
 
     final static ConverterName TEXT_TO_URL = ConverterName.with(TEXT_TO_URL_STRING);
@@ -1013,6 +1022,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_TIME_LIST),
             converterInfo(TEXT_TO_URL),
             converterInfo(TEXT_TO_URL_FRAGMENT),
+            converterInfo(TEXT_TO_URL_QUERY_STRING),
             converterInfo(TEXT_TO_VALIDATION_ERROR),
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),
