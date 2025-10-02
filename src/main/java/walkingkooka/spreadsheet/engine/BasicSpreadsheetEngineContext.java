@@ -482,6 +482,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetMetadata saved = this.spreadsheetContext.saveMetadata(metadata);
         if (this.spreadsheetId().equals(saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
             this.metadata = saved;
+
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/7808
+            this.expressionFunctionProvider = null;
+
+            // TODO recreate #canConvert
         }
         return saved;
     }
