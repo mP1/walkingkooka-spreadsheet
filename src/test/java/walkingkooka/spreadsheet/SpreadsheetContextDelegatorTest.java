@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
 
@@ -49,6 +50,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
     }
 
     final static class TestSpreadsheetContextDelegator implements SpreadsheetContextDelegator {
+
+        @Override
+        public SpreadsheetEngineContext spreadsheetEngineContext() {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public SpreadsheetContext cloneEnvironment() {

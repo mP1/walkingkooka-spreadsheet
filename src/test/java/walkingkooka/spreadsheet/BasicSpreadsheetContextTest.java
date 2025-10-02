@@ -34,6 +34,8 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -61,6 +63,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -75,6 +78,10 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.fake();
+
+    private final Function<SpreadsheetContext, SpreadsheetEngineContext> SPREADSHEET_ENGINE_CONTEXT_FACTORY = (SpreadsheetContext c) -> {
+        throw new UnsupportedOperationException();
+    };
 
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
@@ -107,6 +114,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -123,6 +131,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 null,
                 REPO,
                 SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -139,6 +148,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ID,
                 null,
                 SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -154,6 +164,24 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 SERVER_URL,
                 ID,
                 REPO,
+                null,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetEngineContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
+                ID,
+                REPO,
+                SPREADSHEET_PROVIDER,
                 null,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -171,6 +199,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -187,6 +216,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -203,6 +233,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 null
@@ -491,6 +522,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 SpreadsheetParserProviders.empty(),
                 ValidatorProviders.empty()
             ),
+            (c) -> SpreadsheetEngineContexts.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LOCALE,

@@ -62,6 +62,11 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
     }
 
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext() {
+        return this;
+    }
+
     // SpreadsheetEngineContext.........................................................................................
 
     @Override

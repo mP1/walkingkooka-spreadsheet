@@ -141,6 +141,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.terminalContext = terminalContext;
     }
 
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext() {
+        return this;
+    }
+
     // HasSpreadsheetServerUrl..........................................................................................
 
     @Override

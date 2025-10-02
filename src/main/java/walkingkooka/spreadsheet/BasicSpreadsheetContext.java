@@ -26,6 +26,7 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 final class BasicSpreadsheetContext implements SpreadsheetContext,
     EnvironmentContextDelegator,
@@ -46,6 +48,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                         final SpreadsheetId spreadsheetId,
                                         final SpreadsheetStoreRepository storeRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
+                                        final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
@@ -54,6 +57,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
             Objects.requireNonNull(storeRepository, "storeRepository"),
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
+            Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory"),
+            null, // SpreadsheetEngineContext will created later in ctor
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext"),
             Objects.requireNonNull(providerContext, "providerContext")
@@ -64,6 +69,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                     final SpreadsheetId spreadsheetId,
                                     final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
+                                    final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+                                    final SpreadsheetEngineContext spreadsheetEngineContext,
                                     final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext,
                                     final ProviderContext providerContext) {
@@ -80,6 +87,10 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.environmentContext = environmentContext;
         this.localeContext = LocaleContexts.readOnly(localeContext);
         this.providerContext = providerContext;
+
+        this.spreadsheetEngineContext = null != spreadsheetEngineContextFactory ?
+            spreadsheetEngineContextFactory.apply(this) :
+            spreadsheetEngineContext;
 
         this.metadata = this.loadMetadataOrFail(spreadsheetId);
     }
@@ -182,6 +193,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             );
     }
 
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext() {
+        return this.spreadsheetEngineContext;
+    }
+
+    private final SpreadsheetEngineContext spreadsheetEngineContext;
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override
@@ -191,11 +209,13 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         return before.equals(cloned) ?
             this :
-            with(
+            new BasicSpreadsheetContext(
                 this.serverUrl,
                 this.spreadsheetId,
                 this.storeRepository,
                 this.spreadsheetProvider,
+                null, // SpreadsheetEngineContextFactory
+                this.spreadsheetEngineContext,
                 cloned,
                 this.localeContext,
                 this.providerContext

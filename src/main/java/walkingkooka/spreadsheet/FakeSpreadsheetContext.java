@@ -23,6 +23,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -52,6 +53,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetEngineContext spreadsheetEngineContext() {
         throw new UnsupportedOperationException();
     }
 
