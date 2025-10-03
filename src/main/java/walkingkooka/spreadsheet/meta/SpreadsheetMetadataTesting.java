@@ -69,6 +69,7 @@ import walkingkooka.storage.FakeStorageContext;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.terminal.TerminalId;
 import walkingkooka.test.Testing;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
@@ -438,6 +439,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
+        TerminalId.with(1),
         Printers.sink(LineEnding.NONE)
     );
 
