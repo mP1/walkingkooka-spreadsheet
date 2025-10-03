@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HasNotFoundTextTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
@@ -38,7 +39,6 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
-import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.CharacterConstant;

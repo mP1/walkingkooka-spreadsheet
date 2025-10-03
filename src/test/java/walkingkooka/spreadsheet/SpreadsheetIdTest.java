@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HasNotFoundTextTesting;
 import walkingkooka.ToStringTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.store.HasNotFoundTextTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;

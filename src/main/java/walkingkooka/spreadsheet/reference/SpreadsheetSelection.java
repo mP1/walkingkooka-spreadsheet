@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.HasNotFoundText;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
@@ -46,7 +47,6 @@ import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
-import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.HasNotFoundText;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
@@ -27,7 +28,6 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
-import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
