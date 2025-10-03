@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -346,6 +347,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public Form<SpreadsheetExpressionReference> form() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public TerminalId terminalId() {
         throw new UnsupportedOperationException();
     }
 
