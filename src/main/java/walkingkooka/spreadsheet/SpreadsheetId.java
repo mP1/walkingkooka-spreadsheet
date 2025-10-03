@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.HasId;
+import walkingkooka.HasNotFoundText;
 import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.store.HasNotFoundText;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
