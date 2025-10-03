@@ -2095,7 +2095,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 "isColumnOrColumnRange",
                 "isExternalReference",
                 "isRowOrRowRange",
-                "isUnit"
+                "isUnit",
+                "isEmpty", // CanBeEmpty
+                "isNotEmpty" // CanBeEmpty
             )
         );
     }
