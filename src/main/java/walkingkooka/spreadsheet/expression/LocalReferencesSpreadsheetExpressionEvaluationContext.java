@@ -330,27 +330,24 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
 
     @Override
     public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final SpreadsheetExpressionEvaluationContext before = this.context;
-        final SpreadsheetExpressionEvaluationContext after = before.setObjectPostProcessor(processor);
-
-        return before.equals(after) ?
-            this :
-            new LocalReferencesSpreadsheetExpressionEvaluationContext(
-                this.localReferenceToValues,
-                after
-            );
+        return this.setSpreadsheetExpressionEvaluationContext(
+            this.context.setObjectPostProcessor(processor)
+        );
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetExpressionEvaluationContext before = this.context;
-        final SpreadsheetExpressionEvaluationContext after = before.setPreProcessor(processor);
+        return this.setSpreadsheetExpressionEvaluationContext(
+            this.context.setPreProcessor(processor)
+        );
+    }
 
-        return before.equals(after) ?
+    private SpreadsheetExpressionEvaluationContext setSpreadsheetExpressionEvaluationContext(final SpreadsheetExpressionEvaluationContext context) {
+        return this.context.equals(context) ?
             this :
             new LocalReferencesSpreadsheetExpressionEvaluationContext(
                 this.localReferenceToValues,
-                after
+                context
             );
     }
 
