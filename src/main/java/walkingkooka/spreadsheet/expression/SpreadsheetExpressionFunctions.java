@@ -31,6 +31,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfo;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -79,7 +80,7 @@ public final class SpreadsheetExpressionFunctions implements PublicStaticHelper 
     }
 
     /**
-     * {@link ExpressionFunctionInfoSet#setElements(Set)}
+     * {@link ExpressionFunctionInfoSet#setElements(Collection)}.
      */
     public static ExpressionFunctionInfoSet infoSet(final Set<ExpressionFunctionInfo> infos) {
         return EMPTY_INFO_SET.setElements(infos);

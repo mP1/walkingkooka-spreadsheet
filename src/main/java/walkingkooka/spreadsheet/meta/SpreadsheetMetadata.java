@@ -1140,7 +1140,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // SpreadsheetFormatter.............................................................................................
 
     /**
-     * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
+     * Creates a {@link SpreadsheetFormatter} that creates a single formatter that formats values using {@link SpreadsheetFormatters#automatic(SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter, SpreadsheetFormatter)}
      */
     public final SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterProvider spreadsheetFormatterProvider,
                                                            final ProviderContext context) {
