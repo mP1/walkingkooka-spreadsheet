@@ -244,8 +244,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
             throw new IllegalArgumentException("Invalid metadata id " + newId + " is different from " + oldId);
         }
 
-        final SpreadsheetStoreRepository repo = this.spreadsheetStoreRepository;
-        this.spreadsheetMetadata = repo.metadatas()
+        this.spreadsheetMetadata = this.spreadsheetStoreRepository.metadatas()
             .save(metadata);
         // TODO maybe should clear parsed cell formulas.
     }

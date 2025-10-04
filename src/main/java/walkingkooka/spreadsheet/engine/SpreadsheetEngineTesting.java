@@ -301,19 +301,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                               final Object value,
                                               final String formattedValueText,
                                               final String errorContains) {
-        final SpreadsheetCell spreadsheetCell1 = this.loadCellOrFail(
+        final SpreadsheetCell spreadsheetCell = this.loadCellOrFail(
             engine,
             cell,
             evaluation,
             context
         );
         this.cellFormulaErrorOrValueAndCheck(
-            spreadsheetCell1,
+            spreadsheetCell,
             value
         );
-        final SpreadsheetCell spreadsheetCell = spreadsheetCell1;
 
-        this.cellFormattedValueAndCheck(spreadsheetCell, formattedValueText);
+        this.cellFormattedValueAndCheck(
+            spreadsheetCell,
+            formattedValueText
+        );
 
         if (null != errorContains) {
             final SpreadsheetFormula formula = spreadsheetCell.formula();
