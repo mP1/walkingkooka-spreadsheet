@@ -221,7 +221,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     /**
      * The cached router for this spreadsheet.
      */
-    private Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
+    private final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
 
     // EnvironmentContextDelegator......................................................................................
 
@@ -295,7 +295,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         return this.localeContext;
     }
 
-    private LocaleContext localeContext;
+    private final LocaleContext localeContext;
 
     // HasProviderContext...............................................................................................
 
