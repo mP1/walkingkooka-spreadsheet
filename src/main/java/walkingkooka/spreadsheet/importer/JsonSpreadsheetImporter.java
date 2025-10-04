@@ -62,15 +62,13 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
         final MediaType contentType = cells.contentType()
             .orElse(null);
 
-        return null != contentType &&
-            (SpreadsheetMediaTypes.JSON_CELL.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMULA.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMATTER.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_PARSER.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_STYLE.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType) ||
-                SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType)
-            );
+        return SpreadsheetMediaTypes.JSON_CELL.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_FORMULA.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_FORMATTER.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_PARSER.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_STYLE.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType);
     }
 
     @Override
