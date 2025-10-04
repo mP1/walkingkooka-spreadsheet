@@ -30,7 +30,10 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -144,6 +147,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext() {
         return this;
+    }
+
+    @Override
+    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        throw new UnsupportedOperationException();
     }
 
     // HasSpreadsheetServerUrl..........................................................................................

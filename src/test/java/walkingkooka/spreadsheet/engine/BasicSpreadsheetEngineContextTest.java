@@ -40,9 +40,12 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -1573,6 +1576,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
             throw new UnsupportedOperationException();
         }
 

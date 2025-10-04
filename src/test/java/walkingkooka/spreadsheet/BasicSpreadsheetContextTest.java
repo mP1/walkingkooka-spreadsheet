@@ -30,8 +30,11 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -62,6 +65,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -80,6 +84,10 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.fake();
 
     private final Function<SpreadsheetContext, SpreadsheetEngineContext> SPREADSHEET_ENGINE_CONTEXT_FACTORY = (SpreadsheetContext c) -> {
+        throw new UnsupportedOperationException();
+    };
+
+    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -115,6 +123,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -132,6 +141,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -149,6 +159,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 null,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -166,6 +177,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 REPO,
                 null,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -182,6 +194,25 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
+                null,
+                HTTP_ROUTER_FACTORY,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullHttpRouterFactoryFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
+                ID,
+                REPO,
+                SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -200,6 +231,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 null,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
@@ -217,6 +249,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -234,6 +267,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 null
@@ -523,6 +557,12 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 ValidatorProviders.empty()
             ),
             (c) -> SpreadsheetEngineContexts.fake(),
+            (c) -> new Router<>() {
+                @Override
+                public Optional<HttpHandler> route(final Map<HttpRequestAttribute<?>, Object> attributes) {
+                    throw new UnsupportedOperationException();
+                }
+            },
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LOCALE,

@@ -25,7 +25,10 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -49,6 +52,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                         final SpreadsheetStoreRepository storeRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+                                        final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext) {
@@ -59,6 +63,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
             Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory"),
             null, // SpreadsheetEngineContext will created later in ctor
+            Objects.requireNonNull(httpRouterFactory, "httpRouterFactory"),
+            null, // HttpRouter
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext"),
             Objects.requireNonNull(providerContext, "providerContext")
@@ -71,6 +77,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                     final SpreadsheetEngineContext spreadsheetEngineContext,
+                                    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
+                                    final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter,
                                     final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext,
                                     final ProviderContext providerContext) {
@@ -93,6 +101,10 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.spreadsheetEngineContext = null != spreadsheetEngineContextFactory ?
             spreadsheetEngineContextFactory.apply(this) :
             spreadsheetEngineContext;
+
+        this.httpRouter = null == httpRouter ?
+            httpRouterFactory.apply(this.spreadsheetEngineContext) :
+            httpRouter;
     }
 
     @Override
@@ -201,6 +213,16 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     private final SpreadsheetEngineContext spreadsheetEngineContext;
 
+    @Override
+    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        return this.httpRouter;
+    }
+
+    /**
+     * The cached router for this spreadsheet.
+     */
+    private Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override
@@ -217,6 +239,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                 this.spreadsheetProvider,
                 null, // SpreadsheetEngineContextFactory
                 this.spreadsheetEngineContext,
+                null, // HttpRouterFactory
+                this.httpRouter,
                 cloned,
                 this.localeContext,
                 this.providerContext

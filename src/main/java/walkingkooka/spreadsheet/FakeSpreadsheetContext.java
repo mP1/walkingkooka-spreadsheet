@@ -22,7 +22,10 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
@@ -58,6 +61,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
         throw new UnsupportedOperationException();
     }
 

@@ -50,7 +50,10 @@ import walkingkooka.math.MathTesting;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -578,6 +581,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
             throw new UnsupportedOperationException();
         }
 
