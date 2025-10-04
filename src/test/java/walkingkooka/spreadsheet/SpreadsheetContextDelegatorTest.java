@@ -21,9 +21,6 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.http.server.HttpHandler;
-import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -56,11 +53,6 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
             throw new UnsupportedOperationException();
         }
 
