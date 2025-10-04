@@ -18,11 +18,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.http.server.HttpHandler;
-import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -35,11 +32,6 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
     final static class TestSpreadsheetEngineContextDelegator implements SpreadsheetEngineContextDelegator {
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
             throw new UnsupportedOperationException();
         }
 

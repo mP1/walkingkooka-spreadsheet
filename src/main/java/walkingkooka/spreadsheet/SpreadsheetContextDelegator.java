@@ -24,7 +24,10 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
@@ -57,6 +60,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default SpreadsheetStoreRepository storeRepository() {
         return this.spreadsheetContext()
             .storeRepository();
+    }
+
+    @Override
+    default Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        return this.spreadsheetContext()
+            .httpRouter();
     }
 
     // EnvironmentContextDelegator......................................................................................
