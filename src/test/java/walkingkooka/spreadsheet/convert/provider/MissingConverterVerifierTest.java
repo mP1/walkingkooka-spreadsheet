@@ -152,10 +152,9 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
     private void verifyAndCheck(final SpreadsheetMetadataPropertyName<ConverterSelector> propertyName,
                                 final MissingConverter... expected) {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
         this.verifyAndCheck(
             propertyName,
-            metadata.getOrFail(propertyName),
+            SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(propertyName),
             SpreadsheetMetadataTesting.CONVERTER_PROVIDER,
             expected
         );

@@ -247,9 +247,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
             new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)
         );
 
-        final String one = arabicDigits(1);
-
-        final String text = one;
+        final String text = arabicDigits(1);
 
         this.parseAndCheck(
             this.createParser("0"),
@@ -263,7 +261,10 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
             text,
             SpreadsheetFormulaParserToken.number(
                 Lists.of(
-                    SpreadsheetFormulaParserToken.digits(one, one)
+                    SpreadsheetFormulaParserToken.digits(
+                        text,
+                        text
+                    )
                 ),
                 text
             ),

@@ -3250,13 +3250,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testToStringWithTextStyle() {
-        final TextStyle boldAndItalics = BOLD_ITALICS;
-
         this.toStringAndCheck(
             SpreadsheetCell.with(
                 REFERENCE,
                 this.formula()
-            ).setStyle(boldAndItalics),
+            ).setStyle(BOLD_ITALICS),
             "A1 =1+2 {font-style=ITALIC, font-weight=bold}"
         );
     }
