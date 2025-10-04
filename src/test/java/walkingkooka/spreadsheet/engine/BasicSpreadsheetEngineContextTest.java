@@ -100,6 +100,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
@@ -1462,7 +1463,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 }
 
                 @Override
-                public Storage storage() {
+                public Storage<StorageExpressionEvaluationContext> storage() {
                     return Storages.fake();
                 }
             },
