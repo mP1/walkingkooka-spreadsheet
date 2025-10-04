@@ -22,6 +22,9 @@ import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
@@ -65,6 +68,11 @@ final class BasicSpreadsheetEngineSpreadsheetEngineContext implements Spreadshee
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext() {
         return this;
+    }
+
+    @Override
+    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        throw new UnsupportedOperationException();
     }
 
     // SpreadsheetEngineContext.........................................................................................

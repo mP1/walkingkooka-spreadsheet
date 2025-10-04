@@ -22,7 +22,10 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.HttpHandler;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.HasProviderContext;
+import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -64,6 +67,11 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
      * Getter that returns a cached {@link SpreadsheetEngineContext}, belonging to this {@link SpreadsheetId}.
      */
     SpreadsheetEngineContext spreadsheetEngineContext();
+
+    /**
+     * Returns the {@link Router} for this spreadsheet.
+     */
+    Router<HttpRequestAttribute<?>, HttpHandler> httpRouter();
 
     // EnvironmentContext...............................................................................................
 
