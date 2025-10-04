@@ -304,7 +304,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                            final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetRowStore rows,
-                           final Storage storage,
+                           final Storage<StorageExpressionEvaluationContext> storage,
                            final SpreadsheetUserStore users) {
         assertThrows(
             NullPointerException.class,
@@ -339,7 +339,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetMetadataStore metadatas = this.metadatas();
         final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetRowStore rows = this.rows();
-        final Storage storage = this.storage();
+        final Storage<StorageExpressionEvaluationContext> storage = this.storage();
         final SpreadsheetUserStore users = this.users();
 
         this.toStringAndCheck(
