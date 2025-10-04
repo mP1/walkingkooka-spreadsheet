@@ -56,12 +56,9 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
-import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -87,8 +84,7 @@ import java.util.Set;
 final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
-    JsonNodeMarshallContextDelegator,
-    JsonNodeUnmarshallContextDelegator,
+    JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
     TerminalContextDelegator {
 
@@ -442,49 +438,34 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context;
     }
 
-    // JsonNodeMarshallContextDelegator.................................................................................
+    // JsonNodeMarshallUnmarshallContextDelegator.......................................................................
 
     @Override
     public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final SpreadsheetExpressionEvaluationContext before = this.context;
-        final SpreadsheetExpressionEvaluationContext after = this.context.setObjectPostProcessor(processor);
-
-        return before.equals(after) ?
-            this :
-            new ConverterSpreadsheetExpressionEvaluationContext(
-                this.converter,
-                after
-            );
-    }
-
-    @Override
-    public JsonNodeMarshallContext jsonNodeMarshallContext() {
-        return this.context;
-    }
-
-    // JsonNodeUnmarshallContextDelegator...............................................................................
-
-    @Override
-    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
-        return this.context;
-    }
-
-    @Override
-    public JsonNodeContext jsonNodeContext() {
-        return this.context;
+        return this.setSpreadsheetExpressionEvaluationContext(
+            this.context.setObjectPostProcessor(processor)
+        );
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetExpressionEvaluationContext before = this.context;
-        final SpreadsheetExpressionEvaluationContext after = this.context.setPreProcessor(processor);
+        return this.setSpreadsheetExpressionEvaluationContext(
+            this.context.setPreProcessor(processor)
+        );
+    }
 
-        return before.equals(after) ?
+    private SpreadsheetExpressionEvaluationContext setSpreadsheetExpressionEvaluationContext(final SpreadsheetExpressionEvaluationContext context) {
+        return this.context.equals(context) ?
             this :
             new ConverterSpreadsheetExpressionEvaluationContext(
                 this.converter,
-                after
+                context
             );
+    }
+
+    @Override
+    public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
+        return this;
     }
 
     // LocaleContextDelegator...........................................................................................
