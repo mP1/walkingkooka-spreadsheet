@@ -49,263 +49,316 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<BasicSpreadsheetStoreRepository> {
 
+    private final static SpreadsheetCellStore CELLS = SpreadsheetCellStores.fake();
+
+    private final static SpreadsheetCellReferencesStore CELL_REFERENCES = SpreadsheetCellReferencesStores.fake();
+
+    private final static SpreadsheetColumnStore COLUMNS = SpreadsheetColumnStores.fake();
+
+    private final static SpreadsheetFormStore FORMS = SpreadsheetFormStores.fake();
+
+    private final static SpreadsheetGroupStore GROUPS = SpreadsheetGroupStores.fake();
+
+    private final static SpreadsheetLabelStore LABELS = SpreadsheetLabelStores.fake();
+
+    private final static SpreadsheetLabelReferencesStore LABEL_REFERENCES = SpreadsheetLabelReferencesStores.fake();
+
+    private final static SpreadsheetMetadataStore METADATAS = SpreadsheetMetadataStores.fake();
+
+    private final static SpreadsheetCellRangeStore<SpreadsheetCellReference> RANGE_TO_CELLS = SpreadsheetCellRangeStores.fake();
+
+    private final static SpreadsheetRowStore ROWS = SpreadsheetRowStores.fake();
+
+    private final static Storage<StorageExpressionEvaluationContext> STORAGES = Storages.fake();
+
+    private final static SpreadsheetUserStore USERS = SpreadsheetUserStores.fake();
+
     @Test
     public void testWithNullCellsFails() {
-        this.withFails(
-            null,
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullCellReferencesFails() {
-        this.withFails(
-            this.cells(),
-            null,
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users());
-    }
-
-    @Test
-    public void testWithNullColumnsFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            null,
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users());
-    }
-
-    @Test
-    public void testWithNullFormsFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            null,
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users());
-    }
-
-    @Test
-    public void testWithNullGroupsFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            null,
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users());
-    }
-
-    @Test
-    public void testWithNullLabelsFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            null,
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullLabelReferencesFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            null,
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullMetadatasFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            null,
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullRangeToCellsFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            null,
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullRowsFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            null,
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullStorageFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            null,
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullUserFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            null
-        );
-    }
-
-    private void withFails(final SpreadsheetCellStore cells,
-                           final SpreadsheetCellReferencesStore cellReferences,
-                           final SpreadsheetColumnStore columns,
-                           final SpreadsheetFormStore forms,
-                           final SpreadsheetGroupStore groups,
-                           final SpreadsheetLabelStore labels,
-                           final SpreadsheetLabelReferencesStore labelReferences,
-                           final SpreadsheetMetadataStore metadatas,
-                           final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
-                           final SpreadsheetRowStore rows,
-                           final Storage<StorageExpressionEvaluationContext> storage,
-                           final SpreadsheetUserStore users) {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetStoreRepository.with(
-                cells,
-                cellReferences,
-                columns,
-                forms,
-                groups,
-                labels,
-                labelReferences,
-                metadatas,
-                rangeToCells,
-                rows,
-                storage,
-                users
+                null,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
             )
         );
     }
 
     @Test
+    public void testWithNullCellReferencesFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                null,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullColumnsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                null,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullFormsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                null,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullGroupsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                null,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                null,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLabelReferencesFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                null,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullMetadatasFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                null,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullRangeToCellsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                null,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullRowsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                null,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullStorageFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                null,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullUserFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                null
+            )
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetStoreRepository createStoreRepository() {
+        return BasicSpreadsheetStoreRepository.with(
+            CELLS,
+            CELL_REFERENCES,
+            COLUMNS,
+            FORMS,
+            GROUPS,
+            LABELS,
+            LABEL_REFERENCES,
+            METADATAS,
+            RANGE_TO_CELLS,
+            ROWS,
+            STORAGES,
+            USERS
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
     public void testToString() {
-        final SpreadsheetCellStore cells = this.cells();
-        final SpreadsheetCellReferencesStore cellReferences = this.cellReferences();
-        final SpreadsheetColumnStore columns = this.columns();
-        final SpreadsheetFormStore forms = this.forms();
-        final SpreadsheetGroupStore groups = this.groups();
-        final SpreadsheetLabelStore labels = this.labels();
-        final SpreadsheetLabelReferencesStore labelReferences = this.labelReferences();
-        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
-        final SpreadsheetMetadataStore metadatas = this.metadatas();
-        final SpreadsheetRowStore rows = this.rows();
-        final Storage<StorageExpressionEvaluationContext> storage = this.storage();
-        final SpreadsheetUserStore users = this.users();
+        final SpreadsheetCellStore cells = CELLS;
+        final SpreadsheetCellReferencesStore cellReferences = CELL_REFERENCES;
+        final SpreadsheetColumnStore columns = COLUMNS;
+        final SpreadsheetFormStore forms = FORMS;
+        final SpreadsheetGroupStore groups = GROUPS;
+        final SpreadsheetLabelStore labels = LABELS;
+        final SpreadsheetLabelReferencesStore labelReferences = LABEL_REFERENCES;
+        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = RANGE_TO_CELLS;
+        final SpreadsheetMetadataStore metadatas = METADATAS;
+        final SpreadsheetRowStore rows = ROWS;
+        final Storage<StorageExpressionEvaluationContext> storage = STORAGES;
+        final SpreadsheetUserStore users = USERS;
 
         this.toStringAndCheck(
             BasicSpreadsheetStoreRepository.with(
@@ -325,80 +378,12 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + storage + " " + users);
     }
 
-    @Override
-    public BasicSpreadsheetStoreRepository createStoreRepository() {
-        return BasicSpreadsheetStoreRepository.with(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    private SpreadsheetCellStore cells() {
-        return SpreadsheetCellStores.fake();
-    }
-
-    private SpreadsheetCellReferencesStore cellReferences() {
-        return SpreadsheetCellReferencesStores.fake();
-    }
-
-    private SpreadsheetColumnStore columns() {
-        return SpreadsheetColumnStores.fake();
-    }
-
-    private SpreadsheetFormStore forms() {
-        return SpreadsheetFormStores.fake();
-    }
-
-    private SpreadsheetGroupStore groups() {
-        return SpreadsheetGroupStores.fake();
-    }
-
-    private SpreadsheetLabelStore labels() {
-        return SpreadsheetLabelStores.fake();
-    }
-
-    private SpreadsheetLabelReferencesStore labelReferences() {
-        return SpreadsheetLabelReferencesStores.fake();
-    }
-
-    private SpreadsheetMetadataStore metadatas() {
-        return SpreadsheetMetadataStores.fake();
-    }
-
-    private SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
-        return SpreadsheetCellRangeStores.fake();
-    }
-
-    private SpreadsheetRowStore rows() {
-        return SpreadsheetRowStores.fake();
-    }
-
-    private Storage<StorageExpressionEvaluationContext> storage() {
-        return Storages.fake();
-    }
-
-    private SpreadsheetUserStore users() {
-        return SpreadsheetUserStores.fake();
-    }
-
-    // ClassTesting.....................................................................................................
+    // class............................................................................................................
 
     @Override
     public Class<BasicSpreadsheetStoreRepository> type() {
         return BasicSpreadsheetStoreRepository.class;
     }
-
-    // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNamePrefix() {
