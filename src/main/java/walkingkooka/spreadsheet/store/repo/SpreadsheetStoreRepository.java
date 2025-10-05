@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
@@ -84,11 +83,6 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetCellRangeStore} that maps ranges to cells
      */
     SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells();
-
-    /**
-     * A {@link SpreadsheetCellRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
-     */
-    SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules();
 
     /**
      * A {@link SpreadsheetRowStore} holding rows.

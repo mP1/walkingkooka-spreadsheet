@@ -18595,7 +18595,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetLabelReferencesStores.treeMap(),
                                 SpreadsheetMetadataStores.fake(),
                                 SpreadsheetCellRangeStores.treeMap(),
-                                SpreadsheetCellRangeStores.treeMap(),
                                 SpreadsheetRowStores.treeMap(),
                                 Storages.empty(),
                                 SpreadsheetUserStores.fake()
@@ -25460,7 +25459,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetLabelReferencesStores.treeMap(),
                 SpreadsheetMetadataStores.fake(),
                 SpreadsheetCellRangeStores.treeMap(),
-                SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetRowStores.treeMap(),
                 Storages.fake(),
                 SpreadsheetUserStores.fake()
@@ -25853,7 +25851,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetLabelStores.treeMap(),
             SpreadsheetLabelReferencesStores.treeMap(),
             SpreadsheetMetadataStores.fake(),
-            SpreadsheetCellRangeStores.treeMap(),
             SpreadsheetCellRangeStores.treeMap(),
             SpreadsheetRowStores.treeMap(),
             Storages.fake(),

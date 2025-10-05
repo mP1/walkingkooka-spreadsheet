@@ -62,11 +62,6 @@ public interface SpreadsheetStoreRepositoryTesting<S extends SpreadsheetStoreRep
     }
 
     @Test
-    default void testRangeToConditionalFormattingRules() {
-        assertNotNull(this.createStoreRepository().rangeToConditionalFormattingRules());
-    }
-
-    @Test
     default void testUsers() {
         assertNotNull(this.createStoreRepository().users());
     }
