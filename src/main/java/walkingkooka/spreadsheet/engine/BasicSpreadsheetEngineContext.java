@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
@@ -38,7 +37,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -74,7 +72,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
@@ -413,53 +410,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             );
         }
 
-        return this.applyConditionalRules(
-            formattedCell.setFormattedValue(formatted)
-        );
-    }
-
-    /**
-     * Locates and formats the cell using any matching conditional formatting rules.
-     */
-    private SpreadsheetCell applyConditionalRules(final SpreadsheetCell cell) {
-        SpreadsheetCell formatted = cell;
-
-        // load rules for cell
-        final Set<SpreadsheetConditionalFormattingRule> rules = SortedSets.tree(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
-        rules.addAll(
-            this.storeRepository()
-                .rangeToConditionalFormattingRules()
-                .findValuesWithCell(cell.reference())
-        );
-
-        // apply them
-        for (final SpreadsheetConditionalFormattingRule rule : rules) {
-            final boolean ruleResult = rule.formula()
-                .expression()
-                .get()
-                .toBoolean(
-                    this.spreadsheetExpressionEvaluationContext(
-                        Optional.of(
-                            cell
-                        ),
-                        SpreadsheetExpressionReferenceLoaders.fake() ///
-                    )
-                );
-
-            if (Boolean.TRUE.equals(ruleResult)) {
-                final TextNode formattedText = cell.formattedValue()
-                    .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formattedValue cell=" + cell));
-                formatted = formatted.setFormattedValue(
-                    Optional.of(
-                        rule.style()
-                            .apply(cell)
-                            .replace(formattedText)
-                    )
-                );
-                break;
-            }
-        }
-        return formatted;
+        return formattedCell.setFormattedValue(formatted);
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {

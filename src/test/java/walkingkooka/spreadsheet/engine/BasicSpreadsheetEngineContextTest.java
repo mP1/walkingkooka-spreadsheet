@@ -50,7 +50,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
-import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -117,8 +116,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextStyle;
-import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -804,56 +801,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             cell.setFormattedValue(
                 Optional.of(
                     TextNode.text("CURR1:00")
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testFormatValueAndStyleWithConditionalFormattingRule() {
-        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("1")
-                .setValue(
-                    Optional.of(1)
-                )
-        );
-        final TextStyle style = TextStyle.EMPTY.set(
-            TextStylePropertyName.BACKGROUND_COLOR,
-            Color.parse("#123456")
-        );
-
-        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
-
-        rangeToConditionalFormattingRules.addValue(
-            SpreadsheetSelection.A1.toCellRange(),
-            SpreadsheetConditionalFormattingRule.with(
-                SpreadsheetDescription.with("Test Description"),
-                1,
-                SpreadsheetFormula.EMPTY.setText("=true()")
-                    .setExpression(
-                        Optional.of(
-                            Expression.value(true)
-                        )
-                    ),
-                (c) -> style
-            )
-        );
-
-        this.formatAndStyleAndCheck(
-            this.createContext(
-                METADATA,
-                SpreadsheetLabelStores.fake(),
-                rangeToConditionalFormattingRules
-            ),
-            cell,
-            SpreadsheetPattern.parseNumberFormatPattern("$#.00")
-                .spreadsheetFormatterSelector(),
-            cell.setFormattedValue(
-                Optional.of(
-                    TextNode.text("CURR1:00")
-                        .setAttributes(
-                            style.value()
-                        )
                 )
             )
         );
