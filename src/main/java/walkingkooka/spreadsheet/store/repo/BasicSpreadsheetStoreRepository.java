@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
@@ -50,7 +49,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetLabelReferencesStore labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
-                                                final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                                 final SpreadsheetRowStore rows,
                                                 final Storage<StorageExpressionEvaluationContext> storage,
                                                 final SpreadsheetUserStore users) {
@@ -63,7 +61,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(labelReferences, "labelReferences");
         Objects.requireNonNull(metadatas, "metadatas");
         Objects.requireNonNull(rangeToCells, "rangeToCells");
-        Objects.requireNonNull(rangeToConditionalFormattingRules, "rangeToConditionalFormattingRules");
         Objects.requireNonNull(rows, "rows");
         Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(users, "users");
@@ -78,7 +75,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             labelReferences,
             metadatas,
             rangeToCells,
-            rangeToConditionalFormattingRules,
             rows,
             storage,
             users
@@ -94,7 +90,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetLabelReferencesStore labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
-                                            final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                             final SpreadsheetRowStore rows,
                                             final Storage<StorageExpressionEvaluationContext> storage,
                                             final SpreadsheetUserStore users) {
@@ -107,7 +102,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         this.labelReferences = labelReferences;
         this.metadatas = metadatas;
         this.rangeToCells = rangeToCells;
-        this.rangeToConditionalFormattingRules = rangeToConditionalFormattingRules;
         this.rows = rows;
         this.storage = storage;
         this.users = users;
@@ -177,13 +171,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells;
 
     @Override
-    public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
-        return this.rangeToConditionalFormattingRules;
-    }
-
-    private final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules;
-
-    @Override
     public SpreadsheetRowStore rows() {
         return this.rows;
     }
@@ -215,7 +202,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.labelReferences + " " +
             this.metadatas + " " +
             this.rangeToCells + " " +
-            this.rangeToConditionalFormattingRules + " " +
             this.rows + " " +
             this.storage + " " +
             this.users;

@@ -252,7 +252,6 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
                 SpreadsheetLabelReferencesStores.treeMap(),
                 metadatas,
                 SpreadsheetCellRangeStores.treeMap(),
-                SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetRowStores.treeMap(),
                 Storages.tree(),
                 SpreadsheetUserStores.treeMap()

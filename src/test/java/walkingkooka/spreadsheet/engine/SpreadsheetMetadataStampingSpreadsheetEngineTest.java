@@ -27,7 +27,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -419,7 +418,6 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetLabelReferencesStore labelReferences = SpreadsheetLabelReferencesStores.treeMap();
         final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap();
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = SpreadsheetCellRangeStores.treeMap();
-        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = SpreadsheetCellRangeStores.treeMap();
         final SpreadsheetRowStore rows = SpreadsheetRowStores.treeMap();
 
         metadatas.save(BEFORE);
@@ -470,11 +468,6 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                     }
 
                     @Override
-                    public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
-                        return rangeToConditionalFormattingRules;
-                    }
-
-                    @Override
                     public SpreadsheetRowStore rows() {
                         return rows;
                     }
@@ -488,7 +481,6 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                             " labelReferences: " + this.labelReferences() +
                             " metadatas: " + this.metadatas() +
                             " rangeToCells: " + this.rangeToCells() +
-                            " rangeToConditionalFormattingRules: " + this.rangeToConditionalFormattingRules() +
                             " rows: " + this.rows();
                     }
                 };

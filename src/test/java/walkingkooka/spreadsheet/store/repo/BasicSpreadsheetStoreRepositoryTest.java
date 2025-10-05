@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -62,7 +61,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users()
@@ -81,7 +79,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users());
@@ -99,7 +96,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users());
@@ -117,7 +113,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users());
@@ -135,7 +130,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users());
@@ -153,7 +147,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users()
@@ -172,7 +165,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             null,
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users()
@@ -191,7 +183,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             null,
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users()
@@ -209,26 +200,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labels(),
             this.labelReferences(),
             this.metadatas(),
-            null,
-            this.rangeToConditionalFormattingRules(),
-            this.rows(),
-            this.storage(),
-            this.users()
-        );
-    }
-
-    @Test
-    public void testWithNullRangeToConditionalFormattingRulesFails() {
-        this.withFails(
-            this.cells(),
-            this.cellReferences(),
-            this.columns(),
-            this.forms(),
-            this.groups(),
-            this.labels(),
-            this.labelReferences(),
-            this.metadatas(),
-            this.rangeToCells(),
             null,
             this.rows(),
             this.storage(),
@@ -248,7 +219,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             null,
             this.storage(),
             this.users()
@@ -267,7 +237,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             null,
             this.users()
@@ -286,7 +255,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             null
@@ -302,7 +270,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final SpreadsheetLabelReferencesStore labelReferences,
                            final SpreadsheetMetadataStore metadatas,
                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
-                           final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetRowStore rows,
                            final Storage<StorageExpressionEvaluationContext> storage,
                            final SpreadsheetUserStore users) {
@@ -318,7 +285,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 labelReferences,
                 metadatas,
                 rangeToCells,
-                rangeToConditionalFormattingRules,
                 rows,
                 storage,
                 users
@@ -337,7 +303,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetLabelReferencesStore labelReferences = this.labelReferences();
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
         final SpreadsheetMetadataStore metadatas = this.metadatas();
-        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetRowStore rows = this.rows();
         final Storage<StorageExpressionEvaluationContext> storage = this.storage();
         final SpreadsheetUserStore users = this.users();
@@ -353,12 +318,11 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 labelReferences,
                 metadatas,
                 rangeToCells,
-                rangeToConditionalFormattingRules,
                 rows,
                 storage,
                 users
             ),
-            cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + rows + " " + storage + " " + users);
+            cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + storage + " " + users);
     }
 
     @Override
@@ -373,7 +337,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             this.labelReferences(),
             this.metadatas(),
             this.rangeToCells(),
-            this.rangeToConditionalFormattingRules(),
             this.rows(),
             this.storage(),
             this.users()
@@ -413,10 +376,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     }
 
     private SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
-        return SpreadsheetCellRangeStores.fake();
-    }
-
-    private SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         return SpreadsheetCellRangeStores.fake();
     }
 

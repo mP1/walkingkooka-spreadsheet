@@ -468,7 +468,6 @@ public class TestGwtTest extends GWTTestCase {
                     SpreadsheetLabelReferencesStores.treeMap(),
                     SpreadsheetMetadataStores.fake(),
                     SpreadsheetCellRangeStores.treeMap(),
-                    SpreadsheetCellRangeStores.treeMap(),
                     SpreadsheetRowStores.treeMap(),
                     Storages.tree(),
                     SpreadsheetUserStores.fake()

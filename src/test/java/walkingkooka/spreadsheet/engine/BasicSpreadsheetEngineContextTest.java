@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -83,7 +82,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -732,8 +730,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.formatAndStyleAndCheck(
             this.createContext(
                 METADATA,
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetCellRangeStores.treeMap()
+                SpreadsheetLabelStores.fake()
             ),
             cell,
             formatter,
@@ -766,8 +763,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.formatAndStyleAndCheck(
             this.createContext(
                 METADATA,
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetCellRangeStores.treeMap()
+                SpreadsheetLabelStores.fake()
             ),
             cell,
             SpreadsheetPattern.parseNumberFormatPattern("#.00")
@@ -792,8 +788,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.formatAndStyleAndCheck(
             this.createContext(
                 METADATA,
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetCellRangeStores.treeMap()
+                SpreadsheetLabelStores.fake()
             ),
             cell,
             SpreadsheetPattern.parseNumberFormatPattern("$#.00")
@@ -1334,7 +1329,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     SpreadsheetLabelReferencesStores.treeMap(),
                     SpreadsheetMetadataStores.fake(),
                     SpreadsheetCellRangeStores.treeMap(),
-                    SpreadsheetCellRangeStores.treeMap(),
                     SpreadsheetRowStores.treeMap(),
                     Storages.fake(),
                     SpreadsheetUserStores.fake()
@@ -1356,16 +1350,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final SpreadsheetLabelStore labelStore) {
-        return this.createContext(
-            metadata,
-            labelStore,
-            SpreadsheetCellRangeStores.fake()
-        );
-    }
-
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetLabelStore labelStore,
-                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
         final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
         cells.save(
             LOAD_CELL_REFERENCE.setFormula(
@@ -1380,16 +1364,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(
             metadata,
             cells,
-            labelStore,
-            rangeToConditionalFormattingRules
+            labelStore
         );
     }
 
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
                                                         final SpreadsheetCellStore cellStore,
-                                                        final SpreadsheetLabelStore labelStore,
-                                                        final SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules) {
+                                                        final SpreadsheetLabelStore labelStore) {
         return this.createContext(
             metadata,
             new FakeSpreadsheetStoreRepository() {
@@ -1397,11 +1379,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 @Override
                 public SpreadsheetCellStore cells() {
                     return cellStore;
-                }
-
-                @Override
-                public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
-                    return rangeToConditionalFormattingRules;
                 }
 
                 @Override

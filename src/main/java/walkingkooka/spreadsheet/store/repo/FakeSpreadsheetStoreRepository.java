@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
@@ -82,11 +81,6 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     @Override
     public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetCellRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         throw new UnsupportedOperationException();
     }
 
