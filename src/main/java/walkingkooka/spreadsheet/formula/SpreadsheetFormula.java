@@ -369,6 +369,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     /**
      * Returns any value that is present, first using any {@link #error()} or {@link #value()}.
+     * Note that any {@link ValidationChoiceList} will be filtered or ignored and never returned.
      */
     public Optional<Object> errorOrValue() {
         // GWT's Optional#or is not implemented.
