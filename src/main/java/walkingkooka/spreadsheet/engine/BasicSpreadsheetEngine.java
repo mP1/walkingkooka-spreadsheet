@@ -1606,20 +1606,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                                final SpreadsheetEngineEvaluation evaluation,
                                                                final SpreadsheetExpressionReferenceLoader loader,
                                                                final SpreadsheetEngineContext context) {
-        final SpreadsheetCell afterParse = this.parseFormulaIfNecessary(
+        final SpreadsheetCell formulaParsed = this.parseFormulaIfNecessary(
             cell,
             Function.identity(),
             context
         );
 
-        return afterParse.formula().error().isPresent() ?
-            afterParse :
-            this.evaluateValidateFormatAndStyle(
-                afterParse,
-                evaluation,
-                loader,
-                context
-            );
+        return this.evaluateValidateFormatAndStyle(
+            formulaParsed,
+            evaluation,
+            loader,
+            context
+        );
     }
 
     // PARSE FORMULA....................................................................................................
