@@ -6004,6 +6004,134 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellParserReformats() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setText("01/02/03");
+
+        LocalDate value = LocalDate.of(2003, 2, 1);
+
+        SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+            .setFormatter(
+                Optional.of(
+                    SpreadsheetFormatterSelector.parse("date-format-pattern d/mmmm/yyyy")
+                )
+            ).setParser(
+                Optional.of(
+                    SpreadsheetParserSelector.parse("date-parse-pattern d/m/yy")
+                )
+            ).setStyle(STYLE);
+
+        SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
+            a1Formula.setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.dayNumber(1, "01"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthNumber(2, "02"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.year(3, "03")
+                        ),
+                        "01/02/03"
+                    )
+                )
+            ).setExpression(
+                Optional.of(
+                    Expression.value(value)
+                )
+            ).setValue(
+                Optional.of(value)
+            )
+        ).setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text("1/February/2003")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+
+        a1Cell = a1Cell.setParser(
+            Optional.of(
+                SpreadsheetParserSelector.parse("date-parse-pattern yy/mm/dd")
+            )
+        );
+
+        value = LocalDate.of(2001, 2, 3);
+
+        a1FormattedCell = a1Cell.setFormula(
+            a1Formula.setToken(
+                Optional.of(
+                    SpreadsheetFormulaParserToken.date(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.year(1, "01"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.monthNumber(2, "02"),
+                            SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                            SpreadsheetFormulaParserToken.dayNumber(3, "03")
+                        ),
+                        "01/02/03"
+                    )
+                )
+            ).setExpression(
+                Optional.of(
+                    Expression.value(value)
+                )
+            ).setValue(
+                Optional.of(value)
+            )
+        ).setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text("3/February/2001")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
     public void testSaveCellTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
