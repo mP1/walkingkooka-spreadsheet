@@ -5871,6 +5871,144 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellLocale() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+            Optional.of(value)
+        );
+        final SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+            .setLocale(
+                Optional.of(Locale.FRENCH)
+            ).setStyle(STYLE);
+
+        final SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text("ven./décembre/1999")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellLocaleReformats() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.remove(
+            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
+        ).set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+            Optional.of(value)
+        );
+
+        SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+            .setLocale(
+                Optional.of(LOCALE)
+            ).setStyle(STYLE);
+
+        SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text("Fri./December/1999")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+
+        a1Cell = a1Cell.setFormula(a1Formula)
+            .setDateTimeSymbols(SpreadsheetCell.NO_DATETIME_SYMBOLS)
+            .setDecimalNumberSymbols(SpreadsheetCell.NO_DECIMAL_NUMBER_SYMBOLS)
+            .setLocale(
+                Optional.of(Locale.FRANCE)
+            );
+
+        a1FormattedCell = a1Cell.setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text("ven./décembre/1999")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
     public void testSaveCellTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
