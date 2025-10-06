@@ -5779,6 +5779,98 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellDecimalNumberSymbolsReformats() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(Locale.GERMANY) // ignored
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+            SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+        );
+        final SpreadsheetEngineContext context = this.createContext(metadata);
+
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123.75);
+
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+            Optional.of(value)
+        );
+        SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+            .setDecimalNumberSymbols(
+                Optional.of(
+                    DecimalNumberSymbols.fromDecimalFormatSymbols(
+                        '+',
+                        new DecimalFormatSymbols(Locale.FRANCE)
+                    )
+                )
+            ).setStyle(STYLE);
+
+        SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text(EURO_SYMBOL + "123,75")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+
+        a1Cell = a1Cell.setFormula(a1Formula)
+            .setDecimalNumberSymbols(
+                Optional.of(DECIMAL_NUMBER_SYMBOLS)
+            ).setStyle(STYLE);
+
+        a1FormattedCell = a1Cell.setFormattedValue(
+            Optional.of(
+                STYLE.setChildren(
+                    Lists.of(
+                        TextNode.text("$123.75")
+                    )
+                )
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+    }
+
+    @Test
     public void testSaveCellTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
