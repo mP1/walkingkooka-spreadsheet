@@ -287,6 +287,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         SpreadsheetError error = this;
 
         if (false == this.message.equals(message)) {
+            Objects.requireNonNull(message, "message");
+
             // if message is not empty and kind is SpreadsheetErrorKind#VALIDATION
             SpreadsheetErrorKind kind = this.kind;
             if (false == message.isEmpty() && SpreadsheetErrorKind.VALIDATION == kind) {
@@ -295,7 +297,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
             error = new SpreadsheetError(
                 kind,
-                Objects.requireNonNull(message, "message"),
+                message,
                 this.value
             );
         }
