@@ -2306,7 +2306,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // saveCell.........................................................................................................
 
     @Test
-    public void testSaveCellWithEmptyFormula() {
+    public void testSaveCellFormulaEmpty() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2341,7 +2341,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaSelfReferenceCycle() {
+    public void testSaveCellFormulaSelfReferenceCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2387,7 +2387,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithEmptyFormulaTwice() {
+    public void testSaveCellFormulaEmptyTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2432,7 +2432,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaInvalidDate() {
+    public void testSaveCellFormulaInvalidDate() {
         this.saveCellWithErrorAndCheck(
             "1999/99/31",
             SpreadsheetErrorKind.VALUE.setMessage(
@@ -2442,7 +2442,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaInvalidDateTime() {
+    public void testSaveCellFormulaInvalidDateTime() {
         this.saveCellWithErrorAndCheck(
             "1999/99/31 12:58",
             SpreadsheetErrorKind.VALUE.setMessage("Invalid value for MonthOfYear (valid values 1 - 12): 99")
@@ -2450,7 +2450,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaInvalidTime() {
+    public void testSaveCellFormulaInvalidTime() {
         this.saveCellWithErrorAndCheck(
             "12:99",
             SpreadsheetErrorKind.VALUE.setMessage("Invalid value for MinuteOfHour (valid values 0 - 59): 99")
@@ -2499,7 +2499,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaMathExpression() {
+    public void testSaveCellFormulaMathExpression() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2539,118 +2539,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithIgnoresPreviousErrorComputesValue() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
-
-        final SpreadsheetCell cell = this.cell(
-            b2,
-            SpreadsheetFormula.EMPTY
-                .setText("=1+2")
-                .setValue(
-                    Optional.of(
-                        SpreadsheetErrorKind.VALUE.setMessage("error!")
-                    )
-                )
-        );
-
-        this.saveCellAndCheck(
-            engine,
-            cell,
-            context,
-            SpreadsheetDelta.EMPTY
-                .setCells(
-                    Sets.of(
-                        this.formatCell(
-                            cell,
-                            1 + 2
-                        )
-                    )
-                ).setColumnWidths(
-                    columnWidths("B")
-                ).setRowHeights(
-                    rowHeights("2")
-                ).setColumnCount(
-                    OptionalInt.of(2)
-                ).setRowCount(
-                    OptionalInt.of(2)
-                )
-        );
-    }
-
-    @Test
-    public void testSaveCellWithSecondTimeWithDifferentStyle() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
-
-        final SpreadsheetCell cell = b2.setFormula(
-            SpreadsheetFormula.EMPTY
-                .setText("=1+2")
-        );
-
-        final SpreadsheetCell cellWithValue = this.formatCell(
-            cell,
-            1 + 2,
-            TextStyle.EMPTY
-        );
-
-        this.saveCellAndCheck(
-            engine,
-            cell,
-            context,
-            SpreadsheetDelta.EMPTY
-                .setCells(
-                    Sets.of(
-                        cellWithValue
-                    )
-                ).setColumnWidths(
-                    columnWidths("B")
-                ).setRowHeights(
-                    rowHeights("2")
-                ).setColumnCount(
-                    OptionalInt.of(2)
-                ).setRowCount(
-                    OptionalInt.of(2)
-                )
-        );
-
-        final TextStyle newStyle = TextStyle.EMPTY
-            .set(
-                TextStylePropertyName.COLOR,
-                Color.parse("#123456")
-            );
-
-        this.saveCellAndCheck(
-            engine,
-            cellWithValue.setStyle(newStyle),
-            context,
-            SpreadsheetDelta.EMPTY
-                .setCells(
-                    Sets.of(
-                        this.formatCell(
-                            cell.setStyle(newStyle),
-                            1 + 2,
-                            newStyle
-                        )
-                    )
-                ).setColumnWidths(
-                    columnWidths("B")
-                ).setRowHeights(
-                    rowHeights("2")
-                ).setColumnCount(
-                    OptionalInt.of(2)
-                ).setRowCount(
-                    OptionalInt.of(2)
-                )
-        );
-    }
-
-    @Test
-    public void testSaveCellWithMathExpression() {
+    public void testSaveCellFormulaMathExpression2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2775,7 +2664,118 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMissingCellReference() {
+    public void testSaveCellValueRecomputedPreviouslyWithErrors() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
+
+        final SpreadsheetCell cell = this.cell(
+            b2,
+            SpreadsheetFormula.EMPTY
+                .setText("=1+2")
+                .setValue(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE.setMessage("error!")
+                    )
+                )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        this.formatCell(
+                            cell,
+                            1 + 2
+                        )
+                    )
+                ).setColumnWidths(
+                    columnWidths("B")
+                ).setRowHeights(
+                    rowHeights("2")
+                ).setColumnCount(
+                    OptionalInt.of(2)
+                ).setRowCount(
+                    OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellStyleDifferentSecondTime() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
+
+        final SpreadsheetCell cell = b2.setFormula(
+            SpreadsheetFormula.EMPTY
+                .setText("=1+2")
+        );
+
+        final SpreadsheetCell cellWithValue = this.formatCell(
+            cell,
+            1 + 2,
+            TextStyle.EMPTY
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        cellWithValue
+                    )
+                ).setColumnWidths(
+                    columnWidths("B")
+                ).setRowHeights(
+                    rowHeights("2")
+                ).setColumnCount(
+                    OptionalInt.of(2)
+                ).setRowCount(
+                    OptionalInt.of(2)
+                )
+        );
+
+        final TextStyle newStyle = TextStyle.EMPTY
+            .set(
+                TextStylePropertyName.COLOR,
+                Color.parse("#123456")
+            );
+
+        this.saveCellAndCheck(
+            engine,
+            cellWithValue.setStyle(newStyle),
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(
+                        this.formatCell(
+                            cell.setStyle(newStyle),
+                            1 + 2,
+                            newStyle
+                        )
+                    )
+                ).setColumnWidths(
+                    columnWidths("B")
+                ).setRowHeights(
+                    rowHeights("2")
+                ).setColumnCount(
+                    OptionalInt.of(2)
+                ).setRowCount(
+                    OptionalInt.of(2)
+                )
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaMissingCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2809,7 +2809,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveCellRefreshFirst() {
+    public void testSaveCellFormulaRefreshesReferences() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2877,7 +2877,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveCellReferencesFirst() {
+    public void testSaveCellFormulaWithPreviouslySavedCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -2939,7 +2939,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveCellReferencesFirstLoadBothCellsIndividually() {
+    public void testSaveCellFormulaWithPreviouslySavedCellReference2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3153,7 +3153,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithLabelCycleToSelf() {
+    public void testSaveCellFormulaLabelCycleToSelf() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3198,7 +3198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithLabelToSelf() {
+    public void testSaveCellFormulaLabelToSelf() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3244,7 +3244,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveLabelDifferentCell() {
+    public void testSaveLabelWithExistingCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3309,7 +3309,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithUnknownLabelReference() {
+    public void testSaveCellFormulaUnknownLabelReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3364,7 +3364,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveLabelToMissingCellRefreshesFirstCell() {
+    public void testSaveLabelRefreshesCellWithUknownLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3523,7 +3523,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveCellSaveLabelRefreshesCell() {
+    public void testSaveLabelRefreshesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3622,7 +3622,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithIndirectCycle() {
+    public void testSaveCellFormulaIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -3713,7 +3713,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithDoubleIndirectCycle() {
+    public void testSaveCellFormulaDoubleIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -4368,7 +4368,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // saveCell tests with non expression formula's only value literals.................................................
 
     @Test
-    public void testSaveCellWithFormulaApostropheString() {
+    public void testSaveCellFormulaApostropheString() {
         this.saveCellAndLoadAndFormattedCheck(
             "'Hello",
             "Hello"
@@ -4376,7 +4376,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateLiteral() {
+    public void testSaveCellFormulaDateLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
             "1999/12/31",
             LocalDate.of(1999, 12, 31)
@@ -4384,7 +4384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateLiteralAndArabicDecimalNumberSymbols() {
+    public void testSaveCellFormulaDateLiteralAndArabicDecimalNumberSymbols() {
         this.saveCellAndLoadAndFormattedCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText(
@@ -4407,7 +4407,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateLiteralAndFrenchDateTimeSymbolsAndArabicDecimalNumberSymbols() {
+    public void testSaveCellFormulaDateLiteralAndFrenchDateTimeSymbolsAndArabicDecimalNumberSymbols() {
         this.saveCellAndLoadAndFormattedCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText(
@@ -4430,7 +4430,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateLiteralAndFrenchDateNumberSymbolsAndArabicDecimalNumberSymbols2() {
+    public void testSaveCellFormulaDateLiteralAndFrenchDateNumberSymbolsAndArabicDecimalNumberSymbols2() {
         this.saveCellAndLoadAndFormattedCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText(
@@ -4453,7 +4453,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateTimeLiteral() {
+    public void testSaveCellFormulaDateTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
             "1999/12/31 12:34",
             LocalDateTime.of(
@@ -4464,7 +4464,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaDateTimeLiteralAndArabicDecimalNumberSymbols() {
+    public void testSaveCellFormulaDateTimeLiteralAndArabicDecimalNumberSymbols() {
         this.saveCellAndLoadAndFormattedCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText(
@@ -4494,7 +4494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberLiteral() {
+    public void testSaveCellFormulaNumberLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
             "123",
             EXPRESSION_NUMBER_KIND.create(123)
@@ -4502,7 +4502,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberLiteralAndArabicDecimalNumberSymbols() {
+    public void testSaveCellFormulaNumberLiteralAndArabicDecimalNumberSymbols() {
         this.saveCellAndLoadAndFormattedCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText(
@@ -4525,7 +4525,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumber() {
+    public void testSaveCellFormulaNumber() {
         this.saveCellAndLoadAndFormattedCheck(
             "=123",
             EXPRESSION_NUMBER_KIND.create(123)
@@ -4533,7 +4533,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberMath() {
+    public void testSaveCellFormulaNumberExpression() {
         this.saveCellAndLoadAndFormattedCheck(
             "=123+456.75",
             EXPRESSION_NUMBER_KIND.create(123 + 456.75)
@@ -4541,7 +4541,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberGreaterThan() {
+    public void testSaveCellFormulaNumberGreaterThan() {
         this.saveCellAndLoadAndFormattedCheck(
             "=123>45",
             true
@@ -4549,7 +4549,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaNumberLessThanEquals() {
+    public void testSaveCellFormulaNumberLessThanEquals() {
         this.saveCellAndLoadAndFormattedCheck(
             "=123<=45",
             false
@@ -4557,7 +4557,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringEqualsSameCase() {
+    public void testSaveCellFormulaStringEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
             "=\"hello\"=\"hello\"",
             true
@@ -4565,7 +4565,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringEqualsDifferentCase() {
+    public void testSaveCellFormulaStringEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
             "=\"hello\"=\"HELLO\"",
             true
@@ -4573,7 +4573,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringEqualsDifferent() {
+    public void testSaveCellFormulaStringEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
             "=\"hello\"=\"different\"",
             false
@@ -4581,7 +4581,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringNotEqualsSameCase() {
+    public void testSaveCellFormulaStringNotEqualsSameCase() {
         this.saveCellAndLoadAndFormattedCheck(
             "=\"hello\"<>\"hello\"",
             false
@@ -4589,7 +4589,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringNotEqualsDifferentCase() {
+    public void testSaveCellFormulaStringNotEqualsDifferentCase() {
         this.saveCellAndLoadAndFormattedCheck(
             "=\"hello\"<>\"HELLO\"",
             false
@@ -4597,7 +4597,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaStringNotEqualsDifferent() {
+    public void testSaveCellFormulaStringNotEqualsDifferent() {
         this.saveCellAndLoadAndFormattedCheck(
             "=\"hello\"<>\"different\"",
             true
@@ -4605,7 +4605,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithFormulaTimeLiteral() {
+    public void testSaveCellFormulaTimeLiteral() {
         this.saveCellAndLoadAndFormattedCheck(
             "12:34",
             LocalTime.of(12, 34)
@@ -4613,7 +4613,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithTimeLiteralAndArabicDecimalNumberSymbols() {
+    public void testSaveCellFormulaTimeLiteralAndArabicDecimalNumberSymbols() {
         this.saveCellAndLoadAndFormattedCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText(
@@ -4695,7 +4695,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithEmptyFormulaTextAndExpressionValue() {
+    public void testSaveCellValue() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -4742,7 +4742,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithEmptyFormulaTextAndValue() {
+    public void testSaveCellValue2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -4799,7 +4799,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorPass() {
+    public void testSaveCellValidatorPass() {
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
         final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
@@ -4914,7 +4914,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorFails() {
+    public void testSaveCellValidatorFails() {
         final ValidationErrorList<SpreadsheetExpressionReference> validationError = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
@@ -5046,7 +5046,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorUsesValidationConverter() {
+    public void testSaveCellValidatorUsesValidationConverter() {
         final Object converterInput = this;
         final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = SpreadsheetForms.errorList()
             .concat(
@@ -5198,7 +5198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithValueValidatorUsesValidationFunction() {
+    public void testSaveCellValidatorUsesValidationFunction() {
         final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
@@ -5764,7 +5764,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithTwice() {
+    public void testSaveCellTwice() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -5811,7 +5811,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithCell() {
+    public void testSaveCellFormulaCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("$B$2");
@@ -5939,7 +5939,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveLabel() {
+    public void testSaveLabelAfterSaveCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -6000,7 +6000,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellSaveLabelSaveLabelSameCell() {
+    public void testSaveLabelTwiceSameCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -6168,7 +6168,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsWithIndirectCycle() {
+    public void testSaveCellsFormulaIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -6238,7 +6238,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellsWithDoubleIndirectCycle() {
+    public void testSaveCellsFormulaDoubleIndirectCycle() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
