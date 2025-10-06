@@ -5279,7 +5279,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithDateTimeSymbols() {
+    public void testSaveCellDateTimeSymbols() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.remove(
@@ -5330,7 +5330,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMetadataMissingDateTimeSymbols() {
+    public void testSaveCellDateTimeSymbolsMetadataMissing() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.remove(
@@ -5379,7 +5379,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMetadataMissingDateTimeSymbolsAndLocaleGermany() {
+    public void testSaveCellDateTimeSymbolsLocaleGermanyMetadataMissingDateTimeSymbols() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.remove(
@@ -5431,7 +5431,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithDecimalNumberSymbols() {
+    public void testSaveCellDecimalNumberSymbols() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.set(
@@ -5490,7 +5490,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMetadataDateTimeSymbols() {
+    public void testSaveCellDateTimeSymbolsMetadata() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.set(
@@ -5540,7 +5540,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMetadataMissingDecimalNumberSymbols() {
+    public void testSaveCellDecimalNumberSymbolsMetadataMissing() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.remove(
@@ -5589,7 +5589,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMetadataMissingDecimalNumberSymbolsAndLocaleGermany() {
+    public void testSaveCellDecimalNumberSymbolsLocaleGermanyMetadataMissing() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.remove(
@@ -5641,7 +5641,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellWithMetadataDecimalNumberSymbols() {
+    public void testSaveCellDecimalNumberSymbolsMetadata() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetMetadata metadata = METADATA.set(
