@@ -5922,16 +5922,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellLocaleReformats() {
+    public void testSaveCellFormatterReformats() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final SpreadsheetMetadata metadata = METADATA.remove(
-            SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
-        ).set(
-            SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
-        );
-        final SpreadsheetEngineContext context = this.createContext(metadata);
+        final SpreadsheetEngineContext context = this.createContext();
 
         final LocalDateTime value = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
 
@@ -5940,15 +5934,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
-            .setLocale(
-                Optional.of(LOCALE)
+            .setFormatter(
+                Optional.of(
+                    SpreadsheetFormatterSelector.parse("date-time-format-pattern d/m/yy")
+                )
             ).setStyle(STYLE);
 
         SpreadsheetCell a1FormattedCell = a1Cell.setFormattedValue(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
-                        TextNode.text("Fri./December/1999")
+                        TextNode.text("31/12/99")
                     )
                 )
             )
@@ -5972,18 +5968,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
         );
 
-        a1Cell = a1Cell.setFormula(a1Formula)
-            .setDateTimeSymbols(SpreadsheetCell.NO_DATETIME_SYMBOLS)
-            .setDecimalNumberSymbols(SpreadsheetCell.NO_DECIMAL_NUMBER_SYMBOLS)
-            .setLocale(
-                Optional.of(Locale.FRANCE)
-            );
+        a1Cell = a1Cell.setFormatter(
+            Optional.of(
+                SpreadsheetFormatterSelector.parse("date-time-format-pattern ddddd/mmmm/yyyy")
+            )
+        );
 
         a1FormattedCell = a1Cell.setFormattedValue(
             Optional.of(
                 STYLE.setChildren(
                     Lists.of(
-                        TextNode.text("ven./décembre/1999")
+                        TextNode.text("Friday/December/1999")
                     )
                 )
             )
