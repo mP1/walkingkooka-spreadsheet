@@ -752,6 +752,69 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // isZeroValue......................................................................................................
+
+    @Test
+    public void testIsZeroValueWhenEmpty() {
+        this.isZeroValueAndCheck(
+            SpreadsheetFormula.EMPTY,
+            false
+        );
+    }
+
+    @Test
+    public void testIsZeroValueWithIntegerZero() {
+        this.isZeroValueAndCheck(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(0)
+            ),
+            true
+        );
+    }
+
+    @Test
+    public void testIsZeroValueWithExpressionNumberZero() {
+        this.isZeroValueAndCheck(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of(
+                    EXPRESSION_NUMBER_KIND.zero()
+                )
+            ),
+            true
+        );
+    }
+
+    @Test
+    public void testIsZeroValueWithString() {
+        this.isZeroValueAndCheck(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("0")
+            ),
+            false
+        );
+    }
+
+    @Test
+    public void testIsZeroValueWithError() {
+        this.isZeroValueAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.DIV0.toError()
+                )
+            ),
+            false
+        );
+    }
+
+    private void isZeroValueAndCheck(final SpreadsheetFormula formula,
+                                     final boolean expected) {
+        this.checkEquals(
+            expected,
+            formula.isZeroValue(),
+            formula::toString
+        );
+    }
+
     // setError.........................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")

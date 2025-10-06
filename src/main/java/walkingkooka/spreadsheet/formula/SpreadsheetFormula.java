@@ -47,6 +47,9 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionNumberSign;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.ReferenceExpression;
 import walkingkooka.tree.json.JsonNode;
@@ -357,6 +360,28 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      */
     private final Optional<Object> value;
 
+    // isZeroValue......................................................................................................
+
+    /**
+     * Only returns true if the value that is present is ZERO. All other values including null will return false,
+     * and no conversion is attempted.
+     */
+    public boolean isZeroValue() {
+        final Object value = this.errorOrValue()
+            .orElse(null);
+
+        boolean zeroValue = false;
+        
+        if (ExpressionNumber.is(value) &&
+            ExpressionNumberSign.ZERO == ExpressionNumberKind.DEFAULT.create(
+                    (Number) value)
+                .sign()) {
+            zeroValue = true;
+        }
+        
+        return zeroValue;
+    }
+    
     // HasValidationChoiceList..........................................................................................
 
     @Override
