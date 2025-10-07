@@ -429,20 +429,19 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     @Test
     public void testWithValue() {
         for (final SpreadsheetErrorKind kind : SpreadsheetErrorKind.values()) {
-            if (SpreadsheetErrorKind.FORMATTING == kind) {
-                continue;
+            switch (kind) {
+                case PARSING:
+                case FORMATTING:
+                case NAME_STRING:
+                case VALIDATION:
+                    break;
+                default:
+                    this.checkEquals(
+                        kind,
+                        SpreadsheetErrorKind.withValue(kind.value())
+                    );
+                    break;
             }
-            if (SpreadsheetErrorKind.NAME_STRING == kind) {
-                continue;
-            }
-            if (SpreadsheetErrorKind.VALIDATION == kind) {
-                continue;
-            }
-
-            this.checkEquals(
-                kind,
-                SpreadsheetErrorKind.withValue(kind.value())
-            );
         }
     }
 
@@ -468,6 +467,14 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     public void testIsExpressionWithFormatting() {
         this.isExpressionAndCheck(
             SpreadsheetErrorKind.FORMATTING,
+            false
+        );
+    }
+
+    @Test
+    public void testIsExpressionWithParsing() {
+        this.isExpressionAndCheck(
+            SpreadsheetErrorKind.PARSING,
             false
         );
     }
@@ -506,6 +513,8 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
                 case FORMATTING:
                     break;
                 case NAME_STRING:
+                    break;
+                case PARSING:
                     break;
                 case VALIDATION:
                     break;
