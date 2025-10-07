@@ -145,6 +145,8 @@ public enum SpreadsheetErrorKind implements HasText {
         this.value = value;
     }
 
+    // HasText..........................................................................................................
+
     @Override
     public String text() {
         return this.text;
@@ -189,6 +191,8 @@ public enum SpreadsheetErrorKind implements HasText {
             Optional.ofNullable(value)
         );
     }
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
