@@ -1645,7 +1645,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-                "metadata={\n" +
+                "mode=FORMULA metadata={\n" +
                     "  \"spreadsheetId\": \"7b\",\n" +
                     "  \"autoHideScrollbars\": false,\n" +
                     "  \"cellCharacterWidth\": 1,\n" +
@@ -1870,7 +1870,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 metadata,
                 SpreadsheetLabelStores.treeMap()
             ),
-            "metadata={\n" +
+            "mode=FORMULA metadata={\n" +
                 "  \"spreadsheetId\": \"7b\",\n" +
                 "  \"autoHideScrollbars\": false,\n" +
                 "  \"cellCharacterWidth\": 1,\n" +
