@@ -157,6 +157,8 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.FakeValidator;
+import walkingkooka.validation.ValidationChoice;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationReference;
@@ -5278,6 +5280,213 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testSaveCellValidatorRefreshes() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(11)
+            )
+        ).concat(
+            ValidationChoice.with(
+                "Label2",
+                Optional.of(22)
+            )
+        );
+
+        final ValidationErrorList<SpreadsheetExpressionReference> validationErrorsFail = SpreadsheetForms.errorList()
+            .concat(
+                SpreadsheetForms.error(
+                    SpreadsheetSelection.A1
+                ).setMessage("Validation failed!!!")
+                    .setValue(
+                        Optional.of(choices)
+                    )
+            );
+
+        final ValidationErrorList<SpreadsheetExpressionReference> validationErrorsPass = SpreadsheetForms.errorList()
+            .concat(
+                SpreadsheetForms.error(
+                        SpreadsheetSelection.A1
+                    ).setValue(
+                        Optional.of(choices)
+                    )
+            );
+
+        final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
+        final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
+        final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
+        final ValidatorSelector validatorFailSelector = ValidatorSelector.parse("TestFailValidator");
+        final ValidatorSelector validatorPassSelector = ValidatorSelector.parse("TestPassValidator");
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.CONVERTERS,
+            ConverterAliasSet.EMPTY
+                .concat(
+                    ConverterAlias.parse("null-to-number")
+                ).concat(
+                    ConverterAlias.parse("text")
+                )
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            formulaConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
+            formattingConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
+            validationConverterSelector
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATORS,
+            ValidatorAliasSet.parse("TestFailValidator, TestPassValidator")
+        ).set(
+            SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
+            ValidatorAliasSet.parse("TestFailValidator, TestPassValidator")
+        );
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+            SpreadsheetEngineContextMode.FORMULA,
+            new TestSpreadsheetContext(
+                metadata,
+                spreadsheetStoreRepository(),
+                SpreadsheetProviders.basic(
+                    new FakeConverterProvider() {
+                        @Override
+                        public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                   final List<?> values,
+                                                                                   final ProviderContext context) {
+                            if (formulaConverterSelector.name().equals(name)) {
+                                return CONVERTER_PROVIDER.converter(name, values, context);
+                            }
+                            if (formattingConverterSelector.name().equals(name)) {
+                                return CONVERTER_PROVIDER.converter(name, values, context);
+                            }
+                            if (validationConverterSelector.name().equals(name)) {
+                                return Converters.fake();
+                            }
+                            throw new IllegalArgumentException("Unknown converter " + name);
+                        }
+                    },
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SPREADSHEET_COMPARATOR_PROVIDER,
+                    SPREADSHEET_EXPORTER_PROVIDER,
+                    SPREADSHEET_FORMATTER_PROVIDER,
+                    FormHandlerProviders.fake(),
+                    SPREADSHEET_IMPORTER_PROVIDER,
+                    SPREADSHEET_PARSER_PROVIDER,
+                    new FakeValidatorProvider() {
+                        @Override
+                        public <R extends ValidationReference, C extends ValidatorContext<R>> Validator<R, C> validator(final ValidatorSelector selector,
+                                                                                                                        final ProviderContext context) {
+                            if (validatorFailSelector.equals(selector)) {
+                                return Cast.to(
+                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                              final SpreadsheetValidatorContext context) {
+                                            return validationErrorsFail;
+                                        }
+                                    }
+                                );
+                            }
+                            if (validatorPassSelector.equals(selector)) {
+                                return Cast.to(
+                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                        @Override
+                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                                                                                              final SpreadsheetValidatorContext context) {
+                                            return validationErrorsPass;
+                                        }
+                                    }
+                                );
+                            }
+                            throw new IllegalArgumentException("Unknown validator " + validatorFailSelector);
+                        }
+                    }
+                )
+            ),
+            TERMINAL_CONTEXT
+        );
+
+        final Object value = "Value123";
+        final SpreadsheetFormula a1Formula = SpreadsheetFormula.EMPTY.setValue(
+            Optional.of(value)
+        );
+        SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
+            .setValidator(
+                Optional.of(validatorFailSelector)
+            ).setStyle(STYLE);
+
+        SpreadsheetCell a1FormattedCell = a1Cell.setFormula(
+            a1Cell.formula()
+                .setValue(
+                    Optional.of(value)
+                ).setError(
+                    SpreadsheetError.validationErrors(validationErrorsFail)
+                )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("#ERROR " + FORMATTED_PATTERN_SUFFIX)
+                    .setTextStyle(STYLE)
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+
+        a1Cell = a1Cell.setValidator(
+                Optional.of(validatorPassSelector)
+            );
+
+        a1FormattedCell = a1Cell.setFormula(
+            a1Cell.formula()
+                .setValue(
+                    Optional.of(value)
+                ).setError(
+                    SpreadsheetError.validationErrors(validationErrorsPass)
+                )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text(value + " " + FORMATTED_PATTERN_SUFFIX)
+                    .setTextStyle(STYLE)
+            )
+        );
+
+        this.saveCellAndCheck(
+            engine,
+            a1Cell,
+            context,
+            SpreadsheetDelta.EMPTY
+                .setCells(
+                    Sets.of(a1FormattedCell)
+                ).setColumnWidths(
+                    columnWidths("A")
+                ).setRowHeights(
+                    rowHeights("1")
+                ).setColumnCount(
+                    OptionalInt.of(1)
+                ).setRowCount(
+                    OptionalInt.of(1)
+                )
+        );
+    }
+    
     @Test
     public void testSaveCellDateTimeSymbols() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
