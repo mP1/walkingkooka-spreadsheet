@@ -206,13 +206,13 @@ public enum SpreadsheetErrorKind implements HasText {
             final HasSpreadsheetError has = (HasSpreadsheetError) cause;
             error = has.spreadsheetError();
         } else {
-            error = translate0(cause);
+            error = translateNonSpreadsheetError(cause);
         }
 
         return error;
     }
 
-    private static SpreadsheetError translate0(final Throwable cause) {
+    private static SpreadsheetError translateNonSpreadsheetError(final Throwable cause) {
         Throwable translate = cause;
 
         if (cause instanceof ExpressionEvaluationException) {
@@ -222,10 +222,10 @@ public enum SpreadsheetErrorKind implements HasText {
             }
         }
 
-        return translate1(translate);
+        return translateThrowable(translate);
     }
 
-    private static SpreadsheetError translate1(final Throwable cause) {
+    private static SpreadsheetError translateThrowable(final Throwable cause) {
         SpreadsheetErrorKind kind = null;
         String message = cause.getMessage();
         Object value = null;
