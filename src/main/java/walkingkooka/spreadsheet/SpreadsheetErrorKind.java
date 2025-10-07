@@ -331,6 +331,9 @@ public enum SpreadsheetErrorKind implements HasText {
             );
     }
 
+    /**
+     * Translates the number value of an error back into a {@link SpreadsheetErrorKind}.
+     */
     public static SpreadsheetErrorKind withValue(final int value) {
         return Arrays.stream(values())
             .filter(k -> k.value == value)
