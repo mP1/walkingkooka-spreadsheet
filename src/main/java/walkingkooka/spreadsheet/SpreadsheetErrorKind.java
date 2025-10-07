@@ -135,14 +135,24 @@ public enum SpreadsheetErrorKind implements HasText {
         return EXPRESSION;
     }
 
+    /**
+     * Returns all {@link SpreadsheetErrorKind} that are valid expression errors.
+     */
     private final static List<SpreadsheetErrorKind> EXPRESSION = Arrays.stream(values())
-        .filter(k -> k != VALIDATION)
+        .filter(SpreadsheetErrorKind::isExpression)
         .collect(ImmutableList.collector());
 
     SpreadsheetErrorKind(final String text,
                          final int value) {
         this.text = text;
         this.value = value;
+    }
+
+    /**
+     * Returns true for {@link SpreadsheetErrorKind} that are valid when executing an {@link walkingkooka.tree.expression.Expression}.
+     */
+    public boolean isExpression() {
+        return VALIDATION != this;
     }
 
     // HasText..........................................................................................................

@@ -440,6 +440,41 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
         }
     }
 
+    // isExpression.....................................................................................................
+
+    @Test
+    public void testIsExpressionWithDiv0() {
+        this.isExpressionAndCheck(
+            SpreadsheetErrorKind.DIV0,
+            true
+        );
+    }
+
+    @Test
+    public void testIsExpressionWithError() {
+        this.isExpressionAndCheck(
+            SpreadsheetErrorKind.ERROR,
+            true
+        );
+    }
+
+    @Test
+    public void testIsExpressionWithValidation() {
+        this.isExpressionAndCheck(
+            SpreadsheetErrorKind.VALIDATION,
+            false
+        );
+    }
+
+    private void isExpressionAndCheck(final SpreadsheetErrorKind kind,
+                                      final boolean expected) {
+        this.checkEquals(
+            expected,
+            kind.isExpression(),
+            kind::toString
+        );
+    }
+
     // ParseString......................................................................................................
 
     @Test
