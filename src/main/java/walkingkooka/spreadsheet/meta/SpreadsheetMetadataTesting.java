@@ -354,7 +354,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-            ValidatorAliasSet.parse("absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression")
+            ValidatorAliasSet.parse("absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list")
         ).set(
             SpreadsheetMetadataPropertyName.numberedColor(1),
             Color.BLACK
