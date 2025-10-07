@@ -119,7 +119,7 @@
   "twoDigitYear": 20,
   "validationConverter": "collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)",
   "validationFunctions": "@",
-  "validationValidators": "absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list-expression",
+  "validationValidators": "absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list",
   "validators": "",
   "viewportHome": "A1"
 }
