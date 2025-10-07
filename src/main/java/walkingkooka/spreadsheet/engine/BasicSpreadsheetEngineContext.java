@@ -567,6 +567,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return ToStringBuilder.empty()
             .globalLength(Integer.MAX_VALUE)
             .valueLength(Integer.MAX_VALUE)
+            .label("mode")
+            .value(this.mode)
             .label("metadata")
             .value(this.metadata)
             .build();
