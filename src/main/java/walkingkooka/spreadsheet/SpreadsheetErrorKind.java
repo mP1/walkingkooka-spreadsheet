@@ -110,6 +110,11 @@ public enum SpreadsheetErrorKind implements HasText {
     CALC("#CALC!", 14),
 
     /**
+     * This error will be used to trap exceptions during {@link walkingkooka.spreadsheet.format.SpreadsheetFormatter)} formatting.
+     */
+    FORMATTING("#FORMATTING", -1),
+
+    /**
      * Used to mark a {@link SpreadsheetError} as an error only holding {@link walkingkooka.validation.ValidationChoiceList}
      * and must not be returned by {@link SpreadsheetFormula#errorOrValue()}.
      * Errors of this kind should never be visible or available to Expressions.
@@ -152,7 +157,7 @@ public enum SpreadsheetErrorKind implements HasText {
      * Returns true for {@link SpreadsheetErrorKind} that are valid when executing an {@link walkingkooka.tree.expression.Expression}.
      */
     public boolean isExpression() {
-        return VALIDATION != this;
+        return FORMATTING != this && VALIDATION != this;
     }
 
     // HasText..........................................................................................................
