@@ -151,7 +151,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
 
         this.toStringAndCheck(
             changes,
-            "SKIP_EVALUATE cells: A1: A1 1+2 status=SAVED, B2: B2 3+4 status=SAVED columns: M: M status=SAVED, N: N hidden=true status=SAVED rows: 6: 6 status=SAVED, 7: 7 hidden=true status=SAVED"
+            "SKIP_EVALUATE cells: A1: A1 \"1+2\" status=SAVED, B2: B2 \"3+4\" status=SAVED columns: M: M status=SAVED, N: N hidden=true status=SAVED rows: 6: 6 status=SAVED, 7: 7 hidden=true status=SAVED"
         );
     }
 

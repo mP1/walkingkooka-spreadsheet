@@ -673,7 +673,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
         checkMessage(
             thrown,
-            "Several cells [B2 1] are outside the range C3"
+            "Several cells [B2 \"1\"] are outside the range C3"
         );
     }
 
@@ -698,7 +698,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         checkMessage(
             thrown,
-            "Several cells [B2 1] are outside the range C3:D4"
+            "Several cells [B2 \"1\"] are outside the range C3:D4"
         );
     }
 
@@ -735,7 +735,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         checkMessage(
             thrown,
-            "Several cells [B2 1] are outside the range C3:D4"
+            "Several cells [B2 \"1\"] are outside the range C3:D4"
         );
     }
 
@@ -777,7 +777,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         checkMessage(
             thrown,
-            "Several cells [B2 1, E5 4] are outside the range C3:D4"
+            "Several cells [B2 \"1\", E5 \"4\"] are outside the range C3:D4"
         );
     }
 

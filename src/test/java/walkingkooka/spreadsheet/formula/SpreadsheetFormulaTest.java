@@ -2971,15 +2971,15 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // toString.........................................................................................................
 
     @Test
-    public void testToStringWithValueTypeAndValue() {
+    public void testToStringWithError() {
         this.toStringAndCheck(
             this.createObject()
-                .setValueType(
-                    Optional.of(VALUE_TYPE)
-                ).setValue(
-                    Optional.of(123)
+                .setError(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE.setMessage("Bad value 123")
+                    )
                 ),
-            "text 123"
+            "\"1+2\" error=#VALUE! \"Bad value 123\""
         );
     }
 
@@ -2990,7 +2990,48 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setValue(
                     Optional.of(123)
                 ),
-            "1+2 123"
+            "\"1+2\" value=123"
+        );
+    }
+
+    @Test
+    public void testToStringWithValueAndError() {
+        this.toStringAndCheck(
+            this.createObject()
+                .setValue(
+                    Optional.of(123)
+                ).setError(
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE.setMessage("Bad value 123")
+                    )
+                ),
+            "\"1+2\" value=123 error=#VALUE! \"Bad value 123\""
+        );
+    }
+
+    @Test
+    public void testToStringWithValueTypeAndNumberValue() {
+        this.toStringAndCheck(
+            this.createObject()
+                .setValueType(
+                    Optional.of(VALUE_TYPE)
+                ).setValue(
+                    Optional.of(123)
+                ),
+            "valueType=text value=123"
+        );
+    }
+
+    @Test
+    public void testToStringWithValueTypeAndStringValue() {
+        this.toStringAndCheck(
+            this.createObject()
+                .setValueType(
+                    Optional.of(VALUE_TYPE)
+                ).setValue(
+                    Optional.of("Hello")
+                ),
+            "valueType=text value=\"Hello\""
         );
     }
 

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.formula;
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
-import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
@@ -902,12 +901,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.disable(ToStringBuilderOption.QUOTE);
         builder.value(this.text());
 
+        builder.label("valueType");
         builder.value(this.valueType);
+
+        builder.label("value");
         builder.value(this.value);
 
+        builder.label("error");
         builder.value(this.error);
     }
 
