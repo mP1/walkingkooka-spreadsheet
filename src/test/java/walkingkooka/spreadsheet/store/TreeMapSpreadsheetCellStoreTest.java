@@ -1527,7 +1527,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         this.toStringAndCheck(
             store,
-            "[A1 1+2]"
+            "[A1 \"1+2\"]"
         );
     }
 

@@ -370,7 +370,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
                     SpreadsheetFormula.EMPTY.setText("=123+456")
                 )
             ),
-            "A1=A1 =123+456"
+            "A1=A1 \"=123+456\""
         );
     }
 
