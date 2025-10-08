@@ -63,11 +63,12 @@ final class BasicSpreadsheetEngineFillCells {
         if (cells.isEmpty()) {
             this.deleteCell(to);
         } else {
-            final List<SpreadsheetCell> out = cells.stream()
+            final String outside = cells.stream()
                 .filter(c -> false == from.testCell(c.reference()))
-                .collect(Collectors.toList());
-            if (!out.isEmpty()) {
-                throw new IllegalArgumentException("Several cells " + out + " are outside the range " + from);
+                .map(c -> c.reference().toString())
+                .collect(Collectors.joining(", "));
+            if (false == outside.isEmpty()) {
+                throw new IllegalArgumentException("Several cells " + outside + " are outside the range " + from);
             }
 
             this.fill(cells, from, to);
