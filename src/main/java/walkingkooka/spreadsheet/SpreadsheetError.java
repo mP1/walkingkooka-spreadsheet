@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.HasNotFoundText;
+import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.Value;
@@ -477,6 +478,52 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                 (ValidationChoiceList) value :
                 null
         );
+    }
+
+    // toExpressionError................................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetError} filtering/transforming {@link SpreadsheetErrorKind} as necessary.
+     */
+    public Optional<SpreadsheetError> toExpressionError() {
+        SpreadsheetError error = null;
+
+        // filter if only choices
+        if (false == this.isValidationChoiceList()) {
+            final SpreadsheetErrorKind kind = this.kind();
+
+            error = this;
+
+            // translate PARSING | FORMATTING | VALIDATION
+            if (false == kind.isExpression()) {
+                SpreadsheetErrorKind newKind = null;
+                switch (kind) {
+                    case PARSING:
+                        newKind = SpreadsheetErrorKind.ERROR;
+                        break;
+                    case FORMATTING:
+                        newKind = SpreadsheetErrorKind.ERROR;
+                        break;
+                    case VALIDATION:
+                        newKind = SpreadsheetErrorKind.VALUE;
+                        break;
+                    default:
+                        NeverError.unhandledEnum(
+                            kind,
+                            SpreadsheetErrorKind.PARSING,
+                            SpreadsheetErrorKind.FORMATTING,
+                            SpreadsheetErrorKind.VALIDATION
+                        );
+                }
+
+                error = newKind.setMessageAndValue(
+                    this.message,
+                    this.value.orElse(null)
+                );
+            }
+        }
+
+        return Optional.ofNullable(error);
     }
 
     // TreePrintable....................................................................................................
