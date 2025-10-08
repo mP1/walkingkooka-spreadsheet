@@ -56,9 +56,9 @@ final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTex
                 value,
                 SpreadsheetParserContexts.basic(
                     InvalidCharacterExceptionFactory.POSITION,
-                    context,
-                    context,
-                    ';' // valueSeparator
+                    context, // DateTimeContext
+                    context, // DecimalNumberContext
+                    context.valueSeparator()
                 )
             ).cast(SpreadsheetFormulaParserToken.class)
             .toExpression(
