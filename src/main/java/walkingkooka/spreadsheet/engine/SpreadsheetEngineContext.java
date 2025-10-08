@@ -24,8 +24,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
-import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -38,7 +36,6 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -105,30 +102,6 @@ public interface SpreadsheetEngineContext extends Context,
      */
     SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                         final Optional<SpreadsheetFormatterSelector> formatter);
-
-    /**
-     * Formats the {@link Throwable} into text and styles it as an error.
-     */
-    default SpreadsheetCell formatThrowableAndStyle(final Throwable cause,
-                                                    final SpreadsheetCell cell) {
-        Objects.requireNonNull(cause, "cause");
-        Objects.requireNonNull(cell, "cell");
-
-        final SpreadsheetError error = SpreadsheetErrorKind.translate(cause);
-        final Optional<Object> valueReplacingError = error.replaceWithValueIfPossible(this);
-
-        return this.formatValueAndStyle(
-            cell.setFormula(
-                cell.formula()
-                    .setValue(
-                        valueReplacingError.isPresent() ?
-                            valueReplacingError :
-                            Optional.of(error)
-                    )
-            ),
-            Optional.empty() // ignore cell formatter
-        );
-    }
 
     // HasMissingCellNumberValue........................................................................................
 
