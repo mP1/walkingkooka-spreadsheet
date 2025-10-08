@@ -15843,7 +15843,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // fill deletes.....................................................................................................
 
     @Test
-    public void testFillWithCellsDeleteOneCell() {
+    public void testFillCellsWithDeleteOneCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -15887,7 +15887,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsDeleteOneCell2() {
+    public void testFillCellsWithDeleteOneCell2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -15963,7 +15963,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsDeletesManyCells() {
+    public void testFillCellsWithDeletesManyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16009,7 +16009,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsDeletesManyCells2() {
+    public void testFillCellsWithDeletesManyCells2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16091,7 +16091,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // fill save with missing SpreadsheetCellReferenceSet.parse......................................................................................
 
     @Test
-    public void testFillWithCellsSaveWithMissingCells() {
+    public void testFillCellsWithSaveWithMissingCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16200,7 +16200,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsSaveWithMissingCells2() {
+    public void testFillCellsWithSaveWithMissingCells2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16342,7 +16342,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // fill moves cell..................................................................................................
 
     @Test
-    public void testFillWithCellsRangeOneEmptyCells2() {
+    public void testFillCellsWithRangeOneEmptyCells2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16446,7 +16446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsRangeTwoEmptyCells() {
+    public void testFillCellsWithRangeTwoEmptyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16530,7 +16530,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // fill moves 1 cell................................................................................................
 
     @Test
-    public void testFillWithCellsAddition() {
+    public void testFillCellsWithAddition() {
         this.fillCellsAndCheck(
             "=1+0",
             1 + 0
@@ -16538,7 +16538,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsExpressionNumber() {
+    public void testFillCellsWithExpressionNumber() {
         this.fillCellsAndCheck(
             "=99.5",
             99.5
@@ -16546,7 +16546,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsExpressionNumber2() {
+    public void testFillCellsWithExpressionNumber2() {
         this.fillCellsAndCheck(
             "=99",
             99
@@ -16554,7 +16554,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsDivision() {
+    public void testFillCellsWithDivision() {
         this.fillCellsAndCheck(
             "=10/5",
             10 / 5
@@ -16562,7 +16562,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsEqualsTrue() {
+    public void testFillCellsWithEqualsTrue() {
         this.fillCellsAndCheck(
             "=10=10",
             true
@@ -16570,7 +16570,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsEqualsFalse() {
+    public void testFillCellsWithEqualsFalse() {
         this.fillCellsAndCheck(
             "=10=9",
             false
@@ -16578,7 +16578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsGreaterThanTrue() {
+    public void testFillCellsWithGreaterThanTrue() {
         this.fillCellsAndCheck(
             "=10>9",
             true
@@ -16586,7 +16586,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsGreaterThanFalse() {
+    public void testFillCellsWithGreaterThanFalse() {
         this.fillCellsAndCheck(
             "=10>11",
             false
@@ -16594,7 +16594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsGreaterThanEqualsTrue() {
+    public void testFillCellsWithGreaterThanEqualsTrue() {
         this.fillCellsAndCheck(
             "=10>=10",
             true
@@ -16602,7 +16602,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsGreaterThanEqualsFalse() {
+    public void testFillCellsWithGreaterThanEqualsFalse() {
         this.fillCellsAndCheck(
             "=10>=11",
             false
@@ -16610,7 +16610,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsFunction() {
+    public void testFillCellsWithFunction() {
         this.fillCellsAndCheck(
             "=BasicSpreadsheetEngineTestSum(1,99)",
             1 + 99
@@ -16618,7 +16618,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsGroup() {
+    public void testFillCellsWithGroup() {
         this.fillCellsAndCheck(
             "=(99)",
             99
@@ -16626,7 +16626,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsLessThanTrue() {
+    public void testFillCellsWithLessThanTrue() {
         this.fillCellsAndCheck(
             "=10<11",
             true
@@ -16634,7 +16634,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsLessThanFalse() {
+    public void testFillCellsWithLessThanFalse() {
         this.fillCellsAndCheck(
             "=10<9",
             false
@@ -16642,7 +16642,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsLessThanEqualsTrue() {
+    public void testFillCellsWithLessThanEqualsTrue() {
         this.fillCellsAndCheck(
             "=10<=10",
             true
@@ -16650,7 +16650,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsLessThanEqualsFalse() {
+    public void testFillCellsWithLessThanEqualsFalse() {
         this.fillCellsAndCheck(
             "=10<=9",
             false
@@ -16658,7 +16658,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsMultiplication() {
+    public void testFillCellsWithMultiplication() {
         this.fillCellsAndCheck(
             "=6*7",
             6 * 7
@@ -16666,7 +16666,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsNegative() {
+    public void testFillCellsWithNegative() {
         this.fillCellsAndCheck(
             "=-123",
             -123
@@ -16674,7 +16674,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsNotEqualsTrue() {
+    public void testFillCellsWithNotEqualsTrue() {
         this.fillCellsAndCheck(
             "=10<>9",
             true
@@ -16682,7 +16682,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsNotEqualsFalse() {
+    public void testFillCellsWithNotEqualsFalse() {
         this.fillCellsAndCheck(
             "=10<>10",
             false
@@ -16690,7 +16690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsPercentage() {
+    public void testFillCellsWithPercentage() {
         this.fillCellsAndCheck(
             "=123.5%",
             123.5 / 100
@@ -16698,7 +16698,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsSubtraction() {
+    public void testFillCellsWithSubtraction() {
         this.fillCellsAndCheck(
             "=13-4",
             13 - 4
@@ -16706,7 +16706,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsText() {
+    public void testFillCellsWithText() {
         this.fillCellsAndCheck(
             "=\"abc123\"",
             "abc123"
@@ -16714,7 +16714,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsAdditionWithWhitespace() {
+    public void testFillCellsWithAdditionWithWhitespace() {
         this.fillCellsAndCheck(
             "=1 + 2",
             1 + 2
@@ -16781,7 +16781,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsRepeatCellInto2x2() {
+    public void testFillCellsWithRepeatCellInto2x2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16846,7 +16846,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCells2x2CellInto1x1() {
+    public void testFillCellsWith2x2CellInto1x1() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16924,7 +16924,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCells2x2Into2x2() {
+    public void testFillCellsWith2x2Into2x2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -16992,7 +16992,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCells2x2Into7x2Gives6x2() {
+    public void testFillCellsWith2x2Into7x2Gives6x2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -17090,7 +17090,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCells2x2Into2x7Gives2x6() {
+    public void testFillCellsWith2x2Into2x7Gives2x6() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -17185,7 +17185,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsAbsoluteCellReference() {
+    public void testFillCellsWithAbsoluteCellReference() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -17266,7 +17266,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsExpressionRelativeCellReferenceFixed() {
+    public void testFillCellsWithExpressionRelativeCellReferenceFixed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -17328,7 +17328,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsExternalCellReferencesRefreshed() {
+    public void testFillCellsWithExternalCellReferencesRefreshed() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -17392,7 +17392,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsWithColumns() {
+    public void testFillCellsWithWithColumns() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -17448,7 +17448,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillWithCellsWithRows() {
+    public void testFillCellsWithWithRows() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
