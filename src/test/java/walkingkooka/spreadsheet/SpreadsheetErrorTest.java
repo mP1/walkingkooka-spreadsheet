@@ -874,6 +874,63 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    // isValidationChoiceList...........................................................................................
+
+    @Test
+    public void testIsValidationChoiceListWhenDiv0() {
+        this.isValidationChoiceListAndCheck(
+            SpreadsheetErrorKind.DIV0.toError(),
+            false
+        );
+    }
+
+    @Test
+    public void testIsValidationChoiceListWhenError() {
+        this.isValidationChoiceListAndCheck(
+            SpreadsheetErrorKind.ERROR.setMessage("Error 123"),
+            false
+        );
+    }
+
+    @Test
+    public void testIsValidationChoiceListWhenValidationChoiceListMissingMessage() {
+        this.isValidationChoiceListAndCheck(
+            SpreadsheetError.validationChoiceList(
+                ValidationChoiceList.EMPTY.concat(
+                    ValidationChoice.with(
+                        "Label1",
+                        Optional.of(111)
+                    )
+                )
+            ),
+            true
+        );
+    }
+
+    @Test
+    public void testIsValidationChoiceListWhenValidationChoiceListWithMessage() {
+        this.isValidationChoiceListAndCheck(
+            SpreadsheetError.validationChoiceList(
+                ValidationChoiceList.EMPTY.concat(
+                    ValidationChoice.with(
+                        "Label1",
+                        Optional.of(111)
+                    )
+                )
+            ).setMessage("Validation failed!"),
+            false
+        );
+    }
+
+    private void isValidationChoiceListAndCheck(final SpreadsheetError error,
+                                                final boolean expected) {
+        this.checkEquals(
+            expected,
+            error.isValidationChoiceList(),
+            error::message
+        );
+    }
+
     // HasValidationChoiceList..........................................................................................
 
     @Test

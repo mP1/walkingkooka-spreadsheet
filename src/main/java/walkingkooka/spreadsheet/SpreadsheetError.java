@@ -361,6 +361,16 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
                 .orElse(null) instanceof SpreadsheetCellReference;
     }
 
+    /**
+     * Returns true only if this error has {@link ValidationChoiceList} but no error message, meaning the value will
+     * supply choices.
+     */
+    public boolean isValidationChoiceList() {
+        return SpreadsheetErrorKind.VALIDATION == this.kind &&
+            this.message.isEmpty() &&
+            this.value.orElse(null) instanceof ValidationChoiceList;
+    }
+
     // HasText..........................................................................................................
 
     /**
