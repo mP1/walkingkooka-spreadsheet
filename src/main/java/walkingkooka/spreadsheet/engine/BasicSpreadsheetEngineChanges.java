@@ -53,7 +53,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -300,17 +299,6 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     }
 
     private void refreshCell(final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache) {
-        this.refreshCell(
-            cache,
-            (c) -> this.context.spreadsheetExpressionEvaluationContext(
-                Optional.of(c),
-                this // SpreadsheetExpressionReferenceLoader
-            )
-        );
-    }
-
-    private void refreshCell(final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache,
-                             final Function<SpreadsheetCell, SpreadsheetExpressionEvaluationContext> evaluationContextFunction) {
         final SpreadsheetCellReference cell = cache.reference;
 
         final BasicSpreadsheetEngineChangesCacheStatus<SpreadsheetCellReference> status = cache.status();
@@ -334,10 +322,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                     spreadsheetCell,
                     this.evaluation,
                     this, // SpreadsheetExpressionReferenceLoader
-                    BasicSpreadsheetEngineSpreadsheetEngineContext.with(
-                        this.context, // SpreadsheetEngineContext
-                        evaluationContextFunction.apply(spreadsheetCell) // SpreadsheetExpressionEvaluationContext
-                    )
+                    this.context
                 );
 
                 if (cache.status().isLoading()) {
@@ -733,12 +718,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
             BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
         );
         try {
-            this.refreshCell(
-                cache,
-                (c) -> context.setCell(
-                    Optional.of(c)
-                )
-            );
+            this.refreshCell(cache);
         } finally {
             this.setEvaluation(backupEvaluation);
             this.setMode(backup);
@@ -766,10 +746,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                     BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
                 );
 
-                this.refreshCell(
-                    cache,
-                    (c) -> context.setCell(Optional.of(c))
-                );
+                this.refreshCell(cache);
 
                 final SpreadsheetCell spreadsheetCell = cache.valueOrNull();
                 if (null != spreadsheetCell) {
