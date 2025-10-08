@@ -1019,9 +1019,49 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testErrorOrValueWhenError() {
+    public void testErrorOrValueWhenValidationChoiceList() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(111)
+            )
+        );
+
+        final SpreadsheetError error = SpreadsheetError.validationChoiceList(choices);
+
+        this.errorOrValueAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(error)
+            ),
+            Optional.empty()
+        );
+    }
+
+    @Test
+    public void testErrorOrValueWhenValidationChoiceListAndValue() {
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(111)
+            )
+        );
+
+        final SpreadsheetError error = SpreadsheetError.validationChoiceList(choices);
+
+        final Optional<Object> value = Optional.of(999);
+
+        this.errorOrValueAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(error)
+            ).setValue(value),
+            value
+        );
+    }
+
+    @Test
+    public void testErrorOrValueWhenDiv0Error() {
         final Optional<SpreadsheetError> error = Optional.of(
-            SpreadsheetErrorKind.VALUE.setMessage("error123")
+            SpreadsheetErrorKind.DIV0.setMessage("error123")
         );
 
         this.errorOrValueAndCheck(
@@ -1053,7 +1093,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             error
         );
     }
-
+    
     private void errorOrValueAndCheck(final SpreadsheetFormula formula,
                                       final Optional<?> expected) {
         this.checkEquals(

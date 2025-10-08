@@ -389,7 +389,6 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.error.flatMap(SpreadsheetError::validationChoiceList);
     }
 
-
     // errorOrValue ....................................................................................................
 
     /**
@@ -397,13 +396,19 @@ public final class SpreadsheetFormula implements CanBeEmpty,
      * Note that any {@link ValidationChoiceList} will be filtered or ignored and never returned.
      */
     public Optional<Object> errorOrValue() {
-        // GWT's Optional#or is not implemented.
-        final Optional<SpreadsheetError> maybeError = this.error;
-        final SpreadsheetError error = maybeError.orElse(null);
+        Optional<?> errorOrValue = null;
 
-        return null != error && error.kind() != SpreadsheetErrorKind.VALIDATION ?
-            Cast.to(maybeError) :
-            this.value;
+        final Optional<SpreadsheetError> maybeError = this.error;
+        SpreadsheetError error = maybeError.orElse(null);
+        if (null != error) {
+            errorOrValue = error.toExpressionError();
+        }
+
+        if (null == errorOrValue || errorOrValue.isEmpty()) {
+            errorOrValue = this.value;
+        }
+
+        return Cast.to(errorOrValue);
     }
 
     // error ...........................................................................................................
