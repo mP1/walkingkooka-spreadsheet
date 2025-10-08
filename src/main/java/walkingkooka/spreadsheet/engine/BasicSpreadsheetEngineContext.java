@@ -36,6 +36,7 @@ import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -59,6 +60,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -395,12 +397,21 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         } catch (final UnsupportedOperationException rethrow) {
             throw rethrow;
         } catch (final RuntimeException cause) {
-            final SpreadsheetError error = SpreadsheetError.formatterNotFound(
-                formatter.map(SpreadsheetFormatterSelector::name)
-                    .orElse(null)
+            String message = cause.getMessage();
+            if(CharSequences.isNullOrEmpty(message)) {
+                message = cause.getClass().getSimpleName();
+            }
+
+            final SpreadsheetError error = SpreadsheetErrorKind.FORMATTING.setMessageAndValue(
+                message,
+                formatter.orElse(null)
             );
+
             formatted = Optional.of(
-                TextNode.text(error.text())
+                TextNode.text(
+                    error.toExpressionError()
+                        .get()
+                        .text())
             );
 
             formattedCell = formattedCell.setFormula(

@@ -50,7 +50,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
-import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
@@ -738,8 +738,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 cell.formula()
                     .setError(
                         Optional.of(
-                            SpreadsheetError.formatterNotFound(
-                                formatter.name()
+                            SpreadsheetErrorKind.FORMATTING.setMessageAndValue(
+                                "Unknown formatter unknown-formatter-404",
+                                formatter
                             )
                         )
                     )

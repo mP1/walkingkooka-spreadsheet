@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
@@ -1626,9 +1627,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
     SpreadsheetCell parseFormulaIfNecessary(final SpreadsheetCell cell,
-                                            final Function<SpreadsheetFormulaParserToken, SpreadsheetFormulaParserToken> parsed,
+                                            final Function<SpreadsheetFormulaParserToken, SpreadsheetFormulaParserToken> postTokenHandler,
                                             final SpreadsheetEngineContext context) {
-        SpreadsheetCell result = cell;
+        SpreadsheetCell parsed = cell;
         SpreadsheetFormula formula = cell.formula();
 
         try {
@@ -1668,7 +1669,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         .orElse(null);
                 }
                 if (null != token) {
-                    token = parsed.apply(token);
+                    token = postTokenHandler.apply(token);
                     formula = formula.setToken(
                         Optional.of(token)
                     );
@@ -1680,28 +1681,27 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     );
                 }
 
-                result = cell.setFormula(
-                    formula
-                );
+                parsed = parsed.setFormula(formula);
             }
 
             //if error formatValueAndStyle
             if (formula.error().isPresent()) {
-                result = context.formatValueAndStyle(
-                    result,
+                parsed = context.formatValueAndStyle(
+                    parsed,
                     Optional.empty()
                 );
             }
         } catch (final UnsupportedOperationException rethrow) {
             throw rethrow;
         } catch (final RuntimeException failed) {
-            result = context.formatThrowableAndStyle(
+            parsed = setError(
+                parsed.setFormula(formula),
                 failed,
-                cell.setFormula(formula)
+                SpreadsheetErrorKind.VALUE
             );
         }
 
-        return result;
+        return parsed;
     }
 
     // EVAL ............................................................................................................
@@ -1715,80 +1715,102 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                            final SpreadsheetEngineContext context) {
         SpreadsheetCell result = cell;
 
-        try {
-            // special case formula.text is empty but value is present
-            {
-                SpreadsheetFormula formula = cell.formula();
-                if (false == formula.text().isEmpty()) {
+        // special case formula.text is empty but value is present
+        boolean validate = true;
 
-                    // ask enum to dispatch
-                    final Optional<Expression> maybeExpression = formula.expression();
-                    if (maybeExpression.isPresent()) {
-                        result = cell.setFormula(
-                            formula.setValue(
-                                evaluation.evaluate(
-                                    this,
-                                    cell,
-                                    loader,
-                                    context
+        // evaluate Expression if one is present.
+        final SpreadsheetFormula formula = cell.formula();
+
+        if (false == formula.text().isEmpty()) {
+            final Optional<Expression> maybeExpression = formula.expression();
+            if (maybeExpression.isPresent()) {
+                try {
+                    result = cell.setFormula(
+                        formula.setValue(
+                            evaluation.evaluate(
+                                this,
+                                cell,
+                                loader,
+                                context
+                            )
+                        ).setValueIfError(context)
+                    );
+                } catch (final UnsupportedOperationException rethrow) {
+                    throw rethrow;
+                } catch (final RuntimeException cause) {
+                    // translate runtime exception/error into SpreadsheetError and SpreadsheetCell#setValue
+                    final SpreadsheetError error = SpreadsheetErrorKind.translate(cause);
+                    final Optional<Object> valueReplacingError = error.replaceWithValueIfPossible(context);
+
+                    result = context.formatValueAndStyle(
+                        cell.setFormula(
+                            cell.formula()
+                                .setValue(
+                                    valueReplacingError.isPresent() ?
+                                        valueReplacingError :
+                                        Optional.of(error)
                                 )
-                            ).setValueIfError(context)
-                        );
-                    }
+                        ),
+                        Optional.empty() // ignore cell formatter
+                    );
+
+                    validate = false;
                 }
             }
+        }
 
-            result = this.validate(
+        // if only value (no Expression) OR Expression resulted in a value and not an error then validate
+        if (validate) {
+            result = validate(
                 result,
                 loader,
-                context
+                context.setSpreadsheetEngineContextMode(SpreadsheetEngineContextMode.VALIDATION)
             );
+        }
 
-            result = context.formatValueAndStyle(
+        if (validate) {
+            result = formatValueAndStyle(
                 result,
-                cell.formatter()
-            );
-        } catch (final UnsupportedOperationException rethrow) {
-            throw rethrow;
-        } catch (final RuntimeException cause) {
-            result = context.formatThrowableAndStyle(
-                cause,
-                cell
+                context
             );
         }
 
         return result;
     }
 
-    /**
-     * If the current cell has a validator and has no error, validate the value.
-     */
-    private SpreadsheetCell validate(final SpreadsheetCell cell,
-                                     final SpreadsheetExpressionReferenceLoader loader,
-                                     final SpreadsheetEngineContext context) {
-        SpreadsheetCell result = cell;
+    private static SpreadsheetCell validate(final SpreadsheetCell cell,
+                                            final SpreadsheetExpressionReferenceLoader loader,
+                                            final SpreadsheetEngineContext context) {
+        SpreadsheetCell validated = cell;
 
         final ValidatorSelector validatorSelector = cell.validator()
             .orElse(null);
         if (null != validatorSelector) {
-            final SpreadsheetFormula formula = cell.formula();
-            if (false == formula.error().isPresent()) {
-                result = validate0(
+            try {
+                validated = validateWithValidator(
                     cell,
                     validatorSelector,
-                    loader,
-                    context.setSpreadsheetEngineContextMode(SpreadsheetEngineContextMode.VALIDATION)
+                    loader, // loader
+                    context // context
+                );
+            } catch (final UnsupportedOperationException rethrow) {
+                throw rethrow;
+            } catch (final RuntimeException cause) {
+                validated = setError(
+                    validated,
+                    cause,
+                    SpreadsheetErrorKind.VALIDATION
                 );
             }
         }
 
-        return result;
+        return validated;
     }
 
-    private static SpreadsheetCell validate0(final SpreadsheetCell cell,
-                                             final ValidatorSelector validatorSelector,
-                                             final SpreadsheetExpressionReferenceLoader loader,
-                                             final SpreadsheetEngineContext context) {
+    private static SpreadsheetCell validateWithValidator(final SpreadsheetCell cell,
+                                                         final ValidatorSelector validatorSelector,
+                                                         final SpreadsheetExpressionReferenceLoader loader,
+                                                         final SpreadsheetEngineContext context) {
         final ProviderContext providerContext = context.providerContext();
         final Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext> validator = context.validator(
             validatorSelector,
@@ -1816,7 +1838,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     loader
                                 ).addLocalVariable(
                                     SpreadsheetValidatorContext.VALUE,
-                                    value
+                                    Optional.ofNullable(value)
                                 ),
                                 context, // SpreadsheetLabelNameResolver
                                 context, // ConverterProvider
@@ -1826,6 +1848,50 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     )
                 )
             )
+        );
+    }
+
+    private static SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
+                                                       final SpreadsheetEngineContext context) {
+        SpreadsheetCell formatted;
+
+        try {
+            formatted = context.formatValueAndStyle(
+                cell,
+                cell.formatter()
+            );
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException cause) {
+            formatted = setError(
+                cell,
+                cause,
+                SpreadsheetErrorKind.FORMATTING
+            );
+        }
+
+        return formatted;
+    }
+
+    private static SpreadsheetCell setError(final SpreadsheetCell cell,
+                                            final RuntimeException cause,
+                                            final SpreadsheetErrorKind kind) {
+        final String messageOrNull = cause.getMessage();
+
+        final String message =  CharSequences.isNullOrEmpty(messageOrNull) ?
+            cause.getClass().getName() :
+            messageOrNull;
+        final SpreadsheetError error = kind.setMessage(message);
+
+        final SpreadsheetFormula formula = cell.formula();
+        return cell.setFormula(
+            kind.isExpression() ?
+            formula.setValue(
+                    Optional.of(error)
+                ) :
+                formula.setError(
+                    Optional.of(error)
+                )
         );
     }
 
