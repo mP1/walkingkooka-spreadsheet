@@ -740,6 +740,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             return this.decimalNumberContext.mathContext();
         }
 
+        @Override
+        public char valueSeparator() {
+            return ',';
+        }
+
         private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
     };
     

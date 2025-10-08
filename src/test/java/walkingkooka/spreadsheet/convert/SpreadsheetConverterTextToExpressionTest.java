@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -26,6 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.FormHandlerContexts;
 
@@ -115,6 +117,23 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                     TERMINAL_CONTEXT,
                     ExpressionFunctionProviders.fake(),
                     ProviderContexts.fake()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testConvertStringWithValueSeparatorToExpression() {
+        this.convertAndCheck(
+            "list(\"a\",\"b\")",
+            Expression.class,
+            Expression.call(
+                Expression.namedFunction(
+                    ExpressionFunctionName.with("list")
+                ),
+                Lists.of(
+                    Expression.value("a"),
+                    Expression.value("b")
                 )
             )
         );
