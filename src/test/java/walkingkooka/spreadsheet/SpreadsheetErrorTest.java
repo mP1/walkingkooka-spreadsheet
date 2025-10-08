@@ -44,6 +44,7 @@ import walkingkooka.validation.HasValidationChoiceListTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationErrorList;
 
 import java.util.List;
 import java.util.Optional;
@@ -652,6 +653,131 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                 .setMessage(message)
                 .setValue(value),
             error.toValidationError(cell)
+        );
+    }
+
+    // toExpressionError................................................................................................
+
+    @Test
+    public void testToExpressionErrorWithDiv0() {
+        this.toExpressionErrorAndCheck(
+            SpreadsheetErrorKind.DIV0.toError()
+        );
+    }
+
+    @Test
+    public void testToExpressionErrorWithError() {
+        this.toExpressionErrorAndCheck(
+            SpreadsheetErrorKind.ERROR.toError()
+        );
+    }
+
+    @Test
+    public void testToExpressionErrorWithFormatting() {
+        final String message = "Formatter threw exception 123";
+
+        this.toExpressionErrorAndCheck(
+            SpreadsheetErrorKind.FORMATTING.setMessage(message),
+            SpreadsheetErrorKind.ERROR.setMessage(message)
+        );
+    }
+
+    @Test
+    public void testToExpressionErrorWithValidationChoiceList() {
+        this.toExpressionErrorAndCheck(
+            SpreadsheetError.validationChoiceList(
+                ValidationChoiceList.EMPTY.concat(
+                    ValidationChoice.with(
+                        "Label1",
+                        Optional.of(111)
+                    )
+                )
+            ),
+            Optional.empty()
+        );
+    }
+
+    @Test
+    public void testToExpressionErrorWithValidation() {
+        final String message = "Bad choice 123";
+
+
+        this.toExpressionErrorAndCheck(
+            SpreadsheetErrorKind.VALIDATION.setMessage(message),
+            SpreadsheetErrorKind.VALUE.setMessage(message)
+        );
+    }
+
+    @Test
+    public void testToExpressionErrorWithValidationError() {
+        final String message = "Bad choice 123";
+
+        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
+            .concat(
+                SpreadsheetForms.error(
+                    SpreadsheetSelection.A1
+                ).setMessage(message)
+            );
+
+        this.toExpressionErrorAndCheck(
+            SpreadsheetError.validationErrors(errors)
+                .get(),
+            SpreadsheetErrorKind.ERROR.setMessage(message)
+        );
+    }
+
+    @Test
+    public void testToExpressionErrorWithValidationErrorWithValidationChoiceList() {
+        final String message = "Bad choice 123";
+
+        final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
+            ValidationChoice.with(
+                "Label1",
+                Optional.of(111)
+            )
+        );
+
+        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
+            .concat(
+                SpreadsheetForms.error(
+                        SpreadsheetSelection.A1
+                    ).setMessage(message)
+                    .setValue(
+                        Optional.of(choices)
+                    )
+            );
+
+        this.toExpressionErrorAndCheck(
+            SpreadsheetError.validationErrors(errors)
+                .get(),
+            SpreadsheetErrorKind.ERROR.setMessageAndValue(
+                message,
+                choices
+            )
+        );
+    }
+
+    private void toExpressionErrorAndCheck(final SpreadsheetError error) {
+        this.toExpressionErrorAndCheck(
+            error,
+            error
+        );
+    }
+
+    private void toExpressionErrorAndCheck(final SpreadsheetError error,
+                                           final SpreadsheetError expected) {
+        this.toExpressionErrorAndCheck(
+            error,
+            Optional.of(expected)
+        );
+    }
+
+    private void toExpressionErrorAndCheck(final SpreadsheetError error,
+                                           final Optional<SpreadsheetError> expected) {
+        this.checkEquals(
+            expected,
+            error.toExpressionError(),
+            error::toString
         );
     }
 
