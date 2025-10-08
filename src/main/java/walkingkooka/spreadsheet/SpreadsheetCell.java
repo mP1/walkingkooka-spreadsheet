@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet;
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
-import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
@@ -1432,16 +1431,22 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.reference)
             .value(this.formula)
-            .value(this.dateTimeSymbols)
-            .value(this.decimalNumberSymbols)
-            .value(this.locale)
+            .label("dateTimeSymbols")
+            .value(this.dateTimeSymbols.map(Object::toString))
+            .label("decimalNumberSymbols")
+            .value(this.decimalNumberSymbols.map(Object::toString))
+            .label("formatter")
+            .value(this.formatter.map(Object::toString))
+            .label("formattedValue")
+            .value(this.formattedValue)
+            .label("locale")
+            .value(this.locale.map(Object::toString))
+            .label("parser")
+            .value(this.parser.map(Object::toString))
+            .label("style")
             .value(this.style)
-            .enable(ToStringBuilderOption.QUOTE)
-            .value(this.parser.map(Object::toString).orElse(""))
-            .value(this.formatter.map(Object::toString).orElse(""))
-            .value(this.validator.map(Object::toString).orElse(""))
-            .disable(ToStringBuilderOption.QUOTE)
-            .value(this.formattedValue);
+            .label("validator")
+            .value(this.validator.map(Object::toString));
     }
 
     // HasTextNode......................................................................................................

@@ -3202,6 +3202,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+
     @Test
     public void testToStringWithDateTimeSymbols() {
         this.toStringAndCheck(
@@ -3209,7 +3210,15 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setDateTimeSymbols(this.dateTimeSymbols(LOCALE)),
-            "A1 =1+2 ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\""
+            "A1 =1+2 dateTimeSymbols=\"ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\"\""
+        );
+    }
+
+    @Test
+    public void testToStringFormula() {
+        this.toStringAndCheck(
+            REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("=1+2")),
+            "A1 =1+2"
         );
     }
 
@@ -3222,7 +3231,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             ).setLocale(
                 Optional.of(LOCALE)
             ),
-            "A1 =1+2 en_AU"
+            "A1 =1+2 locale=\"en_AU\""
         );
     }
 
@@ -3233,7 +3242,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setFormatter(this.formatter()),
-            "A1 =1+2 \"text-format-pattern @@\""
+            "A1 =1+2 formatter=\"text-format-pattern @@\""
         );
     }
 
@@ -3244,7 +3253,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setParser(this.parser()),
-            "A1 =1+2 \"date-time-parse-pattern dd/mm/yyyy\""
+            "A1 =1+2 parser=\"date-time-parse-pattern dd/mm/yyyy\""
         );
     }
 
@@ -3255,7 +3264,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setStyle(BOLD_ITALICS),
-            "A1 =1+2 {font-style=ITALIC, font-weight=bold}"
+            "A1 =1+2 style={font-style=ITALIC, font-weight=bold}"
         );
     }
 
@@ -3266,7 +3275,28 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setValidator(this.differentValidator()),
-            "A1 =1+2 \"different-validator-456\""
+            "A1 =1+2 validator=\"different-validator-456\""
+        );
+    }
+
+    @Test
+    public void testToStringWithFormatterLocaleParserTextStyleValidator() {
+        this.toStringAndCheck(
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY.setText("=1+2")
+            ).setFormatter(
+                Optional.of(SpreadsheetFormatterSelector.parse("formatter111"))
+            ).setLocale(
+                Optional.of(Locale.FRANCE)
+            ).setParser(
+                Optional.of(SpreadsheetParserSelector.parse("parser111"))
+            ).setStyle(
+                TextStyle.parse("color: red;")
+            ).setValidator(
+                Optional.of(ValidatorSelector.parse("validator111"))
+            ),
+            "A1 =1+2 formatter=\"formatter111\" locale=\"fr_FR\" parser=\"parser111\" style={color=red} validator=\"validator111\""
         );
     }
 
