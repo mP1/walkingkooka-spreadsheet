@@ -200,12 +200,14 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
     @Test
     public void testWithFormulaListValue() {
+        final Optional<Object> value = Optional.of(
+            Lists.empty()
+        );
+
         final SpreadsheetCell cell = SpreadsheetCell.with(
             REFERENCE,
             SpreadsheetFormula.EMPTY.setText("=1+2")
-                .setValue(
-                    Optional.of(Lists.empty())
-                )
+                .setValue(value)
         );
 
         this.referenceAndCheck(cell);
@@ -214,7 +216,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             SpreadsheetFormula.EMPTY.setText("=1+2")
                 .setValue(
                     Optional.of(
-                        SpreadsheetErrorKind.VALUE)
+                        SpreadsheetErrorKind.VALUE.toError()
+                            .setValue(value)
+                    )
                 )
         );
         this.dateTimeSymbolsAndCheck(cell);
@@ -376,12 +380,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testSetFormulaDifferentListValue() {
+    public void testSetFormulaWithListValue() {
         final SpreadsheetCell cell = this.createCell();
+
+        final Optional<Object> value = Optional.of(
+            Lists.of(1, 22, "three")
+        );
 
         final SpreadsheetCell different = cell.setFormula(
             SpreadsheetFormula.EMPTY
-                .setValue(Optional.of(Lists.empty()))
+                .setValue(value)
         );
         assertNotSame(cell, different);
 
@@ -390,7 +398,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             different,
             SpreadsheetFormula.EMPTY
                 .setValue(
-                    Optional.of(SpreadsheetErrorKind.VALUE)
+                    Optional.of(
+                        SpreadsheetErrorKind.VALUE.toError()
+                            .setValue(value)
+                    )
                 )
         );
         this.dateTimeSymbolsAndCheck(different);
