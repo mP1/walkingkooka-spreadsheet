@@ -72,7 +72,6 @@ import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -269,8 +268,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final SpreadsheetFormula formula;
 
     /**
-     * If a formula has a Collection value, return the {@link SpreadsheetFormula#value()} with {@link SpreadsheetErrorKind#VALUE}.
-     * A cell range resolves to a {@link List}, thus a cell = a range, will show an #VALUE!.
+     * Verifies that the {@link SpreadsheetFormula#value()} is not a {@link Collection}. Collections will be turned into a
+     * {@link SpreadsheetError} with {@link SpreadsheetErrorKind#VALUE}.
      */
     private static SpreadsheetFormula checkFormula(final SpreadsheetFormula formula) {
         Objects.requireNonNull(formula, "formula");
@@ -278,9 +277,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
         // if value is a List formula should have an ERROR of #VALUE!
         return formula.setValue(
             formula.value()
-                .map(v -> v instanceof Collection ? SpreadsheetErrorKind.VALUE : v)
+                .map(v -> v instanceof Collection ?
+                    SpreadsheetErrorKind.VALUE.toError().setValue(
+                        Optional.of(v)
+                    ) :
+                    v
+                )
         );
-        // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/2205
     }
 
     // dateTimeSymbols..................................................................................................
