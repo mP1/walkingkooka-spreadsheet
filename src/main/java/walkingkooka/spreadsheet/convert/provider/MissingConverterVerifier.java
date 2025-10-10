@@ -1233,6 +1233,9 @@ final class MissingConverterVerifier {
                                         2000
                                     )
                                 )
+                            ),
+                            Lists.of(
+                                "Choice1000,Choice2000,Choice3000,"
                             )
                         ),
                         ValidationChoiceList.class,
