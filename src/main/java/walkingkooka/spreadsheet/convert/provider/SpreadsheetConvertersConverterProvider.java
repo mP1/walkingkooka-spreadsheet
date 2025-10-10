@@ -530,6 +530,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toStyleable();
                 break;
+            case TO_VALIDATION_CHOICE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.toValidationChoice();
+                break;
             case TO_VALIDATION_CHOICE_LIST_STRING:
                 noParameterCheck(copy);
 
@@ -933,6 +938,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_STYLEABLE = ConverterName.with(TO_STYLEABLE_STRING);
 
+    private final static String TO_VALIDATION_CHOICE_STRING = "to-validation-choice";
+
+    final static ConverterName TO_VALIDATION_CHOICE = ConverterName.with(TO_VALIDATION_CHOICE_STRING);
+
     private final static String TO_VALIDATION_CHOICE_LIST_STRING = "to-validation-choice-list";
 
     final static ConverterName TO_VALIDATION_CHOICE_LIST = ConverterName.with(TO_VALIDATION_CHOICE_LIST_STRING);
@@ -1049,6 +1058,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TO_JSON),
             converterInfo(TO_NUMBER),
             converterInfo(TO_STYLEABLE),
+            converterInfo(TO_VALIDATION_CHOICE),
             converterInfo(TO_VALIDATION_CHOICE_LIST),
             converterInfo(TO_VALIDATION_ERROR_LIST),
             converterInfo(URL),
