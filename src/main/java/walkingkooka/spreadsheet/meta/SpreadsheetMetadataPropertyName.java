@@ -24,7 +24,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
-import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
@@ -35,37 +34,26 @@ import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlPathName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
-import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
-import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
-import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterName;
-import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
-import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterName;
-import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserName;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
-import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -73,17 +61,12 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.text.FontFamily;
-import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
-import walkingkooka.validation.form.provider.FormHandlerName;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
-import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -924,86 +907,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     static SpreadsheetMetadataPropertyName<?> unmarshallName(final JsonNode node) {
         return with(node.name().value());
-    }
-
-    /*
-     * Force class initialization of the following types which will ensure they also {@link walkingkooka.tree.json.marshall.JsonNodeContext#register(String, BiFunction, BiFunction, Class, Class[])}
-     */
-    static {
-        final EmailAddress emailAddress = EmailAddress.parse("user@example.com");
-        final LocalDateTime now = LocalDateTime.now();
-
-        final Locale locale = Locale.getDefault();
-
-        AuditInfo.with(
-            emailAddress,
-            now,
-            emailAddress,
-            now
-        );
-        Color.BLACK.alpha();
-        ConverterSelector.parse("Dummy");
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(locale)
-        );
-        DecimalNumberSymbols.with(
-            '-',
-            '+',
-            '0',
-            "$",
-            '.',
-            "E",
-            ',',
-            "Infinity",
-            '.',
-            "Nan",
-            ';',
-            '^'
-        );
-        ExpressionNumberKind.DEFAULT.name();
-        SpreadsheetExpressionFunctions.parseAliasSet("hello");
-        FontFamily.with("MS Sans Serif");
-        FontSize.with(1);
-        FormHandlerAliasSet.EMPTY.isEmpty();
-        SpreadsheetCellFindQuery.empty();
-
-        PluginNameSet.parse("");
-
-        SpreadsheetComparatorNameList.parse(
-            SpreadsheetComparatorName.TEXT.toString()
-        );
-        ConverterSelector.with(
-            ConverterName.NEVER,
-            ""
-        );
-        FormHandlerAliasSet.parse("helloFormHandler");
-        FormHandlerSelector.with(
-            FormHandlerName.with("HelloFormHandler"),
-            ""
-        );
-        SpreadsheetExporterAliasSet.parse("json");
-        SpreadsheetExporterSelector.with(
-            SpreadsheetExporterName.EMPTY,
-            ""
-        );
-        SpreadsheetFormatterSelector.with(
-            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
-            "dd/mm/yyyy"
-        );
-        SpreadsheetImporterAliasSet.parse("json");
-        SpreadsheetImporterSelector.with(
-            SpreadsheetImporterName.EMPTY,
-            ""
-        );
-        SpreadsheetParserSelector.with(
-            SpreadsheetParserName.DATE_PARSER_PATTERN,
-            "dd/mm/yyyy"
-        );
-        //noinspection ResultOfMethodCallIgnored
-        SpreadsheetId.with(0);
-        SpreadsheetName.with("Untitled");
-        ValidatorAliasSet.EMPTY.isEmpty();
-        SpreadsheetViewport.NO_NAVIGATION.isEmpty();
     }
 
     // HasId............................................................................................................
