@@ -61,6 +61,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.storage.StorageStartup;
+import walkingkooka.template.TemplateStartup;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.text.TreeTextStartup;
 import walkingkooka.validation.ValidationStartup;
@@ -73,6 +74,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
     static {
         PluginStartup.init();
         StorageStartup.init();
+        TemplateStartup.init();
         TreeTextStartup.init();
         ValidationStartup.init();
 
