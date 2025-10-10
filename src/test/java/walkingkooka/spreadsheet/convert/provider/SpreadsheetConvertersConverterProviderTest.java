@@ -864,6 +864,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToValidationErrorList() {
+        this.converterAndCheck(
+            "to-validation-error-list",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toValidationErrorList()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithUrl() {
         this.converterAndCheck(
             "url",
