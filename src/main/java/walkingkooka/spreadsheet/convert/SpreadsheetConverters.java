@@ -955,6 +955,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ValidationConvertConverters.toValidationChoiceList}
+     */
+    public static Converter<SpreadsheetConverterContext> toValidationChoiceList() {
+        return ValidationConvertConverters.toValidationChoiceList();
+    }
+
+    /**
      * {@see ValidationConvertConverters#toValidationErrorList}
      */
     public static Converter<SpreadsheetConverterContext> toValidationErrorList() {
