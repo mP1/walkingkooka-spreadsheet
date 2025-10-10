@@ -103,6 +103,8 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasLocale;
 import walkingkooka.util.HasOptionalLocale;
+import walkingkooka.validation.ValidationChoice;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationValueTypeName;
@@ -784,6 +786,47 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testFormAndValidationConvertNumberToValidationChoice() {
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123);
+
+        this.formAndValidationConvertAndCheck(
+            value,
+            ValidationChoice.with(
+                "123",
+                Optional.ofNullable(value)
+            )
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertStringToValidationChoice() {
+        final String value = "Value1";
+
+        this.formAndValidationConvertAndCheck(
+            value,
+            ValidationChoice.with(
+                value,
+                Optional.ofNullable(value)
+            )
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertListOfStringToValidationChoiceList() {
+        final String value = "Value1";
+
+        this.formAndValidationConvertAndCheck(
+            Lists.of(value),
+            ValidationChoiceList.EMPTY.concat(
+                ValidationChoice.with(
+                    value,
+                    Optional.ofNullable(value)
+                )
+            )
+        );
+    }
+
+    @Test
     public void testFormAndValidationConvertStringToValidationError() {
         final ValidationError<SpreadsheetExpressionReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
             .toValidationError(SpreadsheetSelection.A1);
@@ -851,7 +894,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
                 SpreadsheetConverters.basic(),
-                SpreadsheetConverters.text()
+                SpreadsheetConverters.text(),
+                Converters.objectToString(),
+                SpreadsheetConverters.toValidationChoice()
             )
         );
 
