@@ -21,25 +21,34 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.provider.ConvertProviderStartup;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
+import walkingkooka.plugin.PluginStartup;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorInfo;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.convert.provider.MissingConverterSet;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterInfo;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterInfoSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterName;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterInfo;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterInfoSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfo;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserInfo;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserInfoSet;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserName;
@@ -51,8 +60,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
+import walkingkooka.storage.StorageStartup;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.text.TreeTextStartup;
+import walkingkooka.validation.ValidationStartup;
 
 /**
  * Used to force all values types to register their {@link JsonNodeContext#register}
@@ -60,7 +71,10 @@ import walkingkooka.tree.text.TreeTextStartup;
 public final class SpreadsheetStartup implements PublicStaticHelper {
 
     static {
+        PluginStartup.init();
+        StorageStartup.init();
         TreeTextStartup.init();
+        ValidationStartup.init();
 
         // register json marshallers/unmarshallers.
         SpreadsheetCell.with(
@@ -78,9 +92,9 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         SpreadsheetDelta.EMPTY.window();
 
-        SpreadsheetFunctionName.with("Hello");
+        SpreadsheetErrorKind.ERROR.setMessage("Hello");
 
-        SpreadsheetMetadata.EMPTY.id();
+        SpreadsheetFunctionName.with("Hello");
 
         SpreadsheetViewport.with(
             SpreadsheetViewportRectangle.with(
@@ -90,9 +104,14 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
             )
         );
 
+        SpreadsheetCellFindQuery.empty();
+
         final AbsoluteUrl url = Url.parseAbsolute("https://example.com");
 
         {
+            SpreadsheetComparatorNameList.EMPTY.size();
+
+            SpreadsheetComparatorAliasSet.EMPTY.size();
             SpreadsheetComparatorInfoSet.with(
                 Lists.of(
                     SpreadsheetComparatorInfo.with(
@@ -101,11 +120,13 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                     )
                 )
             );
+            SpreadsheetComparatorSelector.parse("Hello");
         }
 
         ConvertProviderStartup.init();
 
         {
+            SpreadsheetExporterAliasSet.EMPTY.size();
             SpreadsheetExporterInfoSet.with(
                 Lists.of(
                     SpreadsheetExporterInfo.with(
@@ -117,6 +138,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         }
 
         {
+            SpreadsheetFormatterAliasSet.EMPTY.size();
             SpreadsheetFormatterInfoSet.with(
                 Lists.of(
                     SpreadsheetFormatterInfo.with(
@@ -128,6 +150,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         }
 
         {
+            SpreadsheetImporterAliasSet.EMPTY.size();
             SpreadsheetImporterInfoSet.with(
                 Lists.of(
                     SpreadsheetImporterInfo.with(
@@ -139,6 +162,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         }
 
         {
+            SpreadsheetParserAliasSet.EMPTY.size();
             SpreadsheetParserInfoSet.with(
                 Lists.of(
                     SpreadsheetParserInfo.with(
@@ -159,6 +183,8 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         SpreadsheetExpressionReferenceSet.EMPTY.size();
         SpreadsheetLabelNameSet.EMPTY.size();
         SpreadsheetRowReferenceSet.EMPTY.size();
+
+        SpreadsheetMetadata.EMPTY.id();
     }
 
     public static void init() {

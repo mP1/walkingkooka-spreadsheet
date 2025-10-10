@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.SpreadsheetStartup;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
@@ -88,7 +89,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
@@ -1600,7 +1600,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     static {
-        SpreadsheetMetadataPropertyName.AUDIT_INFO.caseSensitivity();
+        SpreadsheetStartup.init();
 
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),
@@ -1618,10 +1618,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public static final SpreadsheetMetadata NON_LOCALE_DEFAULTS = nonLocaleDefaults();
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
-        EMPTY.id(); // force JsonNodeContext registering of collaborating types.
-        SpreadsheetSelection.parseCellRange("A1");
-        TextStyle.EMPTY.isEmpty();
-
         // locale and now are not actually used w/in this method.
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
