@@ -273,10 +273,6 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
 
     // Json.............................................................................................................
 
-    static void register() {
-        // helps force registry of json marshaller
-    }
-
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(
             this.pluginAliasSet.text()
@@ -297,6 +293,5 @@ public final class SpreadsheetImporterAliasSet extends AbstractSet<SpreadsheetIm
             SpreadsheetImporterAliasSet::marshall,
             SpreadsheetImporterAliasSet.class
         );
-        SpreadsheetImporterInfoSet.EMPTY.size(); // trigger static init and json marshall/unmarshall registry
     }
 }

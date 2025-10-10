@@ -240,8 +240,6 @@ public final class SpreadsheetParserInfoSet extends AbstractSet<SpreadsheetParse
     }
 
     static {
-        SpreadsheetParserInfo.register(); // force registry of json marshaller
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetParserInfoSet.class),
             SpreadsheetParserInfoSet::unmarshall,

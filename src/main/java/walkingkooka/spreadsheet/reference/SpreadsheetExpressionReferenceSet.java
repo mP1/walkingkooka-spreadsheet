@@ -114,10 +114,6 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
 
     // Json.............................................................................................................
 
-    static void register() {
-        // helps force registry of json marshaller
-    }
-
     static SpreadsheetExpressionReferenceSet unmarshall(final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         return parse(
@@ -132,7 +128,5 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
             SpreadsheetExpressionReferenceSet::marshall,
             SpreadsheetExpressionReferenceSet.class
         );
-        SpreadsheetSelection.A1.toCell(); // trigger static init and json marshall/unmarshall registry
-        SpreadsheetSelection.labelName("Hello");
     }
 }

@@ -1841,16 +1841,6 @@ public abstract class SpreadsheetSelection implements HasText,
             SpreadsheetSelection::unmarshallRowRange,
             SpreadsheetRowRangeReference.class
         );
-
-        SpreadsheetCell.NO_FORMATTED_VALUE_CELL.isPresent();
-        SpreadsheetReferenceKind.ABSOLUTE.firstColumn();
-        SpreadsheetLabelMapping.init();
-        SpreadsheetReferenceKind.ABSOLUTE.firstRow();
-
-        SpreadsheetCellReferenceSet.register();
-        SpreadsheetColumnReferenceSet.register();
-        SpreadsheetLabelNameSet.register();
-        SpreadsheetRowReferenceSet.register();
     }
 
     private static <T extends SpreadsheetSelection> void register(final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,

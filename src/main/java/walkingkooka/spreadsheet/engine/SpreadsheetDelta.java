@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
-import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
@@ -3077,12 +3076,6 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
     static {
-        // force static initializers to run, preventing Json type name lookup failures.
-        Form.nameComparator();
-        SpreadsheetViewport.SEPARATOR.toString();
-        SpreadsheetViewportWindows.EMPTY.toString();
-        SpreadsheetFunctionName.with("forceJsonRegister");
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetDelta.class),
             SpreadsheetDelta::unmarshall,
