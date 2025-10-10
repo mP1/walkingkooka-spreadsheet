@@ -110,10 +110,6 @@ public final class SpreadsheetRowReferenceSet extends SpreadsheetSelectionSet<Sp
 
     // Json.............................................................................................................
 
-    static void register() {
-        // helps force registry of json marshaller
-    }
-
     static SpreadsheetRowReferenceSet unmarshall(final JsonNode node,
                                                  final JsonNodeUnmarshallContext context) {
         return parse(
@@ -128,6 +124,5 @@ public final class SpreadsheetRowReferenceSet extends SpreadsheetSelectionSet<Sp
             SpreadsheetRowReferenceSet::marshall,
             SpreadsheetRowReferenceSet.class
         );
-        SpreadsheetSelection.A1.toRow(); // trigger static init and json marshall/unmarshall registry
     }
 }

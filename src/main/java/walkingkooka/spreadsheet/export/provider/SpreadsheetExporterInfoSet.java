@@ -240,8 +240,6 @@ public final class SpreadsheetExporterInfoSet extends AbstractSet<SpreadsheetExp
     }
 
     static {
-        SpreadsheetExporterInfo.register(); // force registry of json marshaller
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetExporterInfoSet.class),
             SpreadsheetExporterInfoSet::unmarshall,

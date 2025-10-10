@@ -114,10 +114,6 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
 
     // Json.............................................................................................................
 
-    static void register() {
-        // helps force registry of json marshaller
-    }
-
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
@@ -136,6 +132,5 @@ public final class SpreadsheetImporterInfo implements PluginInfoLike<Spreadsheet
             SpreadsheetImporterInfo::marshall,
             SpreadsheetImporterInfo.class
         );
-        SpreadsheetImporterName.with("hello"); // trigger static init and json marshall/unmarshall registry
     }
 }

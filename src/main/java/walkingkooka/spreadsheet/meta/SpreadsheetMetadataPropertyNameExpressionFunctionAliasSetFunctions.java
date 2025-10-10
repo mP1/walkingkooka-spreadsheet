@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 /**
@@ -25,10 +24,6 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
  * map and filter which functions are available to a single spreadsheet.
  */
 final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
-
-    static {
-        SpreadsheetExpressionFunctions.EMPTY_INFO_SET.text(); // force registry of json marshaller
-    }
 
     /**
      * Factory, the constant on {@link SpreadsheetMetadataPropertyName} will hold the singleton.

@@ -110,10 +110,6 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
 
     // Json.............................................................................................................
 
-    static void register() {
-        // helps force registry of json marshaller
-    }
-
     static SpreadsheetLabelNameSet unmarshall(final JsonNode node,
                                               final JsonNodeUnmarshallContext context) {
         return parse(
@@ -128,6 +124,5 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
             SpreadsheetLabelNameSet::marshall,
             SpreadsheetLabelNameSet.class
         );
-        SpreadsheetSelection.labelName("Hello"); // trigger static init and json marshall/unmarshall registry
     }
 }
