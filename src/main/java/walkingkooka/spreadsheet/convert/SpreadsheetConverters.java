@@ -263,6 +263,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "form-and-validation",
         textToFormName(),
         textToValidationError(),
+        toValidationChoice(),
+        toValidationChoiceList(),
         toValidationErrorList()
     );
 

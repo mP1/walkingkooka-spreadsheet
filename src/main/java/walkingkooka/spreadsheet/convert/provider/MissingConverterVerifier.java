@@ -85,6 +85,8 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationChoice;
+import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationValueTypeName;
@@ -1190,6 +1192,53 @@ final class MissingConverterVerifier {
                 }
 
                 if (validation) {
+                    // to-validation-choice.............................................................................
+                    finder.addIfConversionFail(
+                        Lists.of(
+                            111,
+                            "Choice1"
+                        ),
+                        ValidationChoice.class,
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                    );
+
+                    // to-validation-choice-list........................................................................
+                    finder.addIfConversionFail(
+                        Lists.of(
+                            Lists.of(
+                                ValidationChoice.with(
+                                    "Choice1",
+                                    Optional.of(111)
+                                ),
+                                ValidationChoice.with(
+                                    "Choice2",
+                                    Optional.of(222
+                                    )
+                                )
+                            ),
+                            Lists.of(
+                                ValidationChoice.with(
+                                    "",
+                                    Optional.empty()
+                                ),
+                                ValidationChoice.with(
+                                    "Choice100",
+                                    Optional.of(
+                                        1000
+                                    )
+                                ),
+                                ValidationChoice.with(
+                                    "Choice200",
+                                    Optional.of(
+                                        2000
+                                    )
+                                )
+                            )
+                        ),
+                        ValidationChoiceList.class,
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                    );
+
                     // to-validation-error-list.........................................................................
                     finder.addIfConversionFail(
                         Lists.of(
