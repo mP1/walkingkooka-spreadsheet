@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -30,6 +31,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -57,11 +59,19 @@ import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.Printers;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
+import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -574,6 +584,61 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    // evaluateFunction.................................................................................................
+
+    @Test
+    public void testEvaluateFunctionMissingParameters() {
+        final ExpressionFunctionName functionName = ExpressionFunctionName.with("TestFunction592");
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(
+            new FakeExpressionFunctionProvider<>() {
+
+                @Override
+                public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                        final List<?> values,
+                                                                                                        final ProviderContext context) {
+                    return new FakeExpressionFunction<>() {
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return Optional.of(functionName);
+                        }
+
+                        @Override
+                        public List<ExpressionFunctionParameter<?>> parameters(int count) {
+                            return Lists.of(
+                                ExpressionFunctionParameter.DATE,
+                                ExpressionFunctionParameter.DATETIME,
+                                ExpressionFunctionParameter.TIME
+                            );
+                        }
+
+                        @Override
+                        public Object apply(final List<Object> parameters,
+                                            final SpreadsheetExpressionEvaluationContext context) {
+                            this.checkParameterCount(parameters);
+                            throw new UnsupportedOperationException();
+                        }
+                    };
+                }
+            }
+        );
+
+        final ExpressionFunction<?, ExpressionEvaluationContext> function = context.expressionFunction(
+            functionName
+        );
+
+        this.evaluateFunctionAndCheck(
+            context,
+            Cast.to(
+                function
+            ),
+            Lists.of(1),
+            Cast.to(
+                SpreadsheetErrorKind.VALUE.setMessage("TestFunction592: Missing parameters: date-time, time")
+            )
+        );
+    }
+
     // environmentContext...............................................................................................
 
     @Test
@@ -841,6 +906,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
+        return this.createContext(
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            ENVIRONMENT_CONTEXT,
+            expressionFunctionProvider,
+            PROVIDER_CONTEXT
+        );
+    }
+
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                       final SpreadsheetConverterContext converterContext,
                                                                       final EnvironmentContext environmentContext) {
@@ -848,6 +923,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             spreadsheetExpressionReferenceLoader,
             converterContext,
             environmentContext,
+            EXPRESSION_FUNCTION_PROVIDER,
             ProviderContexts.fake()
         );
     }
@@ -855,6 +931,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                       final SpreadsheetConverterContext converterContext,
                                                                       final EnvironmentContext environmentContext,
+                                                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                       final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             CELL,
@@ -867,7 +944,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
             FORM_HANDLER_CONTEXT,
             TERMINAL_CONTEXT,
-            EXPRESSION_FUNCTION_PROVIDER,
+            expressionFunctionProvider,
             providerContext
         );
     }
