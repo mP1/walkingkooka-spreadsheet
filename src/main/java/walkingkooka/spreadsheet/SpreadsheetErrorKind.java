@@ -28,7 +28,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.TextException;
 import walkingkooka.Value;
 import walkingkooka.collect.list.ImmutableList;
-import walkingkooka.convert.ConversionException;
+import walkingkooka.convert.ConverterException;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
@@ -313,12 +313,12 @@ public enum SpreadsheetErrorKind implements HasText {
             }
 
             // #VALUE! 	The wrong type of operand or expression argument is used
-            if (cause instanceof ConversionException) {
+            if (cause instanceof ConverterException) {
                 kind = VALUE;
 
-                final ConversionException conversionException = (ConversionException) cause;
-                message = "Cannot convert " + CharSequences.quoteIfChars(conversionException.value()) + " to " + conversionException.type().getSimpleName();
-                value = conversionException.value();
+                final ConverterException converterException = (ConverterException) cause;
+                message = "Cannot convert " + CharSequences.quoteIfChars(converterException.value()) + " to " + converterException.type().getSimpleName();
+                value = converterException.value();
                 break;
             }
 

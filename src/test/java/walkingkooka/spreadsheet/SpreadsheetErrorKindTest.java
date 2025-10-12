@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
-import walkingkooka.convert.ConversionException;
+import walkingkooka.convert.ConverterException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -232,9 +232,9 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
     }
 
     @Test
-    public void testTranslateConversionException() {
+    public void testTranslateConverterException() {
         this.translateAndCheck(
-            new ConversionException(
+            new ConverterException(
                 MESSAGE,
                 "abc",
                 ExpressionNumber.class
