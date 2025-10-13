@@ -38,6 +38,13 @@ public final class SpreadsheetErrorException extends RuntimeException implements
     }
 
     @Override
+    public String getMessage() {
+        return this.error.message();
+    }
+
+    // HasSpreadsheetError..............................................................................................
+
+    @Override
     public SpreadsheetError spreadsheetError() {
         return this.error;
     }
