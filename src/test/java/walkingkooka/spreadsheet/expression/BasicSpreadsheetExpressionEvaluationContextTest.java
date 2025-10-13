@@ -697,7 +697,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             ),
             Lists.of(1),
             Cast.to(
-                SpreadsheetErrorKind.VALUE.setMessage("TestFunction592: Missing parameters: date-time, time")
+                SpreadsheetErrorKind.VALUE.setMessage("TestFunction592: Missing parameter(s): date-time, time")
             )
         );
     }
