@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.HasSpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
@@ -1876,17 +1877,24 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private static SpreadsheetCell setError(final SpreadsheetCell cell,
                                             final RuntimeException cause,
                                             final SpreadsheetErrorKind kind) {
-        final String messageOrNull = cause.getMessage();
+        final SpreadsheetError error;
 
-        final String message =  CharSequences.isNullOrEmpty(messageOrNull) ?
-            cause.getClass().getName() :
-            messageOrNull;
-        final SpreadsheetError error = kind.setMessage(message);
+        if (cause instanceof HasSpreadsheetError) {
+            error = ((HasSpreadsheetError) cause).spreadsheetError()
+                .setKind(kind);
+        } else {
+            final String messageOrNull = cause.getMessage();
+
+            final String message = CharSequences.isNullOrEmpty(messageOrNull) ?
+                cause.getClass().getName() :
+                messageOrNull;
+            error = kind.setMessage(message);
+        }
 
         final SpreadsheetFormula formula = cell.formula();
         return cell.setFormula(
             kind.isExpression() ?
-            formula.setValue(
+                formula.setValue(
                     Optional.of(error)
                 ) :
                 formula.setError(
