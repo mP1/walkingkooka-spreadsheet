@@ -726,6 +726,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 switch (name.value()) {
                     case TEST_NUMBER_PARAMETER:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_NUMBER_PARAMETER)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -751,6 +759,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         };
                     case TEST_STRING_PARAMETER:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_STRING_PARAMETER)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -776,6 +792,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         };
                     case TEST_SUM:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_SUM)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -800,6 +824,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         };
                     case TEST_VALUE:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_VALUE)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -17541,6 +17573,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY,
                         Sets.of(
                             new FakeExpressionFunction<>() {
+
                                 @Override
                                 public Object apply(final List<Object> parameters,
                                                     final SpreadsheetExpressionEvaluationContext context) {

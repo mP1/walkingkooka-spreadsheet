@@ -4162,6 +4162,12 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
 
             private FakeExpressionFunction<Object, ExpressionEvaluationContext> function(final BiFunction<List<Object>, ExpressionEvaluationContext, Object> apply) {
                 return new FakeExpressionFunction<>() {
+
+                    @Override
+                    public Optional<ExpressionFunctionName> name() {
+                        return ExpressionFunction.ANONYMOUS_NAME;
+                    }
+
                     @Override
                     public Object apply(final List<Object> parameters,
                                         final ExpressionEvaluationContext context) {

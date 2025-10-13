@@ -317,7 +317,12 @@ public enum SpreadsheetErrorKind implements HasText {
                 kind = VALUE;
 
                 final ConverterException converterException = (ConverterException) cause;
-                message = "Cannot convert " + CharSequences.quoteIfChars(converterException.value()) + " to " + converterException.type().getSimpleName();
+
+                message = converterException.prefix() +
+                    "Cannot convert " +
+                    CharSequences.quoteIfChars(converterException.value()) +
+                    " to " +
+                    converterException.type().getSimpleName();
                 value = converterException.value();
                 break;
             }
