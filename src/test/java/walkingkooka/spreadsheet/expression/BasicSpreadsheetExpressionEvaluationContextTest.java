@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -59,11 +60,13 @@ import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.Printers;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
+import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
@@ -584,6 +587,66 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
+    // evaluateExpression...............................................................................................
+
+    @Test
+    public void testEvaluateExpressionFunctionParameterValueConvertFails() {
+        final ExpressionFunctionName functionName = ExpressionFunctionName.with("HelloFunction");
+
+        this.evaluateExpressionAndCheck(
+            this.createContext(
+                new FakeSpreadsheetConverterContext() {
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.failConversion(
+                            value,
+                            target
+                        );
+                    }
+                },
+                new FakeExpressionFunctionProvider<>() {
+                    @Override
+                    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                            final List<?> values,
+                                                                                                            final ProviderContext context) {
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(name);
+                            }
+
+                            @Override
+                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
+                                return Lists.of(
+                                    ExpressionFunctionParameter.NUMBER.setKinds(
+                                        ExpressionFunctionParameterKind.CONVERT_EVALUATE
+                                    )
+                                );
+                            }
+
+                            @Override
+                            public Object apply(final List<Object> values,
+                                                final SpreadsheetExpressionEvaluationContext context) {
+                                ExpressionFunctionParameter.NUMBER.getOrFail(values, 0);
+                                throw new UnsupportedOperationException();
+                            }
+                        };
+                    }
+                }
+            ),
+            Expression.call(
+                Expression.namedFunction(functionName),
+                Lists.of(
+                    Expression.value("String1")
+                )
+            ),
+            SpreadsheetErrorKind.VALUE.setMessage(
+                "HelloFunction: number: Cannot convert \"String1\" to ExpressionNumber"
+            )
+        );
+    }
+
     // evaluateFunction.................................................................................................
 
     @Test
@@ -908,8 +971,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
-            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            expressionFunctionProvider
+        );
+    }
+
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
+                                                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
+        return this.createContext(
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            converterContext,
             ENVIRONMENT_CONTEXT,
             expressionFunctionProvider,
             PROVIDER_CONTEXT

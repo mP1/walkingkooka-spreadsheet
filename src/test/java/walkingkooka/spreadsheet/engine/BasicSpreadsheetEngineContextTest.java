@@ -226,7 +226,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
                 switch (name.value()) {
                     case "xyz":
-                        return new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+                        return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with("xyz")
+                                );
+                            }
 
                             @Override
                             public Object apply(final List<Object> parameters,
@@ -252,6 +259,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         };
                     case TEST_CONTEXT_LOADCELL:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -281,6 +296,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         };
                     case TEST_CONTEXT_SERVER_URL:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {
@@ -302,6 +325,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         };
                     case TEST_CONTEXT_SPREADSHEET_METADATA:
                         return new FakeExpressionFunction<>() {
+
+                            @Override
+                            public Optional<ExpressionFunctionName> name() {
+                                return Optional.of(
+                                    ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
+                                );
+                            }
+
                             @Override
                             public Object apply(final List<Object> parameters,
                                                 final SpreadsheetExpressionEvaluationContext context) {

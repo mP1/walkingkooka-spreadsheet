@@ -158,6 +158,12 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
 
                             return Cast.to(
                                 new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+
+                                    @Override
+                                    public Optional<ExpressionFunctionName> name() {
+                                        return Optional.of(name);
+                                    }
+
                                     @Override
                                     public Object apply(final List<Object> parameters,
                                                         final SpreadsheetExpressionEvaluationContext context) {

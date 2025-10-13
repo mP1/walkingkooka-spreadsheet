@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -156,6 +157,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                     new FakeExpressionFunction<>() {
 
                         @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return ExpressionFunction.ANONYMOUS_NAME;
+                        }
+
+                        @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                             return Lists.empty();
                         }
@@ -180,6 +186,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                     new FakeExpressionFunction<>() {
 
                         @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return ExpressionFunction.ANONYMOUS_NAME;
+                        }
+
+                        @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                             return Lists.empty();
                         }
@@ -202,6 +213,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
             this.createContext()
                 .evaluateFunction(
                     new FakeExpressionFunction<>() {
+
+                        @Override
+                        public Optional<ExpressionFunctionName> name() {
+                            return ExpressionFunction.ANONYMOUS_NAME;
+                        }
 
                         @Override
                         public List<ExpressionFunctionParameter<?>> parameters(final int count) {
