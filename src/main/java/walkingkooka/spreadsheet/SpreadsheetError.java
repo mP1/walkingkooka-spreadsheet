@@ -273,6 +273,16 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return this.kind;
     }
 
+    public SpreadsheetError setKind(final SpreadsheetErrorKind kind) {
+        return this.kind.equals(kind) ?
+            this :
+            new SpreadsheetError(
+                Objects.requireNonNull(kind, "kind"),
+                this.message,
+                this.value
+            );
+    }
+
     private final SpreadsheetErrorKind kind;
 
     // message..........................................................................................................

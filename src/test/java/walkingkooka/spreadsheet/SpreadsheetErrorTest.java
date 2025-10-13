@@ -486,6 +486,48 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    // setKind..........................................................................................................
+
+    @Test
+    public void testSetKindWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetError.with(KIND, MESSAGE, VALUE)
+                .setKind(null)
+        );
+    }
+
+    @Test
+    public void testSetKindWithSame() {
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
+        assertSame(
+            error,
+            error.setKind(KIND)
+        );
+    }
+
+    @Test
+    public void testSetKindWithDifferent() {
+        final SpreadsheetError error = SpreadsheetError.with(KIND, MESSAGE, VALUE);
+
+        final SpreadsheetErrorKind differentKind = SpreadsheetErrorKind.ERROR;
+
+        this.checkNotEquals(
+            KIND,
+            differentKind
+        );
+
+        final SpreadsheetError different = error.setKind(differentKind);
+
+        this.kindAndCheck(different, differentKind);
+        this.messageAndCheck(different, MESSAGE);
+        this.valueAndCheck(different, VALUE);
+
+        this.kindAndCheck(error, KIND);
+        this.messageAndCheck(error, MESSAGE);
+        this.valueAndCheck(error, VALUE);
+    }
+    
     // setMessage.......................................................................................................
 
     @Test
