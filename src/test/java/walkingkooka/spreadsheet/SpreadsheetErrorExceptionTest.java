@@ -43,6 +43,11 @@ public final class SpreadsheetErrorExceptionTest implements ClassTesting<Spreads
             exception.spreadsheetError(),
             "spreadsheetError"
         );
+        this.checkEquals(
+            ERROR.message(),
+            exception.getMessage(),
+            "message"
+        );
     }
 
     @Override
