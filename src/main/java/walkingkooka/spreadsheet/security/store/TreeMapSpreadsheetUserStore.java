@@ -108,7 +108,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     }
 
     @Override
-    public Optional<User> loadWithEmail(final EmailAddress email) {
+    public Optional<User> findWithEmail(final EmailAddress email) {
         return this.store.all()
             .stream()
             .filter(u -> email.equals(u.email()))

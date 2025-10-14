@@ -176,10 +176,18 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     }
 
     @Test
-    public void testLoadWithEmail() {
+    public void testFindWithEmail() {
         final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
-        this.checkEquals(Optional.of(this.user1()), store.loadWithEmail(this.user1().email()));
+        this.checkEquals(
+            Optional.of(
+                this.user1()
+            ),
+            store.findWithEmail(
+                this.user1()
+                    .email()
+            )
+        );
     }
 
     @Test

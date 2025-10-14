@@ -32,5 +32,5 @@ public interface SpreadsheetUserStore extends Store<UserId, User> {
     /**
      * Loads the user with the provided {@link EmailAddress}
      */
-    Optional<User> loadWithEmail(final EmailAddress email);
+    Optional<User> findWithEmail(final EmailAddress email);
 }

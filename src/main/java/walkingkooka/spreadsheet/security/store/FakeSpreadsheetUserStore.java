@@ -27,7 +27,7 @@ import java.util.Optional;
 public class FakeSpreadsheetUserStore extends FakeStore<UserId, User> implements SpreadsheetUserStore {
 
     @Override
-    public Optional<User> loadWithEmail(final EmailAddress email) {
+    public Optional<User> findWithEmail(final EmailAddress email) {
         throw new UnsupportedOperationException();
     }
 }
