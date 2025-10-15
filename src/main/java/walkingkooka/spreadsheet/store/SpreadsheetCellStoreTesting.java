@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Optional;
 import java.util.Set;
@@ -322,7 +322,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
-                                                final ValidationValueTypeName valueTypeName,
+                                                final ValueTypeName valueTypeName,
                                                 final int max,
                                                 final SpreadsheetCell... expected) {
         this.findCellsWithValueTypeAndCheck(
@@ -336,7 +336,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
-                                                final ValidationValueTypeName valueTypeName,
+                                                final ValueTypeName valueTypeName,
                                                 final int max,
                                                 final Set<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -376,7 +376,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void countCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                  final SpreadsheetCellRangeReference cellRange,
-                                                 final ValidationValueTypeName valueType,
+                                                 final ValueTypeName valueType,
                                                  final int expected) {
         this.checkEquals(
             expected,

@@ -30,7 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.lang.reflect.Method;
 import java.time.LocalDate;
@@ -210,13 +210,13 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                                      final String expected) {
         this.toValueTypeAndCheck(
             type,
-            ValidationValueTypeName.with(expected)
+            ValueTypeName.with(expected)
         );
     }
 
 
     private void toValueTypeAndCheck(final Class<?> type,
-                                     final ValidationValueTypeName expected) {
+                                     final ValueTypeName expected) {
         this.toValueTypeAndCheck(
             type,
             Optional.of(expected)
@@ -224,7 +224,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     private void toValueTypeAndCheck(final Class<?> type,
-                                     final Optional<ValidationValueTypeName> expected) {
+                                     final Optional<ValueTypeName> expected) {
         this.checkEquals(
             expected,
             SpreadsheetValueType.toValueType(type),
@@ -355,12 +355,12 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     private void toClassAndCheck(final String valueType,
                                  final Class<?> expected) {
         this.toClassAndCheck(
-            ValidationValueTypeName.with(valueType),
+            ValueTypeName.with(valueType),
             expected
         );
     }
 
-    private void toClassAndCheck(final ValidationValueTypeName valueType,
+    private void toClassAndCheck(final ValueTypeName valueType,
                                  final Class<?> expected) {
         this.toClassAndCheck(
             valueType,
@@ -368,7 +368,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
-    private void toClassAndCheck(final ValidationValueTypeName valueType,
+    private void toClassAndCheck(final ValueTypeName valueType,
                                  final Optional<Class<?>> expected) {
         this.checkEquals(
             expected,

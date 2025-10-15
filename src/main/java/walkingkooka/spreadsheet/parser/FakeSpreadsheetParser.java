@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.parser.FakeParser;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class FakeSpreadsheetParser extends FakeParser<SpreadsheetParserContext> 
     }
 
     @Override
-    public Optional<ValidationValueTypeName> valueType() {
+    public Optional<ValueTypeName> valueType() {
         throw new UnsupportedOperationException();
     }
 }

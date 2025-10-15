@@ -63,7 +63,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.HasOptionalLocale;
 import walkingkooka.validation.HasValidationChoiceList;
 import walkingkooka.validation.ValidationChoiceList;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 import walkingkooka.validation.provider.HasOptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -948,7 +948,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 .setValueType(
                     parseCellComponent(
                         list.get(2),
-                        ValidationValueTypeName::with
+                        ValueTypeName::with
                     )
                 ).setValue(
                     unmarshallCellComponentWithType(

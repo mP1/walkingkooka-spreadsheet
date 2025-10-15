@@ -34,7 +34,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.RequiredParser;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -134,11 +134,11 @@ final class SpreadsheetLabelNameSpreadsheetParser implements SpreadsheetParser,
     }
 
     @Override
-    public Optional<ValidationValueTypeName> valueType() {
+    public Optional<ValueTypeName> valueType() {
         return LABEL_VALUE_TYPE;
     }
 
-    private final static Optional<ValidationValueTypeName> LABEL_VALUE_TYPE = Optional.of(
+    private final static Optional<ValueTypeName> LABEL_VALUE_TYPE = Optional.of(
         SpreadsheetValueType.LABEL
     );
 

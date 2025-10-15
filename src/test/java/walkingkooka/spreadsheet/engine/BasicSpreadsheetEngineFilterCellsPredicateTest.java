@@ -45,7 +45,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -133,7 +133,7 @@ public final class BasicSpreadsheetEngineFilterCellsPredicateTest implements Pre
         );
     }
 
-    private BasicSpreadsheetEngineFilterCellsPredicate createPredicate(final ValidationValueTypeName valueType) {
+    private BasicSpreadsheetEngineFilterCellsPredicate createPredicate(final ValueTypeName valueType) {
         final Expression expression = Expression.call(
             Expression.namedFunction(
                 SpreadsheetExpressionFunctions.name("Test123")

@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Optional;
 
@@ -276,7 +276,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         SpreadsheetFormula.EMPTY.setText("=1+2")
                             .setValueType(
                                 Optional.of(
-                                    ValidationValueTypeName.with("hello-value-type")
+                                    ValueTypeName.with("hello-value-type")
                                 )
                             )
                     ),

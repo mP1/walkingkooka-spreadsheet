@@ -31,7 +31,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.validation.OptionalValidationValueTypeName;
+import walkingkooka.validation.OptionalValueTypeName;
 
 import java.util.Objects;
 
@@ -119,7 +119,7 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
     }
 
     public static SpreadsheetImporterCellValue valueType(final SpreadsheetCellReference cell,
-                                                         final OptionalValidationValueTypeName valueType) {
+                                                         final OptionalValueTypeName valueType) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(valueType, "valueType");
 

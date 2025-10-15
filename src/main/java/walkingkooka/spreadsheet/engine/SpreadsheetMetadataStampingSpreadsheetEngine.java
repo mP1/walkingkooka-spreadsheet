@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -144,7 +144,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final ValidationValueTypeName valueType,
+                                            final ValueTypeName valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         return this.engine.filterCells(
@@ -161,7 +161,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                                       final SpreadsheetCellRangeReferencePath path,
                                       final int offset,
                                       final int count,
-                                      final ValidationValueTypeName valueType,
+                                      final ValueTypeName valueType,
                                       final Expression expression,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {

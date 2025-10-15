@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -38,22 +38,22 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest implements MapTesting2<SpreadsheetCellReferenceToValidationValueTypeNameMap, SpreadsheetCellReference, Optional<ValidationValueTypeName>>,
-    ClassTesting2<SpreadsheetCellReferenceToValidationValueTypeNameMap>,
-    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValidationValueTypeNameMap>,
+public final class SpreadsheetCellReferenceToValueTypeNameMapTest implements MapTesting2<SpreadsheetCellReferenceToValueTypeNameMap, SpreadsheetCellReference, Optional<ValueTypeName>>,
+    ClassTesting2<SpreadsheetCellReferenceToValueTypeNameMap>,
+    JsonNodeMarshallingTesting<SpreadsheetCellReferenceToValueTypeNameMap>,
     HasUrlFragmentTesting {
 
     private final static SpreadsheetCellReference KEY1 = SpreadsheetCellReference.A1;
 
-    private final static Optional<ValidationValueTypeName> VALUE1 = Optional.of(
-        ValidationValueTypeName.with("hello-type")
+    private final static Optional<ValueTypeName> VALUE1 = Optional.of(
+        ValueTypeName.with("hello-type")
     );
 
     private final static SpreadsheetCellReference KEY2 = SpreadsheetCellReference.parseCell("A2");
 
-    private final static Optional<ValidationValueTypeName> VALUE2 = Optional.empty();
+    private final static Optional<ValueTypeName> VALUE2 = Optional.empty();
 
-    private final static Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> MAP = Maps.of(
+    private final static Map<SpreadsheetCellReference, Optional<ValueTypeName>> MAP = Maps.of(
         KEY1,
         VALUE1,
         KEY2,
@@ -64,35 +64,35 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     public void testWithNullMapFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToValidationValueTypeNameMap.with(null)
+            () -> SpreadsheetCellReferenceToValueTypeNameMap.with(null)
         );
     }
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<ValueTypeName>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetCellReferenceToValidationValueTypeNameMap.with(map)
+            () -> SpreadsheetCellReferenceToValueTypeNameMap.with(map)
         );
     }
 
     @Test
-    public void testWithSpreadsheetCellReferenceToValidationValueTypeNameMapDoesntWrap() {
-        final SpreadsheetCellReferenceToValidationValueTypeNameMap map = this.createMap();
+    public void testWithSpreadsheetCellReferenceToValueTypeNameMapDoesntWrap() {
+        final SpreadsheetCellReferenceToValueTypeNameMap map = this.createMap();
 
         assertSame(
             map,
-            SpreadsheetCellReferenceToValidationValueTypeNameMap.with(map)
+            SpreadsheetCellReferenceToValueTypeNameMap.with(map)
         );
     }
 
     @Test
     public void testWithMap() {
-        final SpreadsheetCellReferenceToValidationValueTypeNameMap map = this.createMap();
+        final SpreadsheetCellReferenceToValueTypeNameMap map = this.createMap();
 
         this.checkEquals(
             MAP,
@@ -171,7 +171,7 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
 
     @Test
     public void testIteratorRemoveFails() {
-        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<ValidationValueTypeName>>> iterator = this.createMap()
+        final Iterator<Map.Entry<SpreadsheetCellReference, Optional<ValueTypeName>>> iterator = this.createMap()
             .entrySet()
             .iterator();
         iterator.next();
@@ -183,8 +183,8 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidationValueTypeNameMap createMap() {
-        return SpreadsheetCellReferenceToValidationValueTypeNameMap.with(MAP);
+    public SpreadsheetCellReferenceToValueTypeNameMap createMap() {
+        return SpreadsheetCellReferenceToValueTypeNameMap.with(MAP);
     }
 
     // toString.........................................................................................................
@@ -222,16 +222,16 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidationValueTypeNameMap unmarshall(final JsonNode json,
+    public SpreadsheetCellReferenceToValueTypeNameMap unmarshall(final JsonNode json,
                                                                            final JsonNodeUnmarshallContext context) {
-        return SpreadsheetCellReferenceToValidationValueTypeNameMap.unmarshall(
+        return SpreadsheetCellReferenceToValueTypeNameMap.unmarshall(
             json,
             context
         );
     }
 
     @Override
-    public SpreadsheetCellReferenceToValidationValueTypeNameMap createJsonNodeMarshallingValue() {
+    public SpreadsheetCellReferenceToValueTypeNameMap createJsonNodeMarshallingValue() {
         return this.createMap();
     }
 
@@ -248,8 +248,8 @@ public final class SpreadsheetCellReferenceToValidationValueTypeNameMapTest impl
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetCellReferenceToValidationValueTypeNameMap> type() {
-        return SpreadsheetCellReferenceToValidationValueTypeNameMap.class;
+    public Class<SpreadsheetCellReferenceToValueTypeNameMap> type() {
+        return SpreadsheetCellReferenceToValueTypeNameMap.class;
     }
 
     @Override

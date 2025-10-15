@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -126,7 +126,7 @@ public interface SpreadsheetEngine {
      * <br>
      */
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                     final ValidationValueTypeName valueType,
+                                     final ValueTypeName valueType,
                                      final Expression expression,
                                      final SpreadsheetEngineContext context);
 
@@ -143,7 +143,7 @@ public interface SpreadsheetEngine {
                                final SpreadsheetCellRangeReferencePath path,
                                final int offset,
                                final int count,
-                               final ValidationValueTypeName valueType,
+                               final ValueTypeName valueType,
                                final Expression expression,
                                final Set<SpreadsheetDeltaProperties> deltaProperties,
                                final SpreadsheetEngineContext context);
