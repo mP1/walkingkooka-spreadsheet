@@ -84,6 +84,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName LABEL = ValueTypeName.with(LABEL_STRING);
 
+    public static final String LOCAL_DATE_STRING = "local-date";
+
+    public static final ValueTypeName LOCAL_DATE = ValueTypeName.with(LOCAL_DATE_STRING);
+
     public static final String NUMBER_STRING = ValueTypeName.NUMBER_STRING;
 
     public static final ValueTypeName NUMBER = ValueTypeName.NUMBER;
@@ -184,6 +188,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case LABEL_STRING:
                 javaType = SpreadsheetLabelName.class;
+                break;
+            case LOCAL_DATE_STRING:
+                javaType = LocalDate.class;
                 break;
             case NUMBER_STRING:
                 javaType = ExpressionNumber.class;
