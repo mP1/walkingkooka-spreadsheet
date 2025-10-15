@@ -92,6 +92,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName LOCAL_DATE_TIME = ValueTypeName.with(LOCAL_DATE_TIME_STRING);
 
+    public static final String LOCAL_TIME_STRING = "local-time";
+
+    public static final ValueTypeName LOCAL_TIME = ValueTypeName.with(LOCAL_TIME_STRING);
+
     public static final String NUMBER_STRING = ValueTypeName.NUMBER_STRING;
 
     public static final ValueTypeName NUMBER = ValueTypeName.NUMBER;
@@ -198,6 +202,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case LOCAL_DATE_TIME_STRING:
                 javaType = LocalDateTime.class;
+                break;
+            case LOCAL_TIME_STRING:
+                javaType = LocalTime.class;
                 break;
             case NUMBER_STRING:
                 javaType = ExpressionNumber.class;
