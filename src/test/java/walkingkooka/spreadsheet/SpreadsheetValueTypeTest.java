@@ -341,7 +341,8 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testToClassWithString() {
         this.toClassAndCheck(
-            SpreadsheetValueType.TEXT, String.class
+            SpreadsheetValueType.TEXT,
+            String.class
         );
     }
 
