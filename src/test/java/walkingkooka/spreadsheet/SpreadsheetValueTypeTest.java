@@ -331,6 +331,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithLocalTime() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.LOCAL_TIME,
+            LocalTime.class
+        );
+    }
+
+    @Test
     public void testToClassWithNumber() {
         this.toClassAndCheck(
             SpreadsheetValueType.NUMBER,
@@ -363,7 +371,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testToClassWithLocalTime() {
+    public void testToClassWithTime() {
         this.toClassAndCheck(
             SpreadsheetValueType.TIME, 
             LocalTime.class
