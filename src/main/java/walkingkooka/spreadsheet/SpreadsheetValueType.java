@@ -52,7 +52,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValidationValueTypeName CELL = ValidationValueTypeName.with(CELL_STRING);
 
-    public static final String CELL_RANGE_STRING = "cellRange";
+    public static final String CELL_RANGE_STRING = "cell-range";
 
     public static final ValidationValueTypeName CELL_RANGE = ValidationValueTypeName.with(CELL_RANGE_STRING);
 
@@ -60,7 +60,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValidationValueTypeName COLUMN = ValidationValueTypeName.with(COLUMN_STRING);
 
-    public static final String COLUMN_RANGE_STRING = "columnRange";
+    public static final String COLUMN_RANGE_STRING = "column-range";
 
     public static final ValidationValueTypeName COLUMN_RANGE = ValidationValueTypeName.with(COLUMN_RANGE_STRING);
 
@@ -92,11 +92,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValidationValueTypeName ROW = ValidationValueTypeName.with(ROW_STRING);
 
-    public static final String ROW_RANGE_STRING = "rowRange";
+    public static final String ROW_RANGE_STRING = "row-range";
 
     public static final ValidationValueTypeName ROW_RANGE = ValidationValueTypeName.with(ROW_RANGE_STRING);
 
-    public static final String TEMPLATE_VALUE_NAME_STRING = "templateValueName";
+    public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
 
     public static final ValidationValueTypeName TEMPLATE_VALUE_NAME = ValidationValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
 
@@ -108,7 +108,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValidationValueTypeName TIME = ValidationValueTypeName.TIME;
 
-    public static final String VALUE_OR_EXPRESSION_STRING = "valueOrExpression";
+    public static final String VALUE_OR_EXPRESSION_STRING = "value-or-expression";
 
     public static final ValidationValueTypeName VALUE_OR_EXPRESSION = ValidationValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
 

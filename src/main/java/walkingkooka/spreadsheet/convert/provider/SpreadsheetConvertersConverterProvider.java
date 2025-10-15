@@ -690,7 +690,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName JSON = ConverterName.with(JSON_STRING);
 
-    private final static String JSON_TO_STRING = "jsonTo";
+    private final static String JSON_TO_STRING = "json-to";
 
     final static ConverterName JSON_TO = ConverterName.with(JSON_TO_STRING);
 

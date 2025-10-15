@@ -4769,7 +4769,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellValidatorProviderUnknownValidator() {
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestUnknownValidator");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-unknown-validator");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -4828,7 +4828,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetSelection.A1.setFormula(
                                 a1Formula.setError(
                                     Optional.of(
-                                        SpreadsheetErrorKind.VALIDATION.setMessage("Unknown validator TestUnknownValidator")
+                                        SpreadsheetErrorKind.VALIDATION.setMessage("Unknown validator test-unknown-validator")
                                     )
                                 )
                             ).setValidator(
@@ -4855,7 +4855,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellValidatorProviderThrowsSpreadsheetErrorException() {
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-123");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -4951,7 +4951,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     
     @Test
     public void testSaveCellValidatorThrows() {
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-123");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -5050,7 +5050,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSaveCellValidatorPass() {
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-123");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -5172,7 +5172,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-123");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -5304,8 +5304,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
-        final ConverterSelector validationConverterSelector = ConverterSelector.parse("TestValidationConverter");
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+        final ConverterSelector validationConverterSelector = ConverterSelector.parse("test-validation-converter");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-123");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -5455,7 +5455,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String functionName = "TestValidationFunction";
         final ExpressionFunctionSelector validationFunctionSelector = SpreadsheetExpressionFunctions.parseSelector(functionName);
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidator");
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-123");
 
         final SpreadsheetMetadata metadata = METADATA.set(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
@@ -5633,8 +5633,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
-        final ValidatorSelector validatorFailSelector = ValidatorSelector.parse("TestFailValidator1");
-        final ValidatorSelector validatorPassSelector = ValidatorSelector.parse("TestFailValidator2");
+        final ValidatorSelector validatorFailSelector = ValidatorSelector.parse("test-fail-validator-1");
+        final ValidatorSelector validatorPassSelector = ValidatorSelector.parse("test-fail-validator-2");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -5655,10 +5655,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             validationConverterSelector
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATORS,
-            ValidatorAliasSet.parse("TestFailValidator1, TestFailValidator2")
+            ValidatorAliasSet.parse("test-fail-validator-1, test-fail-validator-2")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-            ValidatorAliasSet.parse("TestFailValidator1, TestFailValidator2")
+            ValidatorAliasSet.parse("test-fail-validator-1, test-fail-validator-2")
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -5840,8 +5840,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final ConverterSelector formulaConverterSelector = ConverterSelector.parse("null-to-number");
         final ConverterSelector formattingConverterSelector = ConverterSelector.parse("text");
         final ConverterSelector validationConverterSelector = ConverterSelector.parse("fake");
-        final ValidatorSelector validatorFailSelector = ValidatorSelector.parse("TestFailValidator");
-        final ValidatorSelector validatorPassSelector = ValidatorSelector.parse("TestPassValidator");
+        final ValidatorSelector validatorFailSelector = ValidatorSelector.parse("test-fail-validator");
+        final ValidatorSelector validatorPassSelector = ValidatorSelector.parse("test-pass-validator");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.CONVERTERS,
@@ -5862,10 +5862,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             validationConverterSelector
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATORS,
-            ValidatorAliasSet.parse("TestFailValidator, TestPassValidator")
+            ValidatorAliasSet.parse("test-fail-validator-, test-pass-validator")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-            ValidatorAliasSet.parse("TestFailValidator, TestPassValidator")
+            ValidatorAliasSet.parse("test-fail-validator-, test-pass-validator")
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
@@ -24506,13 +24506,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FormHandlerAliasSet.EMPTY
             ).set(
                 SpreadsheetMetadataPropertyName.DEFAULT_FORM_HANDLER,
-                FormHandlerSelector.parse("invalidFormHandler")
+                FormHandlerSelector.parse("invalid-form-handler")
             ).set(
                 SpreadsheetMetadataPropertyName.VALIDATORS,
                 ValidatorAliasSet.EMPTY
             ).set(
                 SpreadsheetMetadataPropertyName.VALIDATION_VALIDATORS,
-                ValidatorAliasSet.parse("InvalidValidator")
+                ValidatorAliasSet.parse("invalid-validator")
             )
         );
 
@@ -24531,7 +24531,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             Optional.of("InitialFormValue1")
                         ).setValidator(
                             Optional.of(
-                                ValidatorSelector.parse("FormField1Validator")
+                                ValidatorSelector.parse("form-field-1-validator")
                             )
                         )
                 )
@@ -24578,7 +24578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             Optional.of("Initial value")
                         ).setValidator(
                             Optional.of(
-                                ValidatorSelector.parse("Validator123")
+                                ValidatorSelector.parse("validator-123")
                             )
                         )
                 )
@@ -24627,7 +24627,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setValue(
                             Optional.of("Initial value")
                         ).setValidator(
-                            Optional.of(ValidatorSelector.parse("Validator111"))
+                            Optional.of(ValidatorSelector.parse("validator-111"))
                         )
                 )
             );
@@ -24694,7 +24694,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).setValue(
                             Optional.of("Initial value")
                         ).setValidator(
-                            Optional.of(ValidatorSelector.parse("Validator123"))
+                            Optional.of(ValidatorSelector.parse("validator-123"))
                         )
                 )
             );
@@ -25174,7 +25174,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithUnknownFormHandler() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "UnknownFormHandler";
+        final String formHandler = "unknown-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -25207,7 +25207,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return FormHandlerInfoSet.with(
                                 Sets.of(
                                     FormHandlerInfo.with(
-                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        Url.parseAbsolute("https://example.com/unknown-form-handler"),
                                         FormHandlerName.with(formHandler)
                                     )
                                 )
@@ -25250,7 +25250,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.checkEquals(
-            "Unknown form handler UnknownFormHandler",
+            "Unknown form handler unknown-form-handler",
             thrown.getMessage()
         );
     }
@@ -25259,7 +25259,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithMissingCell() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -25377,7 +25377,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithExistingCell() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -25502,8 +25502,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithCellWithValidator() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
-        final ValidatorSelector validatorSelector = ValidatorSelector.parse("TestValidatorSelector");
+        final String formHandler = "test-form-handler";
+        final ValidatorSelector validatorSelector = ValidatorSelector.parse("test-validator-selector");
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -25663,7 +25663,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithColumnSelection() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -25808,7 +25808,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithRowSelection() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -26033,7 +26033,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithUnknownDefaultFormHandler() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "UnknownDefaultFormHandler";
+        final String formHandler = "unknown-default-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -26099,7 +26099,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.checkEquals(
-            "Unknown form handler UnknownDefaultFormHandler",
+            "Unknown form handler unknown-default-form-handler",
             thrown.getMessage()
         );
     }
@@ -26108,7 +26108,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithUnknownFormHandler() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "UnknownFormHandler";
+        final String formHandler = "unknown-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -26141,7 +26141,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             return FormHandlerInfoSet.with(
                                 Sets.of(
                                     FormHandlerInfo.with(
-                                        Url.parseAbsolute("https://example.com/FormHandler"),
+                                        Url.parseAbsolute("https://example.com/unknown-form-handler"),
                                         FormHandlerName.with(formHandler)
                                     )
                                 )
@@ -26178,7 +26178,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         this.checkEquals(
-            "Unknown form handler UnknownFormHandler",
+            "Unknown form handler unknown-form-handler",
             thrown.getMessage()
         );
     }
@@ -26187,7 +26187,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithValidationError() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -26307,7 +26307,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithMissingField() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -26424,7 +26424,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithMissingField2() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
@@ -26553,7 +26553,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithFields() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final String formHandler = "TestFormHandler";
+        final String formHandler = "test-form-handler";
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,

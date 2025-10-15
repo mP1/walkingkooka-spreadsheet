@@ -29,14 +29,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserAliasTest implements PluginAliasLikeTesting<SpreadsheetParserName, SpreadsheetParserSelector, SpreadsheetParserAlias> {
 
-    private final static SpreadsheetParserName NAME = SpreadsheetParserName.with("Hello");
+    private final static SpreadsheetParserName NAME = SpreadsheetParserName.with("hello");
 
     private final static Optional<SpreadsheetParserSelector> SELECTOR = Optional.of(
-        SpreadsheetParserSelector.parse("parser123")
+        SpreadsheetParserSelector.parse("parser-123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-        Url.parseAbsolute("https://example.com/parser123")
+        Url.parseAbsolute("https://example.com/parser-123")
     );
 
     // with.............................................................................................................

@@ -764,7 +764,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
             "A1:B2",
-            "B=TEXT;C=TEXT;ZZ=TEXT",
+            "B=text;C=text;ZZ=text",
             "Invalid column(s) C, ZZ are not within A1:B2"
         );
     }
@@ -773,7 +773,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testComparatorNamesBoundsCheckWithRowComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
             "A1:B2",
-            "2=TEXT;3=TEXT;99=TEXT",
+            "2=text;3=text;99=text",
             "Invalid row(s) 3, 99 are not within A1:B2"
         );
     }

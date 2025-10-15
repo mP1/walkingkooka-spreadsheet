@@ -64,8 +64,8 @@ public final class SpreadsheetComparatorInfoSetTest implements PluginInfoSetLike
     @Override
     public SpreadsheetComparatorInfo info() {
         return SpreadsheetComparatorInfo.with(
-            Url.parseAbsolute("https://example.com/test123"),
-            SpreadsheetComparatorName.with("Test123")
+            Url.parseAbsolute("https://example.com/test-123"),
+            SpreadsheetComparatorName.with("test-123")
         );
     }
 

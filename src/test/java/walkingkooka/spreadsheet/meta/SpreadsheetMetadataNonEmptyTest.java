@@ -2706,7 +2706,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-            FormHandlerAliasSet.parse("Hello-form-handler")
+            FormHandlerAliasSet.parse("hello-form-handler")
         );
         properties.put(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
@@ -2738,7 +2738,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
         properties.put(
             SpreadsheetMetadataPropertyName.PLUGINS,
-            PluginNameSet.parse("TestPlugin111,TestPlugin222")
+            PluginNameSet.parse("test-plugin-111,test-plugin-222")
         );
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);

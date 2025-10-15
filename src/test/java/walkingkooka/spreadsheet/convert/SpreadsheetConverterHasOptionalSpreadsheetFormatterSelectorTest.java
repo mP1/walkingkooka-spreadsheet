@@ -36,7 +36,7 @@ public final class SpreadsheetConverterHasOptionalSpreadsheetFormatterSelectorTe
 
     @Test
     public void testConvertSpreadsheetCellToSpreadsheetFormatterSelector() {
-        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("Hello");
+        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("hello");
 
         this.convertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)

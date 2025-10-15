@@ -276,7 +276,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         SpreadsheetFormula.EMPTY.setText("=1+2")
                             .setValueType(
                                 Optional.of(
-                                    ValidationValueTypeName.with("HelloValueType")
+                                    ValidationValueTypeName.with("hello-value-type")
                                 )
                             )
                     ),
@@ -290,7 +290,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             "A1-XFD1048576.value-type.json.txt",
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
             "{\n" +
-                "  \"A1\": \"HelloValueType\",\n" +
+                "  \"A1\": \"hello-value-type\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );

@@ -252,7 +252,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
             "1",
-            "1=TEXT;2=TEXT;33=TEXT",
+            "1=text;2=text;33=text",
             "Invalid row(s) 2, 33 are not within 1"
         );
     }

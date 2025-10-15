@@ -216,7 +216,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
             "A1",
-            "A=TEXT;B=TEXT;ZZ=TEXT",
+            "A=text;B=text;ZZ=text",
             "Invalid column(s) B, ZZ are not within A1"
         );
     }
@@ -225,7 +225,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testComparatorNamesBoundsCheckWithRowComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
             "A1",
-            "1=TEXT;2=TEXT;99=TEXT",
+            "1=text;2=text;99=text",
             "Invalid row(s) 2, 99 are not within A1"
         );
     }

@@ -36,7 +36,7 @@ public final class SpreadsheetConverterHasOptionalSpreadsheetParserSelectorTest 
 
     @Test
     public void testConvertSpreadsheetCellToSpreadsheetParserSelector() {
-        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("Hello");
+        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("hello");
 
         this.convertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)

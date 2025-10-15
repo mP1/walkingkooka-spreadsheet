@@ -1245,11 +1245,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         Optional.of(123)
                     )
             ).setFormatter(
-                Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
+                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter-1"))
             ).setParser(
-                Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
+                Optional.of(SpreadsheetParserSelector.parse("hello-parser-2"))
             ).setValidator(
-                Optional.of(ValidatorSelector.parse("helloValidator3"))
+                Optional.of(ValidatorSelector.parse("hello-validator-3"))
             ).setStyle(
                 TextStyle.EMPTY.set(
                     TextStylePropertyName.TEXT_ALIGN,
@@ -1280,7 +1280,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         ).textNode()
                 )
             ),
-            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",helloFormatter1,helloParser2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",helloValidator3"
+            "A1,123,,\"{\"\"type\"\": \"\"int\"\",\"\"value\"\": 123}\",\"\"\"AM,PM\"\",\"\"January,February,March,April,May,June,July,August,September,October,November,December\"\",\"\"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec\"\",\"\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\"\",\"\"Sun,Mon,Tue,Wed,Thu,Fri,Sat\"\"\",\"-,+,0,¤,.,E,\"\",\"\",∞,.,NaN,%,‰\",\"{\"\"type\"\": \"\"locale\"\",\"\"value\"\": \"\"en-AU\"\"}\",hello-formatter-1,hello-parser-2,text-align: center;,\"{\"\"type\"\": \"\"text-style-node\"\",\"\"value\"\": {\"\"styles\"\": {\"\"color\"\": \"\"#123456\"\"},\"\"children\"\": [{\"\"type\"\": \"\"text\"\",\"\"value\"\": \"\"Formatted-value-text\"\"}]}}\",hello-validator-3"
         );
     }
 
@@ -1363,11 +1363,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                         )
                     )
             ).setFormatter(
-                Optional.of(SpreadsheetFormatterSelector.parse("helloFormatter1"))
+                Optional.of(SpreadsheetFormatterSelector.parse("hello-formatter-1"))
             ).setParser(
-                Optional.of(SpreadsheetParserSelector.parse("helloParser2"))
+                Optional.of(SpreadsheetParserSelector.parse("hello-parser-2"))
             ).setValidator(
-                Optional.of(ValidatorSelector.parse("helloValidator3"))
+                Optional.of(ValidatorSelector.parse("hello-validator-3"))
             ).setStyle(
                 TextStyle.EMPTY.set(
                     TextStylePropertyName.TEXT_ALIGN,
