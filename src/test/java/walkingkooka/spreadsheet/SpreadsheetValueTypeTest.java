@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
+import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -30,19 +33,28 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.JsonString;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.validation.ValueTypeName;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
+
+    static {
+        SpreadsheetStartup.init(); // required so all json marshaller/unmarshallers are registered.
+    }
 
     @Test
     public void testAll() {
@@ -430,6 +442,44 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
+    // json.............................................................................................................
+
+    @Test
+    public void testConstantsJsonTypeNames() throws Exception {
+        final Set<ValueTypeName> missing = SortedSets.tree();
+        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
+
+        for (final Field constant : SpreadsheetValueType.class.getFields()) {
+            if (false == FieldAttributes.STATIC.is(constant)) {
+                continue;
+            }
+
+            if (JavaVisibility.of(constant) != JavaVisibility.PUBLIC) {
+                continue;
+            }
+
+            if (constant.getType() != ValueTypeName.class) {
+                continue;
+            }
+
+            final ValueTypeName valueTypeName = ((ValueTypeName) constant.get(null));
+
+            final Class<?> type = SpreadsheetValueType.toClass(valueTypeName)
+                .orElse(null);
+            if (null != type) {
+                final JsonString string = context.typeName(type)
+                    .orElse(null);
+                if (null == string) {
+                    missing.add(valueTypeName);
+                }
+            }
+        }
+
+        this.checkEquals(
+            Sets.empty(),
+            missing
+        );
+    }
 
     // class............................................................................................................
 
