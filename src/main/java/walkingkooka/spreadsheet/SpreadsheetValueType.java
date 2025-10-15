@@ -234,6 +234,77 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         return Optional.ofNullable(javaType);
     }
 
+    public static ValueTypeName with(final String name) {
+        Objects.requireNonNull(name, "name");
+
+        final ValueTypeName valueTypeName;
+
+        switch (name) {
+            case ValueTypeName.ANY_STRING:
+                valueTypeName = ANY;
+                break;
+            case BOOLEAN_STRING:
+                valueTypeName = BOOLEAN;
+                break;
+            case CELL_STRING:
+                valueTypeName = CELL;
+                break;
+            case CELL_RANGE_STRING:
+                valueTypeName = CELL_RANGE;
+                break;
+            case COLUMN_STRING:
+                valueTypeName = COLUMN;
+                break;
+            case COLUMN_RANGE_STRING:
+                valueTypeName = COLUMN_RANGE;
+                break;
+            case DATE_STRING:
+                valueTypeName = DATE;
+                break;
+            case DATE_TIME_STRING:
+                valueTypeName = DATE_TIME;
+                break;
+            case ERROR_STRING:
+                valueTypeName = ERROR;
+                break;
+            case LABEL_STRING:
+                valueTypeName = LABEL;
+                break;
+            case LOCAL_DATE_STRING:
+                valueTypeName = LOCAL_DATE;
+                break;
+            case LOCAL_DATE_TIME_STRING:
+                valueTypeName = LOCAL_DATE_TIME;
+                break;
+            case LOCAL_TIME_STRING:
+                valueTypeName = LOCAL_TIME;
+                break;
+            case NUMBER_STRING:
+                valueTypeName = NUMBER;
+                break;
+            case ROW_STRING:
+                valueTypeName = ROW;
+                break;
+            case ROW_RANGE_STRING:
+                valueTypeName = ROW_RANGE;
+                break;
+            case STRING_STRING:
+                valueTypeName = STRING;
+                break;
+            case TEXT_STRING:
+                valueTypeName = TEXT;
+                break;
+            case TIME_STRING:
+                valueTypeName = TIME;
+                break;
+            default:
+                valueTypeName = ValueTypeName.with(name);
+                break;
+        }
+
+        return valueTypeName;
+    }
+
     /**
      * Private ctor
      */
