@@ -315,6 +315,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithLocalDate() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.LOCAL_DATE,
+            LocalDate.class
+        );
+    }
+
+    @Test
     public void testToClassWithNumber() {
         this.toClassAndCheck(
             SpreadsheetValueType.NUMBER,
