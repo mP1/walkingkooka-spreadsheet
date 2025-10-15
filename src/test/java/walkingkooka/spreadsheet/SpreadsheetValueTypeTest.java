@@ -39,6 +39,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting<SpreadsheetValueType> {
@@ -57,6 +58,32 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
             new ArrayList<>(
                 SpreadsheetValueType.ALL
             )
+        );
+    }
+
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetValueType.with(null)
+        );
+    }
+
+    @Test
+    public void testWithEmptyFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetValueType.with("")
+        );
+    }
+
+    @Test
+    public void testWith() {
+        assertSame(
+            SpreadsheetValueType.DATE,
+            SpreadsheetValueType.with("date")
         );
     }
 
@@ -373,7 +400,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testToClassWithTime() {
         this.toClassAndCheck(
-            SpreadsheetValueType.TIME, 
+            SpreadsheetValueType.TIME,
             LocalTime.class
         );
     }
