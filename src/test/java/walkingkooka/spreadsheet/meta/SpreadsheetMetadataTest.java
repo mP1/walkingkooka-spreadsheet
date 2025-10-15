@@ -1029,34 +1029,34 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             null,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.COMPARATORS,
-                SpreadsheetComparatorAliasSet.parse("comparator1")
+                SpreadsheetComparatorAliasSet.parse("comparator-1")
             ).set(
                 SpreadsheetMetadataPropertyName.CONVERTERS,
-                ConverterAliasSet.parse("converter1")
+                ConverterAliasSet.parse("converter-1")
             ).set(
                 SpreadsheetMetadataPropertyName.EXPORTERS,
-                SpreadsheetExporterAliasSet.parse("exporter1")
+                SpreadsheetExporterAliasSet.parse("exporter-1")
             ).set(
                 SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                FormHandlerAliasSet.parse("formHandler1")
+                FormHandlerAliasSet.parse("form-handler-1")
             ).set(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("function1")
+                SpreadsheetExpressionFunctions.parseAliasSet("function-1")
             ).set(
                 SpreadsheetMetadataPropertyName.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("function1")
+                SpreadsheetExpressionFunctions.parseAliasSet("function-1")
             ).set(
                 SpreadsheetMetadataPropertyName.FORMATTERS,
-                SpreadsheetFormatterAliasSet.parse("formatter1")
+                SpreadsheetFormatterAliasSet.parse("formatter-1")
             ).set(
                 SpreadsheetMetadataPropertyName.IMPORTERS,
-                SpreadsheetImporterAliasSet.parse("importer1")
+                SpreadsheetImporterAliasSet.parse("importer-1")
             ).set(
                 SpreadsheetMetadataPropertyName.PARSERS,
-                SpreadsheetParserAliasSet.parse("parser1")
+                SpreadsheetParserAliasSet.parse("parser-1")
             ).set(
                 SpreadsheetMetadataPropertyName.VALIDATORS,
-                ValidatorAliasSet.parse("validator1")
+                ValidatorAliasSet.parse("validator-1")
             ).spreadsheetProvider(
                 this.spreadsheetProvider()
             )
@@ -1068,7 +1068,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
-                    SpreadsheetExpressionFunctions.name("function1")
+                    SpreadsheetExpressionFunctions.name("function-1")
                 );
             }
 

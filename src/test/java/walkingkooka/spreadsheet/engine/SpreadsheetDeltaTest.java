@@ -2536,14 +2536,14 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Test
     public void testValueTypePatch() {
         final Optional<ValidationValueTypeName> valueType = Optional.of(
-            ValidationValueTypeName.with("Text123")
+            ValidationValueTypeName.with("text-123")
         );
 
         this.checkEquals(
             JsonNode.parse(
                 "{\n" +
                     "  \"formula\": {\n" +
-                    "    \"valueType\": \"Text123\"\n" +
+                    "    \"valueType\": \"text-123\"\n" +
                     "  }\n" +
                     "}"
             ),
@@ -3908,7 +3908,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetFormula.EMPTY.setText("'will be patched over")
                     .setValueType(
                         Optional.of(
-                            ValidationValueTypeName.with("LostValueType")
+                            ValidationValueTypeName.with("lost-value-type")
                         )
                     )
             ).setStyle(
@@ -3932,7 +3932,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             );
 
         final Optional<ValidationValueTypeName> typeName = Optional.of(
-            ValidationValueTypeName.with("patchedValueType")
+            ValidationValueTypeName.with("patched-value-type")
         );
 
         final SpreadsheetDelta after = before.setCells(

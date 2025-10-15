@@ -34,12 +34,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterProviderCollectionTest implements SpreadsheetImporterProviderTesting<SpreadsheetImporterProviderCollection> {
 
-    private final static SpreadsheetImporterName NAME = SpreadsheetImporterName.with("Test123");
+    private final static SpreadsheetImporterName NAME = SpreadsheetImporterName.with("test-123");
 
     private final static List<?> VALUES = Lists.of("@@");
 
     private final static SpreadsheetImporterInfo INFO = SpreadsheetImporterInfo.with(
-        Url.parseAbsolute("https://example.com/Test123"),
+        Url.parseAbsolute("https://example.com/test-123"),
         NAME
     );
 

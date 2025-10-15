@@ -600,7 +600,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.PLUGINS,
-            PluginNameSet.parse("TestPlugin111, TestPlugin222")
+            PluginNameSet.parse("test-plugin-111, test-plugin-222")
         );
     }
 
@@ -907,7 +907,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(
             SpreadsheetMetadataPropertyName.VALIDATORS,
-            ValidatorAliasSet.parse("nonNull")
+            ValidatorAliasSet.parse("non-null")
         );
     }
 

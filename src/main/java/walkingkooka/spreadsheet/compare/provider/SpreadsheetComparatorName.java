@@ -180,7 +180,7 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
             default:
                 spreadsheetComparatorName = new SpreadsheetComparatorName(
                     PluginName.with(name)
-                        .checkLength("Comparator")
+                        .checkLength("comparator")
                 );
                 break;
         }

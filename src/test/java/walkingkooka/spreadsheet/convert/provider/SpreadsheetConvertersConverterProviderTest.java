@@ -361,7 +361,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithJsonTo() {
         this.converterAndCheck(
-            "jsonTo",
+            "json-to",
             PROVIDER_CONTEXT,
             SpreadsheetConverters.jsonTo()
         );

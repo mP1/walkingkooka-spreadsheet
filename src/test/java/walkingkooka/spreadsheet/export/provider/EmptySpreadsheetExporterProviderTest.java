@@ -30,7 +30,7 @@ public final class EmptySpreadsheetExporterProviderTest implements SpreadsheetEx
     @Test
     public void testSpreadsheetExporterSelectorFails() {
         this.spreadsheetExporterFails(
-            SpreadsheetExporterSelector.parse("Test123"),
+            SpreadsheetExporterSelector.parse("test-123"),
             CONTEXT
         );
     }
@@ -38,7 +38,7 @@ public final class EmptySpreadsheetExporterProviderTest implements SpreadsheetEx
     @Test
     public void testSpreadsheetExporterNameFails() {
         this.spreadsheetExporterFails(
-            SpreadsheetExporterName.with("Test123"),
+            SpreadsheetExporterName.with("test-123"),
             Lists.empty(),
             CONTEXT
         );

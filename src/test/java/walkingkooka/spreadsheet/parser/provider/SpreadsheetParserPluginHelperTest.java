@@ -35,7 +35,7 @@ public final class SpreadsheetParserPluginHelperTest implements PluginHelperTest
 
     @Override
     public SpreadsheetParserName createName() {
-        return SpreadsheetParserName.with("Hello");
+        return SpreadsheetParserName.with("hello");
     }
 
     // class............................................................................................................

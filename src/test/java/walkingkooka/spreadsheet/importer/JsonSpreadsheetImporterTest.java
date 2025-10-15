@@ -317,7 +317,7 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         );
 
         final Optional<ValidationValueTypeName> valueType = Optional.of(
-            ValidationValueTypeName.with("Hello")
+            ValidationValueTypeName.with("hello")
         );
 
         final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")

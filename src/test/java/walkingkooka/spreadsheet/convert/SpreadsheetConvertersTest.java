@@ -2021,7 +2021,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetFormatterSelector() {
-        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("HelloFormatter");
+        final SpreadsheetFormatterSelector formatter = SpreadsheetFormatterSelector.parse("hello-formatter");
 
         this.spreadsheetValueConvertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
@@ -2034,7 +2034,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetParserSelector() {
-        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("HelloParser");
+        final SpreadsheetParserSelector parser = SpreadsheetParserSelector.parse("hello-parser");
 
         this.spreadsheetValueConvertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
@@ -2047,7 +2047,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertSpreadsheetCellToValidatorSelector() {
-        final ValidatorSelector validator = ValidatorSelector.parse("HelloValidator");
+        final ValidatorSelector validator = ValidatorSelector.parse("hello-validator");
 
         this.spreadsheetValueConvertAndCheck(
             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)

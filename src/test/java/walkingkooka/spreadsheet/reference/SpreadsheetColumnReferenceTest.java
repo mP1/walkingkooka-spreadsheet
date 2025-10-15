@@ -169,7 +169,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testComparatorNamesBoundsCheckWithColumnComparatorsOutOfBoundsFails() {
         this.comparatorNamesBoundsCheckAndCheckFails(
             "A",
-            "A=TEXT;B=TEXT;ZZ=TEXT",
+            "A=text;B=text;ZZ=text",
             "Invalid column(s) B, ZZ are not within A"
         );
     }

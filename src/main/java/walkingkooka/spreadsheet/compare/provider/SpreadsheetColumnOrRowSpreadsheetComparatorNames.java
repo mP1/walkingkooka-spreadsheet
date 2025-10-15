@@ -339,7 +339,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             mode = MODE_COLUMN_OR_ROW_START;
                             break;
                         default:
-                            if (false == SpreadsheetComparatorName.isChar(i, c)) {
+                            if (false == isUpOrDown(i - tokenStart, c)) {
                                 throw new InvalidCharacterException(
                                     text,
                                     i
@@ -414,6 +414,31 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
             default:
                 break;
         }
+    }
+
+    private static boolean isUpOrDown(final int i,
+                                      final char c) {
+        final String valid;
+
+        switch(i) {
+            case 0:
+               valid = "UD";
+               break;
+            case 1:
+                valid = "PO";
+                break;
+            case 2:
+                valid = "W";
+                break;
+            case 3:
+                valid = "N";
+                break;
+            default:
+                valid = "";
+                break;
+        }
+
+        return -1 != valid.indexOf(c);
     }
 
     private static SpreadsheetComparatorNameAndDirection upOrDown(final int start,

@@ -29,14 +29,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetImporterAliasTest implements PluginAliasLikeTesting<SpreadsheetImporterName, SpreadsheetImporterSelector, SpreadsheetImporterAlias> {
 
-    private final static SpreadsheetImporterName NAME = SpreadsheetImporterName.with("Hello");
+    private final static SpreadsheetImporterName NAME = SpreadsheetImporterName.with("hello");
 
     private final static Optional<SpreadsheetImporterSelector> SELECTOR = Optional.of(
-        SpreadsheetImporterSelector.parse("importer123")
+        SpreadsheetImporterSelector.parse("importer-123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-        Url.parseAbsolute("https://example.com/importer123")
+        Url.parseAbsolute("https://example.com/importer-123")
     );
 
     // with.............................................................................................................

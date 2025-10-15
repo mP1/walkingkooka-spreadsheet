@@ -47,7 +47,7 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValueType(
                 Optional.of(
-                    ValidationValueTypeName.with("HelloValueType")
+                    ValidationValueTypeName.with("hello-value-type")
                 )
             )
         ).setDateTimeSymbols(

@@ -27,7 +27,7 @@ public final class SpreadsheetMetadataPropertyNamePluginNameSetTest extends Spre
 
     @Override
     PluginNameSet propertyValue() {
-        return PluginNameSet.parse("TestPlugin111, TestPlugin222");
+        return PluginNameSet.parse("test-plugin-111, test-plugin-222");
     }
 
     @Override

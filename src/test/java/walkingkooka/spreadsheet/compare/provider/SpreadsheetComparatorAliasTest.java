@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetComparatorAliasTest implements PluginAliasLikeTesting<SpreadsheetComparatorName, SpreadsheetComparatorSelector, SpreadsheetComparatorAlias> {
 
-    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("Hello");
+    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("hello");
 
     private final static Optional<SpreadsheetComparatorSelector> SELECTOR = Optional.of(
         SpreadsheetComparatorSelector.parse("comparator123")

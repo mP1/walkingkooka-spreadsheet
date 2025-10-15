@@ -94,9 +94,9 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         SpreadsheetDelta.EMPTY.window();
 
-        SpreadsheetErrorKind.ERROR.setMessage("Hello");
+        SpreadsheetErrorKind.ERROR.setMessage("hello");
 
-        SpreadsheetFunctionName.with("Hello");
+        SpreadsheetFunctionName.with("hello");
 
         SpreadsheetViewport.with(
             SpreadsheetViewportRectangle.with(
@@ -122,7 +122,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                     )
                 )
             );
-            SpreadsheetComparatorSelector.parse("Hello");
+            SpreadsheetComparatorSelector.parse("hello");
         }
 
         ConvertProviderStartup.init();

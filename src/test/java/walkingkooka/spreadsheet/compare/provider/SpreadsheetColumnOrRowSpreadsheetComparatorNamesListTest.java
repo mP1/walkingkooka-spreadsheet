@@ -394,7 +394,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     @Test
     public void testParseInvalidSecondSpreadsheetComparatorNameFails() {
         this.parseStringInvalidCharacterFails(
-            "A=GOOD;B=!BAD",
+            "A=good;B=!bad",
             '!'
         );
     }

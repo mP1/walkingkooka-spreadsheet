@@ -35,7 +35,7 @@ public final class SpreadsheetImporterPluginHelperTest implements PluginHelperTe
 
     @Override
     public SpreadsheetImporterName createName() {
-        return SpreadsheetImporterName.with("Hello");
+        return SpreadsheetImporterName.with("hello");
     }
 
     // class............................................................................................................

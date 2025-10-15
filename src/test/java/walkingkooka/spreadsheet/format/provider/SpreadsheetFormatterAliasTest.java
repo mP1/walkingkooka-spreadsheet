@@ -29,14 +29,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormatterAliasTest implements PluginAliasLikeTesting<SpreadsheetFormatterName, SpreadsheetFormatterSelector, SpreadsheetFormatterAlias> {
 
-    private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("Hello");
+    private final static SpreadsheetFormatterName NAME = SpreadsheetFormatterName.with("hello");
 
     private final static Optional<SpreadsheetFormatterSelector> SELECTOR = Optional.of(
-        SpreadsheetFormatterSelector.parse("formatter123")
+        SpreadsheetFormatterSelector.parse("formatter-123")
     );
 
     private final static Optional<AbsoluteUrl> URL = Optional.of(
-        Url.parseAbsolute("https://example.com/formatter123")
+        Url.parseAbsolute("https://example.com/formatter-123")
     );
 
     // with.............................................................................................................

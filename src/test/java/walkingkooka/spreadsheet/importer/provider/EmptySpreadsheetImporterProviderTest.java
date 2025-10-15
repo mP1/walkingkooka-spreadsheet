@@ -30,7 +30,7 @@ public final class EmptySpreadsheetImporterProviderTest implements SpreadsheetIm
     @Test
     public void testSpreadsheetImporterSelectorFails() {
         this.spreadsheetImporterFails(
-            SpreadsheetImporterSelector.parse("Test123"),
+            SpreadsheetImporterSelector.parse("test-123"),
             CONTEXT
         );
     }
@@ -38,7 +38,7 @@ public final class EmptySpreadsheetImporterProviderTest implements SpreadsheetIm
     @Test
     public void testSpreadsheetImporterNameFails() {
         this.spreadsheetImporterFails(
-            SpreadsheetImporterName.with("Test123"),
+            SpreadsheetImporterName.with("test-123"),
             Lists.empty(),
             CONTEXT
         );
