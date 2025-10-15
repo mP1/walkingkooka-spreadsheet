@@ -39,6 +39,8 @@ import java.util.Set;
 /**
  * A list of possible(supported) spreadsheet value types.
  * A few helpers are provided to help translate {@link ValueTypeName} to and from its equivalent java {@link Class}.
+ * Aliases or apparent duplicates exist such as {@link #DATE} and {@link #LOCAL_DATE} which should support
+ * marshalling/unmarshalling values between {@link ValueTypeName} and java object instances.
  */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
