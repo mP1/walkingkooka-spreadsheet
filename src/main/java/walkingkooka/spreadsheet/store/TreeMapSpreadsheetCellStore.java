@@ -32,7 +32,7 @@ import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -435,7 +435,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                                       final ValidationValueTypeName valueType,
+                                                       final ValueTypeName valueType,
                                                        final int max) {
         SpreadsheetCellStore.checkFindCellsWithValueType(
             range,
@@ -452,7 +452,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                       final ValidationValueTypeName valueType) {
+                                       final ValueTypeName valueType) {
         SpreadsheetCellStore.checkCountCellsWithValueType(
             range,
             valueType
@@ -468,7 +468,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
      * If the valueTypeName is {@link SpreadsheetValueType#ANY} this will match all cells with a value.
      */
     private Stream<SpreadsheetCell> valueTypeStream(final SpreadsheetCellRangeReference range,
-                                                    final ValidationValueTypeName valueType) {
+                                                    final ValueTypeName valueType) {
         final Function<Object, Boolean> filter = SpreadsheetValueType.ANY.equals(valueType) ?
             v -> Boolean.TRUE :
             v -> valueType.equals(

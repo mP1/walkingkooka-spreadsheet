@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Optional;
 
@@ -63,11 +63,11 @@ final class SpreadsheetRowReferenceSpreadsheetParser extends SpreadsheetColumnOr
     }
 
     @Override
-    public Optional<ValidationValueTypeName> valueType() {
+    public Optional<ValueTypeName> valueType() {
         return ROW;
     }
 
-    private final static Optional<ValidationValueTypeName> ROW = Optional.of(
+    private final static Optional<ValueTypeName> ROW = Optional.of(
         SpreadsheetValueType.ROW
     );
 

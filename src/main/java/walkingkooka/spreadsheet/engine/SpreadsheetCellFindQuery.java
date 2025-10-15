@@ -39,7 +39,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Map;
 import java.util.Objects;
@@ -92,7 +92,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
             if (VALUE_TYPE_STRING.equals(component)) {
                 query = query.setValueType(
                     parseComponent(cursor)
-                        .map(ValidationValueTypeName::with)
+                        .map(ValueTypeName::with)
                 );
                 component = parseComponentOrNull(cursor);
             }
@@ -194,7 +194,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 )
             ).setValueType(
                 VALUE_TYPE.firstParameterValue(parameters)
-                    .map(ValidationValueTypeName::with)
+                    .map(ValueTypeName::with)
             ).setQuery(
                 SpreadsheetCellQuery.extract(parameters)
             );
@@ -257,7 +257,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     SpreadsheetCellFindQuery(final Optional<SpreadsheetCellRangeReferencePath> path,
                              final OptionalInt offset,
                              final OptionalInt count,
-                             final Optional<ValidationValueTypeName> valueType,
+                             final Optional<ValueTypeName> valueType,
                              final Optional<SpreadsheetCellQuery> query) {
         this.path = path;
         this.offset = offset;
@@ -340,11 +340,11 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     private final OptionalInt count;
 
-    public Optional<ValidationValueTypeName> valueType() {
+    public Optional<ValueTypeName> valueType() {
         return this.valueType;
     }
 
-    public SpreadsheetCellFindQuery setValueType(final Optional<ValidationValueTypeName> valueType) {
+    public SpreadsheetCellFindQuery setValueType(final Optional<ValueTypeName> valueType) {
         Objects.requireNonNull(valueType, VALUE_TYPE_STRING);
 
         return this.valueType.equals(valueType) ?
@@ -358,7 +358,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
             );
     }
 
-    private final Optional<ValidationValueTypeName> valueType;
+    private final Optional<ValueTypeName> valueType;
 
     public Optional<SpreadsheetCellQuery> query() {
         return this.query;
@@ -383,7 +383,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     private SpreadsheetCellFindQuery replace(final Optional<SpreadsheetCellRangeReferencePath> path,
                                              final OptionalInt offset,
                                              final OptionalInt count,
-                                             final Optional<ValidationValueTypeName> valueType,
+                                             final Optional<ValueTypeName> valueType,
                                              final Optional<SpreadsheetCellQuery> query) {
         return path.isPresent() ||
             offset.isPresent() ||
@@ -450,7 +450,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
                 );
         }
 
-        final Optional<ValidationValueTypeName> valueType = this.valueType;
+        final Optional<ValueTypeName> valueType = this.valueType;
         if (valueType.isPresent()) {
             urlFragment = urlFragment.append(VALUE_TYPE_URL_FRAGMENT)
                 .appendSlashThen(
@@ -512,7 +512,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         final Optional<SpreadsheetCellRangeReferencePath> path = this.path();
         final OptionalInt offset = this.offset();
         final OptionalInt count = this.count();
-        final Optional<ValidationValueTypeName> valueType = this.valueType();
+        final Optional<ValueTypeName> valueType = this.valueType();
         final Optional<SpreadsheetCellQuery> query = this.query();
 
         if (path.isPresent()) {

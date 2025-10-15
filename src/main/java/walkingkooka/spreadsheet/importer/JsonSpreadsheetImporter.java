@@ -31,8 +31,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.validation.OptionalValidationValueTypeName;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.OptionalValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -141,10 +141,10 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                                 if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
                                     value = (j) -> SpreadsheetImporterCellValue.valueType(
                                         cell(j),
-                                        OptionalValidationValueTypeName.with(
+                                        OptionalValueTypeName.with(
                                             context.unmarshallOptional(
                                                 j,
-                                                ValidationValueTypeName.class
+                                                ValueTypeName.class
                                             )
                                         )
                                     );

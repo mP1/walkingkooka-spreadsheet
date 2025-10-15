@@ -17,16 +17,16 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Optional;
 
 /**
- * Translates a {@link Class} into a {@link ValidationValueTypeName}, handling the "differences" eg, TEXT = {@link String}.
+ * Translates a {@link Class} into a {@link ValueTypeName}, handling the "differences" eg, TEXT = {@link String}.
  */
 final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 
-    static Optional<ValidationValueTypeName> valueType(final Class<?> type) {
+    static Optional<ValueTypeName> valueType(final Class<?> type) {
         final SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor visitor = new SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor();
         visitor.accept(type);
         return Optional.ofNullable(
@@ -161,10 +161,10 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     }
 
     private void valueType(final String typeName) {
-        this.valueType = ValidationValueTypeName.with(typeName);
+        this.valueType = ValueTypeName.with(typeName);
     }
 
-    private ValidationValueTypeName valueType;
+    private ValueTypeName valueType;
 
     @Override
     public String toString() {

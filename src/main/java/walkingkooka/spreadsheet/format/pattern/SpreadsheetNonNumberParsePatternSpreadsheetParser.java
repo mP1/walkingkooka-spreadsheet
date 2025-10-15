@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +37,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
 
     static SpreadsheetNonNumberParsePatternSpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
                                                                   final ParserToken token,
-                                                                  final Optional<ValidationValueTypeName> valueType) {
+                                                                  final Optional<ValueTypeName> valueType) {
         return new SpreadsheetNonNumberParsePatternSpreadsheetParser(
             parser,
             token,
@@ -47,7 +47,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
 
     private SpreadsheetNonNumberParsePatternSpreadsheetParser(final Parser<SpreadsheetParserContext> parser,
                                                               final ParserToken token,
-                                                              final Optional<ValidationValueTypeName> valueType) {
+                                                              final Optional<ValueTypeName> valueType) {
         this.parser = parser;
         this.token = token;
         this.valueType = valueType;
@@ -84,11 +84,11 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     private final ParserToken token;
 
     @Override
-    public Optional<ValidationValueTypeName> valueType() {
+    public Optional<ValueTypeName> valueType() {
         return this.valueType;
     }
 
-    private final Optional<ValidationValueTypeName> valueType;
+    private final Optional<ValueTypeName> valueType;
 
     // Object...........................................................................................................
 

@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Objects;
@@ -310,7 +310,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                                       final ValidationValueTypeName valueType,
+                                                       final ValueTypeName valueType,
                                                        final int max) {
         return this.fixFormulaTextSet(
             this.store.findCellsWithValueType(
@@ -323,7 +323,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     @Override
     public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                       final ValidationValueTypeName valueType) {
+                                       final ValueTypeName valueType) {
         return this.store.countCellsWithValueType(
             range,
             valueType

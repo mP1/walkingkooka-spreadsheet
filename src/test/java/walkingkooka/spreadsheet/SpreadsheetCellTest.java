@@ -73,7 +73,7 @@ import walkingkooka.util.HasOptionalLocaleTesting;
 import walkingkooka.validation.HasValidationChoiceListTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 import walkingkooka.validation.provider.HasOptionalValidatorSelectorTesting;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -1218,7 +1218,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.textAndCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setValueType(
-                    Optional.of(ValidationValueTypeName.TEXT)
+                    Optional.of(ValueTypeName.TEXT)
                 ).setValue(
                     Optional.of(123)
                 )

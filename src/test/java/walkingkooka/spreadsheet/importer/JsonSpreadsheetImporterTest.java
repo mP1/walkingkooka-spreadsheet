@@ -41,8 +41,8 @@ import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.OptionalValidationValueTypeName;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.OptionalValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
 import java.util.Optional;
@@ -316,8 +316,8 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetFormula.EMPTY.setText("=1+2")
         );
 
-        final Optional<ValidationValueTypeName> valueType = Optional.of(
-            ValidationValueTypeName.with("hello")
+        final Optional<ValueTypeName> valueType = Optional.of(
+            ValueTypeName.with("hello")
         );
 
         final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
@@ -337,11 +337,11 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetCellValueKind.VALUE_TYPE,
             SpreadsheetImporterCellValue.valueType(
                 cellA1.reference(),
-                OptionalValidationValueTypeName.EMPTY
+                OptionalValueTypeName.EMPTY
             ),
             SpreadsheetImporterCellValue.valueType(
                 cellA2.reference(),
-                OptionalValidationValueTypeName.with(valueType)
+                OptionalValueTypeName.with(valueType)
             )
         );
     }

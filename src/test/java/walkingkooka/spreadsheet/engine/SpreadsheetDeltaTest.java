@@ -58,7 +58,7 @@ import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
@@ -1831,8 +1831,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testCellsValueTypePatch() {
-        final Optional<ValidationValueTypeName> valueType1 = Optional.of(ValidationValueTypeName.with("hello-value-type"));
-        final Optional<ValidationValueTypeName> valueType2 = Optional.empty();
+        final Optional<ValueTypeName> valueType1 = Optional.of(ValueTypeName.with("hello-value-type"));
+        final Optional<ValueTypeName> valueType2 = Optional.empty();
 
         this.cellsValueTypePatchAndCheck(
             Maps.of(
@@ -1858,7 +1858,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         );
     }
 
-    private void cellsValueTypePatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellToValueTypes,
+    private void cellsValueTypePatchAndCheck(final Map<SpreadsheetCellReference, Optional<ValueTypeName>> cellToValueTypes,
                                              final String expected) {
         final JsonNode patch = SpreadsheetDelta.cellsValueTypePatch(
             cellToValueTypes,
@@ -1877,7 +1877,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             Color.BLACK
         );
 
-        for (final Map.Entry<SpreadsheetCellReference, Optional<ValidationValueTypeName>> cellAndValueType : cellToValueTypes.entrySet()) {
+        for (final Map.Entry<SpreadsheetCellReference, Optional<ValueTypeName>> cellAndValueType : cellToValueTypes.entrySet()) {
             final SpreadsheetCellReference cell = cellAndValueType.getKey();
 
             final SpreadsheetFormula formula = SpreadsheetFormula.EMPTY.setText("'Patched over");
@@ -2535,8 +2535,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testValueTypePatch() {
-        final Optional<ValidationValueTypeName> valueType = Optional.of(
-            ValidationValueTypeName.with("text-123")
+        final Optional<ValueTypeName> valueType = Optional.of(
+            ValueTypeName.with("text-123")
         );
 
         this.checkEquals(
@@ -3231,8 +3231,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
 
     @Test
     public void testPatchWithValueType() {
-        final Optional<ValidationValueTypeName> valueType = Optional.of(
-            ValidationValueTypeName.with("hello-value-type")
+        final Optional<ValueTypeName> valueType = Optional.of(
+            ValueTypeName.with("hello-value-type")
         );
 
         final SpreadsheetCell a1 = SpreadsheetSelection.A1.setFormula(
@@ -3240,7 +3240,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setText("=1")
                 .setValueType(
                     Optional.of(
-                        ValidationValueTypeName.with("lost-value-type")
+                        ValueTypeName.with("lost-value-type")
                     )
                 )
         );
@@ -3285,7 +3285,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 .setText("=1")
                 .setValueType(
                     Optional.of(
-                        ValidationValueTypeName.with("lost-value-type")
+                        ValueTypeName.with("lost-value-type")
                     )
                 )
         );
@@ -3908,7 +3908,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 SpreadsheetFormula.EMPTY.setText("'will be patched over")
                     .setValueType(
                         Optional.of(
-                            ValidationValueTypeName.with("lost-value-type")
+                            ValueTypeName.with("lost-value-type")
                         )
                     )
             ).setStyle(
@@ -3931,8 +3931,8 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 )
             );
 
-        final Optional<ValidationValueTypeName> typeName = Optional.of(
-            ValidationValueTypeName.with("patched-value-type")
+        final Optional<ValueTypeName> typeName = Optional.of(
+            ValueTypeName.with("patched-value-type")
         );
 
         final SpreadsheetDelta after = before.setCells(

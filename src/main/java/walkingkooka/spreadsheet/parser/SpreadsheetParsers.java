@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.util.Optional;
 
@@ -36,7 +36,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * {@see ParserSpreadsheetParser}
      */
     public static SpreadsheetParser parser(final Parser<SpreadsheetParserContext> parser,
-                                           final Optional<ValidationValueTypeName> valueType) {
+                                           final Optional<ValueTypeName> valueType) {
         return ParserSpreadsheetParser.with(
             parser,
             valueType

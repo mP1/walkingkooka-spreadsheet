@@ -922,10 +922,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ValidationConvertConverters.textToValidationValueTypeName}
+     * {@see ValidationConvertConverters.textToValueTypeName}
      */
     public static Converter<SpreadsheetConverterContext> textToValueType() {
-        return ValidationConvertConverters.textToValidationValueTypeName();
+        return ValidationConvertConverters.textToValueTypeName();
     }
 
     /**

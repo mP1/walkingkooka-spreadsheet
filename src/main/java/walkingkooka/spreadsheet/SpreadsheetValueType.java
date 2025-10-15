@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,84 +38,84 @@ import java.util.Set;
 
 /**
  * A list of possible(supported) spreadsheet value types.
- * A few helpers are provided to help translate {@link ValidationValueTypeName} to and from its equivalent java {@link Class}.
+ * A few helpers are provided to help translate {@link ValueTypeName} to and from its equivalent java {@link Class}.
  */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
-    public static final ValidationValueTypeName ANY = ValidationValueTypeName.ANY;
+    public static final ValueTypeName ANY = ValueTypeName.ANY;
 
-    public static final String BOOLEAN_STRING = ValidationValueTypeName.BOOLEAN_STRING;
+    public static final String BOOLEAN_STRING = ValueTypeName.BOOLEAN_STRING;
 
-    public static final ValidationValueTypeName BOOLEAN = ValidationValueTypeName.BOOLEAN;
+    public static final ValueTypeName BOOLEAN = ValueTypeName.BOOLEAN;
 
     public static final String CELL_STRING = "cell";
 
-    public static final ValidationValueTypeName CELL = ValidationValueTypeName.with(CELL_STRING);
+    public static final ValueTypeName CELL = ValueTypeName.with(CELL_STRING);
 
     public static final String CELL_RANGE_STRING = "cell-range";
 
-    public static final ValidationValueTypeName CELL_RANGE = ValidationValueTypeName.with(CELL_RANGE_STRING);
+    public static final ValueTypeName CELL_RANGE = ValueTypeName.with(CELL_RANGE_STRING);
 
     public static final String COLUMN_STRING = "column";
 
-    public static final ValidationValueTypeName COLUMN = ValidationValueTypeName.with(COLUMN_STRING);
+    public static final ValueTypeName COLUMN = ValueTypeName.with(COLUMN_STRING);
 
     public static final String COLUMN_RANGE_STRING = "column-range";
 
-    public static final ValidationValueTypeName COLUMN_RANGE = ValidationValueTypeName.with(COLUMN_RANGE_STRING);
+    public static final ValueTypeName COLUMN_RANGE = ValueTypeName.with(COLUMN_RANGE_STRING);
 
     public static final String CONDITION_STRING = "condition";
 
-    public static final ValidationValueTypeName CONDITION = ValidationValueTypeName.with(CONDITION_STRING);
+    public static final ValueTypeName CONDITION = ValueTypeName.with(CONDITION_STRING);
 
-    public static final String DATE_STRING = ValidationValueTypeName.DATE_STRING;
+    public static final String DATE_STRING = ValueTypeName.DATE_STRING;
 
-    public static final ValidationValueTypeName DATE = ValidationValueTypeName.DATE;
+    public static final ValueTypeName DATE = ValueTypeName.DATE;
 
-    public static final String DATE_TIME_STRING = ValidationValueTypeName.DATE_TIME_STRING;
+    public static final String DATE_TIME_STRING = ValueTypeName.DATE_TIME_STRING;
 
-    public static final ValidationValueTypeName DATE_TIME = ValidationValueTypeName.DATE_TIME;
+    public static final ValueTypeName DATE_TIME = ValueTypeName.DATE_TIME;
 
     public static final String ERROR_STRING = "error";
 
-    public static final ValidationValueTypeName ERROR = ValidationValueTypeName.with(ERROR_STRING);
+    public static final ValueTypeName ERROR = ValueTypeName.with(ERROR_STRING);
 
     public static final String LABEL_STRING = "label";
 
-    public static final ValidationValueTypeName LABEL = ValidationValueTypeName.with(LABEL_STRING);
+    public static final ValueTypeName LABEL = ValueTypeName.with(LABEL_STRING);
 
-    public static final String NUMBER_STRING = ValidationValueTypeName.NUMBER_STRING;
+    public static final String NUMBER_STRING = ValueTypeName.NUMBER_STRING;
 
-    public static final ValidationValueTypeName NUMBER = ValidationValueTypeName.NUMBER;
+    public static final ValueTypeName NUMBER = ValueTypeName.NUMBER;
 
     public static final String ROW_STRING = "row";
 
-    public static final ValidationValueTypeName ROW = ValidationValueTypeName.with(ROW_STRING);
+    public static final ValueTypeName ROW = ValueTypeName.with(ROW_STRING);
 
     public static final String ROW_RANGE_STRING = "row-range";
 
-    public static final ValidationValueTypeName ROW_RANGE = ValidationValueTypeName.with(ROW_RANGE_STRING);
+    public static final ValueTypeName ROW_RANGE = ValueTypeName.with(ROW_RANGE_STRING);
 
     public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
 
-    public static final ValidationValueTypeName TEMPLATE_VALUE_NAME = ValidationValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
+    public static final ValueTypeName TEMPLATE_VALUE_NAME = ValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
 
-    public static final String TEXT_STRING = ValidationValueTypeName.TEXT_STRING;
+    public static final String TEXT_STRING = ValueTypeName.TEXT_STRING;
 
-    public static final ValidationValueTypeName TEXT = ValidationValueTypeName.TEXT;
+    public static final ValueTypeName TEXT = ValueTypeName.TEXT;
 
-    public static final String TIME_STRING = ValidationValueTypeName.TIME_STRING;
+    public static final String TIME_STRING = ValueTypeName.TIME_STRING;
 
-    public static final ValidationValueTypeName TIME = ValidationValueTypeName.TIME;
+    public static final ValueTypeName TIME = ValueTypeName.TIME;
 
     public static final String VALUE_OR_EXPRESSION_STRING = "value-or-expression";
 
-    public static final ValidationValueTypeName VALUE_OR_EXPRESSION = ValidationValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
+    public static final ValueTypeName VALUE_OR_EXPRESSION = ValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
 
     /**
      * Does not include all types, only those that typically appear in a cell
      */
-    public static final Set<ValidationValueTypeName> ALL = Sets.of(
+    public static final Set<ValueTypeName> ALL = Sets.of(
         BOOLEAN,
         DATE,
         DATE_TIME,
@@ -127,7 +127,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * Used to build a UI search elements.
      */
-    public final static Set<ValidationValueTypeName> ALL_CELL_TYPES = Sets.of(
+    public final static Set<ValueTypeName> ALL_CELL_TYPES = Sets.of(
         BOOLEAN,
         DATE,
         DATE_TIME,
@@ -140,15 +140,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * For the given type returns the value type name, or {@link Optional#empty()} if the type is unknown.
      */
-    public static Optional<ValidationValueTypeName> toValueType(final Class<?> type) {
+    public static Optional<ValueTypeName> toValueType(final Class<?> type) {
         return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.valueType(type);
     }
 
     /**
-     * Translates a {@link ValidationValueTypeName} into its java {@link Class} equivalent.
+     * Translates a {@link ValueTypeName} into its java {@link Class} equivalent.
      * If the type is unknown an {@link Optional#empty()} is returned.
      */
-    public static Optional<Class<?>> toClass(final ValidationValueTypeName valueType) {
+    public static Optional<Class<?>> toClass(final ValueTypeName valueType) {
         Objects.requireNonNull(valueType, "valueType");
 
         final Class<?> javaType;

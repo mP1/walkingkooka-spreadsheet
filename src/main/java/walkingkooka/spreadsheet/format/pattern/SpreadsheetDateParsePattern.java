@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.validation.ValidationValueTypeName;
+import walkingkooka.validation.ValueTypeName;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -51,7 +51,7 @@ public final class SpreadsheetDateParsePattern extends SpreadsheetNonNumberParse
     }
 
     @Override
-    public ValidationValueTypeName valueType() {
+    public ValueTypeName valueType() {
         return SpreadsheetValueType.DATE;
     }
 

@@ -75,8 +75,8 @@ import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValidationError;
-import walkingkooka.validation.ValidationValueTypeName;
 import walkingkooka.validation.Validator;
+import walkingkooka.validation.ValueTypeName;
 import walkingkooka.validation.form.DuplicateFormFieldReferencesException;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -408,7 +408,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final ValidationValueTypeName valueType,
+                                            final ValueTypeName valueType,
                                             final Expression expression,
                                             final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cells, "cells");
@@ -443,7 +443,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                       final SpreadsheetCellRangeReferencePath path,
                                       final int offset,
                                       final int count,
-                                      final ValidationValueTypeName valueType,
+                                      final ValueTypeName valueType,
                                       final Expression expression,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
                                       final SpreadsheetEngineContext context) {
