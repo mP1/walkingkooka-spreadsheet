@@ -100,6 +100,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName TEMPLATE_VALUE_NAME = ValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
 
+    public static final String STRING_STRING = "string";
+
+    public static final ValueTypeName STRING = ValueTypeName.with(STRING_STRING);
+    
     public static final String TEXT_STRING = ValueTypeName.TEXT_STRING;
 
     public static final ValueTypeName TEXT = ValueTypeName.TEXT;
@@ -189,6 +193,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case ROW_RANGE_STRING:
                 javaType = SpreadsheetRowRangeReference.class;
+                break;
+            case STRING_STRING:
+                javaType = String.class;
                 break;
             case TEXT_STRING:
                 javaType = String.class;
