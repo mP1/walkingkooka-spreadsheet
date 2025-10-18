@@ -145,7 +145,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * Used to build a UI search elements.
      */
-    public final static Set<ValueTypeName> ALL_CELL_TYPES = Sets.of(
+    public final static Set<ValueTypeName> ALL_CELL_VALUE_TYPES = Sets.of(
         BOOLEAN,
         DATE,
         DATE_TIME,
