@@ -91,8 +91,6 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
     }
 
     static {
-        SpreadsheetValueType.DATE_TIME.text();
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(OptionalSpreadsheetValue.class),
             OptionalSpreadsheetValue::unmarshall,

@@ -60,10 +60,6 @@ import java.util.stream.Collectors;
  */
 public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
 
-    static {
-        TemplateValueName.with("Force-json-registry");
-    }
-
     /**
      * Range separator character used to separate the lower and upper bounds.
      */

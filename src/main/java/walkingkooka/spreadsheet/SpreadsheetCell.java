@@ -28,7 +28,6 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbols;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -68,8 +67,6 @@ import walkingkooka.validation.provider.HasOptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Locale;
@@ -1364,21 +1361,6 @@ public final class SpreadsheetCell implements CanBeEmpty,
     final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING);
 
     static {
-        SpreadsheetCell.NO_FORMATTED_VALUE_CELL.hashCode();
-        SpreadsheetFormula.EMPTY.hashCode();
-
-        final Locale locale = Locale.getDefault();
-
-        DateTimeSymbols.fromDateFormatSymbols(
-            new DateFormatSymbols(locale)
-        );
-        DecimalNumberSymbols.fromDecimalFormatSymbols(
-            '+',
-            new DecimalFormatSymbols(locale)
-        );
-        TextNode.NO_ATTRIBUTES.isEmpty();
-        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.toString();
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetCell.class),
             SpreadsheetCell::unmarshall,

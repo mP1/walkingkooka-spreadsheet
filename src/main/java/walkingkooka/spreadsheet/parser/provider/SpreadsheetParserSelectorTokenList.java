@@ -133,12 +133,6 @@ public final class SpreadsheetParserSelectorTokenList extends AbstractList<Sprea
     }
 
     static {
-        SpreadsheetParserSelectorToken.with(
-            "", // label
-            "", // text
-            SpreadsheetParserSelectorToken.NO_ALTERNATIVES
-        );
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetParserSelectorTokenList.class),
             SpreadsheetParserSelectorTokenList::unmarshall,

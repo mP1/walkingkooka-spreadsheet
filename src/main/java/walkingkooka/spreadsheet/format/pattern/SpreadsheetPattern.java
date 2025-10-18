@@ -1086,7 +1086,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     static {
-
         register(
             SpreadsheetDateFormatPattern.class,
             SpreadsheetPattern::unmarshallDateFormatPattern

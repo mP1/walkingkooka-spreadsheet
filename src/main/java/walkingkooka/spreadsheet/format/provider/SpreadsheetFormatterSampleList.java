@@ -24,7 +24,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.text.TextNode;
 
 import java.util.AbstractList;
 import java.util.Collection;
@@ -136,12 +135,6 @@ public final class SpreadsheetFormatterSampleList extends AbstractList<Spreadshe
     }
 
     static {
-        SpreadsheetFormatterSample.with(
-            "Label", // label
-            SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT,
-            TextNode.text("")
-        );
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetFormatterSampleList.class),
             SpreadsheetFormatterSampleList::unmarshall,

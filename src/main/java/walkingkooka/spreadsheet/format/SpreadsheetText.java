@@ -225,8 +225,6 @@ public final class SpreadsheetText implements HasText,
     final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
 
     static {
-        Color.BLACK.hashCode();
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetText.class),
             SpreadsheetText::unmarshall,

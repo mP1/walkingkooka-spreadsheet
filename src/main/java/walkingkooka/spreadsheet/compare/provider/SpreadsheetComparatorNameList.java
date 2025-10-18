@@ -155,8 +155,6 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     }
 
     static {
-        SpreadsheetComparatorName.DATE.toString();
-
         JsonNodeContext.register(
             JsonNodeContext.computeTypeName(SpreadsheetComparatorNameList.class),
             SpreadsheetComparatorNameList::unmarshall,
