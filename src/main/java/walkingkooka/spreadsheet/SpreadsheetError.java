@@ -41,9 +41,10 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.HasValidationChoiceList;
+import walkingkooka.validation.HasValidationPromptValue;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
+import walkingkooka.validation.ValidationPromptValue;
 
 import java.util.List;
 import java.util.Objects;
@@ -59,7 +60,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     HasSpreadsheetErrorKind,
     UsesToStringBuilder,
     HasConvertError,
-    HasValidationChoiceList {
+    HasValidationPromptValue {
 
     /**
      * The message component is optional.
@@ -152,14 +153,14 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetError} without any message only holding {@link ValidationChoiceList}.
+     * Factory that creates a {@link SpreadsheetError} without any message only holding {@link ValidationPromptValue}.
      */
-    public static SpreadsheetError validationChoiceList(final ValidationChoiceList choices) {
-        Objects.requireNonNull(choices, "choices");
+    public static SpreadsheetError validationPromptValue(final ValidationPromptValue value) {
+        Objects.requireNonNull(value, "value");
 
         return SpreadsheetErrorKind.VALIDATION.toError()
             .setValue(
-                Optional.of(choices)
+                Optional.of(value)
             );
     }
 
@@ -179,7 +180,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
             spreadsheetError = firstValidationError.text()
                 .isEmpty() &&
                 valueOrNull instanceof ValidationChoiceList ?
-                validationChoiceList((ValidationChoiceList) valueOrNull) :
+                validationPromptValue((ValidationChoiceList) valueOrNull) :
                 SpreadsheetError.parse(
                     firstValidationError.text()
                 ).setValue(value);
@@ -373,13 +374,13 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
-     * Returns true only if this error has {@link ValidationChoiceList} but no error message, meaning the value will
-     * supply choices.
+     * Returns true only if this error has {@link ValidationPromptValue} but no error message, meaning the value will
+     * supply a {@link ValidationChoiceList} and others.
      */
-    public boolean isValidationChoiceList() {
+    public boolean isValidationPromptValue() {
         return SpreadsheetErrorKind.VALIDATION == this.kind &&
             this.message.isEmpty() &&
-            this.value.orElse(null) instanceof ValidationChoiceList;
+            this.value.orElse(null) instanceof ValidationPromptValue;
     }
 
     // HasText..........................................................................................................
@@ -476,16 +477,16 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         );
     }
 
-    // HasValidationChoiceList..........................................................................................
+    // HasValidationPromptValue.........................................................................................
 
     @Override
-    public Optional<ValidationChoiceList> validationChoiceList() {
+    public Optional<ValidationPromptValue> validationPromptValue() {
         final Object value = this.value()
             .orElse(null);
 
         return Optional.ofNullable(
-            value instanceof ValidationChoiceList ?
-                (ValidationChoiceList) value :
+            value instanceof ValidationPromptValue ?
+                (ValidationPromptValue) value :
                 null
         );
     }
@@ -499,7 +500,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         SpreadsheetError error = null;
 
         // filter if only choices
-        if (false == this.isValidationChoiceList()) {
+        if (false == this.isValidationPromptValue()) {
             final SpreadsheetErrorKind kind = this.kind();
 
             error = this;

@@ -61,8 +61,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.json.patch.Patchable;
-import walkingkooka.validation.HasValidationChoiceList;
+import walkingkooka.validation.HasValidationPromptValue;
 import walkingkooka.validation.ValidationChoiceList;
+import walkingkooka.validation.ValidationPromptValue;
 import walkingkooka.validation.ValueTypeName;
 
 import java.util.Objects;
@@ -81,7 +82,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     TreePrintable,
     UsesToStringBuilder,
     HasUrlFragment,
-    HasValidationChoiceList {
+    HasValidationPromptValue {
 
     /**
      * A constant for an absent formula text.
@@ -381,11 +382,11 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return zeroValue;
     }
     
-    // HasValidationChoiceList..........................................................................................
+    // HasValidationPromptValue.........................................................................................
 
     @Override
-    public Optional<ValidationChoiceList> validationChoiceList() {
-        return this.error.flatMap(SpreadsheetError::validationChoiceList);
+    public Optional<ValidationPromptValue> validationPromptValue() {
+        return this.error.flatMap(SpreadsheetError::validationPromptValue);
     }
 
     // errorOrValue ....................................................................................................
