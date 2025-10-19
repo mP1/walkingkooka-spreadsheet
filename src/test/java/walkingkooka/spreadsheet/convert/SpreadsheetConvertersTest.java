@@ -103,6 +103,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasLocale;
 import walkingkooka.util.HasOptionalLocale;
+import walkingkooka.validation.ValidationCheckbox;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
@@ -786,6 +787,40 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testFormAndValidationConvertEmptyStringToValidationCheckbox() {
+        this.formAndValidationConvertAndCheck(
+            "",
+            ValidationCheckbox.TRUE_FALSE
+        );
+    }
+
+    @Test
+    public void testFormAndValidationConvertStringToValidationCheckbox() {
+        this.formAndValidationConvertAndCheck(
+            "111, 222",
+            ValidationCheckbox.with(
+                Optional.of("111"),
+                Optional.of("222")
+            )
+        );
+    }
+
+
+    @Test
+    public void testFormAndValidationConvertListToValidationCheckbox() {
+        this.formAndValidationConvertAndCheck(
+            Lists.of(
+                333,
+                444
+            ),
+            ValidationCheckbox.with(
+                Optional.of(333),
+                Optional.of(444)
+            )
+        );
+    }
+
+    @Test
     public void testFormAndValidationConvertNumberToValidationChoice() {
         final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123);
 
@@ -896,6 +931,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 SpreadsheetConverters.basic(),
                 SpreadsheetConverters.text(),
                 Converters.objectToString(),
+                SpreadsheetConverters.textToCsvStringList(),
                 SpreadsheetConverters.toValidationChoice()
             )
         );
@@ -903,6 +939,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         @Override
         public SpreadsheetExpressionReference validationReference() {
             return SpreadsheetSelection.A1;
+        }
+
+        @Override
+        public char valueSeparator() {
+            return ',';
         }
     };
     

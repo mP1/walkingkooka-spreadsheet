@@ -263,6 +263,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "form-and-validation",
         textToFormName(),
         textToValidationError(),
+        toValidationCheckbox(),
         toValidationChoice(),
         toValidationChoiceList(),
         toValidationErrorList()
@@ -954,6 +955,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> toStyleable() {
         return TreeTextConverters.toStyleable();
+    }
+
+    /**
+     * {@see ValidationConvertConverters.toValidationCheckbox}
+     */
+    public static Converter<SpreadsheetConverterContext> toValidationCheckbox() {
+        return ValidationConvertConverters.toValidationCheckbox();
     }
 
     /**

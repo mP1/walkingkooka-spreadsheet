@@ -85,6 +85,7 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.validation.ValidationCheckbox;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
@@ -1192,6 +1193,24 @@ final class MissingConverterVerifier {
                 }
 
                 if (validation) {
+                    // to-validation-checkbox.............................................................................
+                    finder.addIfConversionFail(
+                        Lists.of(
+                            Lists.empty(),
+                            Lists.of("true"),
+                            Lists.of("true111, false222"),
+                            Lists.of(
+                                "true111"
+                            ),
+                            Lists.of(
+                                "true111",
+                                "false222"
+                            )
+                        ),
+                        ValidationCheckbox.class,
+                        SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TO_VALIDATION_ERROR_LIST
+                    );
+
                     // to-validation-choice.............................................................................
                     finder.addIfConversionFail(
                         Lists.of(

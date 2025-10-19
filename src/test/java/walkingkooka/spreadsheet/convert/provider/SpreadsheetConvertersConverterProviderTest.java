@@ -846,6 +846,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToValidationCheckbox() {
+        this.converterAndCheck(
+            "to-validation-checkbox",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toValidationCheckbox()
+        );
+    }
+    
+    @Test
     public void testConverterSelectorWithToValidationChoice() {
         this.converterAndCheck(
             "to-validation-choice",
