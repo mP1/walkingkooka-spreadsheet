@@ -1881,8 +1881,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"twoDigitYear\": 20,\n" +
                     "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
                     "  \"validationFunctions\": \"@\",\n" +
-                    "  \"validationValidators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list\",\n" +
-                    "  \"validators\": \"absolute-url, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
+                    "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
+                    "  \"validators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
                     "  \"valueSeparator\": \",\",\n" +
                     "  \"viewportHome\": \"A1\"\n" +
                     "}"
@@ -2106,8 +2106,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"twoDigitYear\": 20,\n" +
                 "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
-                "  \"validationValidators\": \"absolute-url, collection, email-address, expression, non-null, text-length, text-mask, validation-choice-list\",\n" +
-                "  \"validators\": \"absolute-url, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
+                "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
+                "  \"validators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
                 "  \"valueSeparator\": \",\",\n" +
                 "  \"viewportHome\": \"A1\"\n" +
                 "}"
