@@ -70,7 +70,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.HasOptionalLocaleTesting;
-import walkingkooka.validation.HasValidationChoiceListTesting;
+import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValueTypeName;
@@ -102,7 +102,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasOptionalSpreadsheetFormatterSelectorTesting,
     HasOptionalSpreadsheetParserSelectorTesting,
     HasOptionalValidatorSelectorTesting,
-    HasValidationChoiceListTesting,
+    HasValidationPromptValueTesting,
     ParseStringTesting<SpreadsheetCell>,
     JsonNodeMarshallingTesting<SpreadsheetCell>,
     HasSpreadsheetReferenceTesting,
@@ -1284,10 +1284,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    // HasValidationChoiceList..........................................................................................
+    // HasValidationPromptValue.........................................................................................
 
     @Test
-    public void testValidationChoiceListWithErrorWithValidationChoiceList() {
+    public void testValidationPromptValueWithErrorWithValidationChoiceList() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
             ValidationChoice.with(
                 "Label1",
@@ -1297,7 +1297,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             )
         );
 
-        this.validationChoiceListAndCheck(
+        this.validationPromptValueAndCheck(
             SpreadsheetSelection.A1.setFormula(
                 SpreadsheetFormula.EMPTY.setText("=1")
                     .setValue(

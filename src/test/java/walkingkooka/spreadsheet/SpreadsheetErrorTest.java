@@ -40,7 +40,7 @@ import walkingkooka.tree.expression.FakeExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.HasValidationChoiceListTesting;
+import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
@@ -59,7 +59,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     JsonNodeMarshallingTesting<SpreadsheetError>,
     HasTextTesting,
     HasConvertErrorTesting,
-    HasValidationChoiceListTesting,
+    HasValidationPromptValueTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError> {
 
@@ -727,7 +727,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     @Test
     public void testToExpressionErrorWithValidationChoiceList() {
         this.toExpressionErrorAndCheck(
-            SpreadsheetError.validationChoiceList(
+            SpreadsheetError.validationPromptValue(
                 ValidationChoiceList.EMPTY.concat(
                     ValidationChoice.with(
                         "Label1",
@@ -1042,28 +1042,28 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    // isValidationChoiceList...........................................................................................
+    // isValidationPromptValue...........................................................................................
 
     @Test
-    public void testIsValidationChoiceListWhenDiv0() {
-        this.isValidationChoiceListAndCheck(
+    public void testIsValidationPromptValueWhenDiv0() {
+        this.isValidationPromptValueAndCheck(
             SpreadsheetErrorKind.DIV0.toError(),
             false
         );
     }
 
     @Test
-    public void testIsValidationChoiceListWhenError() {
-        this.isValidationChoiceListAndCheck(
+    public void testIsValidationPromptValueWhenError() {
+        this.isValidationPromptValueAndCheck(
             SpreadsheetErrorKind.ERROR.setMessage("Error 123"),
             false
         );
     }
 
     @Test
-    public void testIsValidationChoiceListWhenValidationChoiceListMissingMessage() {
-        this.isValidationChoiceListAndCheck(
-            SpreadsheetError.validationChoiceList(
+    public void testIsValidationPromptValueWhenValidationChoiceListMissingMessage() {
+        this.isValidationPromptValueAndCheck(
+            SpreadsheetError.validationPromptValue(
                 ValidationChoiceList.EMPTY.concat(
                     ValidationChoice.with(
                         "Label1",
@@ -1076,9 +1076,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testIsValidationChoiceListWhenValidationChoiceListWithMessage() {
-        this.isValidationChoiceListAndCheck(
-            SpreadsheetError.validationChoiceList(
+    public void testIsValidationPromptValueWhenValidationChoiceListWithMessage() {
+        this.isValidationPromptValueAndCheck(
+            SpreadsheetError.validationPromptValue(
                 ValidationChoiceList.EMPTY.concat(
                     ValidationChoice.with(
                         "Label1",
@@ -1090,27 +1090,27 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    private void isValidationChoiceListAndCheck(final SpreadsheetError error,
+    private void isValidationPromptValueAndCheck(final SpreadsheetError error,
                                                 final boolean expected) {
         this.checkEquals(
             expected,
-            error.isValidationChoiceList(),
+            error.isValidationPromptValue(),
             error::message
         );
     }
 
-    // HasValidationChoiceList..........................................................................................
+    // HasValidationPromptValue.........................................................................................
 
     @Test
-    public void testValidationChoiceListWithEmptyValue() {
-        this.validationChoiceListAndCheck(
+    public void testValidationPromptValueWithEmptyValue() {
+        this.validationPromptValueAndCheck(
             SpreadsheetErrorKind.VALUE.setMessage("No message")
         );
     }
 
     @Test
-    public void testValidationChoiceListWithNonValidationChoiceListValue() {
-        this.validationChoiceListAndCheck(
+    public void testValidationPromptValueWithNonValidationChoiceListValue() {
+        this.validationPromptValueAndCheck(
             SpreadsheetErrorKind.VALUE.setMessage("No message")
                 .setValue(
                     Optional.of(
@@ -1121,8 +1121,8 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testValidationChoiceListWithValidationErrorListMissingChoices() {
-        this.validationChoiceListAndCheck(
+    public void testValidationPromptValueWithValidationErrorListMissingChoices() {
+        this.validationPromptValueAndCheck(
             SpreadsheetError.validationErrors(
                 SpreadsheetForms.errorList()
                     .concat(SpreadsheetForms.error(SpreadsheetSelection.A1)
@@ -1132,7 +1132,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     }
 
     @Test
-    public void testValidationChoiceListWithValidationChoiceListValue() {
+    public void testValidationPromptValueWithValidationChoiceListValue() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
             ValidationChoice.with(
                 "Label1",
@@ -1140,7 +1140,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             )
         );
 
-        this.validationChoiceListAndCheck(
+        this.validationPromptValueAndCheck(
             SpreadsheetError.validationErrors(
                 SpreadsheetForms.errorList()
                     .concat(

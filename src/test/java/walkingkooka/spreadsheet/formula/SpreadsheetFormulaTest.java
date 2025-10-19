@@ -79,7 +79,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.json.patch.PatchableTesting;
-import walkingkooka.validation.HasValidationChoiceListTesting;
+import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValueTypeName;
@@ -98,7 +98,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
     CanBeEmptyTesting,
     CanReplaceReferencesTesting<SpreadsheetFormula>,
-    HasValidationChoiceListTesting,
+    HasValidationPromptValueTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
     JsonNodeMarshallingTesting<SpreadsheetFormula>,
     PatchableTesting<SpreadsheetFormula>,
@@ -1027,7 +1027,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             )
         );
 
-        final SpreadsheetError error = SpreadsheetError.validationChoiceList(choices);
+        final SpreadsheetError error = SpreadsheetError.validationPromptValue(choices);
 
         this.errorOrValueAndCheck(
             SpreadsheetFormula.EMPTY.setError(
@@ -1046,7 +1046,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             )
         );
 
-        final SpreadsheetError error = SpreadsheetError.validationChoiceList(choices);
+        final SpreadsheetError error = SpreadsheetError.validationPromptValue(choices);
 
         final Optional<Object> value = Optional.of(999);
 
@@ -2361,18 +2361,18 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         return this.createObject();
     }
 
-    // HasValidationChoiceList..........................................................................................
+    // HasValidationPromptValue.........................................................................................
 
     @Test
-    public void testValidationChoiceListWhenEmpty() {
-        this.validationChoiceListAndCheck(
+    public void testValidationPromptValueWhenEmpty() {
+        this.validationPromptValueAndCheck(
             SpreadsheetFormula.EMPTY
         );
     }
 
     @Test
-    public void testValidationChoiceListWithValueWithoutError() {
-        this.validationChoiceListAndCheck(
+    public void testValidationPromptValueWithValueWithoutError() {
+        this.validationPromptValueAndCheck(
             SpreadsheetFormula.EMPTY.setText("=1")
                 .setValue(
                     Optional.of(111)
@@ -2381,7 +2381,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testValidationChoiceListWithSpreadsheetErrorTypeValidatorWithValidationChoiceList() {
+    public void testValidationPromptValueWithSpreadsheetErrorTypeValidatorWithValidationChoiceList() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
             ValidationChoice.with(
                 "Label1",
@@ -2391,7 +2391,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             )
         );
 
-        this.validationChoiceListAndCheck(
+        this.validationPromptValueAndCheck(
             SpreadsheetFormula.EMPTY.setText("=1")
                 .setValue(
                     Optional.of(111)
@@ -2408,7 +2408,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testValidationChoiceListWithSpreadsheetErrorTypeErrorWithValidationChoiceList() {
+    public void testValidationPromptValueWithSpreadsheetErrorTypeErrorWithValidationChoiceList() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
             ValidationChoice.with(
                 "Label1",
@@ -2418,7 +2418,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             )
         );
 
-        this.validationChoiceListAndCheck(
+        this.validationPromptValueAndCheck(
             SpreadsheetFormula.EMPTY.setText("=1")
                 .setValue(
                     Optional.of(111)
