@@ -36,6 +36,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
+    protected void visitAbsoluteUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitBigDecimal() {
         throw new UnsupportedOperationException();
     }
@@ -87,6 +92,16 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
 
     @Override
     protected void visitDouble() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitEmail() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitEmailAddress() {
         throw new UnsupportedOperationException();
     }
 
@@ -172,6 +187,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
 
     @Override
     protected void visitString() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitUrl() {
         throw new UnsupportedOperationException();
     }
 

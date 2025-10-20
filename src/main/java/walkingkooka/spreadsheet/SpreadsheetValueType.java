@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -45,6 +47,10 @@ import java.util.Set;
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName ANY = ValueTypeName.ANY;
+
+    public static final String ABSOLUTE_URL_STRING = "absolute-url";
+
+    public static final ValueTypeName ABSOLUTE_URL = ValueTypeName.with(ABSOLUTE_URL_STRING);
 
     public static final String BOOLEAN_STRING = ValueTypeName.BOOLEAN_STRING;
 
@@ -78,6 +84,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName DATE_TIME = ValueTypeName.DATE_TIME;
 
+    public static final String EMAIL_ADDRESS_STRING = "email-address";
+
+    public static final ValueTypeName EMAIL_ADDRESS = ValueTypeName.with(EMAIL_ADDRESS_STRING);
+
+    public static final String EMAIL_STRING = ValueTypeName.EMAIL_STRING;
+
+    public static final ValueTypeName EMAIL = ValueTypeName.EMAIL;
+    
     public static final String ERROR_STRING = "error";
 
     public static final ValueTypeName ERROR = ValueTypeName.with(ERROR_STRING);
@@ -126,6 +140,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName TIME = ValueTypeName.TIME;
 
+    public static final String URL_STRING = ValueTypeName.URL_STRING;
+
+    public static final ValueTypeName URL = ValueTypeName.URL;
+
     public static final String VALUE_OR_EXPRESSION_STRING = "value-or-expression";
 
     public static final ValueTypeName VALUE_OR_EXPRESSION = ValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
@@ -137,9 +155,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         BOOLEAN,
         DATE,
         DATE_TIME,
+        EMAIL,
         NUMBER,
         TEXT,
-        TIME
+        TIME,
+        URL
     );
 
     /**
@@ -149,10 +169,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         BOOLEAN,
         DATE,
         DATE_TIME,
+        EMAIL,
         ERROR,
         NUMBER,
         TEXT,
-        TIME
+        TIME,
+        URL
     );
 
     /**
@@ -172,6 +194,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         final Class<?> javaType;
 
         switch (valueType.text()) {
+            case ABSOLUTE_URL_STRING:
+                javaType = AbsoluteUrl.class;
+                break;
             case BOOLEAN_STRING:
                 javaType = Boolean.class;
                 break;
@@ -192,6 +217,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case DATE_TIME_STRING:
                 javaType = LocalDateTime.class;
+                break;
+            case EMAIL_ADDRESS_STRING:
+            case EMAIL_STRING:
+                javaType = EmailAddress.class;
                 break;
             case ERROR_STRING:
                 javaType = SpreadsheetError.class;
@@ -226,6 +255,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case TIME_STRING:
                 javaType = LocalTime.class;
                 break;
+            case URL_STRING:
+                javaType = AbsoluteUrl.class;
+                break;
             default:
                 javaType = null;
                 break;
@@ -240,6 +272,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         final ValueTypeName valueTypeName;
 
         switch (name) {
+            case ABSOLUTE_URL_STRING:
+                valueTypeName = ABSOLUTE_URL;
+                break;
             case ValueTypeName.ANY_STRING:
                 valueTypeName = ANY;
                 break;
@@ -263,6 +298,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case DATE_TIME_STRING:
                 valueTypeName = DATE_TIME;
+                break;
+            case EMAIL_ADDRESS_STRING:
+                valueTypeName = EMAIL_ADDRESS;
+                break;
+            case EMAIL_STRING:
+                valueTypeName = EMAIL;
                 break;
             case ERROR_STRING:
                 valueTypeName = ERROR;
