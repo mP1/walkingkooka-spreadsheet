@@ -179,8 +179,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
             spreadsheetError = firstValidationError.text()
                 .isEmpty() &&
-                valueOrNull instanceof ValidationChoiceList ?
-                validationPromptValue((ValidationChoiceList) valueOrNull) :
+                valueOrNull instanceof ValidationPromptValue ?
+                validationPromptValue((ValidationPromptValue) valueOrNull) :
                 SpreadsheetError.parse(
                     firstValidationError.text()
                 ).setValue(value);
