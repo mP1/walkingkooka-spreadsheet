@@ -41,6 +41,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.validation.HasValidationPromptValueTesting;
+import walkingkooka.validation.ValidationCheckbox;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
@@ -286,6 +287,26 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    @Test
+    public void testValidationErrorWithSpreadsheetErrorKindValidatorAndValidationCheckbox() {
+        final ValidationCheckbox checkbox = ValidationCheckbox.TRUE_FALSE;
+
+        this.validationErrorsAndCheck(
+            Lists.of(
+                SpreadsheetForms.error(SpreadsheetSelection.A1)
+                    .setValue(
+                        Optional.of(checkbox)
+                    )
+            ),
+            Optional.of(
+                SpreadsheetErrorKind.VALIDATION.toError()
+                    .setValue(
+                        Optional.of(checkbox)
+                    )
+            )
+        );
+    }
+    
     @Test
     public void testValidationErrorWithSpreadsheetErrorKindValidatorAndValidationChoiceList() {
         final ValidationChoiceList choices = ValidationChoiceList.EMPTY.concat(
