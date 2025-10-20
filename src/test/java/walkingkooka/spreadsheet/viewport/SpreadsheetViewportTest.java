@@ -559,7 +559,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
         this.marshallAndCheck(
             this.createJsonNodeMarshallingValue(),
             "{\n" +
-                "  \"rectangle\": \"A1:100.0:50.0\",\n" +
+                "  \"rectangle\": \"A1:100:50\",\n" +
                 "  \"anchoredSelection\": {\n" +
                 "    \"selection\": {\n" +
                 "      \"type\": \"spreadsheet-cell-range-reference\",\n" +
@@ -578,7 +578,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             this.createJsonNodeMarshallingValue()
                 .setIncludeFrozenColumnsRows(true),
             "{\n" +
-                "  \"rectangle\": \"A1:100.0:50.0\",\n" +
+                "  \"rectangle\": \"A1:100:50\",\n" +
                 "  \"includeFrozenColumnsRows\": true,\n" +
                 "  \"anchoredSelection\": {\n" +
                 "    \"selection\": {\n" +
