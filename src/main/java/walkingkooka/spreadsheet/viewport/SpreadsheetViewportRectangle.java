@@ -283,9 +283,9 @@ public final class SpreadsheetViewportRectangle implements Comparable<Spreadshee
         return JsonObject.string(
             this.home.toString() +
                 SEPARATOR +
-                this.width +
+                toStringWithoutExtraTrailingZero(this.width) +
                 SEPARATOR +
-                this.height
+                toStringWithoutExtraTrailingZero(this.height)
         );
     }
 
