@@ -41,6 +41,11 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     }
 
     @Override
+    protected void visitAbsoluteUrl() {
+        this.valueType(SpreadsheetValueType.ABSOLUTE_URL_STRING);
+    }
+
+    @Override
     protected void visitBigDecimal() {
         this.valueType(SpreadsheetValueType.NUMBER_STRING);
     }
@@ -88,6 +93,16 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     @Override
     protected void visitDouble() {
         this.valueType(SpreadsheetValueType.NUMBER_STRING);
+    }
+
+    @Override
+    protected void visitEmail() {
+        this.valueType(SpreadsheetValueType.EMAIL_STRING);
+    }
+
+    @Override
+    protected void visitEmailAddress() {
+        this.valueType(SpreadsheetValueType.EMAIL_ADDRESS_STRING);
     }
 
     @Override
@@ -158,6 +173,11 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
     @Override
     protected void visitString() {
         this.valueType(SpreadsheetValueType.TEXT_STRING);
+    }
+
+    @Override
+    protected void visitUrl() {
+        this.valueType(SpreadsheetValueType.URL_STRING);
     }
 
     private void valueType(final String typeName) {

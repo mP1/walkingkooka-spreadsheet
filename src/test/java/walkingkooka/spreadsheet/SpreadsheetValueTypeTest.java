@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -63,9 +65,11 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                 SpreadsheetValueType.BOOLEAN,
                 SpreadsheetValueType.DATE,
                 SpreadsheetValueType.DATE_TIME,
+                SpreadsheetValueType.EMAIL,
                 SpreadsheetValueType.NUMBER,
                 SpreadsheetValueType.TEXT,
-                SpreadsheetValueType.TIME
+                SpreadsheetValueType.TIME,
+                SpreadsheetValueType.URL
             ),
             new ArrayList<>(
                 SpreadsheetValueType.ALL
@@ -92,10 +96,42 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
-    public void testWith() {
+    public void testWithAbsoluteUrl() {
+        assertSame(
+            SpreadsheetValueType.ABSOLUTE_URL,
+            SpreadsheetValueType.with("absolute-url")
+        );
+    }
+
+    @Test
+    public void testWithDate() {
         assertSame(
             SpreadsheetValueType.DATE,
             SpreadsheetValueType.with("date")
+        );
+    }
+
+    @Test
+    public void testWithEmail() {
+        assertSame(
+            SpreadsheetValueType.EMAIL,
+            SpreadsheetValueType.with("email")
+        );
+    }
+
+    @Test
+    public void testWithEmailAddress() {
+        assertSame(
+            SpreadsheetValueType.EMAIL_ADDRESS,
+            SpreadsheetValueType.with("email-address")
+        );
+    }
+
+    @Test
+    public void testWithUrl() {
+        assertSame(
+            SpreadsheetValueType.URL,
+            SpreadsheetValueType.with("url")
         );
     }
 
@@ -106,6 +142,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetValueType.toValueType(null)
+        );
+    }
+
+    @Test
+    public void testToValueTypeWithAbsoluteUrl() {
+        this.toValueTypeAndCheck(
+            AbsoluteUrl.class,
+            SpreadsheetValueType.ABSOLUTE_URL
         );
     }
 
@@ -146,6 +190,22 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toValueTypeAndCheck(
             SpreadsheetColumnRangeReference.class,
             SpreadsheetValueType.COLUMN_RANGE
+        );
+    }
+
+    @Test
+    public void testToValueTypeWithEmail() {
+        this.toValueTypeAndCheck(
+            EmailAddress.class,
+            SpreadsheetValueType.EMAIL
+        );
+    }
+
+    @Test
+    public void testToValueTypeWithEmailAddress() {
+        this.toValueTypeAndCheck(
+            EmailAddress.class,
+            SpreadsheetValueType.EMAIL
         );
     }
 
@@ -282,6 +342,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithAbsoluteUrl() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.ABSOLUTE_URL,
+            AbsoluteUrl.class
+        );
+    }
+
+    @Test
     public void testToClassWithBoolean() {
         this.toClassAndCheck(
             SpreadsheetValueType.BOOLEAN,
@@ -334,6 +402,22 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.DATE_TIME,
             LocalDateTime.class
+        );
+    }
+
+    @Test
+    public void testToClassWithEmail() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.EMAIL,
+            EmailAddress.class
+        );
+    }
+
+    @Test
+    public void testToClassWithEmailAddress() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.EMAIL_ADDRESS,
+            EmailAddress.class
         );
     }
 
@@ -414,6 +498,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.TIME,
             LocalTime.class
+        );
+    }
+
+    @Test
+    public void testToClassWithUrl() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.URL,
+            AbsoluteUrl.class
         );
     }
 

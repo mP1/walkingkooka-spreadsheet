@@ -39,6 +39,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
             final String name = type.getName();
 
             switch (name) {
+                case "walkingkooka.net.AbsoluteUrl":
+                    this.visitAbsoluteUrl();
+                    break;
                 case "java.math.BigDecimal":
                     this.visitBigDecimal();
                     break;
@@ -77,6 +80,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     break;
                 case "java.lang.Double":
                     this.visitDouble();
+                    break;
+                case "walkingkooka.net.email.EmailAddress":
+                    this.visitEmail();
                     break;
                 case "walkingkooka.tree.expression.ExpressionNumber":
                 case "walkingkooka.tree.expression.ExpressionNumberBigDecimal":
@@ -147,6 +153,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
+    protected void visitAbsoluteUrl() {
+
+    }
+
     protected void visitBigDecimal() {
 
     }
@@ -196,6 +206,14 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitDouble() {
+
+    }
+
+    protected void visitEmail() {
+
+    }
+
+    protected void visitEmailAddress() {
 
     }
 
@@ -263,6 +281,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitString() {
+
+    }
+
+    protected void visitUrl() {
 
     }
 
