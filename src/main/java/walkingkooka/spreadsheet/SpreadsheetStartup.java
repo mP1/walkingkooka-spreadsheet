@@ -186,6 +186,8 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         SpreadsheetLabelNameSet.EMPTY.size();
         SpreadsheetRowReferenceSet.EMPTY.size();
 
+        SpreadsheetId.with(1);
+
         SpreadsheetMetadata.EMPTY.id();
     }
 
