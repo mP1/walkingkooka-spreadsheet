@@ -122,7 +122,7 @@ public enum SpreadsheetErrorKind implements HasText {
     FORMATTING("#FORMATTING", -1),
 
     /**
-     * Used to mark a {@link SpreadsheetError} as an error only holding {@link walkingkooka.validation.ValidationChoiceList}
+     * Used to mark a {@link SpreadsheetError} as an error only holding {@link walkingkooka.validation.ValidationPromptValue}
      * and must not be returned by {@link SpreadsheetFormula#errorOrValue()}.
      * Errors of this kind should never be visible or available to Expressions.
      */
