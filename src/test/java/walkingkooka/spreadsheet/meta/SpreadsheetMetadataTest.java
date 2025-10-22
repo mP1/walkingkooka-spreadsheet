@@ -1064,7 +1064,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     private SpreadsheetProvider spreadsheetProvider() {
-        final ExpressionFunction<Object, SpreadsheetExpressionEvaluationContext> function1 = new FakeExpressionFunction<Object, SpreadsheetExpressionEvaluationContext>() {
+        final ExpressionFunction<Object, SpreadsheetExpressionEvaluationContext> function1 = new FakeExpressionFunction<>() {
             @Override
             public Optional<ExpressionFunctionName> name() {
                 return Optional.of(
