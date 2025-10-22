@@ -912,7 +912,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     // HasId............................................................................................................
 
     @Override
-    public String id() {
+    public final String id() {
         return this.value();
     }
 }
