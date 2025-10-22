@@ -244,7 +244,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                 },
                 FormHandlerContexts.fake(),
                 TERMINAL_CONTEXT,
-                new FakeExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext>() {
+                new FakeExpressionFunctionProvider<>() {
                     @Override
                     public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
                                                                                                             final List<?> values,
