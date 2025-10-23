@@ -166,8 +166,6 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         PERCENT_STRING,
         null
     );
-    
-    final static String TEXT_STRING = "text";
 
     final static String SPREADSHEET_PATTERN_COLLECTION_STRING = "spreadsheet-pattern-collection";
 
@@ -178,6 +176,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         SPREADSHEET_PATTERN_COLLECTION_STRING,
         null
     );
+
+    final static String TEXT_STRING = "text";
 
     /**
      * The name of the text {@link SpreadsheetFormatter}
