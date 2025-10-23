@@ -87,6 +87,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
+    final static String CURRENCY_STRING = "currency";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName CURRENCY = new SpreadsheetFormatterName(
+        CURRENCY_STRING,
+        null
+    );
+
     final static String DATE_STRING = "date";
 
     /**
