@@ -836,12 +836,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // SpreadsheetFormatterProvider.....................................................................................
 
     // Default
-    //  text-format-pattern
+    //  text
     //    "@"
     //  Hello 123
     @Test
     public void testSpreadsheetFormatterSamples() {
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@@");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT.setValueText("@@");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
@@ -881,7 +881,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             },
             SpreadsheetFormatterSample.with(
                 "Default",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Hello 123")
             ),
             SpreadsheetFormatterSample.with(
@@ -1829,7 +1829,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"findFunctions\": \"@\",\n" +
                     "  \"findHighlighting\": false,\n" +
                     "  \"formHandlers\": \"basic\",\n" +
-                    "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                    "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text, time-format-pattern\",\n" +
                     "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                     "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                     "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -1875,7 +1875,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "    \"wordBreak\": \"NORMAL\",\n" +
                     "    \"wordWrap\": \"NORMAL\"\n" +
                     "  },\n" +
-                    "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                    "  \"textFormatter\": \"text @\",\n" +
                     "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                     "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                     "  \"twoDigitYear\": 20,\n" +
@@ -2054,7 +2054,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
-                "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text, time-format-pattern\",\n" +
                 "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -2100,7 +2100,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "    \"wordBreak\": \"NORMAL\",\n" +
                 "    \"wordWrap\": \"NORMAL\"\n" +
                 "  },\n" +
-                "  \"textFormatter\": \"text-format-pattern @\",\n" +
+                "  \"textFormatter\": \"text @\",\n" +
                 "  \"timeFormatter\": \"time-format-pattern h:mm:ss AM/PM\",\n" +
                 "  \"timeParser\": \"time-parse-pattern h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                 "  \"twoDigitYear\": 20,\n" +

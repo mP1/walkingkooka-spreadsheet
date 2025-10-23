@@ -146,7 +146,7 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         NUMBER_STRING,
         SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
     );
-    final static String TEXT_FORMAT_PATTERN_STRING = "text-format-pattern";
+    final static String TEXT_STRING = "text";
 
     final static String SPREADSHEET_PATTERN_COLLECTION_STRING = "spreadsheet-pattern-collection";
 
@@ -161,8 +161,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
     /**
      * The name of the text {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName TEXT_FORMAT_PATTERN = new SpreadsheetFormatterName(
-        TEXT_FORMAT_PATTERN_STRING,
+    public final static SpreadsheetFormatterName TEXT = new SpreadsheetFormatterName(
+        TEXT_STRING,
         SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
     );
 
@@ -215,8 +215,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case SPREADSHEET_PATTERN_COLLECTION_STRING:
                 spreadsheetFormatterName = SPREADSHEET_PATTERN_COLLECTION;
                 break;
-            case TEXT_FORMAT_PATTERN_STRING:
-                spreadsheetFormatterName = TEXT_FORMAT_PATTERN;
+            case TEXT_STRING:
+                spreadsheetFormatterName = TEXT;
                 break;
             case TIME_FORMAT_PATTERN_STRING:
                 spreadsheetFormatterName = TIME_FORMAT_PATTERN;

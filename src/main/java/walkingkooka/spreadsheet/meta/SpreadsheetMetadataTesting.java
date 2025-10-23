@@ -236,7 +236,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         ).set(
             SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
             SpreadsheetFormatterSelector.parse(
-                "badge-error " + SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+                "badge-error " + SpreadsheetPattern.DEFAULT_TEXT.spreadsheetFormatterSelector()
             )
         ).set(
             SpreadsheetMetadataPropertyName.EXPORTERS,
@@ -331,7 +331,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 .set(TextStylePropertyName.HEIGHT, Length.parsePixels("50px"))
         ).set(
             SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-            SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+            SpreadsheetPattern.DEFAULT_TEXT.spreadsheetFormatterSelector()
         ).set(
             SpreadsheetMetadataPropertyName.TIME_FORMATTER,
             SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").spreadsheetFormatterSelector()

@@ -114,7 +114,7 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
     public void testJsonMarshallNotEmpty() {
         this.marshallAndCheck(
             this.createJsonNodeMarshallingValue(),
-            JsonNode.string("text-format-pattern @")
+            JsonNode.string("text @")
         );
     }
 

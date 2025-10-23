@@ -50,7 +50,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
     @Test
     public void testWithTextFormatPattern() {
-        this.verifyConstant("text-format-pattern");
+        this.verifyConstant("text");
     }
 
     @Test
@@ -116,7 +116,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     @Test
     public void testIsSpreadsheetFormatPatternWithDateTextFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-            "text-format-pattern",
+            "text",
             true
         );
     }
@@ -160,7 +160,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
     @Test
     public void testSetText() {
-        final SpreadsheetFormatterName name = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN;
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.TEXT;
         final String text = "@@";
 
         this.checkEquals(

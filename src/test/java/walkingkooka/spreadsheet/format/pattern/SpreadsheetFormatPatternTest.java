@@ -132,7 +132,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testSpreadsheetFormatterSelectorWhenText() {
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetPattern.parseTextFormatPattern("@@"),
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN + " @@"
+            SpreadsheetFormatterName.TEXT + " @@"
         );
     }
 

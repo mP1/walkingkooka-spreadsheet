@@ -47,7 +47,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
             SpreadsheetFormatterProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetFormatterSelector.parse("text-format-pattern"),
+            SpreadsheetFormatterSelector.parse("text"),
             CONTEXT
         );
     }
@@ -60,7 +60,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
             SpreadsheetFormatterProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetFormatterSelector.parse("text-format-pattern @@"),
+            SpreadsheetFormatterSelector.parse("text @@"),
             CONTEXT,
             SpreadsheetPattern.parseTextFormatPattern("@@")
                 .formatter()
@@ -75,7 +75,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
             SpreadsheetFormatterProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetFormatterName.with("text-format-pattern"),
+            SpreadsheetFormatterName.with("text"),
             Lists.of(),
             CONTEXT
         );
@@ -89,7 +89,7 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
             SpreadsheetFormatterProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetFormatterName.with("text-format-pattern"),
+            SpreadsheetFormatterName.with("text"),
             Lists.of("@@"),
             CONTEXT,
             SpreadsheetPattern.parseTextFormatPattern("@@")
@@ -105,14 +105,14 @@ public final class SpreadsheetFormatterProviderCollectionTest implements Spreads
             SpreadsheetFormatterProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetFormatterSelector.parse("text-format-pattern")
+            SpreadsheetFormatterSelector.parse("text")
         );
     }
 
     @Test
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterName.TEXT.setValueText(""),
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SpreadsheetFormatterProviderSamplesContexts.fake()
         );

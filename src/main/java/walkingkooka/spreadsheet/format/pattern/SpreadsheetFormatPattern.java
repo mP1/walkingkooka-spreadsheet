@@ -63,6 +63,9 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
         ).replace(
             "number-format-pattern",
             "number"
+        ).replace(
+            "text-format-pattern",
+            "text"
         );
 
         return SpreadsheetFormatterSelector.with(

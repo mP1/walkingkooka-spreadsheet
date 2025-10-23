@@ -121,7 +121,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorAutomaticSixParameters() {
         this.spreadsheetFormatterAndCheck(
-            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text-format-pattern(\"\\\"Error\\\" @\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text(\"\\\"Error\\\" @\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
@@ -179,7 +179,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorBadgeError() {
         this.spreadsheetFormatterAndCheck(
-            "badge-error text-format-pattern \"Hello \"@@",
+            "badge-error text \"Hello \"@@",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.badgeError(
                 SpreadsheetPattern.parseTextFormatPattern("\"Hello \"@@")
@@ -191,7 +191,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorBadgeError2() {
         this.spreadsheetFormatterAndCheck(
-            "badge-error(text-format-pattern \"Hello \"@@)",
+            "badge-error(text \"Hello \"@@)",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.badgeError(
                 SpreadsheetPattern.parseTextFormatPattern("\"Hello \"@@")
@@ -203,7 +203,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorBadgeError3() {
         this.spreadsheetFormatterAndCheck(
-            "badge-error text-format-pattern(\"Hello \"@@)",
+            "badge-error text(\"Hello \"@@)",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.badgeError(
                 SpreadsheetFormatters.text(
@@ -217,7 +217,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorBadgeError4() {
         this.spreadsheetFormatterAndCheck(
-            "badge-error (text-format-pattern(\"Hello \"@@))",
+            "badge-error (text(\"Hello \"@@))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.badgeError(
                 SpreadsheetFormatters.text(
@@ -231,7 +231,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorCollection() {
         this.spreadsheetFormatterAndCheck(
-            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.collection(
                 Lists.of(
@@ -249,7 +249,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))"
             )
         );
     }
@@ -793,7 +793,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorSpreadsheetPatternCollection() {
         this.spreadsheetFormatterAndCheck(
-            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.spreadsheetPatternCollection(
                 Lists.of(
@@ -811,7 +811,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenSpreadsheetPatternCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))"
             )
         );
     }
@@ -819,7 +819,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorTextFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            "text-format-pattern @@\"Hello\"",
+            "text @@\"Hello\"",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTextFormatPattern("@@\"Hello\"").formatter()
         );
@@ -828,7 +828,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNameTextFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            SpreadsheetFormatterName.with("text-format-pattern"),
+            SpreadsheetFormatterName.with("text"),
             Lists.of(
                 "@@\"Hello\""
             ),
@@ -840,7 +840,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenTextFormatPatternEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("text-format-pattern"),
+            SpreadsheetFormatterSelector.parse("text"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -865,7 +865,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenTextFormatPatternNotEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("text-format-pattern @"),
+            SpreadsheetFormatterSelector.parse("text @"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -1910,17 +1910,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSamplesTextFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TEXT,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Default",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Hello 123")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText(""),
+                SpreadsheetFormatterName.TEXT.setValueText(""),
                 SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
@@ -1929,14 +1929,14 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSamplesTextFormatPatternWithCellValueSkipSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TEXT,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
             context(
                 Optional.of("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
                 "Default",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Hello 123")
             )
         );
@@ -1945,24 +1945,24 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSamplesTextFormatPatternWithCellValueIncludeSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TEXT,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             context(
                 Optional.of("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
                 "Default",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Hello 123")
             ),
             SpreadsheetFormatterSample.with(
                 "A1",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText(""),
+                SpreadsheetFormatterName.TEXT.setValueText(""),
                 SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
@@ -1970,7 +1970,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     @Test
     public void testSpreadsheetFormatterSamplesTextFormatPatternNotEmptyWithCellValueSkipSamples() {
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("\"Hello\" @@");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT.setValueText("\"Hello\" @@");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
@@ -1980,7 +1980,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Default",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Hello 123")
             )
         );
@@ -1988,7 +1988,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     @Test
     public void testSpreadsheetFormatterSamplesTextFormatPatternNotEmptyWithCellValueIncludeSamples() {
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("\"Hello\" @@");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TEXT.setValueText("\"Hello\" @@");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
@@ -1998,12 +1998,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Default",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Hello 123")
             ),
             SpreadsheetFormatterSample.with(
                 "A1",
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN.setValueText("@"),
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
                 TextNode.text("Cell Value 123")
             ),
             SpreadsheetFormatterSample.with(
@@ -2190,7 +2190,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\n"
         );
     }
@@ -2212,7 +2212,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
                     "]"
             ),

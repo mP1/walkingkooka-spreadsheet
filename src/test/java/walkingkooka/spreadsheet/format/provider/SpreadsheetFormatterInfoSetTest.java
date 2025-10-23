@@ -67,7 +67,7 @@ public final class SpreadsheetFormatterInfoSetTest implements PluginInfoSetLikeT
     public SpreadsheetFormatterInfo info() {
         return SpreadsheetFormatterInfo.with(
             Url.parseAbsolute("https://example.com/test1"),
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
+            SpreadsheetFormatterName.TEXT
         );
     }
 
