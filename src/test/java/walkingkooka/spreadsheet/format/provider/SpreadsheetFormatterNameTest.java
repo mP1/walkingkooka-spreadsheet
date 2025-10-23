@@ -55,7 +55,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
     @Test
     public void testWithTimeFormatPattern() {
-        this.verifyConstant("time-format-pattern");
+        this.verifyConstant("time");
     }
 
     private void verifyConstant(final String text) {
@@ -124,7 +124,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     @Test
     public void testIsSpreadsheetFormatPatternWithTimeFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-            "time-format-pattern",
+            "time",
             true
         );
     }

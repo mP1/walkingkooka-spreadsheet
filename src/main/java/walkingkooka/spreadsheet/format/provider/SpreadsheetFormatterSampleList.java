@@ -45,7 +45,7 @@ import java.util.Objects;
  *   },
  *   {
  *     "label": "label1",
- *     "selector": "time-format-pattern hh/mm",
+ *     "selector": "time hh/mm",
  *     "value": {
  *       "type": "text",
  *       "value": "12/58"

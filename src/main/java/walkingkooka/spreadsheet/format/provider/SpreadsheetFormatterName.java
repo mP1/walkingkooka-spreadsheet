@@ -166,13 +166,13 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         SpreadsheetPatternKind.TEXT_FORMAT_PATTERN
     );
 
-    final static String TIME_FORMAT_PATTERN_STRING = "time-format-pattern";
+    final static String TIME_STRING = "time";
 
     /**
      * The name of the time {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName TIME_FORMAT_PATTERN = new SpreadsheetFormatterName(
-        TIME_FORMAT_PATTERN_STRING,
+    public final static SpreadsheetFormatterName TIME = new SpreadsheetFormatterName(
+        TIME_STRING,
         SpreadsheetPatternKind.TIME_FORMAT_PATTERN
     );
 
@@ -218,8 +218,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case TEXT_STRING:
                 spreadsheetFormatterName = TEXT;
                 break;
-            case TIME_FORMAT_PATTERN_STRING:
-                spreadsheetFormatterName = TIME_FORMAT_PATTERN;
+            case TIME_STRING:
+                spreadsheetFormatterName = TIME;
                 break;
             default:
                 spreadsheetFormatterName = new SpreadsheetFormatterName(

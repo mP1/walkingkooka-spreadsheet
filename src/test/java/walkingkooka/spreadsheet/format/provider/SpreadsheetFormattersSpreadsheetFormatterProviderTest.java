@@ -121,7 +121,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorAutomaticSixParameters() {
         this.spreadsheetFormatterAndCheck(
-            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text(\"\\\"Error\\\" @\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text(\"\\\"Error\\\" @\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
@@ -231,7 +231,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorCollection() {
         this.spreadsheetFormatterAndCheck(
-            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.collection(
                 Lists.of(
@@ -249,7 +249,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))"
             )
         );
     }
@@ -793,7 +793,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorSpreadsheetPatternCollection() {
         this.spreadsheetFormatterAndCheck(
-            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.spreadsheetPatternCollection(
                 Lists.of(
@@ -811,7 +811,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenSpreadsheetPatternCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))"
             )
         );
     }
@@ -886,7 +886,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            "time-format-pattern hh:mm:ss",
+            "time hh:mm:ss",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
         );
@@ -895,7 +895,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNameTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            SpreadsheetFormatterName.with("time-format-pattern"),
+            SpreadsheetFormatterName.with("time"),
             Lists.of("hh:mm:ss"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeFormatPattern("hh:mm:ss").formatter()
@@ -905,7 +905,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenTimeFormatPatternEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("time-format-pattern"),
+            SpreadsheetFormatterSelector.parse("time"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -966,7 +966,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenTimeFormatPatternNotEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("time-format-pattern hh:mm"),
+            SpreadsheetFormatterSelector.parse("time hh:mm"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -2015,33 +2015,33 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     // Short
-    //  time-format-pattern
+    //  time
     //    "h:mm AM/PM"
     //  Text "12:58 PM"
     //
     //Long
-    //  time-format-pattern
+    //  time
     //    "h:mm:ss AM/PM"
     //  Text "12:58:00 PM"
     @Test
     public void testSpreadsheetFormatterSamplesTimeFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TIME,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm AM/PM"),
                 TextNode.text("12:58 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm:ss AM/PM"),
                 TextNode.text("12:58:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText(""),
+                SpreadsheetFormatterName.TIME.setValueText(""),
                 SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
@@ -2061,24 +2061,24 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
 
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TIME,
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm AM/PM"),
                 TextNode.text("3:28 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm:ss AM/PM"),
                 TextNode.text("3:28:29 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText(""),
+                SpreadsheetFormatterName.TIME.setValueText(""),
                 SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
@@ -2097,7 +2097,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "value must be different to now"
         );
 
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("\"Hello\" hh:mm");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TIME.setValueText("\"Hello\" hh:mm");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
@@ -2107,12 +2107,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm AM/PM"),
                 TextNode.text("3:28 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm:ss AM/PM"),
                 TextNode.text("3:28:29 PM")
             )
         );
@@ -2131,7 +2131,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "value must be different to now"
         );
 
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("\"Hello\" hh:mm");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.TIME.setValueText("\"Hello\" hh:mm");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
@@ -2141,12 +2141,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm AM/PM"),
                 TextNode.text("3:28 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.TIME_FORMAT_PATTERN.setValueText("h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.TIME.setValueText("h:mm:ss AM/PM"),
                 TextNode.text("3:28:29 PM")
             ),
             SpreadsheetFormatterSample.with(
@@ -2191,7 +2191,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\n"
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\n"
         );
     }
 
@@ -2213,7 +2213,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\"\n" +
                     "]"
             ),
             JsonNodeMarshallContexts.basic()
