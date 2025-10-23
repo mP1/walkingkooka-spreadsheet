@@ -60,6 +60,9 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
         ).replace(
             "date-time-format-pattern",
             "date-time"
+        ).replace(
+            "number-format-pattern",
+            "number"
         );
 
         return SpreadsheetFormatterSelector.with(

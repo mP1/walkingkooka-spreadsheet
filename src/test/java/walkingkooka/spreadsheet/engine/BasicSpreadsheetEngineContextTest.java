@@ -1829,7 +1829,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"findFunctions\": \"@\",\n" +
                     "  \"findHighlighting\": false,\n" +
                     "  \"formHandlers\": \"basic\",\n" +
-                    "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                    "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                     "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                     "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                     "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -1838,7 +1838,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"hideZeroValues\": false,\n" +
                     "  \"importers\": \"collection, empty, json\",\n" +
                     "  \"locale\": \"en-AU\",\n" +
-                    "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                    "  \"numberFormatter\": \"number #,##0.###\",\n" +
                     "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                     "  \"parsers\": \"date, date-time, number-parse-pattern, time-parse-pattern\",\n" +
                     "  \"plugins\": \"\",\n" +
@@ -2054,7 +2054,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
-                "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number-format-pattern, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
+                "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text-format-pattern, time-format-pattern\",\n" +
                 "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -2063,7 +2063,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"hideZeroValues\": false,\n" +
                 "  \"importers\": \"collection, empty, json\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
-                "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
+                "  \"numberFormatter\": \"number #,##0.###\",\n" +
                 "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
                 "  \"parsers\": \"date, date-time, number-parse-pattern, time-parse-pattern\",\n" +
                 "  \"plugins\": \"\",\n" +

@@ -6259,7 +6259,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+            SpreadsheetFormatterSelector.parse("number $000.00")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6365,7 +6365,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+            SpreadsheetFormatterSelector.parse("number $000.00")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6414,7 +6414,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+            SpreadsheetFormatterSelector.parse("number $000.00")
         ).set(
             SpreadsheetMetadataPropertyName.LOCALE,
             Locale.GERMANY
@@ -6470,7 +6470,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+            SpreadsheetFormatterSelector.parse("number $000.00")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6522,7 +6522,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         ).set(
             SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-            SpreadsheetFormatterSelector.parse("number-format-pattern $000.00")
+            SpreadsheetFormatterSelector.parse("number $000.00")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 

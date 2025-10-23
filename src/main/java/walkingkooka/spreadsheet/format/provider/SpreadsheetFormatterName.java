@@ -137,13 +137,13 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
-    final static String NUMBER_FORMAT_PATTERN_STRING = "number-format-pattern";
+    final static String NUMBER_STRING = "number";
 
     /**
      * The name of the number {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName NUMBER_FORMAT_PATTERN = new SpreadsheetFormatterName(
-        NUMBER_FORMAT_PATTERN_STRING,
+    public final static SpreadsheetFormatterName NUMBER = new SpreadsheetFormatterName(
+        NUMBER_STRING,
         SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
     );
     final static String TEXT_FORMAT_PATTERN_STRING = "text-format-pattern";
@@ -209,8 +209,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case GENERAL_STRING:
                 spreadsheetFormatterName = GENERAL;
                 break;
-            case NUMBER_FORMAT_PATTERN_STRING:
-                spreadsheetFormatterName = NUMBER_FORMAT_PATTERN;
+            case NUMBER_STRING:
+                spreadsheetFormatterName = NUMBER;
                 break;
             case SPREADSHEET_PATTERN_COLLECTION_STRING:
                 spreadsheetFormatterName = SPREADSHEET_PATTERN_COLLECTION;

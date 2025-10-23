@@ -686,7 +686,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
 
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN + text)
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER + text)
         );
     }
 

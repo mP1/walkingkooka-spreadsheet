@@ -315,7 +315,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.GENERAL_STRING:
                 next = null;
                 break;
-            case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.NUMBER_STRING:
                 next = formatPatternNextTextComponent(
                     selector,
                     SpreadsheetFormatParserTokenKind::isNumber
@@ -563,7 +563,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             }
-            case SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.NUMBER_STRING:
                 samples.add(
                     this.numberSpreadsheetFormatterSample(
                         "Number",
@@ -962,7 +962,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)

@@ -202,7 +202,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                    SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
+                    SpreadsheetFormatterName.NUMBER,
                     selector.valueText()
                 );
                 break;

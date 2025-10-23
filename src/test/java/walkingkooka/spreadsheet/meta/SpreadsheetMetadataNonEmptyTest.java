@@ -2599,7 +2599,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"defaultYear\": 1901,\n" +
                 "  \"hideZeroValues\": true,\n" +
                 "  \"locale\": \"en\",\n" +
-                "  \"numberFormatter\": \"number-format-pattern #0.0\",\n" +
+                "  \"numberFormatter\": \"number #0.0\",\n" +
                 "  \"numberParser\": \"number-parse-pattern #0.0;$#0.00\",\n" +
                 "  \"precision\": 123,\n" +
                 "  \"roundingMode\": \"FLOOR\",\n" +
