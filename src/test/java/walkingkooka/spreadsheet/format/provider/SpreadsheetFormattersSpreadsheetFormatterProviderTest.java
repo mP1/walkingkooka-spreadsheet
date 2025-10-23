@@ -121,7 +121,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorAutomaticSixParameters() {
         this.spreadsheetFormatterAndCheck(
-            "automatic (date(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), text-format-pattern(\"\\\"Error\\\" @\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text-format-pattern(\"\\\"Error\\\" @\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
@@ -231,7 +231,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorCollection() {
         this.spreadsheetFormatterAndCheck(
-            "collection (date(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.collection(
                 Lists.of(
@@ -249,7 +249,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "collection (date(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
             )
         );
     }
@@ -382,7 +382,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorDateTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            "date-time-format-pattern dd/mm/yyyy hh:mm:ss",
+            "date-time dd/mm/yyyy hh:mm:ss",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm:ss").formatter()
         );
@@ -391,7 +391,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNameDateTimeFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            SpreadsheetFormatterName.with("date-time-format-pattern"),
+            SpreadsheetFormatterName.with("date-time"),
             Lists.of(
                 "dd/mm/yyyy hh:mm:ss"
             ),
@@ -403,7 +403,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenDateTimeFormatPatternEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern"),
+            SpreadsheetFormatterSelector.parse("date-time"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -500,7 +500,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenDateTimeFormatPatternNotEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern yyyy"),
+            SpreadsheetFormatterSelector.parse("date-time yyyy"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -793,7 +793,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorSpreadsheetPatternCollection() {
         this.spreadsheetFormatterAndCheck(
-            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.spreadsheetPatternCollection(
                 Lists.of(
@@ -811,7 +811,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenSpreadsheetPatternCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time-format-pattern(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
             )
         );
     }
@@ -1298,48 +1298,48 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     // Short
-    //  date-time-format-pattern
+    //  date-time
     //    "d/m/yy, h:mm AM/PM"
     //  Text "31/12/99, 12:58 PM"
     //
     //Medium
-    //  date-time-format-pattern
+    //  date-time
     //    "d mmm yyyy, h:mm:ss AM/PM"
     //  Text "31 Dec. 1999, 12:58:00 PM"
     //
     //Long
-    //  date-time-format-pattern
+    //  date-time
     //    "d mmmm yyyy \\a\\t h:mm:ss AM/PM"
     //  Text "31 December 1999 at 12:58:00 PM"
     //
     //Full
-    //  date-time-format-pattern
+    //  date-time
     //    "dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"
     //  Text "Friday, 31 December 1999 at 12:58:00 PM"
     @Test
     public void testSpreadsheetFormatterSamplesDateTimeFormatPatternSkipSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterName.DATE_TIME.setValueText(""),
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d/m/yy, h:mm AM/PM"),
                 TextNode.text("31/12/99, 12:58 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Medium",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
                 TextNode.text("31 Dec. 1999, 12:58:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("31 December 1999 at 12:58:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
             )
         );
@@ -1348,32 +1348,32 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSamplesDateTimeFormatPatternIncludeSamples() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterName.DATE_TIME.setValueText(""),
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d/m/yy, h:mm AM/PM"),
                 TextNode.text("31/12/99, 12:58 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Medium",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
                 TextNode.text("31 Dec. 1999, 12:58:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("31 December 1999 at 12:58:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Sample",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText(""),
+                SpreadsheetFormatterName.DATE_TIME.setValueText(""),
                 SpreadsheetFormattersSpreadsheetFormatterProvider.sampleError("Empty \"text\"")
             )
         );
@@ -1395,29 +1395,29 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
 
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+            SpreadsheetFormatterName.DATE_TIME,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
             context(
                 Optional.of(value)
             ),
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d/m/yy, h:mm AM/PM"),
                 TextNode.text("2/1/00, 6:30 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Medium",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
                 TextNode.text("2 Jan. 2000, 6:30:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("2 January 2000 at 6:30:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("Sunday, 2 January 2000 at 6:30:00 PM")
             )
         );
@@ -1438,7 +1438,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "value must be different to now"
         );
 
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("\"Hello\" yyyy/mm/dd hh:mm");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.DATE_TIME.setValueText("\"Hello\" yyyy/mm/dd hh:mm");
 
         this.spreadsheetFormatterSamplesAndCheck(
             selector,
@@ -1448,22 +1448,22 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Short",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d/m/yy, h:mm AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d/m/yy, h:mm AM/PM"),
                 TextNode.text("2/1/00, 6:30 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Medium",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmm yyyy, h:mm:ss AM/PM"),
                 TextNode.text("2 Jan. 2000, 6:30:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Long",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("2 January 2000 at 6:30:00 PM")
             ),
             SpreadsheetFormatterSample.with(
                 "Full",
-                SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
+                SpreadsheetFormatterName.DATE_TIME.setValueText("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM"),
                 TextNode.text("Sunday, 2 January 2000 at 6:30:00 PM")
             ),
             SpreadsheetFormatterSample.with(
@@ -2184,7 +2184,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/badge-error badge-error\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date date\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
@@ -2206,7 +2206,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/badge-error badge-error\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date date\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time-format-pattern date-time-format-pattern\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +

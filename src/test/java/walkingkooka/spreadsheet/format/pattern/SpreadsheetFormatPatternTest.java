@@ -124,7 +124,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testSpreadsheetFormatterSelectorWhenDateTime() {
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yyyy hh:mm"),
-            SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN + " dd/mm/yyyy hh:mm"
+            SpreadsheetFormatterName.DATE_TIME + " dd/mm/yyyy hh:mm"
         );
     }
 

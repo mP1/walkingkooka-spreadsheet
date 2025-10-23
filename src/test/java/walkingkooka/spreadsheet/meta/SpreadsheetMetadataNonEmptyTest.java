@@ -2593,7 +2593,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"colorsmall\": 3,\n" +
                 "  \"dateFormatter\": \"date DD/MM/YYYY\",\n" +
                 "  \"dateParser\": \"date DD/MM/YYYY;DDMMYYYY\",\n" +
-                "  \"dateTimeFormatter\": \"date-time-format-pattern DD/MM/YYYY hh:mm\",\n" +
+                "  \"dateTimeFormatter\": \"date-time DD/MM/YYYY hh:mm\",\n" +
                 "  \"dateTimeOffset\": \"0\",\n" +
                 "  \"dateTimeParser\": \"date-time-pattern DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
                 "  \"defaultYear\": 1901,\n" +
