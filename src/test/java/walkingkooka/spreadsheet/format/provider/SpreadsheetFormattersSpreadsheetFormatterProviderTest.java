@@ -121,7 +121,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorAutomaticSixParameters() {
         this.spreadsheetFormatterAndCheck(
-            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text-format-pattern(\"\\\"Error\\\" @\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "automatic (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), text-format-pattern(\"\\\"Error\\\" @\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.automatic(
                 SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
@@ -231,7 +231,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorCollection() {
         this.spreadsheetFormatterAndCheck(
-            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.collection(
                 Lists.of(
@@ -249,7 +249,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
             )
         );
     }
@@ -680,7 +680,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorNumberFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            "number-format-pattern $0.00",
+            "number $0.00",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
         );
@@ -689,7 +689,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNameNumberFormatPattern() {
         this.spreadsheetFormatterAndCheck(
-            SpreadsheetFormatterName.with("number-format-pattern"),
+            SpreadsheetFormatterName.with("number"),
             Lists.of("$0.00"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
@@ -699,7 +699,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenNumberFormatPatternEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("number-format-pattern"),
+            SpreadsheetFormatterSelector.parse("number"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -748,7 +748,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterNextTokenNumberFormatPatternNotEmpty() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("number-format-pattern $0.00"),
+            SpreadsheetFormatterSelector.parse("number $0.00"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -793,7 +793,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     @Test
     public void testSpreadsheetFormatterSelectorSpreadsheetPatternCollection() {
         this.spreadsheetFormatterAndCheck(
-            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
+            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.spreadsheetPatternCollection(
                 Lists.of(
@@ -811,7 +811,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterSelectorNextTokenSpreadsheetPatternCollection() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterSelector.parse(
-                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number-format-pattern(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
+                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text-format-pattern(\"@@\"), time-format-pattern(\"hh:mm\"))"
             )
         );
     }
@@ -1625,128 +1625,128 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     // Number
-    //  number-format-pattern
+    //  number
     //    "#,##0.###"
     //  Text "123.5"
     //
     //Number
-    //  number-format-pattern
+    //  number
     //    "#,##0.###"
     //  Text "-123.5"
     //
     //Number
-    //  number-format-pattern
+    //  number
     //    "#,##0.###"
     //  Text "0."
     //
     //Integer
-    //  number-format-pattern
+    //  number
     //    "#,##0"
     //  Text "124"
     //
     //Integer
-    //  number-format-pattern
+    //  number
     //    "#,##0"
     //  Text "-124"
     //
     //Integer
-    //  number-format-pattern
+    //  number
     //    "#,##0"
     //  Text "0"
     //
     //Percent
-    //  number-format-pattern
+    //  number
     //    "#,##0%"
     //  Text "12,350%"
     //
     //Percent
-    //  number-format-pattern
+    //  number
     //    "#,##0%"
     //  Text "-12,350%"
     //
     //Percent
-    //  number-format-pattern
+    //  number
     //    "#,##0%"
     //  Text "0%"
     //
     //Currency
-    //  number-format-pattern
+    //  number
     //    "$#,##0.00"
     //  Text "$123.50"
     //
     //Currency
-    //  number-format-pattern
+    //  number
     //    "$#,##0.00"
     //  Text "$-123.50"
     //
     //Currency
-    //  number-format-pattern
+    //  number
     //    "$#,##0.00"
     //  Text "$0.00"
     @Test
     public void testSpreadsheetFormatterSamplesNumberFormatPattern() {
         this.spreadsheetFormatterSamplesAndCheck(
-            SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN,
+            SpreadsheetFormatterName.NUMBER,
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("123.5")
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("-123.5")
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("0.")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("124")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("-124")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("0")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("12,350%")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("-12,350%")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("0%")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$123.50")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$-123.50")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$0.00")
             )
         );
@@ -1754,7 +1754,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     @Test
     public void testSpreadsheetFormatterSamplesNumberFormatPatternNotEmptySkipSamples() {
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("\"Hello\" $000.000");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.NUMBER.setValueText("\"Hello\" $000.000");
 
         final Number value = 1234.56;
 
@@ -1766,62 +1766,62 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("123.5")
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("-123.5")
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("0.")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("124")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("-124")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("0")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("12,350%")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("-12,350%")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("0%")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$123.50")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$-123.50")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$0.00")
             )
         );
@@ -1829,7 +1829,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     @Test
     public void testSpreadsheetFormatterSamplesNumberFormatPatternNotEmptyIncludeSamples() {
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("\"Hello\" $000.000");
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.NUMBER.setValueText("\"Hello\" $000.000");
 
         final Number value = 1234.56;
 
@@ -1841,62 +1841,62 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("123.5")
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("-123.5")
             ),
             SpreadsheetFormatterSample.with(
                 "Number",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0.###"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0.###"),
                 TextNode.text("0.")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("124")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("-124")
             ),
             SpreadsheetFormatterSample.with(
                 "Integer",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0"),
                 TextNode.text("0")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("12,350%")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("-12,350%")
             ),
             SpreadsheetFormatterSample.with(
                 "Percent",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("#,##0%"),
+                SpreadsheetFormatterName.NUMBER.setValueText("#,##0%"),
                 TextNode.text("0%")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$123.50")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$-123.50")
             ),
             SpreadsheetFormatterSample.with(
                 "Currency",
-                SpreadsheetFormatterName.NUMBER_FORMAT_PATTERN.setValueText("$#,##0.00"),
+                SpreadsheetFormatterName.NUMBER.setValueText("$#,##0.00"),
                 TextNode.text("$0.00")
             ),
             SpreadsheetFormatterSample.with(
@@ -2188,7 +2188,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\n"
@@ -2210,7 +2210,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number-format-pattern number-format-pattern\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time-format-pattern time-format-pattern\"\n" +

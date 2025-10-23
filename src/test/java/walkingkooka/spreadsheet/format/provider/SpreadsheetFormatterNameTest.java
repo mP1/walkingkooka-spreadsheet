@@ -45,7 +45,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
     @Test
     public void testWithNumberFormatPattern() {
-        this.verifyConstant("number-format-pattern");
+        this.verifyConstant("number");
     }
 
     @Test
@@ -108,7 +108,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     @Test
     public void testIsSpreadsheetFormatPatternWithNumberFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-            "number-format-pattern",
+            "number",
             true
         );
     }
