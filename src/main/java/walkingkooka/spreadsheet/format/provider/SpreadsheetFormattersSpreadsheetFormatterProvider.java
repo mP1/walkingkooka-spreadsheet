@@ -86,6 +86,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.PERCENT_STRING:
+            case SpreadsheetFormatterName.SCIENTIFIC_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
                     this,
@@ -232,6 +233,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context
                 );
                 break;
+            case SpreadsheetFormatterName.SCIENTIFIC_STRING:
+                formatter = scientific(
+                    values,
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = SpreadsheetFormatters.spreadsheetPatternCollection(
                     values.stream()
@@ -288,6 +295,25 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     '0',
                     decimalPlaces
                 ) + "%"
+        ).formatter();
+    }
+
+    private static SpreadsheetFormatter scientific(final List<?> values,
+                                                   final ProviderContext context) {
+        final int decimalPlaces = values.size() == 0 ?
+            2 :
+            context.convertOrFail(
+                values.get(0),
+                Integer.class
+            );
+
+        // "0.00E+00"
+        return SpreadsheetPattern.parseNumberFormatPattern(
+            "0." +
+                CharSequences.repeating(
+                    '0',
+                    decimalPlaces
+                ) + "E+00"
         ).formatter();
     }
 
@@ -799,6 +825,45 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             }
+            case SpreadsheetFormatterName.SCIENTIFIC_STRING: {
+                samples.add(
+                    scientificSample(
+                        123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    scientificSample(
+                        -123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    scientificSample(
+                        0,
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            scientificSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            }
             case SpreadsheetFormatterName.TEXT_STRING: {
                 final Object value = cellValueOr(
                     context,
@@ -1002,6 +1067,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample scientificSample(final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return scientificSample(
+            "Scientific",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample scientificSample(final String label,
+                                                        final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.SCIENTIFIC.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterProviderSamplesContext context) {
@@ -1133,6 +1218,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.PERCENT),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.SCIENTIFIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME)
