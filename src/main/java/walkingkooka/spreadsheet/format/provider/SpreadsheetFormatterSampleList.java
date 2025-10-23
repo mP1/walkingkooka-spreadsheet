@@ -37,7 +37,7 @@ import java.util.Objects;
  * [
  *   {
  *     "label": "label1",
- *     "selector": "date-format-pattern dd/mm/yyyy",
+ *     "selector": "date dd/mm/yyyy",
  *     "value": {
  *       "type": "text",
  *       "value": "31/12/1999"

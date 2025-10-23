@@ -6898,7 +6898,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setFormatter(
                 Optional.of(
-                    SpreadsheetFormatterSelector.parse("date-format-pattern d/mmmm/yyyy")
+                    SpreadsheetFormatterSelector.parse("date d/mmmm/yyyy")
                 )
             ).setParser(
                 Optional.of(

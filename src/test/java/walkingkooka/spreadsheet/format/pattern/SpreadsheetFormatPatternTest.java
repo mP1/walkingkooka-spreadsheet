@@ -116,7 +116,7 @@ public final class SpreadsheetFormatPatternTest implements ClassTesting2<Spreads
     public void testSpreadsheetFormatterSelectorWhenDate() {
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy"),
-            SpreadsheetFormatterName.DATE_FORMAT_PATTERN + " dd/mm/yyyy"
+            SpreadsheetFormatterName.DATE + " dd/mm/yyyy"
         );
     }
 

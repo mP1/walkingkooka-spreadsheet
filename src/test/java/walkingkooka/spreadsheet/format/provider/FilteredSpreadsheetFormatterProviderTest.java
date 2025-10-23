@@ -52,7 +52,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
 
     @Test
     public void testSpreadsheetFormatterWithFilteredFails() {
-        final SpreadsheetFormatterName name = SpreadsheetFormatterName.DATE_FORMAT_PATTERN;
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.DATE;
         final String pattern = "dd/mm/yyyy";
         final List<?> values = Lists.of(pattern);
 

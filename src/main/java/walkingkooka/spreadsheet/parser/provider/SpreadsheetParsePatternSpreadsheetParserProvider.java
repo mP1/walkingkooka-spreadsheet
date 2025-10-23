@@ -190,7 +190,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         switch (name.value()) {
             case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                    SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+                    SpreadsheetFormatterName.DATE,
                     selector.valueText()
                 );
                 break;

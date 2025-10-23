@@ -82,7 +82,7 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
 
     @Test
     public void testSpreadsheetFormatPatternInvalidCharacterExceptionMessage() {
-        final String selector = "date-format-pattern yyyy/!";
+        final String selector = "date yyyy/!";
 
         final InvalidCharacterException thrown = assertThrows(
             InvalidCharacterException.class,
@@ -91,21 +91,21 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         );
 
         this.checkEquals(
-            "Invalid character '!' at 25 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}",
+            "Invalid character '!' at 10 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}",
             thrown.getMessage(),
             "message"
         );
 
         this.checkEquals(
             '!',
-            selector.charAt(25)
+            selector.charAt(10)
         );
     }
 
     @Test
     public void testSpreadsheetFormatPatternWithDateFormatPattern() {
         this.spreadsheetFormatPatternAndCheck(
-            "date-format-pattern dd/mm/yyyy",
+            "date dd/mm/yyyy",
             SpreadsheetPattern.parseDateFormatPattern("dd/mm/yyyy")
         );
     }
