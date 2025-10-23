@@ -149,14 +149,14 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
     public void testMarshall() {
         this.marshallAndCheck(
             this.createJsonNodeMarshallingValue(),
-            "\"number-parse-pattern $0.00\""
+            "\"number $0.00\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-            "\"number-parse-pattern $0.00\"",
+            "\"number $0.00\"",
             this.createJsonNodeMarshallingValue()
         );
     }

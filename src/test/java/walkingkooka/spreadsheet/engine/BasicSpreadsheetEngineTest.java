@@ -4485,7 +4485,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("number-parse-pattern 00.00")
+                    SpreadsheetParserSelector.parse("number 00.00")
                 )
             ).setStyle(STYLE),
             EXPRESSION_NUMBER_KIND.create(12.34),

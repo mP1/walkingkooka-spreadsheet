@@ -2600,7 +2600,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"hideZeroValues\": true,\n" +
                 "  \"locale\": \"en\",\n" +
                 "  \"numberFormatter\": \"number #0.0\",\n" +
-                "  \"numberParser\": \"number-parse-pattern #0.0;$#0.00\",\n" +
+                "  \"numberParser\": \"number #0.0;$#0.00\",\n" +
                 "  \"precision\": 123,\n" +
                 "  \"roundingMode\": \"FLOOR\",\n" +
                 "  \"spreadsheetId\": \"7b\",\n" +

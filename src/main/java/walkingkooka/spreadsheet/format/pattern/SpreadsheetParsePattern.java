@@ -70,6 +70,9 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
         ).replace(
             "date-time-parse-pattern",
             "date-time"
+        ).replace(
+            "number-parse-pattern",
+            "number"
         );
 
         return SpreadsheetParserSelector.with(

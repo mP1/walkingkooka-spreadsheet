@@ -77,7 +77,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
-    final static String NUMBER_PARSER_PATTERN_STRING = "number-parse-pattern";
+    final static String NUMBER_PARSER_PATTERN_STRING = "number";
 
     /**
      * The name of the number {@link Parser}
