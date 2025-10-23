@@ -724,7 +724,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * The corresponding {@link SpreadsheetPatternKind} for this property. Only <code>formatter</code> and
      * <code>parser</code> properties will return a {@link SpreadsheetPatternKind}.
      */
-    // time-parse-pattern -> TIME_PARSER
+    // time -> TIME_PARSER
     @Override
     public final Optional<SpreadsheetPatternKind> patternKind() {
         SpreadsheetPatternKind kind;

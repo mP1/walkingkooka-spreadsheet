@@ -516,7 +516,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserSelectorTimeParsePattern() {
         this.spreadsheetParserAndCheck(
-            "time-parse-pattern hh:mm:ss.SSS AM/PM",
+            "time hh:mm:ss.SSS AM/PM",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM")
                 .parser()
@@ -537,7 +537,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNextTokenTimeParsePatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
-            SpreadsheetParserSelector.parse("time-parse-pattern"),
+            SpreadsheetParserSelector.parse("time"),
             SpreadsheetParserSelectorToken.with(
                 "",
                 "",
@@ -598,7 +598,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNextTokenTimeParsePatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
-            SpreadsheetParserSelector.parse("time-parse-pattern hh:mm"),
+            SpreadsheetParserSelector.parse("time hh:mm"),
             SpreadsheetParserSelectorToken.with(
                 "",
                 "",
@@ -745,7 +745,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\n"
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n"
         );
     }
 
@@ -759,7 +759,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\"\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\"\n" +
                     "]"
             ),
             JsonNodeMarshallContexts.basic()

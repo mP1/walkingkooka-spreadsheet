@@ -113,7 +113,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
     public void testSpreadsheetInfos() {
         this.spreadsheetParserInfosAndCheck(
             SpreadsheetParserInfo.with(
-                url("time-parse-pattern"),
+                url("time"),
                 SpreadsheetParserName.with(NEW_PARSER_NAME) // only this parser has a new name the others remain unchanged.
             )
         );
@@ -128,7 +128,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
         return FilteredMappedSpreadsheetParserProvider.with(
             SpreadsheetParserInfoSet.EMPTY.concat(
                 SpreadsheetParserInfo.with(
-                    url("time-parse-pattern"),
+                    url("time"),
                     SpreadsheetParserName.with(NEW_PARSER_NAME)
                 )
             ),

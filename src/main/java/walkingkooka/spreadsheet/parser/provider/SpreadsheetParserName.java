@@ -87,7 +87,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
     );
 
-    final static String TIME_PARSER_PATTERN_STRING = "time-parse-pattern";
+    final static String TIME_PARSER_PATTERN_STRING = "time";
 
     /**
      * The name of the time {@link Parser}
