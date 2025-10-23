@@ -161,7 +161,7 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
             "[\n" +
                 "  {\n" +
                 "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
+                "    \"selector\": \"date dd/mm/yyyy\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"31/12/1999\"\n" +
@@ -185,7 +185,7 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
             "[\n" +
                 "  {\n" +
                 "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"date-format-pattern dd/mm/yyyy\",\n" +
+                "    \"selector\": \"date dd/mm/yyyy\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"31/12/1999\"\n" +

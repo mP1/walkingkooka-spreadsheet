@@ -35,7 +35,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
 
     @Test
     public void testWithDateFormatPattern() {
-        this.verifyConstant("date-format-pattern");
+        this.verifyConstant("date");
     }
 
     @Test
@@ -92,7 +92,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     @Test
     public void testIsSpreadsheetFormatPatternWithDateFormatPattern() {
         this.isSpreadsheetFormatPatternAndCheck(
-            "date-format-pattern",
+            "date",
             true
         );
     }

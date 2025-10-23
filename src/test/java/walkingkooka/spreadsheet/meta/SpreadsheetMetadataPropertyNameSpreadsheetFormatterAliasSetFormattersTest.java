@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFo
 
     @Override
     SpreadsheetFormatterAliasSet propertyValue() {
-        return SpreadsheetFormatterAliasSet.parse("date-format-pattern");
+        return SpreadsheetFormatterAliasSet.parse("date");
     }
 
     // class............................................................................................................

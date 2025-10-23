@@ -656,7 +656,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
 
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + text)
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
         );
     }
 
@@ -666,7 +666,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
 
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + text)
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
         );
     }
 

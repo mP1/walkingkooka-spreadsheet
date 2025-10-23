@@ -32,7 +32,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Test
     public void testSpreadsheetFormatterSelectorFails() {
         this.spreadsheetFormatterFails(
-            SpreadsheetFormatterName.DATE_FORMAT_PATTERN.setValueText(""),
+            SpreadsheetFormatterName.DATE.setValueText(""),
             CONTEXT
         );
     }
@@ -40,7 +40,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Test
     public void testSpreadsheetFormatterNameFails() {
         this.spreadsheetFormatterFails(
-            SpreadsheetFormatterName.DATE_FORMAT_PATTERN,
+            SpreadsheetFormatterName.DATE,
             Lists.empty(),
             CONTEXT
         );
@@ -49,7 +49,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Test
     public void testSpreadsheetFormatterNextTokenFails() {
         this.spreadsheetFormatterNextTokenFails(
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_FORMAT_PATTERN + "")
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + "")
         );
     }
 

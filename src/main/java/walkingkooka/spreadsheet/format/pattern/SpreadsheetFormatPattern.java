@@ -45,16 +45,18 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
     /**
      * Returns the {@link SpreadsheetFormatterSelector} equivalent to this pattern.
      * <pre>
-     * date-format-pattern
+     * date
      * date-time-format-pattern
      * </pre>
      */
     public final SpreadsheetFormatterSelector spreadsheetFormatterSelector() {
-
         final String formatterName = CaseKind.CAMEL.change(
             this.getClass().getSimpleName()
                 .substring("Spreadsheet".length()),
             CaseKind.KEBAB
+        ).replace(
+            "date-format-pattern",
+            "date"
         );
 
         return SpreadsheetFormatterSelector.with(

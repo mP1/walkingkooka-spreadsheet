@@ -294,7 +294,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.COLLECTION_STRING:
                 next = null;
                 break;
-            case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.DATE_STRING:
                 next = formatPatternNextTextComponent(
                     selector,
                     SpreadsheetFormatParserTokenKind::isDate
@@ -409,7 +409,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.BADGE_ERROR_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
                 break;
-            case SpreadsheetFormatterName.DATE_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.DATE_STRING:
                 samples.add(
                     this.dateSpreadsheetFormatterSample(
                         "Short",
@@ -957,7 +957,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.BADGE_ERROR),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),

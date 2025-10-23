@@ -54,8 +54,8 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
             () -> FilteredMappedSpreadsheetFormatterProvider.with(
                 SpreadsheetFormatterInfoSet.EMPTY.concat(
                     SpreadsheetFormatterInfo.with(
-                        SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
-                        SpreadsheetFormatterName.with("new-date-format-pattern")
+                        SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date")),
+                        SpreadsheetFormatterName.with("new-date")
                     )
                 ),
                 null
@@ -63,7 +63,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         );
     }
 
-    private final static String NEW_FORMATTER_NAME = "new-date-format-pattern";
+    private final static String NEW_FORMATTER_NAME = "new-date";
 
     @Test
     public void testSpreadsheetFormatterSelector() {
@@ -196,22 +196,22 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
     }
 
     // Short
-    //  new-date-format-pattern
+    //  new-date
     //    "d/m/yy"
     //  Text "31/12/99"
     //
     //Medium
-    //  new-date-format-pattern
+    //  new-date
     //    "d mmm yyyy"
     //  Text "31 Dec. 1999"
     //
     //Long
-    //  new-date-format-pattern
+    //  new-date
     //    "d mmmm yyyy"
     //  Text "31 December 1999"
     //
     //Full
-    //  new-date-format-pattern
+    //  new-date
     //    "dddd, d mmmm yyyy"
     //  Text "Friday, 31 December 1999"
     @Test
@@ -276,7 +276,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
         );
     }
 
-    // https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern new-date-format-pattern
+    // https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date new-date
     @Test
     public void testSpreadsheetInfos() {
         this.spreadsheetFormatterInfosAndCheck(
@@ -285,7 +285,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
                 SpreadsheetFormatterName.AUTOMATIC
             ),
             SpreadsheetFormatterInfo.with(
-                url("date-format-pattern"),
+                url("date"),
                 SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
             )
         );
@@ -303,7 +303,7 @@ public final class FilteredMappedSpreadsheetFormatterProviderTest implements Spr
                         SpreadsheetFormatterName.AUTOMATIC
                     ),
                     SpreadsheetFormatterInfo.with(
-                        url("date-format-pattern"),
+                        url("date"),
                         SpreadsheetFormatterName.with(NEW_FORMATTER_NAME)
                     )
                 )

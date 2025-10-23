@@ -2468,7 +2468,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             patch,
             "{\n" +
                 "  \"A1\": {\n" +
-                "    \"formatter\": \"date-format-pattern dd/mm/yyyy\"\n" +
+                "    \"formatter\": \"date dd/mm/yyyy\"\n" +
                 "  }\n" +
                 "}"
         );

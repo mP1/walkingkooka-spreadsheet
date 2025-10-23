@@ -56,8 +56,8 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
             () -> MergedMappedSpreadsheetFormatterProvider.with(
                 SpreadsheetFormatterInfoSet.EMPTY.concat(
                     SpreadsheetFormatterInfo.with(
-                        SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date-format-pattern")),
-                        SpreadsheetFormatterName.with("new-date-format-pattern")
+                        SpreadsheetFormatterProviders.BASE_URL.appendPath(UrlPath.parse("date")),
+                        SpreadsheetFormatterName.with("new-date")
                     )
                 ),
                 null
@@ -65,14 +65,14 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
         );
     }
 
-    private final static String RENAMED_DATE_FORMAT_PATTERN = "new-date-format-pattern";
+    private final static String RENAMED_DATE = "new-date";
 
     @Test
     public void testSpreadsheetFormatterSelector() {
         final String pattern = "yyyy/mm/dd";
 
         this.spreadsheetFormatterAndCheck(
-            RENAMED_DATE_FORMAT_PATTERN + " " + pattern,
+            RENAMED_DATE + " " + pattern,
             CONTEXT,
             SpreadsheetPattern.parseDateFormatPattern(pattern)
                 .formatter()
@@ -84,7 +84,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
         final String pattern = "yyyy/mm/dd";
 
         this.spreadsheetFormatterAndCheck(
-            SpreadsheetFormatterName.with(RENAMED_DATE_FORMAT_PATTERN),
+            SpreadsheetFormatterName.with(RENAMED_DATE),
             Lists.of(pattern),
             CONTEXT,
             SpreadsheetPattern.parseDateFormatPattern(pattern)
@@ -102,7 +102,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
     @Test
     public void testSpreadsheetFormatterNextTokenDifferentFormatterName() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("" + RENAMED_DATE_FORMAT_PATTERN),
+            SpreadsheetFormatterSelector.parse("" + RENAMED_DATE),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -159,7 +159,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
     @Test
     public void testSpreadsheetFormatterNextTokenDifferentFormatterNameNotEmptyText() {
         this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse("" + RENAMED_DATE_FORMAT_PATTERN + " dd"),
+            SpreadsheetFormatterSelector.parse("" + RENAMED_DATE + " dd"),
             SpreadsheetFormatterSelectorToken.with(
                 "",
                 "",
@@ -198,27 +198,27 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
     }
 
     // Short
-    //  new-date-format-pattern
+    //  new-date
     //    "d/m/yy"
     //  Text "31/12/99"
     //
     //Medium
-    //  new-date-format-pattern
+    //  new-date
     //    "d mmm yyyy"
     //  Text "31 Dec. 1999"
     //
     //Long
-    //  new-date-format-pattern
+    //  new-date
     //    "d mmmm yyyy"
     //  Text "31 December 1999"
     //
     //Full
-    //  new-date-format-pattern
+    //  new-date
     //    "dddd, d mmmm yyyy"
     //  Text "Friday, 31 December 1999"
     @Test
     public void testSpreadsheetFormatterSamples() {
-        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.with(RENAMED_DATE_FORMAT_PATTERN)
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.with(RENAMED_DATE)
             .setValueText("");
 
         this.spreadsheetFormatterSamplesAndCheck(
@@ -248,7 +248,7 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
         );
     }
 
-    // https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-format-pattern new-date-format-pattern
+    // https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date new-date
     @Test
     public void testSpreadsheetInfos() {
         final SpreadsheetFormatterInfoSet spreadsheetFormatPattern = SpreadsheetFormatterProviders.spreadsheetFormatters()
@@ -257,10 +257,10 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
         final SpreadsheetFormatterInfoSet withRename = SpreadsheetFormatterInfoSet.with(
             spreadsheetFormatPattern.stream()
                 .map(
-                    i -> i.name().equals(SpreadsheetFormatterName.DATE_FORMAT_PATTERN) ?
+                    i -> i.name().equals(SpreadsheetFormatterName.DATE) ?
                         SpreadsheetFormatterInfo.with(
-                            url("date-format-pattern"),
-                            SpreadsheetFormatterName.with(RENAMED_DATE_FORMAT_PATTERN)
+                            url("date"),
+                            SpreadsheetFormatterName.with(RENAMED_DATE)
                         ) :
                         i
                 ).collect(Collectors.toSet())
@@ -284,8 +284,8 @@ public final class MergedMappedSpreadsheetFormatterProviderTest implements Sprea
             SpreadsheetFormatterInfoSet.with(
                 Sets.of(
                     SpreadsheetFormatterInfo.with(
-                        url("date-format-pattern"),
-                        SpreadsheetFormatterName.with(RENAMED_DATE_FORMAT_PATTERN)
+                        url("date"),
+                        SpreadsheetFormatterName.with(RENAMED_DATE)
                     )
                 )
             ),

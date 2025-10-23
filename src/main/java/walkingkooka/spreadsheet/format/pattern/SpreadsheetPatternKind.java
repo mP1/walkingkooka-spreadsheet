@@ -346,7 +346,8 @@ public enum SpreadsheetPatternKind implements HasUrlFragment {
      * Returns true if this {@link SpreadsheetPatternKind} identifies a pattern that is a subclass of {@link SpreadsheetFormatPattern}.
      */
     public boolean isFormatPattern() {
-        return this.name().contains("FORMAT");
+        return this.name()
+            .contains("FORMAT");
     }
 
     /**
