@@ -34,7 +34,7 @@ import java.util.Optional;
 
 public final class SpreadsheetParserProviderTestingTest implements SpreadsheetParserProviderTesting<TestSpreadsheetParserProvider> {
 
-    private final static String SELECTOR = "date-parse-pattern dd/mm/yyyy";
+    private final static String SELECTOR = "date dd/mm/yyyy";
 
     private final static SpreadsheetParser PARSER = SpreadsheetParsers.fake();
 
@@ -86,7 +86,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");
 
-            checkEquals("date-parse-pattern", selector.name().value());
+            checkEquals("date", selector.name().value());
             return PARSER;
         }
 
@@ -98,7 +98,7 @@ public final class SpreadsheetParserProviderTestingTest implements SpreadsheetPa
             Objects.requireNonNull(values, "values");
             Objects.requireNonNull(context, "context");
 
-            checkEquals("date-parse-pattern", name.value());
+            checkEquals("date", name.value());
             return PARSER;
         }
 

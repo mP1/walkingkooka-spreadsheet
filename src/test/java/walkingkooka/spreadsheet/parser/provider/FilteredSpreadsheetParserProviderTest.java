@@ -79,7 +79,7 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
     public void testSpreadsheetParserInfos() {
         this.spreadsheetParserInfosAndCheck(
             SpreadsheetParserInfoSet.EMPTY.concat(
-                SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern")
+                SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date")
             )
         );
     }
@@ -91,7 +91,7 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
                 SPREADSHEET_FORMATTER_PROVIDER
             ),
             SpreadsheetParserInfoSet.EMPTY.concat(
-                SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-parse-pattern date-parse-pattern")
+                SpreadsheetParserInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date")
             )
         );
     }

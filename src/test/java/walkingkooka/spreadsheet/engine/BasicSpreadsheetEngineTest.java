@@ -4367,7 +4367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("date-parse-pattern dd/mm/yyyy")
+                    SpreadsheetParserSelector.parse("date dd/mm/yyyy")
                 )
             ).setStyle(STYLE),
             LocalDate.of(1999, 12, 31),
@@ -4390,7 +4390,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("date-parse-pattern dd/mmmm/yyyy")
+                    SpreadsheetParserSelector.parse("date dd/mmmm/yyyy")
                 )
             ).setStyle(STYLE),
             LocalDate.of(1999, 12, 31),
@@ -4413,7 +4413,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("date-parse-pattern dd/mmmm/yyyy")
+                    SpreadsheetParserSelector.parse("date dd/mmmm/yyyy")
                 )
             ).setStyle(STYLE),
             LocalDate.of(1999, 12, 31),
@@ -6902,7 +6902,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("date-parse-pattern d/m/yy")
+                    SpreadsheetParserSelector.parse("date d/m/yy")
                 )
             ).setStyle(STYLE);
 
@@ -6957,7 +6957,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         a1Cell = a1Cell.setParser(
             Optional.of(
-                SpreadsheetParserSelector.parse("date-parse-pattern yy/mm/dd")
+                SpreadsheetParserSelector.parse("date yy/mm/dd")
             )
         );
 

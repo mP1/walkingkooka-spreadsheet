@@ -57,7 +57,7 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
 
     // SpreadsheetParserName instances...............................................................................
 
-    final static String DATE_PARSER_PATTERN_STRING = "date-parse-pattern";
+    final static String DATE_PARSER_PATTERN_STRING = "date";
 
     /**
      * The name of the date {@link Parser}

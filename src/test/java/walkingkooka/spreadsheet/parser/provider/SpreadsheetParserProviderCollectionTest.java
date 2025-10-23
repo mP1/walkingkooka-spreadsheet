@@ -48,7 +48,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
             SpreadsheetParserProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/dd"),
+            SpreadsheetParserSelector.parse("date yyyy/mm/dd"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
                 .parser()
@@ -79,7 +79,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
             SpreadsheetParserProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetParserSelector.parse("date-parse-pattern")
+            SpreadsheetParserSelector.parse("date")
         );
     }
 

@@ -29,7 +29,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserAliasSetParse
 
     @Override
     SpreadsheetParserAliasSet propertyValue() {
-        return SpreadsheetParserAliasSet.parse("date-parse-pattern");
+        return SpreadsheetParserAliasSet.parse("date");
     }
 
     // class............................................................................................................

@@ -71,7 +71,7 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
 
     @Test
     public void testSpreadsheetParsePatternInvalidCharacterExceptionMessage() {
-        final String selector = "date-parse-pattern yyyy/!";
+        final String selector = "date yyyy/!";
 
         final InvalidCharacterException thrown = assertThrows(
             InvalidCharacterException.class,
@@ -80,21 +80,21 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         );
 
         this.checkEquals(
-            "Invalid character '!' at 24 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]",
+            "Invalid character '!' at 10 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]",
             thrown.getMessage(),
             "message"
         );
 
         this.checkEquals(
             '!',
-            selector.charAt(24)
+            selector.charAt(10)
         );
     }
 
     @Test
     public void testSpreadsheetParsePatternWithDateParsePattern() {
         this.spreadsheetParsePatternAndCheck(
-            "date-parse-pattern dd/mm/yyyy",
+            "date dd/mm/yyyy",
             SpreadsheetPattern.parseDateParsePattern("dd/mm/yyyy")
         );
     }
