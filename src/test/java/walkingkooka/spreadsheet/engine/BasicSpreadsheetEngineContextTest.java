@@ -1839,8 +1839,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"importers\": \"collection, empty, json\",\n" +
                     "  \"locale\": \"en-AU\",\n" +
                     "  \"numberFormatter\": \"number #,##0.###\",\n" +
-                    "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                    "  \"parsers\": \"date, date-time, number-parse-pattern, time-parse-pattern\",\n" +
+                    "  \"numberParser\": \"number #,##0.###;#,##0\",\n" +
+                    "  \"parsers\": \"date, date-time, number, time-parse-pattern\",\n" +
                     "  \"plugins\": \"\",\n" +
                     "  \"precision\": 10,\n" +
                     "  \"roundingMode\": \"HALF_UP\",\n" +
@@ -2064,8 +2064,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"importers\": \"collection, empty, json\",\n" +
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"numberFormatter\": \"number #,##0.###\",\n" +
-                "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                "  \"parsers\": \"date, date-time, number-parse-pattern, time-parse-pattern\",\n" +
+                "  \"numberParser\": \"number #,##0.###;#,##0\",\n" +
+                "  \"parsers\": \"date, date-time, number, time-parse-pattern\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +

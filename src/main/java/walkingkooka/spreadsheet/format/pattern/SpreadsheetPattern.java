@@ -826,7 +826,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
         printer.outdent();
     }
 
-    // SpreadsheetNumberParsePattern -> number-parse-pattern
+    // SpreadsheetNumberParsePattern -> number
     private String printTreeTypeName() {
         return CaseKind.CAMEL.change(
             this.getClass()

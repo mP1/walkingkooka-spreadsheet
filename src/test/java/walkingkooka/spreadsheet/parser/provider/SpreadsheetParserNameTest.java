@@ -45,7 +45,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
 
     @Test
     public void testWithNumberParsePattern() {
-        this.verifyConstant("number-parse-pattern");
+        this.verifyConstant("number");
     }
 
     @Test
@@ -103,7 +103,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     @Test
     public void testIsSpreadsheetParsePatternWithNumberParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-            "number-parse-pattern",
+            "number",
             true
         );
     }
