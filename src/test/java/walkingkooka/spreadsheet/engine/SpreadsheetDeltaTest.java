@@ -1022,7 +1022,7 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                     SpreadsheetFormula.EMPTY.setText("=1")
                 ).setFormatter(
                     Optional.of(
-                        SpreadsheetPattern.DEFAULT_TEXT.spreadsheetFormatterSelector()
+                        SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
                     )
                 )
             );

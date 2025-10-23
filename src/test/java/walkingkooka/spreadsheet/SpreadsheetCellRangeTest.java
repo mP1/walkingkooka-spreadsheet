@@ -66,7 +66,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     private final static SpreadsheetCell B2_CELL = B2.setFormula(SpreadsheetFormula.EMPTY.setText("=22"))
         .setFormatter(
             Optional.of(
-                SpreadsheetPattern.DEFAULT_TEXT.spreadsheetFormatterSelector()
+                SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
             )
         ).setParser(
             Optional.of(

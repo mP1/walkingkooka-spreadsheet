@@ -123,7 +123,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * This is equivalent to the pattern <pre>@</pre>
      */
     public static SpreadsheetPatternSpreadsheetFormatter defaultText() {
-        return SpreadsheetPattern.DEFAULT_TEXT.formatter();
+        return SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter();
     }
 
     /**
