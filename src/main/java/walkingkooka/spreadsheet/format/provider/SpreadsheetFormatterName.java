@@ -156,6 +156,17 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         NUMBER_STRING,
         SpreadsheetPatternKind.NUMBER_FORMAT_PATTERN
     );
+
+    final static String PERCENT_STRING = "percent";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName PERCENT = new SpreadsheetFormatterName(
+        PERCENT_STRING,
+        null
+    );
+    
     final static String TEXT_STRING = "text";
 
     final static String SPREADSHEET_PATTERN_COLLECTION_STRING = "spreadsheet-pattern-collection";

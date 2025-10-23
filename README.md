@@ -259,6 +259,7 @@ to allow user customisation of that value type along with a single color.
 - hh:mm:ss [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
 - [expression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/ExpressionSpreadsheetFormatter.java)
 - Additional `SpreadsheetFormatter(s)` may be provided via a custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java) *DONE*
+- percent
 - Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/14)
 - SpreadsheetEngine integration (Currently only patterns are used refactoring work needs to be
   done) [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/4177)

@@ -85,6 +85,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.CURRENCY_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
+            case SpreadsheetFormatterName.PERCENT_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
                     this,
@@ -225,6 +226,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 formatter = SpreadsheetFormatters.general();
                 break;
+            case SpreadsheetFormatterName.PERCENT_STRING:
+                formatter = percent(
+                    values,
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = SpreadsheetFormatters.spreadsheetPatternCollection(
                     values.stream()
@@ -263,6 +270,24 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     '0',
                     decimalPlaces
                 )
+        ).formatter();
+    }
+
+    private static SpreadsheetFormatter percent(final List<?> values,
+                                                final ProviderContext context) {
+        final int decimalPlaces = values.size() == 0 ?
+            2 :
+            context.convertOrFail(
+                values.get(0),
+                Integer.class
+            );
+
+        return SpreadsheetPattern.parseNumberFormatPattern(
+            "0." +
+                CharSequences.repeating(
+                    '0',
+                    decimalPlaces
+                ) + "%"
         ).formatter();
     }
 
@@ -735,6 +760,45 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     );
                 }
                 break;
+            case SpreadsheetFormatterName.PERCENT_STRING: {
+                samples.add(
+                    percentSample(
+                        123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    percentSample(
+                        -123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    percentSample(
+                        0,
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            percentSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            }
             case SpreadsheetFormatterName.TEXT_STRING: {
                 final Object value = cellValueOr(
                     context,
@@ -918,6 +982,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample percentSample(final Object value,
+                                                     final SpreadsheetFormatterProviderSamplesContext context) {
+        return percentSample(
+            "Percent",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample percentSample(final String label,
+                                                     final Object value,
+                                                     final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.PERCENT.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterProviderSamplesContext context) {
@@ -1048,6 +1132,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.PERCENT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME)
