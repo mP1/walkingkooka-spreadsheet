@@ -330,7 +330,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     SpreadsheetFormatParserTokenKind::isText
                 );
                 break;
-            case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.TIME_STRING:
                 next = formatPatternNextTextComponent(
                     selector,
                     SpreadsheetFormatParserTokenKind::isTime
@@ -710,7 +710,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             }
-            case SpreadsheetFormatterName.TIME_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.TIME_STRING:
                 samples.add(
                     this.timeSpreadsheetFormatterSample(
                         "Short",
@@ -965,7 +965,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME)
         )
     );
 

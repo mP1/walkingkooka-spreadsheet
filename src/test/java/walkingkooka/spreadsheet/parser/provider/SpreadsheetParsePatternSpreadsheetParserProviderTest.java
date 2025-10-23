@@ -696,7 +696,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
 
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.TIME_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.TIME_FORMAT_PATTERN + text)
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.TIME + text)
         );
     }
 

@@ -50,26 +50,15 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
      * </pre>
      */
     public final SpreadsheetFormatterSelector spreadsheetFormatterSelector() {
-        final String formatterName = CaseKind.CAMEL.change(
-            this.getClass().getSimpleName()
-                .substring("Spreadsheet".length()),
-            CaseKind.KEBAB
-        ).replace(
-            "date-format-pattern",
-            "date"
-        ).replace(
-            "date-time-format-pattern",
-            "date-time"
-        ).replace(
-            "number-format-pattern",
-            "number"
-        ).replace(
-            "text-format-pattern",
-            "text"
-        );
-
         return SpreadsheetFormatterSelector.with(
-            SpreadsheetFormatterName.with(formatterName),
+            SpreadsheetFormatterName.with(
+                CaseKind.CAMEL.change(
+                    this.getClass().getSimpleName()
+                        .replace("Spreadsheet", "")
+                        .replace("FormatPattern", ""),
+                    CaseKind.KEBAB
+                )
+            ),
             this.text()
         );
     }

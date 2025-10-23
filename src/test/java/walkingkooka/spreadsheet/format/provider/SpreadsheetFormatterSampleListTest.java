@@ -169,7 +169,7 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
                 "  },\n" +
                 "  {\n" +
                 "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"time-format-pattern hh/mm\",\n" +
+                "    \"selector\": \"time hh/mm\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"12/58\"\n" +
@@ -193,7 +193,7 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
                 "  },\n" +
                 "  {\n" +
                 "    \"label\": \"label1\",\n" +
-                "    \"selector\": \"time-format-pattern hh/mm\",\n" +
+                "    \"selector\": \"time hh/mm\",\n" +
                 "    \"value\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"12/58\"\n" +
