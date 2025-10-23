@@ -68,6 +68,12 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                         SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
                     );
             }
+            if (value instanceof Double && type == Integer.class) {
+                return type.cast(
+                    ((Double)value).intValue()
+                );
+            }
+
             throw this.convertThrowable(
                 "Only support converting String to Expression but got " + value.getClass().getSimpleName() + " " + type.getSimpleName(),
                 value,
@@ -251,6 +257,26 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterSelector.parse(
                 "collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))"
             )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithCurrency() {
+        this.spreadsheetFormatterAndCheck(
+            "currency",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberFormatPattern("$0.00")
+                .formatter()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithCurrencyWithThree() {
+        this.spreadsheetFormatterAndCheck(
+            "currency(3)",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberFormatPattern("$0.000")
+                .formatter()
         );
     }
 

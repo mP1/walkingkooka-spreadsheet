@@ -82,6 +82,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         switch (name.value()) {
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
+            case SpreadsheetFormatterName.CURRENCY_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
@@ -197,6 +198,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         .collect(Collectors.toList())
                 );
                 break;
+            case SpreadsheetFormatterName.CURRENCY_STRING:
+                formatter = currency(
+                    values,
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
                 if (0 != count) {
                     throw new IllegalArgumentException("Expected 0 value(s) got " + count);
@@ -239,6 +246,24 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         }
 
         return formatter;
+    }
+
+    private static SpreadsheetFormatter currency(final List<?> values,
+                                                 final ProviderContext context) {
+        final int decimalPlaces = values.size() == 0 ?
+            2 :
+            context.convertOrFail(
+                values.get(0),
+                Integer.class
+            );
+
+        return SpreadsheetPattern.parseNumberFormatPattern(
+            "$0." +
+                CharSequences.repeating(
+                    '0',
+                    decimalPlaces
+                )
+        ).formatter();
     }
 
     private SpreadsheetFormatter spreadsheetFormatter(final EnvironmentValueName<SpreadsheetFormatterSelector> value,
