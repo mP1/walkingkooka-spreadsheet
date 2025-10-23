@@ -51,8 +51,8 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
             () -> FilteredMappedSpreadsheetParserProvider.with(
                 SpreadsheetParserInfoSet.EMPTY.concat(
                     SpreadsheetParserInfo.with(
-                        url("date-parse-pattern"),
-                        SpreadsheetParserName.with("new-date-parse-pattern")
+                        url("date"),
+                        SpreadsheetParserName.with("new-date")
                     )
                 ),
                 null
@@ -60,7 +60,7 @@ public final class FilteredMappedSpreadsheetParserProviderTest implements Spread
         );
     }
 
-    private final static String NEW_PARSER_NAME = "new-date-parse-pattern";
+    private final static String NEW_PARSER_NAME = "new-date";
 
     @Test
     public void testSpreadsheetParserSelector() {

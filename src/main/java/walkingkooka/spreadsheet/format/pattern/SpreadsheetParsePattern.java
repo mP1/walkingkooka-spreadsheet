@@ -55,7 +55,7 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
     /**
      * Returns the {@link SpreadsheetParserSelector} equivalent to this pattern.
      * <pre>
-     * date-parse-pattern pattern-here
+     * date pattern-here
      * date-time-parse-pattern pattern-here
      * </pre>
      */
@@ -64,6 +64,9 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
             this.getClass().getSimpleName()
                 .substring("Spreadsheet".length()),
             CaseKind.KEBAB
+        ).replace(
+            "date-parse-pattern",
+            "date"
         );
 
         return SpreadsheetParserSelector.with(

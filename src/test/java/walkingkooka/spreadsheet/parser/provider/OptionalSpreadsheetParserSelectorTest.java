@@ -114,7 +114,7 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     public void testJsonMarshallNotEmpty() {
         this.marshallAndCheck(
             this.createJsonNodeMarshallingValue(),
-            JsonNode.string("date-parse-pattern yyyy/mm/ddd")
+            JsonNode.string("date yyyy/mm/ddd")
         );
     }
 
@@ -146,7 +146,7 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     public OptionalSpreadsheetParserSelector createJsonNodeMarshallingValue() {
         return OptionalSpreadsheetParserSelector.with(
             Optional.of(
-                SpreadsheetParserSelector.parse("date-parse-pattern yyyy/mm/ddd")
+                SpreadsheetParserSelector.parse("date yyyy/mm/ddd")
             )
         );
     }

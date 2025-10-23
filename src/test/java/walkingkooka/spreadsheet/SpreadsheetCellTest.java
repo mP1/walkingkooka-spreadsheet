@@ -2532,7 +2532,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             patch,
             "{\n" +
                 "  \"A1\": {\n" +
-                "    \"parser\": \"date-parse-pattern yyyy/mm/dd\"\n" +
+                "    \"parser\": \"date yyyy/mm/dd\"\n" +
                 "  }\n" +
                 "}"
         );
