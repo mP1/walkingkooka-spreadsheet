@@ -300,7 +300,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     SpreadsheetFormatParserTokenKind::isDate
                 );
                 break;
-            case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.DATE_TIME_STRING:
                 next = formatPatternNextTextComponent(
                     selector,
                     SpreadsheetFormatParserTokenKind::isDateTime
@@ -449,7 +449,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     );
                 }
                 break;
-            case SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.DATE_TIME_STRING:
                 samples.add(
                     this.dateTimeSpreadsheetFormatterSample(
                         "Short",
@@ -958,7 +958,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.BADGE_ERROR),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),

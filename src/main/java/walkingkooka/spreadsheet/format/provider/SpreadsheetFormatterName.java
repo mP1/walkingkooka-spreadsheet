@@ -97,13 +97,13 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         SpreadsheetPatternKind.DATE_FORMAT_PATTERN
     );
 
-    final static String DATE_TIME_FORMAT_PATTERN_STRING = "date-time-format-pattern";
+    final static String DATE_TIME_STRING = "date-time";
 
     /**
      * The name of the date-time {@link SpreadsheetFormatter}
      */
-    public final static SpreadsheetFormatterName DATE_TIME_FORMAT_PATTERN = new SpreadsheetFormatterName(
-        DATE_TIME_FORMAT_PATTERN_STRING,
+    public final static SpreadsheetFormatterName DATE_TIME = new SpreadsheetFormatterName(
+        DATE_TIME_STRING,
         SpreadsheetPatternKind.DATE_TIME_FORMAT_PATTERN
     );
 
@@ -197,8 +197,8 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case DATE_STRING:
                 spreadsheetFormatterName = DATE;
                 break;
-            case DATE_TIME_FORMAT_PATTERN_STRING:
-                spreadsheetFormatterName = DATE_TIME_FORMAT_PATTERN;
+            case DATE_TIME_STRING:
+                spreadsheetFormatterName = DATE_TIME;
                 break;
             case DEFAULT_TEXT_STRING:
                 spreadsheetFormatterName = DEFAULT_TEXT;

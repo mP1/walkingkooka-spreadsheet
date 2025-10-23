@@ -46,7 +46,7 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
      * Returns the {@link SpreadsheetFormatterSelector} equivalent to this pattern.
      * <pre>
      * date
-     * date-time-format-pattern
+     * date-time
      * </pre>
      */
     public final SpreadsheetFormatterSelector spreadsheetFormatterSelector() {
@@ -57,6 +57,9 @@ public abstract class SpreadsheetFormatPattern extends SpreadsheetPattern {
         ).replace(
             "date-format-pattern",
             "date"
+        ).replace(
+            "date-time-format-pattern",
+            "date-time"
         );
 
         return SpreadsheetFormatterSelector.with(

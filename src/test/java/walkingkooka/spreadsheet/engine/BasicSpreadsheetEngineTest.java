@@ -6019,7 +6019,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+            SpreadsheetFormatterSelector.parse("date-time ddd/mmmm/yyyy")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6070,7 +6070,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+            SpreadsheetFormatterSelector.parse("date-time ddd/mmmm/yyyy")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6155,7 +6155,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+            SpreadsheetFormatterSelector.parse("date-time ddd/mmmm/yyyy")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6204,7 +6204,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+            SpreadsheetFormatterSelector.parse("date-time ddd/mmmm/yyyy")
         ).set(
             SpreadsheetMetadataPropertyName.LOCALE,
             Locale.GERMANY
@@ -6316,7 +6316,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FRANCE_DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+            SpreadsheetFormatterSelector.parse("date-time ddd/mmmm/yyyy")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6611,7 +6611,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-            SpreadsheetFormatterSelector.parse("date-time-format-pattern ddd/mmmm/yyyy")
+            SpreadsheetFormatterSelector.parse("date-time ddd/mmmm/yyyy")
         );
         final SpreadsheetEngineContext context = this.createContext(metadata);
 
@@ -6818,7 +6818,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         SpreadsheetCell a1Cell = SpreadsheetSelection.A1.setFormula(a1Formula)
             .setFormatter(
                 Optional.of(
-                    SpreadsheetFormatterSelector.parse("date-time-format-pattern d/m/yy")
+                    SpreadsheetFormatterSelector.parse("date-time d/m/yy")
                 )
             ).setStyle(STYLE);
 
@@ -6852,7 +6852,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         a1Cell = a1Cell.setFormatter(
             Optional.of(
-                SpreadsheetFormatterSelector.parse("date-time-format-pattern ddddd/mmmm/yyyy")
+                SpreadsheetFormatterSelector.parse("date-time ddddd/mmmm/yyyy")
             )
         );
 

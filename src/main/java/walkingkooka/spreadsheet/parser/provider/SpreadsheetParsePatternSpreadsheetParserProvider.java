@@ -196,7 +196,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                 break;
             case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
-                    SpreadsheetFormatterName.DATE_TIME_FORMAT_PATTERN,
+                    SpreadsheetFormatterName.DATE_TIME,
                     selector.valueText()
                 );
                 break;
