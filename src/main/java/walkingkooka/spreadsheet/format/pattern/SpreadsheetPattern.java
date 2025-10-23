@@ -1145,5 +1145,5 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     /**
      * The default {@link SpreadsheetTextFormatPattern}.
      */
-    public static final SpreadsheetTextFormatPattern DEFAULT_TEXT = parseTextFormatPattern("@");
+    public static final SpreadsheetTextFormatPattern DEFAULT_TEXT_FORMAT_PATTERN = parseTextFormatPattern("@");
 }
