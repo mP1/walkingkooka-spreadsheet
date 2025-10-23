@@ -1062,6 +1062,41 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // Currency
+    //  currency
+    //  Text "$123.50"
+    //
+    // Currency
+    //  currency
+    //  Text "$-123.50"
+    //
+    // Currency
+    //  currency
+    //  Text "$0.00"
+    @Test
+    public void testSpreadsheetFormatterSamplesCurrency() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.CURRENCY,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Currency",
+                SpreadsheetFormatterName.CURRENCY.setValueText(""),
+                TextNode.text("$123.50")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Currency",
+                SpreadsheetFormatterName.CURRENCY.setValueText(""),
+                TextNode.text("$-123.50")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Currency",
+                SpreadsheetFormatterName.CURRENCY.setValueText(""),
+                TextNode.text("$0.00")
+            )
+        );
+    }
+
     // Short
     //  date
     //    "d/m/yy"
