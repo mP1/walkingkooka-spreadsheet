@@ -40,7 +40,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
 
     @Test
     public void testWithDateTimeParsePattern() {
-        this.verifyConstant("date-time-parse-pattern");
+        this.verifyConstant("date-time");
     }
 
     @Test
@@ -95,7 +95,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     @Test
     public void testIsSpreadsheetParsePatternWithDateTimeParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-            "date-time-parse-pattern",
+            "date-time",
             true
         );
     }

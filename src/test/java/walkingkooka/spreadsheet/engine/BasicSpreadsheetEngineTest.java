@@ -4451,7 +4451,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Optional.of(ARABIC_DECIMAL_NUMBER_SYMBOLS)
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("date-time-parse-pattern hh:mm dd/mmmm/yyyy")
+                    SpreadsheetParserSelector.parse("date-time hh:mm dd/mmmm/yyyy")
                 )
             ).setStyle(STYLE),
             LocalDateTime.of(

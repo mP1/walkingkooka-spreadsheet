@@ -1753,7 +1753,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                     "  \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                     "  \"dateTimeOffset\": \"-25569\",\n" +
-                    "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                    "  \"dateTimeParser\": \"date-time dd/mm/yyyy hh:mm\",\n" +
                     "  \"dateTimeSymbols\": {\n" +
                     "    \"ampms\": [\n" +
                     "      \"am\",\n" +
@@ -1840,7 +1840,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"locale\": \"en-AU\",\n" +
                     "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
                     "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                    "  \"parsers\": \"date, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
+                    "  \"parsers\": \"date, date-time, number-parse-pattern, time-parse-pattern\",\n" +
                     "  \"plugins\": \"\",\n" +
                     "  \"precision\": 10,\n" +
                     "  \"roundingMode\": \"HALF_UP\",\n" +
@@ -1978,7 +1978,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"dateParser\": \"date dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m\",\n" +
                 "  \"dateTimeFormatter\": \"date-time dddd, d mmmm yyyy \\\\a\\\\t h:mm:ss AM/PM\",\n" +
                 "  \"dateTimeOffset\": \"-25569\",\n" +
-                "  \"dateTimeParser\": \"date-time-parse-pattern dd/mm/yyyy hh:mm\",\n" +
+                "  \"dateTimeParser\": \"date-time dd/mm/yyyy hh:mm\",\n" +
                 "  \"dateTimeSymbols\": {\n" +
                 "    \"ampms\": [\n" +
                 "      \"am\",\n" +
@@ -2065,7 +2065,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"numberFormatter\": \"number-format-pattern #,##0.###\",\n" +
                 "  \"numberParser\": \"number-parse-pattern #,##0.###;#,##0\",\n" +
-                "  \"parsers\": \"date, date-time-parse-pattern, number-parse-pattern, time-parse-pattern\",\n" +
+                "  \"parsers\": \"date, date-time, number-parse-pattern, time-parse-pattern\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
