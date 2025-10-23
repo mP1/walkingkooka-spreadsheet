@@ -1829,7 +1829,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"findFunctions\": \"@\",\n" +
                     "  \"findHighlighting\": false,\n" +
                     "  \"formHandlers\": \"basic\",\n" +
-                    "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text, time\",\n" +
+                    "  \"formatters\": \"automatic, badge-error, collection, currency, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text, time\",\n" +
                     "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                     "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                     "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -2054,7 +2054,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
-                "  \"formatters\": \"automatic, badge-error, collection, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text, time\",\n" +
+                "  \"formatters\": \"automatic, badge-error, collection, currency, date, date-time, default-text, expression, general, number, spreadsheet-pattern-collection, text, time\",\n" +
                 "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +

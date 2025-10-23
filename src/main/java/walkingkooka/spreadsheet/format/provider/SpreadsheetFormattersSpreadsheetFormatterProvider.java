@@ -982,6 +982,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.BADGE_ERROR),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.CURRENCY),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
