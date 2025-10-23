@@ -1991,6 +1991,30 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             )
         );
     }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesScientific() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.SCIENTIFIC,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Scientific",
+                SpreadsheetFormatterName.SCIENTIFIC.setValueText(""),
+                TextNode.text("1.24e02")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Scientific",
+                SpreadsheetFormatterName.SCIENTIFIC.setValueText(""),
+                TextNode.text("-1.24e02")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Scientific",
+                SpreadsheetFormatterName.SCIENTIFIC.setValueText(""),
+                TextNode.text("0.00e00")
+            )
+        );
+    }
     
     @Test
     public void testSpreadsheetFormatterSamplesText() {
@@ -2276,6 +2300,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\n"
@@ -2288,7 +2313,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testMarshall() {
         this.checkEquals(
             JsonNode.parse(
-                "[\n" +
+                    "[\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/badge-error badge-error\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
@@ -2300,6 +2325,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\"\n" +

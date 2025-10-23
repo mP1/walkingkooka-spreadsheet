@@ -167,6 +167,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
+    final static String SCIENTIFIC_STRING = "scientific";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName SCIENTIFIC = new SpreadsheetFormatterName(
+        SCIENTIFIC_STRING,
+        null
+    );
+    
     final static String SPREADSHEET_PATTERN_COLLECTION_STRING = "spreadsheet-pattern-collection";
 
     /**
@@ -232,6 +242,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case NUMBER_STRING:
                 spreadsheetFormatterName = NUMBER;
+                break;
+            case SCIENTIFIC_STRING:
+                spreadsheetFormatterName = SCIENTIFIC;
                 break;
             case SPREADSHEET_PATTERN_COLLECTION_STRING:
                 spreadsheetFormatterName = SPREADSHEET_PATTERN_COLLECTION;
