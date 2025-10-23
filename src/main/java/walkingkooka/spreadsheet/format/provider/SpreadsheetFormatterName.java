@@ -225,6 +225,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case COLLECTION_STRING:
                 spreadsheetFormatterName = COLLECTION;
                 break;
+            case CURRENCY_STRING:
+                spreadsheetFormatterName = CURRENCY;
+                break;
             case DATE_STRING:
                 spreadsheetFormatterName = DATE;
                 break;
@@ -242,6 +245,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case NUMBER_STRING:
                 spreadsheetFormatterName = NUMBER;
+                break;
+            case PERCENT_STRING:
+                spreadsheetFormatterName = PERCENT;
                 break;
             case SCIENTIFIC_STRING:
                 spreadsheetFormatterName = SCIENTIFIC;
