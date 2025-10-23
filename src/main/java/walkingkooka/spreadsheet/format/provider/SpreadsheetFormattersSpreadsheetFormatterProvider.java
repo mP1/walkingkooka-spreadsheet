@@ -324,7 +324,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 next = null;
                 break;
-            case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING:
+            case SpreadsheetFormatterName.TEXT_STRING:
                 next = formatPatternNextTextComponent(
                     selector,
                     SpreadsheetFormatParserTokenKind::isText
@@ -671,7 +671,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     );
                 }
                 break;
-            case SpreadsheetFormatterName.TEXT_FORMAT_PATTERN_STRING: {
+            case SpreadsheetFormatterName.TEXT_STRING: {
                 final Object value = cellValueOr(
                     context,
                     () -> null
@@ -964,7 +964,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT_FORMAT_PATTERN),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME_FORMAT_PATTERN)
         )
     );

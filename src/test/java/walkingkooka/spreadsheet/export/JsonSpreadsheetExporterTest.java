@@ -77,7 +77,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
-                "    \"formatter\": \"text-format-pattern @\",\n" +
+                "    \"formatter\": \"text @\",\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
                 "    \"style\": {\n" +
                 "      \"color\": \"black\"\n" +
@@ -144,7 +144,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             "A1-XFD1048576.formatter.json.txt",
             SpreadsheetMediaTypes.JSON_FORMATTER,
             "{\n" +
-                "  \"A1\": \"text-format-pattern @\",\n" +
+                "  \"A1\": \"text @\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );

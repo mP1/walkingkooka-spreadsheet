@@ -74,7 +74,7 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         assertThrows(
             IllegalArgumentException.class,
             () -> SpreadsheetFormatterSelector.with(
-                SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+                SpreadsheetFormatterName.TEXT,
                 ""
             ).spreadsheetFormatPattern()
         );
@@ -160,14 +160,14 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     public void testMarshall() {
         this.marshallAndCheck(
             this.createJsonNodeMarshallingValue(),
-            "\"text-format-pattern @@\""
+            "\"text @@\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-            "\"text-format-pattern @@\"",
+            "\"text @@\"",
             this.createJsonNodeMarshallingValue()
         );
     }
@@ -184,7 +184,7 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
     @Override
     public SpreadsheetFormatterSelector createJsonNodeMarshallingValue() {
         return SpreadsheetFormatterSelector.with(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TEXT,
             "@@"
         );
     }

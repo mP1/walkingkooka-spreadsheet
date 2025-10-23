@@ -1470,7 +1470,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * {@link SpreadsheetFormatterSelector}
      * <pre>
      * {
-     *   "formatter": "text-format-pattern @\"patched\""
+     *   "formatter": "text @\"patched\""
      *   }
      * }
      * </pre>
@@ -1979,7 +1979,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      * Traverses the cells, patching each with the provided {@link JsonNode format}.
      * <pre>
      * {
-     *   "formatter": "text-format-pattern @\"patched\""
+     *   "formatter": "text @\"patched\""
      * }
      * </pre>
      */

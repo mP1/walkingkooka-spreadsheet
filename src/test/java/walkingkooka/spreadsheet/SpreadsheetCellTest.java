@@ -2001,7 +2001,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
-                "    \"formatter\": \"text-format-pattern @@\",\n" +
+                "    \"formatter\": \"text @@\",\n" +
                 "    \"parser\": \"date-time dd/mm/yyyy\",\n" +
                 "    \"style\": {\n" +
                 "      \"fontStyle\": \"ITALIC\",\n" +
@@ -3039,7 +3039,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  formatter:\n" +
-                "    text-format-pattern\n" +
+                "    text\n" +
                 "      \"@@\"\n" +
                 "  parser:\n" +
                 "    date-time\n" +
@@ -3079,7 +3079,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  formatter:\n" +
-                "    text-format-pattern\n" +
+                "    text\n" +
                 "      \"@@\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
@@ -3117,7 +3117,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  formatter:\n" +
-                "    text-format-pattern\n" +
+                "    text\n" +
                 "      \"@@\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
@@ -3253,7 +3253,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setFormatter(this.formatter()),
-            "A1 \"=1+2\" formatter=\"text-format-pattern @@\""
+            "A1 \"=1+2\" formatter=\"text @@\""
         );
     }
 

@@ -34,7 +34,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
 
     @Test
     public void testSpreadsheetFormatterName() {
-        final SpreadsheetFormatterName name = SpreadsheetFormatterName.TEXT_FORMAT_PATTERN;
+        final SpreadsheetFormatterName name = SpreadsheetFormatterName.TEXT;
         final List<?> values = Lists.of("@@");
 
         this.spreadsheetFormatterAndCheck(
@@ -77,7 +77,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
     public void testSpreadsheetFormatterInfos() {
         this.spreadsheetFormatterInfosAndCheck(
             SpreadsheetFormatterInfoSet.EMPTY.concat(
-                SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
+                SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text")
             )
         );
     }
@@ -87,7 +87,7 @@ public final class FilteredSpreadsheetFormatterProviderTest implements Spreadshe
         return FilteredSpreadsheetFormatterProvider.with(
             SpreadsheetFormatterProviders.spreadsheetFormatters(),
             SpreadsheetFormatterInfoSet.EMPTY.concat(
-                SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text-format-pattern text-format-pattern")
+                SpreadsheetFormatterInfo.parse("https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text")
             )
         );
     }

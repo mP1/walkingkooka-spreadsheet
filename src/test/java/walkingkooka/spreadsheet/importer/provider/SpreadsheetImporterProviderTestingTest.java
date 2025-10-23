@@ -34,7 +34,7 @@ import java.util.Objects;
 public final class SpreadsheetImporterProviderTestingTest implements SpreadsheetImporterProviderTesting<TestSpreadsheetImporterProvider>,
     SpreadsheetMetadataTesting {
 
-    private final static String SELECTOR = "text-format-pattern @@";
+    private final static String SELECTOR = "text @@";
 
     private final static SpreadsheetImporter IMPORTER = SpreadsheetImporters.fake();
 
@@ -84,7 +84,7 @@ public final class SpreadsheetImporterProviderTestingTest implements Spreadsheet
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");
 
-            checkEquals("text-format-pattern", selector.name().value());
+            checkEquals("text", selector.name().value());
             return IMPORTER;
         }
 
@@ -96,7 +96,7 @@ public final class SpreadsheetImporterProviderTestingTest implements Spreadsheet
             Objects.requireNonNull(values, "values");
             Objects.requireNonNull(context, "context");
 
-            checkEquals("text-format-pattern", name.value());
+            checkEquals("text", name.value());
             return IMPORTER;
         }
 

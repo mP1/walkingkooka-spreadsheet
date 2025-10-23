@@ -42,7 +42,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     private final static String LABEL = "Label123";
 
     private final static SpreadsheetFormatterSelector SELECTOR = SpreadsheetFormatterSelector.with(
-        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+        SpreadsheetFormatterName.TEXT,
         " @"
     );
 
@@ -265,7 +265,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
     public void testToString() {
         this.toStringAndCheck(
             this.createObject(),
-            "Label123 text-format-pattern  @ \"Value123\""
+            "Label123 text  @ \"Value123\""
         );
     }
 
@@ -276,7 +276,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
         this.treePrintAndCheck(
             this.createObject(),
             "Label123\n" +
-                "  text-format-pattern\n" +
+                "  text\n" +
                 "    \" @\"\n" +
                 "  Text \"Value123\"\n"
         );
@@ -290,7 +290,7 @@ public final class SpreadsheetFormatterSampleTest implements HashCodeEqualsDefin
             this.createJsonNodeMarshallingValue(),
             "{\n" +
                 "  \"label\": \"Label123\",\n" +
-                "  \"selector\": \"text-format-pattern  @\",\n" +
+                "  \"selector\": \"text  @\",\n" +
                 "  \"value\": {\n" +
                 "    \"type\": \"text\",\n" +
                 "    \"value\": \"Value123\"\n" +

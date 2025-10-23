@@ -56,7 +56,7 @@ public final class EmptySpreadsheetFormatterProviderTest implements SpreadsheetF
     @Test
     public void testSpreadsheetFormatterSamples() {
         this.spreadsheetFormatterSamplesFails(
-            SpreadsheetFormatterName.TEXT_FORMAT_PATTERN,
+            SpreadsheetFormatterName.TEXT,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT
         );
     }

@@ -44,7 +44,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
      * A {@link SpreadsheetFormatterSelector} that selects a {@link SpreadsheetFormatter} with a pattern that prints only the value.
      */
     public final static SpreadsheetFormatterSelector DEFAULT_TEXT_FORMAT = SpreadsheetFormatterSelector.parse(
-        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN +
+        SpreadsheetFormatterName.TEXT +
             " @"
     );
 
@@ -54,7 +54,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
      * Note the format is formatter-name SPACE optional-text, for {@link SpreadsheetPatternSpreadsheetFormatter} the text will hold the raw pattern, without
      * any need for encoding of any kind.
      * <pre>
-     * text-format-pattern @
+     * text @
      * </pre>
      */
     public static SpreadsheetFormatterSelector parse(final String text) {

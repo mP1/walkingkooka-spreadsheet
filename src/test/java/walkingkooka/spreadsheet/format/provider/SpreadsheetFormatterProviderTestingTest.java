@@ -36,7 +36,7 @@ import java.util.Optional;
 public final class SpreadsheetFormatterProviderTestingTest implements SpreadsheetFormatterProviderTesting<TestSpreadsheetFormatterProvider>,
     SpreadsheetMetadataTesting {
 
-    private final static String SELECTOR = "text-format-pattern @@";
+    private final static String SELECTOR = "text @@";
 
     private final static SpreadsheetFormatter FORMATTER = SpreadsheetFormatters.fake();
 
@@ -48,7 +48,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
 
     private final static SpreadsheetFormatterInfo INFO = SpreadsheetFormatterInfo.with(
         Url.parseAbsolute("https://example.com/123"),
-        SpreadsheetFormatterName.TEXT_FORMAT_PATTERN
+        SpreadsheetFormatterName.TEXT
     );
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
@@ -121,7 +121,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             Objects.requireNonNull(selector, "selector");
             Objects.requireNonNull(context, "context");
 
-            checkEquals("text-format-pattern", selector.name().value());
+            checkEquals("text", selector.name().value());
             return FORMATTER;
         }
 
@@ -133,7 +133,7 @@ public final class SpreadsheetFormatterProviderTestingTest implements Spreadshee
             Objects.requireNonNull(values, "values");
             Objects.requireNonNull(context, "context");
 
-            checkEquals("text-format-pattern", name.value());
+            checkEquals("text", name.value());
             return FORMATTER;
         }
 
