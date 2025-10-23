@@ -249,6 +249,7 @@ There are several built-in SpreadsheetFormatter(s) one for each Spreadsheet type
 to allow user customisation of that value type along with a single color.
 
 - [badge-error](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/BadgeErrorSpreadsheetFormatter.java)
+- currency
 - dd/mm/yyyy [date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
 - dd/mm/yyyy hh:mm:ss [date-time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
 - default text [default-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/pattern/SpreadsheetPattern.java#L1163)
