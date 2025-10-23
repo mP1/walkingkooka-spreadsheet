@@ -4594,7 +4594,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
             ).setParser(
                 Optional.of(
-                    SpreadsheetParserSelector.parse("time-parse-pattern hh:mm")
+                    SpreadsheetParserSelector.parse("time hh:mm")
                 )
             ).setStyle(STYLE),
             LocalTime.of(

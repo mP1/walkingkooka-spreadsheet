@@ -60,23 +60,15 @@ public abstract class SpreadsheetParsePattern extends SpreadsheetPattern
      * </pre>
      */
     public final SpreadsheetParserSelector spreadsheetParserSelector() {
-        final String parserName = CaseKind.CAMEL.change(
-            this.getClass().getSimpleName()
-                .substring("Spreadsheet".length()),
-            CaseKind.KEBAB
-        ).replace(
-            "date-parse-pattern",
-            "date"
-        ).replace(
-            "date-time-parse-pattern",
-            "date-time"
-        ).replace(
-            "number-parse-pattern",
-            "number"
-        );
-
         return SpreadsheetParserSelector.with(
-            SpreadsheetParserName.with(parserName),
+            SpreadsheetParserName.with(
+                CaseKind.CAMEL.change(
+                    this.getClass().getSimpleName()
+                        .replace("Spreadsheet", "")
+                        .replace("ParsePattern", ""),
+                    CaseKind.KEBAB
+                )
+            ),
             this.text()
         );
     }

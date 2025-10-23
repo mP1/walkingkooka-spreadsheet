@@ -55,7 +55,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
             () -> MergedMappedSpreadsheetParserProvider.with(
                 SpreadsheetParserInfoSet.EMPTY.concat(
                     SpreadsheetParserInfo.with(
-                        url("time-parse-pattern"),
+                        url("time"),
                         SpreadsheetParserName.TIME_PARSER_PATTERN
                     )
                 ),
@@ -64,7 +64,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
         );
     }
 
-    private final static String RENAMED_TIME_PARSER_PATTERN = "renamed-time-parse-pattern";
+    private final static String RENAMED_TIME_PARSER_PATTERN = "renamed-time";
 
     @Test
     public void testSpreadsheetParserSelectorWithRenamed() {
@@ -147,7 +147,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
                     i -> i.name()
                         .equals(SpreadsheetParserName.TIME_PARSER_PATTERN) ?
                         SpreadsheetParserInfo.with(
-                            url("time-parse-pattern"),
+                            url("time"),
                             SpreadsheetParserName.with(RENAMED_TIME_PARSER_PATTERN)
                         ) :
                         i
@@ -171,7 +171,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
         return MergedMappedSpreadsheetParserProvider.with(
             SpreadsheetParserInfoSet.EMPTY.concat(
                 SpreadsheetParserInfo.with(
-                    url("time-parse-pattern"),
+                    url("time"),
                     SpreadsheetParserName.with(RENAMED_TIME_PARSER_PATTERN)
                 )
             ),

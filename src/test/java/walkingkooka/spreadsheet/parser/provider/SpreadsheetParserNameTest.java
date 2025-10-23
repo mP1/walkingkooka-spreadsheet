@@ -50,7 +50,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
 
     @Test
     public void testWithTimeParsePattern() {
-        this.verifyConstant("time-parse-pattern");
+        this.verifyConstant("time");
     }
 
     private void verifyConstant(final String text) {
@@ -111,7 +111,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     @Test
     public void testIsSpreadsheetParsePatternWithTimeParsePattern() {
         this.isSpreadsheetParsePatternAndCheck(
-            "time-parse-pattern",
+            "time",
             true
         );
     }

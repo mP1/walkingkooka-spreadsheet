@@ -2606,7 +2606,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"spreadsheetId\": \"7b\",\n" +
                 "  \"textFormatter\": \"text @@\",\n" +
                 "  \"timeFormatter\": \"time hh:mm\",\n" +
-                "  \"timeParser\": \"time-parse-pattern hh:mm;hh:mm:ss.000\",\n" +
+                "  \"timeParser\": \"time hh:mm;hh:mm:ss.000\",\n" +
                 "  \"twoDigitYear\": 31\n" +
                 "}"
         );
