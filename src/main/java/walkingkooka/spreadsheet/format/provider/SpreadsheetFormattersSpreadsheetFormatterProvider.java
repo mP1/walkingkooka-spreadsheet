@@ -434,6 +434,45 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.BADGE_ERROR_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
                 break;
+            case SpreadsheetFormatterName.CURRENCY_STRING: {
+                samples.add(
+                    currencySample(
+                        123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    currencySample(
+                        -123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    currencySample(
+                        0,
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            currencySample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            }
             case SpreadsheetFormatterName.DATE_STRING:
                 samples.add(
                     this.dateSpreadsheetFormatterSample(
@@ -463,7 +502,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                if(includeSamples) {
+                if (includeSamples) {
                     samples.add(
                         this.sample(
                             SAMPLE_LABEL,
@@ -503,7 +542,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                if(includeSamples) {
+                if (includeSamples) {
                     samples.add(
                         this.sample(
                             SAMPLE_LABEL,
@@ -522,7 +561,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         TextNode.text("Hello 123")
                     )
                 );
-                if(includeSamples) {
+                if (includeSamples) {
                     samples.add(
                         this.sample(
                             SAMPLE_LABEL,
@@ -568,7 +607,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                if(includeSamples) {
+                if (includeSamples) {
                     final Object value = cellValueOr(
                         context,
                         () -> null
@@ -685,7 +724,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                if(includeSamples) {
+                if (includeSamples) {
                     samples.add(
                         this.sample(
                             SAMPLE_LABEL,
@@ -710,7 +749,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     )
                 );
 
-                if(includeSamples) {
+                if (includeSamples) {
                     if (null != value) {
                         samples.add(
                             sample(
@@ -750,7 +789,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         context
                     )
                 );
-                if(includeSamples) {
+                if (includeSamples) {
                     samples.add(
                         this.sample(
                             SAMPLE_LABEL,
@@ -766,6 +805,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         }
 
         return Lists.immutable(samples);
+    }
+
+    private SpreadsheetFormatterSample currencySample(final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return currencySample(
+            "Currency",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample currencySample(final String label,
+                                                      final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.CURRENCY.setValueText(""),
+            value,
+            context
+        );
     }
 
     private SpreadsheetFormatterSample dateSpreadsheetFormatterSample(final String label,
@@ -891,11 +950,11 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static Object cellValueOr(final SpreadsheetFormatterContext context,
                                       final Supplier<Object> defaultValue) {
-        Object value =context.cell()
+        Object value = context.cell()
             .flatMap(c -> c.formula().value())
             .orElse(null);
 
-        if(null == value || value instanceof SpreadsheetError) {
+        if (null == value || value instanceof SpreadsheetError) {
             value = defaultValue.get();
         }
 
