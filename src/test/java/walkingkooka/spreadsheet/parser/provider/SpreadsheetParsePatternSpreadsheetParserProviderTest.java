@@ -177,7 +177,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserSelectorDateTimeParsePattern() {
         this.spreadsheetParserAndCheck(
-            "date-time-parse-pattern dd/mm/yyyy hh:mm:ss",
+            "date-time dd/mm/yyyy hh:mm:ss",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
                 .parser()
@@ -198,7 +198,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNextTokenDateTimeParsePatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
-            SpreadsheetParserSelector.parse("date-time-parse-pattern"),
+            SpreadsheetParserSelector.parse("date-time"),
             SpreadsheetParserSelectorToken.with(
                 "",
                 "",
@@ -295,7 +295,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     @Test
     public void testSpreadsheetParserNextTokenDateTimeParsePatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
-            SpreadsheetParserSelector.parse("date-time-parse-pattern yyyy"),
+            SpreadsheetParserSelector.parse("date-time yyyy"),
             SpreadsheetParserSelectorToken.with(
                 "",
                 "",
@@ -743,7 +743,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                 .spreadsheetParserInfos(),
             "SpreadsheetParserInfoSet\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time-parse-pattern date-time-parse-pattern\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number-parse-pattern number-parse-pattern\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\n"
         );
@@ -757,7 +757,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
             JsonNode.parse(
                 "[\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time-parse-pattern date-time-parse-pattern\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number-parse-pattern number-parse-pattern\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time-parse-pattern time-parse-pattern\"\n" +
                     "]"

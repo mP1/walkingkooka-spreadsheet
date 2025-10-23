@@ -2002,7 +2002,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
                 "    \"formatter\": \"text-format-pattern @@\",\n" +
-                "    \"parser\": \"date-time-parse-pattern dd/mm/yyyy\",\n" +
+                "    \"parser\": \"date-time dd/mm/yyyy\",\n" +
                 "    \"style\": {\n" +
                 "      \"fontStyle\": \"ITALIC\",\n" +
                 "      \"fontWeight\": \"bold\"\n" +
@@ -2999,7 +2999,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    value:\n" +
                 "      3\n" +
                 "  parser:\n" +
-                "    date-time-parse-pattern\n" +
+                "    date-time\n" +
                 "      \"dd/mm/yyyy\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
@@ -3042,7 +3042,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    text-format-pattern\n" +
                 "      \"@@\"\n" +
                 "  parser:\n" +
-                "    date-time-parse-pattern\n" +
+                "    date-time\n" +
                 "      \"dd/mm/yyyy\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
@@ -3264,7 +3264,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setParser(this.parser()),
-            "A1 \"=1+2\" parser=\"date-time-parse-pattern dd/mm/yyyy\""
+            "A1 \"=1+2\" parser=\"date-time dd/mm/yyyy\""
         );
     }
 
