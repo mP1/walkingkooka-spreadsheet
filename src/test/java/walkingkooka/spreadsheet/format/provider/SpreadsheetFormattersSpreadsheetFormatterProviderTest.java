@@ -216,6 +216,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
+    public void testSpreadsheetFormatterNameWithMediumDateTime() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.MEDIUM_DATE_TIME,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("d mmm yyyy, h:mm:ss AM/PM")
+                .formatter()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterNameWithNumber() {
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("number"),
@@ -531,6 +542,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "medium-date",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateParsePattern("d mmm yyyy")
+                .formatter()
+        );
+    }
+
+    // medium-date-time.................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithMediumDateTime() {
+        this.spreadsheetFormatterAndCheck(
+            "medium-date-time",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("d mmm yyyy, h:mm:ss AM/PM")
                 .formatter()
         );
     }
@@ -974,6 +997,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // medium-date-time.................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithMediumDateTime() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.MEDIUM_DATE_TIME.setValueText("")
+        );
+    }
+
     // number...........................................................................................................
 
     @Test
@@ -1352,7 +1384,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     //Medium
     //  date
     //    "d mmm yyyy"
-    //  Text "31 Dec. 1999"
+    //  Text "31 Dec. 1999, 12:58:00 PM"
     //
     //Long
     //  date
@@ -2416,6 +2448,165 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             )
         );
     }
+
+    // medium-date-time..................................................................................................
+    
+    @Test
+    public void testSpreadsheetFormatterSamplesWithMediumDateTimeWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.MEDIUM_DATE_TIME,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Medium Date Time",
+                SpreadsheetFormatterSelector.parse("medium-date-time"),
+                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithMediumDateTimeWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.MEDIUM_DATE_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.MEDIUM_DATE_TIME,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Medium Date Time",
+                selector,
+                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithMediumDateTimeWithCellValueSkipSamples() {
+        final LocalDateTime dateTime = LocalDateTime.of(
+            2000,
+            1,
+            2,
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            dateTime,
+            NOW.now(),
+            "date-time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.MEDIUM_DATE_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(dateTime)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium Date Time",
+                selector,
+                TextNode.text("2 Jan. 2000, 12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithMediumDateTimeWithCellValueIncludeSamples() {
+        final LocalDateTime dateTime = LocalDateTime.of(
+            2000,
+            1,
+            2,
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            dateTime,
+            NOW.now(),
+            "date-time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.MEDIUM_DATE_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(dateTime)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium Date Time",
+                selector,
+                TextNode.text("2 Jan. 2000, 12:58:59 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("2 Jan. 2000, 12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithMediumDateTimeNotEmptyWithCellValueDateTime() {
+        final LocalDateTime dateTime = LocalDateTime.of(
+            2000,
+            1,
+            2,
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            dateTime,
+            NOW.now(),
+            "date-time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.MEDIUM_DATE_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(dateTime)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium Date Time",
+                selector,
+                TextNode.text("2 Jan. 2000, 12:58:59 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("2 Jan. 2000, 12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithMediumDateTimeNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.MEDIUM_DATE_TIME.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Medium Date Time",
+                selector,
+                TextNode.text("31 Dec. 1999, 12:58:00 PM")
+            )
+        );
+    }
     
     // number...........................................................................................................
 
@@ -3348,6 +3539,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date-time medium-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\n" +
@@ -3378,6 +3570,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date-time medium-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\",\n" +
