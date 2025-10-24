@@ -2099,7 +2099,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterProvider.SKIP_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
-                "Date",
+                "Short Date",
                 SpreadsheetFormatterSelector.parse("short-date"),
                 TextNode.text("31/12/99")
             )
@@ -2115,7 +2115,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
             SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
             SpreadsheetFormatterSample.with(
-                "Date",
+                "Short Date",
                 selector,
                 TextNode.text("31/12/99")
             )
@@ -2144,7 +2144,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
-                "Date",
+                "Short Date",
                 selector,
                 TextNode.text("2/1/00")
             )
@@ -2173,7 +2173,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
-                "Date",
+                "Short Date",
                 selector,
                 TextNode.text("2/1/00")
             ),
@@ -2207,7 +2207,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 Optional.of(date)
             ),
             SpreadsheetFormatterSample.with(
-                "Date",
+                "Short Date",
                 selector,
                 TextNode.text("2/1/00")
             ),
@@ -2233,7 +2233,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 )
             ),
             SpreadsheetFormatterSample.with(
-                "Date",
+                "Short Date",
                 selector,
                 TextNode.text("31/12/99")
             )

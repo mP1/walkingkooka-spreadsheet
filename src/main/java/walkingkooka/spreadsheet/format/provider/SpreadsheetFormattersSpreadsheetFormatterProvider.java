@@ -1133,7 +1133,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private SpreadsheetFormatterSample shortDateSample(final Object value,
                                                        final SpreadsheetFormatterProviderSamplesContext context) {
         return shortDateSample(
-            "Date",
+            "Short Date",
             value,
             context
         );
