@@ -137,6 +137,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
+    final static String FULL_DATE_STRING = "full-date";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName FULL_DATE = new SpreadsheetFormatterName(
+        FULL_DATE_STRING,
+        null
+    );
+    
     final static String GENERAL_STRING = "general";
 
     /**
@@ -270,6 +280,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case EXPRESSION_STRING:
                 spreadsheetFormatterName = EXPRESSION;
+                break;
+            case FULL_DATE_STRING:
+                spreadsheetFormatterName = FULL_DATE;
                 break;
             case GENERAL_STRING:
                 spreadsheetFormatterName = GENERAL;

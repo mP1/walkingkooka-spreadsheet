@@ -477,6 +477,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // full-date........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithFullDate() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.FULL_DATE.text(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("dddd, d mmmm yyyy")
+                .formatter()
+        );
+    }
+    
     // general..........................................................................................................
 
     @Test
@@ -912,6 +924,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterNextTokenWithDefaultText() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterName.DEFAULT_TEXT.setValueText("")
+        );
+    }
+
+    // full-date........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithFullDate() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.LONG_DATE.setValueText("")
         );
     }
 
@@ -1795,6 +1816,160 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // full-date........................................................................................................
+
+    // Full
+    //  date
+    //    "dddd, d mmmm yyyy"
+    //  Text "Friday, 31 December 1999"
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullDateWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.FULL_DATE,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Full Date",
+                SpreadsheetFormatterSelector.parse("full-date"),
+                TextNode.text("Friday, 31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullDateWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.FULL_DATE,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Full Date",
+                selector,
+                TextNode.text("Friday, 31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullDateWithCellValueSkipSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Date",
+                selector,
+                TextNode.text("Sunday, 2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullDateWithCellValueIncludeSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Date",
+                selector,
+                TextNode.text("Sunday, 2 January 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("Sunday, 2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullDateNotEmptyWithCellValueDate() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Date",
+                selector,
+                TextNode.text("Sunday, 2 January 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("Sunday, 2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullDateNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_DATE.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Date",
+                selector,
+                TextNode.text("Friday, 31 December 1999")
+            )
+        );
+    }
+    
     // general..........................................................................................................
 
     // General
@@ -2978,6 +3153,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date full-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\n" +
@@ -3006,6 +3182,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date full-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\",\n" +
