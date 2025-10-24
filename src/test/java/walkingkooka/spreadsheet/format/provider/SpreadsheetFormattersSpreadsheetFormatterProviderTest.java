@@ -952,6 +952,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // short-date......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithShortDate() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterSelector.parse("short-date")
+        );
+    }
+
     // spreadsheet-pattern-collection...................................................................................
 
     @Test
