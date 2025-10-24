@@ -560,6 +560,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // badge-error......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithBadgeError() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.BADGE_ERROR.setValueText("")
+        );
+    }
+
     // currency.........................................................................................................
 
     @Test
