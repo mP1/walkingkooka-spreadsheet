@@ -1764,6 +1764,27 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // default-text.....................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithDefaultText() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.DEFAULT_TEXT,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Default",
+                SpreadsheetFormatterName.TEXT.setValueText("@"),
+                TextNode.text("Hello 123")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Sample",
+                SpreadsheetFormatterName.DEFAULT_TEXT.setValueText(""),
+                TextNode.text("Hello World 123")
+            )
+        );
+    }
+
     // expression.......................................................................................................
 
     @Test
