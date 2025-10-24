@@ -147,6 +147,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
+    final static String LONG_DATE_STRING = "long-date";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName LONG_DATE = new SpreadsheetFormatterName(
+        LONG_DATE_STRING,
+        null
+    );
+    
     final static String MEDIUM_DATE_STRING = "medium-date";
 
     /**
@@ -263,6 +273,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case GENERAL_STRING:
                 spreadsheetFormatterName = GENERAL;
+                break;
+            case LONG_DATE_STRING:
+                spreadsheetFormatterName = LONG_DATE;
                 break;
             case MEDIUM_DATE_STRING:
                 spreadsheetFormatterName = MEDIUM_DATE;
