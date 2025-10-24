@@ -204,6 +204,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
+    public void testSpreadsheetFormatterNameWithShortDate() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.SHORT_DATE,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d/m/yy")
+                .formatter()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterNameWithText() {
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("text"),
@@ -463,6 +474,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "number $0.00",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberFormatPattern("$0.00").formatter()
+        );
+    }
+
+    // short-date.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithShortDate() {
+        this.spreadsheetFormatterAndCheck(
+            "short-date",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d/m/yy")
+                .formatter()
         );
     }
 
@@ -2062,8 +2085,163 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // short-date.......................................................................................................
+
+    // Short
+    //  date
+    //    "d/m/yy"
+    //  Text "31/12/99"
+    //
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortDateWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.SHORT_DATE,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Date",
+                SpreadsheetFormatterSelector.parse("short-date"),
+                TextNode.text("31/12/99")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortDateWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.SHORT_DATE,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Date",
+                selector,
+                TextNode.text("31/12/99")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortDateWithCellValueSkipSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Date",
+                selector,
+                TextNode.text("2/1/00")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortDateWithCellValueIncludeSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Date",
+                selector,
+                TextNode.text("2/1/00")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("2/1/00")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortDateNotEmptyWithCellValueDate() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Date",
+                selector,
+                TextNode.text("2/1/00")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("2/1/00")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortDateNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_DATE.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Date",
+                selector,
+                TextNode.text("31/12/99")
+            )
+        );
+    }
+
     // text.............................................................................................................
-    
+
     @Test
     public void testSpreadsheetFormatterSamplesWithText() {
         this.spreadsheetFormatterSamplesAndCheck(
@@ -2172,7 +2350,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     // time.............................................................................................................
-    
+
     // Short
     //  time
     //    "h:mm AM/PM"
@@ -2351,6 +2529,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\n"
@@ -2376,6 +2555,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\"\n" +
