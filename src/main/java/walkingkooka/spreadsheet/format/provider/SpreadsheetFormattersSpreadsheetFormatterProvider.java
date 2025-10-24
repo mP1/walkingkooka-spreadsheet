@@ -222,6 +222,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.FULL_DATE_STRING:
+                parameterCountCheck(count);
+
                 formatter = fullDate(
                     context
                 );
@@ -232,11 +234,15 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 formatter = SpreadsheetFormatters.general();
                 break;
             case SpreadsheetFormatterName.LONG_DATE_STRING:
+                parameterCountCheck(count);
+
                 formatter = longDate(
                     context
                 );
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
+                parameterCountCheck(count);
+
                 formatter = mediumDate(
                     context
                 );
@@ -254,6 +260,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
+                parameterCountCheck(count);
+
                 formatter = shortDate(
                     context
                 );
