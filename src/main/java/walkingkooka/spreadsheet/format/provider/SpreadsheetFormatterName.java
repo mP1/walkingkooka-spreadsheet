@@ -146,6 +146,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         FULL_DATE_STRING,
         null
     );
+
+    final static String FULL_DATE_TIME_STRING = "full-date-time";
+
+    /**
+     * The name of the date-time {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName FULL_DATE_TIME = new SpreadsheetFormatterName(
+        FULL_DATE_TIME_STRING,
+        null
+    );
     
     final static String GENERAL_STRING = "general";
 
@@ -312,6 +322,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case FULL_DATE_STRING:
                 spreadsheetFormatterName = FULL_DATE;
+                break;
+            case FULL_DATE_TIME_STRING:
+                spreadsheetFormatterName = FULL_DATE_TIME;
                 break;
             case GENERAL_STRING:
                 spreadsheetFormatterName = GENERAL;
