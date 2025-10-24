@@ -241,7 +241,7 @@ public interface SpreadsheetFormatterProviderTesting<T extends SpreadsheetFormat
         );
     }
 
-    // spreadsheetFormatterNextTokensAndCheck...................................................................
+    // spreadsheetFormatterNextTokens...................................................................................
 
     @Test
     default void testSpreadsheetFormatterNextTextComponentWithNullSelectorFails() {
