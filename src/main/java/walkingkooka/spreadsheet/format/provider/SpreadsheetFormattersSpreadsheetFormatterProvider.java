@@ -189,9 +189,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             case SpreadsheetFormatterName.BADGE_ERROR_STRING:
-                if (1 != count) {
-                    throw new IllegalArgumentException("Expected 1 value(s) got " + count);
-                }
+                parameterCountCheck(1, count);
 
                 formatter = SpreadsheetFormatters.badgeError(
                     (SpreadsheetFormatter) copy.get(0)
@@ -216,9 +214,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 formatter = SpreadsheetFormatters.defaultText();
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
-                if (1 != count) {
-                    throw new IllegalArgumentException("Expected 1 value(s) got " + count);
-                }
+                parameterCountCheck(1, count);
+
                 formatter = expressionFormatter(
                     copy.get(0),
                     context
@@ -285,8 +282,16 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     }
 
     private static void parameterCountCheck(final int count) {
-        if (0 != count) {
-            throw new IllegalArgumentException("Expected 0 value(s) got " + count);
+        parameterCountCheck(
+            count,
+            0
+        );
+    }
+
+    private static void parameterCountCheck(final int count,
+                                            final int expected) {
+        if (expected != count) {
+            throw new IllegalArgumentException("Expected " + expected + " value(s) got " + count);
         }
     }
 
