@@ -569,6 +569,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // collection.........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithCollection() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.COLLECTION.setValueText("")
+        );
+    }
+
     // currency.........................................................................................................
 
     @Test
