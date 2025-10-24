@@ -440,6 +440,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     SpreadsheetFormatParserTokenKind::isNumber
                 );
                 break;
+            case SpreadsheetFormatterName.SHORT_DATE_STRING:
+                next = null;
+                break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 next = null;
                 break;
