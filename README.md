@@ -256,6 +256,7 @@ to allow user customisation of that value type along with a single color.
 - full-date
 - General [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
 - long-date
+- long-date-time
 - medium-date
 - medium-date-time
 - $0.00 [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterNumber.java)
