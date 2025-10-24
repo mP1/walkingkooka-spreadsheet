@@ -261,6 +261,7 @@ to allow user customisation of that value type along with a single color.
 - percent
 - scientific
 - short-date
+- short-date-time
 - @ [text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterText.java)
 - hh:mm:ss [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
 - [expression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/ExpressionSpreadsheetFormatter.java)
