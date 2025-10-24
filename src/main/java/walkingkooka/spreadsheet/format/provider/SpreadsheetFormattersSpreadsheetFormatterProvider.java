@@ -84,6 +84,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.CURRENCY_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
+            case SpreadsheetFormatterName.FULL_DATE_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.LONG_DATE_STRING:
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
@@ -224,6 +225,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context
                 );
                 break;
+            case SpreadsheetFormatterName.FULL_DATE_STRING:
+                formatter = fullDate(
+                    values,
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 if (0 != count) {
                     throw new IllegalArgumentException("Expected 0 value(s) got " + count);
@@ -309,6 +316,14 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 context.locale()
             )
         ).formatter();
+    }
+
+    private static SpreadsheetFormatter fullDate(final List<?> values,
+                                                 final ProviderContext context) {
+        return date(
+            DateFormat.FULL,
+            context
+        );
     }
 
     private static SpreadsheetFormatter longDate(final List<?> values,
@@ -444,6 +459,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.FULL_DATE_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
@@ -712,6 +730,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             }
+            case SpreadsheetFormatterName.FULL_DATE_STRING:
+                samples.add(
+                    fullDateSample(
+                        this.dateValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            fullDateSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
             case SpreadsheetFormatterName.GENERAL_STRING: {
                 samples.add(
                     generalSample(
@@ -1155,6 +1199,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample fullDateSample(final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return fullDateSample(
+            "Full Date",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample fullDateSample(final String label,
+                                                      final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.FULL_DATE.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample generalSample(final Object value,
                                                      final SpreadsheetFormatterProviderSamplesContext context) {
         return generalSample(
@@ -1426,6 +1490,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.FULL_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_DATE),
