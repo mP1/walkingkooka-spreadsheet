@@ -410,6 +410,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.COLLECTION_STRING:
                 next = null;
                 break;
+            case SpreadsheetFormatterName.CURRENCY_STRING:
+                next = null;
+                break;
             case SpreadsheetFormatterName.DATE_STRING:
                 next = formatPatternNextTextComponent(
                     selector,
