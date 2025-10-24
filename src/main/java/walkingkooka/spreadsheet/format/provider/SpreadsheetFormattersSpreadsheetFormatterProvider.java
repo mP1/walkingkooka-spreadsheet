@@ -211,9 +211,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
-                if (0 != count) {
-                    throw new IllegalArgumentException("Expected 0 value(s) got " + count);
-                }
+                parameterCountCheck(count);
+
                 formatter = SpreadsheetFormatters.defaultText();
                 break;
             case SpreadsheetFormatterName.EXPRESSION_STRING:
@@ -231,9 +230,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 );
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
-                if (0 != count) {
-                    throw new IllegalArgumentException("Expected 0 value(s) got " + count);
-                }
+                parameterCountCheck(count);
+
                 formatter = SpreadsheetFormatters.general();
                 break;
             case SpreadsheetFormatterName.LONG_DATE_STRING:
@@ -284,6 +282,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         }
 
         return formatter;
+    }
+
+    private static void parameterCountCheck(final int count) {
+        if (0 != count) {
+            throw new IllegalArgumentException("Expected 0 value(s) got " + count);
+        }
     }
 
     private static SpreadsheetFormatter currency(final List<?> values,
