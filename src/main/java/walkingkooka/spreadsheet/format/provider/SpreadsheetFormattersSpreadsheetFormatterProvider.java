@@ -278,9 +278,10 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 if (null == kind) {
                     throw new IllegalArgumentException("Unknown formatter " + name);
                 }
-                if (1 != count) {
-                    throw new IllegalArgumentException("Expected 1 value(s) got " + count);
-                }
+                parameterCountCheck(
+                    count,
+                    1
+                );
                 formatter = kind.parse(
                     (String) copy.get(0)
                 ).formatter();
