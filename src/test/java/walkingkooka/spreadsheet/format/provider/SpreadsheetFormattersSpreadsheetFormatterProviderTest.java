@@ -874,6 +874,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // default-text.....................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithDefaultText() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.DEFAULT_TEXT.setValueText("")
+        );
+    }
+
     // medium-date......................................................................................................
 
     @Test
