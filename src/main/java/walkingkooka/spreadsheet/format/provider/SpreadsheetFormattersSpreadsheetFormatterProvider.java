@@ -91,6 +91,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.PERCENT_STRING:
             case SpreadsheetFormatterName.SCIENTIFIC_STRING:
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
+            case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
                     this,
@@ -266,6 +267,11 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context
                 );
                 break;
+            case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
+                parameterCountCheck(count);
+
+                formatter = shortDateTime(context);
+                break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = SpreadsheetFormatters.spreadsheetPatternCollection(
                     values.stream()
@@ -332,6 +338,17 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         ).formatter();
     }
 
+    private static SpreadsheetFormatter dateTime(final int dateFormat,
+                                                 final ProviderContext context) {
+        return SpreadsheetPattern.dateTimeParsePattern(
+            (SimpleDateFormat) DateFormat.getDateTimeInstance(
+                dateFormat,
+                dateFormat,
+                context.locale()
+            )
+        ).formatter();
+    }
+
     private static SpreadsheetFormatter fullDate(final ProviderContext context) {
         return date(
             DateFormat.FULL,
@@ -392,6 +409,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter shortDate(final ProviderContext context) {
         return date(
+            DateFormat.SHORT,
+            context
+        );
+    }
+
+    private static SpreadsheetFormatter shortDateTime(final ProviderContext context) {
+        return dateTime(
             DateFormat.SHORT,
             context
         );
@@ -496,6 +520,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
@@ -1069,6 +1096,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     }
                 }
                 break;
+            case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
+                samples.add(
+                    shortDateTimeSample(
+                        this.dateTimeValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            shortDateTimeSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
             case SpreadsheetFormatterName.TEXT_STRING: {
                 final Object value = cellValueOr(
                     context,
@@ -1372,6 +1425,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample shortDateTimeSample(final Object value,
+                                                           final SpreadsheetFormatterProviderSamplesContext context) {
+        return shortDateTimeSample(
+            "Short Date Time",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample shortDateTimeSample(final String label,
+                                                           final Object value,
+                                                           final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.SHORT_DATE_TIME.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterProviderSamplesContext context) {
@@ -1508,6 +1581,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.PERCENT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SCIENTIFIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_DATE),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME)
