@@ -85,6 +85,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.CURRENCY_STRING:
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
+            case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
             case SpreadsheetFormatterName.PERCENT_STRING:
             case SpreadsheetFormatterName.SCIENTIFIC_STRING:
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
@@ -228,6 +229,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 formatter = SpreadsheetFormatters.general();
                 break;
+            case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
+                formatter = mediumDate(
+                    values,
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.PERCENT_STRING:
                 formatter = percent(
                     values,
@@ -287,6 +294,24 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         ).formatter();
     }
 
+    private static SpreadsheetFormatter date(final int dateFormat,
+                                             final ProviderContext context) {
+        return SpreadsheetPattern.dateParsePattern(
+            (SimpleDateFormat) DateFormat.getDateInstance(
+                dateFormat,
+                context.locale()
+            )
+        ).formatter();
+    }
+
+    private static SpreadsheetFormatter mediumDate(final List<?> values,
+                                                   final ProviderContext context) {
+        return date(
+            DateFormat.MEDIUM,
+            context
+        );
+    }
+
     private static SpreadsheetFormatter percent(final List<?> values,
                                                 final ProviderContext context) {
         final int decimalPlaces = values.size() == 0 ?
@@ -326,12 +351,10 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter shortDate(final List<?> values,
                                                   final ProviderContext context) {
-        return SpreadsheetPattern.dateParsePattern(
-            (SimpleDateFormat) DateFormat.getDateInstance(
-                DateFormat.SHORT,
-                context.locale()
-            )
-        ).formatter();
+        return date(
+            DateFormat.SHORT,
+            context
+        );
     }
 
     private SpreadsheetFormatter spreadsheetFormatter(final EnvironmentValueName<SpreadsheetFormatterSelector> value,
@@ -406,6 +429,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.NUMBER_STRING:
@@ -695,6 +721,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 }
                 break;
             }
+            case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
+                samples.add(
+                    mediumDateSample(
+                        this.dateValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            mediumDateSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
             case SpreadsheetFormatterName.NUMBER_STRING:
                 samples.add(
                     this.numberSpreadsheetFormatterSample(
@@ -1067,6 +1119,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample mediumDateSample(final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return mediumDateSample(
+            "Medium Date",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample mediumDateSample(final String label,
+                                                        final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.MEDIUM_DATE.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample numberSpreadsheetFormatterSample(final String label,
                                                                         final Function<Locale, NumberFormat> decimalFormat,
                                                                         final Number value,
@@ -1279,6 +1351,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.DEFAULT_TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.PERCENT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SCIENTIFIC),
