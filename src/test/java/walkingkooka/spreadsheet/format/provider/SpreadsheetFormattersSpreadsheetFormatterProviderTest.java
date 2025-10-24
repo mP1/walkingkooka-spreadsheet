@@ -551,6 +551,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     // testSpreadsheetFormatterNextToken................................................................................
 
+    // currency.........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithCurrency() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.CURRENCY.setValueText("")
+        );
+    }
+
     // date.............................................................................................................
 
     @Test
