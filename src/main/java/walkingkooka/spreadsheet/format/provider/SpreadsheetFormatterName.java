@@ -166,6 +166,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         LONG_DATE_STRING,
         null
     );
+
+    final static String LONG_DATE_TIME_STRING = "long-date-time";
+
+    /**
+     * The name of the date-time {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName LONG_DATE_TIME = new SpreadsheetFormatterName(
+        LONG_DATE_TIME_STRING,
+        null
+    );
     
     final static String MEDIUM_DATE_STRING = "medium-date";
 
