@@ -176,6 +176,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         MEDIUM_DATE_STRING,
         null
     );
+
+    final static String MEDIUM_DATE_TIME_STRING = "medium-date-time";
+
+    /**
+     * The name of the medium-date-time {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName MEDIUM_DATE_TIME = new SpreadsheetFormatterName(
+        MEDIUM_DATE_TIME_STRING,
+        null
+    );
     
     final static String NUMBER_STRING = "number";
 
@@ -301,6 +311,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case MEDIUM_DATE_STRING:
                 spreadsheetFormatterName = MEDIUM_DATE;
+                break;
+            case MEDIUM_DATE_TIME_STRING:
+                spreadsheetFormatterName = MEDIUM_DATE_TIME;
                 break;
             case NUMBER_STRING:
                 spreadsheetFormatterName = NUMBER;
