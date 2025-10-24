@@ -1015,6 +1015,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // scientific.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithScientific() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.SCIENTIFIC.setValueText("")
+        );
+    }
+
     // short-date......................................................................................................
 
     @Test

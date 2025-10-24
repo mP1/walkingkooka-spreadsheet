@@ -446,6 +446,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.PERCENT_STRING:
                 next = null;
                 break;
+            case SpreadsheetFormatterName.SCIENTIFIC_STRING:
+                next = null;
+                break;
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
                 next = null;
                 break;
