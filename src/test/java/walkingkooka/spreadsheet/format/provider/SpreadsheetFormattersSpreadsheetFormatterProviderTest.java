@@ -979,6 +979,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // percent..........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithPercent() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.PERCENT.setValueText("")
+        );
+    }
+
     // short-date......................................................................................................
 
     @Test
