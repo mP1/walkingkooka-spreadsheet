@@ -892,6 +892,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // general..........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithGeneral() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.GENERAL.setValueText("")
+        );
+    }
+
     // medium-date......................................................................................................
 
     @Test
