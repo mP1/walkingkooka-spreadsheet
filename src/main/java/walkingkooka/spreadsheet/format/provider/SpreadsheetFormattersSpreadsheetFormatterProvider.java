@@ -227,7 +227,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 break;
             case SpreadsheetFormatterName.FULL_DATE_STRING:
                 formatter = fullDate(
-                    values,
                     context
                 );
                 break;
@@ -239,13 +238,11 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 break;
             case SpreadsheetFormatterName.LONG_DATE_STRING:
                 formatter = longDate(
-                    values,
                     context
                 );
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
                 formatter = mediumDate(
-                    values,
                     context
                 );
                 break;
@@ -263,7 +260,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
                 formatter = shortDate(
-                    values,
                     context
                 );
                 break;
@@ -318,24 +314,21 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         ).formatter();
     }
 
-    private static SpreadsheetFormatter fullDate(final List<?> values,
-                                                 final ProviderContext context) {
+    private static SpreadsheetFormatter fullDate(final ProviderContext context) {
         return date(
             DateFormat.FULL,
             context
         );
     }
 
-    private static SpreadsheetFormatter longDate(final List<?> values,
-                                                 final ProviderContext context) {
+    private static SpreadsheetFormatter longDate(final ProviderContext context) {
         return date(
             DateFormat.LONG,
             context
         );
     }
 
-    private static SpreadsheetFormatter mediumDate(final List<?> values,
-                                                   final ProviderContext context) {
+    private static SpreadsheetFormatter mediumDate(final ProviderContext context) {
         return date(
             DateFormat.MEDIUM,
             context
@@ -379,8 +372,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         ).formatter();
     }
 
-    private static SpreadsheetFormatter shortDate(final List<?> values,
-                                                  final ProviderContext context) {
+    private static SpreadsheetFormatter shortDate(final ProviderContext context) {
         return date(
             DateFormat.SHORT,
             context
