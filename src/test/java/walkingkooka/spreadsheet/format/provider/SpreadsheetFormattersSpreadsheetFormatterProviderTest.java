@@ -194,6 +194,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
+    public void testSpreadsheetFormatterNameWithLongDate() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.LONG_DATE,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
+                .formatter()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterNameWithMediumDate() {
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.MEDIUM_DATE,
@@ -474,6 +485,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "general",
             PROVIDER_CONTEXT,
             SpreadsheetFormatters.general()
+        );
+    }
+
+    // long-date........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithLongDate() {
+        this.spreadsheetFormatterAndCheck(
+            "long-date",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
+                .formatter()
         );
     }
 
@@ -898,6 +921,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterNextTokenWithGeneral() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterName.GENERAL.setValueText("")
+        );
+    }
+
+    // long-date........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithLongDate() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.LONG_DATE.setValueText("")
         );
     }
 
@@ -1861,6 +1893,160 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // long-date........................................................................................................
+
+    // Long
+    //  date
+    //    "d mmmm yyyy"
+    //  Text "31 December 1999"
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongDateWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.LONG_DATE,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Long Date",
+                SpreadsheetFormatterSelector.parse("long-date"),
+                TextNode.text("31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongDateWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.LONG_DATE,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Long Date",
+                selector,
+                TextNode.text("31 December 1999")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongDateWithCellValueSkipSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Date",
+                selector,
+                TextNode.text("2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongDateWithCellValueIncludeSamples() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Date",
+                selector,
+                TextNode.text("2 January 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongDateNotEmptyWithCellValueDate() {
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            2
+        );
+        this.checkNotEquals(
+            date,
+            NOW.now(),
+            "date must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_DATE.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(date)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Date",
+                selector,
+                TextNode.text("2 January 2000")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("2 January 2000")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongDateNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_DATE.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Date",
+                selector,
+                TextNode.text("31 December 1999")
+            )
+        );
+    }
+    
     // medium-date......................................................................................................
 
     // Medium
@@ -2793,6 +2979,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\n" +
@@ -2820,6 +3007,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/default-text default-text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/percent percent\",\n" +
