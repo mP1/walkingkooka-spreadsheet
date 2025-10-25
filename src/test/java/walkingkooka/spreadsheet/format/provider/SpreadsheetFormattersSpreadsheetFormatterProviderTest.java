@@ -1033,6 +1033,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // long-date-time...................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithLongDateTime() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.LONG_DATE_TIME.setValueText("")
+        );
+    }
+
     // medium-date......................................................................................................
 
     @Test
