@@ -1201,6 +1201,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // short-time.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithShortTime() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.SHORT_TIME.setValueText("")
+        );
+    }
+
     // spreadsheet-pattern-collection...................................................................................
 
     @Test
