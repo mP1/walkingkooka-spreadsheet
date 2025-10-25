@@ -375,6 +375,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
             case LONG_DATE_STRING:
                 spreadsheetFormatterName = LONG_DATE;
                 break;
+            case LONG_DATE_TIME_STRING:
+                spreadsheetFormatterName = LONG_DATE_TIME;
+                break;
             case LONG_TIME_STRING:
                 spreadsheetFormatterName = LONG_TIME;
                 break;
