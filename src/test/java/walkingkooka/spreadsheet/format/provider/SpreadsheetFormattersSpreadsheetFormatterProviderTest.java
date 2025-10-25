@@ -543,6 +543,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 .formatter()
         );
     }
+
+    // full-date-time...................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithFullDateTime() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.FULL_DATE_TIME.text(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM")
+                .formatter()
+        );
+    }
     
     // general..........................................................................................................
 
