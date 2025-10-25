@@ -96,7 +96,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see ContextFormatTextSpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter contextFormat() {
+    public static SpreadsheetFormatter contextFormatValue() {
         return ContextFormatTextSpreadsheetFormatter.INSTANCE;
     }
 
