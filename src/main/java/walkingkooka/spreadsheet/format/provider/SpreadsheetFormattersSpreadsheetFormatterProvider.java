@@ -86,6 +86,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.DEFAULT_TEXT_STRING:
             case SpreadsheetFormatterName.FULL_DATE_STRING:
             case SpreadsheetFormatterName.FULL_DATE_TIME_STRING:
+            case SpreadsheetFormatterName.FULL_TIME_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.LONG_DATE_STRING:
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
@@ -239,6 +240,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 parameterCountCheck(count);
 
                 formatter = fullDateTime(
+                    context
+                );
+                break;
+            case SpreadsheetFormatterName.FULL_TIME_STRING:
+                parameterCountCheck(count);
+
+                formatter = fullTime(
                     context
                 );
                 break;
@@ -407,6 +415,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private static SpreadsheetFormatter fullTime(final ProviderContext context) {
+        return time(
+            DateFormat.FULL,
+            context
+        );
+    }
+    
     private static SpreadsheetFormatter longDate(final ProviderContext context) {
         return date(
             DateFormat.LONG,
@@ -595,6 +610,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.FULL_DATE_TIME_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.FULL_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
@@ -922,6 +940,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             fullDateTimeSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            case SpreadsheetFormatterName.FULL_TIME_STRING:
+                samples.add(
+                    fullTimeSample(
+                        this.dateValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            fullTimeSample(
                                 context.cell()
                                     .get()
                                     .reference()
@@ -1572,6 +1616,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample fullTimeSample(final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return fullTimeSample(
+            "Full Time",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample fullTimeSample(final String label,
+                                                      final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.FULL_TIME.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample generalSample(final Object value,
                                                      final SpreadsheetFormatterProviderSamplesContext context) {
         return generalSample(
@@ -1965,6 +2029,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.EXPRESSION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.FULL_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.FULL_DATE_TIME),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.FULL_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE_TIME),
