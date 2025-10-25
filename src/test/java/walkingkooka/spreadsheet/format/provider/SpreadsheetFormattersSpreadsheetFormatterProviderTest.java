@@ -205,6 +205,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
+    public void testSpreadsheetFormatterNameWithLongDateTime() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.LONG_DATE_TIME,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("d mmmm yyyy \\a\\t h:mm:ss AM/PM")
+                .formatter()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterNameWithMediumDate() {
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.MEDIUM_DATE,
