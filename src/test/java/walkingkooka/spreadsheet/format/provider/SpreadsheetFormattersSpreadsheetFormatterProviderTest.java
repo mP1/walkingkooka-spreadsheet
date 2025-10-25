@@ -3865,6 +3865,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date-time short-date-time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-time short-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\n"
@@ -3898,6 +3899,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/scientific scientific\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date-time short-date-time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-time short-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\"\n" +
