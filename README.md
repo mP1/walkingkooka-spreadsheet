@@ -260,6 +260,7 @@ to allow user customisation of that value type along with a single color.
 - long-date-time
 - medium-date
 - medium-date-time
+- medium-time
 - $0.00 [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterNumber.java)
 - percent
 - scientific

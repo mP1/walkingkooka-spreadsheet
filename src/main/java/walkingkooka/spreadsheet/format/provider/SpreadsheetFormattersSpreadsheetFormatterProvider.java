@@ -91,6 +91,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
             case SpreadsheetFormatterName.MEDIUM_DATE_TIME_STRING:
+            case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
             case SpreadsheetFormatterName.PERCENT_STRING:
             case SpreadsheetFormatterName.SCIENTIFIC_STRING:
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
@@ -272,6 +273,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context
                 );
                 break;
+            case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
+                parameterCountCheck(count);
+
+                formatter = mediumTime(
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.PERCENT_STRING:
                 formatter = percent(
                     values,
@@ -410,6 +418,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter mediumDateTime(final ProviderContext context) {
         return dateTime(
+            DateFormat.MEDIUM,
+            context
+        );
+    }
+
+    private static SpreadsheetFormatter mediumTime(final ProviderContext context) {
+        return time(
             DateFormat.MEDIUM,
             context
         );
@@ -576,6 +591,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_TIME_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.NUMBER_STRING:
@@ -1025,6 +1043,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             mediumDateTimeSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
+                samples.add(
+                    mediumTimeSample(
+                        this.dateTimeValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            mediumTimeSample(
                                 context.cell()
                                     .get()
                                     .reference()
@@ -1580,6 +1624,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample mediumTimeSample(final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return mediumTimeSample(
+            "Medium Time",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample mediumTimeSample(final String label,
+                                                        final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.MEDIUM_TIME.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample numberSpreadsheetFormatterSample(final String label,
                                                                         final Function<Locale, NumberFormat> decimalFormat,
                                                                         final Number value,
@@ -1838,6 +1902,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_DATE_TIME),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.NUMBER),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.PERCENT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SCIENTIFIC),
