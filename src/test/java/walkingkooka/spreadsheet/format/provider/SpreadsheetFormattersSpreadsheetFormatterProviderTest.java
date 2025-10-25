@@ -1074,6 +1074,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // full-date-time...................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithFullDateTime() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.LONG_DATE_TIME.setValueText("")
+        );
+    }
+
     // full-time........................................................................................................
 
     @Test
