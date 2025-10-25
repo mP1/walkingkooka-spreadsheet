@@ -590,6 +590,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // long-date-time...................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithLongDateTime() {
+        this.spreadsheetFormatterAndCheck(
+            "long-date-time",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("d mmmm yyyy \\a\\t h:mm:ss AM/PM")
+                .formatter()
+        );
+    }
+
     // long-time........................................................................................................
 
     @Test
