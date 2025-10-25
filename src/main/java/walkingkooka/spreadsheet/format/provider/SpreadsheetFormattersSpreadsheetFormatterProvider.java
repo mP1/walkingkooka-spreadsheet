@@ -304,6 +304,11 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
                 formatter = shortDateTime(context);
                 break;
+            case SpreadsheetFormatterName.SHORT_TIME_STRING:
+                parameterCountCheck(count);
+
+                formatter = shortTime(context);
+                break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = SpreadsheetFormatters.spreadsheetPatternCollection(
                     values.stream()
