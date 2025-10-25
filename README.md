@@ -248,30 +248,32 @@ A `SpreadsheetFormatter` is used to format the cell value into text that is disp
 There are several built-in SpreadsheetFormatter(s) one for each Spreadsheet type, each supporting the standard patterns
 to allow user customisation of that value type along with a single color.
 
+- automatic
 - [badge-error](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/BadgeErrorSpreadsheetFormatter.java)
 - currency
-- dd/mm/yyyy [date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
-- dd/mm/yyyy hh:mm:ss [date-time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
-- default text [default-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/pattern/SpreadsheetPattern.java#L1163)
+- [date](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java) dd/mm/yyyy
+- [date-time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java) dd/mm/yyyy hh:mm:ss
+- [default-text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/pattern/SpreadsheetPattern.java#L1163)
+- [expression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/ExpressionSpreadsheetFormatter.java)
 - full-date
 - full-date-time
 - full-time
-- General [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
+- [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
 - long-date
 - long-date-time
 - long-time
 - medium-date
 - medium-date-time
 - medium-time
-- $0.00 [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterNumber.java)
+- [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterNumber.java) $0.00
 - percent
 - scientific
 - short-date
 - short-date-time
 - short-time
-- @ [text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterText.java)
-- hh:mm:ss [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java)
-- [expression](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/ExpressionSpreadsheetFormatter.java)
+- [text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterText.java)
+- [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java) hh:mm:ss
+
 - Additional `SpreadsheetFormatter(s)` may be provided via a custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java) *DONE*
 - Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/14)
 
