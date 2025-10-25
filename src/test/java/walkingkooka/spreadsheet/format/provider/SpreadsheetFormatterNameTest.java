@@ -19,11 +19,15 @@ package walkingkooka.spreadsheet.format.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.reflect.ConstantsTesting;
+import walkingkooka.reflect.FieldAttributes;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.lang.reflect.Field;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -77,6 +81,44 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     @Override
     public Set<SpreadsheetFormatterName> intentionalDuplicateConstants() {
         return Sets.empty();
+    }
+
+    // calling SpreadsheetFormatterName.with constant#value should return constant
+    @Test
+    public void testWithUsingConstants() throws Exception {
+        final Set<SpreadsheetFormatterName> names = SortedSets.tree();
+
+        int i = 0;
+
+        for (final Field field : SpreadsheetFormatterName.class.getFields()) {
+            if (false == FieldAttributes.STATIC.is(field)) {
+                continue;
+            }
+            if (SpreadsheetFormatterName.class != field.getType()) {
+                continue;
+            }
+            if (false == JavaVisibility.PUBLIC.equals(JavaVisibility.of(field))) {
+                continue;
+            }
+
+            final SpreadsheetFormatterName constant = (SpreadsheetFormatterName) field.get(null);
+            final SpreadsheetFormatterName got = SpreadsheetFormatterName.with(constant.value());
+            if (constant != got) {
+                names.add(got);
+            }
+
+            i++;
+        }
+
+        this.checkNotEquals(
+            0,
+            i
+        );
+
+        this.checkEquals(
+            Sets.empty(),
+            names
+        );
     }
 
     // isSpreadsheetFormatPattern.......................................................................................
