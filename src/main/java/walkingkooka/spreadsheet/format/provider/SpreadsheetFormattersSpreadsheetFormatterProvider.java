@@ -89,6 +89,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.GENERAL_STRING:
             case SpreadsheetFormatterName.LONG_DATE_STRING:
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
+            case SpreadsheetFormatterName.LONG_TIME_STRING:
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
             case SpreadsheetFormatterName.MEDIUM_DATE_TIME_STRING:
             case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
@@ -260,6 +261,11 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     context
                 );
                 break;
+            case SpreadsheetFormatterName.LONG_TIME_STRING:
+                parameterCountCheck(count);
+
+                formatter = longTime(context);
+                break;
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
                 parameterCountCheck(count);
 
@@ -410,6 +416,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter longDateTime(final ProviderContext context) {
         return dateTime(
+            DateFormat.LONG,
+            context
+        );
+    }
+
+    private static SpreadsheetFormatter longTime(final ProviderContext context) {
+        return time(
             DateFormat.LONG,
             context
         );
@@ -591,6 +604,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.LONG_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
@@ -997,6 +1013,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     if (null != value) {
                         samples.add(
                             longDateTimeSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            case SpreadsheetFormatterName.LONG_TIME_STRING:
+                samples.add(
+                    longTimeSample(
+                        this.timeValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            longTimeSample(
                                 context.cell()
                                     .get()
                                     .reference()
@@ -1590,6 +1632,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample longTimeSample(final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return longTimeSample(
+            "Long Time",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample longTimeSample(final String label,
+                                                      final Object value,
+                                                      final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.LONG_TIME.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample mediumDateSample(final Object value,
                                                         final SpreadsheetFormatterProviderSamplesContext context) {
         return mediumDateSample(
@@ -1906,6 +1968,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE_TIME),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.MEDIUM_TIME),

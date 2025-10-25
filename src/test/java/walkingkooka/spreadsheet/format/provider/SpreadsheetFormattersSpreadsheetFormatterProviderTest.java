@@ -214,7 +214,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 .formatter()
         );
     }
-
+    
+    @Test
+    public void testSpreadsheetFormatterNameWithLongTime() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.LONG_TIME,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
+                .formatter()
+        );
+    }
+    
     @Test
     public void testSpreadsheetFormatterNameWithMediumDate() {
         this.spreadsheetFormatterAndCheck(
@@ -575,6 +586,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             "long-date",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
+                .formatter()
+        );
+    }
+
+    // long-time........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithLongTime() {
+        this.spreadsheetFormatterAndCheck(
+            "long-time",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
                 .formatter()
         );
     }
@@ -1054,6 +1077,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // long-time........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithLongTime() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.LONG_TIME.setValueText("")
+        );
+    }
+    
     // medium-date......................................................................................................
 
     @Test
@@ -2696,6 +2728,156 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             )
         );
     }
+
+    // long-time........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongTimeWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.LONG_TIME,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Long Time",
+                SpreadsheetFormatterSelector.parse("long-time"),
+                TextNode.text("12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongTimeWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.LONG_TIME,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Long Time",
+                selector,
+                TextNode.text("12:58:00 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongTimeWithCellValueSkipSamples() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Time",
+                selector,
+                TextNode.text("12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongTimeWithCellValueIncludeSamples() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Time",
+                selector,
+                TextNode.text("12:58:59 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongTimeNotEmptyWithCellValueTime() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Time",
+                selector,
+                TextNode.text("12:58:59 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithLongTimeNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.LONG_TIME.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Long Time",
+                selector,
+                TextNode.text("12:58:00 PM")
+            )
+        );
+    }
     
     // medium-date......................................................................................................
 
@@ -4242,6 +4424,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date-time long-date-time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-time long-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date-time medium-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-time medium-time\n" +
@@ -4277,6 +4460,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date-time long-date-time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-time long-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date medium-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-date-time medium-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/medium-time medium-time\",\n" +
