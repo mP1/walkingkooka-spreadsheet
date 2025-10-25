@@ -96,6 +96,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.SCIENTIFIC_STRING:
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
             case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
+            case SpreadsheetFormatterName.SHORT_TIME_STRING:
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
                     this,

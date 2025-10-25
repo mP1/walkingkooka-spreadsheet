@@ -3790,6 +3790,156 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // short-time.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortTimeWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.SHORT_TIME,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Short Time",
+                SpreadsheetFormatterSelector.parse("short-time"),
+                TextNode.text("12:58 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortTimeWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.SHORT_TIME,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Short Time",
+                selector,
+                TextNode.text("12:58 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortTimeWithCellValueSkipSamples() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short Time",
+                selector,
+                TextNode.text("12:58 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortTimeWithCellValueIncludeSamples() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short Time",
+                selector,
+                TextNode.text("12:58 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("12:58 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortTimeNotEmptyWithCellValueTime() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short Time",
+                selector,
+                TextNode.text("12:58 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("12:58 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithShortTimeNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.SHORT_TIME.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Short Time",
+                selector,
+                TextNode.text("12:58 PM")
+            )
+        );
+    }
+    
     // text.............................................................................................................
 
     @Test
