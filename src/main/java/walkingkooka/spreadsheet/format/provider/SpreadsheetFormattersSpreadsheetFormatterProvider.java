@@ -466,6 +466,23 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private static SpreadsheetFormatter shortTime(final ProviderContext context) {
+        return time(
+            DateFormat.SHORT,
+            context
+        );
+    }
+
+    private static SpreadsheetFormatter time(final int dateFormat,
+                                             final ProviderContext context) {
+        return SpreadsheetPattern.timeParsePattern(
+            (SimpleDateFormat) DateFormat.getTimeInstance(
+                dateFormat,
+                context.locale()
+            )
+        ).formatter();
+    }
+
     private SpreadsheetFormatter spreadsheetFormatter(final EnvironmentValueName<SpreadsheetFormatterSelector> value,
                                                       final ProviderContext context) {
         return this.spreadsheetFormatter(
@@ -577,6 +594,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.SHORT_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
@@ -1254,6 +1274,32 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                     }
                 }
                 break;
+            case SpreadsheetFormatterName.SHORT_TIME_STRING:
+                samples.add(
+                    shortTimeSample(
+                        this.timeValue(context),
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            shortTimeSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
             case SpreadsheetFormatterName.TEXT_STRING: {
                 final Object value = cellValueOr(
                     context,
@@ -1637,6 +1683,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         );
     }
 
+    private SpreadsheetFormatterSample shortTimeSample(final Object value,
+                                                       final SpreadsheetFormatterProviderSamplesContext context) {
+        return shortTimeSample(
+            "Short Time",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample shortTimeSample(final String label,
+                                                       final Object value,
+                                                       final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.SHORT_TIME.setValueText(""),
+            value,
+            context
+        );
+    }
+
     private SpreadsheetFormatterSample timeSpreadsheetFormatterSample(final String label,
                                                                       final int dateFormatStyle,
                                                                       final SpreadsheetFormatterProviderSamplesContext context) {
@@ -1777,6 +1843,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SCIENTIFIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_DATE_TIME),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME)

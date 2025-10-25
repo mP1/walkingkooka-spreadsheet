@@ -267,6 +267,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
+    final static String SHORT_TIME_STRING = "short-time";
+
+    /**
+     * The name of the time {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName SHORT_TIME = new SpreadsheetFormatterName(
+        SHORT_TIME_STRING,
+        null
+    );
+
     final static String TEXT_STRING = "text";
 
     /**
@@ -355,6 +365,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case SPREADSHEET_PATTERN_COLLECTION_STRING:
                 spreadsheetFormatterName = SPREADSHEET_PATTERN_COLLECTION;
+                break;
+            case SHORT_TIME_STRING:
+                spreadsheetFormatterName = SHORT_TIME;
                 break;
             case TEXT_STRING:
                 spreadsheetFormatterName = TEXT;
