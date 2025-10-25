@@ -566,6 +566,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 .formatter()
         );
     }
+
+    // full-time........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithFullTime() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.FULL_TIME.text(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
+                .formatter()
+        );
+    }
     
     // general..........................................................................................................
 
@@ -1062,6 +1074,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
+    // full-time........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithFullTime() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.FULL_TIME.setValueText("")
+        );
+    }
+    
     // general..........................................................................................................
 
     @Test
@@ -2326,6 +2347,156 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "Full Date Time",
                 selector,
                 TextNode.text("Friday, 31 December 1999 at 12:58:00 PM")
+            )
+        );
+    }
+
+    // full-time........................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullTimeWithoutCellSkipSamples() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.FULL_TIME,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Full Time",
+                SpreadsheetFormatterSelector.parse("full-time"),
+                TextNode.text("12:00:00 AM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullTimeWithoutCellIncludeSamples() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.FULL_TIME,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Full Time",
+                selector,
+                TextNode.text("12:00:00 AM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullTimeWithCellValueSkipSamples() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.SKIP_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Time",
+                selector,
+                TextNode.text("12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullTimeWithCellValueIncludeSamples() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Time",
+                selector,
+                TextNode.text("12:58:59 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullTimeNotEmptyWithCellValueTime() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+        this.checkNotEquals(
+            time,
+            NOW.now(),
+            "time must be different to now"
+        );
+
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_TIME.setValueText("");
+
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(time)
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Time",
+                selector,
+                TextNode.text("12:58:59 PM")
+            ),
+            SpreadsheetFormatterSample.with(
+                "A1",
+                selector,
+                TextNode.text("12:58:59 PM")
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithFullTimeNotEmptyWithCellValueSpreadsheetErrorIgnored() {
+        final SpreadsheetFormatterSelector selector = SpreadsheetFormatterName.FULL_TIME.setValueText("");
+
+        // NOW should be used in samples
+        this.spreadsheetFormatterSamplesAndCheck(
+            selector,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            context(
+                Optional.of(
+                    SpreadsheetErrorKind.VALUE.setMessage("Should not appear in formatted samples")
+                )
+            ),
+            SpreadsheetFormatterSample.with(
+                "Full Time",
+                selector,
+                TextNode.text("12:00:00 AM")
             )
         );
     }
@@ -4433,6 +4604,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date full-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date-time full-date-time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-time full-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date-time long-date-time\n" +
@@ -4469,6 +4641,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/expression expression\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date full-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-date-time full-date-time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/full-time full-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date long-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/long-date-time long-date-time\",\n" +
