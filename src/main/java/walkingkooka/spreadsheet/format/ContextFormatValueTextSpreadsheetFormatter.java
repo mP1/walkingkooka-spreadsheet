@@ -27,17 +27,17 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#formatValue(Optional)}.
  */
-final class ContextFormatTextSpreadsheetFormatter implements SpreadsheetFormatter {
+final class ContextFormatValueTextSpreadsheetFormatter implements SpreadsheetFormatter {
 
     /**
-     * The {@link ContextFormatTextSpreadsheetFormatter} singleton instance.
+     * The {@link ContextFormatValueTextSpreadsheetFormatter} singleton instance.
      */
-    static final ContextFormatTextSpreadsheetFormatter INSTANCE = new ContextFormatTextSpreadsheetFormatter();
+    static final ContextFormatValueTextSpreadsheetFormatter INSTANCE = new ContextFormatValueTextSpreadsheetFormatter();
 
     /**
      * Private ctor use factory
      */
-    private ContextFormatTextSpreadsheetFormatter() {
+    private ContextFormatValueTextSpreadsheetFormatter() {
         super();
     }
 
@@ -59,6 +59,6 @@ final class ContextFormatTextSpreadsheetFormatter implements SpreadsheetFormatte
 
     @Override
     public String toString() {
-        return "format";
+        return "formatValue";
     }
 }
