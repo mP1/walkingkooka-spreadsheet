@@ -258,6 +258,7 @@ to allow user customisation of that value type along with a single color.
 - General [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
 - long-date
 - long-date-time
+- long-time
 - medium-date
 - medium-date-time
 - medium-time
