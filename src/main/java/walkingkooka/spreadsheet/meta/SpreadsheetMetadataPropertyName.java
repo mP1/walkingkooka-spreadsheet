@@ -31,6 +31,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.naming.Name;
+import walkingkooka.naming.ValueName;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlPathName;
@@ -83,7 +84,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     Comparable<SpreadsheetMetadataPropertyName<?>>,
     HasSpreadsheetPatternKind,
     HasUrlFragment,
-    HasId<String> {
+    HasId<String>,
+    ValueName<T> {
 
     // constants
 
@@ -610,6 +612,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     /**
      * Returns the value type of this property.
      */
+    @Override
     public abstract Class<T> type();
 
     /**
