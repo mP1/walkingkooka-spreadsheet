@@ -270,6 +270,17 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     @Test
+    public void testSpreadsheetFormatterNameWithShortTime() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.SHORT_TIME,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("h:mm AM/PM")
+                .formatter()
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterNameWithText() {
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.with("text"),
