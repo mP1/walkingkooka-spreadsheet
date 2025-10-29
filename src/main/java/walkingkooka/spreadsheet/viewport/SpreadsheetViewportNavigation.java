@@ -81,7 +81,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationDownRow}
+     * {@see SpreadsheetViewportNavigationColumnOrRowDown}
      */
     public static SpreadsheetViewportNavigation extendDownRow() {
         return SpreadsheetViewportNavigationExtendDownRow.INSTANCE;
@@ -137,10 +137,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationDownRow}
+     * {@see SpreadsheetViewportNavigationColumnOrRowDown}
      */
     public static SpreadsheetViewportNavigation downRow() {
-        return SpreadsheetViewportNavigationDownRow.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowDown.INSTANCE;
     }
 
     /**
