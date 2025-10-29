@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetViewportNavigationRightColumnTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationRightColumn> {
+public final class SpreadsheetViewportNavigationColumnOrRowRightTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationColumnOrRowRight> {
 
     @Test
     public void testUpdateCell() {
@@ -56,12 +56,12 @@ public final class SpreadsheetViewportNavigationRightColumnTest extends Spreadsh
     }
 
     @Override
-    SpreadsheetViewportNavigationRightColumn createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationRightColumn.INSTANCE;
+    SpreadsheetViewportNavigationColumnOrRowRight createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationColumnOrRowRight.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationRightColumn> type() {
-        return SpreadsheetViewportNavigationRightColumn.class;
+    public Class<SpreadsheetViewportNavigationColumnOrRowRight> type() {
+        return SpreadsheetViewportNavigationColumnOrRowRight.class;
     }
 }
