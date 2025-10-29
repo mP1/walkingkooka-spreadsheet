@@ -179,10 +179,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationUpRow}
+     * {@see SpreadsheetViewportNavigationColumnOrRowUp}
      */
     public static SpreadsheetViewportNavigation upRow() {
-        return SpreadsheetViewportNavigationUpRow.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowUp.INSTANCE;
     }
 
     SpreadsheetViewportNavigation() {

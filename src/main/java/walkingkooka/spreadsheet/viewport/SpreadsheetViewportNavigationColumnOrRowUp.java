@@ -22,11 +22,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationUpRow extends SpreadsheetViewportNavigationColumnOrRow {
+final class SpreadsheetViewportNavigationColumnOrRowUp extends SpreadsheetViewportNavigationColumnOrRow {
 
-    final static SpreadsheetViewportNavigationUpRow INSTANCE = new SpreadsheetViewportNavigationUpRow();
+    final static SpreadsheetViewportNavigationColumnOrRowUp INSTANCE = new SpreadsheetViewportNavigationColumnOrRowUp();
 
-    private SpreadsheetViewportNavigationUpRow() {
+    private SpreadsheetViewportNavigationColumnOrRowUp() {
         super();
     }
 
