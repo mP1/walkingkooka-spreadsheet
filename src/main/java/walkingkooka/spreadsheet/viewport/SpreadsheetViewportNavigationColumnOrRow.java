@@ -61,8 +61,8 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
     }
 
     @Override //
-    Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference cell,
-                                                  final SpreadsheetViewportNavigationContext context) {
+    final Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference cell,
+                                                        final SpreadsheetViewportNavigationContext context) {
         return this.updateSelection(
             cell,
             SpreadsheetViewportAnchor.CELL,
