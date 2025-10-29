@@ -20,28 +20,28 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetViewportNavigationColumnOrRowLeftTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationColumnOrRowLeft> {
+public final class SpreadsheetViewportNavigationColumnOrRowMoveDownTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationColumnOrRowMoveDown> {
 
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("C3"),
-            SpreadsheetSelection.parseCell("B3")
+            SpreadsheetSelection.parseCell("C4")
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-            SpreadsheetSelection.parseColumn("C"),
-            SpreadsheetSelection.parseColumn("B")
+            SpreadsheetSelection.parseColumn("C")
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-            SpreadsheetSelection.parseRow("2")
+            SpreadsheetSelection.parseRow("2"),
+            SpreadsheetSelection.parseRow("3")
         );
     }
 
@@ -56,12 +56,12 @@ public final class SpreadsheetViewportNavigationColumnOrRowLeftTest extends Spre
     }
 
     @Override
-    SpreadsheetViewportNavigationColumnOrRowLeft createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationColumnOrRowLeft.INSTANCE;
+    SpreadsheetViewportNavigationColumnOrRowMoveDown createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationColumnOrRowMoveDown.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationColumnOrRowLeft> type() {
-        return SpreadsheetViewportNavigationColumnOrRowLeft.class;
+    public Class<SpreadsheetViewportNavigationColumnOrRowMoveDown> type() {
+        return SpreadsheetViewportNavigationColumnOrRowMoveDown.class;
     }
 }
