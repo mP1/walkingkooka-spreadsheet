@@ -116,10 +116,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationExtendUpPixel}
+     * {@see SpreadsheetViewportNavigationExtendPixelUp}
      */
     public static SpreadsheetViewportNavigation extendUpPixel(final int value) {
-        return SpreadsheetViewportNavigationExtendUpPixel.with(value);
+        return SpreadsheetViewportNavigationExtendPixelUp.with(value);
     }
 
     /**
