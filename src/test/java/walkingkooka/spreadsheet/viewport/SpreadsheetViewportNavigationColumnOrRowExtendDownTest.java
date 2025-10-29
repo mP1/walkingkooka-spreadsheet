@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetViewportNavigationExtendDownRowTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationExtendDownRow> {
+public final class SpreadsheetViewportNavigationColumnOrRowExtendDownTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationColumnOrRowExtendDown> {
 
     @Test
     public void testUpdateCell() {
@@ -59,12 +59,12 @@ public final class SpreadsheetViewportNavigationExtendDownRowTest extends Spread
     }
 
     @Override
-    SpreadsheetViewportNavigationExtendDownRow createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationExtendDownRow.INSTANCE;
+    SpreadsheetViewportNavigationColumnOrRowExtendDown createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationColumnOrRowExtendDown.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationExtendDownRow> type() {
-        return SpreadsheetViewportNavigationExtendDownRow.class;
+    public Class<SpreadsheetViewportNavigationColumnOrRowExtendDown> type() {
+        return SpreadsheetViewportNavigationColumnOrRowExtendDown.class;
     }
 }

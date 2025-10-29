@@ -84,7 +84,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      * {@see SpreadsheetViewportNavigationColumnOrRowDown}
      */
     public static SpreadsheetViewportNavigation extendDownRow() {
-        return SpreadsheetViewportNavigationExtendDownRow.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowExtendDown.INSTANCE;
     }
 
     /**
@@ -278,8 +278,8 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      * Returns true if this is an extend {@link SpreadsheetViewportNavigation}.
      */
     public final boolean isExtend() {
-        return this.getClass().getSimpleName()
-            .contains("NavigationExtend");
+        return this instanceof SpreadsheetViewportNavigationColumnOrRow && this.getClass().getSimpleName().contains("Extend") ||
+            this instanceof SpreadsheetViewportNavigationExtendPixel;
     }
 
     /**
