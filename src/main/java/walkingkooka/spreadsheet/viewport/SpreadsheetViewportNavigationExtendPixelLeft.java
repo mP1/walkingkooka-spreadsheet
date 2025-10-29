@@ -23,13 +23,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationExtendLeftPixel extends SpreadsheetViewportNavigationExtendPixel {
+final class SpreadsheetViewportNavigationExtendPixelLeft extends SpreadsheetViewportNavigationExtendPixel {
 
-    static SpreadsheetViewportNavigationExtendLeftPixel with(final int value) {
-        return new SpreadsheetViewportNavigationExtendLeftPixel(value);
+    static SpreadsheetViewportNavigationExtendPixelLeft with(final int value) {
+        return new SpreadsheetViewportNavigationExtendPixelLeft(value);
     }
 
-    private SpreadsheetViewportNavigationExtendLeftPixel(final int value) {
+    private SpreadsheetViewportNavigationExtendPixelLeft(final int value) {
         super(value);
     }
 
