@@ -1,5 +1,4 @@
 
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -24,20 +23,20 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationRightPixel extends SpreadsheetViewportNavigationNonExtendPixel {
+final class SpreadsheetViewportNavigationPixelMoveLeft extends SpreadsheetViewportNavigationPixelMove {
 
-    static SpreadsheetViewportNavigationRightPixel with(final int value) {
-        return new SpreadsheetViewportNavigationRightPixel(value);
+    static SpreadsheetViewportNavigationPixelMoveLeft with(final int value) {
+        return new SpreadsheetViewportNavigationPixelMoveLeft(value);
     }
 
-    private SpreadsheetViewportNavigationRightPixel(final int value) {
+    private SpreadsheetViewportNavigationPixelMoveLeft(final int value) {
         super(value);
     }
 
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.rightPixels(
+        return home.leftPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
@@ -48,7 +47,7 @@ final class SpreadsheetViewportNavigationRightPixel extends SpreadsheetViewportN
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.rightPixels(
+        return selection.leftPixels(
             anchor,
             this.value,
             context
@@ -57,6 +56,6 @@ final class SpreadsheetViewportNavigationRightPixel extends SpreadsheetViewportN
 
     @Override
     public String text() {
-        return "right " + this.value + "px";
+        return "left " + this.value + "px";
     }
 }

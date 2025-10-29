@@ -22,39 +22,38 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationLeftPixelTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationLeftPixel> {
+public final class SpreadsheetViewportNavigationPixelMoveRightTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationPixelMoveRight> {
 
     @Test
     public void testUpdateHome() {
         this.updateAndCheck(
-            "E5",
-            "C5"
+            "C5",
+            "E5"
         );
     }
 
     @Test
     public void testUpdateHomeSkipsHiddenColumn() {
         this.updateAndCheck(
-            "E5", // home
-            "D", // hidden columns
+            "B5", // home
+            "C", // hidden columns
             "", // hidden rows
-            "B5" // expected
+            "E5" // expected
         );
     }
 
     @Test
     public void testUpdateCell() {
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
-            SpreadsheetSelection.parseCell("E5")
+            SpreadsheetSelection.parseCell("C3")
                 .setDefaultAnchor()
         );
-
         this.updateAndCheck(
-            SpreadsheetSelection.parseCell("E5")
+            SpreadsheetSelection.parseCell("C3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(selection),
-            SpreadsheetSelection.parseCell("C5")
+            SpreadsheetSelection.parseCell("E3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(selection)
@@ -64,16 +63,16 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
     @Test
     public void testUpdateColumn() {
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
-            SpreadsheetSelection.parseColumn("E")
+            SpreadsheetSelection.parseColumn("C")
                 .setDefaultAnchor()
         );
 
         this.updateAndCheck(
-            SpreadsheetSelection.parseCell("E5")
+            SpreadsheetSelection.parseCell("C3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(selection),
-            SpreadsheetSelection.parseCell("C5")
+            SpreadsheetSelection.parseCell("E3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(selection)
@@ -83,21 +82,21 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-            SpreadsheetSelection.parseCell("E5")
+            SpreadsheetSelection.parseCell("C3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseRow("5")
+                        SpreadsheetSelection.parseRow("3")
                             .setDefaultAnchor()
                     )
                 ),
-            SpreadsheetSelection.parseCell("C5")
+            SpreadsheetSelection.parseCell("E3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseRow("5")
+                        SpreadsheetSelection.parseRow("3")
                             .setDefaultAnchor()
                     )
                 )
@@ -115,12 +114,12 @@ public final class SpreadsheetViewportNavigationLeftPixelTest extends Spreadshee
     }
 
     @Override
-    SpreadsheetViewportNavigationLeftPixel createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationLeftPixel.with(2 * COLUMN_WIDTH - 1);
+    SpreadsheetViewportNavigationPixelMoveRight createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationPixelMoveRight.with(2 * COLUMN_WIDTH - 1);
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationLeftPixel> type() {
-        return SpreadsheetViewportNavigationLeftPixel.class;
+    public Class<SpreadsheetViewportNavigationPixelMoveRight> type() {
+        return SpreadsheetViewportNavigationPixelMoveRight.class;
     }
 }
