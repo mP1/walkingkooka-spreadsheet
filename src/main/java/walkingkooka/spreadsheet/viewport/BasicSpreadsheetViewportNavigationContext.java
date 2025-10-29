@@ -213,7 +213,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
                                                                            final Function<T, Double> widthOrHeight,
                                                                            final int pixels) {
         if (pixels < 0) {
-            throw new IllegalArgumentException("Invalid pixels " + pixels + " <= 0");
+            throw new IllegalArgumentException("Invalid pixels " + pixels + " < 0");
         }
 
         T moved = start;
