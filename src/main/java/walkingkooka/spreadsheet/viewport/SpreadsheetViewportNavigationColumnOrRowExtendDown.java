@@ -39,7 +39,7 @@ final class SpreadsheetViewportNavigationColumnOrRowExtendDown extends Spreadshe
 
     @Override
     boolean isOpposite(final SpreadsheetViewportNavigation other) {
-        return other instanceof SpreadsheetViewportNavigationExtendUpRow;
+        return other instanceof SpreadsheetViewportNavigationColumnOrRowExtendUp;
     }
 
     @Override
