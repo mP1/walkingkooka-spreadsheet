@@ -20,28 +20,28 @@ package walkingkooka.spreadsheet.viewport;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetViewportNavigationColumnOrRowDownTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationColumnOrRowDown> {
+public final class SpreadsheetViewportNavigationColumnOrRowMoveRightTest extends SpreadsheetViewportNavigationColumnOrRowTestCase<SpreadsheetViewportNavigationColumnOrRowMoveRight> {
 
     @Test
     public void testUpdateCell() {
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("C3"),
-            SpreadsheetSelection.parseCell("C4")
+            SpreadsheetSelection.parseCell("D3")
         );
     }
 
     @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
-            SpreadsheetSelection.parseColumn("C")
+            SpreadsheetSelection.parseColumn("C"),
+            SpreadsheetSelection.parseColumn("D")
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-            SpreadsheetSelection.parseRow("2"),
-            SpreadsheetSelection.parseRow("3")
+            SpreadsheetSelection.parseRow("2")
         );
     }
 
@@ -56,12 +56,12 @@ public final class SpreadsheetViewportNavigationColumnOrRowDownTest extends Spre
     }
 
     @Override
-    SpreadsheetViewportNavigationColumnOrRowDown createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationColumnOrRowDown.INSTANCE;
+    SpreadsheetViewportNavigationColumnOrRowMoveRight createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationColumnOrRowMoveRight.INSTANCE;
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationColumnOrRowDown> type() {
-        return SpreadsheetViewportNavigationColumnOrRowDown.class;
+    public Class<SpreadsheetViewportNavigationColumnOrRowMoveRight> type() {
+        return SpreadsheetViewportNavigationColumnOrRowMoveRight.class;
     }
 }

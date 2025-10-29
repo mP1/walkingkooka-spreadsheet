@@ -81,7 +81,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowDown}
+     * {@see SpreadsheetViewportNavigationColumnOrRowMoveDown}
      */
     public static SpreadsheetViewportNavigation extendDownRow() {
         return SpreadsheetViewportNavigationColumnOrRowExtendDown.INSTANCE;
@@ -137,17 +137,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowDown}
+     * {@see SpreadsheetViewportNavigationColumnOrRowMoveDown}
      */
     public static SpreadsheetViewportNavigation downRow() {
-        return SpreadsheetViewportNavigationColumnOrRowDown.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowMoveDown.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowLeft}
+     * {@see SpreadsheetViewportNavigationColumnOrRowMoveLeft}
      */
     public static SpreadsheetViewportNavigation leftColumn() {
-        return SpreadsheetViewportNavigationColumnOrRowLeft.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowMoveLeft.INSTANCE;
     }
 
     /**
@@ -158,10 +158,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowRight}
+     * {@see SpreadsheetViewportNavigationColumnOrRowMoveRight}
      */
     public static SpreadsheetViewportNavigation rightColumn() {
-        return SpreadsheetViewportNavigationColumnOrRowRight.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowMoveRight.INSTANCE;
     }
 
     /**
@@ -179,10 +179,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowUp}
+     * {@see SpreadsheetViewportNavigationColumnOrRowMoveUp}
      */
     public static SpreadsheetViewportNavigation upRow() {
-        return SpreadsheetViewportNavigationColumnOrRowUp.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowMoveUp.INSTANCE;
     }
 
     SpreadsheetViewportNavigation() {

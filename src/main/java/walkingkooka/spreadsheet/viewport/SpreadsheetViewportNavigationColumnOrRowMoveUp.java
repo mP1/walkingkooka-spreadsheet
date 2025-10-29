@@ -1,5 +1,4 @@
 
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -23,29 +22,29 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationColumnOrRowDown extends SpreadsheetViewportNavigationColumnOrRow {
+final class SpreadsheetViewportNavigationColumnOrRowMoveUp extends SpreadsheetViewportNavigationColumnOrRow {
 
-    final static SpreadsheetViewportNavigationColumnOrRowDown INSTANCE = new SpreadsheetViewportNavigationColumnOrRowDown();
+    final static SpreadsheetViewportNavigationColumnOrRowMoveUp INSTANCE = new SpreadsheetViewportNavigationColumnOrRowMoveUp();
 
-    private SpreadsheetViewportNavigationColumnOrRowDown() {
+    private SpreadsheetViewportNavigationColumnOrRowMoveUp() {
         super();
     }
 
     @Override
     public String text() {
-        return "down row";
+        return "up row";
     }
 
     @Override
     boolean isOpposite(final SpreadsheetViewportNavigation other) {
-        return other instanceof SpreadsheetViewportNavigationColumnOrRowUp;
+        return other instanceof SpreadsheetViewportNavigationColumnOrRowMoveDown;
     }
 
     @Override
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.downRow(
+        return selection.upRow(
             anchor,
             context
         ).map(s -> s.setAnchorOrDefault(anchor));
