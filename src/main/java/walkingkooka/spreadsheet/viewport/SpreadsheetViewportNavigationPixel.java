@@ -49,8 +49,8 @@ abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNav
     // update...........................................................................................................
 
     @Override
-    SpreadsheetViewport update0(final SpreadsheetViewport viewport,
-                                final SpreadsheetViewportNavigationContext context) {
+    final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
+                                      final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
 
         // move home
