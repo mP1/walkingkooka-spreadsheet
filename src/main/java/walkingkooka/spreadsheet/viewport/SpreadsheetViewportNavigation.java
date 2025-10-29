@@ -102,10 +102,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationExtendRightColumn}
+     * {@see SpreadsheetViewportNavigationColumnOrRowExtendRight}
      */
     public static SpreadsheetViewportNavigation extendRightColumn() {
-        return SpreadsheetViewportNavigationExtendRightColumn.INSTANCE;
+        return SpreadsheetViewportNavigationColumnOrRowExtendRight.INSTANCE;
     }
 
     /**

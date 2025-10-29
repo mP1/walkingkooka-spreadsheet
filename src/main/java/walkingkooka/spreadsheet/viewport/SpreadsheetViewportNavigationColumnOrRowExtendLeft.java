@@ -36,7 +36,7 @@ final class SpreadsheetViewportNavigationColumnOrRowExtendLeft extends Spreadshe
 
     @Override
     boolean isOpposite(final SpreadsheetViewportNavigation other) {
-        return other instanceof SpreadsheetViewportNavigationExtendRightColumn;
+        return other instanceof SpreadsheetViewportNavigationColumnOrRowExtendRight;
     }
 
     @Override
