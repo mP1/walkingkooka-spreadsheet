@@ -95,17 +95,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationScrollExtendLeft}
-     */
-    public static SpreadsheetViewportNavigation extendLeftPixel(final int value) {
-        return SpreadsheetViewportNavigationScrollExtendLeft.with(value);
-    }
-
-    /**
      * {@see SpreadsheetViewportNavigationColumnOrRowExtendRight}
      */
     public static SpreadsheetViewportNavigation extendRightColumn() {
         return SpreadsheetViewportNavigationColumnOrRowExtendRight.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationScrollExtendLeft}
+     */
+    public static SpreadsheetViewportNavigation extendScrollLeft(final int value) {
+        return SpreadsheetViewportNavigationScrollExtendLeft.with(value);
     }
 
     /**
