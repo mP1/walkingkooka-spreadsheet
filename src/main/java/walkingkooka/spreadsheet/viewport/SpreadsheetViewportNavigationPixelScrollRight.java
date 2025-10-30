@@ -1,4 +1,5 @@
 
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -23,20 +24,20 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationPixelMoveLeft extends SpreadsheetViewportNavigationPixelMove {
+final class SpreadsheetViewportNavigationPixelScrollRight extends SpreadsheetViewportNavigationPixelScroll {
 
-    static SpreadsheetViewportNavigationPixelMoveLeft with(final int value) {
-        return new SpreadsheetViewportNavigationPixelMoveLeft(value);
+    static SpreadsheetViewportNavigationPixelScrollRight with(final int value) {
+        return new SpreadsheetViewportNavigationPixelScrollRight(value);
     }
 
-    private SpreadsheetViewportNavigationPixelMoveLeft(final int value) {
+    private SpreadsheetViewportNavigationPixelScrollRight(final int value) {
         super(value);
     }
 
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.leftPixels(
+        return home.rightPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
@@ -47,7 +48,7 @@ final class SpreadsheetViewportNavigationPixelMoveLeft extends SpreadsheetViewpo
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.leftPixels(
+        return selection.rightPixels(
             anchor,
             this.value,
             context
@@ -56,6 +57,6 @@ final class SpreadsheetViewportNavigationPixelMoveLeft extends SpreadsheetViewpo
 
     @Override
     public String text() {
-        return "left " + this.value + "px";
+        return "right " + this.value + "px";
     }
 }

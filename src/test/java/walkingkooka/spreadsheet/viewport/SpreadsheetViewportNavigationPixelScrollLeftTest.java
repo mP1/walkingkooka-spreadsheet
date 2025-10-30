@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationPixelMoveLeftTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationPixelMoveLeft> {
+public final class SpreadsheetViewportNavigationPixelScrollLeftTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationPixelScrollLeft> {
 
     @Test
     public void testUpdateHome() {
@@ -115,12 +115,12 @@ public final class SpreadsheetViewportNavigationPixelMoveLeftTest extends Spread
     }
 
     @Override
-    SpreadsheetViewportNavigationPixelMoveLeft createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationPixelMoveLeft.with(2 * COLUMN_WIDTH - 1);
+    SpreadsheetViewportNavigationPixelScrollLeft createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationPixelScrollLeft.with(2 * COLUMN_WIDTH - 1);
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationPixelMoveLeft> type() {
-        return SpreadsheetViewportNavigationPixelMoveLeft.class;
+    public Class<SpreadsheetViewportNavigationPixelScrollLeft> type() {
+        return SpreadsheetViewportNavigationPixelScrollLeft.class;
     }
 }

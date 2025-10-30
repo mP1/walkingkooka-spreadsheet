@@ -130,10 +130,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelMoveDown}
+     * {@see SpreadsheetViewportNavigationPixelScrollDown}
      */
     public static SpreadsheetViewportNavigation downPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelMoveDown.with(value);
+        return SpreadsheetViewportNavigationPixelScrollDown.with(value);
     }
 
     /**
@@ -151,10 +151,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelMoveLeft}
+     * {@see SpreadsheetViewportNavigationPixelScrollLeft}
      */
     public static SpreadsheetViewportNavigation leftPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelMoveLeft.with(value);
+        return SpreadsheetViewportNavigationPixelScrollLeft.with(value);
     }
 
     /**
@@ -165,17 +165,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelMoveRight}
+     * {@see SpreadsheetViewportNavigationPixelScrollRight}
      */
     public static SpreadsheetViewportNavigation rightPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelMoveRight.with(value);
+        return SpreadsheetViewportNavigationPixelScrollRight.with(value);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelMoveUp}
+     * {@see SpreadsheetViewportNavigationPixelScrollUp}
      */
     public static SpreadsheetViewportNavigation upPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelMoveUp.with(value);
+        return SpreadsheetViewportNavigationPixelScrollUp.with(value);
     }
 
     /**
