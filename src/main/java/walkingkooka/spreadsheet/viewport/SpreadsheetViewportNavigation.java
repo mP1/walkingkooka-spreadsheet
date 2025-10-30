@@ -167,7 +167,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationScroll2Right}
      */
-    public static SpreadsheetViewportNavigation rightPixel(final int value) {
+    public static SpreadsheetViewportNavigation scrollRight(final int value) {
         return SpreadsheetViewportNavigationScroll2Right.with(value);
     }
 
