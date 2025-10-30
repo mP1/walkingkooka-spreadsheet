@@ -283,9 +283,9 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * Returns true if a navigation with a pixel argument
+     * Returns true if a scroll with a pixel argument
      */
-    public final boolean isPixel() {
+    public final boolean isScroll() {
         return this instanceof SpreadsheetViewportNavigationScroll;
     }
 
