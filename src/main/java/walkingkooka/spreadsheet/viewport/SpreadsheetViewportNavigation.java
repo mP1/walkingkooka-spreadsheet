@@ -130,13 +130,6 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationScroll2Down}
-     */
-    public static SpreadsheetViewportNavigation downPixel(final int value) {
-        return SpreadsheetViewportNavigationScroll2Down.with(value);
-    }
-
-    /**
      * {@see SpreadsheetViewportNavigationColumnOrRowMoveDown}
      */
     public static SpreadsheetViewportNavigation downRow() {
@@ -155,6 +148,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     public static SpreadsheetViewportNavigation rightColumn() {
         return SpreadsheetViewportNavigationColumnOrRowMoveRight.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationScroll2Down}
+     */
+    public static SpreadsheetViewportNavigation scrollDown(final int value) {
+        return SpreadsheetViewportNavigationScroll2Down.with(value);
     }
 
     /**

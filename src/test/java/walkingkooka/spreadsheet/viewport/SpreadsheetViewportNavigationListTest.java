@@ -261,7 +261,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
             SpreadsheetViewportNavigation.scrollLeft(10),
             SpreadsheetViewportNavigation.scrollRight(20),
             SpreadsheetViewportNavigation.scrollUp(30),
-            SpreadsheetViewportNavigation.downPixel(40)
+            SpreadsheetViewportNavigation.scrollDown(40)
         );
     }
 
