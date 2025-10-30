@@ -74,10 +74,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationExtendPixelDown}
+     * {@see SpreadsheetViewportNavigationScrollExtendDown}
      */
     public static SpreadsheetViewportNavigation extendDownPixel(final int value) {
-        return SpreadsheetViewportNavigationExtendPixelDown.with(value);
+        return SpreadsheetViewportNavigationScrollExtendDown.with(value);
     }
 
     /**
@@ -95,10 +95,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationExtendPixelLeft}
+     * {@see SpreadsheetViewportNavigationScrollExtendLeft}
      */
     public static SpreadsheetViewportNavigation extendLeftPixel(final int value) {
-        return SpreadsheetViewportNavigationExtendPixelLeft.with(value);
+        return SpreadsheetViewportNavigationScrollExtendLeft.with(value);
     }
 
     /**
@@ -109,17 +109,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationExtendPixelRight}
+     * {@see SpreadsheetViewportNavigationScrollExtendRight}
      */
     public static SpreadsheetViewportNavigation extendRightPixel(final int value) {
-        return SpreadsheetViewportNavigationExtendPixelRight.with(value);
+        return SpreadsheetViewportNavigationScrollExtendRight.with(value);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationExtendPixelUp}
+     * {@see SpreadsheetViewportNavigationScrollExtendUp}
      */
     public static SpreadsheetViewportNavigation extendUpPixel(final int value) {
-        return SpreadsheetViewportNavigationExtendPixelUp.with(value);
+        return SpreadsheetViewportNavigationScrollExtendUp.with(value);
     }
 
     /**
@@ -130,10 +130,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelScrollDown}
+     * {@see SpreadsheetViewportNavigationScroll2Down}
      */
     public static SpreadsheetViewportNavigation downPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelScrollDown.with(value);
+        return SpreadsheetViewportNavigationScroll2Down.with(value);
     }
 
     /**
@@ -151,10 +151,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelScrollLeft}
+     * {@see SpreadsheetViewportNavigationScroll2Left}
      */
     public static SpreadsheetViewportNavigation leftPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelScrollLeft.with(value);
+        return SpreadsheetViewportNavigationScroll2Left.with(value);
     }
 
     /**
@@ -165,17 +165,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelScrollRight}
+     * {@see SpreadsheetViewportNavigationScroll2Right}
      */
     public static SpreadsheetViewportNavigation rightPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelScrollRight.with(value);
+        return SpreadsheetViewportNavigationScroll2Right.with(value);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationPixelScrollUp}
+     * {@see SpreadsheetViewportNavigationScroll2Up}
      */
     public static SpreadsheetViewportNavigation upPixel(final int value) {
-        return SpreadsheetViewportNavigationPixelScrollUp.with(value);
+        return SpreadsheetViewportNavigationScroll2Up.with(value);
     }
 
     /**
@@ -279,14 +279,14 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     public final boolean isExtend() {
         return this instanceof SpreadsheetViewportNavigationColumnOrRow && this.getClass().getSimpleName().contains("Extend") ||
-            this instanceof SpreadsheetViewportNavigationExtendPixel;
+            this instanceof SpreadsheetViewportNavigationScrollExtend;
     }
 
     /**
      * Returns true if a navigation with a pixel argument
      */
     public final boolean isPixel() {
-        return this instanceof SpreadsheetViewportNavigationPixel;
+        return this instanceof SpreadsheetViewportNavigationScroll;
     }
 
     // Object...........................................................................................................

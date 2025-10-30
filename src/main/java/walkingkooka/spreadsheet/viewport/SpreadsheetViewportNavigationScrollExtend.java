@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.viewport;
 
 import java.util.Optional;
 
-abstract class SpreadsheetViewportNavigationPixelScroll extends SpreadsheetViewportNavigationPixel {
+abstract class SpreadsheetViewportNavigationScrollExtend extends SpreadsheetViewportNavigationScroll {
 
-    SpreadsheetViewportNavigationPixelScroll(final int value) {
+    SpreadsheetViewportNavigationScrollExtend(final int value) {
         super(value);
     }
 
@@ -29,20 +29,10 @@ abstract class SpreadsheetViewportNavigationPixelScroll extends SpreadsheetViewp
     final Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection anchoredSelection,
                                                                          final SpreadsheetViewportRectangle rectangle,
                                                                          final SpreadsheetViewportNavigationContext context) {
-        // check if original selection is within the moved viewport
-        final SpreadsheetViewportWindows windows = context.windows(
-            SpreadsheetViewport.with(rectangle)
-                .setIncludeFrozenColumnsRows(true)
+        return this.updateSelection(
+            anchoredSelection.selection(),
+            anchoredSelection.anchor(),
+            context
         );
-
-        return windows.test(
-            anchoredSelection.anchor()
-                .opposite()
-                .selection(
-                    anchoredSelection.selection()
-                )
-        ) ?
-            Optional.of(anchoredSelection) :
-            SpreadsheetViewport.NO_ANCHORED_SELECTION;
     }
 }

@@ -23,13 +23,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationExtendPixelLeft extends SpreadsheetViewportNavigationExtendPixel {
+final class SpreadsheetViewportNavigationScroll2Left extends SpreadsheetViewportNavigationScroll2 {
 
-    static SpreadsheetViewportNavigationExtendPixelLeft with(final int value) {
-        return new SpreadsheetViewportNavigationExtendPixelLeft(value);
+    static SpreadsheetViewportNavigationScroll2Left with(final int value) {
+        return new SpreadsheetViewportNavigationScroll2Left(value);
     }
 
-    private SpreadsheetViewportNavigationExtendPixelLeft(final int value) {
+    private SpreadsheetViewportNavigationScroll2Left(final int value) {
         super(value);
     }
 
@@ -43,20 +43,19 @@ final class SpreadsheetViewportNavigationExtendPixelLeft extends SpreadsheetView
         ).map(SpreadsheetSelection::toCell);
     }
 
-
     @Override
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.extendLeftPixels(
+        return selection.leftPixels(
             anchor,
             this.value,
             context
-        );
+        ).map(s -> s.setAnchorOrDefault(anchor));
     }
 
     @Override
     public String text() {
-        return "extend-left " + this.value + "px";
+        return "left " + this.value + "px";
     }
 }

@@ -18,9 +18,9 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-public final class SpreadsheetViewportNavigationExtendPixelTest extends SpreadsheetViewportNavigationTestCase<SpreadsheetViewportNavigationExtendPixel> {
+public final class SpreadsheetViewportNavigationScroll2Test extends SpreadsheetViewportNavigationTestCase<SpreadsheetViewportNavigationScroll2> {
     @Override
-    public Class<SpreadsheetViewportNavigationExtendPixel> type() {
-        return SpreadsheetViewportNavigationExtendPixel.class;
+    public Class<SpreadsheetViewportNavigationScroll2> type() {
+        return SpreadsheetViewportNavigationScroll2.class;
     }
 }

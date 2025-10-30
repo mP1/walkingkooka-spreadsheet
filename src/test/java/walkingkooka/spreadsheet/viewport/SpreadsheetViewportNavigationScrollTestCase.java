@@ -25,10 +25,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.function.Predicate;
 
-public abstract class SpreadsheetViewportNavigationPixelTestCase<T extends SpreadsheetViewportNavigationPixel> extends
+public abstract class SpreadsheetViewportNavigationScrollTestCase<T extends SpreadsheetViewportNavigationScroll> extends
     SpreadsheetViewportNavigationTestCase2<T> {
 
-    SpreadsheetViewportNavigationPixelTestCase() {
+    SpreadsheetViewportNavigationScrollTestCase() {
         super();
     }
 

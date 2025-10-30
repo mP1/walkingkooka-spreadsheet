@@ -24,20 +24,20 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationPixelScrollDown extends SpreadsheetViewportNavigationPixelScroll {
+final class SpreadsheetViewportNavigationScroll2Right extends SpreadsheetViewportNavigationScroll2 {
 
-    static SpreadsheetViewportNavigationPixelScrollDown with(final int value) {
-        return new SpreadsheetViewportNavigationPixelScrollDown(value);
+    static SpreadsheetViewportNavigationScroll2Right with(final int value) {
+        return new SpreadsheetViewportNavigationScroll2Right(value);
     }
 
-    private SpreadsheetViewportNavigationPixelScrollDown(final int value) {
+    private SpreadsheetViewportNavigationScroll2Right(final int value) {
         super(value);
     }
 
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.downPixels(
+        return home.rightPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
@@ -48,7 +48,7 @@ final class SpreadsheetViewportNavigationPixelScrollDown extends SpreadsheetView
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.downPixels(
+        return selection.rightPixels(
             anchor,
             this.value,
             context
@@ -57,6 +57,6 @@ final class SpreadsheetViewportNavigationPixelScrollDown extends SpreadsheetView
 
     @Override
     public String text() {
-        return "down " + this.value + "px";
+        return "right " + this.value + "px";
     }
 }
