@@ -76,7 +76,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationScrollExtendDown}
      */
-    public static SpreadsheetViewportNavigation extendDownPixel(final int value) {
+    public static SpreadsheetViewportNavigation extendScrollDown(final int value) {
         return SpreadsheetViewportNavigationScrollExtendDown.with(value);
     }
 

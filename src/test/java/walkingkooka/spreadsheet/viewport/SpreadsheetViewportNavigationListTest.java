@@ -272,7 +272,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
             SpreadsheetViewportNavigation.extendScrollLeft(10),
             SpreadsheetViewportNavigation.extendScrollRight(20),
             SpreadsheetViewportNavigation.extendScrollUp(30),
-            SpreadsheetViewportNavigation.extendDownPixel(40)
+            SpreadsheetViewportNavigation.extendScrollDown(40)
         );
     }
 
@@ -283,7 +283,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
             SpreadsheetViewportNavigation.extendScrollLeft(10),
             SpreadsheetViewportNavigation.extendScrollRight(20),
             SpreadsheetViewportNavigation.extendScrollUp(30),
-            SpreadsheetViewportNavigation.extendDownPixel(40),
+            SpreadsheetViewportNavigation.extendScrollDown(40),
             SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
         );
     }
