@@ -174,7 +174,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationScroll2Up}
      */
-    public static SpreadsheetViewportNavigation upPixel(final int value) {
+    public static SpreadsheetViewportNavigation scrollUp(final int value) {
         return SpreadsheetViewportNavigationScroll2Up.with(value);
     }
 
