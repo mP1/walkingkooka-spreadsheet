@@ -255,18 +255,18 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     }
 
     @Test
-    public void testParseLeftPixelRightPixelScrollUp() {
+    public void testParseLeftPixelScrollRightScrollUp() {
         this.parseStringAndCheck(
             "left 10px,right 20px,up 30px,down 40px",
             SpreadsheetViewportNavigation.leftPixel(10),
-            SpreadsheetViewportNavigation.rightPixel(20),
+            SpreadsheetViewportNavigation.scrollRight(20),
             SpreadsheetViewportNavigation.scrollUp(30),
             SpreadsheetViewportNavigation.downPixel(40)
         );
     }
 
     @Test
-    public void testParseExtendLeftPixelExtendRightPixelExtendScrollUp() {
+    public void testParseExtendLeftPixelExtendScrollRightExtendScrollUp() {
         this.parseStringAndCheck(
             "extend-left 10px,extend-right 20px,extend-up 30px,extend-down 40px",
             SpreadsheetViewportNavigation.extendLeftPixel(10),
@@ -277,7 +277,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     }
 
     @Test
-    public void testParseExtendLeftPixelExtendRightPixelExtendScrollUpSelectCell() {
+    public void testParseExtendLeftPixelExtendScrollRightExtendScrollUpSelectCell() {
         this.parseStringAndCheck(
             "extend-left 10px,extend-right 20px,extend-up 30px,extend-down 40px,select cell A1",
             SpreadsheetViewportNavigation.extendLeftPixel(10),

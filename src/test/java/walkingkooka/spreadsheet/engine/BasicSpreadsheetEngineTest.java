@@ -24190,7 +24190,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateWithRightPixels() {
+    public void testNavigateWithScrollRight() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -24201,7 +24201,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .viewport()
                 .setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.rightPixel(
+                        SpreadsheetViewportNavigation.scrollRight(
                             3 * (int) COLUMN_WIDTH - 1
                         )
                     )
@@ -24216,7 +24216,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testNavigateWithCellRightPixels() {
+    public void testNavigateWithCellScrollRight() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -24233,7 +24233,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setAnchoredSelection(selection)
                 .setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.rightPixel(
+                        SpreadsheetViewportNavigation.scrollRight(
                             3 * (int) COLUMN_WIDTH - 1
                         )
                     )
