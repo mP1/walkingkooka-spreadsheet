@@ -408,7 +408,7 @@ public final class SpreadsheetViewport implements HasUrlFragment,
     static SpreadsheetViewport unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
         SpreadsheetViewportRectangle rectangle = null;
-        boolean includeFrozenColumnsRows = false;
+        boolean includeFrozenColumnsRows = DEFAULT_INCLUDE_FROZEN_COLUMNS_ROWS;
         Optional<AnchoredSpreadsheetSelection> anchoredSelection = NO_ANCHORED_SELECTION;
         SpreadsheetViewportNavigationList navigations = NO_NAVIGATION;
 
