@@ -150,7 +150,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
                         SpreadsheetViewportNavigation.leftColumn(),
-                        SpreadsheetViewportNavigation.upRow()
+                        SpreadsheetViewportNavigation.moveUp()
                     )
                 )
             ),

@@ -151,6 +151,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
+     * {@see SpreadsheetViewportNavigationColumnOrRowMoveUp}
+     */
+    public static SpreadsheetViewportNavigation moveUp() {
+        return SpreadsheetViewportNavigationColumnOrRowMoveUp.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetViewportNavigationScroll2Down}
      */
     public static SpreadsheetViewportNavigation scrollDown(final int value) {
@@ -176,13 +183,6 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     public static SpreadsheetViewportNavigation scrollUp(final int value) {
         return SpreadsheetViewportNavigationScroll2Up.with(value);
-    }
-
-    /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowMoveUp}
-     */
-    public static SpreadsheetViewportNavigation upRow() {
-        return SpreadsheetViewportNavigationColumnOrRowMoveUp.INSTANCE;
     }
 
     SpreadsheetViewportNavigation() {

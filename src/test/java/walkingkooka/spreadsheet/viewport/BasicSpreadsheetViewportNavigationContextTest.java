@@ -392,7 +392,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testUpFirstRowNotHidden() {
-        this.upRowAndCheck(
+        this.moveUpAndCheck(
             "",
             "1",
             "1"
@@ -401,7 +401,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testUpFirstRowHidden() {
-        this.upRowAndCheck(
+        this.moveUpAndCheck(
             "1",
             "1"
         );
@@ -409,15 +409,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testUpAllRowsHiddenIncludingGiven() {
-        this.upRowAndCheck(
+        this.moveUpAndCheck(
             "1,2,3",
             "3"
         );
     }
 
     @Test
-    public void testUpRow() {
-        this.upRowAndCheck(
+    public void testMoveUp() {
+        this.moveUpAndCheck(
             "",
             "2",
             "1"
@@ -425,8 +425,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testUpRow2() {
-        this.upRowAndCheck(
+    public void testMoveUp2() {
+        this.moveUpAndCheck(
             "",
             "4",
             "3"
@@ -434,8 +434,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testUpRowFirstRow() {
-        this.upRowAndCheck(
+    public void testMoveUp3() {
+        this.moveUpAndCheck(
             "",
             "1",
             "1"
@@ -443,8 +443,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testUpRowSkips() {
-        this.upRowAndCheck(
+    public void testMoveUpSkips() {
+        this.moveUpAndCheck(
             "3,4",
             "5",
             "2"
@@ -452,8 +452,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testUpRowSkipsFirstRow() {
-        this.upRowAndCheck(
+    public void testMoveUp4() {
+        this.moveUpAndCheck(
             "2,3",
             "4",
             "1"
@@ -462,16 +462,16 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testUpRowAllUpHidden() {
-        this.upRowAndCheck(
+        this.moveUpAndCheck(
             "1,2",
             "3",
             "3"
         );
     }
 
-    private void upRowAndCheck(final String rowHidden,
-                               final String row) {
-        this.upRowAndCheck(
+    private void moveUpAndCheck(final String rowHidden,
+                                final String row) {
+        this.moveUpAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
@@ -483,10 +483,10 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void upRowAndCheck(final String rowHidden,
-                               final String row,
-                               final String expected) {
-        this.upRowAndCheck(
+    private void moveUpAndCheck(final String rowHidden,
+                                final String row,
+                                final String expected) {
+        this.moveUpAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,

@@ -382,7 +382,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
                         SpreadsheetViewportNavigation.leftColumn(),
-                        SpreadsheetViewportNavigation.upRow()
+                        SpreadsheetViewportNavigation.moveUp()
                     )
                 )
             ),
