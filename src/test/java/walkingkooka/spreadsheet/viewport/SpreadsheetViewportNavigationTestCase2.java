@@ -98,7 +98,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         this.checkEquals(
             this.type()
                 .getName()
-                .contains("Pixel"),
+                .contains("Scroll"),
             this.createSpreadsheetViewportNavigation().isPixel()
         );
     }

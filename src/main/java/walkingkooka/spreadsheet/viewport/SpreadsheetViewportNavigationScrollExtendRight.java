@@ -24,39 +24,40 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationPixelScrollUp extends SpreadsheetViewportNavigationPixelScroll {
+final class SpreadsheetViewportNavigationScrollExtendRight extends SpreadsheetViewportNavigationScrollExtend {
 
-    static SpreadsheetViewportNavigationPixelScrollUp with(final int value) {
-        return new SpreadsheetViewportNavigationPixelScrollUp(value);
+    static SpreadsheetViewportNavigationScrollExtendRight with(final int value) {
+        return new SpreadsheetViewportNavigationScrollExtendRight(value);
     }
 
-    private SpreadsheetViewportNavigationPixelScrollUp(final int value) {
+    private SpreadsheetViewportNavigationScrollExtendRight(final int value) {
         super(value);
     }
 
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.upPixels(
+        return home.rightPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
         ).map(SpreadsheetSelection::toCell);
     }
 
+
     @Override
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.upPixels(
+        return selection.extendRightPixels(
             anchor,
             this.value,
             context
-        ).map(s -> s.setAnchorOrDefault(anchor));
+        );
     }
 
     @Override
     public String text() {
-        return "up " + this.value + "px";
+        return "extend-right " + this.value + "px";
     }
 }

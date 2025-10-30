@@ -25,9 +25,9 @@ import java.util.Optional;
  * subclasses represent scrolling of the viewport in either the horizontal or vertical directions. These are measured
  * in pixels, which will be used to skip non hidden columns or rows.
  */
-abstract class SpreadsheetViewportNavigationPixel extends SpreadsheetViewportNavigation {
+abstract class SpreadsheetViewportNavigationScroll extends SpreadsheetViewportNavigation {
 
-    SpreadsheetViewportNavigationPixel(final int value) {
+    SpreadsheetViewportNavigationScroll(final int value) {
         super();
 
         if (value <= 0) {

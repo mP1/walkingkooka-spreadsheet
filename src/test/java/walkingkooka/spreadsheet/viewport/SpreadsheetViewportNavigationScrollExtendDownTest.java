@@ -23,23 +23,23 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationExtendPixelRightTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationExtendPixelRight> {
+public final class SpreadsheetViewportNavigationScrollExtendDownTest extends SpreadsheetViewportNavigationScrollTestCase<SpreadsheetViewportNavigationScrollExtendDown> {
 
     @Test
     public void testUpdateHome() {
         this.updateAndCheck(
-            "C5",
-            "E5"
+            "C3",
+            "C5"
         );
     }
 
     @Test
-    public void testUpdateHomeSkipsHiddenColumn() {
+    public void testUpdateHomeSkipsHiddenRow() {
         this.updateAndCheck(
-            "B5", // home
-            "C", // hidden columns
-            "", // hidden rows
-            "E5" // expected
+            "C3", // home
+            "", // hidden columns
+            "4", // hidden rows
+            "C6" // expected
         );
     }
 
@@ -55,12 +55,12 @@ public final class SpreadsheetViewportNavigationExtendPixelRightTest extends Spr
                             .setDefaultAnchor()
                     )
                 ),
-            SpreadsheetSelection.parseCell("E3")
+            SpreadsheetSelection.parseCell("C5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseCellRange("C3:E3")
+                        SpreadsheetSelection.parseCellRange("C3:C5")
                             .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                     )
                 )
@@ -79,13 +79,13 @@ public final class SpreadsheetViewportNavigationExtendPixelRightTest extends Spr
                             .setDefaultAnchor()
                     )
                 ),
-            SpreadsheetSelection.parseCell("E3")
+            SpreadsheetSelection.parseCell("C5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseColumnRange("C:E")
-                            .setAnchor(SpreadsheetViewportAnchor.LEFT)
+                        SpreadsheetSelection.parseColumn("C")
+                            .setDefaultAnchor()
                     )
                 )
         );
@@ -103,13 +103,13 @@ public final class SpreadsheetViewportNavigationExtendPixelRightTest extends Spr
                             .setDefaultAnchor()
                     )
                 ),
-            SpreadsheetSelection.parseCell("E3")
+            SpreadsheetSelection.parseCell("C5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseRow("3")
-                            .setDefaultAnchor()
+                        SpreadsheetSelection.parseRowRange("3:5")
+                            .setAnchor(SpreadsheetViewportAnchor.TOP)
                     )
                 )
         );
@@ -126,12 +126,12 @@ public final class SpreadsheetViewportNavigationExtendPixelRightTest extends Spr
     }
 
     @Override
-    SpreadsheetViewportNavigationExtendPixelRight createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationExtendPixelRight.with(2 * COLUMN_WIDTH - 1);
+    SpreadsheetViewportNavigationScrollExtendDown createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationScrollExtendDown.with(2 * ROW_HEIGHT - 1);
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationExtendPixelRight> type() {
-        return SpreadsheetViewportNavigationExtendPixelRight.class;
+    public Class<SpreadsheetViewportNavigationScrollExtendDown> type() {
+        return SpreadsheetViewportNavigationScrollExtendDown.class;
     }
 }

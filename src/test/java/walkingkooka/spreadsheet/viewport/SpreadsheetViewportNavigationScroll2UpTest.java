@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -15,7 +14,6 @@
  * limitations under the License.
  *
  */
-
 package walkingkooka.spreadsheet.viewport;
 
 import org.junit.jupiter.api.Test;
@@ -23,7 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationExtendPixelUpTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationExtendPixelUp> {
+public final class SpreadsheetViewportNavigationScroll2UpTest extends SpreadsheetViewportNavigationScrollTestCase<SpreadsheetViewportNavigationScroll2Up> {
 
     @Test
     public void testUpdateHome() {
@@ -45,73 +43,62 @@ public final class SpreadsheetViewportNavigationExtendPixelUpTest extends Spread
 
     @Test
     public void testUpdateCell() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+            SpreadsheetSelection.parseCell("E5")
+                .setDefaultAnchor()
+        );
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("E5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseCell("E5")
-                            .setDefaultAnchor()
-                    )
-                ),
+                .setAnchoredSelection(selection),
             SpreadsheetSelection.parseCell("E3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseCellRange("E3:E5")
-                            .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
-                    )
-                )
+                .setAnchoredSelection(selection)
         );
     }
 
     @Test
     public void testUpdateColumn() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+            SpreadsheetSelection.parseColumn("E")
+                .setDefaultAnchor()
+        );
+
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("E5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseColumn("E")
-                            .setDefaultAnchor()
-                    )
+                    selection
                 ),
             SpreadsheetSelection.parseCell("E3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseColumn("E")
-                            .setDefaultAnchor()
-                    )
+                    selection
                 )
         );
     }
 
     @Test
     public void testUpdateRow() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+            SpreadsheetSelection.parseRow("5")
+                .setDefaultAnchor()
+        );
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("E5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseRow("5")
-                            .setDefaultAnchor()
-                    )
+                    selection
                 ),
             SpreadsheetSelection.parseCell("E3")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseRowRange("3:5")
-                            .setAnchor(SpreadsheetViewportAnchor.BOTTOM)
-                    )
-                )
+                .setAnchoredSelection(selection)
         );
     }
 
@@ -121,17 +108,17 @@ public final class SpreadsheetViewportNavigationExtendPixelUpTest extends Spread
     public void testIsExtend() {
         this.isExtendAndCheck(
             this.createSpreadsheetViewportNavigation(),
-            true
+            false
         );
     }
 
     @Override
-    SpreadsheetViewportNavigationExtendPixelUp createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationExtendPixelUp.with(2 * ROW_HEIGHT - 1);
+    SpreadsheetViewportNavigationScroll2Up createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationScroll2Up.with(2 * ROW_HEIGHT - 1);
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationExtendPixelUp> type() {
-        return SpreadsheetViewportNavigationExtendPixelUp.class;
+    public Class<SpreadsheetViewportNavigationScroll2Up> type() {
+        return SpreadsheetViewportNavigationScroll2Up.class;
     }
 }

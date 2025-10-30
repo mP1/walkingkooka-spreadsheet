@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -23,83 +22,73 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationExtendPixelDownTest extends SpreadsheetViewportNavigationPixelTestCase<SpreadsheetViewportNavigationExtendPixelDown> {
+public final class SpreadsheetViewportNavigationScroll2LeftTest extends SpreadsheetViewportNavigationScrollTestCase<SpreadsheetViewportNavigationScroll2Left> {
 
     @Test
     public void testUpdateHome() {
         this.updateAndCheck(
-            "C3",
+            "E5",
             "C5"
         );
     }
 
     @Test
-    public void testUpdateHomeSkipsHiddenRow() {
+    public void testUpdateHomeSkipsHiddenColumn() {
         this.updateAndCheck(
-            "C3", // home
-            "", // hidden columns
-            "4", // hidden rows
-            "C6" // expected
+            "E5", // home
+            "D", // hidden columns
+            "", // hidden rows
+            "B5" // expected
         );
     }
 
     @Test
     public void testUpdateCell() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+            SpreadsheetSelection.parseCell("E5")
+                .setDefaultAnchor()
+        );
+
         this.updateAndCheck(
-            SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCell("E5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseCell("C3")
-                            .setDefaultAnchor()
-                    )
-                ),
+                .setAnchoredSelection(selection),
             SpreadsheetSelection.parseCell("C5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseCellRange("C3:C5")
-                            .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
-                    )
-                )
+                .setAnchoredSelection(selection)
         );
     }
 
     @Test
     public void testUpdateColumn() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+            SpreadsheetSelection.parseColumn("E")
+                .setDefaultAnchor()
+        );
+
         this.updateAndCheck(
-            SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCell("E5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseColumn("C")
-                            .setDefaultAnchor()
-                    )
-                ),
+                .setAnchoredSelection(selection),
             SpreadsheetSelection.parseCell("C5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
-                .setAnchoredSelection(
-                    Optional.of(
-                        SpreadsheetSelection.parseColumn("C")
-                            .setDefaultAnchor()
-                    )
-                )
+                .setAnchoredSelection(selection)
         );
     }
 
     @Test
     public void testUpdateRow() {
         this.updateAndCheck(
-            SpreadsheetSelection.parseCell("C3")
+            SpreadsheetSelection.parseCell("E5")
                 .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseRow("3")
+                        SpreadsheetSelection.parseRow("5")
                             .setDefaultAnchor()
                     )
                 ),
@@ -108,8 +97,8 @@ public final class SpreadsheetViewportNavigationExtendPixelDownTest extends Spre
                 .viewport()
                 .setAnchoredSelection(
                     Optional.of(
-                        SpreadsheetSelection.parseRowRange("3:5")
-                            .setAnchor(SpreadsheetViewportAnchor.TOP)
+                        SpreadsheetSelection.parseRow("5")
+                            .setDefaultAnchor()
                     )
                 )
         );
@@ -121,17 +110,17 @@ public final class SpreadsheetViewportNavigationExtendPixelDownTest extends Spre
     public void testIsExtend() {
         this.isExtendAndCheck(
             this.createSpreadsheetViewportNavigation(),
-            true
+            false
         );
     }
 
     @Override
-    SpreadsheetViewportNavigationExtendPixelDown createSpreadsheetViewportNavigation() {
-        return SpreadsheetViewportNavigationExtendPixelDown.with(2 * ROW_HEIGHT - 1);
+    SpreadsheetViewportNavigationScroll2Left createSpreadsheetViewportNavigation() {
+        return SpreadsheetViewportNavigationScroll2Left.with(2 * COLUMN_WIDTH - 1);
     }
 
     @Override
-    public Class<SpreadsheetViewportNavigationExtendPixelDown> type() {
-        return SpreadsheetViewportNavigationExtendPixelDown.class;
+    public Class<SpreadsheetViewportNavigationScroll2Left> type() {
+        return SpreadsheetViewportNavigationScroll2Left.class;
     }
 }

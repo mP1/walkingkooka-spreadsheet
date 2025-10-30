@@ -1,4 +1,5 @@
 
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -23,20 +24,20 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationPixelScrollLeft extends SpreadsheetViewportNavigationPixelScroll {
+final class SpreadsheetViewportNavigationScroll2Down extends SpreadsheetViewportNavigationScroll2 {
 
-    static SpreadsheetViewportNavigationPixelScrollLeft with(final int value) {
-        return new SpreadsheetViewportNavigationPixelScrollLeft(value);
+    static SpreadsheetViewportNavigationScroll2Down with(final int value) {
+        return new SpreadsheetViewportNavigationScroll2Down(value);
     }
 
-    private SpreadsheetViewportNavigationPixelScrollLeft(final int value) {
+    private SpreadsheetViewportNavigationScroll2Down(final int value) {
         super(value);
     }
 
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.leftPixels(
+        return home.downPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
@@ -47,7 +48,7 @@ final class SpreadsheetViewportNavigationPixelScrollLeft extends SpreadsheetView
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.leftPixels(
+        return selection.downPixels(
             anchor,
             this.value,
             context
@@ -56,6 +57,6 @@ final class SpreadsheetViewportNavigationPixelScrollLeft extends SpreadsheetView
 
     @Override
     public String text() {
-        return "left " + this.value + "px";
+        return "down " + this.value + "px";
     }
 }
