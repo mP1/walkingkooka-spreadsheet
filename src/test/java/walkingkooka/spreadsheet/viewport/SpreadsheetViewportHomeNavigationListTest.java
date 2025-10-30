@@ -126,7 +126,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
             SpreadsheetViewportHomeNavigationList.with(
                 HOME,
                 SpreadsheetViewportNavigationList.EMPTY.concat(
-                    SpreadsheetViewportNavigation.rightColumn()
+                    SpreadsheetViewportNavigation.moveRight()
                 )
             )
         );

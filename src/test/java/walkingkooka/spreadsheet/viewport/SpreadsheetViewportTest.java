@@ -307,7 +307,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 INCLUDE_FROZEN_COLUMNS_ROWS,
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 SpreadsheetViewportNavigationList.EMPTY.concat(
-                    SpreadsheetViewportNavigation.rightColumn()
+                    SpreadsheetViewportNavigation.moveRight()
                 )
             )
         );

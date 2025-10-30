@@ -24173,7 +24173,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     )
                 ).setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.rightColumn()
+                        SpreadsheetViewportNavigation.moveRight()
                     )
                 ),
             context,
@@ -24301,7 +24301,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     )
                 ).setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.rightColumn()
+                        SpreadsheetViewportNavigation.moveRight()
                     )
                 ),
             context,
@@ -24423,7 +24423,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
                 .setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.rightColumn()
+                        SpreadsheetViewportNavigation.moveRight()
                     )
                 ),
             context,
