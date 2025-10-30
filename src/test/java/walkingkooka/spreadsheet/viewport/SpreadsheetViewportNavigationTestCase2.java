@@ -92,14 +92,16 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
-    // isPixel.........................................................................................................
+    // isScroll.........................................................................................................
+
     @Test
-    public final void testIsPixel() {
+    public final void testIsScroll() {
         this.checkEquals(
             this.type()
                 .getName()
                 .contains("Scroll"),
-            this.createSpreadsheetViewportNavigation().isPixel()
+            this.createSpreadsheetViewportNavigation()
+                .isScroll()
         );
     }
 
