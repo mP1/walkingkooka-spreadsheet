@@ -300,8 +300,8 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     // TerminalContextDelegator.........................................................................................
 
     @Override
-    public SpreadsheetExpressionEvaluationContext quitTerminal() {
-        this.context.quitTerminal();
+    public SpreadsheetExpressionEvaluationContext exitTerminal() {
+        this.context.exitTerminal();
         return this;
     }
 

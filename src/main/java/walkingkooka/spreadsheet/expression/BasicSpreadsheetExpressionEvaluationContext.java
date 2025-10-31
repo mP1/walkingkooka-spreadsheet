@@ -555,8 +555,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     // TerminalContextDelegator.........................................................................................
 
     @Override
-    public SpreadsheetExpressionEvaluationContext quitTerminal() {
-        this.terminalContext.quitTerminal();
+    public SpreadsheetExpressionEvaluationContext exitTerminal() {
+        this.terminalContext.exitTerminal();
         return this;
     }
 

@@ -387,7 +387,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext quitTerminal() {
+    public SpreadsheetExpressionEvaluationContext exitTerminal() {
         throw new UnsupportedOperationException();
     }
 }

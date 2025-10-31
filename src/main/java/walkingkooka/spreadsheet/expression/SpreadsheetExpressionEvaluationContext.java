@@ -273,5 +273,5 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     // TerminalContext..................................................................................................
 
     @Override
-    SpreadsheetExpressionEvaluationContext quitTerminal();
+    SpreadsheetExpressionEvaluationContext exitTerminal();
 }

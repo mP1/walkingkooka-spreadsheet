@@ -183,8 +183,8 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     // TerminalContextDelegator.........................................................................................
 
     @Override
-    public SpreadsheetExpressionEvaluationContext quitTerminal() {
-        this.context.quitTerminal();
+    public SpreadsheetExpressionEvaluationContext exitTerminal() {
+        this.context.exitTerminal();
         return this;
     }
 
