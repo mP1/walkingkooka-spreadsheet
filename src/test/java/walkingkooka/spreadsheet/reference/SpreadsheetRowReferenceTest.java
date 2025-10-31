@@ -961,8 +961,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // navigate.........................................................................................................
 
     @Test
-    public void testLeftColumn() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumn() {
+        this.moveLeftColumnAndCheck(
             "1",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -972,8 +972,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testLeftColumnHidden() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnHidden() {
+        this.moveLeftColumnAndCheck(
             "2",
             SpreadsheetViewportAnchor.NONE,
             "2",

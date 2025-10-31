@@ -734,8 +734,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     // navigate.........................................................................................................
 
     @Test
-    public void testLeftColumnAnchorLeft() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnAnchorLeft() {
+        this.moveLeftColumnAndCheck(
             "B:C",
             SpreadsheetViewportAnchor.LEFT,
             NO_HIDDEN_COLUMNS,
@@ -745,8 +745,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testLeftColumnAnchorRight() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnAnchorRight() {
+        this.moveLeftColumnAndCheck(
             "B:C",
             SpreadsheetViewportAnchor.RIGHT,
             NO_HIDDEN_COLUMNS,
@@ -756,8 +756,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testLeftColumnFirstAnchorLeft() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnFirstAnchorLeft() {
+        this.moveLeftColumnAndCheck(
             "A:C",
             SpreadsheetViewportAnchor.LEFT,
             NO_HIDDEN_COLUMNS,
@@ -767,8 +767,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testLeftColumnFirstAnchorRight() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnFirstAnchorRight() {
+        this.moveLeftColumnAndCheck(
             "A:C",
             SpreadsheetViewportAnchor.RIGHT,
             NO_HIDDEN_COLUMNS,
@@ -778,8 +778,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testLeftColumnSkipsHidden() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnSkipsHidden() {
+        this.moveLeftColumnAndCheck(
             "D:E",
             SpreadsheetViewportAnchor.RIGHT,
             "C",

@@ -762,8 +762,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     // navigate.........................................................................................................
 
     @Test
-    public void testLeftColumnAnchorTop() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnAnchorTop() {
+        this.moveLeftColumnAndCheck(
             "2:3",
             SpreadsheetViewportAnchor.TOP,
             NO_HIDDEN_COLUMNS,
