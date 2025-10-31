@@ -941,8 +941,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownPixels() {
-        this.downPixelsAndCheck(
+    public void testMoveDownPixels() {
+        this.moveDownPixelsAndCheck(
             "2:3",
             SpreadsheetViewportAnchor.TOP,
             50,

@@ -388,9 +388,9 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
     }
 
     @Override
-    public Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
-                                                     final int count,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveDownPixels(final SpreadsheetViewportAnchor anchor,
+                                                         final int count,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 

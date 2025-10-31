@@ -934,8 +934,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testDownPixels() {
-        this.downPixelsAndCheck(
+    public void testMoveDownPixels() {
+        this.moveDownPixelsAndCheck(
             "A:B",
             SpreadsheetViewportAnchor.LEFT,
             50,

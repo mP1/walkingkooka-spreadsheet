@@ -554,9 +554,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
-                                                     final int count,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveDownPixels(final SpreadsheetViewportAnchor anchor,
+                                                         final int count,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return this.upOrDownPixels(
             context,
             count,
@@ -674,7 +674,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                                    final int count,
                                                                    final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.downPixels(
+            this.moveDownPixels(
                 anchor,
                 count,
                 context

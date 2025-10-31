@@ -388,12 +388,12 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
     }
 
     @Override
-    public Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
-                                                     final int count,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveDownPixels(final SpreadsheetViewportAnchor anchor,
+                                                         final int count,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return anchor.opposite()
             .row(this)
-            .downPixels(
+            .moveDownPixels(
                 anchor,
                 count,
                 context
@@ -489,7 +489,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
         return this.extendRow(
             this.isUnit() ? SpreadsheetViewportAnchor.TOP : anchor,
             r -> Cast.to(
-                r.downPixels(
+                r.moveDownPixels(
                     anchor,
                     count,
                     context
