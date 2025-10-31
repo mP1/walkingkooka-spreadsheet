@@ -454,7 +454,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     // downPixels.......................................................................................................
 
     @Test
-    default void downPixelsWithNullRowFails() {
+    default void testMoveDownPixelsWithNullRowFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext().downPixels(null, 1)
@@ -462,7 +462,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     }
 
     @Test
-    default void downPixelsWithNegativePixelsFails() {
+    default void testMoveDownPixelsWithNegativePixelsFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createContext()
@@ -473,11 +473,11 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void downPixelsAndCheck(final String start,
-                                    final int pixels,
-                                    final C context,
-                                    final String expected) {
-        this.downPixelsAndCheck(
+    default void moveDownPixelsAndCheck(final String start,
+                                        final int pixels,
+                                        final C context,
+                                        final String expected) {
+        this.moveDownPixelsAndCheck(
             SpreadsheetSelection.parseRow(start),
             pixels,
             context,
@@ -487,10 +487,10 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void downPixelsAndCheck(final SpreadsheetRowReference start,
-                                    final int pixels,
-                                    final C context,
-                                    final Optional<SpreadsheetRowReference> expected) {
+    default void moveDownPixelsAndCheck(final SpreadsheetRowReference start,
+                                        final int pixels,
+                                        final C context,
+                                        final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
             expected,
             context.downPixels(
