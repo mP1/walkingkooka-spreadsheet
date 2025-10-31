@@ -356,12 +356,12 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
     }
 
     @Override
-    public Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
-                                                      final int count,
-                                                      final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveRightPixels(final SpreadsheetViewportAnchor anchor,
+                                                          final int count,
+                                                          final SpreadsheetViewportNavigationContext context) {
         return anchor.opposite()
             .column(this)
-            .rightPixels(
+            .moveRightPixels(
                 anchor,
                 count,
                 context
