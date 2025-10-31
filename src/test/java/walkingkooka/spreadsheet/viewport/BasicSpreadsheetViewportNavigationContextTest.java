@@ -180,7 +180,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testLeftFirstColumnNotHidden() {
-        this.leftColumnAndCheck(
+        this.moveLeftAndCheck(
             "",
             "A",
             "A"
@@ -189,7 +189,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testLeftFirstColumnHidden() {
-        this.leftColumnAndCheck(
+        this.moveLeftAndCheck(
             "A",
             "A"
         );
@@ -197,15 +197,15 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testLeftAllColumnsHiddenIncludingGiven() {
-        this.leftColumnAndCheck(
+        this.moveLeftAndCheck(
             "A,B,C",
             "C"
         );
     }
 
     @Test
-    public void testLeftColumn() {
-        this.leftColumnAndCheck(
+    public void testMoveLeft() {
+        this.moveLeftAndCheck(
             "",
             "B",
             "A"
@@ -213,8 +213,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testLeftColumn2() {
-        this.leftColumnAndCheck(
+    public void testMoveLeft2() {
+        this.moveLeftAndCheck(
             "",
             "D",
             "C"
@@ -222,8 +222,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testLeftColumnFirstColumn() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftFirstColumn() {
+        this.moveLeftAndCheck(
             "",
             "A",
             "A"
@@ -231,8 +231,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testLeftColumnSkips() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftSkips() {
+        this.moveLeftAndCheck(
             "C,D",
             "E",
             "B"
@@ -240,8 +240,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testLeftColumnSkipsFirstColumn() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftSkipsFirstColumn() {
+        this.moveLeftAndCheck(
             "B,C",
             "D",
             "A"
@@ -250,16 +250,16 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     @Test
     public void testLeftColumnAllLeftHidden() {
-        this.leftColumnAndCheck(
+        this.moveLeftAndCheck(
             "A,B",
             "C",
             "C"
         );
     }
 
-    private void leftColumnAndCheck(final String columnHidden,
-                                    final String column) {
-        this.leftColumnAndCheck(
+    private void moveLeftAndCheck(final String columnHidden,
+                                  final String column) {
+        this.moveLeftAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
@@ -271,10 +271,10 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void leftColumnAndCheck(final String columnHidden,
-                                    final String column,
-                                    final String expected) {
-        this.leftColumnAndCheck(
+    private void moveLeftAndCheck(final String columnHidden,
+                                  final String column,
+                                  final String expected) {
+        this.moveLeftAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,

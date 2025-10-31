@@ -73,7 +73,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     private final Predicate<SpreadsheetRowReference> rowHidden;
 
     @Override
-    public Optional<SpreadsheetColumnReference> leftColumn(final SpreadsheetColumnReference column) {
+    public Optional<SpreadsheetColumnReference> moveLeft(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
 
         return move(
