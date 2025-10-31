@@ -32,7 +32,7 @@ final class SpreadsheetViewportNavigationColumnOrRowExtendRight extends Spreadsh
 
     @Override
     public String text() {
-        return "extend-right column";
+        return "move&extend right column";
     }
 
     @Override

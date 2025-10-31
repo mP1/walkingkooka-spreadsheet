@@ -33,7 +33,7 @@ final class SpreadsheetViewportNavigationColumnOrRowExtendUp extends Spreadsheet
 
     @Override
     public String text() {
-        return "extend-up row";
+        return "move&extend up row";
     }
 
     @Override
