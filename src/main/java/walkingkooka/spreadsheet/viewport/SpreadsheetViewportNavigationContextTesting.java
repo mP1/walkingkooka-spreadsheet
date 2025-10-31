@@ -401,10 +401,10 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // upPixels.........................................................................................................
+    // moveUpPixels.....................................................................................................
 
     @Test
-    default void upPixelsWithNullRowFails() {
+    default void testMoveUpPixelsWithNullRowFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext().upPixels(null, 1)
@@ -412,7 +412,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     }
 
     @Test
-    default void upPixelsWithNegativePixelsFails() {
+    default void testMoveUpPixelsWithNegativePixelsFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createContext()
@@ -423,11 +423,11 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void upPixelsAndCheck(final String start,
-                                  final int pixels,
-                                  final C context,
-                                  final String expected) {
-        this.upPixelsAndCheck(
+    default void moveUpPixelsAndCheck(final String start,
+                                      final int pixels,
+                                      final C context,
+                                      final String expected) {
+        this.moveUpPixelsAndCheck(
             SpreadsheetSelection.parseRow(start),
             pixels,
             context,
@@ -437,10 +437,10 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void upPixelsAndCheck(final SpreadsheetRowReference start,
-                                  final int pixels,
-                                  final C context,
-                                  final Optional<SpreadsheetRowReference> expected) {
+    default void moveUpPixelsAndCheck(final SpreadsheetRowReference start,
+                                      final int pixels,
+                                      final C context,
+                                      final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
             expected,
             context.upPixels(

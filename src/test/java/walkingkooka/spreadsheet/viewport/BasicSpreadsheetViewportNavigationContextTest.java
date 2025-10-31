@@ -995,7 +995,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final Predicate<SpreadsheetRowReference> rowsHidden,
                                   final Function<SpreadsheetRowReference, Double> rowHeights,
                                   final Optional<SpreadsheetRowReference> expected) {
-        this.upPixelsAndCheck(
+        this.moveUpPixelsAndCheck(
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
