@@ -421,7 +421,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
                                                                     final SpreadsheetViewportNavigationContext context) {
         return this.extendColumn(
             this.isUnit() ? SpreadsheetViewportAnchor.LEFT : anchor,
-            context::rightColumn
+            context::moveRightColumn
         );
     }
 

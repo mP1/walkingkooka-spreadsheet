@@ -425,7 +425,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     public Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
                                                       final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
-            context.rightColumn(this)
+            context.moveRightColumn(this)
         );
     }
 

@@ -54,7 +54,7 @@ public interface SpreadsheetViewportNavigationContext extends Context {
      * <br>
      * This method is used to support keyboard navigation.
      */
-    Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column);
+    Optional<SpreadsheetColumnReference> moveRightColumn(final SpreadsheetColumnReference column);
 
     /**
      * Returns the first row moving up parse the given starting point that is not hidden.

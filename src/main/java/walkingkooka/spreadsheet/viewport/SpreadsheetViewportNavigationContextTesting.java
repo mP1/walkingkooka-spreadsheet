@@ -128,60 +128,60 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // rightColumn......................................................................................................
+    // moveRightColumn..................................................................................................
 
     @Test
-    default void moveRightWithNullFails() {
+    default void testMoveRightColumnWithNullFails() {
         assertThrows(
             NullPointerException.class,
-            () -> this.createContext().rightColumn(null)
+            () -> this.createContext().moveRightColumn(null)
         );
     }
 
-    default void moveRightAndCheck(final C context,
-                                   final String reference) {
-        this.moveRightAndCheck(
+    default void moveRightColumnAndCheck(final C context,
+                                         final String reference) {
+        this.moveRightColumnAndCheck(
             context,
             SpreadsheetSelection.parseColumn(reference)
         );
     }
 
-    default void moveRightAndCheck(final C context,
-                                   final String reference,
-                                   final String expected) {
-        this.moveRightAndCheck(
+    default void moveRightColumnAndCheck(final C context,
+                                         final String reference,
+                                         final String expected) {
+        this.moveRightColumnAndCheck(
             context,
             SpreadsheetSelection.parseColumn(reference),
             SpreadsheetSelection.parseColumn(expected)
         );
     }
 
-    default void moveRightAndCheck(final C context,
-                                   final SpreadsheetColumnReference reference) {
-        this.moveRightAndCheck(
+    default void moveRightColumnAndCheck(final C context,
+                                         final SpreadsheetColumnReference reference) {
+        this.moveRightColumnAndCheck(
             context,
             reference,
             Optional.empty()
         );
     }
 
-    default void moveRightAndCheck(final C context,
-                                   final SpreadsheetColumnReference reference,
-                                   final SpreadsheetColumnReference expected) {
-        this.moveRightAndCheck(
+    default void moveRightColumnAndCheck(final C context,
+                                         final SpreadsheetColumnReference reference,
+                                         final SpreadsheetColumnReference expected) {
+        this.moveRightColumnAndCheck(
             context,
             reference,
             Optional.of(expected)
         );
     }
 
-    default void moveRightAndCheck(final C context,
-                                   final SpreadsheetColumnReference reference,
-                                   final Optional<SpreadsheetColumnReference> expected) {
+    default void moveRightColumnAndCheck(final C context,
+                                         final SpreadsheetColumnReference reference,
+                                         final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
             expected,
-            context.rightColumn(reference),
-            () -> reference + " rightColumn " + context
+            context.moveRightColumn(reference),
+            () -> reference + " moveRightColumn " + context
         );
     }
 

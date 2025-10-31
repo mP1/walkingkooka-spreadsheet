@@ -348,7 +348,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testRightColumnAllRightHidden() {
+    public void testMoveRightColumnAllMoveRightHidden() {
         final SpreadsheetColumnReference last = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
         this.moveRightAndCheck(
@@ -360,7 +360,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void moveRightAndCheck(final String columnHidden,
                                    final String column) {
-        this.moveRightAndCheck(
+        this.moveRightColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
@@ -375,7 +375,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void moveRightAndCheck(final String columnHidden,
                                    final String column,
                                    final String expected) {
-        this.moveRightAndCheck(
+        this.moveRightColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,

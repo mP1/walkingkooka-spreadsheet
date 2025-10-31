@@ -39,7 +39,7 @@ public class FakeSpreadsheetViewportNavigationContext implements SpreadsheetView
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
+    public Optional<SpreadsheetColumnReference> moveRightColumn(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 
