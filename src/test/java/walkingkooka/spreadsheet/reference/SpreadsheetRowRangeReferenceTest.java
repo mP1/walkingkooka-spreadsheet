@@ -773,7 +773,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testLeftPixels() {
+    public void testMoveLeftPixels() {
         this.rightPixelsAndCheck(
             "3:4",
             SpreadsheetViewportAnchor.LEFT,

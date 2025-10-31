@@ -482,9 +482,9 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
-                                                     final int count,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveLeftPixels(final SpreadsheetViewportAnchor anchor,
+                                                         final int count,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return this.leftOrRightPixels(
             context,
             count,
@@ -592,7 +592,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                                    final int count,
                                                                    final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.leftPixels(
+            this.moveLeftPixels(
                 anchor,
                 count,
                 context

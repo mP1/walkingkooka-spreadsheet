@@ -1520,8 +1520,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftPixels() {
-        this.leftPixelsAndCheck(
+    public void testMoveLeftPixels() {
+        this.moveLeftPixelsAndCheck(
             "E4",
             SpreadsheetViewportAnchor.LEFT,
             50,
