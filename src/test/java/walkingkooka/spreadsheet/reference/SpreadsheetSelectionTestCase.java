@@ -1010,12 +1010,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // upRow............................................................................................................
 
-    final void upRowAndCheck(final String selection,
-                             final SpreadsheetViewportAnchor anchor,
-                             final String hiddenColumns,
-                             final String hiddenRows,
-                             final String expected) {
-        this.upRowAndCheck(
+    final void moveUpRowAndCheck(final String selection,
+                                 final SpreadsheetViewportAnchor anchor,
+                                 final String hiddenColumns,
+                                 final String hiddenRows,
+                                 final String expected) {
+        this.moveUpRowAndCheck(
             this.parseString(selection),
             anchor,
             this.hiddenColumns(hiddenColumns),
@@ -1024,14 +1024,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upRowAndCheck(final S selection,
-                             final SpreadsheetViewportAnchor anchor,
-                             final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                             final Predicate<SpreadsheetRowReference> hiddenRows,
-                             final Optional<SpreadsheetSelection> expected) {
+    final void moveUpRowAndCheck(final S selection,
+                                 final SpreadsheetViewportAnchor anchor,
+                                 final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                 final Predicate<SpreadsheetRowReference> hiddenRows,
+                                 final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
             expected.map(SpreadsheetSelection::toScalarIfUnit),
-            selection.upRow(
+            selection.moveUpRow(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
                     hiddenColumns,

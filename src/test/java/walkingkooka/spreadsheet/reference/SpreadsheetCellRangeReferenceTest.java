@@ -2114,8 +2114,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     // B3 C3 D3
 
     @Test
-    public void testUpRowAnchorBottomRight() {
-        this.upRowAndCheck(
+    public void testMoveUpRowAnchorBottomRight() {
+        this.moveUpRowAndCheck(
             "B1:D3",
             SpreadsheetViewportAnchor.BOTTOM_LEFT,
             NO_HIDDEN_COLUMNS,

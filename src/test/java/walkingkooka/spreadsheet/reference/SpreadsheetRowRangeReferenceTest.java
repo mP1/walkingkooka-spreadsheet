@@ -787,8 +787,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpRowAnchorTop() {
-        this.upRowAndCheck(
+    public void testMoveUpRowAnchorTop() {
+        this.moveUpRowAndCheck(
             "2:3",
             SpreadsheetViewportAnchor.TOP,
             NO_HIDDEN_COLUMNS,
@@ -798,8 +798,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpRowAnchorBottom() {
-        this.upRowAndCheck(
+    public void testMoveUpRowAnchorBottom() {
+        this.moveUpRowAndCheck(
             "2:4",
             SpreadsheetViewportAnchor.BOTTOM,
             NO_HIDDEN_COLUMNS,
@@ -809,8 +809,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpRowAnchorBottom2() {
-        this.upRowAndCheck(
+    public void testMoveUpRowAnchorBottom2() {
+        this.moveUpRowAndCheck(
             "1:3",
             SpreadsheetViewportAnchor.BOTTOM,
             NO_HIDDEN_COLUMNS,
@@ -820,8 +820,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpRowFirstAnchorTop() {
-        this.upRowAndCheck(
+    public void testMoveUpRowFirstAnchorTop() {
+        this.moveUpRowAndCheck(
             "1:3",
             SpreadsheetViewportAnchor.TOP,
             NO_HIDDEN_COLUMNS,
@@ -831,8 +831,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testUpRowFirstAnchorBottom() {
-        this.upRowAndCheck(
+    public void testMoveUpRowFirstAnchorBottom() {
+        this.moveUpRowAndCheck(
             "1:2",
             SpreadsheetViewportAnchor.BOTTOM,
             NO_HIDDEN_COLUMNS,
