@@ -145,7 +145,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
      * Accepts text that has a more pretty form of any {@link SpreadsheetViewportNavigation enum value}.
      * The text is identical to the enum name but in lower case and underscore replaced with dash.
      * <br>
-     * {@link SpreadsheetViewportNavigation#extendLeftColumn()} = <pre>extend-left</pre>.
+     * {@link SpreadsheetViewportNavigation#extendMoveLeft()} = <pre>extend-left</pre>.
      */
     public static SpreadsheetViewportNavigationList parse(final String text) {
         final TextCursor cursor = TextCursors.charSequence(text);
@@ -196,7 +196,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                                 navigation = parseSpaceColumnOrRowOrPixels(
                                     cursor,
                                     COLUMN,
-                                    SpreadsheetViewportNavigation::extendLeftColumn,
+                                    SpreadsheetViewportNavigation::extendMoveLeft,
                                     SpreadsheetViewportNavigation::extendScrollLeft
                                 );
                             } else {
