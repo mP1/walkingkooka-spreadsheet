@@ -188,7 +188,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
                             navigation = parseSpaceColumnOrRowOrPixels(
                                 cursor,
                                 ROW,
-                                SpreadsheetViewportNavigation::downRow,
+                                SpreadsheetViewportNavigation::moveDown,
                                 SpreadsheetViewportNavigation::scrollDown
                             );
                         } else {
