@@ -841,8 +841,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testRightColumnAnchorLeft() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnAnchorLeft() {
+        this.moveRightColumnAndCheck(
             "B:C",
             SpreadsheetViewportAnchor.LEFT,
             NO_HIDDEN_COLUMNS,
@@ -852,8 +852,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testRightColumnAnchorRight() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnAnchorRight() {
+        this.moveRightColumnAndCheck(
             "B:C",
             SpreadsheetViewportAnchor.RIGHT,
             NO_HIDDEN_COLUMNS,
@@ -863,8 +863,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testRightColumnFirstAnchorLeft() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnFirstAnchorLeft() {
+        this.moveRightColumnAndCheck(
             "A:C",
             SpreadsheetViewportAnchor.LEFT,
             NO_HIDDEN_COLUMNS,
@@ -874,8 +874,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testRightColumnFirstAnchorRight() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnFirstAnchorRight() {
+        this.moveRightColumnAndCheck(
             "A:C",
             SpreadsheetViewportAnchor.RIGHT,
             NO_HIDDEN_COLUMNS,
@@ -885,8 +885,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testRightColumnSkipsHidden() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnSkipsHidden() {
+        this.moveRightColumnAndCheck(
             "C:D",
             SpreadsheetViewportAnchor.LEFT,
             "E",

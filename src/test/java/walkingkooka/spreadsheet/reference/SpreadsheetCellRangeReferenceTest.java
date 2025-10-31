@@ -2063,8 +2063,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testRightColumnAnchorTopLeft() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnAnchorTopLeft() {
+        this.moveRightColumnAndCheck(
             "A1:C3",
             SpreadsheetViewportAnchor.TOP_LEFT,
             NO_HIDDEN_COLUMNS,
@@ -2074,8 +2074,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testRightColumnAnchorTopRight() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnAnchorTopRight() {
+        this.moveRightColumnAndCheck(
             "A1:C3",
             SpreadsheetViewportAnchor.TOP_RIGHT,
             NO_HIDDEN_COLUMNS,
@@ -2085,8 +2085,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testRightColumnAnchorBottomRight() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnAnchorBottomRight() {
+        this.moveRightColumnAndCheck(
             "A1:C3",
             SpreadsheetViewportAnchor.BOTTOM_RIGHT,
             NO_HIDDEN_COLUMNS,

@@ -1057,8 +1057,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testRightColumn() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumn() {
+        this.moveRightColumnAndCheck(
             "2",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1068,8 +1068,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testRightColumnHidden() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnHidden() {
+        this.moveRightColumnAndCheck(
             "2",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,

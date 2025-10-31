@@ -44,7 +44,7 @@ final class SpreadsheetViewportNavigationColumnOrRowMoveRight extends Spreadshee
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.rightColumn(
+        return selection.moveRightColumn(
             anchor,
             context
         ).map(s -> s.setAnchorOrDefault(anchor));

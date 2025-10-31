@@ -1094,12 +1094,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // rightColumn.......................................................................................................
 
-    final void rightColumnAndCheck(final String selection,
-                                   final SpreadsheetViewportAnchor anchor,
-                                   final String hiddenColumns,
-                                   final String hiddenRows,
-                                   final String expected) {
-        this.rightColumnAndCheck(
+    final void moveRightColumnAndCheck(final String selection,
+                                       final SpreadsheetViewportAnchor anchor,
+                                       final String hiddenColumns,
+                                       final String hiddenRows,
+                                       final String expected) {
+        this.moveRightColumnAndCheck(
             this.parseString(selection),
             anchor,
             this.hiddenColumns(hiddenColumns),
@@ -1108,14 +1108,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void rightColumnAndCheck(final S selection,
-                                   final SpreadsheetViewportAnchor anchor,
-                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                                   final Predicate<SpreadsheetRowReference> hiddenRows,
-                                   final Optional<SpreadsheetSelection> expected) {
+    final void moveRightColumnAndCheck(final S selection,
+                                       final SpreadsheetViewportAnchor anchor,
+                                       final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                       final Predicate<SpreadsheetRowReference> hiddenRows,
+                                       final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
             expected.map(SpreadsheetSelection::toScalarIfUnit),
-            selection.rightColumn(
+            selection.moveRightColumn(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
                     hiddenColumns,

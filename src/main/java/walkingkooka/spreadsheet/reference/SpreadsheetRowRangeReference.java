@@ -340,8 +340,8 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
     }
 
     @Override
-    public Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
-                                                      final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveRightColumn(final SpreadsheetViewportAnchor anchor,
+                                                          final SpreadsheetViewportNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 
