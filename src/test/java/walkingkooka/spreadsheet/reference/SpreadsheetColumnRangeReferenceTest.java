@@ -910,10 +910,10 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testDownRowAnchorLeft() {
+    public void testMoveDownRowAnchorLeft() {
         final String range = "B:C";
 
-        this.downRowAndCheck(
+        this.moveDownRowAndCheck(
             range,
             SpreadsheetViewportAnchor.LEFT,
             NO_HIDDEN_COLUMNS,
@@ -923,8 +923,8 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     }
 
     @Test
-    public void testDownRowHiddenColumn() {
-        this.downRowAndCheck(
+    public void testMoveDownRowHiddenColumn() {
+        this.moveDownRowAndCheck(
             "C:D",
             SpreadsheetViewportAnchor.COLUMN,
             "C",

@@ -45,7 +45,7 @@ final class SpreadsheetViewportNavigationColumnOrRowMoveDown extends Spreadsheet
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.downRow(
+        return selection.moveDownRow(
             anchor,
             context
         ).map(s -> s.setAnchorOrDefault(anchor));

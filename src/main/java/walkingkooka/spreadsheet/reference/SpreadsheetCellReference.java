@@ -524,8 +524,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
-                                                  final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveDownRow(final SpreadsheetViewportAnchor anchor,
+                                                      final SpreadsheetViewportNavigationContext context) {
         return this.upOrDownRow(
             context,
             context::downRow
@@ -661,7 +661,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     public Optional<AnchoredSpreadsheetSelection> extendDownRow(final SpreadsheetViewportAnchor anchor,
                                                                 final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.downRow(
+            this.moveDownRow(
                 anchor,
                 context
             ),
