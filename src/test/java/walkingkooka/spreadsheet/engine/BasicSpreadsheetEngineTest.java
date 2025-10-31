@@ -24465,7 +24465,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 )
                 .setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.downRow()
+                        SpreadsheetViewportNavigation.moveDown()
                     )
                 ),
             context,
