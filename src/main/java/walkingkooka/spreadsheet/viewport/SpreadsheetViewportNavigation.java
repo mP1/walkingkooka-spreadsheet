@@ -139,7 +139,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationColumnOrRowMoveLeft}
      */
-    public static SpreadsheetViewportNavigation leftColumn() {
+    public static SpreadsheetViewportNavigation moveLeft() {
         return SpreadsheetViewportNavigationColumnOrRowMoveLeft.INSTANCE;
     }
 

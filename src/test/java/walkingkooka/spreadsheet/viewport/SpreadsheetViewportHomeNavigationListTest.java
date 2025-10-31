@@ -45,7 +45,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
 
     private static final SpreadsheetViewportNavigationList NAVIGATIONS = SpreadsheetViewportNavigationList.EMPTY
         .concat(
-            SpreadsheetViewportNavigation.leftColumn()
+            SpreadsheetViewportNavigation.moveLeft()
         );
 
     @Test
@@ -149,7 +149,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
                 HOME,
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
-                        SpreadsheetViewportNavigation.leftColumn(),
+                        SpreadsheetViewportNavigation.moveLeft(),
                         SpreadsheetViewportNavigation.moveUp()
                     )
                 )
