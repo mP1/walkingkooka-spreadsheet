@@ -458,7 +458,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                      final SpreadsheetViewportNavigationContext context) {
         return this.leftOrRightColumn(
             context,
-            context::leftColumn
+            context::moveLeftColumn
         );
     }
 
