@@ -85,7 +85,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> rightColumn(final SpreadsheetColumnReference column) {
+    public Optional<SpreadsheetColumnReference> moveRightColumn(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
 
         return move(
