@@ -430,9 +430,9 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     @Override
-    public Optional<SpreadsheetSelection> rightPixels(final SpreadsheetViewportAnchor anchor,
-                                                      final int count,
-                                                      final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveRightPixels(final SpreadsheetViewportAnchor anchor,
+                                                          final int count,
+                                                          final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
             context.rightPixels(
                 this,
@@ -516,7 +516,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                                                                     final int count,
                                                                     final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.rightPixels(
+            this.moveRightPixels(
                 anchor,
                 count,
                 context

@@ -984,7 +984,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testMoveLeftPixels() {
-        this.rightPixelsAndCheck(
+        this.moveRightPixelsAndCheck(
             "3",
             SpreadsheetViewportAnchor.LEFT,
             50,
@@ -1079,8 +1079,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testRightPixels() {
-        this.rightPixelsAndCheck(
+    public void testMoveRightPixels() {
+        this.moveRightPixelsAndCheck(
             "3",
             SpreadsheetViewportAnchor.LEFT,
             50,
