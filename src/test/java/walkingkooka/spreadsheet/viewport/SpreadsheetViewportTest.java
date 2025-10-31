@@ -203,7 +203,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testSetNavigationsDifferent() {
         final SpreadsheetViewport viewport = this.createObject();
         final SpreadsheetViewportNavigationList navigations = SpreadsheetViewportNavigationList.EMPTY.concat(
-            SpreadsheetViewportNavigation.extendRightColumn()
+            SpreadsheetViewportNavigation.extendMoveRight()
         );
         this.checkNotEquals(
             NAVIGATIONS,

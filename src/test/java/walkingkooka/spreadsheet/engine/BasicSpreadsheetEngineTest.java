@@ -24339,7 +24339,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     )
                 ).setNavigations(
                     SpreadsheetViewportNavigationList.EMPTY.concat(
-                        SpreadsheetViewportNavigation.extendRightColumn()
+                        SpreadsheetViewportNavigation.extendMoveRight()
                     )
                 ),
             context,

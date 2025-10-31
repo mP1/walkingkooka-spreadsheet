@@ -80,7 +80,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
     public void testSetNavigationsDifferent() {
         final SpreadsheetViewportHomeNavigationList viewport = this.createObject();
         final SpreadsheetViewportNavigationList navigations = SpreadsheetViewportNavigationList.EMPTY.concat(
-            SpreadsheetViewportNavigation.extendRightColumn()
+            SpreadsheetViewportNavigation.extendMoveRight()
         );
         this.checkNotEquals(
             NAVIGATIONS,
