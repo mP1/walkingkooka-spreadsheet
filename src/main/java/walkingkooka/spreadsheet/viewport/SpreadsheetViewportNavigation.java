@@ -39,17 +39,17 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationSelectionExtendCell}
-     */
-    public static SpreadsheetViewportNavigation extendCell(final SpreadsheetCellReference selection) {
-        return SpreadsheetViewportNavigationSelectionExtendCell.with(selection);
-    }
-
-    /**
      * {@see SpreadsheetViewportNavigationSelectionSelectColumn}
      */
     public static SpreadsheetViewportNavigation column(final SpreadsheetColumnReference selection) {
         return SpreadsheetViewportNavigationSelectionSelectColumn.with(selection);
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionExtendCell}
+     */
+    public static SpreadsheetViewportNavigation extendCell(final SpreadsheetCellReference selection) {
+        return SpreadsheetViewportNavigationSelectionExtendCell.with(selection);
     }
 
     /**
@@ -60,24 +60,10 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationSelectionSelectRow}
-     */
-    public static SpreadsheetViewportNavigation row(final SpreadsheetRowReference row) {
-        return SpreadsheetViewportNavigationSelectionSelectRow.with(row);
-    }
-
-    /**
      * {@see SpreadsheetViewportNavigationSelectionExtendRow}
      */
     public static SpreadsheetViewportNavigation extendRow(final SpreadsheetRowReference row) {
         return SpreadsheetViewportNavigationSelectionExtendRow.with(row);
-    }
-
-    /**
-     * {@see SpreadsheetViewportNavigationScrollExtendDown}
-     */
-    public static SpreadsheetViewportNavigation extendScrollDown(final int value) {
-        return SpreadsheetViewportNavigationScrollExtendDown.with(value);
     }
 
     /**
@@ -102,6 +88,20 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
+     * {@see SpreadsheetViewportNavigationColumnOrRowExtendUp}
+     */
+    public static SpreadsheetViewportNavigation extendMoveUp() {
+        return SpreadsheetViewportNavigationColumnOrRowExtendUp.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationScrollExtendDown}
+     */
+    public static SpreadsheetViewportNavigation extendScrollDown(final int value) {
+        return SpreadsheetViewportNavigationScrollExtendDown.with(value);
+    }
+
+    /**
      * {@see SpreadsheetViewportNavigationScrollExtendLeft}
      */
     public static SpreadsheetViewportNavigation extendScrollLeft(final int value) {
@@ -120,13 +120,6 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     public static SpreadsheetViewportNavigation extendScrollUp(final int value) {
         return SpreadsheetViewportNavigationScrollExtendUp.with(value);
-    }
-
-    /**
-     * {@see SpreadsheetViewportNavigationColumnOrRowExtendUp}
-     */
-    public static SpreadsheetViewportNavigation extendMoveUp() {
-        return SpreadsheetViewportNavigationColumnOrRowExtendUp.INSTANCE;
     }
 
     /**
@@ -155,6 +148,13 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
      */
     public static SpreadsheetViewportNavigation moveUp() {
         return SpreadsheetViewportNavigationColumnOrRowMoveUp.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetViewportNavigationSelectionSelectRow}
+     */
+    public static SpreadsheetViewportNavigation row(final SpreadsheetRowReference row) {
+        return SpreadsheetViewportNavigationSelectionSelectRow.with(row);
     }
 
     /**
