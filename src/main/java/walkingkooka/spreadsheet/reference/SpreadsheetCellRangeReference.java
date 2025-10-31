@@ -485,11 +485,11 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     @Override
-    public Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
-                                                  final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveDownRow(final SpreadsheetViewportAnchor anchor,
+                                                      final SpreadsheetViewportNavigationContext context) {
         return anchor.opposite()
             .cell(this)
-            .downRow(
+            .moveDownRow(
                 anchor,
                 context
             );
@@ -641,7 +641,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         return this.extendRow(
             anchor,
             (r) -> Cast.to(
-                r.downRow(
+                r.moveDownRow(
                     anchor,
                     context
                 )

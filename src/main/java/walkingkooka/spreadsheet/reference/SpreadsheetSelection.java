@@ -1436,8 +1436,8 @@ public abstract class SpreadsheetSelection implements HasText,
                                                                    final int count,
                                                                    final SpreadsheetViewportNavigationContext context);
 
-    public abstract Optional<SpreadsheetSelection> downRow(final SpreadsheetViewportAnchor anchor,
-                                                           final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> moveDownRow(final SpreadsheetViewportAnchor anchor,
+                                                               final SpreadsheetViewportNavigationContext context);
 
 
     public abstract Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,

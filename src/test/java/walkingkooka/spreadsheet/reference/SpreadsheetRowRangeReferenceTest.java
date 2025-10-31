@@ -870,8 +870,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownRowAnchorTop() {
-        this.downRowAndCheck(
+    public void testMoveDownRowAnchorTop() {
+        this.moveDownRowAndCheck(
             "2:4",
             SpreadsheetViewportAnchor.TOP,
             NO_HIDDEN_COLUMNS,
@@ -881,8 +881,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownRowAnchorBottom() {
-        this.downRowAndCheck(
+    public void testMoveDownRowAnchorBottom() {
+        this.moveDownRowAndCheck(
             "2:4",
             SpreadsheetViewportAnchor.BOTTOM,
             NO_HIDDEN_COLUMNS,
@@ -892,8 +892,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownRowFirstAnchorTop() {
-        this.downRowAndCheck(
+    public void testMoveDownRowFirstAnchorTop() {
+        this.moveDownRowAndCheck(
             "1:3",
             SpreadsheetViewportAnchor.TOP,
             NO_HIDDEN_COLUMNS,
@@ -903,8 +903,8 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownRowFirstAnchorBottom() {
-        this.downRowAndCheck(
+    public void testMoveDownRowFirstAnchorBottom() {
+        this.moveDownRowAndCheck(
             "1:3",
             SpreadsheetViewportAnchor.BOTTOM,
             NO_HIDDEN_COLUMNS,
@@ -914,11 +914,11 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownRowLastAnchorTop() {
+    public void testMoveDownRowLastAnchorTop() {
         final String row = SpreadsheetReferenceKind.RELATIVE.lastRow()
             .toString();
 
-        this.downRowAndCheck(
+        this.moveDownRowAndCheck(
             "1:" + row,
             SpreadsheetViewportAnchor.TOP,
             NO_HIDDEN_COLUMNS,
@@ -928,10 +928,10 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     }
 
     @Test
-    public void testDownRowLastAnchorBottom() {
+    public void testMoveDownRowLastAnchorBottom() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.downRowAndCheck(
+        this.moveDownRowAndCheck(
             "1:" + row,
             SpreadsheetViewportAnchor.BOTTOM,
             NO_HIDDEN_COLUMNS,

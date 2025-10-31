@@ -1190,8 +1190,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testDownRow() {
-        this.downRowAndCheck(
+    public void testMoveDownRow() {
+        this.moveDownRowAndCheck(
             "B",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1201,8 +1201,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testDownRowHidden() {
-        this.downRowAndCheck(
+    public void testMoveDownRowHidden() {
+        this.moveDownRowAndCheck(
             "C",
             SpreadsheetViewportAnchor.NONE,
             "C",

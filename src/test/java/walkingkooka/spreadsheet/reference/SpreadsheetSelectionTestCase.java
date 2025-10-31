@@ -1178,12 +1178,12 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // downRow..........................................................................................................
 
-    final void downRowAndCheck(final String selection,
-                               final SpreadsheetViewportAnchor anchor,
-                               final String hiddenColumns,
-                               final String hiddenRows,
-                               final String expected) {
-        this.downRowAndCheck(
+    final void moveDownRowAndCheck(final String selection,
+                                   final SpreadsheetViewportAnchor anchor,
+                                   final String hiddenColumns,
+                                   final String hiddenRows,
+                                   final String expected) {
+        this.moveDownRowAndCheck(
             this.parseString(selection),
             anchor,
             this.hiddenColumns(hiddenColumns),
@@ -1192,14 +1192,14 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void downRowAndCheck(final S selection,
-                               final SpreadsheetViewportAnchor anchor,
-                               final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                               final Predicate<SpreadsheetRowReference> hiddenRows,
-                               final Optional<SpreadsheetSelection> expected) {
+    final void moveDownRowAndCheck(final S selection,
+                                   final SpreadsheetViewportAnchor anchor,
+                                   final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                   final Predicate<SpreadsheetRowReference> hiddenRows,
+                                   final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
             expected.map(SpreadsheetSelection::toScalarIfUnit),
-            selection.downRow(
+            selection.moveDownRow(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
                     hiddenColumns,
