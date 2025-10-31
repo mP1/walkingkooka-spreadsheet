@@ -1047,15 +1047,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // upPixels.......................................................................................................
 
-    final void upPixelsAndCheck(final String selection,
-                                final SpreadsheetViewportAnchor anchor,
-                                final int count,
-                                final String hiddenColumns,
-                                final Map<String, Double> columnWidths,
-                                final String hiddenRows,
-                                final Map<String, Double> rowHeights,
-                                final String expected) {
-        this.upPixelsAndCheck(
+    final void moveUpPixelsAndCheck(final String selection,
+                                    final SpreadsheetViewportAnchor anchor,
+                                    final int count,
+                                    final String hiddenColumns,
+                                    final Map<String, Double> columnWidths,
+                                    final String hiddenRows,
+                                    final Map<String, Double> rowHeights,
+                                    final String expected) {
+        this.moveUpPixelsAndCheck(
             this.parseString(selection),
             anchor,
             count,
@@ -1067,17 +1067,17 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    final void upPixelsAndCheck(final S selection,
-                                final SpreadsheetViewportAnchor anchor,
-                                final int count,
-                                final Predicate<SpreadsheetColumnReference> hiddenColumns,
-                                final Function<SpreadsheetColumnReference, Double> columnWidths,
-                                final Predicate<SpreadsheetRowReference> hiddenRows,
-                                final Function<SpreadsheetRowReference, Double> rowHeight,
-                                final Optional<SpreadsheetSelection> expected) {
+    final void moveUpPixelsAndCheck(final S selection,
+                                    final SpreadsheetViewportAnchor anchor,
+                                    final int count,
+                                    final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                    final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                    final Predicate<SpreadsheetRowReference> hiddenRows,
+                                    final Function<SpreadsheetRowReference, Double> rowHeight,
+                                    final Optional<SpreadsheetSelection> expected) {
         this.checkEquals(
             expected.map(SpreadsheetSelection::toScalarIfUnit),
-            selection.upPixels(
+            selection.moveUpPixels(
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(

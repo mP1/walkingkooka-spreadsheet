@@ -1043,8 +1043,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     }
 
     @Test
-    public void testUpPixels() {
-        this.upPixelsAndCheck(
+    public void testMoveUpPixels() {
+        this.moveUpPixelsAndCheck(
             "5",
             SpreadsheetViewportAnchor.TOP,
             50,

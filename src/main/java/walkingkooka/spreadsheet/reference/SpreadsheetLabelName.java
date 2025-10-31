@@ -315,9 +315,9 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    public Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
-                                                   final int count,
-                                                   final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveUpPixels(final SpreadsheetViewportAnchor anchor,
+                                                       final int count,
+                                                       final SpreadsheetViewportNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
