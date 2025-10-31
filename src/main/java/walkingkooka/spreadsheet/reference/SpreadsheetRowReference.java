@@ -425,9 +425,9 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     }
 
     @Override
-    public Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
-                                                   final int count,
-                                                   final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveUpPixels(final SpreadsheetViewportAnchor anchor,
+                                                       final int count,
+                                                       final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
             context.upPixels(
                 this,
@@ -514,7 +514,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
                                                                  final int count,
                                                                  final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.upPixels(
+            this.moveUpPixels(
                 anchor,
                 count,
                 context

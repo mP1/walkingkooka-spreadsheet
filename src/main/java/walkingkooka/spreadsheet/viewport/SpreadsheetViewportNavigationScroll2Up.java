@@ -37,7 +37,7 @@ final class SpreadsheetViewportNavigationScroll2Up extends SpreadsheetViewportNa
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.upPixels(
+        return home.moveUpPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
@@ -48,7 +48,7 @@ final class SpreadsheetViewportNavigationScroll2Up extends SpreadsheetViewportNa
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.upPixels(
+        return selection.moveUpPixels(
             anchor,
             this.value,
             context

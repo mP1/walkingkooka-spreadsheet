@@ -448,9 +448,9 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     @Override
-    public Optional<SpreadsheetSelection> upPixels(final SpreadsheetViewportAnchor anchor,
-                                                   final int count,
-                                                   final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveUpPixels(final SpreadsheetViewportAnchor anchor,
+                                                       final int count,
+                                                       final SpreadsheetViewportNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 

@@ -1591,8 +1591,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpPixels() {
-        this.upPixelsAndCheck(
+    public void testMoveUpPixels() {
+        this.moveUpPixelsAndCheck(
             "E5",
             SpreadsheetViewportAnchor.LEFT,
             50,
