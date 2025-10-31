@@ -301,10 +301,10 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // leftPixels.......................................................................................................
+    // moveLeftPixels...................................................................................................
 
     @Test
-    default void leftPixelsWithNullColumnFails() {
+    default void testMoveLeftPixelsWithNullColumnFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext().leftPixels(null, 1)
@@ -312,7 +312,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     }
 
     @Test
-    default void leftPixelsWithNegativePixelsFails() {
+    default void testMoveLeftPixelsWithNegativePixelsFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createContext()
@@ -323,11 +323,11 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void leftPixelsAndCheck(final String start,
-                                    final int pixels,
-                                    final C context,
-                                    final String expected) {
-        this.leftPixelsAndCheck(
+    default void moveLeftPixelsAndCheck(final String start,
+                                        final int pixels,
+                                        final C context,
+                                        final String expected) {
+        this.moveLeftPixelsAndCheck(
             SpreadsheetSelection.parseColumn(start),
             pixels,
             context,
@@ -337,10 +337,10 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void leftPixelsAndCheck(final SpreadsheetColumnReference start,
-                                    final int pixels,
-                                    final C context,
-                                    final Optional<SpreadsheetColumnReference> expected) {
+    default void moveLeftPixelsAndCheck(final SpreadsheetColumnReference start,
+                                        final int pixels,
+                                        final C context,
+                                        final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
             expected,
             context.leftPixels(
