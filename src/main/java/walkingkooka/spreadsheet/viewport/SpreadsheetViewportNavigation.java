@@ -146,7 +146,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationColumnOrRowMoveRight}
      */
-    public static SpreadsheetViewportNavigation rightColumn() {
+    public static SpreadsheetViewportNavigation moveRight() {
         return SpreadsheetViewportNavigationColumnOrRowMoveRight.INSTANCE;
     }
 
