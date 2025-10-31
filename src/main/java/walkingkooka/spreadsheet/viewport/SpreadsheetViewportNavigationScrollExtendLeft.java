@@ -55,8 +55,10 @@ final class SpreadsheetViewportNavigationScrollExtendLeft extends SpreadsheetVie
         );
     }
 
+    // text.............................................................................................................
+
     @Override
-    public String text() {
-        return "extend-left " + this.value + "px";
+    String textToken() {
+        return "left";
     }
 }

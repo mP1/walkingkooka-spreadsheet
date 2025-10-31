@@ -35,4 +35,15 @@ abstract class SpreadsheetViewportNavigationScrollExtend extends SpreadsheetView
             context
         );
     }
+
+    // text.............................................................................................................
+
+    // extend-down 123 px
+    @Override
+    public final String text() {
+        return "extend-" + this.textToken() + " " + this.value + "px";
+    }
+
+    abstract String textToken();
+
 }
