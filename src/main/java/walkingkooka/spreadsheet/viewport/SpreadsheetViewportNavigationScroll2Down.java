@@ -55,8 +55,10 @@ final class SpreadsheetViewportNavigationScroll2Down extends SpreadsheetViewport
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 
+    // text.............................................................................................................
+
     @Override
-    public String text() {
-        return "down " + this.value + "px";
+    String textToken() {
+        return "down";
     }
 }
