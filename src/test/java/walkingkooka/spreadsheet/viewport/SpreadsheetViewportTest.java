@@ -72,7 +72,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
 
     private static final SpreadsheetViewportNavigationList NAVIGATIONS = SpreadsheetViewportNavigationList.EMPTY
         .concat(
-            SpreadsheetViewportNavigation.leftColumn()
+            SpreadsheetViewportNavigation.moveLeft()
         );
 
     @Test
@@ -381,7 +381,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 SpreadsheetViewport.NO_ANCHORED_SELECTION,
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
-                        SpreadsheetViewportNavigation.leftColumn(),
+                        SpreadsheetViewportNavigation.moveLeft(),
                         SpreadsheetViewportNavigation.moveUp()
                     )
                 )
@@ -412,7 +412,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 ),
                 SpreadsheetViewportNavigationList.EMPTY.setElements(
                     Lists.of(
-                        SpreadsheetViewportNavigation.leftColumn()
+                        SpreadsheetViewportNavigation.moveLeft()
                     )
                 )
             ),
