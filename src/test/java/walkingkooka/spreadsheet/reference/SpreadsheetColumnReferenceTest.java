@@ -1129,8 +1129,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightColumn() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumn() {
+        this.moveRightColumnAndCheck(
             "B",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1140,8 +1140,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightColumnFirst() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnFirst() {
+        this.moveRightColumnAndCheck(
             "A",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1151,11 +1151,11 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightColumnLast() {
+    public void testMoveRightColumnLast() {
         final String column = SpreadsheetReferenceKind.RELATIVE.lastColumn()
             .toString();
 
-        this.rightColumnAndCheck(
+        this.moveRightColumnAndCheck(
             column,
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1165,8 +1165,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testRightColumnSkipsHidden() {
-        this.rightColumnAndCheck(
+    public void testMoveRightColumnSkipsHidden() {
+        this.moveRightColumnAndCheck(
             "B",
             SpreadsheetViewportAnchor.NONE,
             "C",

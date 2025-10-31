@@ -422,8 +422,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     @Override
-    public Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
-                                                      final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveRightColumn(final SpreadsheetViewportAnchor anchor,
+                                                          final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
             context.moveRightColumn(this)
         );
@@ -501,7 +501,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     public Optional<AnchoredSpreadsheetSelection> extendRightColumn(final SpreadsheetViewportAnchor anchor,
                                                                     final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.rightColumn(
+            this.moveRightColumn(
                 anchor,
                 context
             ),

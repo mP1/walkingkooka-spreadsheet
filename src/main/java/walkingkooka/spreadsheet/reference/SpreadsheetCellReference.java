@@ -463,8 +463,8 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     }
 
     @Override
-    public Optional<SpreadsheetSelection> rightColumn(final SpreadsheetViewportAnchor anchor,
-                                                      final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveRightColumn(final SpreadsheetViewportAnchor anchor,
+                                                          final SpreadsheetViewportNavigationContext context) {
         return this.leftOrRightColumn(
             context,
             context::moveRightColumn
@@ -635,7 +635,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     public Optional<AnchoredSpreadsheetSelection> extendRightColumn(final SpreadsheetViewportAnchor anchor,
                                                                     final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.rightColumn(
+            this.moveRightColumn(
                 anchor,
                 context
             ),
