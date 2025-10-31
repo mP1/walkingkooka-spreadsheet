@@ -55,8 +55,10 @@ final class SpreadsheetViewportNavigationScrollExtendDown extends SpreadsheetVie
         );
     }
 
+    // text.............................................................................................................
+
     @Override
-    public String text() {
-        return "extend-down " + this.value + "px";
+    String textToken() {
+        return "down";
     }
 }

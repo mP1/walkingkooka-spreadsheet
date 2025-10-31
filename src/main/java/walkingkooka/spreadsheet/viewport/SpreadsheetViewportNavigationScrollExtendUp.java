@@ -55,8 +55,10 @@ final class SpreadsheetViewportNavigationScrollExtendUp extends SpreadsheetViewp
         );
     }
 
+    // text.............................................................................................................
+
     @Override
-    public String text() {
-        return "extend-up " + this.value + "px";
+    String textToken() {
+        return "up";
     }
 }
