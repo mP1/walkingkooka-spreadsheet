@@ -2049,8 +2049,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testLeftPixels() {
-        this.leftPixelsAndCheck(
+    public void testMoveLeftPixels() {
+        this.moveLeftPixelsAndCheck(
             "D2:E2",
             SpreadsheetViewportAnchor.TOP_LEFT,
             50,

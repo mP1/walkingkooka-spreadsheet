@@ -36,7 +36,7 @@ final class SpreadsheetViewportNavigationScrollExtendLeft extends SpreadsheetVie
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.leftPixels(
+        return home.moveLeftPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context

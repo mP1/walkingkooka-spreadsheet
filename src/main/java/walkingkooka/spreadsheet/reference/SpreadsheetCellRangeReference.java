@@ -424,12 +424,12 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     @Override
-    public Optional<SpreadsheetSelection> leftPixels(final SpreadsheetViewportAnchor anchor,
-                                                     final int count,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveLeftPixels(final SpreadsheetViewportAnchor anchor,
+                                                         final int count,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return anchor.opposite()
             .cell(this)
-            .leftPixels(
+            .moveLeftPixels(
                 anchor,
                 count,
                 context
@@ -531,7 +531,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         return this.extendColumn(
             anchor,
             (c) -> Cast.to(
-                c.leftPixels(
+                c.moveLeftPixels(
                     anchor,
                     count,
                     context
