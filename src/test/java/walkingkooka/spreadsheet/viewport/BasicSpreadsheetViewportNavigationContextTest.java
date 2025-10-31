@@ -259,7 +259,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void moveLeftAndCheck(final String columnHidden,
                                   final String column) {
-        this.moveLeftAndCheck(
+        this.moveLeftColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
@@ -274,7 +274,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void moveLeftAndCheck(final String columnHidden,
                                   final String column,
                                   final String expected) {
-        this.moveLeftAndCheck(
+        this.moveLeftColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
