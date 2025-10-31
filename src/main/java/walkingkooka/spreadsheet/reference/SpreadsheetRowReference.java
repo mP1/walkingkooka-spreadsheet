@@ -418,7 +418,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     public Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
                                                 final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
-            context.upRow(
+            context.moveUpRow(
                 this
             )
         );
