@@ -321,11 +321,11 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
     // navigate.........................................................................................................
 
     @Override
-    public Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveLeftColumn(final SpreadsheetViewportAnchor anchor,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return anchor.opposite()
             .column(this)
-            .leftColumn(
+            .moveLeftColumn(
                 anchor,
                 context
             );

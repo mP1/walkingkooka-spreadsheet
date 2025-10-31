@@ -1463,8 +1463,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     // navigate.........................................................................................................
 
     @Test
-    public void testLeftColumn() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumn() {
+        this.moveLeftColumnAndCheck(
             "B2",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1474,8 +1474,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftColumnFirst() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnFirst() {
+        this.moveLeftColumnAndCheck(
             "A2",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1485,10 +1485,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftColumnLast() {
+    public void testMoveLeftColumnLast() {
         final SpreadsheetColumnReference column = SpreadsheetReferenceKind.RELATIVE.lastColumn();
 
-        this.leftColumnAndCheck(
+        this.moveLeftColumnAndCheck(
             column + "1",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1498,8 +1498,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftColumnSkipsHidden() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnSkipsHidden() {
+        this.moveLeftColumnAndCheck(
             "D1",
             SpreadsheetViewportAnchor.NONE,
             "C",
@@ -1509,8 +1509,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testLeftColumnHiddenRow() {
-        this.leftColumnAndCheck(
+    public void testMoveLeftColumnHiddenRow() {
+        this.moveLeftColumnAndCheck(
             "D1",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,

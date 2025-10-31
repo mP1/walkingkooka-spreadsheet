@@ -413,11 +413,11 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     }
 
     @Override
-    public Optional<SpreadsheetSelection> leftColumn(final SpreadsheetViewportAnchor anchor,
-                                                     final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveLeftColumn(final SpreadsheetViewportAnchor anchor,
+                                                         final SpreadsheetViewportNavigationContext context) {
         return anchor.opposite()
             .cell(this)
-            .leftColumn(
+            .moveLeftColumn(
                 anchor,
                 context
             );
@@ -514,7 +514,7 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
         return this.extendColumn(
             anchor,
             (c) -> Cast.to(
-                c.leftColumn(
+                c.moveLeftColumn(
                     anchor,
                     context
                 )
