@@ -393,8 +393,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 "      width: 100.0\n" +
                 "      height: 50.0\n" +
                 "  navigations:\n" +
-                "    left column\n" +
-                "    up row\n"
+                "    move left column\n" +
+                "    move up row\n"
         );
     }
 
@@ -424,7 +424,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 "      height: 50.0\n" +
                 "  anchoredSelection:row-range 12:34 TOP\n" +
                 "  navigations:\n" +
-                "    left column\n"
+                "    move left column\n"
         );
     }
 
@@ -529,8 +529,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             HOME.viewportRectangle(111, 222)
                 .viewport()
                 .setIncludeFrozenColumnsRows(true)
-                .setNavigations(SpreadsheetViewportNavigationList.parse("right 99px,down 999px")),
-            "/home/A1/width/111/height/222/includeFrozenColumnsRows/true/navigations/right%2099px,down%20999px"
+                .setNavigations(SpreadsheetViewportNavigationList.parse("scroll right 99px,scroll down 999px")),
+            "/home/A1/width/111/height/222/includeFrozenColumnsRows/true/navigations/scroll%20right%2099px,scroll%20down%20999px"
         );
     }
 
@@ -540,7 +540,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             HOME.viewportRectangle(111, 222)
                 .viewport()
                 .setNavigations(NAVIGATIONS),
-            "/home/A1/width/111/height/222/navigations/left%20column"
+            "/home/A1/width/111/height/222/navigations/move%20left%20column"
         );
     }
 
@@ -548,7 +548,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     public void testUrlFragmentAllProperties() {
         this.urlFragmentAndCheck(
             this.createObject(),
-            "/home/A1/width/100/height/50/selection/B2:C3/top-left/navigations/left%20column"
+            "/home/A1/width/100/height/50/selection/B2:C3/top-left/navigations/move%20left%20column"
         );
     }
 
@@ -567,7 +567,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 "    },\n" +
                 "    \"anchor\": \"TOP_LEFT\"\n" +
                 "  },\n" +
-                "  \"navigations\": \"left column\"\n" +
+                "  \"navigations\": \"move left column\"\n" +
                 "}"
         );
     }
@@ -587,7 +587,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                 "    },\n" +
                 "    \"anchor\": \"TOP_LEFT\"\n" +
                 "  },\n" +
-                "  \"navigations\": \"left column\"\n" +
+                "  \"navigations\": \"move left column\"\n" +
                 "}"
         );
     }
@@ -910,7 +910,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             300
         );
         this.fromUrlFragmentAndCheck(
-            rectangle.urlFragment() + "/selection/B2/navigations/right 400px",
+            rectangle.urlFragment() + "/selection/B2/navigations/scroll right 400px",
             rectangle.viewport()
                 .setAnchoredSelection(
                     Optional.of(
@@ -918,7 +918,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                             .setDefaultAnchor()
                     )
                 ).setNavigations(
-                    SpreadsheetViewportNavigationList.parse("right 400px")
+                    SpreadsheetViewportNavigationList.parse("scroll right 400px")
                 )
         );
     }
@@ -931,7 +931,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             300
         );
         this.fromUrlFragmentAndCheck(
-            rectangle.urlFragment() + "/selection/C3:D4/top-left/navigations/right 400px",
+            rectangle.urlFragment() + "/selection/C3:D4/top-left/navigations/scroll right 400px",
             rectangle.viewport()
                 .setAnchoredSelection(
                     Optional.of(
@@ -939,7 +939,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
                             .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
                     )
                 ).setNavigations(
-                    SpreadsheetViewportNavigationList.parse("right 400px")
+                    SpreadsheetViewportNavigationList.parse("scroll right 400px")
                 )
         );
     }
@@ -952,10 +952,10 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             300
         );
         this.fromUrlFragmentAndCheck(
-            rectangle.urlFragment() + "/navigations/right 555px",
+            rectangle.urlFragment() + "/navigations/scroll right 555px",
             rectangle.viewport()
                 .setNavigations(
-                    SpreadsheetViewportNavigationList.parse("right 555px")
+                    SpreadsheetViewportNavigationList.parse("scroll right 555px")
                 )
         );
     }

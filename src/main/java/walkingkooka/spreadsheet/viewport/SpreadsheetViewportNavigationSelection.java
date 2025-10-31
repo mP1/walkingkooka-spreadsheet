@@ -40,6 +40,10 @@ abstract class SpreadsheetViewportNavigationSelection<T extends SpreadsheetSelec
      */
     final T selection;
 
+    // select cell A1
+    // select column A
+    // select row 1
+    // move&
     @Override
     public final String text() {
         return this.textPrefix() + this.selection.textLabel().toLowerCase() + " " + this.selection;

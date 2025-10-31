@@ -48,11 +48,11 @@ abstract class SpreadsheetViewportNavigationScroll2 extends SpreadsheetViewportN
 
     // text.............................................................................................................
 
-    // down 123 px
+    // scroll down 123px
 
     @Override
     public final String text() {
-        return this.textToken() + " " + this.value + "px";
+        return "scroll " + this.textToken() + " " + this.value + "px";
     }
 
     abstract String textToken();

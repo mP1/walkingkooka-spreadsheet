@@ -46,7 +46,6 @@ import walkingkooka.text.cursor.parser.LongParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -61,9 +60,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
 /**
@@ -151,7 +148,7 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         final TextCursor cursor = TextCursors.charSequence(text);
         final List<SpreadsheetViewportNavigation> navigations = Lists.array();
 
-        final Supplier<IllegalArgumentException> ice = () -> new InvalidCharacterException(
+        final Supplier<InvalidCharacterException> ice = () -> new InvalidCharacterException(
             text,
             cursor.lineInfo()
                 .textOffset()
@@ -160,97 +157,90 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         while (cursor.isNotEmpty()) {
             final SpreadsheetViewportNavigation navigation;
 
-            if (isMatch(LEFT, cursor)) {
-                navigation = parseSpaceColumnOrRowOrPixels(
+            // select cell A1
+            // select column A
+            // select row 1
+            if(isMatch(
+                SELECT,
+                cursor
+            )) {
+                navigation = parseCellColumnOrRow(
                     cursor,
-                    COLUMN,
-                    SpreadsheetViewportNavigation::moveLeft,
-                    SpreadsheetViewportNavigation::scrollLeft
+                    SpreadsheetViewportNavigation::cell,
+                    SpreadsheetViewportNavigation::column,
+                    SpreadsheetViewportNavigation::row,
+                    ice
                 );
             } else {
-                if (isMatch(RIGHT, cursor)) {
-                    navigation = parseSpaceColumnOrRowOrPixels(
+                if (isMatch(
+                    EXTEND,
+                    cursor
+                )) {
+                    navigation = parseCellColumnOrRow(
                         cursor,
-                        COLUMN,
-                        SpreadsheetViewportNavigation::moveRight,
-                        SpreadsheetViewportNavigation::scrollRight
+                        SpreadsheetViewportNavigation::extendCell,
+                        SpreadsheetViewportNavigation::extendColumn,
+                        SpreadsheetViewportNavigation::extendRow,
+                        ice
                     );
                 } else {
-                    if (isMatch(UP, cursor)) {
-                        navigation = parseSpaceColumnOrRowOrPixels(
+                    // move&extend SPACE ( left | right | top | bottom ) SPACE ( column | row)
+                    if (isMatch(
+                        MOVE_EXTEND,
+                        cursor
+                    )) {
+                        navigation = parseDownLeftRightUpColumnRow(
                             cursor,
-                            ROW,
-                            SpreadsheetViewportNavigation::moveUp,
-                            SpreadsheetViewportNavigation::scrollUp
+                            SpreadsheetViewportNavigation.extendMoveDown(),
+                            SpreadsheetViewportNavigation.extendMoveLeft(),
+                            SpreadsheetViewportNavigation.extendMoveRight(),
+                            SpreadsheetViewportNavigation.extendMoveUp(),
+                            ice
                         );
                     } else {
-                        if (isMatch(DOWN, cursor)) {
-                            navigation = parseSpaceColumnOrRowOrPixels(
+                        // move SPACE ( left | right | top | bottom ) SPACE ( column | row)
+                        if (isMatch(
+                            MOVE,
+                            cursor
+                        )) {
+                            navigation = parseDownLeftRightUpColumnRow(
                                 cursor,
-                                ROW,
-                                SpreadsheetViewportNavigation::moveDown,
-                                SpreadsheetViewportNavigation::scrollDown
+                                SpreadsheetViewportNavigation.moveDown(),
+                                SpreadsheetViewportNavigation.moveLeft(),
+                                SpreadsheetViewportNavigation.moveRight(),
+                                SpreadsheetViewportNavigation.moveUp(),
+                                ice
                             );
                         } else {
-                            if (isMatch(EXTEND_LEFT, cursor)) {
-                                navigation = parseSpaceColumnOrRowOrPixels(
+                            // scroll&extend SPACE ( left | right | top | bottom ) SPACE 123px
+                            if (isMatch(
+                                SCROLL_EXTEND,
+                                cursor
+                            )) {
+                                navigation = parseDownLeftRightUpPixels(
                                     cursor,
-                                    COLUMN,
-                                    SpreadsheetViewportNavigation::extendMoveLeft,
-                                    SpreadsheetViewportNavigation::extendScrollLeft
+                                    SpreadsheetViewportNavigation::extendScrollDown,
+                                    SpreadsheetViewportNavigation::extendScrollLeft,
+                                    SpreadsheetViewportNavigation::extendScrollRight,
+                                    SpreadsheetViewportNavigation::extendScrollUp,
+                                    ice
                                 );
                             } else {
-                                if (isMatch(EXTEND_RIGHT, cursor)) {
-                                    navigation = parseSpaceColumnOrRowOrPixels(
+                                // scroll SPACE ( left | right | top | bottom ) SPACE 123px
+                                if (isMatch(
+                                    SCROLL,
+                                    cursor
+                                )) {
+                                    navigation = parseDownLeftRightUpPixels(
                                         cursor,
-                                        COLUMN,
-                                        SpreadsheetViewportNavigation::extendMoveRight,
-                                        SpreadsheetViewportNavigation::extendScrollRight
+                                        SpreadsheetViewportNavigation::scrollDown,
+                                        SpreadsheetViewportNavigation::scrollLeft,
+                                        SpreadsheetViewportNavigation::scrollRight,
+                                        SpreadsheetViewportNavigation::scrollUp,
+                                        ice
                                     );
                                 } else {
-                                    if (isMatch(EXTEND_UP, cursor)) {
-                                        navigation = parseSpaceColumnOrRowOrPixels(
-                                            cursor,
-                                            ROW,
-                                            SpreadsheetViewportNavigation::extendMoveUp,
-                                            SpreadsheetViewportNavigation::extendScrollUp
-                                        );
-                                    } else {
-                                        if (isMatch(EXTEND_DOWN, cursor)) {
-                                            navigation = parseSpaceColumnOrRowOrPixels(
-                                                cursor,
-                                                ROW,
-                                                SpreadsheetViewportNavigation::extendMoveDown,
-                                                SpreadsheetViewportNavigation::extendScrollDown
-                                            );
-                                        } else {
-                                            if (isMatch(SELECT, cursor)) {
-                                                navigation = parseCellColumnOrRow(
-                                                    cursor,
-                                                    SpreadsheetViewportNavigation::cell,
-                                                    SpreadsheetViewportNavigation::column,
-                                                    SpreadsheetViewportNavigation::row,
-                                                    ice
-                                                );
-                                            } else {
-                                                if (isMatch(EXTEND, cursor)) {
-                                                    navigation = parseCellColumnOrRow(
-                                                        cursor,
-                                                        SpreadsheetViewportNavigation::extendCell,
-                                                        SpreadsheetViewportNavigation::extendColumn,
-                                                        SpreadsheetViewportNavigation::extendRow,
-                                                        ice
-                                                    );
-                                                } else {
-                                                    throw new InvalidCharacterException(
-                                                        text,
-                                                        cursor.lineInfo()
-                                                            .textOffset()
-                                                    );
-                                                }
-                                            }
-                                        }
-                                    }
+                                    throw ice.get();
                                 }
                             }
                         }
@@ -270,6 +260,264 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         return with(navigations);
     }
 
+    // select cell A1
+    // select column AB
+    // select row 23
+    // extend cell A1
+    // extend column A
+    // extend row B
+    private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
+                                                                      final Function<SpreadsheetCellReference, SpreadsheetViewportNavigation> cell,
+                                                                      final Function<SpreadsheetColumnReference, SpreadsheetViewportNavigation> column,
+                                                                      final Function<SpreadsheetRowReference, SpreadsheetViewportNavigation> row,
+                                                                      final Supplier<InvalidCharacterException> invalidCharacter) {
+        parseSpace(cursor);
+
+        final SpreadsheetViewportNavigation navigation;
+
+        if (isMatch(CELL_LITERAL, cursor)) {
+            parseSpace(cursor);
+
+            navigation = cell.apply(
+                parseSelection(
+                    CELL_REFERENCE,
+                    cursor,
+                    CellSpreadsheetFormulaParserToken.class
+                ).reference()
+            );
+        } else {
+            if (isMatch(COLUMN_LITERAL, cursor)) {
+                parseSpace(cursor);
+
+                navigation = column.apply(
+                    parseSelection(
+                        COLUMN_REFERENCE,
+                        cursor,
+                        ColumnSpreadsheetFormulaParserToken.class
+                    ).reference()
+                );
+            } else {
+                if (isMatch(ROW_LITERAL, cursor)) {
+                    parseSpace(cursor);
+
+                    navigation = row.apply(
+                        parseSelection(
+                            ROW_REFERENCE,
+                            cursor,
+                            RowSpreadsheetFormulaParserToken.class
+                        ).reference()
+                    );
+                } else {
+                    throw invalidCharacter.get();
+                }
+            }
+        }
+
+        return navigation;
+    }
+
+    private final static Parser<ParserContext> CELL_LITERAL = stringParser("cell");
+
+    private final static Parser<ParserContext> COLUMN_LITERAL = stringParser("column");
+
+    private final static Parser<ParserContext> ROW_LITERAL = stringParser("row");
+
+    private final static Parser<ParserContext> CELL_REFERENCE = SpreadsheetFormulaParsers.cell()
+        .orReport(ParserReporters.basic())
+        .cast();
+
+    private final static Parser<ParserContext> COLUMN_REFERENCE = SpreadsheetFormulaParsers.column()
+        .orReport(ParserReporters.basic())
+        .cast();
+
+    private final static Parser<ParserContext> ROW_REFERENCE = SpreadsheetFormulaParsers.row()
+        .orReport(ParserReporters.basic())
+        .cast();
+
+    private static <T extends SpreadsheetFormulaParserToken> T parseSelection(final Parser<ParserContext> parser,
+                                                                              final TextCursor cursor,
+                                                                              final Class<T> parserToken) {
+        return parser.parse(
+                cursor,
+                PARSER_CONTEXT
+            ).get()
+            .cast(parserToken);
+    }
+
+    private final static Parser<ParserContext> MOVE = stringParser("move");
+
+    private final static Parser<ParserContext> MOVE_EXTEND = stringParser("move&extend");
+
+    private final static Parser<ParserContext> SCROLL = stringParser("scroll");
+
+    private final static Parser<ParserContext> SCROLL_EXTEND = stringParser("scroll&extend");
+
+    // move left column
+    // move&extend left column
+    private static SpreadsheetViewportNavigation parseDownLeftRightUpColumnRow(final TextCursor cursor,
+                                                                               final SpreadsheetViewportNavigation down,
+                                                                               final SpreadsheetViewportNavigation left,
+                                                                               final SpreadsheetViewportNavigation right,
+                                                                               final SpreadsheetViewportNavigation up,
+                                                                               final Supplier<InvalidCharacterException> invalidCharacter) {
+        parseSpace(cursor);
+
+        final SpreadsheetViewportNavigation navigation;
+
+        if (isMatch(DOWN, cursor)) {
+            navigation = parseRow(
+                cursor,
+                down,
+                invalidCharacter
+            );
+        } else {
+            if (isMatch(LEFT, cursor)) {
+                navigation = parseColumn(
+                    cursor,
+                    left,
+                    invalidCharacter
+                );
+            } else {
+                if (isMatch(RIGHT, cursor)) {
+                    navigation = parseColumn(
+                        cursor,
+                        right,
+                        invalidCharacter
+                    );
+                } else {
+                    if (isMatch(UP, cursor)) {
+                        navigation = parseRow(
+                            cursor,
+                            up,
+                            invalidCharacter
+                        );
+                    } else {
+                        throw invalidCharacter.get();
+                    }
+                }
+            }
+        }
+
+        return navigation;
+    }
+
+    // move left column
+    // move right column
+    private static SpreadsheetViewportNavigation parseColumn(final TextCursor cursor,
+                                                             final SpreadsheetViewportNavigation column,
+                                                             final Supplier<InvalidCharacterException> invalidCharacter) {
+        return parseColumnOrRow(
+            cursor,
+            COLUMN_LITERAL,
+            column,
+            invalidCharacter
+        );
+    }
+
+    // move up row
+    // move down row
+    private static SpreadsheetViewportNavigation parseRow(final TextCursor cursor,
+                                                          final SpreadsheetViewportNavigation row,
+                                                          final Supplier<InvalidCharacterException> invalidCharacter) {
+        return parseColumnOrRow(
+            cursor,
+            ROW_LITERAL,
+            row,
+            invalidCharacter
+        );
+    }
+
+    private static SpreadsheetViewportNavigation parseColumnOrRow(final TextCursor cursor,
+                                                                  final Parser<ParserContext> columnOrRow,
+                                                                  final SpreadsheetViewportNavigation navigation,
+                                                                  final Supplier<InvalidCharacterException> invalidCharacter) {
+        parseSpace(cursor);
+
+        if (isMatch(columnOrRow, cursor)) {
+            return navigation;
+        } else {
+            throw invalidCharacter.get();
+        }
+    }
+
+    // move left column
+    // move&extend left column
+    private static SpreadsheetViewportNavigation parseDownLeftRightUpPixels(final TextCursor cursor,
+                                                                            final Function<Integer, SpreadsheetViewportNavigation> down,
+                                                                            final Function<Integer, SpreadsheetViewportNavigation> left,
+                                                                            final Function<Integer, SpreadsheetViewportNavigation> right,
+                                                                            final Function<Integer, SpreadsheetViewportNavigation> up,
+                                                                            final Supplier<InvalidCharacterException> invalidCharacter) {
+        parseSpace(cursor);
+
+        final SpreadsheetViewportNavigation navigation;
+
+        if (isMatch(DOWN, cursor)) {
+            navigation = parsePixels(
+                cursor,
+                down,
+                invalidCharacter
+            );
+        } else {
+            if (isMatch(LEFT, cursor)) {
+                navigation = parsePixels(
+                    cursor,
+                    left,
+                    invalidCharacter
+                );
+            } else {
+                if (isMatch(RIGHT, cursor)) {
+                    navigation = parsePixels(
+                        cursor,
+                        right,
+                        invalidCharacter
+                    );
+                } else {
+                    if (isMatch(UP, cursor)) {
+                        navigation = parsePixels(
+                            cursor,
+                            up,
+                            invalidCharacter
+                        );
+                    } else {
+                        throw invalidCharacter.get();
+                    }
+                }
+            }
+        }
+
+        return navigation;
+    }
+
+    private static SpreadsheetViewportNavigation parsePixels(final TextCursor cursor,
+                                                             final Function<Integer, SpreadsheetViewportNavigation> factory,
+                                                             final Supplier<InvalidCharacterException> invalidCharacter) {
+        parseSpace(cursor);
+
+        final SpreadsheetViewportNavigation navigation = factory.apply(
+            VALUE.parse(
+                    cursor,
+                    PARSER_CONTEXT
+                ).get()
+                .cast(LongParserToken.class)
+                .value()
+                .intValue()
+        );
+
+        PX.parse(
+            cursor,
+            PARSER_CONTEXT
+        );
+
+        return navigation;
+    }
+
+    private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
+        .orReport(ParserReporters.basic());
+
+    private final static Parser<ParserContext> PX = stringParser("px")
+        .orReport(ParserReporters.basic());
+
     private final static Parser<ParserContext> LEFT = stringParser("left");
 
     private final static Parser<ParserContext> RIGHT = stringParser("right");
@@ -277,14 +525,6 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     private final static Parser<ParserContext> UP = stringParser("up");
 
     private final static Parser<ParserContext> DOWN = stringParser("down");
-
-    private final static Parser<ParserContext> EXTEND_LEFT = stringParser("extend-left");
-
-    private final static Parser<ParserContext> EXTEND_RIGHT = stringParser("extend-right");
-
-    private final static Parser<ParserContext> EXTEND_UP = stringParser("extend-up");
-
-    private final static Parser<ParserContext> EXTEND_DOWN = stringParser("extend-down");
 
     private final static Parser<ParserContext> SEPARATOR_PARSER = characterParserOrReport(
         CharPredicates.is(SEPARATOR.character())
@@ -300,57 +540,6 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
             PARSER_CONTEXT).isPresent();
     }
 
-    /**
-     * Attempts to match the column or row suffix and if that fails expects a pixel value followed by px.
-     * <pre>
-     * left column
-     * left 123px
-     * </pre>
-     */
-    private static SpreadsheetViewportNavigation parseSpaceColumnOrRowOrPixels(final TextCursor cursor,
-                                                                               final Parser<ParserContext> columnOrRowParser,
-                                                                               final Supplier<SpreadsheetViewportNavigation> columnOrRowNavigation,
-                                                                               final IntFunction<SpreadsheetViewportNavigation> columnOrRowPixel) {
-        parseSpace(cursor);
-
-        final SpreadsheetViewportNavigation navigation;
-
-        final Optional<ParserToken> maybeColumnOrRow = columnOrRowParser.parse(cursor, PARSER_CONTEXT);
-        if (maybeColumnOrRow.isPresent()) {
-            navigation = columnOrRowNavigation.get();
-        } else {
-            navigation = columnOrRowPixel.apply(
-                VALUE.parse(
-                        cursor,
-                        PARSER_CONTEXT
-                    ).get()
-                    .cast(LongParserToken.class)
-                    .value()
-                    .intValue()
-            );
-
-            PX.parse(
-                cursor,
-                PARSER_CONTEXT
-            );
-        }
-
-        return navigation;
-    }
-
-    private final static Parser<ParserContext> VALUE = Parsers.longParser(10)
-        .orReport(ParserReporters.basic());
-
-    private final static Parser<ParserContext> CELL = stringParser("cell");
-
-    private final static Parser<ParserContext> COLUMN = stringParser("column");
-
-    private final static Parser<ParserContext> ROW = stringParser("row");
-
-    private final static Parser<ParserContext> PX = stringParser("px")
-        .orReport(ParserReporters.basic());
-
-
     // select cell A1
     // select column A
     // select row B
@@ -360,85 +549,6 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     // extend column A
     // extend row B
     private final static Parser<ParserContext> EXTEND = stringParser("extend");
-
-
-    // select cell A1
-    // select column AB
-    // select row 23
-    // extend cell A1
-    // extend column A
-    // extend row B
-    private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
-                                                                      final Function<SpreadsheetCellReference, SpreadsheetViewportNavigation> cell,
-                                                                      final Function<SpreadsheetColumnReference, SpreadsheetViewportNavigation> column,
-                                                                      final Function<SpreadsheetRowReference, SpreadsheetViewportNavigation> row,
-                                                                      final Supplier<IllegalArgumentException> invalidCharacter) {
-        parseSpace(cursor);
-
-        final SpreadsheetViewportNavigation navigation;
-
-        if (isMatch(CELL, cursor)) {
-            parseSpace(cursor);
-
-            navigation = cell.apply(
-                parseSelection(
-                    CELL_PARSER,
-                    cursor,
-                    CellSpreadsheetFormulaParserToken.class
-                ).reference()
-            );
-        } else {
-            if (isMatch(COLUMN, cursor)) {
-                parseSpace(cursor);
-
-                navigation = column.apply(
-                    parseSelection(
-                        COLUMN_PARSER,
-                        cursor,
-                        ColumnSpreadsheetFormulaParserToken.class
-                    ).reference()
-                );
-            } else {
-                if (isMatch(ROW, cursor)) {
-                    parseSpace(cursor);
-
-                    navigation = row.apply(
-                        parseSelection(
-                            ROW_PARSER,
-                            cursor,
-                            RowSpreadsheetFormulaParserToken.class
-                        ).reference()
-                    );
-                } else {
-                    throw invalidCharacter.get();
-                }
-            }
-        }
-
-        return navigation;
-    }
-
-    private final static Parser<ParserContext> CELL_PARSER = SpreadsheetFormulaParsers.cell()
-        .orReport(ParserReporters.basic())
-        .cast();
-
-    private final static Parser<ParserContext> COLUMN_PARSER = SpreadsheetFormulaParsers.column()
-        .orReport(ParserReporters.basic())
-        .cast();
-
-    private final static Parser<ParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
-        .orReport(ParserReporters.basic())
-        .cast();
-
-    private static <T extends SpreadsheetFormulaParserToken> T parseSelection(final Parser<ParserContext> parser,
-                                                                              final TextCursor cursor,
-                                                                              final Class<T> parserToken) {
-        return parser.parse(
-                cursor,
-                PARSER_CONTEXT
-            ).get()
-            .cast(parserToken);
-    }
 
     /**
      * Parses a required space, throwing an exception if it was not found.

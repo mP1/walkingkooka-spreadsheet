@@ -101,33 +101,33 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
     @Test
     public void testParseUnknownFails3() {
-        final String text = "right row";
+        final String text = "move right row";
 
         this.parseStringFails(
             text,
             new InvalidCharacterException(
                 text,
-                "right ".length()
+                "move right ".length()
             )
         );
     }
 
     @Test
     public void testParseInvalidValue() {
-        final String text = "right 123A";
+        final String text = "move right 123A";
 
         this.parseStringFails(
             text,
             new InvalidCharacterException(
                 text,
-                "right 123".length()
+                "move right ".length()
             )
         );
     }
 
     @Test
     public void testParseMissingPxSuffix() {
-        final String text = "down 123";
+        final String text = "scroll down 123";
 
         this.parseStringFails(
             text,
@@ -137,7 +137,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
     @Test
     public void testParseIncompletePxSuffix() {
-        final String text = "extend-left 45p";
+        final String text = "scroll left 45p";
 
         this.parseStringFails(
             text,
@@ -235,7 +235,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testParseMoveLeftMoveRightMoveUp() {
         this.parseStringAndCheck(
-            "left column,right column,up row,down row",
+            "move left column,move right column,move up row,move down row",
             SpreadsheetViewportNavigation.moveLeft(),
             SpreadsheetViewportNavigation.moveRight(),
             SpreadsheetViewportNavigation.moveUp(),
@@ -246,7 +246,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testParseExtendMoveLeftExtendMoveRightExtendMoveUp() {
         this.parseStringAndCheck(
-            "extend-left column,extend-right column,extend-up row,extend-down row",
+            "move&extend left column,move&extend right column,move&extend up row,move&extend down row",
             SpreadsheetViewportNavigation.extendMoveLeft(),
             SpreadsheetViewportNavigation.extendMoveRight(),
             SpreadsheetViewportNavigation.extendMoveUp(),
@@ -257,7 +257,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testParseScrollLeftScrollRightScrollUp() {
         this.parseStringAndCheck(
-            "left 10px,right 20px,up 30px,down 40px",
+            "scroll left 10px,scroll right 20px,scroll up 30px,scroll down 40px",
             SpreadsheetViewportNavigation.scrollLeft(10),
             SpreadsheetViewportNavigation.scrollRight(20),
             SpreadsheetViewportNavigation.scrollUp(30),
@@ -268,7 +268,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testParseExtendScrollLeftExtendScrollRightExtendScrollUp() {
         this.parseStringAndCheck(
-            "extend-left 10px,extend-right 20px,extend-up 30px,extend-down 40px",
+            "scroll&extend left 10px,scroll&extend right 20px,scroll&extend up 30px,scroll&extend down 40px",
             SpreadsheetViewportNavigation.extendScrollLeft(10),
             SpreadsheetViewportNavigation.extendScrollRight(20),
             SpreadsheetViewportNavigation.extendScrollUp(30),
@@ -279,7 +279,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testParseExtendScrollLeftExtendScrollRightExtendScrollUpSelectCell() {
         this.parseStringAndCheck(
-            "extend-left 10px,extend-right 20px,extend-up 30px,extend-down 40px,select cell A1",
+            "scroll&extend left 10px,scroll&extend right 20px,scroll&extend up 30px,scroll&extend down 40px,select cell A1",
             SpreadsheetViewportNavigation.extendScrollLeft(10),
             SpreadsheetViewportNavigation.extendScrollRight(20),
             SpreadsheetViewportNavigation.extendScrollUp(30),
@@ -322,7 +322,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
     @Test
     public void testHasText() {
-        final String text = "left column,right column,up row,down row";
+        final String text = "move left column,move right column,move up row,move down row";
 
         this.textAndCheck(
             SpreadsheetViewportNavigationList.parse(text),
@@ -741,7 +741,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testUnmarshall2() {
         this.unmarshallAndCheck(
-            "\"extend-left column,extend-right column,extend-up row,extend-down row,select cell A1\"",
+            "\"move&extend left column,move&extend right column,move&extend up row,move&extend down row,select cell A1\"",
             SpreadsheetViewportNavigationList.EMPTY.setElements(
                 Lists.of(
                     SpreadsheetViewportNavigation.extendMoveLeft(),
@@ -766,7 +766,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Override
     public SpreadsheetViewportNavigationList createJsonNodeMarshallingValue() {
         return Cast.to(
-            SpreadsheetViewportNavigationList.parse("extend-left column,extend-right column,extend-up row,extend-down row")
+            SpreadsheetViewportNavigationList.parse("move&extend left column,move&extend right column,move&extend up row,move&extend down row,scroll up 123px")
         );
     }
 
@@ -774,7 +774,8 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
 
     @Test
     public void testUrlFragment() {
-        final String text = "extend-left column,extend-right column,extend-up row,extend-down row";
+        final String text = "move&extend left column,move&extend right column,move&extend up row,move&extend down row";
+
         this.urlFragmentAndCheck(
             SpreadsheetViewportNavigationList.parse(text),
             text

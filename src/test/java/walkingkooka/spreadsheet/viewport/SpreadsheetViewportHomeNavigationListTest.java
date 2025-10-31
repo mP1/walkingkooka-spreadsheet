@@ -158,8 +158,8 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
                 "  home:\n" +
                 "    cell A1\n" +
                 "  navigations:\n" +
-                "    left column\n" +
-                "    up row\n"
+                "    move left column\n" +
+                "    move up row\n"
         );
     }
 
@@ -180,7 +180,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
                 HOME,
                 NAVIGATIONS
             ),
-            "/A1/left%20column"
+            "/A1/move%20left%20column"
         );
     }
 
@@ -201,7 +201,7 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
                 HOME,
                 NAVIGATIONS
             ),
-            "A1 left column"
+            "A1 move left column"
         );
     }
 
@@ -226,10 +226,10 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
     @Test
     public void testFromUrlFragmentWithCellAndNavigations() {
         this.fromUrlFragmentAndCheck(
-            "/" + HOME.urlFragment() + "/right 555px",
+            "/" + HOME.urlFragment() + "/move left column,scroll right 555px",
             SpreadsheetViewportHomeNavigationList.with(
                 HOME,
-                SpreadsheetViewportNavigationList.parse("right 555px")
+                SpreadsheetViewportNavigationList.parse("move left column,scroll right 555px")
             )
         );
     }
