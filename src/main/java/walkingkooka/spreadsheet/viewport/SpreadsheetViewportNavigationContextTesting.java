@@ -243,61 +243,61 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // downRow..........................................................................................................
+    // moveDownRow......................................................................................................
 
     @Test
-    default void downRowWithNullFails() {
+    default void testMoveDownRowWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext().downRow(null)
         );
     }
 
-    default void downRowAndCheck(final C context,
-                                 final String reference) {
-        this.downRowAndCheck(
+    default void moveDownRowAndCheck(final C context,
+                                     final String reference) {
+        this.moveDownRowAndCheck(
             context,
             SpreadsheetSelection.parseRow(reference),
             Optional.empty()
         );
     }
 
-    default void downRowAndCheck(final C context,
-                                 final String reference,
-                                 final String expected) {
-        this.downRowAndCheck(
+    default void moveDownRowAndCheck(final C context,
+                                     final String reference,
+                                     final String expected) {
+        this.moveDownRowAndCheck(
             context,
             SpreadsheetSelection.parseRow(reference),
             SpreadsheetSelection.parseRow(expected)
         );
     }
 
-    default void downRowAndCheck(final C context,
-                                 final SpreadsheetRowReference reference) {
-        this.downRowAndCheck(
+    default void moveDownRowAndCheck(final C context,
+                                     final SpreadsheetRowReference reference) {
+        this.moveDownRowAndCheck(
             context,
             reference,
             Optional.empty()
         );
     }
 
-    default void downRowAndCheck(final C context,
-                                 final SpreadsheetRowReference reference,
-                                 final SpreadsheetRowReference expected) {
-        this.downRowAndCheck(
+    default void moveDownRowAndCheck(final C context,
+                                     final SpreadsheetRowReference reference,
+                                     final SpreadsheetRowReference expected) {
+        this.moveDownRowAndCheck(
             context,
             reference,
             Optional.of(expected)
         );
     }
 
-    default void downRowAndCheck(final C context,
-                                 final SpreadsheetRowReference reference,
-                                 final Optional<SpreadsheetRowReference> expected) {
+    default void moveDownRowAndCheck(final C context,
+                                     final SpreadsheetRowReference reference,
+                                     final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
             expected,
             context.downRow(reference),
-            () -> reference + " downRow " + context
+            () -> reference + " moveDownRow " + context
         );
     }
 

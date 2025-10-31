@@ -572,7 +572,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void downRowAndCheck(final String rowHidden,
                                  final String row) {
-        this.downRowAndCheck(
+        this.moveDownRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
@@ -1099,7 +1099,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void downRowAndCheck(final String rowHidden,
                                  final String row,
                                  final String expected) {
-        this.downRowAndCheck(
+        this.moveDownRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
