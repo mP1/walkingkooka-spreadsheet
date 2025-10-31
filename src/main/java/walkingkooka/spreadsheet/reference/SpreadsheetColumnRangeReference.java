@@ -369,8 +369,8 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
     }
 
     @Override
-    public Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
-                                                final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveUpRow(final SpreadsheetViewportAnchor anchor,
+                                                    final SpreadsheetViewportNavigationContext context) {
         return this.emptyIfHidden(context);
     }
 

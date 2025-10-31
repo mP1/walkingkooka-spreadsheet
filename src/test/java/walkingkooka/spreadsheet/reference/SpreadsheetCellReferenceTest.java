@@ -1534,8 +1534,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpRow() {
-        this.upRowAndCheck(
+    public void testMoveUpRow() {
+        this.moveUpRowAndCheck(
             "B2",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1545,8 +1545,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpRowFirst() {
-        this.upRowAndCheck(
+    public void testMoveUpRowFirst() {
+        this.moveUpRowAndCheck(
             "B1",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1556,10 +1556,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpRowLast() {
+    public void testMoveUpRowLast() {
         final SpreadsheetRowReference row = SpreadsheetReferenceKind.RELATIVE.lastRow();
 
-        this.upRowAndCheck(
+        this.moveUpRowAndCheck(
             "B" + row,
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1569,8 +1569,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpRowSkipsHidden() {
-        this.upRowAndCheck(
+    public void testMoveUpRowSkipsHidden() {
+        this.moveUpRowAndCheck(
             "B4",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,
@@ -1580,8 +1580,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testUpRowIgnoresHiddenColumn() {
-        this.upRowAndCheck(
+    public void testMoveUpRowIgnoresHiddenColumn() {
+        this.moveUpRowAndCheck(
             "B2",
             SpreadsheetViewportAnchor.NONE,
             "B",

@@ -1093,8 +1093,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testUpRowHidden() {
-        this.upRowAndCheck(
+    public void testMoveUpRowHidden() {
+        this.moveUpRowAndCheck(
             "C",
             SpreadsheetViewportAnchor.NONE,
             "C",
@@ -1104,8 +1104,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testUpRow() {
-        this.upRowAndCheck(
+    public void testMoveUpRow() {
+        this.moveUpRowAndCheck(
             "B",
             SpreadsheetViewportAnchor.NONE,
             NO_HIDDEN_COLUMNS,

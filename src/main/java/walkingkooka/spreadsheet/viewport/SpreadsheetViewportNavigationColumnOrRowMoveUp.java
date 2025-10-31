@@ -44,7 +44,7 @@ final class SpreadsheetViewportNavigationColumnOrRowMoveUp extends SpreadsheetVi
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.upRow(
+        return selection.moveUpRow(
             anchor,
             context
         ).map(s -> s.setAnchorOrDefault(anchor));

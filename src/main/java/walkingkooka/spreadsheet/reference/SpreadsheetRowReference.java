@@ -415,8 +415,8 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     }
 
     @Override
-    public Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
-                                                final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveUpRow(final SpreadsheetViewportAnchor anchor,
+                                                    final SpreadsheetViewportNavigationContext context) {
         return Cast.to(
             context.moveUpRow(
                 this
@@ -499,7 +499,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     public Optional<AnchoredSpreadsheetSelection> extendUpRow(final SpreadsheetViewportAnchor anchor,
                                                               final SpreadsheetViewportNavigationContext context) {
         return this.extendRange(
-            this.upRow(
+            this.moveUpRow(
                 anchor,
                 context
             ),

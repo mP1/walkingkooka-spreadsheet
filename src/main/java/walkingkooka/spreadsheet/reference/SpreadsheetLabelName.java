@@ -309,8 +309,8 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
     }
 
     @Override
-    public Optional<SpreadsheetSelection> upRow(final SpreadsheetViewportAnchor anchor,
-                                                final SpreadsheetViewportNavigationContext context) {
+    public Optional<SpreadsheetSelection> moveUpRow(final SpreadsheetViewportAnchor anchor,
+                                                    final SpreadsheetViewportNavigationContext context) {
         throw new UnsupportedOperationException();
     }
 
