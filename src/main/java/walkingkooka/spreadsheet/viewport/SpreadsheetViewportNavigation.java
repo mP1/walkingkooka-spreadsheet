@@ -83,7 +83,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationColumnOrRowMoveDown}
      */
-    public static SpreadsheetViewportNavigation extendDownRow() {
+    public static SpreadsheetViewportNavigation extendMoveDown() {
         return SpreadsheetViewportNavigationColumnOrRowExtendDown.INSTANCE;
     }
 

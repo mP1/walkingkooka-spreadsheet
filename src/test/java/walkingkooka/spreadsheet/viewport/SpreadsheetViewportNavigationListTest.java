@@ -207,7 +207,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     @Test
     public void testParseExtendMoveDown() {
         this.parseStringAndCheck0(
-            SpreadsheetViewportNavigation.extendDownRow()
+            SpreadsheetViewportNavigation.extendMoveDown()
         );
     }
 
@@ -250,7 +250,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
             SpreadsheetViewportNavigation.extendMoveLeft(),
             SpreadsheetViewportNavigation.extendMoveRight(),
             SpreadsheetViewportNavigation.extendMoveUp(),
-            SpreadsheetViewportNavigation.extendDownRow()
+            SpreadsheetViewportNavigation.extendMoveDown()
         );
     }
 
@@ -390,7 +390,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
             SpreadsheetViewportNavigation.moveLeft(),
             SpreadsheetViewportNavigation.extendMoveRight(),
             SpreadsheetViewportNavigation.moveUp(),
-            SpreadsheetViewportNavigation.extendDownRow()
+            SpreadsheetViewportNavigation.extendMoveDown()
         );
     }
 
@@ -450,7 +450,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
         this.compactAndCheck(
             Lists.of(
                 SpreadsheetViewportNavigation.extendMoveUp(),
-                SpreadsheetViewportNavigation.extendDownRow()
+                SpreadsheetViewportNavigation.extendMoveDown()
             )
         );
     }
@@ -469,7 +469,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     public void testCompactExtendDownExtendUp() {
         this.compactAndCheck(
             Lists.of(
-                SpreadsheetViewportNavigation.extendDownRow(),
+                SpreadsheetViewportNavigation.extendMoveDown(),
                 SpreadsheetViewportNavigation.extendMoveUp()
             )
         );
@@ -548,7 +548,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
                 SpreadsheetViewportNavigation.extendMoveLeft(),
                 SpreadsheetViewportNavigation.extendMoveUp(),
                 SpreadsheetViewportNavigation.extendMoveRight(),
-                SpreadsheetViewportNavigation.extendDownRow()
+                SpreadsheetViewportNavigation.extendMoveDown()
             )
         );
     }
@@ -747,7 +747,7 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
                     SpreadsheetViewportNavigation.extendMoveLeft(),
                     SpreadsheetViewportNavigation.extendMoveRight(),
                     SpreadsheetViewportNavigation.extendMoveUp(),
-                    SpreadsheetViewportNavigation.extendDownRow(),
+                    SpreadsheetViewportNavigation.extendMoveDown(),
                     SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)
                 )
             )
