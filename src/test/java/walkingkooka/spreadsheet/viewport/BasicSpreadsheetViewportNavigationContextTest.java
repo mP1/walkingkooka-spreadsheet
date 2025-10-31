@@ -709,7 +709,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                     final Predicate<SpreadsheetColumnReference> columnsHidden,
                                     final Function<SpreadsheetColumnReference, Double> columnWidths,
                                     final Optional<SpreadsheetColumnReference> expected) {
-        this.leftPixelsAndCheck(
+        this.moveLeftPixelsAndCheck(
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
