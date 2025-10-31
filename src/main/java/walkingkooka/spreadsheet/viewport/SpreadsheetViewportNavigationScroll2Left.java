@@ -54,8 +54,10 @@ final class SpreadsheetViewportNavigationScroll2Left extends SpreadsheetViewport
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 
+    // text.............................................................................................................
+
     @Override
-    public String text() {
-        return "left " + this.value + "px";
+    String textToken() {
+        return "left";
     }
 }

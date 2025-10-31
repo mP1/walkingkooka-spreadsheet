@@ -55,8 +55,10 @@ final class SpreadsheetViewportNavigationScroll2Up extends SpreadsheetViewportNa
         ).map(s -> s.setAnchorOrDefault(anchor));
     }
 
+    // text.............................................................................................................
+
     @Override
-    public String text() {
-        return "up " + this.value + "px";
+    String textToken() {
+        return "up";
     }
 }

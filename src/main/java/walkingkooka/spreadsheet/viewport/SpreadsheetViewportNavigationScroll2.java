@@ -45,4 +45,15 @@ abstract class SpreadsheetViewportNavigationScroll2 extends SpreadsheetViewportN
             Optional.of(anchoredSelection) :
             SpreadsheetViewport.NO_ANCHORED_SELECTION;
     }
+
+    // text.............................................................................................................
+
+    // down 123 px
+
+    @Override
+    public final String text() {
+        return this.textToken() + " " + this.value + "px";
+    }
+
+    abstract String textToken();
 }
