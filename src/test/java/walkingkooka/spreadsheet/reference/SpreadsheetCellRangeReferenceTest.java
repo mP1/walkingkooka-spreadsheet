@@ -2150,8 +2150,8 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testDownPixels() {
-        this.downPixelsAndCheck(
+    public void testMoveDownPixels() {
+        this.moveDownPixelsAndCheck(
             "B2:C3",
             SpreadsheetViewportAnchor.TOP_LEFT,
             50,

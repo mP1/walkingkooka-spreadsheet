@@ -1212,8 +1212,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     }
 
     @Test
-    public void testDownPixels() {
-        this.downPixelsAndCheck(
+    public void testMoveDownPixels() {
+        this.moveDownPixelsAndCheck(
             "B",
             SpreadsheetViewportAnchor.LEFT,
             50,

@@ -1440,9 +1440,9 @@ public abstract class SpreadsheetSelection implements HasText,
                                                                final SpreadsheetViewportNavigationContext context);
 
 
-    public abstract Optional<SpreadsheetSelection> downPixels(final SpreadsheetViewportAnchor anchor,
-                                                              final int count,
-                                                              final SpreadsheetViewportNavigationContext context);
+    public abstract Optional<SpreadsheetSelection> moveDownPixels(final SpreadsheetViewportAnchor anchor,
+                                                                  final int count,
+                                                                  final SpreadsheetViewportNavigationContext context);
 
     public abstract Optional<AnchoredSpreadsheetSelection> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
                                                                             final SpreadsheetViewportNavigationContext context);

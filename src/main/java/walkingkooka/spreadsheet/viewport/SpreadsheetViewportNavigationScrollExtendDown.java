@@ -37,7 +37,7 @@ final class SpreadsheetViewportNavigationScrollExtendDown extends SpreadsheetVie
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.downPixels(
+        return home.moveDownPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
