@@ -44,7 +44,7 @@ public class FakeSpreadsheetViewportNavigationContext implements SpreadsheetView
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
+    public Optional<SpreadsheetRowReference> moveUpRow(final SpreadsheetRowReference row) {
         throw new UnsupportedOperationException();
     }
 

@@ -185,61 +185,61 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // upRow............................................................................................................
+    // moveUpRow........................................................................................................
 
     @Test
-    default void moveUpWithNullFails() {
+    default void testMoveUpRowWithNullFails() {
         assertThrows(
             NullPointerException.class,
-            () -> this.createContext().upRow(null)
+            () -> this.createContext().moveUpRow(null)
         );
     }
 
-    default void moveUpAndCheck(final C context,
-                                final String reference) {
-        this.moveUpAndCheck(
+    default void moveUpRowAndCheck(final C context,
+                                   final String reference) {
+        this.moveUpRowAndCheck(
             context,
             SpreadsheetSelection.parseRow(reference),
             Optional.empty()
         );
     }
 
-    default void moveUpAndCheck(final C context,
-                                final String reference,
-                                final String expected) {
-        this.moveUpAndCheck(
+    default void moveUpRowAndCheck(final C context,
+                                   final String reference,
+                                   final String expected) {
+        this.moveUpRowAndCheck(
             context,
             SpreadsheetSelection.parseRow(reference),
             SpreadsheetSelection.parseRow(expected)
         );
     }
 
-    default void moveUpAndCheck(final C context,
-                                final SpreadsheetRowReference reference) {
-        this.moveUpAndCheck(
+    default void moveUpRowAndCheck(final C context,
+                                   final SpreadsheetRowReference reference) {
+        this.moveUpRowAndCheck(
             context,
             reference,
             Optional.empty()
         );
     }
 
-    default void moveUpAndCheck(final C context,
-                                final SpreadsheetRowReference reference,
-                                final SpreadsheetRowReference expected) {
-        this.moveUpAndCheck(
+    default void moveUpRowAndCheck(final C context,
+                                   final SpreadsheetRowReference reference,
+                                   final SpreadsheetRowReference expected) {
+        this.moveUpRowAndCheck(
             context,
             reference,
             Optional.of(expected)
         );
     }
 
-    default void moveUpAndCheck(final C context,
-                                final SpreadsheetRowReference reference,
-                                final Optional<SpreadsheetRowReference> expected) {
+    default void moveUpRowAndCheck(final C context,
+                                   final SpreadsheetRowReference reference,
+                                   final Optional<SpreadsheetRowReference> expected) {
         this.checkEquals(
             expected,
-            context.upRow(reference),
-            () -> reference + " upRow " + context
+            context.moveUpRow(reference),
+            () -> reference + " moveUpRow " + context
         );
     }
 

@@ -63,7 +63,7 @@ public interface SpreadsheetViewportNavigationContext extends Context {
      * <br>
      * This method is used to support keyboard navigation.
      */
-    Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row);
+    Optional<SpreadsheetRowReference> moveUpRow(final SpreadsheetRowReference row);
 
     /**
      * Returns the last row moving down parse the given starting point that is not hidden.

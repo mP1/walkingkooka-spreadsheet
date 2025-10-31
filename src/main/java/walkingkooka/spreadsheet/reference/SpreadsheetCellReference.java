@@ -519,7 +519,7 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
                                                 final SpreadsheetViewportNavigationContext context) {
         return this.upOrDownRow(
             context,
-            context::upRow
+            context::moveUpRow
         );
     }
 

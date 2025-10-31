@@ -97,7 +97,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     }
 
     @Override
-    public Optional<SpreadsheetRowReference> upRow(final SpreadsheetRowReference row) {
+    public Optional<SpreadsheetRowReference> moveUpRow(final SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
 
         return move(

@@ -461,7 +461,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testUpRowAllUpHidden() {
+    public void testMoveUpRowAllUpHidden() {
         this.moveUpAndCheck(
             "1,2",
             "3",
@@ -471,7 +471,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void moveUpAndCheck(final String rowHidden,
                                 final String row) {
-        this.moveUpAndCheck(
+        this.moveUpRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
@@ -486,7 +486,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     private void moveUpAndCheck(final String rowHidden,
                                 final String row,
                                 final String expected) {
-        this.moveUpAndCheck(
+        this.moveUpRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
