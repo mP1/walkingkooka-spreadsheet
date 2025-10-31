@@ -351,10 +351,10 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    // rightPixels......................................................................................................
+    // moveRightPixels..................................................................................................
 
     @Test
-    default void rightPixelsWithNullColumnFails() {
+    default void testMoveRightPixelsWithNullColumnFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext().rightPixels(null, 1)
@@ -362,7 +362,7 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
     }
 
     @Test
-    default void rightPixelsWithNegativePixelsFails() {
+    default void testMoveRightPixelsWithNegativePixelsFails() {
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createContext()
@@ -373,11 +373,11 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void rightPixelsAndCheck(final String start,
-                                     final int pixels,
-                                     final C context,
-                                     final String expected) {
-        this.rightPixelsAndCheck(
+    default void moveRightPixelsAndCheck(final String start,
+                                         final int pixels,
+                                         final C context,
+                                         final String expected) {
+        this.moveRightPixelsAndCheck(
             SpreadsheetSelection.parseColumn(start),
             pixels,
             context,
@@ -387,17 +387,17 @@ public interface SpreadsheetViewportNavigationContextTesting<C extends Spreadshe
         );
     }
 
-    default void rightPixelsAndCheck(final SpreadsheetColumnReference start,
-                                     final int pixels,
-                                     final C context,
-                                     final Optional<SpreadsheetColumnReference> expected) {
+    default void moveRightPixelsAndCheck(final SpreadsheetColumnReference start,
+                                         final int pixels,
+                                         final C context,
+                                         final Optional<SpreadsheetColumnReference> expected) {
         this.checkEquals(
             expected,
             context.rightPixels(
                 start,
                 pixels
             ),
-            () -> "rightPixels " + start + " " + pixels
+            () -> "moveRightPixels " + start + " " + pixels
         );
     }
 
