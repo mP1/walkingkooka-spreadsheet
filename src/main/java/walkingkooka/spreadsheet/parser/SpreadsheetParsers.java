@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.validation.ValueTypeName;
 
@@ -31,6 +32,20 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     public static SpreadsheetParser fake() {
         return new FakeSpreadsheetParser();
     }
+
+    /**
+     * A {@link SpreadsheetParser} that accepts integers, decimal and scientific numbers.
+     */
+    public static SpreadsheetParser general() {
+        return GENERAL;
+    }
+
+    private final static SpreadsheetParser GENERAL = SpreadsheetPattern.parseNumberParsePattern(
+        "0.0E+0;" + // scientific
+        "0E+0;" + // scientific without decimals
+            "#.##;" + // decimal
+            "#" // integer
+    ).parser();
 
     /**
      * {@see ParserSpreadsheetParser}
