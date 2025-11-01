@@ -135,6 +135,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
+    @Test
+    public void testWithWholeNumber() {
+        assertSame(
+            SpreadsheetValueType.WHOLE_NUMBER,
+            SpreadsheetValueType.with("whole-number")
+        );
+    }
+
     // toValueType......................................................................................................
 
     @Test
@@ -506,6 +514,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.URL,
             AbsoluteUrl.class
+        );
+    }
+
+    @Test
+    public void testToClassWithWholeNumber() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.WHOLE_NUMBER,
+            ExpressionNumber.class
         );
     }
 

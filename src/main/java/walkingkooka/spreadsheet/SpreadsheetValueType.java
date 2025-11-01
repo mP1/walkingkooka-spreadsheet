@@ -148,6 +148,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueTypeName VALUE_OR_EXPRESSION = ValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
 
+    public static final String WHOLE_NUMBER_STRING = ValueTypeName.WHOLE_NUMBER_STRING;
+
+    public static final ValueTypeName WHOLE_NUMBER = ValueTypeName.WHOLE_NUMBER;
+
     /**
      * Does not include all types, only those that typically appear in a cell
      */
@@ -258,6 +262,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case URL_STRING:
                 javaType = AbsoluteUrl.class;
                 break;
+            case WHOLE_NUMBER_STRING:
+                javaType = ExpressionNumber.class;
+                break;
             default:
                 javaType = null;
                 break;
@@ -337,6 +344,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case TIME_STRING:
                 valueTypeName = TIME;
+                break;
+            case WHOLE_NUMBER_STRING:
+                valueTypeName = WHOLE_NUMBER;
                 break;
             default:
                 valueTypeName = ValueTypeName.with(name);
