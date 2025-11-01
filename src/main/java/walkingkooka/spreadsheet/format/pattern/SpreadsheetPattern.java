@@ -171,7 +171,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Creates a {@link SpreadsheetDateFormatPattern} using date/time patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetDateTimeFormatPattern dateTimeFormatPatternLocale(final Locale locale) {
-        checkLocale(locale);
+        Objects.requireNonNull(locale, "locale");
 
         return javaTextDateFormat(
             DateFormat.getDateTimeInstance(
@@ -186,7 +186,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     }
 
     public static SpreadsheetDateTimeParsePattern dateTimeParsePatternLocale(final Locale locale) {
-        checkLocale(locale);
+        Objects.requireNonNull(locale, "locale");
 
         final List<DateFormat> patterns = Lists.array();
 
@@ -215,7 +215,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetTimeFormatPattern timeFormatPatternLocale(final Locale locale) {
-        checkLocale(locale);
+        Objects.requireNonNull(locale, "locale");
 
         return javaTextDateFormat(
             DateFormat.getTimeInstance(DateFormat.FULL, locale),
@@ -229,7 +229,7 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Creates a {@link SpreadsheetTimeFormatPattern} using time patterns parse the {@link DateFormat} and {@link Locale}.
      */
     public static SpreadsheetTimeParsePattern timeParsePatternLocale(final Locale locale) {
-        checkLocale(locale);
+        Objects.requireNonNull(locale, "locale");
 
         return javaTextDateFormat(
             Lists.of(
@@ -242,10 +242,6 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
             TIME,
             SpreadsheetPattern::parseTimeParsePattern
         );
-    }
-
-    private static void checkLocale(final Locale locale) {
-        Objects.requireNonNull(locale, "locale");
     }
 
     /**
