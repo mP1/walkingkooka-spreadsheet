@@ -44,15 +44,15 @@ import java.util.stream.Collectors;
  * A {link SpreadsheetParserProvider} that supports creating {@link Parser} for each of the
  * available {@link SpreadsheetParsePattern}.
  */
-final class SpreadsheetParsePatternSpreadsheetParserProvider implements SpreadsheetParserProvider {
+final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetParserProvider {
 
-    static SpreadsheetParsePatternSpreadsheetParserProvider with(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
-        return new SpreadsheetParsePatternSpreadsheetParserProvider(
+    static SpreadsheetParserSpreadsheetParserProvider with(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+        return new SpreadsheetParserSpreadsheetParserProvider(
             Objects.requireNonNull(spreadsheetFormatterProvider, "spreadsheetFormatterProvider")
         );
     }
 
-    private SpreadsheetParsePatternSpreadsheetParserProvider(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
+    private SpreadsheetParserSpreadsheetParserProvider(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
         super();
         this.spreadsheetFormatterProvider = spreadsheetFormatterProvider;
     }
@@ -299,6 +299,6 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
 
     @Override
     public String toString() {
-        return "SpreadsheetPattern.parser";
+        return this.getClass().getSimpleName();
     }
 }

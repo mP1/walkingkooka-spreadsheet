@@ -33,8 +33,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParsePatternSpreadsheetParserProvider>,
-    ToStringTesting<SpreadsheetParsePatternSpreadsheetParserProvider> {
+public final class SpreadsheetParserSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParserSpreadsheetParserProvider>,
+    ToStringTesting<SpreadsheetParserSpreadsheetParserProvider> {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -42,7 +42,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testWithNullSpreadsheetFormatterProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetParsePatternSpreadsheetParserProvider.with(null)
+            () -> SpreadsheetParserSpreadsheetParserProvider.with(null)
         );
     }
 
@@ -752,8 +752,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     // SpreadsheetParserProvider........................................................................................
 
     @Override
-    public SpreadsheetParsePatternSpreadsheetParserProvider createSpreadsheetParserProvider() {
-        return SpreadsheetParsePatternSpreadsheetParserProvider.with(
+    public SpreadsheetParserSpreadsheetParserProvider createSpreadsheetParserProvider() {
+        return SpreadsheetParserSpreadsheetParserProvider.with(
             SpreadsheetFormatterProviders.spreadsheetFormatters()
         );
     }
@@ -764,7 +764,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     public void testSpreadsheetParserSelectorToString() {
         this.toStringAndCheck(
             this.createSpreadsheetParserProvider(),
-            "SpreadsheetPattern.parser"
+            "SpreadsheetParserSpreadsheetParserProvider"
         );
     }
 
@@ -809,8 +809,8 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetParsePatternSpreadsheetParserProvider> type() {
-        return SpreadsheetParsePatternSpreadsheetParserProvider.class;
+    public Class<SpreadsheetParserSpreadsheetParserProvider> type() {
+        return SpreadsheetParserSpreadsheetParserProvider.class;
     }
 
     @Override

@@ -105,10 +105,10 @@ public final class SpreadsheetParserProviders implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetParsePatternSpreadsheetParserProvider}
+     * {@see SpreadsheetParserSpreadsheetParserProvider}
      */
     public static SpreadsheetParserProvider spreadsheetParsePattern(final SpreadsheetFormatterProvider spreadsheetFormatterProvider) {
-        return SpreadsheetParsePatternSpreadsheetParserProvider.with(spreadsheetFormatterProvider);
+        return SpreadsheetParserSpreadsheetParserProvider.with(spreadsheetFormatterProvider);
     }
 
     /**
