@@ -17,12 +17,330 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.lang.reflect.Method;
+import java.math.MathContext;
+import java.util.List;
 
-public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers> {
+public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
+    SpreadsheetParserTesting {
+
+    // general..........................................................................................................
+
+    @Test
+    public void testGeneralParseInvalidFails() {
+        this.parseFailAndCheck(
+            SpreadsheetParsers.general(),
+            this.generalParserContext(),
+            "!"
+        );
+    }
+
+    @Test
+    public void testGeneralParseIntegerZero() {
+        this.generalParseAndCheck(
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseIntegerPositive() {
+        this.generalParseAndCheck(
+            digits("1")
+        );
+    }
+
+    @Test
+    public void testGeneralParseIntegerPositive2() {
+        this.generalParseAndCheck(
+            digits("123")
+        );
+    }
+
+    @Test
+    public void testGeneralParseIntegerNegative() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("1")
+        );
+    }
+
+    @Test
+    public void testGeneralParseIntegerNegative2() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("123")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalZero() {
+        this.generalParseAndCheck(
+            digits("0"),
+            decimal(),
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalZero2() {
+        this.generalParseAndCheck(
+            digits("0"),
+            decimal(),
+            digits("00")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalPositiveZero() {
+        this.generalParseAndCheck(
+            plus(),
+            digits("0"),
+            decimal(),
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalNegativeZero() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("0"),
+            decimal(),
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalPositiveNumber() {
+        this.generalParseAndCheck(
+            plus(),
+            digits("1"),
+            decimal(),
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalPositiveNumber2() {
+        this.generalParseAndCheck(
+            plus(),
+            digits("1"),
+            decimal(),
+            digits("23")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalNegativeNumber() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("1"),
+            decimal(),
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseDecimalNegativeNumber2() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("1"),
+            decimal(),
+            digits("23")
+        );
+    }
+
+    // 0E0
+    @Test
+    public void testGeneralParseScientificZero() {
+        this.generalParseAndCheck(
+            digits("0"),
+            exponent(),
+            digits("0")
+        );
+    }
+
+    // 0.0E0
+    @Test
+    public void testGeneralParseScientificZero2() {
+        this.generalParseAndCheck(
+            digits("0"),
+            decimal(),
+            digits("0"),
+            exponent(),
+            digits("0")
+        );
+    }
+
+    @Test
+    public void testGeneralParseScientificNumber() {
+        this.generalParseAndCheck(
+            digits("1"),
+            decimal(),
+            digits("2"),
+            exponent(),
+            digits("3")
+        );
+    }
+
+    @Test
+    public void testGeneralParseScientificNumber2() {
+        this.generalParseAndCheck(
+            digits("1"),
+            decimal(),
+            digits("2"),
+            exponent(),
+            digits("34")
+        );
+    }
+
+    @Test
+    public void testGeneralParseScientificPositiveNumber() {
+        this.generalParseAndCheck(
+            plus(),
+            digits("1"),
+            decimal(),
+            digits("2"),
+            exponent(),
+            digits("3")
+        );
+    }
+
+    @Test
+    public void testGeneralParseScientificPositiveNumber2() {
+        this.generalParseAndCheck(
+            plus(),
+            digits("1"),
+            decimal(),
+            digits("2"),
+            exponent(),
+            digits("34")
+        );
+    }
+
+    @Test
+    public void testGeneralParseScientificNegativeNumber() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("1"),
+            decimal(),
+            digits("2"),
+            exponent(),
+            digits("3")
+        );
+    }
+
+    @Test
+    public void testGeneralParseScientificNegativeNumber2() {
+        this.generalParseAndCheck(
+            minus(),
+            digits("1"),
+            decimal(),
+            digits("2"),
+            exponent(),
+            digits("34")
+        );
+    }
+
+    private void generalParseAndCheck(final SpreadsheetFormulaParserToken... tokens) {
+        this.generalParseAndCheck(
+            Lists.of(tokens)
+        );
+    }
+
+    private void generalParseAndCheck(final List<ParserToken> tokens) {
+        final String text = ParserToken.text(tokens);
+
+        this.generalParseAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.number(
+                tokens,
+                text
+            )
+        );
+    }
+
+    private void generalParseAndCheck(final String text,
+                                      final ParserToken token) {
+        this.parseAndCheck(
+            SpreadsheetParsers.general(),
+            this.generalParserContext(),
+            text,
+            token,
+            text
+        );
+    }
+
+    private SpreadsheetParserContext generalParserContext() {
+        return SpreadsheetParserContexts.basic(
+            InvalidCharacterExceptionFactory.POSITION_EXPECTED,
+            DateTimeContexts.fake(), // DateTimeContext unnecessary
+            ExpressionNumberContexts.basic(
+                ExpressionNumberKind.BIG_DECIMAL,
+                DecimalNumberContexts.american(MathContext.DECIMAL32)
+            ),
+            ',' // valueSeparator
+        );
+    }
+
+
+    private SpreadsheetFormulaParserToken decimal() {
+        return SpreadsheetFormulaParserToken.decimalSeparatorSymbol(
+            ".",
+            "."
+        );
+    }
+
+    private SpreadsheetFormulaParserToken digits(final String text) {
+        return SpreadsheetFormulaParserToken.digits(
+            text,
+            text
+        );
+    }
+
+    private SpreadsheetFormulaParserToken exponent() {
+        return SpreadsheetFormulaParserToken.exponentSymbol(
+            "E",
+            "E"
+        );
+    }
+
+    private SpreadsheetFormulaParserToken minus() {
+        return SpreadsheetFormulaParserToken.minusSymbol(
+            "-",
+            "-"
+        );
+    }
+
+    private SpreadsheetFormulaParserToken number(final SpreadsheetFormulaParserToken... tokens) {
+        return SpreadsheetFormulaParserToken.number(
+            Lists.of(tokens),
+            ParserToken.text(
+                Lists.of(tokens)
+            )
+        );
+    }
+
+    private SpreadsheetFormulaParserToken plus() {
+        return SpreadsheetFormulaParserToken.plusSymbol(
+            "+",
+            "+"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetParsers> type() {
