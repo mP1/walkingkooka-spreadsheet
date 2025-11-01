@@ -74,63 +74,63 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
     public static final CharacterConstant SEPARATOR = CharacterConstant.with(';');
 
     /**
-     * Factory that creates a {@link ParserToken} parse the given token.
+     * Factory that creates a {@link SpreadsheetDateFormatPattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetDateFormatPattern dateFormatPattern(final ParserToken token) {
         return SpreadsheetDateFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDateParsePattern} parse the given tokens.
+     * Factory that creates a {@link SpreadsheetDateParsePattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetDateParsePattern dateParsePattern(final ParserToken token) {
         return SpreadsheetDateParsePattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} parse the given token.
+     * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetDateTimeFormatPattern dateTimeFormatPattern(final ParserToken token) {
         return SpreadsheetDateTimeFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} parse the given tokens.
+     * Factory that creates a {@link SpreadsheetDateTimeParsePattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetDateTimeParsePattern dateTimeParsePattern(final ParserToken token) {
         return SpreadsheetDateTimeParsePattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} parse the given token.
+     * Factory that creates a {@link SpreadsheetNumberFormatPattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetNumberFormatPattern numberFormatPattern(final ParserToken token) {
         return SpreadsheetNumberFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} parse the given tokens.
+     * Factory that creates a {@link SpreadsheetNumberParsePattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetNumberParsePattern numberParsePattern(final ParserToken token) {
         return SpreadsheetNumberParsePattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTextFormatPattern} parse the given token.
+     * Factory that creates a {@link SpreadsheetTextFormatPattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetTextFormatPattern textFormatPattern(final ParserToken token) {
         return SpreadsheetTextFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetTimeFormatPattern} parse the given token.
+     * Factory that creates a {@link SpreadsheetTimeFormatPattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetTimeFormatPattern timeFormatPattern(final ParserToken token) {
         return SpreadsheetTimeFormatPattern.with(token);
     }
 
     /**
-     * Factory that creates a {@link ParserToken} parse the given tokens.
+     * Factory that creates a {@link SpreadsheetTimeParsePattern} from the given {@link ParserToken}.
      */
     public static SpreadsheetTimeParsePattern timeParsePattern(final ParserToken token) {
         return SpreadsheetTimeParsePattern.with(token);
