@@ -155,7 +155,7 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     private SpreadsheetPatternSpreadsheetFormatter scientificFormatter(final SpreadsheetFormatterContext context) {
         final int digitCount = context.generalFormatNumberDigitCount();
 
-        final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = generalNumberFormatDigitCountToScientificFormatter;
+        final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = this.generalNumberFormatDigitCountToScientificFormatter;
 
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
@@ -195,6 +195,9 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         return formatter;
     }
 
+    /**
+     * A cache of scientific formatters with the number of decimal digits as the key.
+     */
     private final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> generalNumberFormatDigitCountToNonScientificFormatter = Maps.concurrent();
 
     /**
@@ -215,10 +218,10 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
     public List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context) {
         Objects.requireNonNull(context, "context");
 
-        return TEXT_COMPONENTS;
+        return TOKENS;
     }
 
-    private final static List<SpreadsheetFormatterSelectorToken> TEXT_COMPONENTS = Lists.of(
+    private final static List<SpreadsheetFormatterSelectorToken> TOKENS = Lists.of(
         SpreadsheetFormatterSelectorToken.with(
             "General",
             "General",
