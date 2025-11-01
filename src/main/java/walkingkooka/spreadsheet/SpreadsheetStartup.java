@@ -169,7 +169,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                 Lists.of(
                     SpreadsheetParserInfo.with(
                         url,
-                        SpreadsheetParserName.TIME_PARSER_PATTERN
+                        SpreadsheetParserName.TIME
                     )
                 )
             );

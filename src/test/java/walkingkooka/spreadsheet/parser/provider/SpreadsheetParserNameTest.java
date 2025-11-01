@@ -149,7 +149,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
 
     @Test
     public void testSetText() {
-        final SpreadsheetParserName name = SpreadsheetParserName.TIME_PARSER_PATTERN;
+        final SpreadsheetParserName name = SpreadsheetParserName.TIME;
         final String text = "yyyy/mm/dd";
 
         this.checkEquals(

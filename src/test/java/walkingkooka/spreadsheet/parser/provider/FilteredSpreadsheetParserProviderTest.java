@@ -36,7 +36,7 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
 
     @Test
     public void testSpreadsheetParserName() {
-        final SpreadsheetParserName name = SpreadsheetParserName.DATE_PARSER_PATTERN;
+        final SpreadsheetParserName name = SpreadsheetParserName.DATE;
         final List<?> values = Lists.of("dd/mmm/yyyy");
 
         this.spreadsheetParserAndCheck(
@@ -54,7 +54,7 @@ public final class FilteredSpreadsheetParserProviderTest implements SpreadsheetP
 
     @Test
     public void testSpreadsheetParserWithFilteredFails() {
-        final SpreadsheetParserName name = SpreadsheetParserName.TIME_PARSER_PATTERN;
+        final SpreadsheetParserName name = SpreadsheetParserName.TIME;
         final String pattern = "h/m/s.SSS AM/PM";
         final List<?> values = Lists.of(pattern);
 

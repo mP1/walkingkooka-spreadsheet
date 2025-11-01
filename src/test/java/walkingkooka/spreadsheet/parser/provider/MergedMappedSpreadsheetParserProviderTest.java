@@ -56,7 +56,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
                 SpreadsheetParserInfoSet.EMPTY.concat(
                     SpreadsheetParserInfo.with(
                         url("time"),
-                        SpreadsheetParserName.TIME_PARSER_PATTERN
+                        SpreadsheetParserName.TIME
                     )
                 ),
                 null
@@ -82,7 +82,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
         final String pattern = "hh/mm";
 
         this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN + " " + pattern,
+            SpreadsheetParserName.DATE_TIME + " " + pattern,
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern(pattern).parser()
         );
@@ -107,7 +107,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
             SpreadsheetParserProviders.spreadsheetParsePattern(
                 SpreadsheetFormatterProviders.spreadsheetFormatters()
             ).spreadsheetParserNextToken(
-                SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
+                SpreadsheetParserName.TIME.setValueText("")
             )
         );
     }
@@ -119,7 +119,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
             SpreadsheetParserProviders.spreadsheetParsePattern(
                 SpreadsheetFormatterProviders.spreadsheetFormatters()
             ).spreadsheetFormatterSelector(
-                SpreadsheetParserName.TIME_PARSER_PATTERN.setValueText("")
+                SpreadsheetParserName.TIME.setValueText("")
             )
         );
     }
@@ -127,11 +127,11 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
     @Test
     public void testSpreadsheetFormatterSelectorWithProviderName() {
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN + " hh:mm:ss"),
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME + " hh:mm:ss"),
             SpreadsheetParserProviders.spreadsheetParsePattern(
                 SpreadsheetFormatterProviders.spreadsheetFormatters()
             ).spreadsheetFormatterSelector(
-                SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("hh:mm:ss")
+                SpreadsheetParserName.DATE_TIME.setValueText("hh:mm:ss")
             )
         );
     }
@@ -145,7 +145,7 @@ public final class MergedMappedSpreadsheetParserProviderTest implements Spreadsh
             spreadsheetParserPattern.stream()
                 .map(
                     i -> i.name()
-                        .equals(SpreadsheetParserName.TIME_PARSER_PATTERN) ?
+                        .equals(SpreadsheetParserName.TIME) ?
                         SpreadsheetParserInfo.with(
                             url("time"),
                             SpreadsheetParserName.with(RENAMED_TIME_PARSER_PATTERN)
