@@ -163,7 +163,8 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         NUMBER,
         TEXT,
         TIME,
-        URL
+        URL,
+        WHOLE_NUMBER
     );
 
     /**

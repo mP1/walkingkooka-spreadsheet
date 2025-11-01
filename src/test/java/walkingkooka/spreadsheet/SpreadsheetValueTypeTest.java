@@ -69,7 +69,8 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                 SpreadsheetValueType.NUMBER,
                 SpreadsheetValueType.TEXT,
                 SpreadsheetValueType.TIME,
-                SpreadsheetValueType.URL
+                SpreadsheetValueType.URL,
+                SpreadsheetValueType.WHOLE_NUMBER
             ),
             new ArrayList<>(
                 SpreadsheetValueType.ALL
