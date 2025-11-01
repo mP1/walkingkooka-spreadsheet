@@ -1130,10 +1130,12 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
 
     private static <P extends SpreadsheetPattern> void register(final Class<P> type,
                                                                 final BiFunction<JsonNode, JsonNodeUnmarshallContext, P> unmarshaller) {
-        JsonNodeContext.register(JsonNodeContext.computeTypeName(type),
+        JsonNodeContext.register(
+            JsonNodeContext.computeTypeName(type),
             unmarshaller,
             SpreadsheetPattern::marshall,
-            type);
+            type
+        );
     }
 
     // constant here to avoid NPE during static init
