@@ -45,8 +45,125 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         );
     }
 
+    // spreadsheetFormatterSelector.....................................................................................
+
     @Test
-    public void testSpreadsheetParserSelectorDateParsePattern() {
+    public void testSpreadsheetFormatterSelectorWithUnknown() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("unknown123")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithDateWithEmptyPattern() {
+        final String text = "";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithDateNotEmptyPattern() {
+        final String text = " yyyy/mm/dd";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithDateTimeAndPattern() {
+        final String text = " yyyy/mm/dd hh:mm";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN + text),
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_TIME + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithNumberAndPattern() {
+        final String text = " $0.00";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER_PARSER_PATTERN + text),
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithTimeAndPattern() {
+        final String text = " hh:mm";
+
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.TIME_PARSER_PATTERN + text),
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.TIME + text)
+        );
+    }
+
+    // SpreadsheetParserSelector........................................................................................
+
+    @Test
+    public void testSpreadsheetParserNameWithDate() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.DATE_PARSER_PATTERN,
+            Lists.of("dd/mm/yy"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithDateTime() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
+            Lists.of("dd/mm/yyyy hh:mm:ss"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithNumber() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.NUMBER_PARSER_PATTERN,
+            Lists.of("$0.00"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithTextFails() {
+        this.spreadsheetParserFails(
+            SpreadsheetParserName.with("text"),
+            Lists.of("@@\"Hello\""),
+            PROVIDER_CONTEXT
+        );
+    }
+
+
+    @Test
+    public void testSpreadsheetParserNameWithTime() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.TIME_PARSER_PATTERN,
+            Lists.of("hh:mm:ss"),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
+                .parser()
+        );
+    }
+
+    // SpreadsheetParserSelector........................................................................................
+
+    @Test
+    public void testSpreadsheetParserSelectorWithDate() {
         this.spreadsheetParserAndCheck(
             "date dd/mm/yy",
             PROVIDER_CONTEXT,
@@ -56,7 +173,47 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserSelectorNextTokenDateParsePatternEmpty() {
+    public void testSpreadsheetParserSelectorWithDateTime() {
+        this.spreadsheetParserAndCheck(
+            "date-time dd/mm/yyyy hh:mm:ss",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithNumber() {
+        this.spreadsheetParserAndCheck(
+            "number $0.00",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithTextFails() {
+        this.spreadsheetParserFails(
+            "text-parse-pattern @@\"Hello\"",
+            PROVIDER_CONTEXT
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithTime() {
+        this.spreadsheetParserAndCheck(
+            "time hh:mm:ss.SSS AM/PM",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM")
+                .parser()
+        );
+    }
+
+    // spreadsheetParserSelectorNextToken...............................................................................
+
+    @Test
+    public void testSpreadsheetParserSelectorNextTokenWithDateEmptyPattern() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse(
                 "date"
@@ -115,7 +272,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenDateParsePatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithDatePatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("date yyyy"),
             SpreadsheetParserSelectorToken.with(
@@ -164,39 +321,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNameDateParsePattern() {
-        this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.DATE_PARSER_PATTERN,
-            Lists.of("dd/mm/yy"),
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserSelectorDateTimeParsePattern() {
-        this.spreadsheetParserAndCheck(
-            "date-time dd/mm/yyyy hh:mm:ss",
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNameDateTimeParsePattern() {
-        this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
-            Lists.of("dd/mm/yyyy hh:mm:ss"),
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNextTokenDateTimeParsePatternEmpty() {
+    public void testSpreadsheetParserNextTokenWithDateTimePatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("date-time"),
             SpreadsheetParserSelectorToken.with(
@@ -293,7 +418,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenDateTimeParsePatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithDateTimeatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("date-time yyyy"),
             SpreadsheetParserSelectorToken.with(
@@ -382,28 +507,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserSelectorNumberParsePattern() {
-        this.spreadsheetParserAndCheck(
-            "number $0.00",
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseNumberParsePattern("$0.00")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNameNumberParsePattern() {
-        this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.NUMBER_PARSER_PATTERN,
-            Lists.of("$0.00"),
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseNumberParsePattern("$0.00")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNextTokenNumberParsePatternEmpty() {
+    public void testSpreadsheetParserNextTokenWithNumberPatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("number"),
             SpreadsheetParserSelectorToken.with(
@@ -452,7 +556,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenNumberParsePatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithNumberPatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("number $0.00"),
             SpreadsheetParserSelectorToken.with(
@@ -497,45 +601,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserSelectorTextParsePatternFails() {
-        this.spreadsheetParserFails(
-            "text-parse-pattern @@\"Hello\"",
-            PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNameTextParsePatternFails() {
-        this.spreadsheetParserFails(
-            SpreadsheetParserName.with("text"),
-            Lists.of("@@\"Hello\""),
-            PROVIDER_CONTEXT
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserSelectorTimeParsePattern() {
-        this.spreadsheetParserAndCheck(
-            "time hh:mm:ss.SSS AM/PM",
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNameTimeParsePattern() {
-        this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.TIME_PARSER_PATTERN,
-            Lists.of("hh:mm:ss"),
-            PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")
-                .parser()
-        );
-    }
-
-    @Test
-    public void testSpreadsheetParserNextTokenTimeParsePatternEmpty() {
+    public void testSpreadsheetParserNextTokenWithTimePatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("time"),
             SpreadsheetParserSelectorToken.with(
@@ -596,7 +662,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenTimeParsePatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithTimeParsePatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("time hh:mm"),
             SpreadsheetParserSelectorToken.with(
@@ -648,80 +714,13 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
         );
     }
 
-    // spreadsheetFormatterSelector.....................................................................................
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithEmptyDateParsePattern() {
-        final String text = "";
-
-        this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithDateParsePattern() {
-        final String text = " yyyy/mm/dd";
-
-        this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithDateTimeParsePattern() {
-        final String text = " yyyy/mm/dd hh:mm";
-
-        this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_TIME + text)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithNumberParsePattern() {
-        final String text = " $0.00";
-
-        this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER + text)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithTimeParsePattern() {
-        final String text = " hh:mm";
-
-        this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.TIME_PARSER_PATTERN + text),
-            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.TIME + text)
-        );
-    }
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithNonPattern() {
-        this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse("unknown123")
-        );
-    }
+    // SpreadsheetParserProvider........................................................................................
 
     @Override
     public SpreadsheetParsePatternSpreadsheetParserProvider createSpreadsheetParserProvider() {
         return SpreadsheetParsePatternSpreadsheetParserProvider.with(
             SpreadsheetFormatterProviders.spreadsheetFormatters()
         );
-    }
-
-    @Override
-    public Class<SpreadsheetParsePatternSpreadsheetParserProvider> type() {
-        return SpreadsheetParsePatternSpreadsheetParserProvider.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     // ToString.........................................................................................................
@@ -768,5 +767,17 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                         .spreadsheetParserInfos()
                 )
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetParsePatternSpreadsheetParserProvider> type() {
+        return SpreadsheetParsePatternSpreadsheetParserProvider.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
