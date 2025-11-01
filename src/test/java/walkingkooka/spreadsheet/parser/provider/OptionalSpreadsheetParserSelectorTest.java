@@ -58,7 +58,7 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
     @Test
     public void testWithNotEmpty() {
         final Optional<SpreadsheetParserSelector> selector = Optional.of(
-            SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText("yyyy/mm/ddd")
+            SpreadsheetParserName.DATE.setValueText("yyyy/mm/ddd")
         );
 
         final OptionalSpreadsheetParserSelector optional = OptionalSpreadsheetParserSelector.with(selector);

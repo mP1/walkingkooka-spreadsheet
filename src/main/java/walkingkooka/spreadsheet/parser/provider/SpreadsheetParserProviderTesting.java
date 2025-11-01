@@ -52,7 +52,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
             NullPointerException.class,
             () -> this.createSpreadsheetParserProvider()
                 .spreadsheetParser(
-                    SpreadsheetParserName.DATE_PARSER_PATTERN.setValueText(""),
+                    SpreadsheetParserName.DATE.setValueText(""),
                     null
                 )
         );
@@ -166,7 +166,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         assertThrows(
             NullPointerException.class,
             () -> this.createSpreadsheetParserProvider().spreadsheetParser(
-                SpreadsheetParserName.TIME_PARSER_PATTERN,
+                SpreadsheetParserName.TIME,
                 null,
                 ProviderContexts.fake()
             )
@@ -178,7 +178,7 @@ public interface SpreadsheetParserProviderTesting<T extends SpreadsheetParserPro
         assertThrows(
             NullPointerException.class,
             () -> this.createSpreadsheetParserProvider().spreadsheetParser(
-                SpreadsheetParserName.TIME_PARSER_PATTERN,
+                SpreadsheetParserName.TIME,
                 Lists.empty(),
                 null
             )

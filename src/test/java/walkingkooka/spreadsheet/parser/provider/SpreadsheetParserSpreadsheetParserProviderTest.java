@@ -60,7 +60,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         final String text = "";
 
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE + text),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
         );
     }
@@ -70,7 +70,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         final String text = " yyyy/mm/dd";
 
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_PARSER_PATTERN + text),
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE + text),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE + text)
         );
     }
@@ -80,7 +80,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         final String text = " yyyy/mm/dd hh:mm";
 
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN + text),
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.DATE_TIME + text),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.DATE_TIME + text)
         );
     }
@@ -98,7 +98,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         final String text = " $0.00";
 
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER_PARSER_PATTERN + text),
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER + text),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER + text)
         );
     }
@@ -108,7 +108,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         final String text = " hh:mm";
 
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserSelector.parse(SpreadsheetParserName.TIME_PARSER_PATTERN + text),
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.TIME + text),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.TIME + text)
         );
     }
@@ -118,7 +118,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     @Test
     public void testSpreadsheetParserNameWithDate() {
         this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.DATE_PARSER_PATTERN,
+            SpreadsheetParserName.DATE,
             Lists.of("dd/mm/yy"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateParsePattern("dd/mm/yy")
@@ -129,7 +129,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     @Test
     public void testSpreadsheetParserNameWithDateTime() {
         this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN,
+            SpreadsheetParserName.DATE_TIME,
             Lists.of("dd/mm/yyyy hh:mm:ss"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
@@ -150,7 +150,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     @Test
     public void testSpreadsheetParserNameWithNumber() {
         this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.NUMBER_PARSER_PATTERN,
+            SpreadsheetParserName.NUMBER,
             Lists.of("$0.00"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberParsePattern("$0.00")
@@ -171,7 +171,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     @Test
     public void testSpreadsheetParserNameWithTime() {
         this.spreadsheetParserAndCheck(
-            SpreadsheetParserName.TIME_PARSER_PATTERN,
+            SpreadsheetParserName.TIME,
             Lists.of("hh:mm:ss"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss")

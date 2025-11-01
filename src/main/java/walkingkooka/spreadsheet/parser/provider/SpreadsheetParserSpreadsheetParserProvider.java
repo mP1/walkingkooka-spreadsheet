@@ -121,13 +121,13 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
 
         final SpreadsheetParserName name = selector.name();
         switch (name.value()) {
-            case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
+            case SpreadsheetParserName.DATE_STRING:
                 next = spreadsheetParserNextToken(
                     selector,
                     SpreadsheetFormatParserTokenKind::isDate
                 );
                 break;
-            case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
+            case SpreadsheetParserName.DATE_TIME_STRING:
                 next = spreadsheetParserNextToken(
                     selector,
                     SpreadsheetFormatParserTokenKind::isDateTime
@@ -142,7 +142,7 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
                     SpreadsheetFormatParserTokenKind::isNumber
                 );
                 break;
-            case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
+            case SpreadsheetParserName.TIME_STRING:
                 next = spreadsheetParserNextToken(
                     selector,
                     SpreadsheetFormatParserTokenKind::isTime
@@ -211,13 +211,13 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
 
         final SpreadsheetParserName name = selector.name();
         switch (name.value()) {
-            case SpreadsheetParserName.DATE_PARSER_PATTERN_STRING:
+            case SpreadsheetParserName.DATE_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.DATE,
                     selector.valueText()
                 );
                 break;
-            case SpreadsheetParserName.DATE_TIME_PARSER_PATTERN_STRING:
+            case SpreadsheetParserName.DATE_TIME_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.DATE_TIME,
                     selector.valueText()
@@ -235,7 +235,7 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
                     selector.valueText()
                 );
                 break;
-            case SpreadsheetParserName.TIME_PARSER_PATTERN_STRING:
+            case SpreadsheetParserName.TIME_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.TIME,
                     selector.valueText()
@@ -280,11 +280,11 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
 
     private final static SpreadsheetParserInfoSet INFOS = SpreadsheetParserInfoSet.with(
         Sets.of(
-            spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
-            spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.DATE),
+            spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME),
             spreadsheetParserInfo(SpreadsheetParserName.GENERAL),
-            spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
-            spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
+            spreadsheetParserInfo(SpreadsheetParserName.NUMBER),
+            spreadsheetParserInfo(SpreadsheetParserName.TIME)
         )
     );
 

@@ -63,7 +63,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
             SpreadsheetParserProviderCollection.with(
                 Sets.of(provider)
             ),
-            SpreadsheetParserName.DATE_PARSER_PATTERN,
+            SpreadsheetParserName.DATE,
             Lists.of("yyyy/mm/dd"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateParsePattern("yyyy/mm/dd")
@@ -86,7 +86,7 @@ public final class SpreadsheetParserProviderCollectionTest implements Spreadshee
     @Test
     public void testSpreadsheetFormatterSelector() {
         this.spreadsheetFormatterSelectorAndCheck(
-            SpreadsheetParserName.DATE_TIME_PARSER_PATTERN.setValueText("")
+            SpreadsheetParserName.DATE_TIME.setValueText("")
         );
     }
 
