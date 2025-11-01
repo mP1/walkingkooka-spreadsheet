@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Arrays;
@@ -62,9 +63,20 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         Objects.requireNonNull(selector, "selector");
         Objects.requireNonNull(context, "context");
 
-        return selector.spreadsheetParsePattern()
-            .map(SpreadsheetParsePattern::parser)
-            .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
+        final SpreadsheetParser parser;
+
+        if (SpreadsheetParserName.GENERAL.equals(selector.name())) {
+            parser = selector.evaluateValueText(
+                this,
+                context
+            );
+        } else {
+            parser = selector.spreadsheetParsePattern()
+                .map(SpreadsheetParsePattern::parser)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown parser " + selector.name()));
+        }
+
+        return parser;
     }
 
     @Override
@@ -75,22 +87,30 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetPatternKind kind = name.patternKind;
-        if (null == kind) {
-            throw new IllegalArgumentException("Unknown parser " + name);
+        SpreadsheetParser parser;
+
+        if (SpreadsheetParserName.GENERAL.equals(name)) {
+            parser = SpreadsheetParsers.general();
+        } else {
+            final SpreadsheetPatternKind kind = name.patternKind;
+            if (null == kind) {
+                throw new IllegalArgumentException("Unknown parser " + name);
+            }
+
+            final List<?> copy = Lists.immutable(values);
+            final int count = copy.size();
+            switch (count) {
+                case 1:
+                    final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern) kind.parse(
+                        (String) copy.get(0)
+                    );
+                    return pattern.parser();
+                default:
+                    throw new IllegalArgumentException("Expected 0 values got " + count);
+            }
         }
 
-        final List<?> copy = Lists.immutable(values);
-        final int count = copy.size();
-        switch (count) {
-            case 1:
-                final SpreadsheetParsePattern pattern = (SpreadsheetParsePattern) kind.parse(
-                    (String) copy.get(0)
-                );
-                return pattern.parser();
-            default:
-                throw new IllegalArgumentException("Expected 0 values got " + count);
-        }
+        return parser;
     }
 
     @Override
@@ -112,6 +132,9 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                     selector,
                     SpreadsheetFormatParserTokenKind::isDateTime
                 );
+                break;
+            case SpreadsheetParserName.GENERAL_STRING:
+                next = null;
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
                 next = spreadsheetParserNextToken(
@@ -200,6 +223,12 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
                     selector.valueText()
                 );
                 break;
+            case SpreadsheetParserName.GENERAL_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                    SpreadsheetFormatterName.GENERAL,
+                    selector.valueText()
+                );
+                break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.NUMBER,
@@ -253,6 +282,7 @@ final class SpreadsheetParsePatternSpreadsheetParserProvider implements Spreadsh
         Sets.of(
             spreadsheetParserInfo(SpreadsheetParserName.DATE_PARSER_PATTERN),
             spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME_PARSER_PATTERN),
+            spreadsheetParserInfo(SpreadsheetParserName.GENERAL),
             spreadsheetParserInfo(SpreadsheetParserName.NUMBER_PARSER_PATTERN),
             spreadsheetParserInfo(SpreadsheetParserName.TIME_PARSER_PATTERN)
         )

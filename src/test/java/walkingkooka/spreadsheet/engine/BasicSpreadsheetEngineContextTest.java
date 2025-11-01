@@ -1840,7 +1840,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"locale\": \"en-AU\",\n" +
                     "  \"numberFormatter\": \"number #,##0.###\",\n" +
                     "  \"numberParser\": \"number #,##0.###;#,##0\",\n" +
-                    "  \"parsers\": \"date, date-time, number, time\",\n" +
+                    "  \"parsers\": \"date, date-time, general, number, time\",\n" +
                     "  \"plugins\": \"\",\n" +
                     "  \"precision\": 10,\n" +
                     "  \"roundingMode\": \"HALF_UP\",\n" +
@@ -2065,7 +2065,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"numberFormatter\": \"number #,##0.###\",\n" +
                 "  \"numberParser\": \"number #,##0.###;#,##0\",\n" +
-                "  \"parsers\": \"date, date-time, number, time\",\n" +
+                "  \"parsers\": \"date, date-time, general, number, time\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
