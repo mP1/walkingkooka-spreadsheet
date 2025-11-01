@@ -287,16 +287,6 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         null
     );
 
-    final static String SPREADSHEET_PATTERN_COLLECTION_STRING = "spreadsheet-pattern-collection";
-
-    /**
-     * The name of the date {@link SpreadsheetFormatter}
-     */
-    public final static SpreadsheetFormatterName SPREADSHEET_PATTERN_COLLECTION = new SpreadsheetFormatterName(
-        SPREADSHEET_PATTERN_COLLECTION_STRING,
-        null
-    );
-
     final static String SHORT_TIME_STRING = "short-time";
 
     /**
@@ -404,9 +394,6 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case SHORT_DATE_TIME_STRING:
                 spreadsheetFormatterName = SHORT_DATE_TIME;
-                break;
-            case SPREADSHEET_PATTERN_COLLECTION_STRING:
-                spreadsheetFormatterName = SPREADSHEET_PATTERN_COLLECTION;
                 break;
             case SHORT_TIME_STRING:
                 spreadsheetFormatterName = SHORT_TIME;

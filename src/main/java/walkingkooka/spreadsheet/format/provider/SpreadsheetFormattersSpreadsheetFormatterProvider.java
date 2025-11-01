@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -99,7 +98,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
             case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
             case SpreadsheetFormatterName.SHORT_TIME_STRING:
-            case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 formatter = selector.evaluateValueText(
                     this,
                     context
@@ -323,13 +321,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 parameterCountCheck(count);
 
                 formatter = shortTime(context);
-                break;
-            case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
-                formatter = SpreadsheetFormatters.spreadsheetPatternCollection(
-                    values.stream()
-                        .map(c -> (SpreadsheetPatternSpreadsheetFormatter) c)
-                        .collect(Collectors.toList())
-                );
                 break;
             default:
                 final SpreadsheetPatternKind kind = name.patternKind;
@@ -655,9 +646,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.SHORT_TIME_STRING:
-                next = null;
-                break;
-            case SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.TEXT_STRING:
@@ -2043,7 +2031,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.SHORT_TIME),
-            spreadsheetFormatterInfo(SpreadsheetFormatterName.SPREADSHEET_PATTERN_COLLECTION),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TEXT),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.TIME)
         )
