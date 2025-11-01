@@ -345,6 +345,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case TIME_STRING:
                 valueTypeName = TIME;
                 break;
+            case URL_STRING:
+                valueTypeName = URL;
+                break;
             case WHOLE_NUMBER_STRING:
                 valueTypeName = WHOLE_NUMBER;
                 break;
