@@ -74,6 +74,13 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
         return Sets.empty();
     }
 
+    // name.............................................................................................................
+
+    @Override
+    public SpreadsheetParserName createName(final String name) {
+        return SpreadsheetParserName.with(name);
+    }
+
     // isSpreadsheetParsePattern.......................................................................................
 
     @Test
@@ -125,17 +132,7 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
         );
     }
 
-    // name.............................................................................................................
-
-    @Override
-    public SpreadsheetParserName createName(final String name) {
-        return SpreadsheetParserName.with(name);
-    }
-
-    @Override
-    public Class<SpreadsheetParserName> type() {
-        return SpreadsheetParserName.class;
-    }
+    // json.............................................................................................................
 
     @Override
     public SpreadsheetParserName unmarshall(final JsonNode from,
@@ -154,5 +151,12 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
             SpreadsheetParserSelector.with(name, text),
             name.setValueText(text)
         );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetParserName> type() {
+        return SpreadsheetParserName.class;
     }
 }
