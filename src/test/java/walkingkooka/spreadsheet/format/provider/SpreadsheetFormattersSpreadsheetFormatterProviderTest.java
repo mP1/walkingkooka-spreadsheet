@@ -685,25 +685,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
     }
 
-    // spreadsheet-pattern-collection...................................................................................
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithSpreadsheetPatternCollection() {
-        this.spreadsheetFormatterAndCheck(
-            "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))",
-            PROVIDER_CONTEXT,
-            SpreadsheetFormatters.spreadsheetPatternCollection(
-                Lists.of(
-                    SpreadsheetPattern.parseDateFormatPattern("dd/mm/yy").formatter(),
-                    SpreadsheetPattern.parseDateTimeFormatPattern("dd/mm/yy hh:mm").formatter(),
-                    SpreadsheetPattern.parseNumberFormatPattern("0.00").formatter(),
-                    SpreadsheetPattern.parseTextFormatPattern("@@").formatter(),
-                    SpreadsheetPattern.parseTimeFormatPattern("hh:mm").formatter()
-                )
-            )
-        );
-    }
-
     @Test
     public void testSpreadsheetFormatterSelectorWithText() {
         this.spreadsheetFormatterAndCheck(
@@ -1293,17 +1274,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     public void testSpreadsheetFormatterNextTokenWithShortTime() {
         this.spreadsheetFormatterNextTokenAndCheck(
             SpreadsheetFormatterName.SHORT_TIME.setValueText("")
-        );
-    }
-
-    // spreadsheet-pattern-collection...................................................................................
-
-    @Test
-    public void testSpreadsheetFormatterSelectorWithNextTokenSpreadsheetPatternCollection() {
-        this.spreadsheetFormatterNextTokenAndCheck(
-            SpreadsheetFormatterSelector.parse(
-                "spreadsheet-pattern-collection (date(\"dd/mm/yy\"), date-time(\"dd/mm/yy hh:mm\"), number(\"0.00\"), text(\"@@\"), time(\"hh:mm\"))"
-            )
         );
     }
 
@@ -4627,7 +4597,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date-time short-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-time short-time\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\n"
         );
@@ -4664,7 +4633,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date short-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-date-time short-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/short-time short-time\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/spreadsheet-pattern-collection spreadsheet-pattern-collection\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/text text\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/time time\"\n" +
                     "]"
