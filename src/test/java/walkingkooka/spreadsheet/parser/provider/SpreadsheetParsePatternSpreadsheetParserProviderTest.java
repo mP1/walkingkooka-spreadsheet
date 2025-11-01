@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
@@ -85,6 +86,14 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
+    public void testSpreadsheetFormatterSelectorWithGeneral() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.GENERAL_STRING),
+            SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.GENERAL + "")
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorWithNumberAndPattern() {
         final String text = " $0.00";
 
@@ -125,6 +134,16 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
                 .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithGeneral() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.GENERAL,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetParsers.general()
         );
     }
 
@@ -179,6 +198,15 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm:ss")
                 .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithGeneral() {
+        this.spreadsheetParserAndCheck(
+            "general",
+            PROVIDER_CONTEXT,
+            SpreadsheetParsers.general()
         );
     }
 
@@ -507,6 +535,13 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
     }
 
     @Test
+    public void testSpreadsheetParserNextTokenWithGeneral() {
+        this.spreadsheetParserNextTokenAndCheck(
+            SpreadsheetParserSelector.parse("general")
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserNextTokenWithNumberPatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("number"),
@@ -743,6 +778,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
             "SpreadsheetParserInfoSet\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n"
         );
@@ -757,6 +793,7 @@ public final class SpreadsheetParsePatternSpreadsheetParserProviderTest implemen
                 "[\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\"\n" +
                     "]"

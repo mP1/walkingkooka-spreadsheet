@@ -77,6 +77,13 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
+    final static String GENERAL_STRING = "general";
+
+    public final static SpreadsheetParserName GENERAL = new SpreadsheetParserName(
+        GENERAL_STRING,
+        null
+    );
+
     final static String NUMBER_PARSER_PATTERN_STRING = "number";
 
     /**
@@ -111,6 +118,9 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
                 break;
             case DATE_TIME_PARSER_PATTERN_STRING:
                 parserName = DATE_TIME_PARSER_PATTERN;
+                break;
+            case GENERAL_STRING:
+                parserName = GENERAL;
                 break;
             case NUMBER_PARSER_PATTERN_STRING:
                 parserName = NUMBER_PARSER_PATTERN;
