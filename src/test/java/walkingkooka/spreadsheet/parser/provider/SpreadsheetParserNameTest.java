@@ -34,12 +34,12 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     // constants........................................................................................................
 
     @Test
-    public void testWithDateParsePattern() {
+    public void testWithDate() {
         this.verifyConstant("date");
     }
 
     @Test
-    public void testWithDateTimeParsePattern() {
+    public void testWithDateTime() {
         this.verifyConstant("date-time");
     }
 
@@ -49,12 +49,12 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     }
 
     @Test
-    public void testWithNumberParsePattern() {
+    public void testWithNumber() {
         this.verifyConstant("number");
     }
 
     @Test
-    public void testWithTimeParsePattern() {
+    public void testWithTime() {
         this.verifyConstant("time");
     }
 
