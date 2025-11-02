@@ -66,7 +66,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetFormatterSelectorWithDateNotEmptyPattern() {
+    public void testSpreadsheetFormatterSelectorWithDateAndNotEmptyPattern() {
         final String text = " yyyy/mm/dd";
 
         this.spreadsheetFormatterSelectorAndCheck(
@@ -241,7 +241,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     // spreadsheetParserSelectorNextToken...............................................................................
 
     @Test
-    public void testSpreadsheetParserSelectorNextTokenWithDateEmptyPattern() {
+    public void testSpreadsheetParserSelectorNextTokenWithDateAndEmptyPattern() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse(
                 "date"
@@ -300,7 +300,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithDatePatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithDateAndPatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("date yyyy"),
             SpreadsheetParserSelectorToken.with(
@@ -349,7 +349,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithDateTimePatternEmpty() {
+    public void testSpreadsheetParserNextTokenWithDateTimeAndPatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("date-time"),
             SpreadsheetParserSelectorToken.with(
@@ -446,7 +446,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithDateTimeatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithDateTimeAndPatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("date-time yyyy"),
             SpreadsheetParserSelectorToken.with(
@@ -542,7 +542,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithNumberPatternEmpty() {
+    public void testSpreadsheetParserNextTokenWithNumberAndPatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("number"),
             SpreadsheetParserSelectorToken.with(
@@ -591,7 +591,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithNumberPatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithNumberAndPatternNotEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("number $0.00"),
             SpreadsheetParserSelectorToken.with(
@@ -636,7 +636,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithTimePatternEmpty() {
+    public void testSpreadsheetParserNextTokenWithTimeAndPatternEmpty() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("time"),
             SpreadsheetParserSelectorToken.with(
@@ -697,7 +697,7 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
-    public void testSpreadsheetParserNextTokenWithTimeParsePatternNotEmpty() {
+    public void testSpreadsheetParserNextTokenWithTimeWithNotEmptyPattern() {
         this.spreadsheetParserNextTokenAndCheck(
             SpreadsheetParserSelector.parse("time hh:mm"),
             SpreadsheetParserSelectorToken.with(
