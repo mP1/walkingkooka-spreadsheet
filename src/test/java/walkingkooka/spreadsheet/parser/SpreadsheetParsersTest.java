@@ -324,15 +324,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
-    private SpreadsheetFormulaParserToken number(final SpreadsheetFormulaParserToken... tokens) {
-        return SpreadsheetFormulaParserToken.number(
-            Lists.of(tokens),
-            ParserToken.text(
-                Lists.of(tokens)
-            )
-        );
-    }
-
     private SpreadsheetFormulaParserToken plus() {
         return SpreadsheetFormulaParserToken.plusSymbol(
             "+",
