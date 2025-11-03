@@ -38,6 +38,11 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     // constants........................................................................................................
 
     @Test
+    public void testWithAccounting() {
+        this.verifyConstant("accounting");
+    }
+
+    @Test
     public void testWithBadgeError() {
         this.verifyConstant("badge-error");
     }
@@ -51,7 +56,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     public void testWithCurrency() {
         this.verifyConstant("currency");
     }
-    
+
     @Test
     public void testWithDate() {
         this.verifyConstant("date");
@@ -111,7 +116,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     public void testWithMediumTime() {
         this.verifyConstant("medium-time");
     }
-    
+
     @Test
     public void testWithNumber() {
         this.verifyConstant("number");
