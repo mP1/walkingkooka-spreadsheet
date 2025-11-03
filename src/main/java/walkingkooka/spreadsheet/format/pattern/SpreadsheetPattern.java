@@ -965,8 +965,8 @@ abstract public class SpreadsheetPattern implements Value<ParserToken>,
      * Generalized helper that attempts to remove any token matched by the given {@link Predicate}. If a remove happened,
      * the factory is called to create a new {@link SpreadsheetPattern} otherwise this is returned.
      */
-    final <T extends SpreadsheetFormatPattern> T removeIf0(final Predicate<ParserToken> predicate,
-                                                           final Function<ParserToken, T> factory) {
+    final <T extends SpreadsheetFormatPattern> T removeIf(final Predicate<ParserToken> predicate,
+                                                          final Function<ParserToken, T> factory) {
         final ParserToken token = this.value();
         final Optional<?> removed = token.removeIf(predicate);
 

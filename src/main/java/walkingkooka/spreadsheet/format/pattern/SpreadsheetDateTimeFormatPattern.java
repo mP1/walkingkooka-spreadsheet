@@ -71,7 +71,7 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
 
     @Override
     public SpreadsheetDateTimeFormatPattern removeColor() {
-        return this.removeIf0(
+        return this.removeIf(
             COLOR_PREDICATE,
             SpreadsheetDateTimeFormatPattern::new
         );
@@ -99,7 +99,7 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
 
     @Override
     public SpreadsheetDateTimeFormatPattern removeCondition() {
-        return this.removeIf0(
+        return this.removeIf(
             CONDITION_PREDICATE,
             SpreadsheetDateTimeFormatPattern::new
         );
