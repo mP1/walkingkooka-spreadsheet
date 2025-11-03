@@ -38,27 +38,27 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     // constants........................................................................................................
 
     @Test
-    public void testWithDateFormatPattern() {
+    public void testWithDate() {
         this.verifyConstant("date");
     }
 
     @Test
-    public void testWithDateTimeFormatPattern() {
+    public void testWithDateTime() {
         this.verifyConstant("date-time");
     }
 
     @Test
-    public void testWithNumberFormatPattern() {
+    public void testWithNumber() {
         this.verifyConstant("number");
     }
 
     @Test
-    public void testWithTextFormatPattern() {
+    public void testWithText() {
         this.verifyConstant("text");
     }
 
     @Test
-    public void testWithTimeFormatPattern() {
+    public void testWithTime() {
         this.verifyConstant("time");
     }
 
@@ -132,7 +132,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithDateFormatPattern() {
+    public void testIsSpreadsheetFormatPatternWithDate() {
         this.isSpreadsheetFormatPatternAndCheck(
             "date",
             true
@@ -140,7 +140,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithDateTimeFormatPattern() {
+    public void testIsSpreadsheetFormatPatternWithDateTime() {
         this.isSpreadsheetFormatPatternAndCheck(
             "date-time",
             true
@@ -148,7 +148,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithNumberFormatPattern() {
+    public void testIsSpreadsheetFormatPatternWithNumber() {
         this.isSpreadsheetFormatPatternAndCheck(
             "number",
             true
@@ -156,7 +156,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithDateTextFormatPattern() {
+    public void testIsSpreadsheetFormatPatternWithText() {
         this.isSpreadsheetFormatPatternAndCheck(
             "text",
             true
@@ -164,7 +164,7 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
-    public void testIsSpreadsheetFormatPatternWithTimeFormatPattern() {
+    public void testIsSpreadsheetFormatPatternWithTime() {
         this.isSpreadsheetFormatPatternAndCheck(
             "time",
             true
