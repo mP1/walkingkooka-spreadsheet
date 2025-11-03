@@ -362,9 +362,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 Integer.class
             );
 
+        final String pattern = "$0." +
+            decimalPlaces(decimalPlaces);
+
         return SpreadsheetPattern.parseNumberFormatPattern(
-            "$0." +
-                decimalPlaces(decimalPlaces)
+            pattern +
+                ";" +
+                "[RED]" + pattern
         ).formatter();
     }
 

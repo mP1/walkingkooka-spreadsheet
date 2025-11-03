@@ -464,7 +464,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "currency",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseNumberFormatPattern("$0.00")
+            SpreadsheetPattern.parseNumberFormatPattern("$0.00;[RED]$0.00")
                 .formatter()
         );
     }
@@ -474,7 +474,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "currency(3)",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseNumberFormatPattern("$0.000")
+            SpreadsheetPattern.parseNumberFormatPattern("$0.000;[RED]$0.000")
                 .formatter()
         );
     }
