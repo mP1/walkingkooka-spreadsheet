@@ -49,8 +49,8 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     // spreadsheetFormatterSelector.....................................................................................
 
     @Test
-    public void testSpreadsheetFormatterSelectorWithUnknown() {
-        this.spreadsheetFormatterSelectorAndCheck(
+    public void testSpreadsheetFormatterSelectorWithUnknownFails() {
+        this.spreadsheetFormatterSelectorFails(
             SpreadsheetParserSelector.parse("unknown123")
         );
     }

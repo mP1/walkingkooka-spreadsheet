@@ -260,8 +260,7 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
                 spreadsheetFormatterSelector = Optional.empty();
                 break;
             default:
-                spreadsheetFormatterSelector = Optional.empty();
-                break;
+                throw new IllegalArgumentException("Unknown parser " + name);
         }
 
         return spreadsheetFormatterSelector;
