@@ -27,8 +27,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * A {@link SpreadsheetPatternSpreadsheetFormatter} that forms a chain of {@link SpreadsheetPatternSpreadsheetFormatter formatters}.
- * When a format request is made, each will be tried one by one until success.
+ * A {@link SpreadsheetPatternSpreadsheetFormatter} that forms a chain of {@link SpreadsheetPatternSpreadsheetFormatter formatters},
+ * each one tried one by one until success.
+ * This supports conditional formatters such as a number format with both a positive and negative pattern.
  */
 final class SpreadsheetPatternSpreadsheetFormatterCollection implements SpreadsheetPatternSpreadsheetFormatter {
 
