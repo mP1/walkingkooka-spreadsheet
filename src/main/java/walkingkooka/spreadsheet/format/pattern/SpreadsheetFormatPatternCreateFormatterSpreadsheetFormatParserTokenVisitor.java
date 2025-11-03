@@ -84,6 +84,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(final ParserToken token) {
         super();
         this.token = token;
+        this.patternCounter = 0;
     }
 
     @Override
@@ -174,9 +175,14 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.number(token)
+            SpreadsheetFormatters.number(
+                token,
+                1 == this.patternCounter
+            )
         );
     }
+
+    private int patternCounter;
 
     @Override
     protected void endVisit(final TextSpreadsheetFormatParserToken token) {
@@ -205,6 +211,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void visit(final SeparatorSymbolSpreadsheetFormatParserToken token) {
         this.component = null;
+        this.patternCounter++;
     }
 
     private SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorComponent component() {

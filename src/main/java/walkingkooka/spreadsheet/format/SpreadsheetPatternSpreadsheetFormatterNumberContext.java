@@ -30,6 +30,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
      * Factory that creates a new context.
      */
     static SpreadsheetPatternSpreadsheetFormatterNumberContext with(final boolean currency,
+                                                                    final boolean suppressMinusSignsWithinParens,
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer,
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction,
                                                                     final SpreadsheetPatternSpreadsheetFormatterNumberDigits exponent,
@@ -37,6 +38,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
                                                                     final SpreadsheetFormatterContext context) {
         return new SpreadsheetPatternSpreadsheetFormatterNumberContext(
             currency,
+            suppressMinusSignsWithinParens,
             integer,
             fraction,
             exponent,
@@ -49,6 +51,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
      * Private ctor use factory.
      */
     private SpreadsheetPatternSpreadsheetFormatterNumberContext(final boolean currency,
+                                                                final boolean suppressMinusSignsWithinParens,
                                                                 final SpreadsheetPatternSpreadsheetFormatterNumberDigits integer,
                                                                 final SpreadsheetPatternSpreadsheetFormatterNumberDigits fraction,
                                                                 final SpreadsheetPatternSpreadsheetFormatterNumberDigits exponent,
@@ -57,6 +60,8 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
         super();
 
         this.currency = currency;
+        this.suppressMinusSignsWithinParens = suppressMinusSignsWithinParens;
+        this.parens = 0;
 
         this.integer = integer;
         this.fraction = fraction;
@@ -106,16 +111,53 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
     }
 
     void appendNegativeSign() {
-        this.text.append(this.context.negativeSign());
+        boolean required = true;
+
+        if (this.suppressMinusSignsWithinParens) {
+            required = this.parens == 0;
+            this.parens++;
+        }
+
+        if (required) {
+            this.text.append(
+                this.context.negativeSign()
+            );
+        }
     }
+
+    private final boolean suppressMinusSignsWithinParens;
 
     void appendPercent() {
         this.text.append(this.context.percentSymbol());
     }
 
     void appendText(final String text) {
-        this.text.append(text);
+        for(final char c : text.toCharArray()) {
+            switch(c) {
+                case '(':
+                    this.parens = parens | 1;
+                    break;
+                case ')':
+                    this.parens = parens | 2;
+                    break;
+                default:
+                    break; // ignore character
+            }
+            this.text.append(c);
+        }
     }
+
+    /**
+     * Tracks open/close parens within a pattern, and supports skipping the minus sign for a negative value when
+     * within parens.
+     * <pre>
+     * (0.0)
+     * -1.2
+     *
+     * (1.2)
+     * </pre>
+     */
+    private int parens;
 
     char zeroDigit() {
         return this.context.zeroDigit();
@@ -151,6 +193,7 @@ final class SpreadsheetPatternSpreadsheetFormatterNumberContext implements Conte
             .separator("")
             .labelSeparator("")
             .value(this.currency ? "currency " : "") // https://github.com/mP1/walkingkooka/issues/2525
+            .value(this.suppressMinusSignsWithinParens ? "suppressMinusSignsWithinParens " : "") // https://github.com/mP1/walkingkooka-spreadsheet/issues/8093
             .value(this.integer)
             .value(this.fraction)
             .value(this.exponent)
