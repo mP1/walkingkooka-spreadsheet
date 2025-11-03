@@ -273,7 +273,4 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
             SpreadsheetNumberFormatPattern::new
         );
     }
-
-    // Object...........................................................................................................
-
 }
