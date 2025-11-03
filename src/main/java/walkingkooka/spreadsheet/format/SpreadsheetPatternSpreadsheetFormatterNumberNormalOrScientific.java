@@ -72,6 +72,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
 
             return SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
                 formatter.currency, // when true formatting will use the monetaryDecimalSeparator rather than decimalSeparator
+                formatter.suppressMinusSignsWithinParens,
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(
                     SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(valueSignum),
                     integerDigits,
@@ -128,6 +129,7 @@ enum SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific {
 
             return SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
                 formatter.currency,
+                false, // suppressMinusSignsWithinParens
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(
                     SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.fromSignum(
                         value.signum()

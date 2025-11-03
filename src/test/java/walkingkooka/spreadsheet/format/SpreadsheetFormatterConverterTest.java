@@ -119,8 +119,11 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 TextCursors.charSequence(pattern),
                 SpreadsheetFormatParserContexts.basic(InvalidCharacterExceptionFactory.POSITION)
             ).map((t) -> t.cast(SequenceParserToken.class).value().get(0).cast(NumberSpreadsheetFormatParserToken.class))
-            .map(SpreadsheetFormatters::number)
-            .orElseThrow(UnsupportedOperationException::new);
+            .map((t) -> SpreadsheetFormatters.number(
+                t,
+                false // suppressMinusSignsWithinParens
+                )
+            ).orElseThrow(UnsupportedOperationException::new);
     }
 
     @Override

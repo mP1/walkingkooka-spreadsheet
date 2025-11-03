@@ -2481,7 +2481,10 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberTest extends Spre
 
     @Override
     SpreadsheetPatternSpreadsheetFormatterNumber createFormatter0(final NumberSpreadsheetFormatParserToken token) {
-        return SpreadsheetPatternSpreadsheetFormatterNumber.with(token);
+        return SpreadsheetPatternSpreadsheetFormatterNumber.with(
+            token,
+            false // suppressMinusSignWithinParens
+        );
     }
 
     @Override

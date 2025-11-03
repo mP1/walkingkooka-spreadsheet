@@ -27,11 +27,20 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberContextTest exten
     public void testToStringCurrencyTrue() {
         this.toStringAndCheck(
             SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
-                true,
+                true, // currency
+                false, // suppressMinusSignsWithinParens
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
-                SpreadsheetPatternSpreadsheetFormatterNumber.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
+                SpreadsheetPatternSpreadsheetFormatterNumber.with(
+                    SpreadsheetFormatParserToken.number(
+                        Lists.of(
+                            SpreadsheetFormatParserToken.digit("1", "1")
+                        ),
+                        "1"
+                    ),
+                    false // suppressMinusSignsWithinParens
+                ),
                 SpreadsheetFormatterContexts.fake()),
             "currency 123-456789"
         );
@@ -41,13 +50,68 @@ public final class SpreadsheetPatternSpreadsheetFormatterNumberContextTest exten
     public void testToStringCurrencyFalse() {
         this.toStringAndCheck(
             SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
-                false,
+                false, // currency
+                false, // suppressMinusSignsWithinParens
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
                 SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
-                SpreadsheetPatternSpreadsheetFormatterNumber.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
+                SpreadsheetPatternSpreadsheetFormatterNumber.with(
+                    SpreadsheetFormatParserToken.number(
+                        Lists.of(
+                            SpreadsheetFormatParserToken.digit("1", "1")
+                        ),
+                        "1"
+                    ),
+                    false // suppressMinusSignsWithinParens
+                ),
                 SpreadsheetFormatterContexts.fake()),
             "123-456789"
+        );
+    }
+
+    @Test
+    public void testToStringSuppressMinusSignsWithinParensFalse() {
+        this.toStringAndCheck(
+            SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
+                false, // currency
+                false, // suppressMinusSignsWithinParens
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
+                SpreadsheetPatternSpreadsheetFormatterNumber.with(
+                    SpreadsheetFormatParserToken.number(
+                        Lists.of(
+                            SpreadsheetFormatParserToken.digit("1", "1")
+                        ),
+                        "1"
+                    ),
+                    false // suppressMinusSignsWithinParens
+                ),
+                SpreadsheetFormatterContexts.fake()),
+            "123-456789"
+        );
+    }
+
+    @Test
+    public void testToStringSuppressMinusSignsWithinParensTrue() {
+        this.toStringAndCheck(
+            SpreadsheetPatternSpreadsheetFormatterNumberContext.with(
+                false, // currency
+                true, // suppressMinusSignsWithinParens
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "123", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.REQUIRED, "456", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.INCLUDE),
+                SpreadsheetPatternSpreadsheetFormatterNumberDigits.integer(SpreadsheetPatternSpreadsheetFormatterNumberMinusSign.NOT_REQUIRED, "789", SpreadsheetPatternSpreadsheetFormatterNumberGroupSeparator.NONE),
+                SpreadsheetPatternSpreadsheetFormatterNumber.with(
+                    SpreadsheetFormatParserToken.number(
+                        Lists.of(
+                            SpreadsheetFormatParserToken.digit("1", "1")
+                        ),
+                        "1"
+                    ),
+                    false // suppressMinusSignsWithinParens
+                ),
+                SpreadsheetFormatterContexts.fake()),
+            "suppressMinusSignsWithinParens 123-456789"
         );
     }
 

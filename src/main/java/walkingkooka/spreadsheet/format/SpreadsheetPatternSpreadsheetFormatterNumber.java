@@ -34,20 +34,27 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
 
     /**
      * Creates a {@link SpreadsheetPatternSpreadsheetFormatterNumber} parse a {@link NumberSpreadsheetFormatParserToken}.
+     * If this number format pattern is only for negative values, skip minus signs within parens.
      */
-    static SpreadsheetPatternSpreadsheetFormatterNumber with(final NumberSpreadsheetFormatParserToken token) {
+    static SpreadsheetPatternSpreadsheetFormatterNumber with(final NumberSpreadsheetFormatParserToken token,
+                                                             final boolean suppressMinusSignsWithinParens) {
         Objects.requireNonNull(token, "token");
 
-        return new SpreadsheetPatternSpreadsheetFormatterNumber(token);
+        return new SpreadsheetPatternSpreadsheetFormatterNumber(
+            token,
+            suppressMinusSignsWithinParens
+        );
     }
 
     /**
      * Private ctor use static method.
      */
-    private SpreadsheetPatternSpreadsheetFormatterNumber(final NumberSpreadsheetFormatParserToken token) {
+    private SpreadsheetPatternSpreadsheetFormatterNumber(final NumberSpreadsheetFormatParserToken token,
+                                                         final boolean suppressMinusSignsWithinParens) {
         super();
 
         this.token = token;
+        this.suppressMinusSignsWithinParens = suppressMinusSignsWithinParens;
 
         final SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor visitor =
             SpreadsheetPatternSpreadsheetFormatterNumberSpreadsheetFormatParserTokenVisitor.analyze(token);
@@ -98,6 +105,12 @@ final class SpreadsheetPatternSpreadsheetFormatterNumber implements SpreadsheetP
                 null
         );
     }
+
+    /**
+     * Should only be true when this pattern is for negative values and minus signs within a parens should not be outputted.
+     */
+    // @see SpreadsheetPatternSpreadsheetFormatterNumberNormalOrScientific
+    final boolean suppressMinusSignsWithinParens;
 
     /**
      * When true indicates that his pattern formats currency values.

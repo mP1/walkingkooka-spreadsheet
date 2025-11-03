@@ -172,8 +172,12 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterNumber}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token) {
-        return SpreadsheetPatternSpreadsheetFormatterNumber.with(token);
+    public static SpreadsheetPatternSpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token,
+                                                                final boolean suppressMinusSignsWithinParens) {
+        return SpreadsheetPatternSpreadsheetFormatterNumber.with(
+            token,
+            suppressMinusSignsWithinParens
+        );
     }
 
     /**

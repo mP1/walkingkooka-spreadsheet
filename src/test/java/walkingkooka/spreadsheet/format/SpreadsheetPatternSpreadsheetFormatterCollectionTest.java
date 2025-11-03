@@ -19,13 +19,18 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -83,6 +88,106 @@ public final class SpreadsheetPatternSpreadsheetFormatterCollectionTest extends 
         this.formatAndCheck(
             Optional.empty(),
             Optional.empty()
+        );
+    }
+
+    @Test
+    public void testFormatPositiveNumberWithAccountingPattern() {
+        this.formatAndCheck(
+            SpreadsheetPattern.parseNumberFormatPattern("(0.00);[RED]0.0000")
+                .formatter(),
+            ExpressionNumberKind.BIG_DECIMAL.create( 1.5),
+            new FakeSpreadsheetFormatterContext() {
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> target) {
+                    if(value instanceof ExpressionNumber && BigDecimal.class == target) {
+                        return this.successfulConversion(
+                            ExpressionNumber.class.cast(value)
+                                .bigDecimal(),
+                            target
+                        );
+                    }
+                    if(value instanceof ExpressionNumber && ExpressionNumber.isClass(target)) {
+                        return this.successfulConversion(
+                            target.cast(value),
+                            target
+                        );
+                    }
+
+                    return this.failConversion(
+                        value,
+                        target
+                    );
+                }
+
+                @Override
+                public char decimalSeparator() {
+                    return '.';
+                }
+
+                @Override
+                public MathContext mathContext() {
+                    return MathContext.DECIMAL32;
+                }
+
+                @Override
+                public char zeroDigit() {
+                    return '0';
+                }
+            },
+            "(1.50)" // MINUS sign should not appear between parens
+        );
+    }
+
+    @Test
+    public void testFormatNegativeNumberWithAccountingPattern() {
+        this.formatAndCheck(
+            SpreadsheetPattern.parseNumberFormatPattern("[BLACK](0.00);(0.00)")
+                .formatter(),
+            ExpressionNumberKind.BIG_DECIMAL.create( -1.5),
+            new FakeSpreadsheetFormatterContext() {
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> target) {
+                    if(value instanceof ExpressionNumber && BigDecimal.class == target) {
+                        return this.successfulConversion(
+                            ExpressionNumber.class.cast(value)
+                                .bigDecimal(),
+                            target
+                        );
+                    }
+                    if(value instanceof ExpressionNumber && ExpressionNumber.isClass(target)) {
+                        return this.successfulConversion(
+                            target.cast(value),
+                            target
+                        );
+                    }
+
+                    return this.failConversion(
+                        value,
+                        target
+                    );
+                }
+
+                @Override
+                public char decimalSeparator() {
+                    return '.';
+                }
+
+                @Override
+                public MathContext mathContext() {
+                    return MathContext.DECIMAL32;
+                }
+
+                @Override
+                public char zeroDigit() {
+                    return '0';
+                }
+            },
+            "(1.50)" // MINUS sign should not appear between parens
         );
     }
 
