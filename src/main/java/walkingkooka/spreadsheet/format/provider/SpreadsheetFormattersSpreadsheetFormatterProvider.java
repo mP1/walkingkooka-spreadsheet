@@ -364,10 +364,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
         return SpreadsheetPattern.parseNumberFormatPattern(
             "$0." +
-                CharSequences.repeating(
-                    '0',
-                    decimalPlaces
-                )
+                decimalPlaces(decimalPlaces)
         ).formatter();
     }
 
@@ -466,10 +463,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
         return SpreadsheetPattern.parseNumberFormatPattern(
             "0." +
-                CharSequences.repeating(
-                    '0',
-                    decimalPlaces
-                ) + "%"
+                decimalPlaces(decimalPlaces) +
+                "%"
         ).formatter();
     }
 
@@ -485,10 +480,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         // "0.00E+00"
         return SpreadsheetPattern.parseNumberFormatPattern(
             "0." +
-                CharSequences.repeating(
-                    '0',
-                    decimalPlaces
-                ) + "E+00"
+                decimalPlaces(decimalPlaces) +
+                "E+00"
         ).formatter();
     }
 
@@ -521,6 +514,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 context.locale()
             )
         ).formatter();
+    }
+
+    private static CharSequence decimalPlaces(final int decimalPlaces) {
+        return CharSequences.repeating(
+            '0',
+            decimalPlaces
+        );
     }
 
     private SpreadsheetFormatter spreadsheetFormatter(final EnvironmentValueName<SpreadsheetFormatterSelector> value,
