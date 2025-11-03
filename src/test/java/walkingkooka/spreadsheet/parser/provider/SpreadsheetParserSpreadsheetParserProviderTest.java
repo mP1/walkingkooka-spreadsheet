@@ -113,6 +113,13 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         );
     }
 
+    @Test
+    public void testSpreadsheetFormatterSelectorWithWholeNumber() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse(SpreadsheetParserName.WHOLE_NUMBER_STRING)
+        );
+    }
+
     // SpreadsheetParserSelector........................................................................................
 
     @Test
@@ -179,6 +186,16 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         );
     }
 
+    @Test
+    public void testSpreadsheetParserNameWithWholeNumber() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.WHOLE_NUMBER,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetParsers.wholeNumber()
+        );
+    }
+
     // SpreadsheetParserSelector........................................................................................
 
     @Test
@@ -235,6 +252,15 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseTimeParsePattern("hh:mm:ss.SSS AM/PM")
                 .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithWholeNumber() {
+        this.spreadsheetParserAndCheck(
+            "whole-number",
+            PROVIDER_CONTEXT,
+            SpreadsheetParsers.wholeNumber()
         );
     }
 
@@ -749,6 +775,15 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         );
     }
 
+    @Test
+    public void testSpreadsheetParserNextTokenWithWholeNumber() {
+        this.spreadsheetParserNextTokenAndCheck(
+            SpreadsheetParserSelector.parse(
+                SpreadsheetParserName.WHOLE_NUMBER_STRING
+            )
+        );
+    }
+
     // SpreadsheetParserProvider........................................................................................
 
     @Override
@@ -780,7 +815,8 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\n" +
-                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n"
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\n"
         );
     }
 
@@ -795,7 +831,8 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\",\n" +
-                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\"\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\"\n" +
                     "]"
             ),
             JsonNodeMarshallContexts.basic()
