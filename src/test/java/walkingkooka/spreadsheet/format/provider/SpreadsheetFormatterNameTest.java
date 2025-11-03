@@ -38,6 +38,21 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     // constants........................................................................................................
 
     @Test
+    public void testWithBadgeError() {
+        this.verifyConstant("badge-error");
+    }
+
+    @Test
+    public void testWithCollection() {
+        this.verifyConstant("collection");
+    }
+
+    @Test
+    public void testWithCurrency() {
+        this.verifyConstant("currency");
+    }
+    
+    @Test
     public void testWithDate() {
         this.verifyConstant("date");
     }
@@ -48,8 +63,83 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
+    public void testWithFullDate() {
+        this.verifyConstant("full-date");
+    }
+
+    @Test
+    public void testWithFullDateTime() {
+        this.verifyConstant("full-date-time");
+    }
+
+    @Test
+    public void testWithFullTime() {
+        this.verifyConstant("full-time");
+    }
+
+    @Test
+    public void testWithGeneral() {
+        this.verifyConstant("general");
+    }
+
+    @Test
+    public void testWithLongDate() {
+        this.verifyConstant("long-date");
+    }
+
+    @Test
+    public void testWithLongDateTime() {
+        this.verifyConstant("long-date-time");
+    }
+
+    @Test
+    public void testWithLongTime() {
+        this.verifyConstant("long-time");
+    }
+
+    @Test
+    public void testWithMediumDate() {
+        this.verifyConstant("medium-date");
+    }
+
+    @Test
+    public void testWithMediumDateTime() {
+        this.verifyConstant("medium-date-time");
+    }
+
+    @Test
+    public void testWithMediumTime() {
+        this.verifyConstant("medium-time");
+    }
+    
+    @Test
     public void testWithNumber() {
         this.verifyConstant("number");
+    }
+
+    @Test
+    public void testWithPercent() {
+        this.verifyConstant("percent");
+    }
+
+    @Test
+    public void testWithScientific() {
+        this.verifyConstant("scientific");
+    }
+
+    @Test
+    public void testWithShortDate() {
+        this.verifyConstant("short-date");
+    }
+
+    @Test
+    public void testWithShortDateTime() {
+        this.verifyConstant("short-date-time");
+    }
+
+    @Test
+    public void testWithShortTime() {
+        this.verifyConstant("short-time");
     }
 
     @Test
