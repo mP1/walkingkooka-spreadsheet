@@ -78,8 +78,11 @@ final class SpreadsheetPatternSpreadsheetFormatterCollection implements Spreadsh
             ).findFirst();
     }
 
+    /**
+     * Necessary because GWT's JRE {@link Optional#stream()} is not implemented so an equivalent is provided here.
+     */
     // TODO Missing GWT JRE Optional#stream
-    private Stream<SpreadsheetText> optionalStream(final Optional<SpreadsheetText> optional) {
+    private static Stream<SpreadsheetText> optionalStream(final Optional<SpreadsheetText> optional) {
         return optional.map(Stream::of)
             .orElse(Stream.of());
     }
