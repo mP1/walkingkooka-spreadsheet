@@ -104,6 +104,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.TIME_PARSE_PATTERN
     );
 
+    final static String WHOLE_NUMBER_STRING = "whole-number";
+
+    /**
+     * The name of the whole-number {@link Parser}
+     */
+    public final static SpreadsheetParserName WHOLE_NUMBER = new SpreadsheetParserName(
+        WHOLE_NUMBER_STRING,
+        null
+    );
+
     /**
      * Factory that creates a {@link SpreadsheetParserName}
      */
@@ -127,6 +137,9 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
                 break;
             case TIME_STRING:
                 parserName = TIME;
+                break;
+            case WHOLE_NUMBER_STRING:
+                parserName = WHOLE_NUMBER;
                 break;
             default:
                 parserName = new SpreadsheetParserName(
