@@ -1829,7 +1829,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"findFunctions\": \"@\",\n" +
                     "  \"findHighlighting\": false,\n" +
                     "  \"formHandlers\": \"basic\",\n" +
-                    "  \"formatters\": \"automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
+                    "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
                     "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                     "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                     "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
@@ -2054,7 +2054,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
-                "  \"formatters\": \"automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
+                "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
                 "  \"formattingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +

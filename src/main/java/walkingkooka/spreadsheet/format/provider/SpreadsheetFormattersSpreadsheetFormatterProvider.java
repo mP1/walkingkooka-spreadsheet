@@ -79,6 +79,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
+            case SpreadsheetFormatterName.ACCOUNTING_STRING:
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
             case SpreadsheetFormatterName.CURRENCY_STRING:
@@ -150,6 +151,12 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         final SpreadsheetFormatter formatter;
 
         switch (name.value()) {
+            case SpreadsheetFormatterName.ACCOUNTING_STRING:
+                formatter = accounting(
+                    values,
+                    context
+                );
+                break;
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
                 switch (count) {
                     case 0:
@@ -351,6 +358,30 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         if (expected != count) {
             throw new IllegalArgumentException("Expected " + expected + " value(s) got " + count);
         }
+    }
+
+    private static SpreadsheetFormatter accounting(final List<?> values,
+                                                   final ProviderContext context) {
+        final int decimalPlaces = values.size() == 0 ?
+            2 :
+            context.convertOrFail(
+                values.get(0),
+                Integer.class
+            );
+
+        // $0.00 SPACE
+        String pattern = "$0." +
+            CharSequences.repeating(
+                '0',
+                decimalPlaces
+            );
+
+        return SpreadsheetPattern.parseNumberFormatPattern(
+            pattern +
+                " ;"
+                + "(" + pattern + ");" +
+                "- "
+        ).formatter();
     }
 
     private static SpreadsheetFormatter currency(final List<?> values,
@@ -571,6 +602,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
+            case SpreadsheetFormatterName.ACCOUNTING_STRING:
+                next = null;
+                break;
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
                 next = null;
                 break;
@@ -733,6 +767,45 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
         final SpreadsheetFormatterName name = selector.name();
         switch (name.value()) {
+            case SpreadsheetFormatterName.ACCOUNTING_STRING: {
+                samples.add(
+                    accountingSample(
+                        123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    accountingSample(
+                        -123.5,
+                        context
+                    )
+                );
+                samples.add(
+                    accountingSample(
+                        0,
+                        context
+                    )
+                );
+                if (includeSamples) {
+                    final Object value = cellValueOr(
+                        context,
+                        () -> null
+                    );
+                    if (null != value) {
+                        samples.add(
+                            accountingSample(
+                                context.cell()
+                                    .get()
+                                    .reference()
+                                    .text(),
+                                value,
+                                context
+                            )
+                        );
+                    }
+                }
+                break;
+            }
             case SpreadsheetFormatterName.AUTOMATIC_STRING:
             case SpreadsheetFormatterName.BADGE_ERROR_STRING:
             case SpreadsheetFormatterName.COLLECTION_STRING:
@@ -1500,6 +1573,26 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         return Lists.immutable(samples);
     }
 
+    private SpreadsheetFormatterSample accountingSample(final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return accountingSample(
+            "Accounting",
+            value,
+            context
+        );
+    }
+
+    private SpreadsheetFormatterSample accountingSample(final String label,
+                                                        final Object value,
+                                                        final SpreadsheetFormatterProviderSamplesContext context) {
+        return this.sample(
+            label,
+            SpreadsheetFormatterName.ACCOUNTING.setValueText(""),
+            value,
+            context
+        );
+    }
+    
     private SpreadsheetFormatterSample currencySample(final Object value,
                                                       final SpreadsheetFormatterProviderSamplesContext context) {
         return currencySample(
@@ -2011,6 +2104,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private final static SpreadsheetFormatterInfoSet INFOS = SpreadsheetFormatterInfoSet.with(
         Sets.of(
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.ACCOUNTING),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.AUTOMATIC),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.BADGE_ERROR),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.COLLECTION),

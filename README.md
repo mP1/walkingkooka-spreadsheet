@@ -248,6 +248,7 @@ A `SpreadsheetFormatter` is used to format the cell value into text that is disp
 There are several built-in SpreadsheetFormatter(s) one for each Spreadsheet type, each supporting the standard patterns
 to allow user customisation of that value type along with a single color.
 
+- accounting
 - automatic
 - [badge-error](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/BadgeErrorSpreadsheetFormatter.java)
 - currency

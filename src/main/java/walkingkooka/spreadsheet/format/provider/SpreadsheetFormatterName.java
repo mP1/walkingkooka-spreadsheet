@@ -57,6 +57,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
 
     // SpreadsheetFormatterName instances...............................................................................
 
+    final static String ACCOUNTING_STRING = "accounting";
+
+    /**
+     * The name of the date {@link SpreadsheetFormatter}
+     */
+    public final static SpreadsheetFormatterName ACCOUNTING = new SpreadsheetFormatterName(
+        ACCOUNTING_STRING,
+        null
+    );
+
     final static String AUTOMATIC_STRING = "automatic";
 
     /**
@@ -326,6 +336,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
         final SpreadsheetFormatterName spreadsheetFormatterName;
 
         switch (name) {
+            case ACCOUNTING_STRING:
+                spreadsheetFormatterName = ACCOUNTING;
+                break;
             case AUTOMATIC_STRING:
                 spreadsheetFormatterName = AUTOMATIC;
                 break;

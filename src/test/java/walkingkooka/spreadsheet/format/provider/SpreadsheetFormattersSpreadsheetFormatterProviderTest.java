@@ -126,6 +126,19 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     // SpreadsheetFormatterName.........................................................................................
 
+    // accounting.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNameWithAccounting() {
+        this.spreadsheetFormatterAndCheck(
+            SpreadsheetFormatterName.with("accounting"),
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberFormatPattern("$0.00 ;($0.00);- ")
+                .formatter()
+        );
+    }
+
     // date.............................................................................................................
 
     @Test
@@ -325,6 +338,18 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     // SpreadsheetFormatterSelector.....................................................................................
+
+    // accounting.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithAccounting() {
+        this.spreadsheetFormatterAndCheck(
+            "accounting(2)",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseNumberFormatPattern("$0.00 ;($0.00);- ")
+                .formatter()
+        );
+    }
 
     // automatic........................................................................................................
 
@@ -704,6 +729,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
     }
 
     // testSpreadsheetFormatterNextToken................................................................................
+
+    // accounting.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterNextTokenWithAccounting() {
+        this.spreadsheetFormatterNextTokenAndCheck(
+            SpreadsheetFormatterName.ACCOUNTING.setValueText("2")
+        );
+    }
 
     // automatic........................................................................................................
 
@@ -1443,6 +1477,32 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     // spreadsheetFormatterSamples......................................................................................
 
+    // accounting.......................................................................................................
+
+    @Test
+    public void testSpreadsheetFormatterSamplesWithAccounting() {
+        this.spreadsheetFormatterSamplesAndCheck(
+            SpreadsheetFormatterName.ACCOUNTING,
+            SpreadsheetFormatterProvider.INCLUDE_SAMPLES,
+            SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT,
+            SpreadsheetFormatterSample.with(
+                "Accounting",
+                SpreadsheetFormatterName.ACCOUNTING.setValueText(""),
+                TextNode.text("$123.50 ")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Accounting",
+                SpreadsheetFormatterName.ACCOUNTING.setValueText(""),
+                TextNode.text("($123.50)")
+            ),
+            SpreadsheetFormatterSample.with(
+                "Accounting",
+                SpreadsheetFormatterName.ACCOUNTING.setValueText(""),
+                TextNode.text("- ")
+            )
+        );
+    }
+    
     // automatic........................................................................................................
 
     @Test
@@ -4573,6 +4633,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             this.createSpreadsheetFormatterProvider()
                 .spreadsheetFormatterInfos(),
             "SpreadsheetFormatterInfoSet\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/accounting accounting\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/badge-error badge-error\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\n" +
@@ -4609,6 +4670,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.checkEquals(
             JsonNode.parse(
                     "[\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/accounting accounting\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/automatic automatic\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/badge-error badge-error\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetFormatter/collection collection\",\n" +
