@@ -104,7 +104,4 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
             SpreadsheetTimeFormatPattern::new
         );
     }
-
-    // Object...........................................................................................................
-
 }

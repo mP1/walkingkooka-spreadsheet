@@ -105,7 +105,4 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
             SpreadsheetTextFormatPattern::new
         );
     }
-
-    // Object...........................................................................................................
-
 }

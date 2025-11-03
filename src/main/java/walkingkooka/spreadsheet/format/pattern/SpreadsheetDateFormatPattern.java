@@ -104,7 +104,4 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
             SpreadsheetDateFormatPattern::new
         );
     }
-
-    // Object...........................................................................................................
-
 }
