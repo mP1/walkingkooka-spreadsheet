@@ -72,7 +72,7 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
 
     @Override
     public SpreadsheetTextFormatPattern removeColor() {
-        return this.removeIf0(
+        return this.removeIf(
             COLOR_PREDICATE,
             SpreadsheetTextFormatPattern::new
         );
@@ -100,7 +100,7 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
 
     @Override
     public SpreadsheetTextFormatPattern removeCondition() {
-        return this.removeIf0(
+        return this.removeIf(
             CONDITION_PREDICATE,
             SpreadsheetTextFormatPattern::new
         );

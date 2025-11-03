@@ -240,7 +240,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     @Override
     public SpreadsheetNumberFormatPattern removeColor() {
-        return this.removeIf0(
+        return this.removeIf(
             COLOR_PREDICATE,
             SpreadsheetNumberFormatPattern::new
         );
@@ -268,7 +268,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     @Override
     public SpreadsheetNumberFormatPattern removeCondition() {
-        return this.removeIf0(
+        return this.removeIf(
             CONDITION_PREDICATE,
             SpreadsheetNumberFormatPattern::new
         );
