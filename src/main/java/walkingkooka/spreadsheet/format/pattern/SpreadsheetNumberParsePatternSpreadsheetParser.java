@@ -26,6 +26,8 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RequiredParser;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
@@ -36,7 +38,8 @@ import java.util.Optional;
  * The {@link SpreadsheetParser} returned by {@link SpreadsheetNumberParsePattern#converter()}.
  */
 final class SpreadsheetNumberParsePatternSpreadsheetParser implements SpreadsheetParser,
-    RequiredParser<SpreadsheetParserContext> {
+    RequiredParser<SpreadsheetParserContext>,
+    TreePrintable{
 
     static SpreadsheetNumberParsePatternSpreadsheetParser with(final SpreadsheetNumberParsePattern pattern,
                                                                final SpreadsheetNumberParsePatternMode mode) {
@@ -130,4 +133,23 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
      * The enclosing {@link SpreadsheetNumberParsePattern}.
      */
     private final SpreadsheetNumberParsePattern pattern;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            printer.println("pattern");
+            printer.indent();
+            {
+
+                this.pattern.printTree(printer);
+            }
+            printer.outdent();
+        }
+        printer.outdent();
+    }
 }

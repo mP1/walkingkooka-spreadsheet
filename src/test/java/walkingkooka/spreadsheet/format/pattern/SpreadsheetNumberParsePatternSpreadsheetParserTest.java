@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -51,7 +52,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends SpreadsheetNumberParsePatternTestCase2<SpreadsheetNumberParsePatternSpreadsheetParser>
     implements SpreadsheetParserTesting2<SpreadsheetNumberParsePatternSpreadsheetParser>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetNumberParsePatternSpreadsheetParser> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetNumberParsePatternSpreadsheetParser>,
+    TreePrintableTesting {
 
     private final static char VALUE_SEPARATOR = ';';
 
@@ -774,6 +776,19 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
     @Override
     public SpreadsheetNumberParsePatternSpreadsheetParser createObject() {
         return this.createParser();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "SpreadsheetNumberParsePatternSpreadsheetParser\n" +
+                "  pattern\n" +
+                "    number-parse-pattern\n" +
+                "      \"#\"\n"
+        );
     }
 
     // Class............................................................................................................
