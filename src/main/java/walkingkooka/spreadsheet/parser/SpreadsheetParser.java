@@ -52,4 +52,12 @@ public interface SpreadsheetParser extends Parser<SpreadsheetParserContext> {
      * Returns the {@link ValueTypeName that this parser returns.
      */
     Optional<ValueTypeName> valueType();
+
+    @Override
+    default SpreadsheetParser setToString(final String toString) {
+        return SpreadsheetParsers.toString(
+            this,
+            toString
+        );
+    }
 }
