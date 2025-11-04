@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
@@ -32,7 +34,8 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetParser} that only parsers whole numbers, with decimals and scientific numbers failing.
  */
-final class WholeNumberSpreadsheetParser implements SpreadsheetParser {
+final class WholeNumberSpreadsheetParser implements SpreadsheetParser,
+    TreePrintable {
 
     /**
      * Singleton
@@ -84,5 +87,20 @@ final class WholeNumberSpreadsheetParser implements SpreadsheetParser {
     @Override
     public String toString() {
         return "whole-number";
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.parser,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
