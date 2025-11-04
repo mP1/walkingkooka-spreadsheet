@@ -33,12 +33,14 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.util.Locale;
 
 public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParserTesting2<WholeNumberSpreadsheetParser>,
+    TreePrintableTesting,
     ClassTesting<WholeNumberSpreadsheetParser> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
@@ -204,6 +206,17 @@ public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParser
         public String toString() {
             return this.getClass().getSimpleName();
         }
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "WholeNumberSpreadsheetParser\n" +
+                "  \"#\" (walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatternSpreadsheetParser)\n"
+        );
     }
 
     // class............................................................................................................
