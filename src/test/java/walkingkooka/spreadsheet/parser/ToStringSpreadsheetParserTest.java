@@ -60,6 +60,11 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
             Objects.requireNonNull(context, "context");
             return TOKENS;
         }
+
+        @Override
+        public String toString() {
+            return "TestSpreadsheetParser";
+        }
     };
 
     private final static String TO_STRING = "TestToString";
@@ -181,6 +186,17 @@ public final class ToStringSpreadsheetParserTest implements SpreadsheetParserTes
         this.toStringAndCheck(
             this.createParser(),
             TO_STRING
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "ToStringSpreadsheetParser\n" +
+                "  TestSpreadsheetParser (walkingkooka.spreadsheet.parser.ToStringSpreadsheetParserTest$1)\n"
         );
     }
 
