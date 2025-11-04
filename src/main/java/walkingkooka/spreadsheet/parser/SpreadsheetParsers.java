@@ -45,7 +45,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         "0E+0;" + // scientific without decimals
             "#.##;" + // decimal
             "#" // integer
-    ).parser();
+    ).parser()
+        .setToString("general");
 
     /**
      * {@see ParserSpreadsheetParser}

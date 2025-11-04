@@ -331,6 +331,15 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
     }
 
+    @Test
+    public void testGeneralToString() {
+        this.checkEquals(
+            SpreadsheetParsers.general()
+                .toString(),
+            "general"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
