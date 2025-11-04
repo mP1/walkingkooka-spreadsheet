@@ -215,7 +215,10 @@ public final class WholeNumberSpreadsheetParserTest implements SpreadsheetParser
         this.treePrintAndCheck(
             this.createParser(),
             "WholeNumberSpreadsheetParser\n" +
-                "  \"#\" (walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatternSpreadsheetParser)\n"
+                "  SpreadsheetNumberParsePatternSpreadsheetParser\n" +
+                "    pattern\n" +
+                "      number-parse-pattern\n" +
+                "        \"#\"\n"
         );
     }
 
