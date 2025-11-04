@@ -27,10 +27,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTesting2;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorTokenAlternative;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest implements SpreadsheetParserTesting2<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
     ClassTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
-    ToStringTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser> {
+    ToStringTesting<SpreadsheetNonNumberParsePatternSpreadsheetParser>,
+    TreePrintableTesting {
 
     @Test
     public void testTokens() {
@@ -116,6 +118,28 @@ public final class SpreadsheetNonNumberParsePatternSpreadsheetParserTest impleme
         this.toStringAndCheck(
             this.createParser(),
             "\"dd/mm/yyyy\""
+        );
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "SpreadsheetNonNumberParsePatternSpreadsheetParser\n" +
+                "  parser\n" +
+                "    \"dd/mm/yyyy\" (walkingkooka.text.cursor.parser.AndEmptyTextCursorParser)\n" +
+                "  valueType\n" +
+                "    date\n" +
+                "  tokens\n" +
+                "    Sequence \"dd/mm/yyyy\"\n" +
+                "      DateSpreadsheetFormat \"dd/mm/yyyy\"\n" +
+                "        DaySpreadsheetFormat \"dd\" \"dd\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        MonthSpreadsheetFormat \"mm\" \"mm\"\n" +
+                "        TextLiteralSpreadsheetFormat \"/\" \"/\"\n" +
+                "        YearSpreadsheetFormat \"yyyy\" \"yyyy\"\n"
         );
     }
 

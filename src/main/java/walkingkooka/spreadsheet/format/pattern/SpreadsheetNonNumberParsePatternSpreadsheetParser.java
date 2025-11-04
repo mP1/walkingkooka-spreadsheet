@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.validation.ValueTypeName;
 
 import java.util.List;
@@ -33,7 +35,8 @@ import java.util.Optional;
 /**
  * Wraps a {@link Parser} keeping the original {@link ParserToken}. The former provides the parsing and the token is used to provide the {@link SpreadsheetParserSelectorToken}.
  */
-final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements SpreadsheetParser {
+final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements SpreadsheetParser,
+    TreePrintable {
 
     static SpreadsheetNonNumberParsePatternSpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
                                                                   final ParserToken token,
@@ -115,5 +118,48 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     @Override
     public String toString() {
         return this.parser.toString();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            printer.println("parser");
+            printer.indent();
+            {
+
+                TreePrintable.printTreeOrToString(
+                    this.parser,
+                    printer
+                );
+            }
+            printer.outdent();
+        }
+        {
+            printer.println("valueType");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.valueType,
+                    printer
+                );
+            }
+            printer.outdent();
+        }
+
+        {
+            printer.println("tokens");
+            printer.indent();
+            {
+
+                this.token.printTree(printer);
+            }
+            printer.outdent();
+        }
+        printer.outdent();
     }
 }
