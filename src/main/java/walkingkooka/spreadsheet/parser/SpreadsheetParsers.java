@@ -59,6 +59,17 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see ToStringSpreadsheetParser}
+     */
+    public static SpreadsheetParser toString(final SpreadsheetParser parser,
+                                             final String toString) {
+        return ToStringSpreadsheetParser.with(
+            parser,
+            toString
+        );
+    }
+
+    /**
      * {@see WholeNumberSpreadsheetParser}
      */
     public static SpreadsheetParser wholeNumber() {
