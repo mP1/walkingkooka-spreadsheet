@@ -17,9 +17,8 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -47,7 +46,7 @@ public final class SpreadsheetCellReferenceToLocaleMap extends SpreadsheetCellRe
     private static Map<SpreadsheetCellReference, Optional<Locale>> copy(final Map<SpreadsheetCellReference, Optional<Locale>> cellReferenceToLocale) {
         Objects.requireNonNull(cellReferenceToLocale, "cellReferenceToLocale");
 
-        final Map<SpreadsheetCellReference, Optional<Locale>> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<Locale>> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, Optional<Locale>> referenceAndCell : cellReferenceToLocale.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),

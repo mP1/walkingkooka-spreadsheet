@@ -17,12 +17,35 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.PublicStaticHelper;
+
+import java.util.SortedMap;
 
 /**
  * A collection of maps where the key is a {@link SpreadsheetSelection}.
  */
 public final class SpreadsheetSelectionMaps implements PublicStaticHelper {
+
+    public static <V> SortedMap<SpreadsheetCellReference, V> cell() {
+        return Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    }
+
+    public static <V> SortedMap<SpreadsheetColumnReference, V> column() {
+        return Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    }
+
+    public static <V> SortedMap<SpreadsheetLabelName, V> label() {
+        return Maps.sorted();
+    }
+
+    public static <V> SortedMap<SpreadsheetRowReference, V> row() {
+        return Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    }
+
+    public static <V> SortedMap<SpreadsheetExpressionReference, V> spreadsheetExpressionReference() {
+        return Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    }
 
     /**
      * Stop creation

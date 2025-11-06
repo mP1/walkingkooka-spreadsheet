@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.store.Store;
 import walkingkooka.watch.Watchers;
 
@@ -255,7 +255,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     /**
      * All mappings present in this spreadsheet
      */
-    private final SortedMap<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.sorted();
+    private final SortedMap<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = SpreadsheetSelectionMaps.label();
 
     @Override
     public String toString() {

@@ -17,13 +17,12 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -53,7 +52,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
     private static Map<SpreadsheetCellReference, SpreadsheetCell> copy(final Map<SpreadsheetCellReference, SpreadsheetCell> cellReferenceToCell) {
         Objects.requireNonNull(cellReferenceToCell, "cellReferenceToCell");
 
-        final Map<SpreadsheetCellReference, SpreadsheetCell> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetCell> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, SpreadsheetCell> referenceAndCell : cellReferenceToCell.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),
@@ -112,9 +111,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMap extends Abstract
 
     static SpreadsheetCellReferenceToSpreadsheetCellMap unmarshall(final JsonNode node,
                                                                    final JsonNodeUnmarshallContext context) {
-        final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = Maps.sorted(
-            SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
-        );
+        final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = SpreadsheetSelectionMaps.cell();
 
         SpreadsheetCellSet.unmarshallCollection(
             node,

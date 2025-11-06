@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -28,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -41,7 +41,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             cellReference,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.cell(),
             BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
         );
 
@@ -77,7 +77,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             cell,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.cell(),
             BasicSpreadsheetEngineChangesCacheStatusCell.LOADING
         );
 
@@ -112,7 +112,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             cell,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.cell(),
             BasicSpreadsheetEngineChangesCacheStatusCell.SAVING
         );
 
@@ -148,7 +148,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             cellReference,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.cell(),
             BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
         );
 
@@ -185,7 +185,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             cell,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.cell(),
             BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_LOADED
         );
 
@@ -220,7 +220,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             cell,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.cell(),
             BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_SAVING
         );
 
@@ -258,7 +258,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             label,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.label(),
             BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
         );
 
@@ -289,7 +289,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             label,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.label(),
             BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED
         );
 
@@ -324,7 +324,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             label,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.label(),
             BasicSpreadsheetEngineChangesCacheStatusLabel.SAVED
         );
 
@@ -360,7 +360,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             label,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.label(),
             BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_UNLOADED
         );
 
@@ -396,7 +396,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             label,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.label(),
             BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_LOADED
         );
 
@@ -431,7 +431,7 @@ public final class BasicSpreadsheetEngineChangesCacheTest implements ClassTestin
 
         final BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping> cache = BasicSpreadsheetEngineChangesCache.getOrCreate(
             label,
-            Maps.sorted(),
+            SpreadsheetSelectionMaps.label(),
             BasicSpreadsheetEngineChangesCacheStatusLabel.REFERENCE_SAVED
         );
 

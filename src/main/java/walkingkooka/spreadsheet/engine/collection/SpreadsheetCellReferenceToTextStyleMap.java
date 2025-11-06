@@ -18,9 +18,8 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -48,7 +47,7 @@ public final class SpreadsheetCellReferenceToTextStyleMap extends SpreadsheetCel
     private static Map<SpreadsheetCellReference, TextStyle> copy(final Map<SpreadsheetCellReference, TextStyle> cellReferenceToTextStyle) {
         Objects.requireNonNull(cellReferenceToTextStyle, "cellReferenceToTextStyle");
 
-        final Map<SpreadsheetCellReference, TextStyle> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, TextStyle> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, TextStyle> referenceAndCell : cellReferenceToTextStyle.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),

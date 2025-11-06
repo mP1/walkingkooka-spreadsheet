@@ -27,10 +27,10 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.store.Store;
 import walkingkooka.watch.Watchers;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -55,9 +55,8 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     private TreeMapSpreadsheetExpressionReferenceStore() {
         super();
 
-        final Comparator<SpreadsheetSelection> comparator = SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR;
-        this.cellToReferences = Maps.sorted(comparator);
-        this.referenceToCells = Maps.sorted(comparator);
+        this.cellToReferences = SpreadsheetSelectionMaps.cell();
+        this.referenceToCells = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
     @Override

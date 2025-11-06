@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.text.CharSequences;
@@ -557,7 +558,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
      */
     private static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filterReferences(final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
                                                                                                        final SpreadsheetViewportWindows window) {
-        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filtered = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> filtered = SpreadsheetSelectionMaps.cell();
 
         for (final Map.Entry<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellAndReferences : references.entrySet()) {
             final SpreadsheetCellReference cell = cellAndReferences.getKey();
@@ -2558,7 +2559,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     );
                     break;
                 case REFERENCES_PROPERTY_STRING:
-                    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+                    final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references = SpreadsheetSelectionMaps.cell();
 
                     for (final JsonNode reference : child.objectOrFail().children()) {
                         references.put(

@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -71,7 +72,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, SpreadsheetCell> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetCell> map = SpreadsheetSelectionMaps.cell();
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 
