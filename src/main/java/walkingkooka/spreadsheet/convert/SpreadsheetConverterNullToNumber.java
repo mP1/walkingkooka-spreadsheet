@@ -48,7 +48,10 @@ final class SpreadsheetConverterNullToNumber implements TryingShortCircuitingCon
     public Object tryConvertOrFail(final Object value,
                                    final Class<?> type,
                                    final SpreadsheetConverterContext context) {
-        return context.missingCellNumberValue();
+        return context.convertOrFail(
+            context.missingCellNumberValue(),
+            type
+        );
     }
 
     @Override

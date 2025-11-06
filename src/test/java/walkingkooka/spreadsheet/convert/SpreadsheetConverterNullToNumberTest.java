@@ -18,12 +18,20 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.math.BigDecimal;
+
 public final class SpreadsheetConverterNullToNumberTest extends SpreadsheetConverterTestCase<SpreadsheetConverterNullToNumber> {
 
-    private final static ExpressionNumber MISSING = ExpressionNumber.with(123);
+    private final static ExpressionNumberKind KIND = ExpressionNumberKind.BIG_DECIMAL;
+
+    private final static Number VALUE = 123;
+
+    private final static ExpressionNumber MISSING = KIND.create(VALUE);
 
     @Test
     public void testConvertNullToNumber() {
@@ -47,17 +55,47 @@ public final class SpreadsheetConverterNullToNumberTest extends SpreadsheetConve
     public void testConvertNullToExpressionNumberBigDecimal() {
         this.convertAndCheck(
             null,
-            (Class<ExpressionNumber>) ExpressionNumberKind.BIG_DECIMAL.numberType(),
-            MISSING
+            ExpressionNumberKind.BIG_DECIMAL.create(VALUE)
+        );
+    }
+
+    // Number -> ExpressionNumberDouble gives ExpressionNumberBigDecimal when Context.expressionNumberKind is ExpressionNumberBigDecimal
+    @Test
+    public void testConvertNullToExpressionNumberDouble() {
+        final ExpressionNumber number = ExpressionNumberKind.DOUBLE.create(VALUE);
+
+        this.convertAndCheck(
+            null, // value
+            number.getClass(),
+            this.createContext(ExpressionNumberKind.DOUBLE),
+            Cast.to(number)
         );
     }
 
     @Test
-    public void testConvertNullToExpressionNumberDouble() {
+    public void testConvertNullToBigDecimal() {
         this.convertAndCheck(
             null,
-            (Class<ExpressionNumber>) ExpressionNumberKind.DOUBLE.numberType(),
-            MISSING
+            BigDecimal.class,
+            MISSING.bigDecimal()
+        );
+    }
+
+    @Test
+    public void testConvertNullToDouble() {
+        this.convertAndCheck(
+            null,
+            Double.class,
+            MISSING.doubleValue()
+        );
+    }
+
+    @Test
+    public void testConvertNullToInteger() {
+        this.convertAndCheck(
+            null,
+            Integer.class,
+            MISSING.intValueExact()
         );
     }
 
@@ -92,10 +130,30 @@ public final class SpreadsheetConverterNullToNumberTest extends SpreadsheetConve
 
     @Override
     public SpreadsheetConverterContext createContext() {
+        return this.createContext(MISSING.kind());
+    }
+
+    private SpreadsheetConverterContext createContext(final ExpressionNumberKind kind) {
         return new FakeSpreadsheetConverterContext() {
             @Override
             public ExpressionNumber missingCellNumberValue() {
-                return MISSING;
+                return kind.create(MISSING);
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return SpreadsheetConverters.numberToNumber()
+                    .convert(
+                        value,
+                        target,
+                        this
+                    );
+            }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return kind;
             }
         };
     }
