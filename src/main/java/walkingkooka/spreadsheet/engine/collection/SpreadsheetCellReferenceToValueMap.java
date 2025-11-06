@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine.collection;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -58,7 +58,7 @@ public final class SpreadsheetCellReferenceToValueMap extends SpreadsheetCellRef
     private static Map<SpreadsheetCellReference, Optional<Object>> copy(final Map<SpreadsheetCellReference, Optional<Object>> cellReferenceToValue) {
         Objects.requireNonNull(cellReferenceToValue, "cellReferenceToValue");
 
-        final Map<SpreadsheetCellReference, Optional<Object>> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<Object>> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, Optional<Object>> referenceAndCell : cellReferenceToValue.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),

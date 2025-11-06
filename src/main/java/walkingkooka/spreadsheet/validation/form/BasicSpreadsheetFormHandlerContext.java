@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
@@ -34,6 +33,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.text.CharSequences;
@@ -146,8 +146,8 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         final SpreadsheetEngineContext context = this.context;
 
         // build a map of cell or label to cell
-        final Map<SpreadsheetExpressionReference, SpreadsheetCellReference> cellOrLabelToCell = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-        final Map<SpreadsheetCellReference, SpreadsheetCell> loadedCellToSpreadsheetCell = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetExpressionReference, SpreadsheetCellReference> cellOrLabelToCell = SpreadsheetSelectionMaps.spreadsheetExpressionReference();
+        final Map<SpreadsheetCellReference, SpreadsheetCell> loadedCellToSpreadsheetCell = SpreadsheetSelectionMaps.cell();
 
         for (final FormField<SpreadsheetExpressionReference> field : fields) {
             SpreadsheetExpressionReference cellOrLabel = field.reference();

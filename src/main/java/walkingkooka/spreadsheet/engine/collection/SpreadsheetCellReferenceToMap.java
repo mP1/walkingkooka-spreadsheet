@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.engine.collection;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -48,7 +48,7 @@ abstract class SpreadsheetCellReferenceToMap<T> extends AbstractMap<SpreadsheetC
     private static <T> Map<SpreadsheetCellReference, T> copy(final Map<SpreadsheetCellReference, T> cellReferenceToValue) {
         Objects.requireNonNull(cellReferenceToValue, "cellReferenceToValue");
 
-        final Map<SpreadsheetCellReference, T> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, T> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, T> referenceAndCell : cellReferenceToValue.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),
@@ -125,12 +125,10 @@ abstract class SpreadsheetCellReferenceToMap<T> extends AbstractMap<SpreadsheetC
     static <T> Map<SpreadsheetCellReference, T> unmarshallMap(final JsonNode node,
                                                               final Function<JsonNode, T> valueUnmarshaller,
                                                               final JsonNodeUnmarshallContext context) {
-        final Map<SpreadsheetCellReference, T> referenceToValue = Maps.sorted(
-            SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR
-        );
+        final Map<SpreadsheetCellReference, T> cellToValue = SpreadsheetSelectionMaps.cell();
 
         for (final JsonNode cell : node.children()) {
-            referenceToValue.put(
+            cellToValue.put(
                 SpreadsheetSelection.parseCell(
                     cell.name()
                         .value()
@@ -139,7 +137,7 @@ abstract class SpreadsheetCellReferenceToMap<T> extends AbstractMap<SpreadsheetC
             );
         }
 
-        return referenceToValue;
+        return cellToValue;
     }
 
     // HasUrlFragment...................................................................................................

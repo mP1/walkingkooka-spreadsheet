@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.http.server.hateos.HateosResource;
@@ -33,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -97,7 +97,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         this.shouldSaveUpdateCells = deltaProperties.contains(SpreadsheetDeltaProperties.CELLS);
         this.shouldDeleteCells = deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS);
 
-        this.references = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        this.references = SpreadsheetSelectionMaps.cell();
     }
 
     private SpreadsheetDelta go() {
@@ -241,7 +241,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    private final Map<SpreadsheetColumnReference, SpreadsheetColumn> columns = SpreadsheetSelectionMaps.column();
 
     private void rows() {
         if (this.shouldSaveUpdateRows || this.shouldDeleteRows) {
@@ -276,7 +276,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetRowReference, SpreadsheetRow> rows = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    private final Map<SpreadsheetRowReference, SpreadsheetRow> rows = SpreadsheetSelectionMaps.row();
 
     private void labels() {
         if (this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateCells) {
@@ -355,7 +355,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> labels = SpreadsheetSelectionMaps.label();
 
     private void cells() {
         if (this.shouldSaveUpdateCells || this.shouldDeleteCells || this.shouldSaveUpdateLabels || this.shouldDeleteLabels || this.shouldSaveUpdateColumns || this.shouldDeleteColumns || this.shouldSaveUpdateRows || this.shouldDeleteRows) {
@@ -413,7 +413,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         }
     }
 
-    private final Map<SpreadsheetCellReference, SpreadsheetCell> cells = Maps.sorted();
+    private final Map<SpreadsheetCellReference, SpreadsheetCell> cells = SpreadsheetSelectionMaps.cell();
 
     private void addCell(final SpreadsheetCellReference cell) {
         if (this.window.test(cell)) {
@@ -443,7 +443,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private Map<SpreadsheetColumnReference, Double> columnsWidths() {
-        final Map<SpreadsheetColumnReference, Double> columnsWidths = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetColumnReference, Double> columnsWidths = SpreadsheetSelectionMaps.column();
 
         for (final SpreadsheetCellReference cell : this.cells.keySet()) {
             final SpreadsheetColumnReference column = cell.column().toRelative();
@@ -525,7 +525,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     }
 
     private Map<SpreadsheetRowReference, Double> rowHeights() {
-        final Map<SpreadsheetRowReference, Double> rowsHeights = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetRowReference, Double> rowsHeights = SpreadsheetSelectionMaps.row();
 
         for (final SpreadsheetCellReference cell : this.cells.keySet()) {
             final SpreadsheetRowReference row = cell.row()
@@ -600,7 +600,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> cellRangesStore = repo.rangeToCells();
         final SpreadsheetLabelStore labelStore = repo.labels();
 
-        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all = SpreadsheetSelectionMaps.cell();
         all.putAll(this.references);
         final SpreadsheetViewportWindows window = this.window;
 

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -37,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.store.ReferenceAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -243,7 +243,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     }
 
     // BasicSpreadsheetEnginePrepareResponse
-    final Map<SpreadsheetLabelName, BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping>> labels = Maps.sorted();
+    final Map<SpreadsheetLabelName, BasicSpreadsheetEngineChangesCache<SpreadsheetLabelName, SpreadsheetLabelMapping>> labels = SpreadsheetSelectionMaps.label();
 
     // CELL.............................................................................................................
 
@@ -522,7 +522,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     }
 
     // BasicSpreadsheetEnginePrepareResponse
-    final Map<SpreadsheetCellReference, BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell>> cells = Maps.sorted();
+    final Map<SpreadsheetCellReference, BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell>> cells = SpreadsheetSelectionMaps.cell();
 
     // COLUMN...........................................................................................................
 
@@ -548,7 +548,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     }
 
     // BasicSpreadsheetEnginePrepareResponse
-    final Map<SpreadsheetColumnReference, BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn>> columns = Maps.sorted();
+    final Map<SpreadsheetColumnReference, BasicSpreadsheetEngineChangesCache<SpreadsheetColumnReference, SpreadsheetColumn>> columns = SpreadsheetSelectionMaps.column();
 
     // ROW..............................................................................................................
 
@@ -576,7 +576,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
     }
 
     // BasicSpreadsheetEnginePrepareResponse
-    final Map<SpreadsheetRowReference, BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow>> rows = Maps.sorted();
+    final Map<SpreadsheetRowReference, BasicSpreadsheetEngineChangesCache<SpreadsheetRowReference, SpreadsheetRow>> rows = SpreadsheetSelectionMaps.row();
 
     // shared...........................................................................................................
 

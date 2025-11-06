@@ -17,10 +17,9 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -47,7 +46,7 @@ public final class SpreadsheetCellReferenceToDateTimeSymbolsMap extends Spreadsh
     private static Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> copy(final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellReferenceToDateTimeSymbols) {
         Objects.requireNonNull(cellReferenceToDateTimeSymbols, "cellReferenceToDateTimeSymbols");
 
-        final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, Optional<DateTimeSymbols>> referenceAndCell : cellReferenceToDateTimeSymbols.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),

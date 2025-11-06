@@ -17,9 +17,8 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -47,7 +46,7 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMap extends Spread
     private static Map<SpreadsheetCellReference, Optional<ValidatorSelector>> copy(final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> cellReferenceToValidatorSelector) {
         Objects.requireNonNull(cellReferenceToValidatorSelector, "cellReferenceToValidatorSelector");
 
-        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<ValidatorSelector>> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, Optional<ValidatorSelector>> referenceAndCell : cellReferenceToValidatorSelector.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),

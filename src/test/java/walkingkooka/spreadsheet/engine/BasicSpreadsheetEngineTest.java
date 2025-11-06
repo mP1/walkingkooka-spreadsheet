@@ -102,6 +102,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
@@ -417,7 +418,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * </pre>
      */
     private static Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references(final String references) {
-        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellToReferences = Maps.sorted();
+        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> cellToReferences = SpreadsheetSelectionMaps.cell();
 
         for (final String entry : references.split(";")) {
             final int equalsSign = entry.indexOf('=');
@@ -447,7 +448,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     );
 
     private static Map<SpreadsheetColumnReference, Double> columnWidths(final String columns) {
-        final Map<SpreadsheetColumnReference, Double> map = Maps.sorted();
+        final Map<SpreadsheetColumnReference, Double> map = SpreadsheetSelectionMaps.column();
 
         Arrays.stream(columns.split(","))
             .forEach(c ->
@@ -465,7 +466,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static Map<SpreadsheetRowReference, Double> ROW_1_HEIGHT = rowHeights("1");
 
     private static Map<SpreadsheetRowReference, Double> rowHeights(final String rows) {
-        final Map<SpreadsheetRowReference, Double> map = Maps.sorted();
+        final Map<SpreadsheetRowReference, Double> map = SpreadsheetSelectionMaps.row();
 
         Arrays.stream(rows.split(","))
             .forEach(r ->

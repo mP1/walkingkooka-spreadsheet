@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 
 import java.util.Collection;
@@ -70,7 +69,7 @@ final class SpreadsheetCellRangeReferenceCellsConsumer implements Consumer<Sprea
 
     final Consumer<? super SpreadsheetCell> present;
     final Consumer<? super SpreadsheetCellReference> absent;
-    final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCells = Maps.sorted();
+    final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCells = SpreadsheetSelectionMaps.cell();
 
     @Override
     public String toString() {

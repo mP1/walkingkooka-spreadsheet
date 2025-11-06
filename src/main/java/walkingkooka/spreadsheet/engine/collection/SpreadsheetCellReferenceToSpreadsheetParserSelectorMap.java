@@ -17,10 +17,9 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -47,7 +46,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetParserSelectorMap extend
     private static Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> copy(final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> cellReferenceToSpreadsheetParserSelector) {
         Objects.requireNonNull(cellReferenceToSpreadsheetParserSelector, "cellReferenceToSpreadsheetParserSelector");
 
-        final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, Optional<SpreadsheetParserSelector>> referenceAndCell : cellReferenceToSpreadsheetParserSelector.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),

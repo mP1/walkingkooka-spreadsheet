@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 
 import java.util.List;
@@ -84,7 +84,7 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
      */
     @Override
     protected void visit(final SpreadsheetCellRangeReference range) {
-        final Map<SpreadsheetCellReference, Object> cellToValue = Maps.sorted();
+        final Map<SpreadsheetCellReference, Object> cellToValue = SpreadsheetSelectionMaps.cell();
 
         for (final SpreadsheetCell cell : this.loader.loadCellRange(
             range,

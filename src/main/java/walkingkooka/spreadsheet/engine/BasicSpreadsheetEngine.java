@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -1069,7 +1070,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            final Map<SpreadsheetExpressionReference, Integer> cellOrLabelToCount = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+            final Map<SpreadsheetExpressionReference, Integer> cellOrLabelToCount = SpreadsheetSelectionMaps.spreadsheetExpressionReference();
 
             for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
                 final SpreadsheetExpressionReference cellOrLabel = field.reference();
@@ -1317,7 +1318,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     1;
 
                 // build a map of submitted form fields.
-                final Map<SpreadsheetExpressionReference, FormField<SpreadsheetExpressionReference>> referenceToFields = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+                final Map<SpreadsheetExpressionReference, FormField<SpreadsheetExpressionReference>> referenceToFields = SpreadsheetSelectionMaps.spreadsheetExpressionReference();
 
                 for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
                     referenceToFields.put(

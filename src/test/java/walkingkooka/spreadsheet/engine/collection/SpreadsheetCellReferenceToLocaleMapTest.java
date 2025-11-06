@@ -26,6 +26,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -70,7 +71,7 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
 
     @Test
     public void testWithIncludesNullSpreadsheetCellFails() {
-        final Map<SpreadsheetCellReference, Optional<Locale>> map = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<Locale>> map = SpreadsheetSelectionMaps.cell();
         map.put(KEY1, VALUE1);
         map.put(KEY2, null);
 

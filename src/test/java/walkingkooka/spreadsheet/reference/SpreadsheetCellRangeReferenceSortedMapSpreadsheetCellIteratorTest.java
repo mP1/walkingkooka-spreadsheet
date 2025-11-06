@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.reflect.ClassTesting;
@@ -252,7 +251,7 @@ public final class SpreadsheetCellRangeReferenceSortedMapSpreadsheetCellIterator
 
     private void iteratorCheck(final SpreadsheetCellRangeReference range,
                                final Set<SpreadsheetCell> cells) {
-        final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cellMap = Maps.sorted();
+        final SortedMap<SpreadsheetCellReference, SpreadsheetCell> cellMap = SpreadsheetSelectionMaps.cell();
         final Set<SpreadsheetCell> iterated = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
         cells.forEach(

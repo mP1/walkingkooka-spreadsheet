@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -26,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 
 import java.util.Map;
@@ -80,7 +80,7 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
                 return mapping;
             }
 
-            private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = Maps.sorted();
+            private final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = SpreadsheetSelectionMaps.label();
         };
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");

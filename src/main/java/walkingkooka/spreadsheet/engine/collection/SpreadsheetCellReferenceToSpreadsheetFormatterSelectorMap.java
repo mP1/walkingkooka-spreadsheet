@@ -17,10 +17,9 @@
 
 package walkingkooka.spreadsheet.engine.collection;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -47,7 +46,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMap ext
     private static Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> copy(final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> cellReferenceToSpreadsheetFormatterSelector) {
         Objects.requireNonNull(cellReferenceToSpreadsheetFormatterSelector, "cellReferenceToSpreadsheetFormatterSelector");
 
-        final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> copy = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        final Map<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> copy = SpreadsheetSelectionMaps.cell();
         for (final Entry<SpreadsheetCellReference, Optional<SpreadsheetFormatterSelector>> referenceAndCell : cellReferenceToSpreadsheetFormatterSelector.entrySet()) {
             copy.put(
                 referenceAndCell.getKey(),
