@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceSet;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -90,6 +91,11 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         SpreadsheetRow.with(
             SpreadsheetSelection.A1.row()
+        );
+
+        SpreadsheetLabelMapping.with(
+            SpreadsheetSelection.labelName("Hello"),
+            SpreadsheetSelection.A1
         );
 
         SpreadsheetDelta.EMPTY.window();
