@@ -2332,7 +2332,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         ignoresKindExpected.addAll(expected);
 
         this.checkEquals(
-            (Object) ignoresKindExpected,
+            ignoresKindExpected,
             (Object) actual,
             message
         );
