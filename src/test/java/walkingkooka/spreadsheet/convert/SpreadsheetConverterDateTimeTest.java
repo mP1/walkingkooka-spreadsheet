@@ -920,9 +920,9 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             }
 
             @Override
-            public <T> Either<T, String> doConvert(final Object value,
-                                                   final Class<T> type,
-                                                   final SpreadsheetConverterContext context) {
+            public <TT> Either<TT, String> doConvert(final Object value,
+                                                     final Class<TT> type,
+                                                     final SpreadsheetConverterContext context) {
                 return this.successfulConversion(
                     stringToTemporal.apply(value.toString()),
                     type

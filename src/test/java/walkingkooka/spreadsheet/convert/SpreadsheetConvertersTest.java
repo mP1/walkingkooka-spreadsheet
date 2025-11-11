@@ -217,8 +217,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 @Override
-                public <T> Either<T, String> convert(final Object value,
-                                                     final Class<T> target) {
+                public <TT> Either<TT, String> convert(final Object value,
+                                                       final Class<TT> target) {
                     return this.converter.convert(
                         value,
                         target,
@@ -372,8 +372,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 @Override
-                public <T> Either<T, String> convert(final Object value,
-                                                     final Class<T> target) {
+                public <TT> Either<TT, String> convert(final Object value,
+                                                       final Class<TT> target) {
                     return this.converter.convert(
                         value,
                         target,
@@ -2988,8 +2988,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 @Override
-                public <T> Either<T, String> convert(final Object v,
-                                                     final Class<T> t) {
+                public <TT> Either<TT, String> convert(final Object v,
+                                                       final Class<TT> t) {
                     return converter.convert(
                         v,
                         t,
@@ -3180,8 +3180,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 @Override
-                public <T> T unmarshall(final JsonNode json,
-                                        final Class<T> type) {
+                public <TT> TT unmarshall(final JsonNode json,
+                                          final Class<TT> type) {
                     return this.jsonNodeUnmarshallContext.unmarshall(
                         json,
                         type

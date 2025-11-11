@@ -37,8 +37,8 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
         );
     }
 
-    default <T extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final T can,
-                                                                               final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
+    default <TT extends CanReplaceReferences<TT>> void replaceReferencesAndCheck(final TT can,
+                                                                                 final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper) {
         assertSame(
             can,
             can.replaceReferences(mapper),
@@ -46,9 +46,9 @@ public interface CanReplaceReferencesTesting<T extends CanReplaceReferences<T>> 
         );
     }
 
-    default <T extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final T can,
-                                                                               final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
-                                                                               final T expected) {
+    default <TT extends CanReplaceReferences<T>> void replaceReferencesAndCheck(final TT can,
+                                                                                final Function<SpreadsheetCellReference, Optional<SpreadsheetCellReference>> mapper,
+                                                                                final TT expected) {
         this.checkEquals(
             expected,
             can.replaceReferences(mapper),
