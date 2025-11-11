@@ -95,7 +95,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             NullPointerException.class,
             () -> this.createSpreadsheetEngine()
                 .loadCells(
-                    (SpreadsheetSelection) null,
+                    null,
                     SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                     SpreadsheetDeltaProperties.ALL,
                     this.createContext()

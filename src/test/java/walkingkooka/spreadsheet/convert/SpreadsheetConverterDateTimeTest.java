@@ -184,7 +184,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         this.convertAndCheck(
             BYTE_DATE,
             Byte.class,
-            (byte) BYTE
+            BYTE
         );
     }
 
@@ -327,7 +327,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         this.convertAndCheck(
             FLOAT_DATE_TIME,
             Byte.class,
-            (byte) BYTE
+            BYTE
         );
     }
 
@@ -363,7 +363,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         this.convertAndCheck(
             FLOAT_DATE_TIME,
             Float.class,
-            (float) FLOAT
+            FLOAT
         );
     }
 
@@ -491,7 +491,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         this.convertAndCheck(
             FLOAT_TIME,
             Integer.class,
-            (int)0
+            0
         );
     }
 
@@ -518,7 +518,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
         this.convertAndCheck(
             FLOAT_TIME,
             Double.class,
-            (double) 0.5
+            0.5
         );
     }
 

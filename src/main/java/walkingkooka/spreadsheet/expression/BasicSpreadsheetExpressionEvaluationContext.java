@@ -485,8 +485,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetDelta saveFormFieldValues(List<FormField<SpreadsheetExpressionReference>> formFields) {
-        return (SpreadsheetDelta)
-            this.formHandlerContext.saveFormFieldValues(formFields);
+        return this.formHandlerContext.saveFormFieldValues(formFields);
     }
 
     @Override

@@ -2290,9 +2290,9 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                 number(111),
                 multiplySymbol(),
                 power(
-                    (SpreadsheetFormulaParserToken) number(222),
+                    number(222),
                     powerSymbol(),
-                    (SpreadsheetFormulaParserToken) number(333)
+                    number(333)
                 )
             ),
             text,

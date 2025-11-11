@@ -976,13 +976,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                 }
                 if (value instanceof LocalDate && LocalDate.class == target) {
                     return this.successfulConversion(
-                        (LocalDate) value,
+                        value,
                         target
                     );
                 }
                 if (value instanceof String && String.class == target) {
                     return this.successfulConversion(
-                        (String) value,
+                        value,
                         target
                     );
                 }

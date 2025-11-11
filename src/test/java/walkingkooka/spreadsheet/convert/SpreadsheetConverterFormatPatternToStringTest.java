@@ -129,7 +129,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
     @Test
     public void testConvertIntegerToString() {
         this.convertNumberToStringAndCheck(
-            (Integer) NUMBER
+            NUMBER
         );
     }
 

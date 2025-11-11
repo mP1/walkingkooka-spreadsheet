@@ -743,7 +743,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     private SpreadsheetLabelNameSet filterDeletedLabels(final Set<SpreadsheetLabelName> deletedLabels) {
         return SpreadsheetLabelNameSet.with(
             deletedLabels instanceof SortedSet ?
-                (SortedSet<SpreadsheetLabelName>) deletedLabels :
+                deletedLabels :
                 new TreeSet<>(deletedLabels)
         );
     }
