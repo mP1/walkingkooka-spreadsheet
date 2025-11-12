@@ -38,7 +38,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link Context} holding state including {@link EnvironmentContext} for a single spreadsheet.
+ * A {@link Context} holding state including {@link EnvironmentContext} for a single user and the spreadsheet they are
+ * viewing/editing.
  */
 public interface SpreadsheetContext extends SpreadsheetProvider,
     EnvironmentContext,
@@ -61,6 +62,9 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
      */
     SpreadsheetId spreadsheetId();
 
+    /**
+     * The {@link SpreadsheetStoreRepository} for the selected spreadsheet.
+     */
     SpreadsheetStoreRepository storeRepository();
 
     /**
