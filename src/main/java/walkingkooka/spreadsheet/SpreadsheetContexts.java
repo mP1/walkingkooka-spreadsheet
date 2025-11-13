@@ -38,7 +38,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      */
     public static SpreadsheetContext basic(final AbsoluteUrl serverUrl,
                                            final SpreadsheetId spreadsheetId,
-                                           final SpreadsheetStoreRepository storeRepository,
+                                           final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                            final SpreadsheetProvider spreadsheetProvider,
                                            final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -48,7 +48,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
         return BasicSpreadsheetContext.with(
             serverUrl,
             spreadsheetId,
-            storeRepository,
+            spreadsheetIdToStoreRepository,
             spreadsheetProvider,
             spreadsheetEngineContextFactory,
             httpRouterFactory,

@@ -79,7 +79,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static SpreadsheetId ID = SpreadsheetId.with(1);
 
-    private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
+    private final static Function<SpreadsheetId, SpreadsheetStoreRepository> REPO = (i) -> SpreadsheetStoreRepositories.fake();
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.fake();
 
@@ -536,12 +536,15 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         return BasicSpreadsheetContext.with(
             SERVER_URL,
             ID,
-            new FakeSpreadsheetStoreRepository() {
+            (i) -> {
+                checkEquals(ID, i, "id -> SpreadsheetStoreRepository");
+                return new FakeSpreadsheetStoreRepository() {
 
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return store;
-                }
+                    @Override
+                    public SpreadsheetMetadataStore metadatas() {
+                        return store;
+                    }
+                };
             },
             SpreadsheetProviders.basic(
                 ConverterProviders.empty(),
