@@ -49,7 +49,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     static BasicSpreadsheetContext with(final AbsoluteUrl serverUrl,
                                         final SpreadsheetId spreadsheetId,
-                                        final SpreadsheetStoreRepository storeRepository,
+                                        final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -59,7 +59,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(serverUrl, "serverUrl"),
             Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
-            Objects.requireNonNull(storeRepository, "storeRepository"),
+            Objects.requireNonNull(spreadsheetIdToStoreRepository, "spreadsheetIdToStoreRepository"),
+            null, // SpreadsheetStoreRepository
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
             Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory"),
             null, // SpreadsheetEngineContext will created later in ctor
@@ -73,6 +74,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     private BasicSpreadsheetContext(final AbsoluteUrl serverUrl,
                                     final SpreadsheetId spreadsheetId,
+                                    final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                     final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
@@ -88,7 +90,10 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.spreadsheetId = spreadsheetId;
 
-        this.storeRepository = storeRepository;
+        this.spreadsheetIdToStoreRepository = spreadsheetIdToStoreRepository;
+        this.storeRepository = null != storeRepository ?
+            storeRepository :
+            spreadsheetIdToStoreRepository.apply(spreadsheetId);
 
         this.spreadsheetProvider = spreadsheetProvider;
         
@@ -127,6 +132,11 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private final SpreadsheetStoreRepository storeRepository;
+
+    /**
+     * This will supply {@link SpreadsheetStoreRepository} when switching to a different {@link SpreadsheetId}.
+     */
+    private final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository;
 
     // HasSpreadsheetMetadata...........................................................................................
 
@@ -235,6 +245,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             new BasicSpreadsheetContext(
                 this.serverUrl,
                 this.spreadsheetId,
+                this.spreadsheetIdToStoreRepository,
                 this.storeRepository,
                 this.spreadsheetProvider,
                 null, // SpreadsheetEngineContextFactory
