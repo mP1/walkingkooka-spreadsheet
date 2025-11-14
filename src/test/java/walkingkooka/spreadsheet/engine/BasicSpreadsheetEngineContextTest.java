@@ -400,7 +400,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // with.............................................................................................................
 
     @Test
-    public void testWithNullSpredsheetEngineContextModeFails() {
+    public void testWithNullSpreadsheetEngineContextModeFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
