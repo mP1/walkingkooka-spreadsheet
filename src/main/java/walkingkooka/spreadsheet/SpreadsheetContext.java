@@ -49,6 +49,13 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     LocaleContext,
     SpreadsheetMetadataContext {
 
+    /**
+     * The {@link EnvironmentContext#environmentValue(EnvironmentValueName)} should always match {@link #spreadsheetId()}.
+     */
+    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with(
+        "spreadsheet-id"
+    );
+
     @Override
     default SpreadsheetMetadata createMetadata(final EmailAddress user,
                                                final Optional<Locale> locale) {

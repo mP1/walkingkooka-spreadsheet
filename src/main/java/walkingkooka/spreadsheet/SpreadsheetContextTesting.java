@@ -34,6 +34,19 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     LocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 
+    // spreadsheetId....................................................................................................
+
+    @Test
+    default void testEnvironmentValueNameWithSpreadsheetId() {
+        final C context = this.createContext();
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetContext.SPREADSHEET_ID,
+            context.spreadsheetId()
+        );
+    }
+
     default void spreadsheetIdAndCheck(final C context,
                                        final SpreadsheetId expected) {
         this.checkEquals(

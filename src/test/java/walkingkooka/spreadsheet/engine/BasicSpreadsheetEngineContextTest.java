@@ -1505,13 +1505,21 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                final EnvironmentContext environmentContext,
                                final LocaleContext localeContext,
                                final ProviderContext providerContext) {
-            checkEquals(SPREADSHEET_ID, metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID));
+            checkEquals(
+                BasicSpreadsheetEngineContextTest.SPREADSHEET_ID,
+                metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+            );
             this.metadata = metadata;
             this.storeRepository = storeRepository;
 
             this.environmentContext = environmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
+
+            environmentContext.setEnvironmentValue(
+                SPREADSHEET_ID,
+                BasicSpreadsheetEngineContextTest.SPREADSHEET_ID
+            );
         }
 
         @Override
@@ -1521,14 +1529,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         @Override
         public SpreadsheetId spreadsheetId() {
-            return SPREADSHEET_ID;
+            return BasicSpreadsheetEngineContextTest.SPREADSHEET_ID;
         }
 
         @Override
         public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
             Objects.requireNonNull(id, "id");
 
-            if (SPREADSHEET_ID.equals(id)) {
+            if (this.spreadsheetId().equals(id)) {
                 return this;
             }
             throw new UnsupportedOperationException();

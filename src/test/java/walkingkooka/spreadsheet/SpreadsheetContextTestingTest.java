@@ -60,7 +60,12 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
             Objects.requireNonNull(name, "name");
-            throw new UnsupportedOperationException();
+
+            return Optional.ofNullable(
+                SpreadsheetContext.SPREADSHEET_ID.equals(name) ?
+                    (T) TestSpreadsheetContext.SPREADSHEET_ID :
+                    null
+            );
         }
 
         @Override

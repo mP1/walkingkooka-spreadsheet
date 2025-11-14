@@ -112,6 +112,11 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             httpRouterFactory.apply(this.spreadsheetEngineContext) :
             httpRouter;
         this.httpRouterFactory = httpRouterFactory;
+
+        this.setEnvironmentValue(
+            SPREADSHEET_ID,
+            spreadsheetId
+        );
     }
 
     @Override
