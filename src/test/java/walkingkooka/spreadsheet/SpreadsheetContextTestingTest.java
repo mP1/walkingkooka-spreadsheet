@@ -40,6 +40,23 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
     static class TestSpreadsheetContext extends FakeSpreadsheetContext {
 
+        private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+        @Override
+        public SpreadsheetId spreadsheetId() {
+            return SPREADSHEET_ID;
+        }
+
+        @Override
+        public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+            Objects.requireNonNull(id, "id");
+
+            if (SPREADSHEET_ID.equals(id)) {
+                return this;
+            }
+            throw new UnsupportedOperationException();
+        }
+
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
             Objects.requireNonNull(name, "name");

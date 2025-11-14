@@ -453,6 +453,22 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
+    public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+        final SpreadsheetContext before = this.spreadsheetContext;
+        final SpreadsheetContext after = before.setSpreadsheetId(id);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetEngineContext(
+                this.mode,
+                this.canConvert,
+                this.spreadsheetLabelNameResolver,
+                after,
+                this.terminalContext
+            );
+    }
+
+    @Override
     public SpreadsheetStoreRepository storeRepository() {
         return this.spreadsheetContext.storeRepository();
     }

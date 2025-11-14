@@ -106,10 +106,12 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.spreadsheetEngineContext = null != spreadsheetEngineContextFactory ?
             spreadsheetEngineContextFactory.apply(this) :
             spreadsheetEngineContext;
+        this.spreadsheetEngineContextFactory = spreadsheetEngineContextFactory;
 
         this.httpRouter = null == httpRouter ?
             httpRouterFactory.apply(this.spreadsheetEngineContext) :
             httpRouter;
+        this.httpRouterFactory = httpRouterFactory;
     }
 
     @Override
@@ -119,12 +121,39 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     private final AbsoluteUrl serverUrl;
 
+    // SpreadsheetId....................................................................................................
+
     @Override
     public SpreadsheetId spreadsheetId() {
         return this.spreadsheetId;
     }
 
     private final SpreadsheetId spreadsheetId;
+
+
+    @Override
+    public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+        Objects.requireNonNull(id, "id");
+
+        return this.spreadsheetId.equals(id) ?
+            this :
+            new BasicSpreadsheetContext(
+                this.serverUrl,
+                id,
+                this.spreadsheetIdToStoreRepository,
+                null, // SpreadsheetStoreRepository
+                this.spreadsheetProvider,
+                this.spreadsheetEngineContextFactory,
+                null, // SpreadsheetEngineContext
+                this.httpRouterFactory,
+                null, // httpRouter
+                this.environmentContext,
+                this.localeContext,
+                this.providerContext
+            );
+    }
+
+    // StoreRepository..................................................................................................
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
@@ -223,6 +252,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     private final SpreadsheetEngineContext spreadsheetEngineContext;
 
+    private final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory;
+
     @Override
     public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
         return this.httpRouter;
@@ -232,6 +263,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
      * The cached router for this spreadsheet.
      */
     private final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
+
+    private final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory;
 
     // EnvironmentContextDelegator......................................................................................
 

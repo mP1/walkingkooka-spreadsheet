@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -30,6 +31,12 @@ import java.util.Optional;
 public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting<SpreadsheetEngineContextDelegator> {
 
     final static class TestSpreadsheetEngineContextDelegator implements SpreadsheetEngineContextDelegator {
+
+        @Override
+        public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+            throw new UnsupportedOperationException();
+        }
+
         @Override
         public SpreadsheetEngineContext spreadsheetEngineContext() {
             throw new UnsupportedOperationException();

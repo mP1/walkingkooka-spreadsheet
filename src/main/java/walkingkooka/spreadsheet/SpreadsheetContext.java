@@ -63,6 +63,11 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     SpreadsheetId spreadsheetId();
 
     /**
+     * Returns a {@link SpreadsheetContext} with the given {@link SpreadsheetId}, creating a new instance if different.
+     */
+    SpreadsheetContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
+
+    /**
      * The {@link SpreadsheetStoreRepository} for the selected spreadsheet.
      */
     SpreadsheetStoreRepository storeRepository();

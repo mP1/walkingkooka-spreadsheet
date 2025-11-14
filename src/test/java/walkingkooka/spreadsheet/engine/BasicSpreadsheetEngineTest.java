@@ -581,6 +581,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
+        public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetStoreRepository storeRepository() {
             return this.spreadsheetStoreRepository;
         }

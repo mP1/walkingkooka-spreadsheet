@@ -218,6 +218,13 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    // SpreadsheetEngineContext.........................................................................................
+
+    @Override
+    public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Override

@@ -1525,6 +1525,16 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
+        public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+            Objects.requireNonNull(id, "id");
+
+            if (SPREADSHEET_ID.equals(id)) {
+                return this;
+            }
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public SpreadsheetStoreRepository storeRepository() {
             return this.storeRepository;
         }
