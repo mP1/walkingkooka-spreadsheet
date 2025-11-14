@@ -24,6 +24,9 @@ import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends EnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
@@ -38,6 +41,31 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
             context.spreadsheetId()
         );
     }
+
+    // setSpreadsheetId.................................................................................................
+
+    @Test
+    default void testSetSpreadsheetIdWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .setSpreadsheetId(null)
+        );
+    }
+
+    @Test
+    default void testSetSpreadsheetIdWithSame() {
+        final C context = this.createContext();
+
+        assertSame(
+            context,
+            context.setSpreadsheetId(
+                context.spreadsheetId()
+            )
+        );
+    }
+
+    // setLocale........................................................................................................
 
     @Test
     @Override

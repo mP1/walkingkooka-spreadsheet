@@ -24,6 +24,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -110,6 +111,14 @@ public interface SpreadsheetEngineContext extends Context,
         return this.spreadsheetMetadata()
             .missingCellNumberValue();
     }
+
+    // SpreadsheetContext...............................................................................................
+
+    /**
+     * {@see SpreadsheetContext#setSpreadsheetId}
+     */
+    @Override
+    SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 
     // EnvironmentContext...............................................................................................
 
