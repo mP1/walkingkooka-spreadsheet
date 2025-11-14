@@ -103,14 +103,10 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.metadata = this.loadMetadataOrFail(spreadsheetId);
 
-        this.spreadsheetEngineContext = null != spreadsheetEngineContextFactory ?
-            spreadsheetEngineContextFactory.apply(this) :
-            spreadsheetEngineContext;
+        this.spreadsheetEngineContext = spreadsheetEngineContext;
         this.spreadsheetEngineContextFactory = spreadsheetEngineContextFactory;
 
-        this.httpRouter = null == httpRouter ?
-            httpRouterFactory.apply(this.spreadsheetEngineContext) :
-            httpRouter;
+        this.httpRouter = httpRouter;
         this.httpRouterFactory = httpRouterFactory;
 
         this.setEnvironmentValue(
@@ -252,22 +248,28 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public SpreadsheetEngineContext spreadsheetEngineContext() {
+        if(null == this.spreadsheetEngineContext) {
+            this.spreadsheetEngineContext = this.spreadsheetEngineContextFactory.apply(this);
+        }
         return this.spreadsheetEngineContext;
     }
 
-    private final SpreadsheetEngineContext spreadsheetEngineContext;
+    private SpreadsheetEngineContext spreadsheetEngineContext;
 
     private final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory;
 
     @Override
     public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        if(null == this.httpRouter) {
+            this.httpRouter = this.httpRouterFactory.apply(this.spreadsheetEngineContext());
+        }
         return this.httpRouter;
     }
 
     /**
-     * The cached router for this spreadsheet.
+     * The lazy cached router for this spreadsheet.
      */
-    private final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
+    private Router<HttpRequestAttribute<?>, HttpHandler> httpRouter;
 
     private final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory;
 
