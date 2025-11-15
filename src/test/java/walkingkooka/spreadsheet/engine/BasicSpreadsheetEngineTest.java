@@ -674,7 +674,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             return this;
         }
 
-        private final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
+        private final LocaleContext localeContext = LocaleContexts.jre(SpreadsheetMetadataTesting.LOCALE);
 
         // EnvironmentContextDelegator..................................................................................
 
