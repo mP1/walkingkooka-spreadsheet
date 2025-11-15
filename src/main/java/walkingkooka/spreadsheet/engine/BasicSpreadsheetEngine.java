@@ -232,11 +232,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final SpreadsheetCellStore store = context.storeRepository()
                 .cells();
 
-            for (final SpreadsheetCellReference cell : cellRange) {
-                changes.getOrCreateCellCache(
-                    cell,
-                    BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
-                );
+            if (changes.deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
+                for (final SpreadsheetCellReference cell : cellRange) {
+                    changes.getOrCreateCellCache(
+                        cell,
+                        BasicSpreadsheetEngineChangesCacheStatusCell.DELETED
+                    );
+                }
             }
 
             final Set<SpreadsheetCell> spreadsheetCells = store.loadCellRange(cellRange);

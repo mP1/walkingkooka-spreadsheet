@@ -738,21 +738,27 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final BasicSpreadsheetEngineChangesMode backupMode = this.setImmediate();
         final SpreadsheetEngineEvaluation backupEvaluation = this.setEvaluation(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
         try {
-            final SortedSet<SpreadsheetCell> all = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+            for (final SpreadsheetCell cell : this.context.storeRepository()
+                .cells()
+                .loadCellRange(range)) {
 
-            for (final SpreadsheetCellReference cell : range) {
                 BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
-                    cell,
+                    cell.reference(),
                     BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
                 );
 
-                this.refreshCell(cache);
+                cache.loaded(cell);
+            }
 
+            final SortedSet<SpreadsheetCell> all = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
+
+            for (final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache : this.cells.values()) {
                 final SpreadsheetCell spreadsheetCell = cache.valueOrNull();
                 if (null != spreadsheetCell) {
                     all.add(spreadsheetCell);
                 }
             }
+
             return SortedSets.immutable(all);
         } finally {
             this.setEvaluation(backupEvaluation);
