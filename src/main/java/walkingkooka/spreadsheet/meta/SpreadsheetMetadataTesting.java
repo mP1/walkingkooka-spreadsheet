@@ -168,7 +168,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
         @Override
         public Optional<EmailAddress> user() {
-            return Optional.of(USER);
+            return Optional.of(SpreadsheetMetadataTesting.USER);
         }
     };
 
