@@ -102,9 +102,7 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
         final List<Object> value = Lists.array();
         for (final SpreadsheetCellReference cell : range) {
             value.add(
-                //Optional.ofNullable(
                 cellToValue.get(cell)
-                //)
             );
         }
 
