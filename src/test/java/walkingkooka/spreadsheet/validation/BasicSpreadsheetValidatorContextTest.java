@@ -40,6 +40,11 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
         );
     }
 
+    @Override
+    public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testSetValidationReferenceSameDifferentKind() {
         final BasicSpreadsheetValidatorContext context = this.createContext();

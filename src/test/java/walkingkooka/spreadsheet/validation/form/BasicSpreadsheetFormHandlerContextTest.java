@@ -23,6 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -52,8 +54,8 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -509,23 +511,45 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
-                public SpreadsheetEngineContext setLocale(final Locale locale) {
-                    Objects.requireNonNull(locale, "locale");
+                public Locale locale() {
+                    return this.environmentContext.locale();
+                }
 
-                    throw new UnsupportedOperationException();
+                @Override
+                public SpreadsheetEngineContext setLocale(final Locale locale) {
+                    this.environmentContext.setLocale(locale);
+                    return this;
+                }
+
+                @Override
+                public Optional<EmailAddress> user() {
+                    return this.environmentContext.user();
                 }
 
                 @Override
                 public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
-                    Objects.requireNonNull(user, "user");
-                    throw new UnsupportedOperationException();
+                    this.environmentContext.setUser(user);
+                    return this;
+                }
+
+                @Override
+                public <T> Optional<T> environmentValue(final EnvironmentValueName<T> environmentValueName) {
+                    return this.environmentContext.environmentValue(environmentValueName);
                 }
 
                 @Override
                 public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-                    Objects.requireNonNull(name, "name");
-                    throw new UnsupportedOperationException();
+                    this.environmentContext.removeEnvironmentValue(name);
+                    return this;
                 }
+
+                private final EnvironmentContext environmentContext = EnvironmentContexts.map(
+                    EnvironmentContexts.empty(
+                        Locale.ENGLISH,
+                        LocalDateTime::now,
+                        EnvironmentContext.ANONYMOUS
+                    )
+                );
             }
         );
     }

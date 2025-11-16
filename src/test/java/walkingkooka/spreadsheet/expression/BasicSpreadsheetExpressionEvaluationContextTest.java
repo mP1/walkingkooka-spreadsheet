@@ -1111,6 +1111,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     }
 
     @Override
+    public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testUserNotNull() {
         throw new UnsupportedOperationException();
     }

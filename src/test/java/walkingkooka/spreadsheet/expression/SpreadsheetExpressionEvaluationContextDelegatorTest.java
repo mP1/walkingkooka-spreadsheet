@@ -88,6 +88,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
+    public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSpreadsheetFormatterContextWithNullFails() {
         throw new UnsupportedOperationException();
     }

@@ -62,18 +62,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
-    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
-        EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LOCALE,
-                () -> LocalDateTime.MIN,
-                Optional.of(USER)
-            )
-        ).setEnvironmentValue(
-            ENVIRONMENT_VALUE_NAME,
-            ENVIRONMENT_VALUE
-        )
-    );
+    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.fake();
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
 
@@ -179,7 +168,16 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         return BasicProviderContext.with(
             PLUGIN_STORE,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-            ENVIRONMENT_CONTEXT,
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LOCALE,
+                    () -> LocalDateTime.MIN,
+                    Optional.of(USER)
+                )
+            ).setEnvironmentValue(
+                ENVIRONMENT_VALUE_NAME,
+                ENVIRONMENT_VALUE
+            ),
             LOCALE_CONTEXT
         );
     }
