@@ -33,6 +33,16 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting<TestSpreadsheetContextDelegator> {
+    
+    @Override
+    public void testEnvironmentValueLocaleEqualsLocale() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public void testTypeNaming() {

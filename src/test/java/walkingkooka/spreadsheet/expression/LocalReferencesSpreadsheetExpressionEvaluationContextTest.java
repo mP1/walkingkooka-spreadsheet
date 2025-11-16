@@ -23,6 +23,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -50,6 +52,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -469,27 +472,43 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                 }
 
                 @Override
-                public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                    Objects.requireNonNull(name, "name");
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public Optional<EmailAddress> user() {
-                    return Optional.empty();
-                }
-
-                @Override
-                public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-                    Objects.requireNonNull(user, "user");
-                    throw new UnsupportedOperationException();
+                public Locale locale() {
+                    return this.environmentContext.locale();
                 }
 
                 @Override
                 public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-                    Objects.requireNonNull(locale, "locale");
-                    throw new UnsupportedOperationException();
+                    this.environmentContext.setLocale(locale);
+                    return this;
                 }
+
+                private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
+
+                @Override
+                public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+                    return this.environmentContext.environmentValue(name);
+                }
+
+                @Override
+                public Optional<EmailAddress> user() {
+                    return this.environmentContext.user();
+                }
+
+                @Override
+                public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+                    this.environmentContext.setUser(user);
+                    return this;
+                }
+
+                private final EnvironmentContext environmentContext = EnvironmentContexts.map(
+                    EnvironmentContexts.empty(
+                        this.localeContext.locale(),
+                        LocalDateTime::now,
+                        Optional.of(
+                            EmailAddress.parse("user@example.com")
+                        )
+                    )
+                );
 
                 @Override
                 public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
@@ -507,8 +526,6 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                 public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
                     return this.localeContext.decimalNumberSymbolsForLocale(locale);
                 }
-
-                private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
 
                 @Override
                 public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {

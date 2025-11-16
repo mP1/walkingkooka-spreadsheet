@@ -41,6 +41,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
     SpreadsheetMetadataTesting {
 
     @Override
+    public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public TestSpreadsheetValidatorContext createContext() {
         return new TestSpreadsheetValidatorContext();
     }

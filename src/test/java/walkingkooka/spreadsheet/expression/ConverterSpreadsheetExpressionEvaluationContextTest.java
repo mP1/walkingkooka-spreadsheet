@@ -560,7 +560,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                     LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
                 ),
-                ENVIRONMENT_CONTEXT,
+                EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
                 ((Optional<SpreadsheetCell> cell) -> {
                     Objects.requireNonNull(cell, "cell");
                     throw new UnsupportedOperationException();
