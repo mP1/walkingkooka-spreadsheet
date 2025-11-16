@@ -373,10 +373,12 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
-    EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.empty(
-        LOCALE,
-        NOW,
-        Optional.of(USER)
+    EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
+        EnvironmentContexts.empty(
+            LOCALE,
+            NOW,
+            Optional.of(USER)
+        )
     );
 
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();

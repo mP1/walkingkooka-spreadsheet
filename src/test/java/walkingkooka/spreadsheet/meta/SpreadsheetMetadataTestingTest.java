@@ -115,6 +115,26 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testSetLocaleFails() {
+        final Locale locale = Locale.FRANCE;
+        
+        this.checkNotEquals(
+            LOCALE,
+            locale
+        );
+        
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> ENVIRONMENT_CONTEXT.setLocale(locale)
+        );
+        
+        this.localeAndCheck(
+            ENVIRONMENT_CONTEXT,
+            LOCALE
+        );
+    }
+
+    @Test
     public void testProviderContextSetEnvironmentValueFails() {
         assertThrows(
             UnsupportedOperationException.class,
@@ -211,5 +231,27 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 LOCALE_CONTEXT,
                 LocalDateTime::now
             );
+    }
+
+    @Test
+    public void testSetUserFails() {
+        final EmailAddress user = EmailAddress.parse("different@example.com");
+
+        this.checkNotEquals(
+            USER,
+            user
+        );
+
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> ENVIRONMENT_CONTEXT.setUser(
+                Optional.of(user)
+            )
+        );
+
+        this.userAndCheck(
+            ENVIRONMENT_CONTEXT,
+            USER
+        );
     }
 }
