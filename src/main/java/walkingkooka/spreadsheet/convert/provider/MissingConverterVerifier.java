@@ -99,6 +99,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -403,6 +404,112 @@ final class MissingConverterVerifier {
                     ),
                 StringList.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+        }
+
+        // collection-to................................................................................................
+        {
+            finder.addIfConversionFail(
+                (Object)
+                    Arrays.asList(
+                        (Object) null
+                    ),
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        false
+                    ),
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        true
+                    ),
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        123
+                    ),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalDate.of(
+                            1999,
+                            12,
+                            31
+                        )
+                    ),
+                LocalDate.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalDateTime.of(
+                            1999,
+                            12,
+                            31,
+                            12,
+                            58,
+                            59
+                        )
+                    ),
+                LocalDateTime.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalDateTime.of(
+                            1999,
+                            12,
+                            31,
+                            12,
+                            0,
+                            0
+                        )
+                    ),
+                LocalDateTimeList.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        "Hello"
+                    ),
+                String.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
+            );
+
+            finder.addIfConversionFail(
+                (Object)
+                    Lists.of(
+                        LocalTime.of(
+                            12,
+                            58,
+                            59
+                        )
+                    ),
+                LocalTime.class,
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
         }
 

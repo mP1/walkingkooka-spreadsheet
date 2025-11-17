@@ -113,6 +113,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             case COLLECTION_TO_LIST_STRING:
                 converter = SpreadsheetConverters.collectionToList();
                 break;
+            case COLLECTION_TO_STRING:
+                converter = SpreadsheetConverters.collectionTo();
+                break;
             case COLOR_STRING:
                 noParameterCheck(copy);
 
@@ -607,6 +610,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName COLLECTION = ConverterName.COLLECTION;
 
+    private final static String COLLECTION_TO_STRING = "collection-to";
+
+    final static ConverterName COLLECTION_TO = ConverterName.with(COLLECTION_TO_STRING);
+
     private final static String COLLECTION_TO_LIST_STRING = "collection-to-list";
 
     final static ConverterName COLLECTION_TO_LIST = ConverterName.with(COLLECTION_TO_LIST_STRING);
@@ -983,6 +990,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(BOOLEAN),
             converterInfo(BOOLEAN_TO_TEXT),
             converterInfo(COLLECTION),
+            converterInfo(COLLECTION_TO),
             converterInfo(COLLECTION_TO_LIST),
             converterInfo(COLOR),
             converterInfo(COLOR_TO_COLOR),
