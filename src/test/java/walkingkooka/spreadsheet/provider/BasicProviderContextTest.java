@@ -163,6 +163,29 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         );
     }
 
+    // setLocale........................................................................................................
+
+    @Test
+    public void testSetLocale() {
+        final BasicProviderContext context = this.createContext();
+
+        this.convertAndCheck(
+            context,
+            "123.5",
+            Double.class,
+            123.5
+        );
+
+        context.setLocale(Locale.FRENCH);
+
+        this.convertAndCheck(
+            context,
+            "456,75",
+            Double.class,
+            456.75
+        );
+    }
+
     @Override
     public BasicProviderContext createContext() {
         return BasicProviderContext.with(
