@@ -61,6 +61,7 @@ final class BasicProviderContext implements ProviderContext,
                                      final LocaleContext localeContext) {
         return new BasicProviderContext(
             Objects.requireNonNull(pluginStore, "pluginStore"),
+            null, // ConverterContext
             Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext")
@@ -68,17 +69,49 @@ final class BasicProviderContext implements ProviderContext,
     }
 
     private BasicProviderContext(final PluginStore pluginStore,
+                                 final ConverterContext converterContext,
                                  final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                  final EnvironmentContext environmentContext,
                                  final LocaleContext localeContext) {
         this.pluginStore = pluginStore;
         this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
         this.environmentContext = environmentContext;
+        this.converterContext = converterContext;
         this.localeContext = localeContext;
 
+        if (null == converterContext) {
+            this.setConverterContext(environmentContext.locale());
+        }
+    }
+
+    // PluginStore......................................................................................................
+
+    @Override
+    public PluginStore pluginStore() {
+        return this.pluginStore;
+    }
+
+    private final PluginStore pluginStore;
+
+    // ConverterContextDelegator........................................................................................
+
+    @Override
+    public ConverterContext converterContext() {
+        return this.converterContext;
+    }
+
+    /**
+     * Lazily re-created whenever {@link Locale} is changed.
+     */
+    private ConverterContext converterContext;
+
+    /**
+     * Re-creates the {@link ConverterContext} whenever the {@link Locale} changes.
+     */
+    private void setConverterContext(final Locale locale) {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
 
-        final Locale locale = localeContext.locale();
+        final LocaleContext localeContext = this.localeContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
             SpreadsheetConverterContexts.NO_METADATA,
@@ -101,35 +134,20 @@ final class BasicProviderContext implements ProviderContext,
                             50, // twoDigitYear
                             environmentContext
                         ),
-                        DecimalNumberContexts.american(
-                            MathContext.UNLIMITED
+                        DecimalNumberContexts.basic(
+                            localeContext.decimalNumberSymbolsForLocale(locale)
+                                .orElseThrow(() -> new IllegalArgumentException("DecimalNumberSymbols missing for " + locale)),
+                            locale,
+                            MathContext.DECIMAL32
                         )
                     ),
                     ExpressionNumberKind.DEFAULT
                 ),
-                jsonNodeMarshallUnmarshallContext
+                this.jsonNodeMarshallUnmarshallContext
             ),
             localeContext
         );
     }
-
-    // PluginStore......................................................................................................
-
-    @Override
-    public PluginStore pluginStore() {
-        return this.pluginStore;
-    }
-
-    private final PluginStore pluginStore;
-
-    // ConverterContextDelegator........................................................................................
-
-    @Override
-    public ConverterContext converterContext() {
-        return this.converterContext;
-    }
-
-    private final ConverterContext converterContext;
 
     // EnvironmentContext...............................................................................................
 
@@ -142,6 +160,7 @@ final class BasicProviderContext implements ProviderContext,
             this :
             new BasicProviderContext(
                 this.pluginStore,
+                this.converterContext, // keep, recreate only when locale changes
                 this.jsonNodeMarshallUnmarshallContext,
                 after,
                 this.localeContext
@@ -166,7 +185,15 @@ final class BasicProviderContext implements ProviderContext,
 
     @Override
     public ProviderContext setLocale(final Locale locale) {
+        final EnvironmentContext environmentContext = this.environmentContext;
+        final Locale previous = environmentContext.locale();
         this.environmentContext.setLocale(locale);
+
+        // re-create ConverterContext when Locale changes.
+        if (false == previous.equals(locale)) {
+            this.setConverterContext(locale);
+        }
+
         return this;
     }
 
