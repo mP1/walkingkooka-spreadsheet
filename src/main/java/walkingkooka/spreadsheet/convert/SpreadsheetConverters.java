@@ -103,8 +103,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * {@see SpreadsheetConverterBasic}
      */
     public static Converter<SpreadsheetConverterContext> basic() {
-        return SpreadsheetConverterBasic.INSTANCE;
+        return BASIC;
     }
+
+    private final static Converter<SpreadsheetConverterContext> BASIC = namedCollection(
+        "basic",
+        Converters.simple(),
+        SpreadsheetConverters.collectionTo()
+    );
 
     /**
      * A {@link Converter} that handles converting from or to a {@link Boolean} value
@@ -133,6 +139,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return Converters.collection(
             converters
         );
+    }
+
+    /**
+     * {@see ConverterCollectionTo}
+     */
+    public static <C extends ConverterContext> Converter<C> collectionTo() {
+        return Converters.collectionTo();
     }
 
     /**

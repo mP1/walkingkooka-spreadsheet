@@ -121,6 +121,7 @@ import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -131,6 +132,88 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
+    // basic............................................................................................................
+
+    @Test
+    public void testBasicConvertNullToNumber() {
+        this.basicConvertAndCheck(
+            null,
+            Integer.class,
+            null
+        );
+    }
+
+    @Test
+    public void testBasicConvertListNullToNumber() {
+        this.basicConvertAndCheck(
+            Arrays.asList((Object)null),
+            Integer.class,
+            0
+        );
+    }
+
+    @Test
+    public void testBasicConvertListIntegerToLong() {
+        this.basicConvertAndCheck(
+            Lists.of(123),
+            123L
+        );
+    }
+
+    private void basicConvertAndCheck(final Object value,
+                                      final Object expected) {
+        this.basicConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void basicConvertAndCheck(final Object value,
+                                          final Class<T> type,
+                                          final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.basic(),
+            value,
+            type,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <TT> Either<TT, String> convert(final Object value,
+                                                       final Class<TT> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                    Lists.of(
+                        SpreadsheetConverters.nullToNumber(),
+                        SpreadsheetConverters.numberToNumber(),
+                        SpreadsheetConverters.text()
+                    )
+                );
+
+                @Override
+                public ExpressionNumberKind expressionNumberKind() {
+                    return EXPRESSION_NUMBER_KIND;
+                }
+            },
+            expected
+        );
+    }
+    
     // boolean..........................................................................................................
 
     @Test
