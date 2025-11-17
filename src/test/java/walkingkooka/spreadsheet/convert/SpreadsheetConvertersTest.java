@@ -25,6 +25,7 @@ import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
 import walkingkooka.convert.Converter;
@@ -156,6 +157,14 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testBasicConvertListIntegerToLong() {
         this.basicConvertAndCheck(
             Lists.of(123),
+            123L
+        );
+    }
+
+    @Test
+    public void testBasicConvertSetIntegerToLong() {
+        this.basicConvertAndCheck(
+            Sets.of(123),
             123L
         );
     }
