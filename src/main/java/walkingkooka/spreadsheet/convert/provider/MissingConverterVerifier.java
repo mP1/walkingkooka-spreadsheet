@@ -487,7 +487,7 @@ final class MissingConverterVerifier {
                         )
                     ),
                 LocalDateTimeList.class,
-                SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
+                SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
             finder.addIfConversionFail(
