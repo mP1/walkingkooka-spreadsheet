@@ -109,7 +109,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> BASIC = namedCollection(
         "basic",
         Converters.simple(),
-        SpreadsheetConverters.collectionTo()
+        SpreadsheetConverters.collectionTo(),
+        SpreadsheetConverters.optionalTo()
     );
 
     /**
@@ -430,6 +431,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> numberToText() {
         return SpreadsheetConverterNumberToText.INSTANCE;
+    }
+
+    /**
+     * {@see ConverterOptionalTo}
+     */
+    public static Converter<SpreadsheetConverterContext> optionalTo() {
+        return Converters.optionalTo();
     }
 
     /**

@@ -268,6 +268,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.nullToNumber();
                 break;
+            case OPTIONAL_TO_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.optionalTo();
+                break;
             case PLUGINS_STRING:
                 noParameterCheck(copy);
 
@@ -738,6 +743,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName NUMBER_TO_TEXT = ConverterName.with(NUMBER_TO_TEXT_STRING);
 
+    private final static String OPTIONAL_TO_STRING = "optional-to";
+
+    final static ConverterName OPTIONAL_TO = ConverterName.with(OPTIONAL_TO_STRING);
+
     private final static String PLUGINS_STRING = "plugins";
 
     final static ConverterName PLUGINS = ConverterName.with(PLUGINS_STRING);
@@ -1022,6 +1031,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(NUMBER_TO_COLOR),
             converterInfo(NUMBER_TO_NUMBER),
             converterInfo(NUMBER_TO_TEXT),
+            converterInfo(OPTIONAL_TO),
             converterInfo(PLUGINS),
             converterInfo(SPREADSHEET_CELL_SET),
             converterInfo(SPREADSHEET_METADATA),

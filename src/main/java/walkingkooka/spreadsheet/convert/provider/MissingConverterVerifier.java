@@ -780,6 +780,97 @@ final class MissingConverterVerifier {
             );
         }
 
+        // optional-to..................................................................................................
+        {
+            finder.addIfConversionFail(
+                Optional.empty(),
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(false),
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(true),
+                Boolean.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(
+                    123
+                ),
+                NUMBER_TYPES,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(
+                    LocalDate.of(
+                        1999,
+                        12,
+                        31
+                    )
+                ),
+                LocalDate.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(
+                    LocalDateTime.of(
+                        1999,
+                        12,
+                        31,
+                        12,
+                        58,
+                        59
+                    )
+                ),
+                LocalDateTime.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(
+                    LocalDateTime.of(
+                        1999,
+                        12,
+                        31,
+                        12,
+                        0,
+                        0
+                    )
+                ),
+                LocalDateTimeList.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(
+                    "Hello"
+                ),
+                String.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+
+            finder.addIfConversionFail(
+                Optional.of(
+                    LocalTime.of(
+                        12,
+                        58,
+                        59
+                    )
+                ),
+                LocalTime.class,
+                SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
+            );
+        }
+        
         // plugins......................................................................................................
         {
             if (scripting || validation) {
