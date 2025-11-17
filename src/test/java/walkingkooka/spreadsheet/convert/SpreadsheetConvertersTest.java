@@ -169,6 +169,23 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    @Test
+    public void testBasicConvertOptionalEmptyToNumber() {
+        this.basicConvertAndCheck(
+            Optional.empty(),
+            Integer.class,
+            0
+        );
+    }
+
+    @Test
+    public void testBasicConvertOptionalIntegerToLong() {
+        this.basicConvertAndCheck(
+            Optional.of(123),
+            123L
+        );
+    }
+
     private void basicConvertAndCheck(final Object value,
                                       final Object expected) {
         this.basicConvertAndCheck(
