@@ -118,8 +118,6 @@ public final class Sample {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
-
     public static void main(final String[] args) {
         final Sample sample = new Sample();
         sample.testFormula();
@@ -303,6 +301,8 @@ public final class Sample {
             )
         );
 
+        final ProviderContext providerContext = ProviderContexts.fake();
+
         return new FakeSpreadsheetEngineContext() {
 
             @Override
@@ -348,7 +348,7 @@ public final class Sample {
                             .expressionFunction(
                                 n,
                                 Lists.empty(),
-                                PROVIDER_CONTEXT
+                                providerContext
                             ),
                         (r) -> {
                             throw new UnsupportedOperationException();
@@ -365,7 +365,7 @@ public final class Sample {
                             LABEL_NAME_RESOLVER,
                             converterProvider,
                             this.localeContext,
-                            PROVIDER_CONTEXT
+                            providerContext
                         ),
                         LocaleContexts.fake()
                     )
@@ -400,12 +400,12 @@ public final class Sample {
                     (SpreadsheetFormatterSelector s) ->
                         spreadsheetFormatterProvider.spreadsheetFormatter(
                             s,
-                            PROVIDER_CONTEXT
+                            providerContext
                         )
                 ).orElseGet(
                     () -> metadata.spreadsheetFormatter(
                         spreadsheetFormatterProvider,
-                        PROVIDER_CONTEXT
+                        providerContext
                     )
                 ).format(
                     value,
@@ -427,7 +427,7 @@ public final class Sample {
                             SpreadsheetParserProviders.fake(),
                             ValidatorProviders.fake()
                         ),
-                        PROVIDER_CONTEXT
+                        providerContext
                     )
                 );
             }

@@ -121,8 +121,6 @@ public class J2clTest {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
-
     @Test
     public void testMetadataNonLocaleDefaults() {
         Assert.assertNotEquals(null, SpreadsheetMetadata.NON_LOCALE_DEFAULTS);
@@ -306,6 +304,8 @@ public class J2clTest {
             )
         );
 
+        final ProviderContext providerContext = ProviderContexts.fake();
+
         return new FakeSpreadsheetEngineContext() {
 
             @Override
@@ -317,17 +317,17 @@ public class J2clTest {
             public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                               final Optional<SpreadsheetCell> cell) {
                 return Cast.to(
-                        SpreadsheetFormulaParsers.expression()
-                                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                                .parse(
-                                        formula,
-                                        metadata.spreadsheetParserContext(
-                                                cell,
-                                                this.localeContext,
-                                                NOW
-                                        )
-                                ) // TODO should fetch parse metadata prop
-                                .get()
+                    SpreadsheetFormulaParsers.expression()
+                        .orFailIfCursorNotEmpty(ParserReporters.basic())
+                        .parse(
+                            formula,
+                            metadata.spreadsheetParserContext(
+                                cell,
+                                this.localeContext,
+                                NOW
+                            )
+                        ) // TODO should fetch parse metadata prop
+                        .get()
                 );
             }
 
@@ -335,8 +335,8 @@ public class J2clTest {
             public SpreadsheetParser spreadsheetParser(final SpreadsheetParserSelector selector,
                                                        final ProviderContext context) {
                 return spreadsheetParserProvider.spreadsheetParser(
-                        selector,
-                        context
+                    selector,
+                    context
                 );
             }
 
@@ -344,34 +344,34 @@ public class J2clTest {
             public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                                  final SpreadsheetExpressionReferenceLoader loader) {
                 return new SampleSpreadsheetExpressionEvaluationContext(
-                        cell,
-                        ExpressionEvaluationContexts.basic(
-                                EXPRESSION_NUMBER_KIND,
-                                n -> ExpressionFunctionProviders.fake()
-                                        .expressionFunction(
-                                                n,
-                                                Lists.empty(),
-                                                PROVIDER_CONTEXT
-                                        ),
-                                (r) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                (r) -> {
-                                    throw new UnsupportedOperationException();
-                                },
-                                SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
-                                CaseSensitivity.INSENSITIVE,
-                                metadata.spreadsheetConverterContext(
-                                        SpreadsheetMetadata.NO_CELL,
-                                        SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                                        SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                                        LABEL_NAME_RESOLVER,
-                                        converterProvider,
-                                        this.localeContext,
-                                        PROVIDER_CONTEXT
-                                ),
-                                LocaleContexts.fake()
-                        )
+                    cell,
+                    ExpressionEvaluationContexts.basic(
+                        EXPRESSION_NUMBER_KIND,
+                        n -> ExpressionFunctionProviders.fake()
+                            .expressionFunction(
+                                n,
+                                Lists.empty(),
+                                providerContext
+                            ),
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        (r) -> {
+                            throw new UnsupportedOperationException();
+                        },
+                        SpreadsheetExpressionEvaluationContexts.referenceNotFound(),
+                        CaseSensitivity.INSENSITIVE,
+                        metadata.spreadsheetConverterContext(
+                            SpreadsheetMetadata.NO_CELL,
+                            SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                            SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                            LABEL_NAME_RESOLVER,
+                            converterProvider,
+                            this.localeContext,
+                            providerContext
+                        ),
+                        LocaleContexts.fake()
+                    )
                 );
             }
 
@@ -380,12 +380,12 @@ public class J2clTest {
                 Objects.requireNonNull(token, "token");
 
                 return token.toExpression(
-                        new FakeExpressionEvaluationContext() {
-                            @Override
-                            public ExpressionNumberKind expressionNumberKind() {
-                                return EXPRESSION_NUMBER_KIND;
-                            }
+                    new FakeExpressionEvaluationContext() {
+                        @Override
+                        public ExpressionNumberKind expressionNumberKind() {
+                            return EXPRESSION_NUMBER_KIND;
                         }
+                    }
                 );
             }
 
@@ -394,24 +394,23 @@ public class J2clTest {
                                                   final Optional<Object> value,
                                                   final Optional<SpreadsheetFormatterSelector> formatter) {
                 checkEquals(
-                        false,
-                        value.orElse(null) instanceof Optional,
-                        "Value must not be optional" + value
+                    false,
+                    value.orElse(null) instanceof Optional,
+                    "Value must not be optional" + value
                 );
 
                 return formatter.map(
-                        (SpreadsheetFormatterSelector s) ->
-                                spreadsheetFormatterProvider.spreadsheetFormatter(
-                                        s,
-                                        PROVIDER_CONTEXT
-                                )
-                ).orElseGet(
-                        () -> metadata.spreadsheetFormatter(
-                                spreadsheetFormatterProvider,
-                                PROVIDER_CONTEXT
+                    (SpreadsheetFormatterSelector s) ->
+                        spreadsheetFormatterProvider.spreadsheetFormatter(
+                            s,
+                            providerContext
                         )
+                ).orElseGet(
+                    () -> metadata.spreadsheetFormatter(
+                        spreadsheetFormatterProvider,
+                        providerContext
+                    )
                 ).format(
-                        value,
                     value,
                     metadata.spreadsheetFormatterContext(
                         Optional.of(cell),
@@ -431,7 +430,7 @@ public class J2clTest {
                             SpreadsheetParserProviders.fake(),
                             ValidatorProviders.fake()
                         ),
-                        PROVIDER_CONTEXT
+                        providerContext
                     )
                 );
             }
@@ -440,17 +439,17 @@ public class J2clTest {
             public SpreadsheetCell formatValueAndStyle(final SpreadsheetCell cell,
                                                        final Optional<SpreadsheetFormatterSelector> formatter) {
                 return cell.setFormattedValue(
-                        Optional.of(
-                                this.formatValue(
-                                        cell,
-                                        cell.formula()
-                                                .errorOrValue(),
-                                        formatter
-                                ).map(
-                                        f -> cell.style()
-                                                .replace(f)
-                                ).orElse(TextNode.EMPTY_TEXT)
-                        )
+                    Optional.of(
+                        this.formatValue(
+                            cell,
+                            cell.formula()
+                                .errorOrValue(),
+                            formatter
+                        ).map(
+                            f -> cell.style()
+                                .replace(f)
+                        ).orElse(TextNode.EMPTY_TEXT)
+                    )
                 );
             }
 
@@ -465,7 +464,7 @@ public class J2clTest {
             }
 
             private final LocaleContext localeContext = LocaleContexts.jre(
-                    Locale.forLanguageTag("EN-AU")
+                Locale.forLanguageTag("EN-AU")
             );
 
             @Override
@@ -474,18 +473,18 @@ public class J2clTest {
             }
 
             private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.basic(
-                    SpreadsheetCellStores.treeMap(),
-                    SpreadsheetCellReferencesStores.treeMap(),
-                    SpreadsheetColumnStores.treeMap(),
-                    SpreadsheetFormStores.fake(),
-                    SpreadsheetGroupStores.fake(),
-                    SpreadsheetLabelStores.treeMap(),
-                    SpreadsheetLabelReferencesStores.treeMap(),
-                    SpreadsheetMetadataStores.fake(),
-                    SpreadsheetCellRangeStores.treeMap(),
-                    SpreadsheetRowStores.treeMap(),
-                    Storages.tree(),
-                    SpreadsheetUserStores.fake()
+                SpreadsheetCellStores.treeMap(),
+                SpreadsheetCellReferencesStores.treeMap(),
+                SpreadsheetColumnStores.treeMap(),
+                SpreadsheetFormStores.fake(),
+                SpreadsheetGroupStores.fake(),
+                SpreadsheetLabelStores.treeMap(),
+                SpreadsheetLabelReferencesStores.treeMap(),
+                SpreadsheetMetadataStores.fake(),
+                SpreadsheetCellRangeStores.treeMap(),
+                SpreadsheetRowStores.treeMap(),
+                Storages.tree(),
+                SpreadsheetUserStores.fake()
             );
 
             @Override
