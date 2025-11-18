@@ -43,7 +43,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicProviderContextTest implements ProviderContextTesting<BasicProviderContext> {
+public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext> {
 
     private final static PluginStore PLUGIN_STORE = PluginStores.fake();
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
@@ -72,7 +72,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     public void testWithNullPluginStoreFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicProviderContext.with(
+            () -> SpreadsheetProviderContext.with(
                 null,
                 ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
@@ -86,7 +86,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     public void testWithNullEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicProviderContext.with(
+            () -> SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
                 null,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
@@ -99,7 +99,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     public void testWithNullJsonNodeMarshallUnmarshallContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicProviderContext.with(
+            () -> SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
                 ENVIRONMENT_CONTEXT,
                 null,
@@ -112,7 +112,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     public void testWithNullLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicProviderContext.with(
+            () -> SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
                 ENVIRONMENT_CONTEXT,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
@@ -133,7 +133,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
 
     @Test
     public void testCloneEnvironmentContextAndSetLocale() {
-        final BasicProviderContext context = this.createContext();
+        final SpreadsheetProviderContext context = this.createContext();
 
         final Locale locale = Locale.FRENCH;
 
@@ -146,7 +146,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
 
     @Test
     public void testCloneEnvironmentContextAndSetUser() {
-        final BasicProviderContext context = this.createContext();
+        final SpreadsheetProviderContext context = this.createContext();
 
         final EmailAddress user = EmailAddress.parse("different@example.com");
 
@@ -161,7 +161,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
 
     @Test
     public void testCloneEnvironmentContextAndSetEnvironmentValue() {
-        final BasicProviderContext context = this.createContext();
+        final SpreadsheetProviderContext context = this.createContext();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "World456";
@@ -181,7 +181,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
 
     @Test
     public void testSetLocale() {
-        final BasicProviderContext context = this.createContext();
+        final SpreadsheetProviderContext context = this.createContext();
 
         this.convertAndCheck(
             context,
@@ -201,8 +201,8 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     }
 
     @Override
-    public BasicProviderContext createContext() {
-        return BasicProviderContext.with(
+    public SpreadsheetProviderContext createContext() {
+        return SpreadsheetProviderContext.with(
             PLUGIN_STORE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
@@ -244,7 +244,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     // class............................................................................................................
 
     @Override
-    public Class<BasicProviderContext> type() {
-        return BasicProviderContext.class;
+    public Class<SpreadsheetProviderContext> type() {
+        return SpreadsheetProviderContext.class;
     }
 }

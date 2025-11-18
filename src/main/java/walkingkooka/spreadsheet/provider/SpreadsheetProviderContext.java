@@ -51,15 +51,15 @@ import java.util.Optional;
 /**
  * A {@link ProviderContext} that may be used as the system {@link ProviderContext}.
  */
-final class BasicProviderContext implements ProviderContext,
+final class SpreadsheetProviderContext implements ProviderContext,
     EnvironmentContextDelegator,
     ConverterContextDelegator {
 
-    static BasicProviderContext with(final PluginStore pluginStore,
-                                     final EnvironmentContext environmentContext,
-                                     final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                     final LocaleContext localeContext) {
-        return new BasicProviderContext(
+    static SpreadsheetProviderContext with(final PluginStore pluginStore,
+                                           final EnvironmentContext environmentContext,
+                                           final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
+                                           final LocaleContext localeContext) {
+        return new SpreadsheetProviderContext(
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
             Objects.requireNonNull(environmentContext, "environmentContext"),
@@ -68,11 +68,11 @@ final class BasicProviderContext implements ProviderContext,
         );
     }
 
-    private BasicProviderContext(final PluginStore pluginStore,
-                                 final ConverterContext converterContext,
-                                 final EnvironmentContext environmentContext,
-                                 final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                 final LocaleContext localeContext) {
+    private SpreadsheetProviderContext(final PluginStore pluginStore,
+                                       final ConverterContext converterContext,
+                                       final EnvironmentContext environmentContext,
+                                       final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
+                                       final LocaleContext localeContext) {
         this.pluginStore = pluginStore;
 
         this.converterContext = converterContext;
@@ -153,13 +153,13 @@ final class BasicProviderContext implements ProviderContext,
     // EnvironmentContext...............................................................................................
 
     @Override
-    public BasicProviderContext cloneEnvironment() {
+    public SpreadsheetProviderContext cloneEnvironment() {
         final EnvironmentContext before = this.environmentContext;
         final EnvironmentContext after = before.cloneEnvironment();
 
         return before.equals(after) ?
             this :
-            new BasicProviderContext(
+            new SpreadsheetProviderContext(
                 this.pluginStore,
                 this.converterContext, // keep, recreate only when locale changes
                 after,

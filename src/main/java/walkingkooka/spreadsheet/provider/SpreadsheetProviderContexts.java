@@ -27,13 +27,13 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 public final class SpreadsheetProviderContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicProviderContext}
+     * {@see SpreadsheetProviderContext}
      */
     public static ProviderContext basic(final PluginStore pluginStore,
                                         final EnvironmentContext environmentContext,
                                         final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                         final LocaleContext localeContext) {
-        return BasicProviderContext.with(
+        return SpreadsheetProviderContext.with(
             pluginStore,
             environmentContext,
             jsonNodeMarshallUnmarshallContext,
