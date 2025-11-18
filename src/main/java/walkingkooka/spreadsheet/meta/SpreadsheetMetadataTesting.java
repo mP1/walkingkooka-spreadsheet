@@ -28,6 +28,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.HasUser;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -114,6 +115,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
      */
     EmailAddress USER = EmailAddress.parse("user@example.com");
 
+    HasUser HAS_USER = () -> Optional.of(USER);
+
     HasNow NOW = () -> LocalDateTime.of(
         1999,
         12,
@@ -168,7 +171,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
         @Override
         public Optional<EmailAddress> user() {
-            return Optional.of(SpreadsheetMetadataTesting.USER);
+            return HAS_USER.user();
         }
     };
 
@@ -442,6 +445,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
         TerminalId.with(1),
+        HAS_USER,
         Printers.sink(LineEnding.NONE)
     );
 

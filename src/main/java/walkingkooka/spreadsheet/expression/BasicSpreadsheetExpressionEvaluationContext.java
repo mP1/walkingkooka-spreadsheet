@@ -460,6 +460,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
+    public Optional<EmailAddress> user() {
+        return this.environmentContext.user();
+    }
+
+    @Override
     public EnvironmentContext environmentContext() {
         return this.environmentContext;
     }
