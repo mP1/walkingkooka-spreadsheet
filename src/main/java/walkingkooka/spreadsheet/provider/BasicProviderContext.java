@@ -56,28 +56,29 @@ final class BasicProviderContext implements ProviderContext,
     ConverterContextDelegator {
 
     static BasicProviderContext with(final PluginStore pluginStore,
-                                     final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                      final EnvironmentContext environmentContext,
+                                     final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                      final LocaleContext localeContext) {
         return new BasicProviderContext(
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
-            Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
+            Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext"),
             Objects.requireNonNull(localeContext, "localeContext")
         );
     }
 
     private BasicProviderContext(final PluginStore pluginStore,
                                  final ConverterContext converterContext,
-                                 final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                  final EnvironmentContext environmentContext,
+                                 final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                  final LocaleContext localeContext) {
         this.pluginStore = pluginStore;
-        this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
-        this.environmentContext = environmentContext;
+
         this.converterContext = converterContext;
+        this.environmentContext = environmentContext;
         this.localeContext = localeContext;
+        this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
 
         if (null == converterContext) {
             this.setConverterContext(environmentContext.locale());
@@ -161,8 +162,8 @@ final class BasicProviderContext implements ProviderContext,
             new BasicProviderContext(
                 this.pluginStore,
                 this.converterContext, // keep, recreate only when locale changes
-                this.jsonNodeMarshallUnmarshallContext,
                 after,
+                this.jsonNodeMarshallUnmarshallContext,
                 this.localeContext
             );
     }

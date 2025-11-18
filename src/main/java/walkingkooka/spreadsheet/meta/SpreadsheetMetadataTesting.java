@@ -393,7 +393,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.basic(
             PluginStores.fake(),
-            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
@@ -436,6 +435,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                         )
                 )
             ),
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             LOCALE_CONTEXT
         )
     );
