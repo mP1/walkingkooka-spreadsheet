@@ -108,6 +108,19 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
         );
     }
 
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicProviderContext.with(
+                PLUGIN_STORE,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
+                null
+            )
+        );
+    }
+
     // environment......................................................................................................
 
     @Test
