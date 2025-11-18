@@ -74,8 +74,22 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             NullPointerException.class,
             () -> BasicProviderContext.with(
                 null,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+
+    @Test
+    public void testWithNullEnvironmentContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicProviderContext.with(
+                PLUGIN_STORE,
+                null,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
                 LOCALE_CONTEXT
             )
         );
@@ -87,20 +101,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
             NullPointerException.class,
             () -> BasicProviderContext.with(
                 PLUGIN_STORE,
-                null,
                 ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullEnvironmentContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicProviderContext.with(
-                PLUGIN_STORE,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
                 null,
                 LOCALE_CONTEXT
             )
@@ -190,7 +191,6 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
     public BasicProviderContext createContext() {
         return BasicProviderContext.with(
             PLUGIN_STORE,
-            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LOCALE,
@@ -201,6 +201,7 @@ public final class BasicProviderContextTest implements ProviderContextTesting<Ba
                 ENVIRONMENT_VALUE_NAME,
                 ENVIRONMENT_VALUE
             ),
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             LOCALE_CONTEXT
         );
     }
