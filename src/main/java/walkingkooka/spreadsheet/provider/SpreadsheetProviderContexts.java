@@ -29,10 +29,10 @@ public final class SpreadsheetProviderContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetProviderContext}
      */
-    public static ProviderContext basic(final PluginStore pluginStore,
-                                        final EnvironmentContext environmentContext,
-                                        final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                        final LocaleContext localeContext) {
+    public static ProviderContext spreadsheet(final PluginStore pluginStore,
+                                              final EnvironmentContext environmentContext,
+                                              final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
+                                              final LocaleContext localeContext) {
         return SpreadsheetProviderContext.with(
             pluginStore,
             environmentContext,
