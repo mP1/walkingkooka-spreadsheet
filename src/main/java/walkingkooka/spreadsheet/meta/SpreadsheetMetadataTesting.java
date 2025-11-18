@@ -391,7 +391,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
-        SpreadsheetProviderContexts.basic(
+        SpreadsheetProviderContexts.spreadsheet(
             PluginStores.fake(),
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
