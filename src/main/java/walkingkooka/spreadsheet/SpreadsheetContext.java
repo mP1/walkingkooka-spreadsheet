@@ -56,6 +56,8 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
         "spreadsheet-id"
     );
 
+    // SpreadsheetMetadataContext.......................................................................................
+
     @Override
     default SpreadsheetMetadata createMetadata(final EmailAddress user,
                                                final Optional<Locale> locale) {
@@ -63,6 +65,8 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
         Objects.requireNonNull(locale, "locale");
         throw new UnsupportedOperationException();
     }
+
+    // SpreadsheetContext...............................................................................................
 
     /**
      * The {@link SpreadsheetId} that identifies this spreadsheet.
