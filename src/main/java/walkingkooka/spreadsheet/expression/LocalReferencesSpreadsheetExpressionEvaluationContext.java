@@ -367,6 +367,11 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     // EnvironmentContext...............................................................................................
 
     @Override
+    public Optional<EmailAddress> user() {
+        return this.context.user();
+    }
+
+    @Override
     public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
         this.context.setUser(user);
         return this;

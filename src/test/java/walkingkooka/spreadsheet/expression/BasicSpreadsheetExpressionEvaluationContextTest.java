@@ -113,6 +113,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
         TerminalId.with(1),
+        HAS_USER,
         Printers.sink(LineEnding.NL)
     );
 
