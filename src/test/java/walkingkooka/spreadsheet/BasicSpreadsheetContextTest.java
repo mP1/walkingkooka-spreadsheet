@@ -291,7 +291,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     }
 
     @Test
-    public void testWithNullProviderontextFails() {
+    public void testWithNullProviderContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
