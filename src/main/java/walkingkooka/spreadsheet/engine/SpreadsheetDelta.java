@@ -63,7 +63,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -1217,7 +1217,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode cellsValueTypePatch(final Map<SpreadsheetCellReference, Optional<ValueTypeName>> cellToValueTypes,
+    public static JsonNode cellsValueTypePatch(final Map<SpreadsheetCellReference, Optional<ValueType>> cellToValueTypes,
                                                final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToValueTypes, "cellToValueTypes");
         Objects.requireNonNull(context, "context");
@@ -1225,7 +1225,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return cellsPatchFromMap(
             cellToValueTypes,
             FORMULA_PROPERTY,
-            (Optional<ValueTypeName> t) -> SpreadsheetFormula.valueTypePatch(t, context)
+            (Optional<ValueType> t) -> SpreadsheetFormula.valueTypePatch(t, context)
         );
     }
 
@@ -1400,7 +1400,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)}.
      */
-    public static JsonNode valueTypePatch(final Optional<ValueTypeName> valueType,
+    public static JsonNode valueTypePatch(final Optional<ValueType> valueType,
                                           final JsonNodeMarshallContext context) {
         Objects.requireNonNull(valueType, "valueType");
         Objects.requireNonNull(context, "context");

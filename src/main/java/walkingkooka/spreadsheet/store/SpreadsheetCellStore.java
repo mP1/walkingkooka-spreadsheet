@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -131,7 +131,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
     Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column);
 
     static void checkFindCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                            final ValueTypeName valueType,
+                                            final ValueType valueType,
                                             final int max) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(valueType, "valueType");
@@ -145,13 +145,13 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
     Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                                final ValueTypeName valueType,
+                                                final ValueType valueType,
                                                 final int max);
 
     static void checkCountCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                             final ValueTypeName valueTypeName) {
+                                             final ValueType valueType) {
         Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(valueTypeName, "valueTypeName");
+        Objects.requireNonNull(valueType, "valueType");
     }
 
     /**
@@ -159,5 +159,5 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
      * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
      */
     int countCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                final ValueTypeName valueType);
+                                final ValueType valueType);
 }

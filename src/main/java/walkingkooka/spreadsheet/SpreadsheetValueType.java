@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,122 +40,122 @@ import java.util.Set;
 
 /**
  * A list of possible(supported) spreadsheet value types.
- * A few helpers are provided to help translate {@link ValueTypeName} to and from its equivalent java {@link Class}.
+ * A few helpers are provided to help translate {@link ValueType} to and from its equivalent java {@link Class}.
  * Aliases or apparent duplicates exist such as {@link #DATE} and {@link #LOCAL_DATE} which should support
- * marshalling/unmarshalling values between {@link ValueTypeName} and java object instances.
+ * marshalling/unmarshalling values between {@link ValueType} and java object instances.
  */
 public final class SpreadsheetValueType implements PublicStaticHelper {
 
-    public static final ValueTypeName ANY = ValueTypeName.ANY;
+    public static final ValueType ANY = ValueType.ANY;
 
     public static final String ABSOLUTE_URL_STRING = "absolute-url";
 
-    public static final ValueTypeName ABSOLUTE_URL = ValueTypeName.with(ABSOLUTE_URL_STRING);
+    public static final ValueType ABSOLUTE_URL = ValueType.with(ABSOLUTE_URL_STRING);
 
-    public static final String BOOLEAN_STRING = ValueTypeName.BOOLEAN_STRING;
+    public static final String BOOLEAN_STRING = ValueType.BOOLEAN_STRING;
 
-    public static final ValueTypeName BOOLEAN = ValueTypeName.BOOLEAN;
+    public static final ValueType BOOLEAN = ValueType.BOOLEAN;
 
     public static final String CELL_STRING = "cell";
 
-    public static final ValueTypeName CELL = ValueTypeName.with(CELL_STRING);
+    public static final ValueType CELL = ValueType.with(CELL_STRING);
 
     public static final String CELL_RANGE_STRING = "cell-range";
 
-    public static final ValueTypeName CELL_RANGE = ValueTypeName.with(CELL_RANGE_STRING);
+    public static final ValueType CELL_RANGE = ValueType.with(CELL_RANGE_STRING);
 
     public static final String COLUMN_STRING = "column";
 
-    public static final ValueTypeName COLUMN = ValueTypeName.with(COLUMN_STRING);
+    public static final ValueType COLUMN = ValueType.with(COLUMN_STRING);
 
     public static final String COLUMN_RANGE_STRING = "column-range";
 
-    public static final ValueTypeName COLUMN_RANGE = ValueTypeName.with(COLUMN_RANGE_STRING);
+    public static final ValueType COLUMN_RANGE = ValueType.with(COLUMN_RANGE_STRING);
 
     public static final String CONDITION_STRING = "condition";
 
-    public static final ValueTypeName CONDITION = ValueTypeName.with(CONDITION_STRING);
+    public static final ValueType CONDITION = ValueType.with(CONDITION_STRING);
 
-    public static final String DATE_STRING = ValueTypeName.DATE_STRING;
+    public static final String DATE_STRING = ValueType.DATE_STRING;
 
-    public static final ValueTypeName DATE = ValueTypeName.DATE;
+    public static final ValueType DATE = ValueType.DATE;
 
-    public static final String DATE_TIME_STRING = ValueTypeName.DATE_TIME_STRING;
+    public static final String DATE_TIME_STRING = ValueType.DATE_TIME_STRING;
 
-    public static final ValueTypeName DATE_TIME = ValueTypeName.DATE_TIME;
+    public static final ValueType DATE_TIME = ValueType.DATE_TIME;
 
     public static final String EMAIL_ADDRESS_STRING = "email-address";
 
-    public static final ValueTypeName EMAIL_ADDRESS = ValueTypeName.with(EMAIL_ADDRESS_STRING);
+    public static final ValueType EMAIL_ADDRESS = ValueType.with(EMAIL_ADDRESS_STRING);
 
-    public static final String EMAIL_STRING = ValueTypeName.EMAIL_STRING;
+    public static final String EMAIL_STRING = ValueType.EMAIL_STRING;
 
-    public static final ValueTypeName EMAIL = ValueTypeName.EMAIL;
+    public static final ValueType EMAIL = ValueType.EMAIL;
     
     public static final String ERROR_STRING = "error";
 
-    public static final ValueTypeName ERROR = ValueTypeName.with(ERROR_STRING);
+    public static final ValueType ERROR = ValueType.with(ERROR_STRING);
 
     public static final String LABEL_STRING = "label";
 
-    public static final ValueTypeName LABEL = ValueTypeName.with(LABEL_STRING);
+    public static final ValueType LABEL = ValueType.with(LABEL_STRING);
 
     public static final String LOCAL_DATE_STRING = "local-date";
 
-    public static final ValueTypeName LOCAL_DATE = ValueTypeName.with(LOCAL_DATE_STRING);
+    public static final ValueType LOCAL_DATE = ValueType.with(LOCAL_DATE_STRING);
 
     public static final String LOCAL_DATE_TIME_STRING = "local-date-time";
 
-    public static final ValueTypeName LOCAL_DATE_TIME = ValueTypeName.with(LOCAL_DATE_TIME_STRING);
+    public static final ValueType LOCAL_DATE_TIME = ValueType.with(LOCAL_DATE_TIME_STRING);
 
     public static final String LOCAL_TIME_STRING = "local-time";
 
-    public static final ValueTypeName LOCAL_TIME = ValueTypeName.with(LOCAL_TIME_STRING);
+    public static final ValueType LOCAL_TIME = ValueType.with(LOCAL_TIME_STRING);
 
-    public static final String NUMBER_STRING = ValueTypeName.NUMBER_STRING;
+    public static final String NUMBER_STRING = ValueType.NUMBER_STRING;
 
-    public static final ValueTypeName NUMBER = ValueTypeName.NUMBER;
+    public static final ValueType NUMBER = ValueType.NUMBER;
 
     public static final String ROW_STRING = "row";
 
-    public static final ValueTypeName ROW = ValueTypeName.with(ROW_STRING);
+    public static final ValueType ROW = ValueType.with(ROW_STRING);
 
     public static final String ROW_RANGE_STRING = "row-range";
 
-    public static final ValueTypeName ROW_RANGE = ValueTypeName.with(ROW_RANGE_STRING);
+    public static final ValueType ROW_RANGE = ValueType.with(ROW_RANGE_STRING);
 
     public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
 
-    public static final ValueTypeName TEMPLATE_VALUE_NAME = ValueTypeName.with(TEMPLATE_VALUE_NAME_STRING);
+    public static final ValueType TEMPLATE_VALUE_NAME = ValueType.with(TEMPLATE_VALUE_NAME_STRING);
 
     public static final String STRING_STRING = "string";
 
-    public static final ValueTypeName STRING = ValueTypeName.with(STRING_STRING);
+    public static final ValueType STRING = ValueType.with(STRING_STRING);
     
-    public static final String TEXT_STRING = ValueTypeName.TEXT_STRING;
+    public static final String TEXT_STRING = ValueType.TEXT_STRING;
 
-    public static final ValueTypeName TEXT = ValueTypeName.TEXT;
+    public static final ValueType TEXT = ValueType.TEXT;
 
-    public static final String TIME_STRING = ValueTypeName.TIME_STRING;
+    public static final String TIME_STRING = ValueType.TIME_STRING;
 
-    public static final ValueTypeName TIME = ValueTypeName.TIME;
+    public static final ValueType TIME = ValueType.TIME;
 
-    public static final String URL_STRING = ValueTypeName.URL_STRING;
+    public static final String URL_STRING = ValueType.URL_STRING;
 
-    public static final ValueTypeName URL = ValueTypeName.URL;
+    public static final ValueType URL = ValueType.URL;
 
     public static final String VALUE_OR_EXPRESSION_STRING = "value-or-expression";
 
-    public static final ValueTypeName VALUE_OR_EXPRESSION = ValueTypeName.with(VALUE_OR_EXPRESSION_STRING);
+    public static final ValueType VALUE_OR_EXPRESSION = ValueType.with(VALUE_OR_EXPRESSION_STRING);
 
-    public static final String WHOLE_NUMBER_STRING = ValueTypeName.WHOLE_NUMBER_STRING;
+    public static final String WHOLE_NUMBER_STRING = ValueType.WHOLE_NUMBER_STRING;
 
-    public static final ValueTypeName WHOLE_NUMBER = ValueTypeName.WHOLE_NUMBER;
+    public static final ValueType WHOLE_NUMBER = ValueType.WHOLE_NUMBER;
 
     /**
      * Does not include all types, only those that typically appear in a cell
      */
-    public static final Set<ValueTypeName> ALL = Sets.of(
+    public static final Set<ValueType> ALL = Sets.of(
         BOOLEAN,
         DATE,
         DATE_TIME,
@@ -170,7 +170,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * Used to build a UI search elements.
      */
-    public final static Set<ValueTypeName> ALL_CELL_VALUE_TYPES = Sets.of(
+    public final static Set<ValueType> ALL_CELL_VALUE_TYPES = Sets.of(
         BOOLEAN,
         DATE,
         DATE_TIME,
@@ -186,15 +186,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     /**
      * For the given type returns the value type name, or {@link Optional#empty()} if the type is unknown.
      */
-    public static Optional<ValueTypeName> toValueType(final Class<?> type) {
+    public static Optional<ValueType> toValueType(final Class<?> type) {
         return SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor.valueType(type);
     }
 
     /**
-     * Translates a {@link ValueTypeName} into its java {@link Class} equivalent.
+     * Translates a {@link ValueType} into its java {@link Class} equivalent.
      * If the type is unknown an {@link Optional#empty()} is returned.
      */
-    public static Optional<Class<?>> toClass(final ValueTypeName valueType) {
+    public static Optional<Class<?>> toClass(final ValueType valueType) {
         Objects.requireNonNull(valueType, "valueType");
 
         final Class<?> javaType;
@@ -275,90 +275,90 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         return Optional.ofNullable(javaType);
     }
 
-    public static ValueTypeName with(final String name) {
+    public static ValueType with(final String name) {
         Objects.requireNonNull(name, "name");
 
-        final ValueTypeName valueTypeName;
+        final ValueType valueType;
 
         switch (name) {
             case ABSOLUTE_URL_STRING:
-                valueTypeName = ABSOLUTE_URL;
+                valueType = ABSOLUTE_URL;
                 break;
-            case ValueTypeName.ANY_STRING:
-                valueTypeName = ANY;
+            case ValueType.ANY_STRING:
+                valueType = ANY;
                 break;
             case BOOLEAN_STRING:
-                valueTypeName = BOOLEAN;
+                valueType = BOOLEAN;
                 break;
             case CELL_STRING:
-                valueTypeName = CELL;
+                valueType = CELL;
                 break;
             case CELL_RANGE_STRING:
-                valueTypeName = CELL_RANGE;
+                valueType = CELL_RANGE;
                 break;
             case COLUMN_STRING:
-                valueTypeName = COLUMN;
+                valueType = COLUMN;
                 break;
             case COLUMN_RANGE_STRING:
-                valueTypeName = COLUMN_RANGE;
+                valueType = COLUMN_RANGE;
                 break;
             case DATE_STRING:
-                valueTypeName = DATE;
+                valueType = DATE;
                 break;
             case DATE_TIME_STRING:
-                valueTypeName = DATE_TIME;
+                valueType = DATE_TIME;
                 break;
             case EMAIL_ADDRESS_STRING:
-                valueTypeName = EMAIL_ADDRESS;
+                valueType = EMAIL_ADDRESS;
                 break;
             case EMAIL_STRING:
-                valueTypeName = EMAIL;
+                valueType = EMAIL;
                 break;
             case ERROR_STRING:
-                valueTypeName = ERROR;
+                valueType = ERROR;
                 break;
             case LABEL_STRING:
-                valueTypeName = LABEL;
+                valueType = LABEL;
                 break;
             case LOCAL_DATE_STRING:
-                valueTypeName = LOCAL_DATE;
+                valueType = LOCAL_DATE;
                 break;
             case LOCAL_DATE_TIME_STRING:
-                valueTypeName = LOCAL_DATE_TIME;
+                valueType = LOCAL_DATE_TIME;
                 break;
             case LOCAL_TIME_STRING:
-                valueTypeName = LOCAL_TIME;
+                valueType = LOCAL_TIME;
                 break;
             case NUMBER_STRING:
-                valueTypeName = NUMBER;
+                valueType = NUMBER;
                 break;
             case ROW_STRING:
-                valueTypeName = ROW;
+                valueType = ROW;
                 break;
             case ROW_RANGE_STRING:
-                valueTypeName = ROW_RANGE;
+                valueType = ROW_RANGE;
                 break;
             case STRING_STRING:
-                valueTypeName = STRING;
+                valueType = STRING;
                 break;
             case TEXT_STRING:
-                valueTypeName = TEXT;
+                valueType = TEXT;
                 break;
             case TIME_STRING:
-                valueTypeName = TIME;
+                valueType = TIME;
                 break;
             case URL_STRING:
-                valueTypeName = URL;
+                valueType = URL;
                 break;
             case WHOLE_NUMBER_STRING:
-                valueTypeName = WHOLE_NUMBER;
+                valueType = WHOLE_NUMBER;
                 break;
             default:
-                valueTypeName = ValueTypeName.with(name);
+                valueType = ValueType.with(name);
                 break;
         }
 
-        return valueTypeName;
+        return valueType;
     }
 
     /**

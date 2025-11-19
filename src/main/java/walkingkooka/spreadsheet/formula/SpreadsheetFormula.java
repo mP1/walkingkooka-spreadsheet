@@ -64,7 +64,7 @@ import walkingkooka.tree.json.patch.Patchable;
 import walkingkooka.validation.HasValidationPromptValue;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationPromptValue;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -107,7 +107,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * Input value type is absent constant.
      */
-    public final static Optional<ValueTypeName> NO_VALUE_TYPE = Optional.empty();
+    public final static Optional<ValueType> NO_VALUE_TYPE = Optional.empty();
 
     /**
      * Input value is absent constant.
@@ -172,7 +172,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     private SpreadsheetFormula(final String text,
                                final Optional<SpreadsheetFormulaParserToken> token,
                                final Optional<Expression> expression,
-                               final Optional<ValueTypeName> valueType,
+                               final Optional<ValueType> valueType,
                                final Optional<Object> value,
                                final Optional<SpreadsheetError> error) {
         super();
@@ -303,14 +303,14 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * A hint that is used by the UI to select an appropriate picker forcing the user to enter a matching {@link #value}.
      */
-    public Optional<ValueTypeName> valueType() {
+    public Optional<ValueType> valueType() {
         return this.valueType;
     }
 
     /**
      * Would be setter that returns a {@link SpreadsheetFormula} with the input value hint.
      */
-    public SpreadsheetFormula setValueType(final Optional<ValueTypeName> valueType) {
+    public SpreadsheetFormula setValueType(final Optional<ValueType> valueType) {
         return this.valueType.equals(valueType) ?
             this :
             new SpreadsheetFormula(
@@ -326,7 +326,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * A type hint for the {@link #value}.
      */
-    private final Optional<ValueTypeName> valueType;
+    private final Optional<ValueType> valueType;
 
     // value..................................................................................................
 
@@ -553,7 +553,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
     /**
      * Creates a PATCH for a formula to replace the {@link #valueType()}.
      */
-    public static JsonNode valueTypePatch(final Optional<ValueTypeName> valueType,
+    public static JsonNode valueTypePatch(final Optional<ValueType> valueType,
                                           final JsonNodeMarshallContext context) {
         Objects.requireNonNull(valueType, "valueType");
         Objects.requireNonNull(context, "context");
@@ -588,7 +588,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                         Optional.ofNullable(
                             context.unmarshall(
                                 propertyAndValue,
-                                ValueTypeName.class
+                                ValueType.class
                             )
                         )
                     );
@@ -725,7 +725,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         String text = NO_TEXT;
         SpreadsheetFormulaParserToken token = null;
         Expression expression = null;
-        Optional<ValueTypeName> valueType = NO_VALUE_TYPE;
+        Optional<ValueType> valueType = NO_VALUE_TYPE;
         Object value = null;
         Optional<SpreadsheetError> error = NO_ERROR;
 
@@ -749,7 +749,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
                 case VALUE_TYPE_PROPERTY_STRING:
                     valueType = context.unmarshallOptional(
                         child,
-                        ValueTypeName.class
+                        ValueType.class
                     );
                     break;
                 case VALUE_PROPERTY_STRING:
@@ -811,7 +811,7 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             );
         }
 
-        final Optional<ValueTypeName> valueType = this.valueType;
+        final Optional<ValueType> valueType = this.valueType;
         if (valueType.isPresent()) {
             object = object.set(
                 VALUE_TYPE_PROPERTY,

@@ -26,7 +26,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +40,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
 
     static SpreadsheetNonNumberParsePatternSpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
                                                                   final ParserToken token,
-                                                                  final Optional<ValueTypeName> valueType) {
+                                                                  final Optional<ValueType> valueType) {
         return new SpreadsheetNonNumberParsePatternSpreadsheetParser(
             parser,
             token,
@@ -50,7 +50,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
 
     private SpreadsheetNonNumberParsePatternSpreadsheetParser(final Parser<SpreadsheetParserContext> parser,
                                                               final ParserToken token,
-                                                              final Optional<ValueTypeName> valueType) {
+                                                              final Optional<ValueType> valueType) {
         this.parser = parser;
         this.token = token;
         this.valueType = valueType;
@@ -87,11 +87,11 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParser implements Spreads
     private final ParserToken token;
 
     @Override
-    public Optional<ValueTypeName> valueType() {
+    public Optional<ValueType> valueType() {
         return this.valueType;
     }
 
-    private final Optional<ValueTypeName> valueType;
+    private final Optional<ValueType> valueType;
 
     // Object...........................................................................................................
 

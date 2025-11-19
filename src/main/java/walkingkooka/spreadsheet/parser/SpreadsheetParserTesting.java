@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.parser.ParserTesting;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +59,7 @@ public interface SpreadsheetParserTesting extends ParserTesting {
     }
 
     default void valueTypeAndCheck(final SpreadsheetParser parser,
-                                   final ValueTypeName expected) {
+                                   final ValueType expected) {
         this.valueTypeAndCheck(
             parser,
             Optional.of(expected)
@@ -67,7 +67,7 @@ public interface SpreadsheetParserTesting extends ParserTesting {
     }
 
     default void valueTypeAndCheck(final SpreadsheetParser parser,
-                                   final Optional<ValueTypeName> expected) {
+                                   final Optional<ValueType> expected) {
         this.checkEquals(
             expected,
             parser.valueType(),

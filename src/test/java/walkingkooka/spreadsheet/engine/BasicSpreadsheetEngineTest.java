@@ -172,7 +172,7 @@ import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValidationReference;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.FakeFormHandler;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -24551,7 +24551,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     SpreadsheetForms.field(cell)
                         .setLabel("FormField1")
                         .setType(
-                            Optional.of(ValueTypeName.TEXT)
+                            Optional.of(ValueType.TEXT)
                         ).setValue(
                             Optional.of("InitialFormValue1")
                         ).setValidator(
@@ -24598,7 +24598,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     SpreadsheetForms.field(cell)
                         .setLabel("A1Label")
                         .setType(
-                            Optional.of(ValueTypeName.TEXT)
+                            Optional.of(ValueType.TEXT)
                         ).setValue(
                             Optional.of("Initial value")
                         ).setValidator(
@@ -24648,7 +24648,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     SpreadsheetForms.field(label)
                         .setLabel("TextLabel111")
                         .setType(
-                            Optional.of(ValueTypeName.TEXT)
+                            Optional.of(ValueType.TEXT)
                         ).setValue(
                             Optional.of("Initial value")
                         ).setValidator(
@@ -24715,7 +24715,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     SpreadsheetForms.field(a1Cell.reference())
                         .setLabel("A1Label")
                         .setType(
-                            Optional.of(ValueTypeName.TEXT)
+                            Optional.of(ValueType.TEXT)
                         ).setValue(
                             Optional.of("Initial value")
                         ).setValidator(
@@ -25082,7 +25082,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         SpreadsheetForms.field(SpreadsheetSelection.labelName("FormField" + i))
                             .setLabel("TextLabel1")
                             .setType(
-                                Optional.of(ValueTypeName.TEXT)
+                                Optional.of(ValueType.TEXT)
                             ).setValue(
                                 Optional.of(i)
                             )

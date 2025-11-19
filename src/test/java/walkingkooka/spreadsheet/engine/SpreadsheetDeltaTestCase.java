@@ -54,7 +54,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -680,7 +680,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
                 SpreadsheetForms.field(SpreadsheetSelection.A1)
                     .setLabel("Label111")
                     .setType(
-                        Optional.of(ValueTypeName.TEXT)
+                        Optional.of(ValueType.TEXT)
                     )
             )
         );

@@ -109,7 +109,7 @@ import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -2236,7 +2236,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSpreadsheetValueConvertStringToValueType() {
-        final ValueTypeName type = SpreadsheetValueType.NUMBER;
+        final ValueType type = SpreadsheetValueType.NUMBER;
 
         this.spreadsheetValueConvertAndCheck(
             type.toString(),

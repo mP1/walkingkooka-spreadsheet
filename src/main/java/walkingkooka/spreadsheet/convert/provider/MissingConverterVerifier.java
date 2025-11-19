@@ -90,7 +90,7 @@ import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.provider.ValidatorSelector;
 
@@ -1090,7 +1090,7 @@ final class MissingConverterVerifier {
             if (validation) {
                 finder.addIfConversionFail(
                     SpreadsheetValueType.TEXT.value(),
-                    ValueTypeName.class,
+                    ValueType.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_VALUE_TYPE
                 );
             }
