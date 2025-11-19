@@ -23,7 +23,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.List;
 import java.util.Objects;
@@ -96,7 +96,7 @@ final class ToStringSpreadsheetParser implements SpreadsheetParser,
     }
 
     @Override
-    public Optional<ValueTypeName> valueType() {
+    public Optional<ValueType> valueType() {
         return this.parser.valueType();
     }
 

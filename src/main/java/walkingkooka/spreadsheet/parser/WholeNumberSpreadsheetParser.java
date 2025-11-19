@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.List;
 import java.util.Objects;
@@ -76,7 +76,7 @@ final class WholeNumberSpreadsheetParser implements SpreadsheetParser,
     }
 
     @Override
-    public Optional<ValueTypeName> valueType() {
+    public Optional<ValueType> valueType() {
         return Optional.of(
             SpreadsheetValueType.WHOLE_NUMBER
         );

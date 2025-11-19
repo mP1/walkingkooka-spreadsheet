@@ -68,7 +68,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -85,7 +85,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
      * Creates a {@link SpreadsheetParser} for each of the individual date/datetime/time individual patterns.
      */
     static SpreadsheetParser toParser(final ParserToken token,
-                                      final ValueTypeName valueType) {
+                                      final ValueType valueType) {
         final SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
 

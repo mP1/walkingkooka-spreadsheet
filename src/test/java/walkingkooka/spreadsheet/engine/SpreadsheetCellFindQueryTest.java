@@ -38,7 +38,7 @@ import walkingkooka.text.HasTextTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.Map;
 import java.util.Optional;
@@ -63,7 +63,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
 
     private final static OptionalInt COUNT = OptionalInt.of(456);
 
-    private final static Optional<ValueTypeName> VALUE_TYPE = Optional.of(ValueTypeName.ANY);
+    private final static Optional<ValueType> VALUE_TYPE = Optional.of(ValueType.ANY);
 
     private final static Optional<SpreadsheetCellQuery> QUERY = Optional.of(
         SpreadsheetCellQuery.parse("789+blah()")
@@ -255,7 +255,7 @@ public final class SpreadsheetCellFindQueryTest implements HasUrlFragmentTesting
     @Test
     public void testSetValueTypeDifferent() {
         final SpreadsheetCellFindQuery find = SpreadsheetCellFindQuery.empty();
-        final Optional<ValueTypeName> valueType = Optional.of(
+        final Optional<ValueType> valueType = Optional.of(
             SpreadsheetValueType.TEXT
         );
 

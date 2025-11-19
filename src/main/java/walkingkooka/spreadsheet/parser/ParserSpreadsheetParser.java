@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelectorToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +35,7 @@ import java.util.Optional;
 final class ParserSpreadsheetParser implements SpreadsheetParser {
 
     public static SpreadsheetParser with(final Parser<SpreadsheetParserContext> parser,
-                                         final Optional<ValueTypeName> valueType) {
+                                         final Optional<ValueType> valueType) {
         return parser instanceof SpreadsheetParser ?
             (SpreadsheetParser) parser :
             new ParserSpreadsheetParser(
@@ -45,7 +45,7 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     }
 
     private ParserSpreadsheetParser(final Parser<SpreadsheetParserContext> parser,
-                                    final Optional<ValueTypeName> valueType) {
+                                    final Optional<ValueType> valueType) {
         this.parser = parser;
         this.valueType = valueType;
     }
@@ -79,11 +79,11 @@ final class ParserSpreadsheetParser implements SpreadsheetParser {
     private final Parser<SpreadsheetParserContext> parser;
 
     @Override
-    public Optional<ValueTypeName> valueType() {
+    public Optional<ValueType> valueType() {
         return this.valueType;
     }
 
-    private final Optional<ValueTypeName> valueType;
+    private final Optional<ValueType> valueType;
 
     // Object...........................................................................................................
 

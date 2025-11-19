@@ -38,7 +38,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -318,13 +318,13 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                                      final String expected) {
         this.toValueTypeAndCheck(
             type,
-            ValueTypeName.with(expected)
+            ValueType.with(expected)
         );
     }
 
 
     private void toValueTypeAndCheck(final Class<?> type,
-                                     final ValueTypeName expected) {
+                                     final ValueType expected) {
         this.toValueTypeAndCheck(
             type,
             Optional.of(expected)
@@ -332,7 +332,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     private void toValueTypeAndCheck(final Class<?> type,
-                                     final Optional<ValueTypeName> expected) {
+                                     final Optional<ValueType> expected) {
         this.checkEquals(
             expected,
             SpreadsheetValueType.toValueType(type),
@@ -529,12 +529,12 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     private void toClassAndCheck(final String valueType,
                                  final Class<?> expected) {
         this.toClassAndCheck(
-            ValueTypeName.with(valueType),
+            ValueType.with(valueType),
             expected
         );
     }
 
-    private void toClassAndCheck(final ValueTypeName valueType,
+    private void toClassAndCheck(final ValueType valueType,
                                  final Class<?> expected) {
         this.toClassAndCheck(
             valueType,
@@ -542,7 +542,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
-    private void toClassAndCheck(final ValueTypeName valueType,
+    private void toClassAndCheck(final ValueType valueType,
                                  final Optional<Class<?>> expected) {
         this.checkEquals(
             expected,
@@ -555,7 +555,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
     @Test
     public void testConstantsJsonTypeNames() throws Exception {
-        final Set<ValueTypeName> missing = SortedSets.tree();
+        final Set<ValueType> missing = SortedSets.tree();
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         for (final Field constant : SpreadsheetValueType.class.getFields()) {
@@ -567,19 +567,19 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
                 continue;
             }
 
-            if (constant.getType() != ValueTypeName.class) {
+            if (constant.getType() != ValueType.class) {
                 continue;
             }
 
-            final ValueTypeName valueTypeName = ((ValueTypeName) constant.get(null));
+            final ValueType valueType = ((ValueType) constant.get(null));
 
-            final Class<?> type = SpreadsheetValueType.toClass(valueTypeName)
+            final Class<?> type = SpreadsheetValueType.toClass(valueType)
                 .orElse(null);
             if (null != type) {
                 final JsonString string = context.typeName(type)
                     .orElse(null);
                 if (null == string) {
-                    missing.add(valueTypeName);
+                    missing.add(valueType);
                 }
             }
         }

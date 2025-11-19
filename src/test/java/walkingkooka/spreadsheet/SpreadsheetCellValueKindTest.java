@@ -31,7 +31,7 @@ import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
@@ -47,7 +47,7 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValueType(
                 Optional.of(
-                    ValueTypeName.with("hello-value-type")
+                    ValueType.with("hello-value-type")
                 )
             )
         ).setDateTimeSymbols(

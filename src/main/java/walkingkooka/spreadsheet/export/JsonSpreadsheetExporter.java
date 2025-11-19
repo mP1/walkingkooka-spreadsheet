@@ -28,7 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
-import walkingkooka.validation.OptionalValueTypeName;
+import walkingkooka.validation.OptionalValueType;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -121,7 +121,7 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 break;
             case VALUE_TYPE:
                 value = (c) -> context.marshall(
-                    OptionalValueTypeName.with(
+                    OptionalValueType.with(
                         c.formula()
                             .valueType()
                     )

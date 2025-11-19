@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.Optional;
 import java.util.Set;
@@ -287,7 +287,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
     }
 
     @Test
-    default void testFindCellsWithValueTypeWithNullValueTypeNameFails() {
+    default void testFindCellsWithValueTypeWithNullValueTypeFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore().findCellsWithValueType(
@@ -322,13 +322,13 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
-                                                final ValueTypeName valueTypeName,
+                                                final ValueType valueType,
                                                 final int max,
                                                 final SpreadsheetCell... expected) {
         this.findCellsWithValueTypeAndCheck(
             store,
             cellRange,
-            valueTypeName,
+            valueType,
             max,
             Sets.of(expected)
         );
@@ -336,17 +336,17 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void findCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                 final SpreadsheetCellRangeReference cellRange,
-                                                final ValueTypeName valueTypeName,
+                                                final ValueType valueType,
                                                 final int max,
                                                 final Set<SpreadsheetCell> expected) {
         this.checkEquals(
             expected,
             store.findCellsWithValueType(
                 cellRange,
-                valueTypeName,
+                valueType,
                 max
             ),
-            () -> "findCellsWithValueType " + cellRange + " " + valueTypeName + " max=" + max
+            () -> "findCellsWithValueType " + cellRange + " " + valueType + " max=" + max
         );
     }
 
@@ -376,7 +376,7 @@ public interface SpreadsheetCellStoreTesting<S extends SpreadsheetCellStore> ext
 
     default void countCellsWithValueTypeAndCheck(final SpreadsheetCellStore store,
                                                  final SpreadsheetCellRangeReference cellRange,
-                                                 final ValueTypeName valueType,
+                                                 final ValueType valueType,
                                                  final int expected) {
         this.checkEquals(
             expected,

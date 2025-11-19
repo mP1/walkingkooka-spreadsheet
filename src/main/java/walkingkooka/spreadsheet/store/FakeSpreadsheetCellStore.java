@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.Optional;
 import java.util.Set;
@@ -93,14 +93,14 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
 
     @Override
     public Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                                       final ValueTypeName valueType,
+                                                       final ValueType valueType,
                                                        final int max) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public int countCellsWithValueType(final SpreadsheetCellRangeReference range,
-                                       final ValueTypeName valueType) {
+                                       final ValueType valueType) {
         throw new UnsupportedOperationException();
     }
 }

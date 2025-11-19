@@ -28,7 +28,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RequiredParser;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.util.List;
 import java.util.Objects;
@@ -99,11 +99,11 @@ final class SpreadsheetNumberParsePatternSpreadsheetParser implements Spreadshee
     }
 
     @Override
-    public Optional<ValueTypeName> valueType() {
+    public Optional<ValueType> valueType() {
         return NUMBER;
     }
 
-    private final static Optional<ValueTypeName> NUMBER = Optional.of(
+    private final static Optional<ValueType> NUMBER = Optional.of(
         SpreadsheetValueType.NUMBER
     );
 

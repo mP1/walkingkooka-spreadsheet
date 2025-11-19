@@ -82,7 +82,7 @@ import walkingkooka.tree.json.patch.PatchableTesting;
 import walkingkooka.validation.HasValidationPromptValueTesting;
 import walkingkooka.validation.ValidationChoice;
 import walkingkooka.validation.ValidationChoiceList;
-import walkingkooka.validation.ValueTypeName;
+import walkingkooka.validation.ValueType;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
@@ -109,12 +109,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     private final static String TEXT = "1+2";
     private final static String EXPRESSION = "1+2";
     private final static Double EXPRESSION_VALUE = 3.0;
-    private final static ValueTypeName VALUE_TYPE = ValueTypeName.TEXT;
+    private final static ValueType VALUE_TYPE = ValueType.TEXT;
     private final static String VALUE = "\"Value444\"";
     private final static String ERROR = "Message #1";
 
     private final static String DIFFERENT_TEXT = "99+99";
-    private final static ValueTypeName DIFFERENT_VALUE_TYPE = ValueTypeName.TIME;
+    private final static ValueType DIFFERENT_VALUE_TYPE = ValueType.TIME;
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -527,7 +527,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetValueTypeDifferent() {
         final SpreadsheetFormula formula = this.createObject()
             .setToken(this.token());
-        final Optional<ValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
+        final Optional<ValueType> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(
             formula,
@@ -549,7 +549,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetValueTypeDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
             .setValueType(this.valueType());
-        final Optional<ValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
+        final Optional<ValueType> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(
             formula,
@@ -571,7 +571,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             .setExpression(this.expression())
             .setValueType(this.valueType());
 
-        final Optional<ValueTypeName> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
+        final Optional<ValueType> differentValueType = Optional.of(DIFFERENT_VALUE_TYPE);
         final SpreadsheetFormula different = formula.setValueType(differentValueType);
         assertNotSame(formula, different);
 
@@ -589,16 +589,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.errorAndCheck(different);
     }
 
-    private Optional<ValueTypeName> valueType() {
+    private Optional<ValueType> valueType() {
         return this.valueType(VALUE_TYPE);
     }
 
-    private Optional<ValueTypeName> valueType(final ValueTypeName type) {
+    private Optional<ValueType> valueType(final ValueType type) {
         return Optional.of(type);
     }
 
     private void valueTypeAndCheck(final SpreadsheetFormula formula,
-                                   final ValueTypeName type) {
+                                   final ValueType type) {
         this.valueTypeAndCheck(
             formula,
             Optional.of(type)
@@ -606,7 +606,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void valueTypeAndCheck(final SpreadsheetFormula formula,
-                                   final Optional<ValueTypeName> type) {
+                                   final Optional<ValueType> type) {
         this.checkEquals(
             type,
             formula.valueType(),
@@ -2103,7 +2103,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.isEmptyAndCheck(
             SpreadsheetFormula.EMPTY
                 .setValueType(
-                    Optional.of(ValueTypeName.TEXT)
+                    Optional.of(ValueType.TEXT)
                 ),
             false
         );
@@ -2561,7 +2561,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testTreePrintTextValueType() {
         this.treePrintAndCheck(
             SpreadsheetFormula.EMPTY.setValueType(
-                Optional.of(ValueTypeName.TEXT)
+                Optional.of(ValueType.TEXT)
             ),
             "Formula\n" +
                 "  valueType:\n" +
@@ -2784,7 +2784,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 ),
             SpreadsheetFormula.valueTypePatch(
                 Optional.of(
-                    ValueTypeName.with("text123")
+                    ValueType.with("text123")
                 ),
                 JsonNodeMarshallContexts.basic()
             )
@@ -2899,7 +2899,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testPatchValueTypeWithEmpty() {
         final SpreadsheetFormula formula = this.formula("=1");
-        final Optional<ValueTypeName> valueType = SpreadsheetFormula.NO_VALUE_TYPE;
+        final Optional<ValueType> valueType = SpreadsheetFormula.NO_VALUE_TYPE;
 
         this.patchAndCheck(
             formula,
@@ -2914,8 +2914,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testPatchValueTypeWithNonEmpty() {
         final SpreadsheetFormula formula = this.formula("=1");
-        final Optional<ValueTypeName> valueType = Optional.of(
-            ValueTypeName.with("text123")
+        final Optional<ValueType> valueType = Optional.of(
+            ValueType.with("text123")
         );
 
         this.patchAndCheck(
