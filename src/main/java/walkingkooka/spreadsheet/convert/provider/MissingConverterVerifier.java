@@ -323,11 +323,7 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 (Object)
                     Lists.of(
-                        LocalDate.of(
-                            1999,
-                            12,
-                            31
-                        ),
+                        DATE,
                         LocalDate.of(
                             2000,
                             2,
@@ -342,14 +338,7 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 (Object)
                     Lists.of(
-                        LocalDateTime.of(
-                            1999,
-                            12,
-                            31,
-                            12,
-                            0,
-                            0
-                        ),
+                        DATE_TIME,
                         LocalDateTime.of(
                             2000,
                             2,
@@ -367,11 +356,7 @@ final class MissingConverterVerifier {
             finder.addIfConversionFail(
                 (Object)
                     Lists.of(
-                        LocalTime.of(
-                            12,
-                            58,
-                            59
-                        ),
+                        TIME,
                         LocalTime.of(
                             2,
                             22,
@@ -447,45 +432,21 @@ final class MissingConverterVerifier {
 
             finder.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        LocalDate.of(
-                            1999,
-                            12,
-                            31
-                        )
-                    ),
+                    Lists.of(DATE),
                 LocalDate.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
             finder.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        LocalDateTime.of(
-                            1999,
-                            12,
-                            31,
-                            12,
-                            58,
-                            59
-                        )
-                    ),
+                    Lists.of(DATE_TIME),
                 LocalDateTime.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
             finder.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        LocalDateTime.of(
-                            1999,
-                            12,
-                            31,
-                            12,
-                            0,
-                            0
-                        )
-                    ),
+                    Lists.of(DATE_TIME),
                 LocalDateTimeList.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
@@ -501,13 +462,7 @@ final class MissingConverterVerifier {
 
             finder.addIfConversionFail(
                 (Object)
-                    Lists.of(
-                        LocalTime.of(
-                            12,
-                            58,
-                            59
-                        )
-                    ),
+                    Lists.of(TIME),
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
@@ -809,43 +764,19 @@ final class MissingConverterVerifier {
             );
 
             finder.addIfConversionFail(
-                Optional.of(
-                    LocalDate.of(
-                        1999,
-                        12,
-                        31
-                    )
-                ),
+                Optional.of(DATE),
                 LocalDate.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
             finder.addIfConversionFail(
-                Optional.of(
-                    LocalDateTime.of(
-                        1999,
-                        12,
-                        31,
-                        12,
-                        58,
-                        59
-                    )
-                ),
+                Optional.of(DATE_TIME),
                 LocalDateTime.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
             finder.addIfConversionFail(
-                Optional.of(
-                    LocalDateTime.of(
-                        1999,
-                        12,
-                        31,
-                        12,
-                        0,
-                        0
-                    )
-                ),
+                Optional.of(DATE_TIME),
                 LocalDateTimeList.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
@@ -859,13 +790,7 @@ final class MissingConverterVerifier {
             );
 
             finder.addIfConversionFail(
-                Optional.of(
-                    LocalTime.of(
-                        12,
-                        58,
-                        59
-                    )
-                ),
+                Optional.of(TIME),
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
