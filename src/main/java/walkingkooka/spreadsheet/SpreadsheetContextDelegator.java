@@ -34,6 +34,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -141,6 +143,27 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     @Override
     default SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.spreadsheetContext();
+    }
+
+    // TerminalServerContext............................................................................................
+
+    @Override
+    default TerminalContext createTerminalContext(final EnvironmentContext context) {
+        return this.spreadsheetContext()
+            .createTerminalContext(context);
+    }
+
+    @Override
+    default Optional<TerminalContext> terminalContext(final TerminalId terminalId) {
+        return this.spreadsheetContext()
+            .terminalContext(terminalId);
+    }
+
+    @Override
+    default SpreadsheetContext removeTerminalContext(final TerminalId terminalId) {
+        this.spreadsheetContext()
+            .removeTerminalContext(terminalId);
+        return this;
     }
 
     SpreadsheetContext spreadsheetContext();

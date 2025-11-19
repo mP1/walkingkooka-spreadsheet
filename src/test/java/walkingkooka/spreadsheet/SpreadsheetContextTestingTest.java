@@ -18,12 +18,15 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextTestingTest.TestSpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
 
 import java.util.List;
 import java.util.Locale;
@@ -168,6 +171,24 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public Optional<EmailAddress> user() {
             return Optional.empty();
+        }
+
+        @Override
+        public TerminalContext createTerminalContext(final EnvironmentContext context) {
+            Objects.requireNonNull(context, "context");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<TerminalContext> terminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetContext removeTerminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
         }
     }
 

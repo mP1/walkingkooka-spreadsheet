@@ -60,6 +60,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -585,6 +586,24 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetContext;
+    }
+
+    // TerminalServerContext............................................................................................
+
+    @Override
+    public TerminalContext createTerminalContext(final EnvironmentContext context) {
+        return this.spreadsheetContext.createTerminalContext(context);
+    }
+
+    @Override
+    public Optional<TerminalContext> terminalContext(final TerminalId id) {
+        return this.spreadsheetContext.terminalContext(id);
+    }
+
+    @Override
+    public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
+        this.spreadsheetContext.removeTerminalContext(id);
+        return this;
     }
 
     // Object...........................................................................................................

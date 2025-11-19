@@ -28,6 +28,7 @@ import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.server.TerminalServerContext;
 
 import java.util.function.Function;
 
@@ -44,7 +45,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                            final EnvironmentContext environmentContext,
                                            final LocaleContext localeContext,
-                                           final ProviderContext providerContext) {
+                                           final ProviderContext providerContext,
+                                           final TerminalServerContext terminalServerContext) {
         return BasicSpreadsheetContext.with(
             serverUrl,
             spreadsheetId,
@@ -54,7 +56,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
             httpRouterFactory,
             environmentContext,
             localeContext,
-            providerContext
+            providerContext,
+            terminalServerContext
         );
     }
 

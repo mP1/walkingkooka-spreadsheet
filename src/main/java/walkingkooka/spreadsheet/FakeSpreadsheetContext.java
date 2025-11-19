@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -30,6 +31,8 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -192,6 +195,23 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
+
+    // TerminalServerContext............................................................................................
+
+    @Override
+    public TerminalContext createTerminalContext(final EnvironmentContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<TerminalContext> terminalContext(final TerminalId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetContext removeTerminalContext(final TerminalId id) {
         throw new UnsupportedOperationException();
     }
 }

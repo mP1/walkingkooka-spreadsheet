@@ -35,6 +35,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.TerminalServerContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +58,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                         final EnvironmentContext environmentContext,
                                         final LocaleContext localeContext,
-                                        final ProviderContext providerContext) {
+                                        final ProviderContext providerContext,
+                                        final TerminalServerContext terminalServerContext) {
         return new BasicSpreadsheetContext(
             Objects.requireNonNull(serverUrl, "serverUrl"),
             Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
@@ -68,7 +72,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             null, // HttpRouter
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(localeContext, "localeContext"),
-            Objects.requireNonNull(providerContext, "providerContext")
+            Objects.requireNonNull(providerContext, "providerContext"),
+            Objects.requireNonNull(terminalServerContext, "terminalServerContext")
         );
     }
 
@@ -83,7 +88,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                                     final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter,
                                     final EnvironmentContext environmentContext,
                                     final LocaleContext localeContext,
-                                    final ProviderContext providerContext) {
+                                    final ProviderContext providerContext,
+                                    final TerminalServerContext terminalServerContext) {
         super();
 
         this.serverUrl = serverUrl;
@@ -108,6 +114,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.httpRouter = httpRouter;
         this.httpRouterFactory = httpRouterFactory;
+
+        this.terminalServerContext = terminalServerContext;
 
         this.setEnvironmentValue(
             SPREADSHEET_ID,
@@ -150,7 +158,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                 null, // httpRouter
                 this.environmentContext,
                 this.localeContext,
-                this.providerContext
+                this.providerContext,
+                this.terminalServerContext
             );
     }
 
@@ -294,7 +303,8 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                 this.httpRouter,
                 cloned,
                 this.localeContext,
-                this.providerContext
+                this.providerContext,
+                this.terminalServerContext
             );
     }
 
@@ -380,6 +390,26 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     private SpreadsheetProvider metadataSpreadsheetProvider;
+
+    // TerminalServerContext............................................................................................
+
+    @Override
+    public TerminalContext createTerminalContext(final EnvironmentContext context) {
+        return this.terminalServerContext.createTerminalContext(context);
+    }
+
+    @Override
+    public Optional<TerminalContext> terminalContext(final TerminalId id) {
+        return this.terminalServerContext.terminalContext(id);
+    }
+
+    @Override
+    public SpreadsheetContext removeTerminalContext(final TerminalId id) {
+        this.terminalServerContext.removeTerminalContext(id);
+        return this;
+    }
+
+    private final TerminalServerContext terminalServerContext;
 
     // Object...........................................................................................................
 
