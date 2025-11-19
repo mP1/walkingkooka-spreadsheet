@@ -23,6 +23,7 @@ import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
+import walkingkooka.terminal.server.TerminalServerContextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,7 +33,8 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
     LocaleContextTesting2<C>,
-    SpreadsheetMetadataContextTesting<C> {
+    SpreadsheetMetadataContextTesting<C>,
+    TerminalServerContextTesting<C> {
 
     // spreadsheetId....................................................................................................
 

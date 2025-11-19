@@ -99,6 +99,8 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -1679,6 +1681,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         @Override
         public SpreadsheetProvider spreadsheetProvider() {
             return SPREADSHEET_PROVIDER;
+        }
+
+        // TerminalServerContext........................................................................................
+
+        @Override
+        public TerminalContext createTerminalContext(final EnvironmentContext context) {
+            Objects.requireNonNull(context, "context");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<TerminalContext> terminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
         }
     }
 

@@ -32,6 +32,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.TerminalServerContext;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -47,7 +50,8 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl,
     LocaleContext,
-    SpreadsheetMetadataContext {
+    SpreadsheetMetadataContext,
+    TerminalServerContext {
 
     /**
      * The {@link EnvironmentContext#environmentValue(EnvironmentValueName)} should always match {@link #spreadsheetId()}.
@@ -111,4 +115,18 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
 
     @Override
     SpreadsheetContext setUser(final Optional<EmailAddress> user);
+
+    // TerminalServerContext............................................................................................
+
+    /**
+     * The default way to create a {@link TerminalContext}, after cloning the current {@link EnvironmentContext}.
+     */
+    default TerminalContext createTerminalContext() {
+        return this.createTerminalContext(
+            this.cloneEnvironment()
+        );
+    }
+
+    @Override
+    SpreadsheetContext removeTerminalContext(final TerminalId terminalId);
 }

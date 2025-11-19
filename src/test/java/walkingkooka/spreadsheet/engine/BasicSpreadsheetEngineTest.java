@@ -135,6 +135,8 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -720,6 +722,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         private final SpreadsheetProvider spreadsheetProvider;
+
+        // TerminalServerContext........................................................................................
+
+        @Override
+        public TerminalContext createTerminalContext(final EnvironmentContext context) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<TerminalContext> terminalContext(final TerminalId id) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
+            throw new UnsupportedOperationException();
+        }
     }
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(

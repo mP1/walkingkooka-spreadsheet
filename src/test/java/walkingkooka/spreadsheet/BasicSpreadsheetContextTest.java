@@ -57,6 +57,10 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.FakeTerminalServerContext;
+import walkingkooka.terminal.server.TerminalServerContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -66,6 +70,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -113,6 +118,26 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
+    private final static TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
+        @Override
+        public TerminalContext createTerminalContext(final EnvironmentContext context) {
+            Objects.requireNonNull(context, "context");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<TerminalContext> terminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public TerminalServerContext removeTerminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+    };
+
     @Test
     public void testWithNullServerUrlFails() {
         assertThrows(
@@ -126,7 +151,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -144,7 +170,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -162,7 +189,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -180,7 +208,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -198,7 +227,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -216,7 +246,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 null,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -234,7 +265,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 null,
                 LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -252,7 +284,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 null,
-                PROVIDER_CONTEXT
+                PROVIDER_CONTEXT,
+                TERMINAL_SERVER_CONTEXT
             )
         );
     }
@@ -270,6 +303,26 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 HTTP_ROUTER_FACTORY,
                 ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
+                null,
+                TERMINAL_SERVER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullTerminalServerContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetContext.with(
+                SERVER_URL,
+                ID,
+                REPO,
+                SPREADSHEET_PROVIDER,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
+                ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT,
                 null
             )
         );
@@ -574,7 +627,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 )
             ),
             LOCALE_CONTEXT,
-            PROVIDER_CONTEXT
+            PROVIDER_CONTEXT,
+            TERMINAL_SERVER_CONTEXT
         );
     }
 
