@@ -71,6 +71,8 @@ import walkingkooka.storage.StorageContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.TerminalServerContext;
+import walkingkooka.terminal.server.TerminalServerContexts;
 import walkingkooka.test.Testing;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
@@ -447,6 +449,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
         TerminalId.with(1),
         HAS_USER,
         Printers.sink(LineEnding.NONE)
+    );
+
+    TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(
+        (e) -> TERMINAL_CONTEXT
     );
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
