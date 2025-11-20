@@ -92,7 +92,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType EMAIL = ValueType.EMAIL;
     
-    public static final String ERROR_STRING = "error";
+    public static final String ERROR_STRING = ValueType.ERROR_STRING;
 
     public static final ValueType ERROR = ValueType.with(ERROR_STRING);
 
