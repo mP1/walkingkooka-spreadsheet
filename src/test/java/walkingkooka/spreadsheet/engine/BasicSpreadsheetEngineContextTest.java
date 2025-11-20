@@ -80,21 +80,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
@@ -1353,19 +1345,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             SpreadsheetEngineContextMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
-                SpreadsheetStoreRepositories.basic(
-                    SpreadsheetCellStores.treeMap(),
-                    SpreadsheetCellReferencesStores.treeMap(),
-                    SpreadsheetColumnStores.treeMap(),
-                    SpreadsheetFormStores.fake(),
-                    SpreadsheetGroupStores.fake(),
-                    SpreadsheetLabelStores.treeMap(),
-                    SpreadsheetLabelReferencesStores.treeMap(),
-                    SpreadsheetMetadataStores.fake(),
-                    SpreadsheetCellRangeStores.treeMap(),
-                    SpreadsheetRowStores.treeMap(),
-                    Storages.fake(),
-                    SpreadsheetUserStores.fake()
+                SpreadsheetStoreRepositories.treeMap(
+                    SpreadsheetMetadataStores.fake()
                 ),
                 environmentContext,
                 LOCALE_CONTEXT,

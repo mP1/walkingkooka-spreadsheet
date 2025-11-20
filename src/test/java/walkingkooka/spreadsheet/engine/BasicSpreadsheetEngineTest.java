@@ -19625,19 +19625,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     new FakeSpreadsheetEngineContext() {
                         @Override
                         public SpreadsheetStoreRepository storeRepository() {
-                            return SpreadsheetStoreRepositories.basic(
-                                SpreadsheetCellStores.treeMap(),
-                                SpreadsheetCellReferencesStores.treeMap(),
-                                SpreadsheetColumnStores.treeMap(),
-                                SpreadsheetFormStores.treeMap(),
-                                SpreadsheetGroupStores.fake(),
-                                SpreadsheetLabelStores.treeMap(),
-                                SpreadsheetLabelReferencesStores.treeMap(),
-                                SpreadsheetMetadataStores.fake(),
-                                SpreadsheetCellRangeStores.treeMap(),
-                                SpreadsheetRowStores.treeMap(),
-                                Storages.empty(),
-                                SpreadsheetUserStores.fake()
+                            return SpreadsheetStoreRepositories.treeMap(
+                                SpreadsheetMetadataStores.fake()
                             );
                         }
 
@@ -27188,19 +27177,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * Creates a {@link SpreadsheetStoreRepository} with TreeMap stores
      */
     private static SpreadsheetStoreRepository spreadsheetStoreRepository() {
-        return SpreadsheetStoreRepositories.basic(
-            SpreadsheetCellStores.treeMap(),
-            SpreadsheetCellReferencesStores.treeMap(),
-            SpreadsheetColumnStores.treeMap(),
-            SpreadsheetFormStores.treeMap(),
-            SpreadsheetGroupStores.fake(),
-            SpreadsheetLabelStores.treeMap(),
-            SpreadsheetLabelReferencesStores.treeMap(),
-            SpreadsheetMetadataStores.fake(),
-            SpreadsheetCellRangeStores.treeMap(),
-            SpreadsheetRowStores.treeMap(),
-            Storages.fake(),
-            SpreadsheetUserStores.fake()
+        return SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.fake()
         );
     }
 

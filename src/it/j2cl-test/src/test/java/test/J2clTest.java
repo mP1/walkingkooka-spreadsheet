@@ -73,20 +73,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
-import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
-import walkingkooka.storage.FakeStorageContext;
-import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -472,19 +460,8 @@ public class J2clTest {
                 return this.storeRepository;
             }
 
-            private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.basic(
-                SpreadsheetCellStores.treeMap(),
-                SpreadsheetCellReferencesStores.treeMap(),
-                SpreadsheetColumnStores.treeMap(),
-                SpreadsheetFormStores.fake(),
-                SpreadsheetGroupStores.fake(),
-                SpreadsheetLabelStores.treeMap(),
-                SpreadsheetLabelReferencesStores.treeMap(),
-                SpreadsheetMetadataStores.fake(),
-                SpreadsheetCellRangeStores.treeMap(),
-                SpreadsheetRowStores.treeMap(),
-                Storages.tree(),
-                SpreadsheetUserStores.fake()
+            private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.treeMap(
+                SpreadsheetMetadataStores.fake()
             );
 
             @Override

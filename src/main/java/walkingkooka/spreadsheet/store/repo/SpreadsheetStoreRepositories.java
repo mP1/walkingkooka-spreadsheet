@@ -25,16 +25,27 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
+import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
+import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 /**
@@ -94,6 +105,26 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
             spreadsheetParserProvider,
             localeContext,
             providerContext
+        );
+    }
+
+    /**
+     * {@see BasicSpreadsheetStoreRepository}
+     */
+    public static SpreadsheetStoreRepository treeMap(final SpreadsheetMetadataStore metadatas) {
+        return basic(
+            SpreadsheetCellStores.treeMap(),
+            SpreadsheetCellReferencesStores.treeMap(),
+            SpreadsheetColumnStores.treeMap(),
+            SpreadsheetFormStores.treeMap(),
+            SpreadsheetGroupStores.treeMap(),
+            SpreadsheetLabelStores.treeMap(),
+            SpreadsheetLabelReferencesStores.treeMap(),
+            metadatas,
+            SpreadsheetCellRangeStores.treeMap(),
+            SpreadsheetRowStores.treeMap(),
+            Storages.tree(),
+            SpreadsheetUserStores.treeMap()
         );
     }
 
