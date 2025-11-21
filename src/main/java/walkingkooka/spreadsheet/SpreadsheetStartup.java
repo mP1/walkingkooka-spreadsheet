@@ -133,6 +133,8 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         ConvertProviderStartup.init();
 
+        MissingConverterSet.EMPTY.size();
+
         {
             SpreadsheetExporterAliasSet.EMPTY.size();
             SpreadsheetExporterInfoSet.with(
