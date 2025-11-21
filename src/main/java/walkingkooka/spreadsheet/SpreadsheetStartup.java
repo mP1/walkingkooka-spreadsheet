@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.provider.ConvertProviderStartup;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.PluginStartup;
@@ -29,7 +31,9 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorInfoSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
+import walkingkooka.spreadsheet.convert.provider.MissingConverter;
 import walkingkooka.spreadsheet.convert.provider.MissingConverterSet;
+import walkingkooka.spreadsheet.convert.provider.MissingConverterValue;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
@@ -133,7 +137,17 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
 
         ConvertProviderStartup.init();
 
-        MissingConverterSet.EMPTY.size();
+        MissingConverterSet.EMPTY.concat(
+            MissingConverter.with(
+                ConverterName.HAS_TEXT,
+                Sets.of(
+                    MissingConverterValue.with(
+                        "Hello",
+                        "text"
+                    )
+                )
+            )
+        );
 
         {
             SpreadsheetExporterAliasSet.EMPTY.size();
