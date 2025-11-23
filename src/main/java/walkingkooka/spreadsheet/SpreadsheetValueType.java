@@ -55,7 +55,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ANY = ValueType.ANY;
 
-    public static final String ABSOLUTE_URL_STRING = "absolute-url";
+    public static final String ABSOLUTE_URL_STRING = ValueType.ABSOLUTE_URL_STRING;
 
     public static final ValueType ABSOLUTE_URL = ValueType.with(ABSOLUTE_URL_STRING);
 
