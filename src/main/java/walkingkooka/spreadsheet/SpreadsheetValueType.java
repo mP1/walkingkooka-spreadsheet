@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.collect.list.BooleanList;
+import walkingkooka.collect.list.CsvStringList;
+import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.HslColor;
@@ -25,6 +28,12 @@ import walkingkooka.color.HsvColor;
 import walkingkooka.color.HsvColorComponent;
 import walkingkooka.color.RgbColor;
 import walkingkooka.color.RgbColorComponent;
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.LocalDateList;
+import walkingkooka.datetime.LocalDateTimeList;
+import walkingkooka.datetime.LocalTimeList;
+import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -36,11 +45,21 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.json.JsonArray;
+import walkingkooka.tree.json.JsonBoolean;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNull;
+import walkingkooka.tree.json.JsonNumber;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.validation.ValidationChoiceList;
+import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValueType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -354,11 +373,17 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case BOOLEAN_STRING:
                 javaType = Boolean.class;
                 break;
+            case BOOLEAN_LIST_STRING:
+                javaType = BooleanList.class;
+                break;
             case CELL_STRING:
                 javaType = SpreadsheetCellReference.class;
                 break;
             case CELL_RANGE_STRING:
                 javaType = SpreadsheetCellRangeReference.class;
+                break;
+            case CHOICE_LIST_STRING:
+                javaType = ValidationChoiceList.class;
                 break;
             case COLOR_STRING:
                 javaType = Color.class;
@@ -369,11 +394,26 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case COLUMN_RANGE_STRING:
                 javaType = SpreadsheetColumnRangeReference.class;
                 break;
+            case CSV_LIST_STRING:
+                javaType = CsvStringList.class;
+                break;
             case DATE_STRING:
                 javaType = LocalDate.class;
                 break;
+            case DATE_LIST_STRING:
+                javaType = LocalDateList.class;
+                break;
             case DATE_TIME_STRING:
                 javaType = LocalDateTime.class;
+                break;
+            case DATE_TIME_LIST_STRING:
+                javaType = LocalDateTimeList.class;
+                break;
+            case DATE_TIME_SYMBOLS_STRING:
+                javaType = DateTimeSymbols.class;
+                break;
+            case DECIMAL_NUMBER_SYMBOLS_STRING:
+                javaType = DecimalNumberSymbols.class;
                 break;
             case EMAIL_ADDRESS_STRING:
             case EMAIL_STRING:
@@ -382,14 +422,38 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ERROR_STRING:
                 javaType = SpreadsheetError.class;
                 break;
+            case ERROR_LIST_STRING:
+                javaType = ValidationErrorList.class;
+                break;
             case HSL_COLOR_STRING:
                 javaType = HslColor.class;
                 break;
             case HSV_COLOR_STRING:
                 javaType = HsvColor.class;
                 break;
+            case JSON_ARRAY_STRING:
+                javaType = JsonArray.class;
+                break;
+            case JSON_BOOLEAN_STRING:
+                javaType = JsonBoolean.class;
+                break;
+            case JSON_NODE_STRING:
+                javaType = JsonNode.class;
+                break;
+            case JSON_NULL_STRING:
+                javaType = JsonNull.class;
+                break;
+            case JSON_NUMBER_STRING:
+                javaType = JsonNumber.class;
+                break;
+            case JSON_OBJECT_STRING:
+                javaType = JsonObject.class;
+                break;
             case LABEL_STRING:
                 javaType = SpreadsheetLabelName.class;
+                break;
+            case LIST_STRING:
+                javaType = List.class;
                 break;
             case LOCAL_DATE_STRING:
                 javaType = LocalDate.class;
@@ -400,8 +464,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case LOCAL_TIME_STRING:
                 javaType = LocalTime.class;
                 break;
+            case LOCALE_STRING:
+                javaType = Locale.class;
+                break;
             case NUMBER_STRING:
                 javaType = ExpressionNumber.class;
+                break;
+            case NUMBER_LIST_STRING:
+                javaType = NumberList.class;
                 break;
             case OPAQUE_HSL_COLOR_STRING:
                 javaType = OPAQUE_HSL_COLOR_CLASS;
@@ -424,11 +494,17 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case STRING_STRING:
                 javaType = String.class;
                 break;
+            case STRING_LIST_STRING:
+                javaType = StringList.class;
+                break;
             case TEXT_STRING:
                 javaType = String.class;
                 break;
             case TIME_STRING:
                 javaType = LocalTime.class;
+                break;
+            case TIME_LIST_STRING:
+                javaType = LocalTimeList.class;
                 break;
             case URL_STRING:
                 javaType = AbsoluteUrl.class;
