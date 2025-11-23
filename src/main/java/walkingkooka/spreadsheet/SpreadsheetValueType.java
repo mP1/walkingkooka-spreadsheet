@@ -44,7 +44,30 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.tree.expression.AddExpression;
+import walkingkooka.tree.expression.AndExpression;
+import walkingkooka.tree.expression.CallExpression;
+import walkingkooka.tree.expression.DivideExpression;
+import walkingkooka.tree.expression.EqualsExpression;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.GreaterThanEqualsExpression;
+import walkingkooka.tree.expression.GreaterThanExpression;
+import walkingkooka.tree.expression.LambdaFunctionExpression;
+import walkingkooka.tree.expression.LessThanEqualsExpression;
+import walkingkooka.tree.expression.LessThanExpression;
+import walkingkooka.tree.expression.ListExpression;
+import walkingkooka.tree.expression.ModuloExpression;
+import walkingkooka.tree.expression.MultiplyExpression;
+import walkingkooka.tree.expression.NegativeExpression;
+import walkingkooka.tree.expression.NotEqualsExpression;
+import walkingkooka.tree.expression.NotExpression;
+import walkingkooka.tree.expression.OrExpression;
+import walkingkooka.tree.expression.PowerExpression;
+import walkingkooka.tree.expression.ReferenceExpression;
+import walkingkooka.tree.expression.SubtractExpression;
+import walkingkooka.tree.expression.ValueExpression;
+import walkingkooka.tree.expression.XorExpression;
 import walkingkooka.tree.json.JsonArray;
 import walkingkooka.tree.json.JsonBoolean;
 import walkingkooka.tree.json.JsonNode;
@@ -78,6 +101,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ABSOLUTE_URL = ValueType.with(ABSOLUTE_URL_STRING);
 
+    public static final String ADD_EXPRESSION_STRING = ValueType.ADD_EXPRESSION_STRING;
+
+    public static final ValueType ADD_EXPRESSION = ValueType.ADD_EXPRESSION;
+    
     public final static String ALPHA_HSV_COLOR_STRING = "color(hsv-alpha)";
 
     public final static ValueType ALPHA_HSV_COLOR = ValueType.with(ALPHA_HSV_COLOR_STRING);
@@ -90,6 +117,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType ALPHA_RGB_COLOR = ValueType.with(ALPHA_RGB_COLOR_STRING);
 
+    public static final String AND_EXPRESSION_STRING = ValueType.AND_EXPRESSION_STRING;
+
+    public static final ValueType AND_EXPRESSION = ValueType.AND_EXPRESSION;
+
     public static final String BOOLEAN_STRING = ValueType.BOOLEAN_STRING;
 
     public static final ValueType BOOLEAN = ValueType.BOOLEAN;
@@ -97,6 +128,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String BOOLEAN_LIST_STRING = ValueType.BOOLEAN_LIST_STRING;
 
     public static final ValueType BOOLEAN_LIST = ValueType.BOOLEAN_LIST;
+
+    public static final String CALL_EXPRESSION_STRING = ValueType.CALL_EXPRESSION_STRING;
+
+    public static final ValueType CALL_EXPRESSION = ValueType.CALL_EXPRESSION;
 
     public static final String CELL_STRING = "cell";
 
@@ -158,6 +193,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType DECIMAL_NUMBER_SYMBOLS = ValueType.DECIMAL_NUMBER_SYMBOLS;
 
+    public static final String DIVIDE_EXPRESSION_STRING = ValueType.DIVIDE_EXPRESSION_STRING;
+
+    public static final ValueType DIVIDE_EXPRESSION = ValueType.DIVIDE_EXPRESSION;
+
     public static final String EMAIL_ADDRESS_STRING = "email-address";
 
     public static final ValueType EMAIL_ADDRESS = ValueType.with(EMAIL_ADDRESS_STRING);
@@ -165,7 +204,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String EMAIL_STRING = ValueType.EMAIL_STRING;
 
     public static final ValueType EMAIL = ValueType.EMAIL;
-    
+
+    public static final String EQUALS_EXPRESSION_STRING = ValueType.EQUALS_EXPRESSION_STRING;
+
+    public static final ValueType EQUALS_EXPRESSION = ValueType.EQUALS_EXPRESSION;
+
     public static final String ERROR_STRING = ValueType.ERROR_STRING;
 
     public static final ValueType ERROR = ValueType.with(ERROR_STRING);
@@ -173,6 +216,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String ERROR_LIST_STRING = ValueType.ERROR_LIST_STRING;
 
     public static final ValueType ERROR_LIST = ValueType.with(ERROR_LIST_STRING);
+
+    public static final String EXPRESSION_STRING = ValueType.EXPRESSION_STRING;
+
+    public static final ValueType EXPRESSION = ValueType.EXPRESSION;
+
+    public static final String GREATER_THAN_EXPRESSION_STRING = ValueType.GREATER_THAN_EXPRESSION_STRING;
+
+    public static final ValueType GREATER_THAN_EXPRESSION = ValueType.GREATER_THAN_EXPRESSION;
+
+    public static final String GREATER_THAN_EQUALS_EXPRESSION_STRING = ValueType.GREATER_THAN_EQUALS_EXPRESSION_STRING;
+
+    public static final ValueType GREATER_THAN_EQUALS_EXPRESSION = ValueType.GREATER_THAN_EQUALS_EXPRESSION;
 
     public final static String HSL_COLOR_STRING = "color(hsl)";
 
@@ -210,9 +265,25 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType JSON_STRING = ValueType.JSON_STRING;
 
+    public static final String LAMBDA_FUNCTION_EXPRESSION_STRING = ValueType.LAMBDA_FUNCTION_EXPRESSION_STRING;
+
+    public static final ValueType LAMBDA_FUNCTION_EXPRESSION = ValueType.LAMBDA_FUNCTION_EXPRESSION;
+    
+    public static final String LESS_THAN_EXPRESSION_STRING = ValueType.LESS_THAN_EXPRESSION_STRING;
+
+    public static final ValueType LESS_THAN_EXPRESSION = ValueType.LESS_THAN_EXPRESSION;
+
+    public static final String LESS_THAN_EQUALS_EXPRESSION_STRING = ValueType.LESS_THAN_EQUALS_EXPRESSION_STRING;
+
+    public static final ValueType LESS_THAN_EQUALS_EXPRESSION = ValueType.LESS_THAN_EQUALS_EXPRESSION;
+
     public final static String LIST_STRING = ValueType.LIST_STRING;
 
     public final static ValueType LIST = ValueType.LIST;
+
+    public static final String LIST_EXPRESSION_STRING = ValueType.LIST_EXPRESSION_STRING;
+
+    public static final ValueType LIST_EXPRESSION = ValueType.LIST_EXPRESSION;
     
     public final static String LOCALE_STRING = ValueType.LOCALE_STRING;
 
@@ -238,6 +309,30 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType MAIL_TO_URL = ValueType.MAIL_TO_URL;
 
+    public static final String MODULO_EXPRESSION_STRING = ValueType.MODULO_EXPRESSION_STRING;
+
+    public static final ValueType MODULO_EXPRESSION = ValueType.MODULO_EXPRESSION;
+
+    public static final String MULTIPLY_EXPRESSION_STRING = ValueType.MULTIPLY_EXPRESSION_STRING;
+
+    public static final ValueType MULTIPLY_EXPRESSION = ValueType.MULTIPLY_EXPRESSION;
+
+    public static final String NAMED_FUNCTION_EXPRESSION_STRING = ValueType.NAMED_FUNCTION_EXPRESSION_STRING;
+
+    public static final ValueType NAMED_FUNCTION_EXPRESSION = ValueType.NAMED_FUNCTION_EXPRESSION;
+
+    public static final String NEGATIVE_EXPRESSION_STRING = ValueType.NEGATIVE_EXPRESSION_STRING;
+
+    public static final ValueType NEGATIVE_EXPRESSION = ValueType.NEGATIVE_EXPRESSION;
+
+    public static final String NOT_EXPRESSION_STRING = ValueType.NOT_EXPRESSION_STRING;
+
+    public static final ValueType NOT_EXPRESSION = ValueType.NOT_EXPRESSION;
+
+    public static final String NOT_EQUALS_EXPRESSION_STRING = ValueType.NOT_EQUALS_EXPRESSION_STRING;
+
+    public static final ValueType NOT_EQUALS_EXPRESSION = ValueType.NOT_EQUALS_EXPRESSION;
+
     public static final String NUMBER_STRING = ValueType.NUMBER_STRING;
 
     public static final ValueType NUMBER = ValueType.NUMBER;
@@ -258,6 +353,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType OPAQUE_RGB_COLOR = ValueType.with(OPAQUE_RGB_COLOR_STRING);
 
+    public static final String OR_EXPRESSION_STRING = ValueType.OR_EXPRESSION_STRING;
+
+    public static final ValueType OR_EXPRESSION = ValueType.OR_EXPRESSION;
+
+    public static final String POWER_EXPRESSION_STRING = ValueType.POWER_EXPRESSION_STRING;
+
+    public static final ValueType POWER_EXPRESSION = ValueType.POWER_EXPRESSION;
+
+    public static final String REFERENCE_EXPRESSION_STRING = ValueType.REFERENCE_EXPRESSION_STRING;
+
+    public static final ValueType REFERENCE_EXPRESSION = ValueType.REFERENCE_EXPRESSION;
+    
     public final static String RGB_COLOR_STRING = "color(rgb)";
 
     public final static ValueType RGB_COLOR = ValueType.with(RGB_COLOR_STRING);
@@ -273,6 +380,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String ROW_RANGE_STRING = "row-range";
 
     public static final ValueType ROW_RANGE = ValueType.with(ROW_RANGE_STRING);
+
+    public static final String SUBTRACT_EXPRESSION_STRING = ValueType.SUBTRACT_EXPRESSION_STRING;
+
+    public static final ValueType SUBTRACT_EXPRESSION = ValueType.SUBTRACT_EXPRESSION;
 
     public static final String TEMPLATE_VALUE_NAME_STRING = "template-value-name";
 
@@ -302,6 +413,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType URL = ValueType.URL;
 
+    public static final String VALUE_EXPRESSION_STRING = ValueType.VALUE_EXPRESSION_STRING;
+
+    public static final ValueType VALUE_EXPRESSION = ValueType.VALUE_EXPRESSION;
+    
     public static final String VALUE_OR_EXPRESSION_STRING = "value-or-expression";
 
     public static final ValueType VALUE_OR_EXPRESSION = ValueType.with(VALUE_OR_EXPRESSION_STRING);
@@ -309,6 +424,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String WHOLE_NUMBER_STRING = ValueType.WHOLE_NUMBER_STRING;
 
     public static final ValueType WHOLE_NUMBER = ValueType.WHOLE_NUMBER;
+
+    public static final String XOR_EXPRESSION_STRING = ValueType.XOR_EXPRESSION_STRING;
+
+    public static final ValueType XOR_EXPRESSION = ValueType.XOR_EXPRESSION;
 
     /**
      * Does not include all types, only those that typically appear in a cell
@@ -361,6 +480,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ABSOLUTE_URL_STRING:
                 javaType = AbsoluteUrl.class;
                 break;
+            case ADD_EXPRESSION_STRING:
+                javaType = AddExpression.class;
+                break;
             case ALPHA_HSL_COLOR_STRING:
                 javaType = ALPHA_HSL_COLOR_CLASS;
                 break;
@@ -373,8 +495,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case BOOLEAN_STRING:
                 javaType = Boolean.class;
                 break;
+            case AND_EXPRESSION_STRING:
+                javaType = AndExpression.class;
+                break;
             case BOOLEAN_LIST_STRING:
                 javaType = BooleanList.class;
+                break;
+            case CALL_EXPRESSION_STRING:
+                javaType = CallExpression.class;
                 break;
             case CELL_STRING:
                 javaType = SpreadsheetCellReference.class;
@@ -415,6 +543,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case DECIMAL_NUMBER_SYMBOLS_STRING:
                 javaType = DecimalNumberSymbols.class;
                 break;
+            case DIVIDE_EXPRESSION_STRING:
+                javaType = DivideExpression.class;
+                break;
             case EMAIL_ADDRESS_STRING:
             case EMAIL_STRING:
                 javaType = EmailAddress.class;
@@ -424,6 +555,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case ERROR_LIST_STRING:
                 javaType = ValidationErrorList.class;
+                break;
+            case EQUALS_EXPRESSION_STRING:
+                javaType = EqualsExpression.class;
+                break;
+            case EXPRESSION_STRING:
+                javaType = Expression.class;
+                break;
+            case GREATER_THAN_EXPRESSION_STRING:
+                javaType = GreaterThanExpression.class;
+                break;
+            case GREATER_THAN_EQUALS_EXPRESSION_STRING:
+                javaType = GreaterThanEqualsExpression.class;
                 break;
             case HSL_COLOR_STRING:
                 javaType = HslColor.class;
@@ -452,6 +595,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case LABEL_STRING:
                 javaType = SpreadsheetLabelName.class;
                 break;
+            case LAMBDA_FUNCTION_EXPRESSION_STRING:
+                javaType = LambdaFunctionExpression.class;
+                break;
+            case LESS_THAN_EXPRESSION_STRING:
+                javaType = LessThanExpression.class;
+                break;
+            case LESS_THAN_EQUALS_EXPRESSION_STRING:
+                javaType = LessThanEqualsExpression.class;
+                break;
+            case LIST_EXPRESSION_STRING:
+                javaType = ListExpression.class;
+                break;
             case LIST_STRING:
                 javaType = List.class;
                 break;
@@ -466,6 +621,21 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case LOCALE_STRING:
                 javaType = Locale.class;
+                break;
+            case MODULO_EXPRESSION_STRING:
+                javaType = ModuloExpression.class;
+                break;
+            case MULTIPLY_EXPRESSION_STRING:
+                javaType = MultiplyExpression.class;
+                break;
+            case NEGATIVE_EXPRESSION_STRING:
+                javaType = NegativeExpression.class;
+                break;
+            case NOT_EQUALS_EXPRESSION_STRING:
+                javaType = NotEqualsExpression.class;
+                break;
+            case NOT_EXPRESSION_STRING:
+                javaType = NotExpression.class;
                 break;
             case NUMBER_STRING:
                 javaType = ExpressionNumber.class;
@@ -482,6 +652,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case OPAQUE_RGB_COLOR_STRING:
                 javaType = OPAQUE_RGB_COLOR_CLASS;
                 break;
+            case OR_EXPRESSION_STRING:
+                javaType = OrExpression.class;
+                break;
+            case POWER_EXPRESSION_STRING:
+                javaType = PowerExpression.class;
+                break;
+            case REFERENCE_EXPRESSION_STRING:
+                javaType = ReferenceExpression.class;
+                break;
             case RGB_COLOR_STRING:
                 javaType = RgbColor.class;
                 break;
@@ -497,6 +676,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case STRING_LIST_STRING:
                 javaType = StringList.class;
                 break;
+            case SUBTRACT_EXPRESSION_STRING:
+                javaType = SubtractExpression.class;
+                break;
             case TEXT_STRING:
                 javaType = String.class;
                 break;
@@ -509,8 +691,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case URL_STRING:
                 javaType = AbsoluteUrl.class;
                 break;
+            case VALUE_EXPRESSION_STRING:
+                javaType = ValueExpression.class;
+                break;
             case WHOLE_NUMBER_STRING:
                 javaType = ExpressionNumber.class;
+                break;
+            case XOR_EXPRESSION_STRING:
+                javaType = XorExpression.class;
                 break;
             default:
                 javaType = null;

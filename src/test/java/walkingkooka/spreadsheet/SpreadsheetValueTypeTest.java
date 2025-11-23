@@ -39,6 +39,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.reflect.ClassAttributes;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -49,8 +50,30 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.tree.expression.AddExpression;
+import walkingkooka.tree.expression.AndExpression;
+import walkingkooka.tree.expression.CallExpression;
+import walkingkooka.tree.expression.DivideExpression;
+import walkingkooka.tree.expression.EqualsExpression;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.GreaterThanEqualsExpression;
+import walkingkooka.tree.expression.GreaterThanExpression;
+import walkingkooka.tree.expression.LambdaFunctionExpression;
+import walkingkooka.tree.expression.LessThanEqualsExpression;
+import walkingkooka.tree.expression.LessThanExpression;
+import walkingkooka.tree.expression.ListExpression;
+import walkingkooka.tree.expression.ModuloExpression;
+import walkingkooka.tree.expression.MultiplyExpression;
+import walkingkooka.tree.expression.NegativeExpression;
+import walkingkooka.tree.expression.NotExpression;
+import walkingkooka.tree.expression.OrExpression;
+import walkingkooka.tree.expression.PowerExpression;
+import walkingkooka.tree.expression.ReferenceExpression;
+import walkingkooka.tree.expression.SubtractExpression;
+import walkingkooka.tree.expression.ValueExpression;
+import walkingkooka.tree.expression.XorExpression;
 import walkingkooka.tree.json.JsonArray;
 import walkingkooka.tree.json.JsonBoolean;
 import walkingkooka.tree.json.JsonNode;
@@ -602,6 +625,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithAddExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.ADD_EXPRESSION,
+            AddExpression.class
+        );
+    }
+
+    @Test
     public void testToClassWithAlphaHsl() {
         this.toClassAndCheck(
             SpreadsheetValueType.ALPHA_HSL_COLOR,
@@ -632,6 +663,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithAndExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.AND_EXPRESSION,
+            AndExpression.class
+        );
+    }
+
+    @Test
     public void testToClassWithBoolean() {
         this.toClassAndCheck(
             SpreadsheetValueType.BOOLEAN,
@@ -644,6 +683,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.BOOLEAN_LIST,
             BooleanList.class
+        );
+    }
+
+    @Test
+    public void testToClassWithCallExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.CALL_EXPRESSION,
+            CallExpression.class
         );
     }
 
@@ -744,6 +791,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithDivideExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.DIVIDE_EXPRESSION,
+            DivideExpression.class
+        );
+    }
+
+    @Test
     public void testToClassWithEmail() {
         this.toClassAndCheck(
             SpreadsheetValueType.EMAIL,
@@ -775,6 +830,38 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
+    @Test
+    public void testToClassWithEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.EQUALS_EXPRESSION,
+            EqualsExpression.class
+        );
+    }
+    
+    @Test
+    public void testToClassWithExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.EXPRESSION,
+            Expression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithGreaterThanExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.GREATER_THAN_EXPRESSION_STRING,
+            GreaterThanExpression.class
+        );
+    }
+    
+    @Test
+    public void testToClassWithGreaterThanEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.GREATER_THAN_EQUALS_EXPRESSION_STRING,
+            GreaterThanEqualsExpression.class
+        );
+    }
+    
     @Test
     public void testToClassWithJsonArray() {
         this.toClassAndCheck(
@@ -832,6 +919,38 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithLambdaFunctionExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.LAMBDA_FUNCTION_EXPRESSION_STRING,
+            LambdaFunctionExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithLessThanExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.LESS_THAN_EXPRESSION_STRING,
+            LessThanExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithLessThanEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.LESS_THAN_EQUALS_EXPRESSION_STRING,
+            LessThanEqualsExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithListEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.LIST_EXPRESSION_STRING,
+            ListExpression.class
+        );
+    }
+
+    @Test
     public void testToClassWithLocalDate() {
         this.toClassAndCheck(
             SpreadsheetValueType.LOCAL_DATE,
@@ -855,6 +974,46 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         );
     }
 
+    @Test
+    public void testToClassWithModuloEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.MODULO_EXPRESSION_STRING,
+            ModuloExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithMultiplyEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.MULTIPLY_EXPRESSION_STRING,
+            MultiplyExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithNegativeExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.NEGATIVE_EXPRESSION_STRING,
+            NegativeExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithNotEqualsExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.NOT_EXPRESSION_STRING,
+            NotExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithNotExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.NOT_EXPRESSION_STRING,
+            NotExpression.class
+        );
+    }
+    
     @Test
     public void testToClassWithNumber() {
         this.toClassAndCheck(
@@ -896,6 +1055,30 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithOrExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.OR_EXPRESSION_STRING,
+            OrExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithPowerExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.POWER_EXPRESSION_STRING,
+            PowerExpression.class
+        );
+    }
+
+    @Test
+    public void testToClassWithReferenceExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.REFERENCE_EXPRESSION_STRING,
+            ReferenceExpression.class
+        );
+    }
+    
+    @Test
     public void testToClassWithRow() {
         this.toClassAndCheck(
             SpreadsheetValueType.ROW,
@@ -928,6 +1111,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithSubtractExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.SUBTRACT_EXPRESSION_STRING,
+            SubtractExpression.class
+        );
+    }
+    
+    @Test
     public void testToClassWithTime() {
         this.toClassAndCheck(
             SpreadsheetValueType.TIME,
@@ -952,10 +1143,26 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithValueExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.VALUE_EXPRESSION_STRING,
+            ValueExpression.class
+        );
+    }
+    
+    @Test
     public void testToClassWithWholeNumber() {
         this.toClassAndCheck(
             SpreadsheetValueType.WHOLE_NUMBER,
             ExpressionNumber.class
+        );
+    }
+
+    @Test
+    public void testToClassWithXorExpression() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.XOR_EXPRESSION_STRING,
+            XorExpression.class
         );
     }
 
@@ -1138,7 +1345,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
 
             final Class<?> type = SpreadsheetValueType.toClass(valueType)
                 .orElse(null);
-            if (null != type) {
+            if (null != type && false == ClassAttributes.ABSTRACT.is(type)) {
                 final JsonString string = context.typeName(type)
                     .orElse(null);
                 if (null == string) {
