@@ -729,6 +729,71 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     private final static Class<?> OPAQUE_RGB_COLOR_CLASS = Color.BLACK
         .getClass();
 
+    public static ValueType fromClassName(final String className) {
+        Objects.requireNonNull(className, "className");
+
+        ValueType valueType;
+
+        switch (className) {
+            case "walkingkooka.color.AlphaHslColor":
+                valueType = ALPHA_HSL_COLOR;
+                break;
+            case "walkingkooka.color.AlphaHsvColor":
+                valueType = ALPHA_HSV_COLOR;
+                break;
+            case "walkingkooka.color.AlphaRgbColor":
+                valueType = ALPHA_RGB_COLOR;
+                break;
+            case "walkingkooka.color.Color":
+                valueType = COLOR;
+                break;
+            case "walkingkooka.color.HslColor":
+                valueType = HSL_COLOR;
+                break;
+            case "walkingkooka.color.HsvColor":
+                valueType = HSV_COLOR;
+                break;
+            case "walkingkooka.color.OpaqueHslColor":
+                valueType = OPAQUE_HSL_COLOR;
+                break;
+            case "walkingkooka.color.OpaqueHsvColor":
+                valueType = OPAQUE_HSV_COLOR;
+                break;
+            case "walkingkooka.color.OpaqueRgbColor":
+                valueType = OPAQUE_RGB_COLOR;
+                break;
+            case "walkingkooka.color.RgbColor":
+                valueType = RGB_COLOR;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetCellReference":
+                valueType = CELL;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference":
+                valueType = CELL_RANGE;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetColumnReference":
+                valueType = COLUMN;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference":
+                valueType = COLUMN_RANGE;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetLabelName":
+                valueType = LABEL;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetRowReference":
+                valueType = ROW;
+                break;
+            case "walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference":
+                valueType = ROW_RANGE;
+                break;
+            default:
+                valueType = ValueType.fromClassName(className);
+                break;
+        }
+
+        return valueType;
+    }
+
     public static ValueType with(final String name) {
         Objects.requireNonNull(name, "name");
 
