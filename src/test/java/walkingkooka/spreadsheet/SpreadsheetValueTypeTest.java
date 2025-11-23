@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.AddExpression;
 import walkingkooka.tree.expression.AndExpression;
 import walkingkooka.tree.expression.CallExpression;
@@ -239,6 +240,201 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
             SpreadsheetValueType.with("whole-number")
         );
     }
+
+    // fromClassName....................................................................................................
+
+    @Test
+    public void testFromClassNameWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetValueType.fromClassName(null)
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithCell() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.A1,
+            SpreadsheetValueType.CELL
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithCellRange() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            SpreadsheetValueType.CELL_RANGE
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithColumn() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.parseColumn("A"),
+            SpreadsheetValueType.COLUMN
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithColumnRange() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.parseColumnRange("A:B"),
+            SpreadsheetValueType.COLUMN_RANGE
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithLabel() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.labelName("Label123"),
+            SpreadsheetValueType.LABEL
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithRow() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.parseRow("12"),
+            SpreadsheetValueType.ROW
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithRowRange() {
+        this.fromClassNameAndCheck(
+            SpreadsheetSelection.parseRowRange("12:34"),
+            SpreadsheetValueType.ROW_RANGE
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithAlphaHslColor() {
+        this.fromClassNameAndCheck(
+            Color.BLACK.toHsl()
+                .set(
+                    HslColorComponent.alpha(0.5f)
+                ),
+            SpreadsheetValueType.ALPHA_HSL_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithAlphaHsvColor() {
+        this.fromClassNameAndCheck(
+            Color.BLACK.toHsv()
+                .set(
+                    HsvColorComponent.alpha(0.5f)
+                ),
+            SpreadsheetValueType.ALPHA_HSV_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithAlphaRgbColor() {
+        this.fromClassNameAndCheck(
+            Color.BLACK.set(
+                RgbColorComponent.alpha((byte)127)
+            ),
+            SpreadsheetValueType.ALPHA_RGB_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithColor() {
+        this.fromClassNameAndCheck(
+            Color.class,
+            SpreadsheetValueType.COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithHslColor() {
+        this.fromClassNameAndCheck(
+            HslColor.class,
+            SpreadsheetValueType.HSL_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithHsvColor() {
+        this.fromClassNameAndCheck(
+            HsvColor.class,
+            SpreadsheetValueType.HSV_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithOpaqueHslColor() {
+        this.fromClassNameAndCheck(
+            Color.BLACK.toHsl(),
+            SpreadsheetValueType.OPAQUE_HSL_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithOpaqueHsvColor() {
+        this.fromClassNameAndCheck(
+            Color.BLACK.toHsv(),
+            SpreadsheetValueType.OPAQUE_HSV_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithOpaqueRgbColor() {
+        this.fromClassNameAndCheck(
+            Color.BLACK,
+            SpreadsheetValueType.OPAQUE_RGB_COLOR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithRgbColor() {
+        this.fromClassNameAndCheck(
+            RgbColor.class,
+            SpreadsheetValueType.RGB_COLOR
+        );
+    }
+    
+    @Test
+    public void testFromClassNameWithExpressionNumber() {
+        this.fromClassNameAndCheck(
+            ExpressionNumberKind.BIG_DECIMAL.zero(),
+            SpreadsheetValueType.NUMBER
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithString() {
+        this.fromClassNameAndCheck(
+            String.class,
+            SpreadsheetValueType.TEXT
+        );
+    }
+
+    private void fromClassNameAndCheck(final Object value,
+                                       final ValueType expected) {
+        this.fromClassNameAndCheck(
+            value.getClass(),
+            expected
+        );
+    }
+
+    private void fromClassNameAndCheck(final Class<?> klass,
+                                       final ValueType expected) {
+        this.fromClassNameAndCheck(
+            klass.getName(),
+            expected
+        );
+    }
+
+    private void fromClassNameAndCheck(final String className,
+                                       final ValueType expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetValueType.fromClassName(className)
+        );
+    }
+
 
     // toValueType......................................................................................................
 
