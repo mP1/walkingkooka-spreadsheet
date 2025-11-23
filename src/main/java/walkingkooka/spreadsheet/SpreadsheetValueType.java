@@ -99,6 +99,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType CONDITION = ValueType.with(CONDITION_STRING);
 
+    public final static String DATA_URL_STRING = ValueType.DATA_URL_STRING;
+
+    public final static ValueType DATA_URL = ValueType.DATA_URL;
+
     public static final String DATE_STRING = ValueType.DATE_STRING;
 
     public static final ValueType DATE = ValueType.DATE;
@@ -106,6 +110,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String DATE_TIME_STRING = ValueType.DATE_TIME_STRING;
 
     public static final ValueType DATE_TIME = ValueType.DATE_TIME;
+
+    public final static String DATE_TIME_SYMBOLS_STRING = ValueType.DATE_TIME_SYMBOLS_STRING;
+
+    public final static ValueType DATE_TIME_SYMBOLS = ValueType.DATE_TIME_SYMBOLS;
+
+    public final static String DECIMAL_NUMBER_SYMBOLS_STRING = ValueType.DECIMAL_NUMBER_SYMBOLS_STRING;
+
+    public final static ValueType DECIMAL_NUMBER_SYMBOLS = ValueType.DECIMAL_NUMBER_SYMBOLS;
 
     public static final String EMAIL_ADDRESS_STRING = "email-address";
 
@@ -127,6 +139,38 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType HSV_COLOR = ValueType.with(HSV_COLOR_STRING);
 
+    public final static String JSON_NODE_STRING = ValueType.JSON_NODE_STRING;
+
+    public final static ValueType JSON_NODE = ValueType.JSON_NODE;
+
+    public final static String JSON_ARRAY_STRING = ValueType.JSON_ARRAY_STRING;
+
+    public final static ValueType JSON_ARRAY = ValueType.JSON_ARRAY;
+
+    public final static String JSON_BOOLEAN_STRING = ValueType.JSON_BOOLEAN_STRING;
+
+    public final static ValueType JSON_BOOLEAN = ValueType.JSON_BOOLEAN;
+
+    public final static String JSON_NULL_STRING = ValueType.JSON_NULL_STRING;
+
+    public final static ValueType JSON_NULL = ValueType.JSON_NULL;
+
+    public final static String JSON_NUMBER_STRING = ValueType.JSON_NUMBER_STRING;
+
+    public final static ValueType JSON_NUMBER = ValueType.JSON_NUMBER;
+
+    public final static String JSON_OBJECT_STRING = ValueType.JSON_OBJECT_STRING;
+
+    public final static ValueType JSON_OBJECT = ValueType.JSON_OBJECT;
+
+    public final static String JSON_STRING_STRING = ValueType.JSON_STRING_STRING;
+
+    public final static ValueType JSON_STRING = ValueType.JSON_STRING;
+
+    public final static String LOCALE_STRING = ValueType.LOCALE_STRING;
+
+    public final static ValueType LOCALE = ValueType.LOCALE;
+
     public static final String LABEL_STRING = "label";
 
     public static final ValueType LABEL = ValueType.with(LABEL_STRING);
@@ -142,6 +186,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String LOCAL_TIME_STRING = "local-time";
 
     public static final ValueType LOCAL_TIME = ValueType.with(LOCAL_TIME_STRING);
+
+    public final static String MAIL_TO_URL_STRING = ValueType.MAIL_TO_URL_STRING;
+
+    public final static ValueType MAIL_TO_URL = ValueType.MAIL_TO_URL;
 
     public static final String NUMBER_STRING = ValueType.NUMBER_STRING;
 
@@ -162,6 +210,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public final static String RGB_COLOR_STRING = "color(rgb)";
 
     public final static ValueType RGB_COLOR = ValueType.with(RGB_COLOR_STRING);
+
+    public final static String RELATIVE_URL_STRING = ValueType.RELATIVE_URL_STRING;
+
+    public final static ValueType RELATIVE_URL = ValueType.RELATIVE_URL;
 
     public static final String ROW_STRING = "row";
 
