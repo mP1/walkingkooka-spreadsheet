@@ -75,6 +75,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType BOOLEAN = ValueType.BOOLEAN;
 
+    public static final String BOOLEAN_LIST_STRING = ValueType.BOOLEAN_LIST_STRING;
+
+    public static final ValueType BOOLEAN_LIST = ValueType.BOOLEAN_LIST;
+
     public static final String CELL_STRING = "cell";
 
     public static final ValueType CELL = ValueType.with(CELL_STRING);
@@ -83,6 +87,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType CELL_RANGE = ValueType.with(CELL_RANGE_STRING);
 
+    public static final String CHOICE_LIST_STRING = ValueType.CHOICE_LIST_STRING;
+
+    public static final ValueType CHOICE_LIST = ValueType.with(CHOICE_LIST_STRING);
+    
     public final static String COLOR_STRING = "color";
 
     public final static ValueType COLOR = ValueType.with(COLOR_STRING);
@@ -99,6 +107,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType CONDITION = ValueType.with(CONDITION_STRING);
 
+    public static final String CSV_LIST_STRING = ValueType.CSV_LIST_STRING;
+
+    public static final ValueType CSV_LIST = ValueType.with(CSV_LIST_STRING);
+
     public final static String DATA_URL_STRING = ValueType.DATA_URL_STRING;
 
     public final static ValueType DATA_URL = ValueType.DATA_URL;
@@ -107,9 +119,17 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType DATE = ValueType.DATE;
 
+    public static final String DATE_LIST_STRING = ValueType.DATE_LIST_STRING;
+
+    public static final ValueType DATE_LIST = ValueType.DATE_LIST;
+
     public static final String DATE_TIME_STRING = ValueType.DATE_TIME_STRING;
 
     public static final ValueType DATE_TIME = ValueType.DATE_TIME;
+
+    public static final String DATE_TIME_LIST_STRING = ValueType.DATE_TIME_LIST_STRING;
+
+    public static final ValueType DATE_TIME_LIST = ValueType.DATE_TIME_LIST;
 
     public final static String DATE_TIME_SYMBOLS_STRING = ValueType.DATE_TIME_SYMBOLS_STRING;
 
@@ -130,6 +150,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String ERROR_STRING = ValueType.ERROR_STRING;
 
     public static final ValueType ERROR = ValueType.with(ERROR_STRING);
+
+    public static final String ERROR_LIST_STRING = ValueType.ERROR_LIST_STRING;
+
+    public static final ValueType ERROR_LIST = ValueType.with(ERROR_LIST_STRING);
 
     public final static String HSL_COLOR_STRING = "color(hsl)";
 
@@ -167,6 +191,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public final static ValueType JSON_STRING = ValueType.JSON_STRING;
 
+    public final static String LIST_STRING = ValueType.LIST_STRING;
+
+    public final static ValueType LIST = ValueType.LIST;
+    
     public final static String LOCALE_STRING = ValueType.LOCALE_STRING;
 
     public final static ValueType LOCALE = ValueType.LOCALE;
@@ -194,6 +222,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String NUMBER_STRING = ValueType.NUMBER_STRING;
 
     public static final ValueType NUMBER = ValueType.NUMBER;
+
+    public static final String NUMBER_LIST_STRING = ValueType.NUMBER_LIST_STRING;
+
+    public static final ValueType NUMBER_LIST = ValueType.NUMBER_LIST;
 
     public final static String OPAQUE_HSL_COLOR_STRING = "color(hsl-opaque)";
 
@@ -230,14 +262,22 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String STRING_STRING = "string";
 
     public static final ValueType STRING = ValueType.with(STRING_STRING);
-    
+
+    public static final String STRING_LIST_STRING = ValueType.STRING_LIST_STRING;
+
+    public static final ValueType STRING_LIST = ValueType.STRING_LIST;
+
     public static final String TEXT_STRING = ValueType.TEXT_STRING;
 
     public static final ValueType TEXT = ValueType.TEXT;
-
+    
     public static final String TIME_STRING = ValueType.TIME_STRING;
 
     public static final ValueType TIME = ValueType.TIME;
+
+    public static final String TIME_LIST_STRING = ValueType.TIME_LIST_STRING;
+
+    public static final ValueType TIME_LIST = ValueType.TIME_LIST;
 
     public static final String URL_STRING = ValueType.URL_STRING;
 
