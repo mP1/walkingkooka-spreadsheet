@@ -185,6 +185,36 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
         final ValueType valueType;
         
         switch (type) {
+            case "java.util.List":
+                valueType = SpreadsheetValueType.LIST;
+                break;
+            case "walkingkooka.collect.list.BooleanList":
+                valueType = SpreadsheetValueType.BOOLEAN_LIST;
+                break;
+            case "walkingkooka.collect.list.CsvStringList":
+                valueType = SpreadsheetValueType.CSV_LIST;
+                break;
+            case "walkingkooka.datetime.LocalDateList":
+                valueType = SpreadsheetValueType.DATE_LIST;
+                break;
+            case "walkingkooka.datetime.LocalDateTimeList":
+                valueType = SpreadsheetValueType.DATE_TIME_LIST;
+                break;
+            case "walkingkooka.datetime.LocalTimeList":
+                valueType = SpreadsheetValueType.TIME_LIST;
+                break;
+            case "walkingkooka.math.NumberList":
+                valueType = SpreadsheetValueType.NUMBER_LIST;
+                break;
+            case "walkingkooka.validation.ValidationChoiceList":
+                valueType = SpreadsheetValueType.CHOICE_LIST;
+                break;
+            case "walkingkooka.validation.ValidationErrorList":
+                valueType = SpreadsheetValueType.ERROR_LIST;
+                break;
+            case "walkingkooka.collect.list.StringList":
+                valueType = SpreadsheetValueType.STRING_LIST;
+                break;
             case "walkingkooka.color.AlphaHslColor":
                 valueType = SpreadsheetValueType.ALPHA_HSL_COLOR;
                 break;
