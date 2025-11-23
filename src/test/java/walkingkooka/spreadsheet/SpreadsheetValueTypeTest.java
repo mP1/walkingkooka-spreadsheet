@@ -107,7 +107,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     public void testWithAbsoluteUrl() {
         assertSame(
             SpreadsheetValueType.ABSOLUTE_URL,
-            SpreadsheetValueType.with("absolute-url")
+            SpreadsheetValueType.with("url(absolute)")
         );
     }
 
