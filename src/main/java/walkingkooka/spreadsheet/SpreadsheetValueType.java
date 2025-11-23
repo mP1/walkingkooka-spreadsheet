@@ -18,6 +18,13 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
+import walkingkooka.color.HslColor;
+import walkingkooka.color.HslColorComponent;
+import walkingkooka.color.HsvColor;
+import walkingkooka.color.HsvColorComponent;
+import walkingkooka.color.RgbColor;
+import walkingkooka.color.RgbColorComponent;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -52,6 +59,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ABSOLUTE_URL = ValueType.with(ABSOLUTE_URL_STRING);
 
+    public final static String ALPHA_HSV_COLOR_STRING = "color(hsv-alpha)";
+
+    public final static ValueType ALPHA_HSV_COLOR = ValueType.with(ALPHA_HSV_COLOR_STRING);
+
+    public final static String ALPHA_HSL_COLOR_STRING = "color(hsl-alpha)";
+
+    public final static ValueType ALPHA_HSL_COLOR = ValueType.with(ALPHA_HSL_COLOR_STRING);
+
+    public final static String ALPHA_RGB_COLOR_STRING = "color(rgb-alpha)";
+
+    public final static ValueType ALPHA_RGB_COLOR = ValueType.with(ALPHA_RGB_COLOR_STRING);
+
     public static final String BOOLEAN_STRING = ValueType.BOOLEAN_STRING;
 
     public static final ValueType BOOLEAN = ValueType.BOOLEAN;
@@ -63,6 +82,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String CELL_RANGE_STRING = "cell-range";
 
     public static final ValueType CELL_RANGE = ValueType.with(CELL_RANGE_STRING);
+
+    public final static String COLOR_STRING = "color";
+
+    public final static ValueType COLOR = ValueType.with(COLOR_STRING);
 
     public static final String COLUMN_STRING = "column";
 
@@ -96,6 +119,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ERROR = ValueType.with(ERROR_STRING);
 
+    public final static String HSL_COLOR_STRING = "color(hsl)";
+
+    public final static ValueType HSL_COLOR = ValueType.with(HSL_COLOR_STRING);
+
+    public final static String HSV_COLOR_STRING = "color(hsv)";
+
+    public final static ValueType HSV_COLOR = ValueType.with(HSV_COLOR_STRING);
+
     public static final String LABEL_STRING = "label";
 
     public static final ValueType LABEL = ValueType.with(LABEL_STRING);
@@ -115,6 +146,22 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String NUMBER_STRING = ValueType.NUMBER_STRING;
 
     public static final ValueType NUMBER = ValueType.NUMBER;
+
+    public final static String OPAQUE_HSL_COLOR_STRING = "color(hsl-opaque)";
+
+    public final static ValueType OPAQUE_HSL_COLOR = ValueType.with(OPAQUE_HSL_COLOR_STRING);
+
+    public final static String OPAQUE_HSV_COLOR_STRING = "color(hsv-opaque)";
+
+    public final static ValueType OPAQUE_HSV_COLOR = ValueType.with(OPAQUE_HSV_COLOR_STRING);
+
+    public final static String OPAQUE_RGB_COLOR_STRING = "color(rgb-opaque)";
+
+    public final static ValueType OPAQUE_RGB_COLOR = ValueType.with(OPAQUE_RGB_COLOR_STRING);
+
+    public final static String RGB_COLOR_STRING = "color(rgb)";
+
+    public final static ValueType RGB_COLOR = ValueType.with(RGB_COLOR_STRING);
 
     public static final String ROW_STRING = "row";
 
@@ -203,6 +250,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ABSOLUTE_URL_STRING:
                 javaType = AbsoluteUrl.class;
                 break;
+            case ALPHA_HSL_COLOR_STRING:
+                javaType = ALPHA_HSL_COLOR_CLASS;
+                break;
+            case ALPHA_HSV_COLOR_STRING:
+                javaType = ALPHA_HSV_COLOR_CLASS;
+                break;
+            case ALPHA_RGB_COLOR_STRING:
+                javaType = ALPHA_RGB_COLOR_CLASS;
+                break;
             case BOOLEAN_STRING:
                 javaType = Boolean.class;
                 break;
@@ -211,6 +267,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case CELL_RANGE_STRING:
                 javaType = SpreadsheetCellRangeReference.class;
+                break;
+            case COLOR_STRING:
+                javaType = Color.class;
                 break;
             case COLUMN_STRING:
                 javaType = SpreadsheetColumnReference.class;
@@ -231,6 +290,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ERROR_STRING:
                 javaType = SpreadsheetError.class;
                 break;
+            case HSL_COLOR_STRING:
+                javaType = HslColor.class;
+                break;
+            case HSV_COLOR_STRING:
+                javaType = HsvColor.class;
+                break;
             case LABEL_STRING:
                 javaType = SpreadsheetLabelName.class;
                 break;
@@ -245,6 +310,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case NUMBER_STRING:
                 javaType = ExpressionNumber.class;
+                break;
+            case OPAQUE_HSL_COLOR_STRING:
+                javaType = OPAQUE_HSL_COLOR_CLASS;
+                break;
+            case OPAQUE_HSV_COLOR_STRING:
+                javaType = OPAQUE_HSV_COLOR_CLASS;
+                break;
+            case OPAQUE_RGB_COLOR_STRING:
+                javaType = OPAQUE_RGB_COLOR_CLASS;
+                break;
+            case RGB_COLOR_STRING:
+                javaType = RgbColor.class;
                 break;
             case ROW_STRING:
                 javaType = SpreadsheetRowReference.class;
@@ -275,6 +352,27 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         return Optional.ofNullable(javaType);
     }
 
+    private final static Class<?> ALPHA_HSL_COLOR_CLASS = Color.BLACK.toHsl()
+        .set(HslColorComponent.alpha(0.5f))
+        .getClass();
+
+    private final static Class<?> ALPHA_HSV_COLOR_CLASS = Color.BLACK.toHsv()
+        .set(HsvColorComponent.alpha(0.5f))
+        .getClass();
+
+    private final static Class<?> ALPHA_RGB_COLOR_CLASS = Color.BLACK
+        .set(RgbColorComponent.alpha((byte)127))
+        .getClass();
+    
+    private final static Class<?> OPAQUE_HSL_COLOR_CLASS = Color.BLACK.toHsl()
+        .getClass();
+
+    private final static Class<?> OPAQUE_HSV_COLOR_CLASS = Color.BLACK.toHsv()
+        .getClass();
+
+    private final static Class<?> OPAQUE_RGB_COLOR_CLASS = Color.BLACK
+        .getClass();
+
     public static ValueType with(final String name) {
         Objects.requireNonNull(name, "name");
 
@@ -287,6 +385,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ValueType.ANY_STRING:
                 valueType = ANY;
                 break;
+            case ALPHA_HSL_COLOR_STRING:
+                valueType = ALPHA_HSL_COLOR;
+                break;
+            case ALPHA_HSV_COLOR_STRING:
+                valueType = ALPHA_HSV_COLOR;
+                break;
+            case ALPHA_RGB_COLOR_STRING:
+                valueType = ALPHA_RGB_COLOR;
+                break;
             case BOOLEAN_STRING:
                 valueType = BOOLEAN;
                 break;
@@ -295,6 +402,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case CELL_RANGE_STRING:
                 valueType = CELL_RANGE;
+                break;
+            case COLOR_STRING:
+                valueType = COLOR;
                 break;
             case COLUMN_STRING:
                 valueType = COLUMN;
@@ -317,6 +427,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ERROR_STRING:
                 valueType = ERROR;
                 break;
+            case HSL_COLOR_STRING:
+                valueType = HSL_COLOR;
+                break;
+            case HSV_COLOR_STRING:
+                valueType = HSV_COLOR;
+                break;
             case LABEL_STRING:
                 valueType = LABEL;
                 break;
@@ -331,6 +447,18 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case NUMBER_STRING:
                 valueType = NUMBER;
+                break;
+            case OPAQUE_HSL_COLOR_STRING:
+                valueType = OPAQUE_HSL_COLOR;
+                break;
+            case OPAQUE_HSV_COLOR_STRING:
+                valueType = OPAQUE_HSV_COLOR;
+                break;
+            case OPAQUE_RGB_COLOR_STRING:
+                valueType = OPAQUE_RGB_COLOR;
+                break;
+            case RGB_COLOR_STRING:
+                valueType = RGB_COLOR;
                 break;
             case ROW_STRING:
                 valueType = ROW;
@@ -359,6 +487,15 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         }
 
         return valueType;
+    }
+
+    /**
+     * Returns true if the {@link ValueType} is a color.
+     */
+    public static boolean isColor(final ValueType type) {
+        Objects.requireNonNull(type, "type");
+
+        return type.prefix().equals(COLOR_STRING);
     }
 
     /**

@@ -180,8 +180,57 @@ final class SpreadsheetValueTypeToValueTypeSpreadsheetValueTypeVisitor extends S
         this.valueType(SpreadsheetValueType.URL_STRING);
     }
 
-    private void valueType(final String typeName) {
-        this.valueType = ValueType.with(typeName);
+    @Override
+    protected void visitUnknown(final String type) {
+        final ValueType valueType;
+        
+        switch (type) {
+            case "walkingkooka.color.AlphaHslColor":
+                valueType = SpreadsheetValueType.ALPHA_HSL_COLOR;
+                break;
+            case "walkingkooka.color.AlphaHsvColor":
+                valueType = SpreadsheetValueType.ALPHA_HSV_COLOR;
+                break;
+            case "walkingkooka.color.AlphaRgbColor":
+                valueType = SpreadsheetValueType.ALPHA_RGB_COLOR;
+                break;
+            case "walkingkooka.color.Color":
+                valueType = SpreadsheetValueType.COLOR;
+                break;
+            case "walkingkooka.color.HslColor":
+                valueType = SpreadsheetValueType.HSL_COLOR;
+                break;
+            case "walkingkooka.color.HsvColor":
+                valueType = SpreadsheetValueType.HSV_COLOR;
+                break;
+            case "walkingkooka.color.OpaqueHslColor":
+                valueType = SpreadsheetValueType.OPAQUE_HSL_COLOR;
+                break;
+            case "walkingkooka.color.OpaqueHsvColor":
+                valueType = SpreadsheetValueType.OPAQUE_HSV_COLOR;
+                break;
+            case "walkingkooka.color.OpaqueRgbColor":
+                valueType = SpreadsheetValueType.OPAQUE_RGB_COLOR;
+                break;
+            case "walkingkooka.color.RgbColor":
+                valueType = SpreadsheetValueType.RGB_COLOR;
+                break;
+            default:
+                valueType = null;
+                break;
+        }
+        
+        this.valueType(valueType);
+    }
+
+    private void valueType(final String valueType) {
+        this.valueType(
+            ValueType.with(valueType)
+        );
+    }
+
+    private void valueType(final ValueType valueType) {
+        this.valueType = valueType;
     }
 
     private ValueType valueType;
