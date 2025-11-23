@@ -31,9 +31,11 @@ import walkingkooka.color.HsvColor;
 import walkingkooka.color.HsvColorComponent;
 import walkingkooka.color.RgbColor;
 import walkingkooka.color.RgbColorComponent;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -49,6 +51,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.JsonArray;
+import walkingkooka.tree.json.JsonBoolean;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNull;
+import walkingkooka.tree.json.JsonNumber;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -632,6 +640,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithBooleanList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.BOOLEAN_LIST,
+            BooleanList.class
+        );
+    }
+
+    @Test
     public void testToClassWithCell() {
         this.toClassAndCheck(
             SpreadsheetValueType.CELL,
@@ -644,6 +660,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.CELL_RANGE,
             SpreadsheetCellRangeReference.class
+        );
+    }
+
+    @Test
+    public void testToClassWithChoiceList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.CHOICE_LIST,
+            ValidationChoiceList.class
         );
     }
 
@@ -664,6 +688,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithCsvList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.CSV_LIST,
+            CsvStringList.class
+        );
+    }
+
+    @Test
     public void testToClassWithDate() {
         this.toClassAndCheck(
             SpreadsheetValueType.DATE,
@@ -672,10 +704,42 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithDateList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.DATE_LIST,
+            LocalDateList.class
+        );
+    }
+
+    @Test
     public void testToClassWithDateTime() {
         this.toClassAndCheck(
             SpreadsheetValueType.DATE_TIME,
             LocalDateTime.class
+        );
+    }
+
+    @Test
+    public void testToClassWithDateTimeList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.DATE_TIME_LIST,
+            LocalDateTimeList.class
+        );
+    }
+
+    @Test
+    public void testToClassWithDateTimeSymbols() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.DATE_TIME_SYMBOLS,
+            DateTimeSymbols.class
+        );
+    }
+
+    @Test
+    public void testToClassWithDecimalNumberSymbols() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.DECIMAL_NUMBER_SYMBOLS,
+            DecimalNumberSymbols.class
         );
     }
 
@@ -700,6 +764,62 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.ERROR,
             SpreadsheetError.class
+        );
+    }
+
+    @Test
+    public void testToClassWithErrorList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.ERROR_LIST,
+            ValidationErrorList.class
+        );
+    }
+
+    @Test
+    public void testToClassWithJsonArray() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.JSON_ARRAY,
+            JsonArray.class
+        );
+    }
+
+    @Test
+    public void testToClassWithJsonBoolean() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.JSON_BOOLEAN,
+            JsonBoolean.class
+        );
+    }
+
+    @Test
+    public void testToClassWithJsonNode() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.JSON_NODE,
+            JsonNode.class
+        );
+    }
+
+    @Test
+    public void testToClassWithJsonNull() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.JSON_NULL,
+            JsonNull.class
+        );
+    }
+
+    @Test
+    public void testToClassWithJsonNumber() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.JSON_NUMBER,
+            JsonNumber.class
+        );
+    }
+
+    @Test
+    public void testToClassWithJsonObject() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.JSON_OBJECT,
+            JsonObject.class
         );
     }
 
@@ -740,6 +860,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.NUMBER,
             ExpressionNumber.class
+        );
+    }
+
+    @Test
+    public void testToClassWithNumberList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.NUMBER_LIST,
+            NumberList.class
         );
     }
 
@@ -792,10 +920,26 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithStringLists() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.STRING_LIST,
+            StringList.class
+        );
+    }
+
+    @Test
     public void testToClassWithTime() {
         this.toClassAndCheck(
             SpreadsheetValueType.TIME,
             LocalTime.class
+        );
+    }
+
+    @Test
+    public void testToClassWithTimeList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.TIME_LIST,
+            LocalTimeList.class
         );
     }
 
