@@ -492,11 +492,11 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ALPHA_RGB_COLOR_STRING:
                 javaType = ALPHA_RGB_COLOR_CLASS;
                 break;
-            case BOOLEAN_STRING:
-                javaType = Boolean.class;
-                break;
             case AND_EXPRESSION_STRING:
                 javaType = AndExpression.class;
+                break;
+            case BOOLEAN_STRING:
+                javaType = Boolean.class;
                 break;
             case BOOLEAN_LIST_STRING:
                 javaType = BooleanList.class;
