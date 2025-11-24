@@ -390,4 +390,9 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     public SpreadsheetExpressionEvaluationContext exitTerminal() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isTerminalOpen() {
+        throw new UnsupportedOperationException();
+    }
 }
