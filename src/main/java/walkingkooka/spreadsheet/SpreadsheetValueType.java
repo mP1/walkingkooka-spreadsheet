@@ -945,6 +945,21 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     }
 
     /**
+     * Returns true if the {@link ValueType} is a {@link walkingkooka.spreadsheet.reference.SpreadsheetSelection}
+     */
+    public static boolean isReference(final ValueType type) {
+        Objects.requireNonNull(type, "type");
+
+        return CELL.equals(type) ||
+            CELL_RANGE.equals(type) ||
+            COLUMN.equals(type) ||
+            COLUMN_RANGE.equals(type) ||
+            LABEL.equals(type) ||
+            ROW.equals(type) ||
+            ROW_RANGE.equals(type);
+    }
+
+    /**
      * Private ctor
      */
     private SpreadsheetValueType() {

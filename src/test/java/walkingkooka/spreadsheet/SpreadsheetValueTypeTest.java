@@ -1555,6 +1555,96 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
             SpreadsheetValueType.isColor(valueType)
         );
     }
+
+    // isReference..........................................................................................................
+
+    @Test
+    public void testIsReferenceWithAny() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.ANY,
+            false
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithCell() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.CELL,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithCellRange() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.CELL_RANGE,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithColumn() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.COLUMN,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithColumnRange() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.COLUMN_RANGE,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithLabel() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.LABEL,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithRow() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.ROW,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithRowRange() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.ROW_RANGE,
+            true
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithNumber() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.NUMBER,
+            false
+        );
+    }
+
+    @Test
+    public void testIsReferenceWithString() {
+        this.isReferenceAndCheck(
+            SpreadsheetValueType.STRING,
+            false
+        );
+    }
+
+    private void isReferenceAndCheck(final ValueType valueType,
+                                     final boolean expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetValueType.isReference(valueType)
+        );
+    }
     
     // json.............................................................................................................
 
