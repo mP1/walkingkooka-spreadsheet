@@ -85,6 +85,7 @@ import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.validation.ValidationChoiceList;
+import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValueType;
 
@@ -408,6 +409,22 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.fromClassNameAndCheck(
             String.class,
             SpreadsheetValueType.TEXT
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithSpreadsheetError() {
+        this.fromClassNameAndCheck(
+            SpreadsheetError.class,
+            SpreadsheetValueType.SPREADSHEET_ERROR
+        );
+    }
+
+    @Test
+    public void testFromClassNameWithValidationError() {
+        this.fromClassNameAndCheck(
+            ValidationError.class,
+            SpreadsheetValueType.VALIDATION_ERROR
         );
     }
 
@@ -1013,16 +1030,7 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     @Test
     public void testToClassWithError() {
         this.toClassAndCheck(
-            SpreadsheetValueType.ERROR,
-            SpreadsheetError.class
-        );
-    }
-
-    @Test
-    public void testToClassWithErrorList() {
-        this.toClassAndCheck(
-            SpreadsheetValueType.ERROR_LIST,
-            ValidationErrorList.class
+            ValueType.ERROR
         );
     }
 
@@ -1291,6 +1299,14 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithSpreadsheetError() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.SPREADSHEET_ERROR,
+            SpreadsheetError.class
+        );
+    }
+
+    @Test
     public void testToClassWithString() {
         this.toClassAndCheck(
             SpreadsheetValueType.TEXT,
@@ -1339,6 +1355,22 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
     }
 
     @Test
+    public void testToClassWithValidationError() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.VALIDATION_ERROR,
+            ValidationError.class
+        );
+    }
+
+    @Test
+    public void testToClassWithValidationErrorList() {
+        this.toClassAndCheck(
+            SpreadsheetValueType.VALIDATION_ERROR_LIST,
+            ValidationErrorList.class
+        );
+    }
+
+    @Test
     public void testToClassWithValueExpression() {
         this.toClassAndCheck(
             SpreadsheetValueType.VALUE_EXPRESSION_STRING,
@@ -1359,6 +1391,13 @@ public final class SpreadsheetValueTypeTest implements PublicStaticHelperTesting
         this.toClassAndCheck(
             SpreadsheetValueType.XOR_EXPRESSION_STRING,
             XorExpression.class
+        );
+    }
+
+    private void toClassAndCheck(final ValueType valueType) {
+        this.toClassAndCheck(
+            valueType,
+            Optional.empty()
         );
     }
 

@@ -75,6 +75,7 @@ import walkingkooka.tree.json.JsonNull;
 import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.validation.ValidationChoiceList;
+import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.ValueType;
 
@@ -381,6 +382,10 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
 
     public static final ValueType ROW_RANGE = ValueType.with(ROW_RANGE_STRING);
 
+    public static final String SPREADSHEET_ERROR_STRING = "error(spreadsheet)";
+
+    public static final ValueType SPREADSHEET_ERROR = ValueType.with(SPREADSHEET_ERROR_STRING);
+
     public static final String SUBTRACT_EXPRESSION_STRING = ValueType.SUBTRACT_EXPRESSION_STRING;
 
     public static final ValueType SUBTRACT_EXPRESSION = ValueType.SUBTRACT_EXPRESSION;
@@ -412,6 +417,14 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
     public static final String URL_STRING = ValueType.URL_STRING;
 
     public static final ValueType URL = ValueType.URL;
+
+    public static final String VALIDATION_ERROR_STRING = "error(validation)";
+
+    public static final ValueType VALIDATION_ERROR = ValueType.with(VALIDATION_ERROR_STRING);
+
+    public static final String VALIDATION_ERROR_LIST_STRING = "list(error(validation))";
+
+    public static final ValueType VALIDATION_ERROR_LIST = ValueType.with(VALIDATION_ERROR_LIST_STRING);
 
     public static final String VALUE_EXPRESSION_STRING = ValueType.VALUE_EXPRESSION_STRING;
 
@@ -452,7 +465,7 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
         DATE,
         DATE_TIME,
         EMAIL,
-        ERROR,
+        SPREADSHEET_ERROR,
         NUMBER,
         TEXT,
         TIME,
@@ -549,12 +562,6 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case EMAIL_ADDRESS_STRING:
             case EMAIL_STRING:
                 javaType = EmailAddress.class;
-                break;
-            case ERROR_STRING:
-                javaType = SpreadsheetError.class;
-                break;
-            case ERROR_LIST_STRING:
-                javaType = ValidationErrorList.class;
                 break;
             case EQUALS_EXPRESSION_STRING:
                 javaType = EqualsExpression.class;
@@ -670,6 +677,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case ROW_RANGE_STRING:
                 javaType = SpreadsheetRowRangeReference.class;
                 break;
+            case SPREADSHEET_ERROR_STRING:
+                javaType = SpreadsheetError.class;
+                break;
             case STRING_STRING:
                 javaType = String.class;
                 break;
@@ -690,6 +700,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case URL_STRING:
                 javaType = AbsoluteUrl.class;
+                break;
+            case VALIDATION_ERROR_STRING:
+                javaType = ValidationError.class;
+                break;
+            case VALIDATION_ERROR_LIST_STRING:
+                javaType = ValidationErrorList.class;
                 break;
             case VALUE_EXPRESSION_STRING:
                 javaType = ValueExpression.class;
@@ -765,6 +781,9 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
             case "walkingkooka.color.RgbColor":
                 valueType = RGB_COLOR;
                 break;
+            case "walkingkooka.spreadsheet.SpreadsheetError":
+                valueType = SPREADSHEET_ERROR;
+                break;
             case "walkingkooka.spreadsheet.reference.SpreadsheetCellReference":
                 valueType = CELL;
                 break;
@@ -785,6 +804,12 @@ public final class SpreadsheetValueType implements PublicStaticHelper {
                 break;
             case "walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference":
                 valueType = ROW_RANGE;
+                break;
+            case "walkingkooka.validation.ValidationError":
+                valueType = VALIDATION_ERROR;
+                break;
+            case "walkingkooka.validation.ValidationErrorList":
+                valueType = VALIDATION_ERROR_LIST;
                 break;
             default:
                 valueType = ValueType.fromClassName(className);
