@@ -445,10 +445,17 @@ public interface SpreadsheetMetadataTesting extends Testing {
         )
     );
 
-    TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
+    TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
         HAS_USER,
-        Printers.sink(LineEnding.NONE)
+        (Long timeout) -> {
+            if(timeout < 0) {
+                throw new IllegalArgumentException("Invalid timeout " + timeout + " < 0");
+            }
+            return Optional.empty();
+        },
+        Printers.sink(LineEnding.NONE), // output
+        Printers.sink(LineEnding.NONE) // error
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(

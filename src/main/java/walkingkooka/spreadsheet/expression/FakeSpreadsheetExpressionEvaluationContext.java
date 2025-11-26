@@ -39,8 +39,8 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalId;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.printer.Printer;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
@@ -362,27 +362,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public Optional<String> readLine(final long timeout) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void print(final CharSequence chars) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public LineEnding lineEnding() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void flush() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void close() {
+    public boolean isTerminalOpen() {
         throw new UnsupportedOperationException();
     }
 
@@ -392,7 +372,17 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public boolean isTerminalOpen() {
+    public Optional<String> readLine(final long timeout) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Printer output() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Printer error() {
         throw new UnsupportedOperationException();
     }
 }
