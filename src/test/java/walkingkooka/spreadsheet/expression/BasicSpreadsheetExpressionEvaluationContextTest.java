@@ -57,9 +57,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
-import walkingkooka.terminal.TerminalId;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.printer.Printers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -111,11 +108,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> FORM_HANDLER_CONTEXT = FormHandlerContexts.fake();
 
-    private final static TerminalContext TERMINAL_CONTEXT = TerminalContexts.printer(
-        TerminalId.with(1),
-        HAS_USER,
-        Printers.sink(LineEnding.NL)
-    );
+    private final static TerminalContext TERMINAL_CONTEXT = TerminalContexts.fake();
 
     // with.............................................................................................................
 
