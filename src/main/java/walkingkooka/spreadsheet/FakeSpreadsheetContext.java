@@ -40,6 +40,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements SpreadsheetContext {
 
@@ -199,6 +200,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     // TerminalServerContext............................................................................................
+
+    @Override
+    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public TerminalContext createTerminalContext(final EnvironmentContext context) {

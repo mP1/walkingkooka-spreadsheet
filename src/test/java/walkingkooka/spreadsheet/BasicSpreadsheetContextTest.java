@@ -119,6 +119,13 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     private final static TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
+
+        @Override
+        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
+            throw new UnsupportedOperationException();
+        }
+
         @Override
         public TerminalContext createTerminalContext(final EnvironmentContext context) {
             Objects.requireNonNull(context, "context");

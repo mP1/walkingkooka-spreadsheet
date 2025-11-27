@@ -459,6 +459,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(
+        () -> {
+            throw new UnsupportedOperationException();
+        },
         (e) -> TERMINAL_CONTEXT
     );
 

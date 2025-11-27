@@ -38,7 +38,9 @@ import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     EnvironmentContextDelegator,
@@ -146,6 +148,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     }
 
     // TerminalServerContext............................................................................................
+
+    @Override
+    default TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+        Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     default TerminalContext createTerminalContext(final EnvironmentContext context) {

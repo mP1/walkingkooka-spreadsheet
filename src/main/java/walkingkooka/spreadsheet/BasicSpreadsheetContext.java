@@ -394,6 +394,11 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     // TerminalServerContext............................................................................................
 
     @Override
+    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+        return this.terminalServerContext.addTerminalContext(terminalContextFactory);
+    }
+
+    @Override
     public TerminalContext createTerminalContext(final EnvironmentContext context) {
         return this.terminalServerContext.createTerminalContext(context);
     }
