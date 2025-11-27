@@ -206,6 +206,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -724,6 +725,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         private final SpreadsheetProvider spreadsheetProvider;
 
         // TerminalServerContext........................................................................................
+
+        @Override
+        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public TerminalContext createTerminalContext(final EnvironmentContext context) {

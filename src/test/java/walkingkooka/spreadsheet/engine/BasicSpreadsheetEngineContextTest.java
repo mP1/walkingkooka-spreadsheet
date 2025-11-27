@@ -117,6 +117,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -1665,6 +1666,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         // TerminalServerContext........................................................................................
+
+        @Override
+        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public TerminalContext createTerminalContext(final EnvironmentContext context) {

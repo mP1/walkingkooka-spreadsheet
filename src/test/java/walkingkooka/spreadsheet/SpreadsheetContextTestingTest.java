@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 public final class SpreadsheetContextTestingTest implements SpreadsheetContextTesting<TestSpreadsheetContext> {
 
@@ -171,6 +172,12 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public Optional<EmailAddress> user() {
             return Optional.empty();
+        }
+
+        @Override
+        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
+            throw new UnsupportedOperationException();
         }
 
         @Override

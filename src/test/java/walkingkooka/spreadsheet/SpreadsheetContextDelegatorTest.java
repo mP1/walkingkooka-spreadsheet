@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting<TestSpreadsheetContextDelegator> {
     
@@ -221,6 +222,12 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
                 Objects.requireNonNull(user, "user");
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+                Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
                 throw new UnsupportedOperationException();
             }
 

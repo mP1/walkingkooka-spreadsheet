@@ -75,6 +75,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
@@ -589,6 +590,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     // TerminalServerContext............................................................................................
+
+    @Override
+    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+        return this.spreadsheetContext.addTerminalContext(terminalContextFactory);
+    }
 
     @Override
     public TerminalContext createTerminalContext(final EnvironmentContext context) {
