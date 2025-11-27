@@ -34,19 +34,19 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.TerminalServerContext;
+import walkingkooka.terminal.server.TerminalServerContextDelegator;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     EnvironmentContextDelegator,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
-    SpreadsheetProviderDelegator {
+    SpreadsheetProviderDelegator,
+    TerminalServerContextDelegator {
 
     @Override
     default AbsoluteUrl serverUrl() {
@@ -147,29 +147,16 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
         return this.spreadsheetContext();
     }
 
-    // TerminalServerContext............................................................................................
+    // TerminalServerContextDelegator...................................................................................
 
     @Override
-    default TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default TerminalContext createTerminalContext(final EnvironmentContext context) {
-        return this.spreadsheetContext()
-            .createTerminalContext(context);
-    }
-
-    @Override
-    default Optional<TerminalContext> terminalContext(final TerminalId terminalId) {
-        return this.spreadsheetContext()
-            .terminalContext(terminalId);
+    default TerminalServerContext terminalServerContext() {
+        return this.spreadsheetContext();
     }
 
     @Override
     default SpreadsheetContext removeTerminalContext(final TerminalId terminalId) {
-        this.spreadsheetContext()
+        this.terminalServerContext()
             .removeTerminalContext(terminalId);
         return this;
     }
