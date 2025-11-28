@@ -362,7 +362,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter accounting(final List<?> values,
                                                    final ProviderContext context) {
-        final int decimalPlaces = values.size() == 0 ?
+        final int decimalPlaces = values.isEmpty() ?
             2 :
             context.convertOrFail(
                 values.get(0),
@@ -386,7 +386,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter currency(final List<?> values,
                                                  final ProviderContext context) {
-        final int decimalPlaces = values.size() == 0 ?
+        final int decimalPlaces = values.isEmpty() ?
             2 :
             context.convertOrFail(
                 values.get(0),
@@ -489,7 +489,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter percent(final List<?> values,
                                                 final ProviderContext context) {
-        final int decimalPlaces = values.size() == 0 ?
+        final int decimalPlaces = values.isEmpty() ?
             2 :
             context.convertOrFail(
                 values.get(0),
@@ -505,7 +505,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static SpreadsheetFormatter scientific(final List<?> values,
                                                    final ProviderContext context) {
-        final int decimalPlaces = values.size() == 0 ?
+        final int decimalPlaces = values.isEmpty() ?
             2 :
             context.convertOrFail(
                 values.get(0),
