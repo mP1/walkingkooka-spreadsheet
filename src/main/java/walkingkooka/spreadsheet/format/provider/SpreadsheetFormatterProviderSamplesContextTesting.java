@@ -22,11 +22,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextTesting2;
 public interface SpreadsheetFormatterProviderSamplesContextTesting<C extends SpreadsheetFormatterProviderSamplesContext> extends SpreadsheetFormatterContextTesting2<C> {
 
     @Override
-    default C createCanConvert() {
-        return this.createCanConvert();
-    }
-
-    @Override
     default String typeNameSuffix() {
         return SpreadsheetFormatterProviderSamplesContext.class.getSimpleName();
     }
