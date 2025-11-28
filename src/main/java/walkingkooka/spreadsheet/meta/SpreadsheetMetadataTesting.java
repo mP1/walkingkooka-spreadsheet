@@ -29,6 +29,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUser;
+import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -448,12 +449,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
         HAS_USER,
-        (Long timeout) -> {
-            if(timeout < 0) {
-                throw new IllegalArgumentException("Invalid timeout " + timeout + " < 0");
-            }
-            return Optional.empty();
-        },
+        TextReaders.fake(),
         Printers.sink(LineEnding.NONE), // output
         Printers.sink(LineEnding.NONE) // error
     );

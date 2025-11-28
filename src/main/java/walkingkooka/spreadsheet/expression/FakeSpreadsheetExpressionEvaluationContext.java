@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.io.TextReader;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -372,7 +373,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public Optional<String> readLine(final long timeout) {
+    public TextReader input() {
         throw new UnsupportedOperationException();
     }
 
