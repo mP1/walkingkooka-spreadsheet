@@ -393,6 +393,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToJson();
                 break;
+            case TEXT_TO_LINE_ENDING_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToLineEnding();
+                break;
             case TEXT_TO_LOCALE_STRING:
                 noParameterCheck(copy);
 
@@ -843,6 +848,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
 
+    private final static String TEXT_TO_LINE_ENDING_STRING = "text-to-line-ending";
+
+    final static ConverterName TEXT_TO_LINE_ENDING = ConverterName.with(TEXT_TO_LINE_ENDING_STRING);
+
     private final static String TEXT_TO_LOCALE_STRING = "text-to-locale";
 
     final static ConverterName TEXT_TO_LOCALE = ConverterName.with(TEXT_TO_LOCALE_STRING);
@@ -1056,6 +1065,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_HAS_HOST_ADDRESS),
             converterInfo(TEXT_TO_HOST_ADDRESS),
             converterInfo(TEXT_TO_JSON),
+            converterInfo(TEXT_TO_LINE_ENDING),
             converterInfo(TEXT_TO_LOCALE),
             converterInfo(TEXT_TO_NUMBER_LIST),
             converterInfo(TEXT_TO_OBJECT),

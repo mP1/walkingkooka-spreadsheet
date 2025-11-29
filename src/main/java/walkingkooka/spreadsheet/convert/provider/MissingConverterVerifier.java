@@ -69,6 +69,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -1163,6 +1164,40 @@ final class MissingConverterVerifier {
 
         // text-node....................................................................................................
         {
+            // text-to-line-ending......................................................................................
+            if (scripting) {
+                if (formatting) {
+                    finder.addIfConversionFail(
+                        Lists.of(
+                        "",
+                            "\n",
+                            "\r",
+                            "\r\n",
+                            "CR",
+                            "CRLF",
+                            "LF",
+                            "NL"
+                        ),
+                        LineEnding.class,
+                        SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING
+                    );
+                }
+
+                // url-to-hyperlink.....................................................................................
+                finder.addIfConversionFail(
+                    absoluteUrl.text(),
+                    Hyperlink.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
+                );
+
+                // url-to-image.........................................................................................
+                finder.addIfConversionFail(
+                    absoluteUrl.text(),
+                    Image.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
+                );
+            }
+
             // text-to-url..............................................................................................
             if (formatting || scripting) {
                 if (formatting) {

@@ -163,6 +163,7 @@ eg
 - [text-to-form-name](https://github.com/mP1/walkingkooka-validation/blob/master/src/main/java/walkingkooka/validation/convert/TextToFormNameConverter.java)
 - [text-to-has-host-address](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToHasHostAddress.java)
 - [text-to-host-address](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToHostAddress.java)
+- [text-to-line-ending](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToLineEnding.java)
 - [text-to-locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToLocale.java)
 - [text-to-number-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToListNumberList.java)
 - [text-to-object](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToObject.java)
