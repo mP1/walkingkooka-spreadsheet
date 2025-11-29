@@ -231,8 +231,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> ENVIRONMENT = namedCollection(
         "environment",
-        EnvironmentConverters.textToEnvironmentValueName(),
-        textToLineEnding()
+        EnvironmentConverters.textToEnvironmentValueName()
     );
 
     /**
