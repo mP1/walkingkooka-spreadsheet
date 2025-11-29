@@ -222,7 +222,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * A converter that involves {@link walkingkooka.environment.EnvironmentContext} as a source or destination
+     * A converter that involves {@link walkingkooka.environment.EnvironmentContext} as a source or destination,
+     * or values from an {@link walkingkooka.environment.EnvironmentContext}.
      */
     public static Converter<SpreadsheetConverterContext> environment() {
         return ENVIRONMENT;
@@ -230,7 +231,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> ENVIRONMENT = namedCollection(
         "environment",
-        EnvironmentConverters.textToEnvironmentValueName()
+        EnvironmentConverters.textToEnvironmentValueName(),
+        textToLineEnding()
     );
 
     /**
@@ -739,6 +741,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToJson() {
         return JsonNodeConverters.textToJsonNode();
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToLocale}
+     */
+    public static Converter<SpreadsheetConverterContext> textToLineEnding() {
+        return Converters.textToLineEnding();
     }
 
     /**

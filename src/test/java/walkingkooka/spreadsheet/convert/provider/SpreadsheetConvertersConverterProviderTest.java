@@ -632,6 +632,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToLineEnding() {
+        this.converterAndCheck(
+            "text-to-line-ending",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToLineEnding()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToLocale() {
         this.converterAndCheck(
             "text-to-locale",
