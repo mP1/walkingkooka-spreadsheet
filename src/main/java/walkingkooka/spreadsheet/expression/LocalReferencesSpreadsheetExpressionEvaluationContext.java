@@ -48,6 +48,7 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -349,6 +350,19 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
                 this.localReferenceToValues,
                 context
             );
+    }
+
+    // HasLineEnding....................................................................................................
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.context.lineEnding();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        this.context.setLineEnding(lineEnding);
+        return this;
     }
 
     // LocaleContextDelegator...........................................................................................

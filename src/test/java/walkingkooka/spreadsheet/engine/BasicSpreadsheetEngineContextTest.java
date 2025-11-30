@@ -94,6 +94,7 @@ import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -900,12 +901,66 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    // lineEnding.......................................................................................................
+
+    @Test
+    public void testLineEnding() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.lineEndingAndCheck(
+            this.createContext(environmentContext),
+            environmentContext.lineEnding()
+        );
+    }
+
+    @Test
+    public void testSetLineEnding() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+
+        final LineEnding lineEnding = LineEnding.CRNL;
+
+        this.checkNotEquals(
+            LINE_ENDING,
+            lineEnding
+        );
+
+        context.setLineEnding(lineEnding);
+
+        this.lineEndingAndCheck(
+            context,
+            lineEnding
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            EnvironmentValueName.LINE_ENDING,
+            lineEnding
+        );
+    }
+
     // locale(EnvironmentContext).......................................................................................
 
     @Test
     public void testLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                LINE_ENDING,
                 Locale.FRANCE,
                 NOW,
                 EnvironmentContext.ANONYMOUS
@@ -922,6 +977,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testSetLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                LINE_ENDING,
                 Locale.FRANCE,
                 NOW,
                 EnvironmentContext.ANONYMOUS
@@ -1409,6 +1465,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             },
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    LINE_ENDING,
                     LOCALE,
                     NOW::now,
                     Optional.of(USER)
@@ -1622,6 +1679,17 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             return this;
         }
 
+        @Override
+        public LineEnding lineEnding() {
+            return this.environmentContext.lineEnding();
+        }
+
+        @Override
+        public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
+            this.environmentContext.setLineEnding(lineEnding);
+            return this;
+        }
+        
         @Override
         public Locale locale() {
             return this.environmentContext.locale();

@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -511,6 +512,17 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
+                public LineEnding lineEnding() {
+                    return this.environmentContext.lineEnding();
+                }
+
+                @Override
+                public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+                    this.environmentContext.setLineEnding(lineEnding);
+                    return this;
+                }
+                
+                @Override
                 public Locale locale() {
                     return this.environmentContext.locale();
                 }
@@ -545,6 +557,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
                 private final EnvironmentContext environmentContext = EnvironmentContexts.map(
                     EnvironmentContexts.empty(
+                        LineEnding.NL,
                         Locale.ENGLISH,
                         LocalDateTime::now,
                         EnvironmentContext.ANONYMOUS

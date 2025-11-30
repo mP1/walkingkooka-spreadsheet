@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -177,6 +178,17 @@ final class SpreadsheetProviderContext implements ProviderContext,
     @Override
     public LocalDateTime now() {
         return this.converterContext.now();
+    }
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.environmentContext.lineEnding();
+    }
+
+    @Override
+    public ProviderContext setLineEnding(final LineEnding lineEnding) {
+        this.environmentContext.setLineEnding(lineEnding);
+        return this;
     }
 
     @Override

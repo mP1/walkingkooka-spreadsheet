@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.TerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContextDelegator;
+import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -105,6 +106,21 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
             .spreadsheetMetadata();
     }
 
+    // HasLineEnding....................................................................................................
+
+    @Override
+    default LineEnding lineEnding() {
+        return this.environmentContext()
+            .lineEnding();
+    }
+
+    @Override
+    default SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
+        this.environmentContext()
+            .setLineEnding(lineEnding);
+        return this;
+    }
+    
     // LocaleContext....................................................................................................
 
     @Override

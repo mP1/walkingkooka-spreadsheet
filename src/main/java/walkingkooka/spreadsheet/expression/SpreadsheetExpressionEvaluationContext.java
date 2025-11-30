@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -233,6 +234,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name);
+
+    // HasLineEnding....................................................................................................
+
+    @Override
+    SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding);
 
     // LocaleContext....................................................................................................
 

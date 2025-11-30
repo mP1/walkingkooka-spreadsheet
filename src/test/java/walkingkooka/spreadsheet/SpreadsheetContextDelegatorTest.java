@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
+import walkingkooka.text.LineEnding;
 
 import java.util.List;
 import java.util.Locale;
@@ -89,6 +90,12 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
         @Override
         public SpreadsheetContext cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
+            Objects.requireNonNull(lineEnding, "lineEnding");
             throw new UnsupportedOperationException();
         }
 

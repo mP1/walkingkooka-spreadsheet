@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.LineEnding;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -77,6 +78,18 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
         }
 
+        @Override
+        public LineEnding lineEnding() {
+            return this.environmentContext()
+                .lineEnding();
+        }
+
+        @Override
+        public SpreadsheetValidatorContext setLineEnding(final LineEnding lineEnding) {
+            Objects.requireNonNull(lineEnding, "lineEnding");
+            throw new UnsupportedOperationException();
+        }
+        
         @Override
         public Locale locale() {
             return this.environmentContext()

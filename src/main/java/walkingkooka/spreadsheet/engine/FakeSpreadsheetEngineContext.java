@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.test.Fake;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -226,6 +227,18 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    // HasLineEnding....................................................................................................
+
+    @Override
+    public LineEnding lineEnding() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
         throw new UnsupportedOperationException();
     }
 

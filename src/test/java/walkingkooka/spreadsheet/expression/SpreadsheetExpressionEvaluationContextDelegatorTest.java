@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -253,6 +254,17 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public LineEnding lineEnding() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+            Objects.requireNonNull(lineEnding, "lineEnding");
+            throw new UnsupportedOperationException();
+        }
+        
         @Override
         public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");

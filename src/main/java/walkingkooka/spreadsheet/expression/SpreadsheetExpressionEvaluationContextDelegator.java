@@ -40,6 +40,7 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -99,6 +100,15 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default boolean isText(final Object value) {
         return SpreadsheetExpressionEvaluationContext.super.isText(value);
+    }
+
+    // HasLineEnding....................................................................................................
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        this.storageExpressionEvaluationContext()
+            .setLineEnding(lineEnding);
+        return this;
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................

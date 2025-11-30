@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
+import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -119,6 +120,18 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     @Override
     public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
         Objects.requireNonNull(user, "user");
+        throw new UnsupportedOperationException();
+    }
+
+    // HasLineEnding....................................................................................................
+
+    @Override
+    public LineEnding lineEnding() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
         throw new UnsupportedOperationException();
     }
 

@@ -57,6 +57,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -699,8 +700,52 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // environmentContext...............................................................................................
 
     @Test
+    public void testLineEnding() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            LINE_ENDING,
+            LOCALE,
+            NOW,
+            EnvironmentContext.ANONYMOUS
+        );
+
+        this.lineEndingAndCheck(
+            this.createContext(environmentContext),
+            environmentContext.lineEnding()
+        );
+    }
+
+    @Test
+    public void testSetLineEnding() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+
+        final LineEnding lineEnding = LineEnding.CRNL;
+
+        this.checkNotEquals(
+            LINE_ENDING,
+            lineEnding
+        );
+
+        context.setLineEnding(lineEnding);
+
+        this.lineEndingAndCheck(
+            context,
+            lineEnding
+        );
+    }
+    
+    @Test
     public void testLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            LINE_ENDING,
             Locale.FRANCE,
             NOW,
             EnvironmentContext.ANONYMOUS
@@ -716,6 +761,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testSetLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                LINE_ENDING,
                 Locale.FRANCE,
                 NOW,
                 EnvironmentContext.ANONYMOUS
@@ -804,6 +850,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         final EmailAddress user = EmailAddress.parse("user123@example.com");
 
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            LINE_ENDING,
             LOCALE,
             NOW,
             Optional.of(user)

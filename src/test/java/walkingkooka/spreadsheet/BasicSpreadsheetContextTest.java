@@ -61,6 +61,7 @@ import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -96,6 +97,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         throw new UnsupportedOperationException();
     };
 
+    private final static LineEnding LINE_ENDING = LineEnding.NL;
+
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     private final static AuditInfo AUDIT_INFO = AuditInfo.with(
@@ -107,6 +110,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.map(
         EnvironmentContexts.empty(
+            LINE_ENDING,
             LOCALE,
             LocalDateTime::now,
             Optional.empty() // no user
@@ -628,6 +632,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             },
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    LINE_ENDING,
                     LOCALE,
                     LocalDateTime::now,
                     Optional.empty() // no user

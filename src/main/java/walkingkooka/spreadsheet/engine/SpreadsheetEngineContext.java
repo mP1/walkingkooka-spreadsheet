@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -124,6 +125,9 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext cloneEnvironment();
+
+    @Override
+    SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding);
 
     @Override
     SpreadsheetEngineContext setLocale(final Locale locale);

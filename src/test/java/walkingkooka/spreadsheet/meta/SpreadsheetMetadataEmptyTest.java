@@ -27,6 +27,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -135,6 +136,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.environmentValueAndCheck(
             SpreadsheetMetadata.EMPTY.environmentContext(
                 EnvironmentContexts.empty(
+                    LineEnding.NL,
                     LOCALE_CONTEXT.locale(),
                     LocalDateTime::now,
                     EnvironmentContext.ANONYMOUS
