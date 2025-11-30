@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -98,6 +99,19 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
         return this.context.spreadsheetFormatterContext(cell);
+    }
+
+    // HasLineEnding....................................................................................................
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.context.lineEnding();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        this.context.setLineEnding(lineEnding);
+        return this;
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................

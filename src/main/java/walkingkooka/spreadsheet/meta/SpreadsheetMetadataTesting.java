@@ -379,8 +379,11 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
+    LineEnding LINE_ENDING = LineEnding.NL;
+
     EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
         EnvironmentContexts.empty(
+            LINE_ENDING,
             LOCALE,
             NOW,
             Optional.of(USER)
@@ -450,8 +453,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
         TerminalId.with(1),
         HAS_USER,
         TextReaders.fake(),
-        Printers.sink(LineEnding.NONE), // output
-        Printers.sink(LineEnding.NONE) // error
+        Printers.sink(ENVIRONMENT_CONTEXT), // output
+        Printers.sink(ENVIRONMENT_CONTEXT) // error
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(

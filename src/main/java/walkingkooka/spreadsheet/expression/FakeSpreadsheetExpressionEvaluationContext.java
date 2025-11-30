@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalId;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -137,6 +138,18 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
         throw new UnsupportedOperationException();
     }
 
+    // HasLineEnding....................................................................................................
+
+    @Override
+    public LineEnding lineEnding() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        throw new UnsupportedOperationException();
+    }
+    
     // EnvironmentContext...............................................................................................
 
     @Override

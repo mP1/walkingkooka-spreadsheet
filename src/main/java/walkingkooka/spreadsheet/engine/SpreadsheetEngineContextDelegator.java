@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -137,6 +138,13 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.spreadsheetEngineContext()
             .removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
+    default SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+        this.spreadsheetEngineContext()
+            .setLineEnding(lineEnding);
         return this;
     }
 

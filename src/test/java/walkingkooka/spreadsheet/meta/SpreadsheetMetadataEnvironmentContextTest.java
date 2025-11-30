@@ -26,6 +26,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -48,6 +49,7 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
     private final static EnvironmentContext CONTEXT = EnvironmentContexts.empty(
+        LineEnding.NL,
         Locale.FRENCH,
         () -> NOW,
         Optional.of(USER)

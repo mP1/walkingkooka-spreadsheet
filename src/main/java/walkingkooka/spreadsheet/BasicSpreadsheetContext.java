@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.TerminalServerContext;
+import walkingkooka.text.LineEnding;
 
 import java.util.List;
 import java.util.Locale;
@@ -321,6 +322,17 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     @Override
     public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.environmentContext.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.environmentContext.lineEnding();
+    }
+
+    @Override
+    public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
+        this.environmentContext.setLineEnding(lineEnding);
         return this;
     }
 

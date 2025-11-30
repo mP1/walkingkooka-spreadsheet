@@ -29,6 +29,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -53,6 +54,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             MathContext.DECIMAL32
         )
     );
+
+    private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
@@ -206,6 +209,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             PLUGIN_STORE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    LINE_ENDING,
                     LOCALE,
                     () -> LocalDateTime.MIN,
                     Optional.of(USER)

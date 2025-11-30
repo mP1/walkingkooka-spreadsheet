@@ -23,6 +23,7 @@ import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -86,6 +87,17 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
             );
     }
 
+    @Override
+    public LineEnding lineEnding() {
+        return this.environmentValueOrFail(LINE_ENDING);
+    }
+
+    @Override
+    public EnvironmentContext setLineEnding(final LineEnding lineEnding) {
+        this.context.setLineEnding(lineEnding);
+        return this;
+    }
+    
     /**
      * This always returns the {@link SpreadsheetMetadata#locale()}.
      */

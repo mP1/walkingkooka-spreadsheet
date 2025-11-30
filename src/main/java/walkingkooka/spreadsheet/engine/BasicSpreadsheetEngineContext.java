@@ -62,6 +62,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
@@ -538,6 +539,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 after,
                 this.terminalContext
             );
+    }
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.spreadsheetContext.lineEnding();
+    }
+
+    @Override
+    public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+        this.spreadsheetContext.setLineEnding(lineEnding);
+        return this;
     }
 
     @Override

@@ -23,6 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -49,6 +50,12 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
 
         @Override
         public SpreadsheetEngineContext cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+            Objects.requireNonNull(lineEnding, "lineEnding");
             throw new UnsupportedOperationException();
         }
 
