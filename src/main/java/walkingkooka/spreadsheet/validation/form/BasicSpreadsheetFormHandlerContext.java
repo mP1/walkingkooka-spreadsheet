@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.Form;
@@ -262,6 +263,12 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
             );
     }
 
+    @Override
+    public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
+        this.context.setLineEnding(lineEnding);
+        return this;
+    }
+    
     @Override
     public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
         this.context.setLocale(locale);

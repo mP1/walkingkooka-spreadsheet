@@ -22,6 +22,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.FakeFormHandlerContext;
 
 import java.util.Locale;
@@ -32,6 +33,11 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
 
     public FakeSpreadsheetFormHandlerContext() {
         super();
+    }
+
+    @Override
+    public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
