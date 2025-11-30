@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.FormHandlerContext;
 
 import java.util.Comparator;
@@ -35,6 +36,9 @@ import java.util.Optional;
  * No new methods are added.
  */
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
+
+    @Override
+    SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding);
 
     @Override
     SpreadsheetFormHandlerContext setLocale(final Locale locale);
