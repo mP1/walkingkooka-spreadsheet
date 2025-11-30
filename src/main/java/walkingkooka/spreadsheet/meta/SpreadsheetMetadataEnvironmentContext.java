@@ -103,7 +103,7 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
      */
     @Override
     public Locale locale() {
-        return this.environmentValueOrFail(EnvironmentValueName.LOCALE);
+        return this.environmentValueOrFail(LOCALE);
     }
 
     @Override
