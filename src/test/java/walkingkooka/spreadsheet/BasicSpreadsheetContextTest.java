@@ -101,10 +101,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
-    private final static AuditInfo AUDIT_INFO = AuditInfo.with(
+    private final static AuditInfo AUDIT_INFO = AuditInfo.create(
         EmailAddress.parse("creator@example.com"),
-        LocalDateTime.MIN,
-        EmailAddress.parse("modified@example.com"),
         LocalDateTime.MIN
     );
 
