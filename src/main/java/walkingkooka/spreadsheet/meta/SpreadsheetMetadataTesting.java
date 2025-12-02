@@ -192,9 +192,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         ).loadFromLocale(LOCALE_CONTEXT)
         .set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
-            AuditInfo.with(
-                USER,
-                NOW.now(),
+            AuditInfo.create(
                 USER,
                 NOW.now()
             )

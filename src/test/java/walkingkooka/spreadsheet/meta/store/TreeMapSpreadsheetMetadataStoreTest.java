@@ -158,9 +158,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
             SpreadsheetName.with(name)
         ).set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
-            AuditInfo.with(
-                CREATOR,
-                NOW,
+            AuditInfo.create(
                 CREATOR,
                 NOW
             )

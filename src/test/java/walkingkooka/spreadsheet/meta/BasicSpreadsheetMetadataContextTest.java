@@ -45,9 +45,7 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
         (e, dl) ->
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                AuditInfo.with(
-                    e,
-                    NOW,
+                AuditInfo.create(
                     e,
                     NOW
                 )
