@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
@@ -235,12 +234,6 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
                 Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public TerminalContext createTerminalContext(final EnvironmentContext context) {
-                Objects.requireNonNull(context, "context");
                 throw new UnsupportedOperationException();
             }
 

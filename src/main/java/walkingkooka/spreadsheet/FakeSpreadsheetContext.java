@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -216,11 +215,6 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public TerminalContext createTerminalContext(final EnvironmentContext context) {
         throw new UnsupportedOperationException();
     }
 
