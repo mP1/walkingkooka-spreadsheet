@@ -741,11 +741,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public TerminalContext createTerminalContext(final EnvironmentContext context) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public Optional<TerminalContext> terminalContext(final TerminalId id) {
             throw new UnsupportedOperationException();
         }

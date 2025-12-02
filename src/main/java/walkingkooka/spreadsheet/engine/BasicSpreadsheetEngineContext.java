@@ -609,11 +609,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
-    public TerminalContext createTerminalContext(final EnvironmentContext context) {
-        return this.spreadsheetContext.createTerminalContext(context);
-    }
-
-    @Override
     public Optional<TerminalContext> terminalContext(final TerminalId id) {
         return this.spreadsheetContext.terminalContext(id);
     }

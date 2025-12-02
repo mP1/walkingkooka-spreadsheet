@@ -1742,12 +1742,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
-        public TerminalContext createTerminalContext(final EnvironmentContext context) {
-            Objects.requireNonNull(context, "context");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public Optional<TerminalContext> terminalContext(final TerminalId id) {
             Objects.requireNonNull(id, "id");
             throw new UnsupportedOperationException();
