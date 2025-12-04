@@ -63,7 +63,7 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
         final ValidatorContext<SpreadsheetExpressionReference> before = this.context;
         final ValidatorContext<SpreadsheetExpressionReference> after = before.setEnvironmentContext(environmentContext);
 
-        return before.equals(after) ?
+        return before == after ?
             this :
             with(after);
     }

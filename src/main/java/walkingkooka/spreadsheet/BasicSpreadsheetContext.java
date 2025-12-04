@@ -313,7 +313,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
         final EnvironmentContext before = this.environmentContext;
 
-        return before.equals(environmentContext) ?
+        return before == environmentContext ?
             this :
             new BasicSpreadsheetContext(
                 this.serverUrl,

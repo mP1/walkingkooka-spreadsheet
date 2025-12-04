@@ -268,7 +268,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         final SpreadsheetEngineContext before = this.context;
         final SpreadsheetEngineContext after = before.setEnvironmentContext(environmentContext);
 
-        return before.equals(after) ?
+        return before == after ?
             this :
             new BasicSpreadsheetFormHandlerContext(
                 this.form,

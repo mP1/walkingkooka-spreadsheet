@@ -546,7 +546,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         final SpreadsheetContext before = this.spreadsheetContext;
         final SpreadsheetContext after = before.setEnvironmentContext(environmentContext);
 
-        return before.equals(after) ?
+        return before == after ?
             this :
             new BasicSpreadsheetEngineContext(
                 this.mode,

@@ -511,7 +511,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         final SpreadsheetExpressionEvaluationContext after = before.setEnvironmentContext(environmentContext);
 
 
-        return before.equals(after) ?
+        return before == after ?
             this :
             new ConverterSpreadsheetExpressionEvaluationContext(
                 this.converter,

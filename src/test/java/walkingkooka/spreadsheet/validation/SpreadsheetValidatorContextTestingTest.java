@@ -117,7 +117,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         public TestSpreadsheetValidatorContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
-            throw new UnsupportedOperationException();
+            return new TestSpreadsheetValidatorContext();
         }
 
         @Override

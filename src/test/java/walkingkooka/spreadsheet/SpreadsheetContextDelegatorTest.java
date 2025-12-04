@@ -96,13 +96,23 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         @Override
         public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
-            throw new UnsupportedOperationException();
+            return new TestSpreadsheetContextDelegator();
+        }
+
+        @Override
+        public LineEnding lineEnding() {
+            return LineEnding.NL;
         }
 
         @Override
         public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
             Objects.requireNonNull(lineEnding, "lineEnding");
             throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Locale locale() {
+            return Locale.ENGLISH;
         }
 
         @Override

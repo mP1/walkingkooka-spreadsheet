@@ -520,7 +520,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
                     Objects.requireNonNull(environmentContext, "environmentContext");
 
-                    throw new UnsupportedOperationException();
+                    return SpreadsheetEngineContexts.fake();
                 }
 
                 @Override

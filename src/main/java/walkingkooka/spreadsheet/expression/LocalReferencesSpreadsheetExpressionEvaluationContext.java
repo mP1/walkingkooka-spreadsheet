@@ -411,7 +411,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         final SpreadsheetExpressionEvaluationContext before = this.context;
         final SpreadsheetExpressionEvaluationContext after = before.setEnvironmentContext(environmentContext);
 
-        return before.equals(after) ?
+        return before == after ?
             this :
             new LocalReferencesSpreadsheetExpressionEvaluationContext(
                 this.localReferenceToValues,
