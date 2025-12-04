@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -33,6 +34,9 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
 
     @Override
     SpreadsheetValidatorContext cloneEnvironment();
+
+    @Override
+    SpreadsheetValidatorContext setEnvironmentContext(final EnvironmentContext environmentContext);
 
     @Override
     SpreadsheetValidatorContext setLocale(final Locale locale);

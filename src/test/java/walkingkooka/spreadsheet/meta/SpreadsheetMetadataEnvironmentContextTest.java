@@ -33,6 +33,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataEnvironmentContextTest implements EnvironmentContextTesting2<SpreadsheetMetadataEnvironmentContext>,
@@ -128,6 +130,58 @@ public final class SpreadsheetMetadataEnvironmentContextTest implements Environm
                 spreadsheetMetadata2,
                 wrap
             )
+        );
+    }
+
+    // setEnvironmentContext............................................................................................
+
+    @Test
+    public void testSetEnvironmentContextWithSame() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(CONTEXT);
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
+
+        final SpreadsheetMetadataEnvironmentContext spreadsheetMetadataEnvironmentContext = SpreadsheetMetadataEnvironmentContext.with(
+            metadata,
+            environmentContext
+        );
+
+        final EnvironmentContext afterSet = spreadsheetMetadataEnvironmentContext.setEnvironmentContext(environmentContext);
+        assertSame(
+            spreadsheetMetadataEnvironmentContext,
+            afterSet
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentContextWithDifferent() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(CONTEXT);
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
+
+        final SpreadsheetMetadataEnvironmentContext spreadsheetMetadataEnvironmentContext = SpreadsheetMetadataEnvironmentContext.with(
+            metadata,
+            environmentContext
+        );
+
+        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(CONTEXT)
+            .setLocale(Locale.FRENCH);
+
+        this.checkNotEquals(
+            environmentContext,
+            differentEnvironmentContext
+        );
+
+        final EnvironmentContext afterSet = spreadsheetMetadataEnvironmentContext.setEnvironmentContext(differentEnvironmentContext);
+        assertNotSame(
+            spreadsheetMetadataEnvironmentContext,
+            afterSet
+        );
+
+        this.checkEquals(
+            SpreadsheetMetadataEnvironmentContext.with(
+                metadata,
+                differentEnvironmentContext
+            ),
+            afterSet
         );
     }
 

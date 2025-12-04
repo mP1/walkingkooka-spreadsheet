@@ -103,6 +103,9 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     SpreadsheetContext cloneEnvironment();
 
     @Override
+    SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext);
+
+    @Override
     <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                final T value);
 

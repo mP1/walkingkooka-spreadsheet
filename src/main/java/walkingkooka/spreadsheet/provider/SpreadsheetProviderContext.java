@@ -169,6 +169,21 @@ final class SpreadsheetProviderContext implements ProviderContext,
             );
     }
 
+    @Override
+    public SpreadsheetProviderContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final EnvironmentContext before = this.environmentContext;
+
+        return before.equals(environmentContext) ?
+            this :
+            new SpreadsheetProviderContext(
+                this.pluginStore,
+                null, // recreate because environmentContext changed.
+                Objects.requireNonNull(environmentContext, "environmentContext"),
+                this.jsonNodeMarshallUnmarshallContext,
+                this.localeContext
+            );
+    }
+
     private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
     private final LocaleContext localeContext;
@@ -240,6 +255,28 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private final EnvironmentContext environmentContext;
 
     // toString.........................................................................................................
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.pluginStore,
+            this.environmentContext
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof SpreadsheetProviderContext &&
+                this.equals0((SpreadsheetProviderContext) other));
+    }
+
+    private boolean equals0(final SpreadsheetProviderContext other) {
+        return this.pluginStore.equals(other.pluginStore) &&
+            this.environmentContext.equals(other.environmentContext);
+    }
 
     @Override
     public String toString() {

@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -501,6 +502,20 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
             new ConverterSpreadsheetExpressionEvaluationContext(
                 this.converter,
                 Objects.requireNonNull(cloned, "environmentContext")
+            );
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = before.setEnvironmentContext(environmentContext);
+
+
+        return before.equals(after) ?
+            this :
+            new ConverterSpreadsheetExpressionEvaluationContext(
+                this.converter,
+                Objects.requireNonNull(after, "environmentContext")
             );
     }
 

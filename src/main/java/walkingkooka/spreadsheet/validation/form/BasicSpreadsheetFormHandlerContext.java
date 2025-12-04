@@ -264,6 +264,21 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     }
 
     @Override
+    public SpreadsheetFormHandlerContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetEngineContext before = this.context;
+        final SpreadsheetEngineContext after = before.setEnvironmentContext(environmentContext);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetFormHandlerContext(
+                this.form,
+                this.loader,
+                this.cellsSaver,
+                Objects.requireNonNull(after, "environmentContext")
+            );
+    }
+
+    @Override
     public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
         this.context.setLineEnding(lineEnding);
         return this;
@@ -307,6 +322,30 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     private final SpreadsheetEngineContext context;
 
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.form,
+            this.loader,
+            this.cellsSaver,
+            this.context
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof BasicSpreadsheetFormHandlerContext &&
+                this.equals0((BasicSpreadsheetFormHandlerContext) other));
+    }
+
+    private boolean equals0(final BasicSpreadsheetFormHandlerContext other) {
+        return this.form.equals(other.form) &&
+            this.loader.equals(other.loader) &&
+            this.cellsSaver.equals(other.cellsSaver) &&
+            this.context.equals(other.context);
+    }
 
     @Override
     public String toString() {

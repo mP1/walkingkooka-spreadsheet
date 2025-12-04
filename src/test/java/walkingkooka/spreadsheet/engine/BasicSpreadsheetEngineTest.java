@@ -702,6 +702,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
+        public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+            Objects.requireNonNull(environmentContext, "environmentContext");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                           final T value) {
             throw new UnsupportedOperationException();

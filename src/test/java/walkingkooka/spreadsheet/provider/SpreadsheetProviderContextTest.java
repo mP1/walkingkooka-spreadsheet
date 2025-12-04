@@ -18,8 +18,10 @@
 package walkingkooka.spreadsheet.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -42,9 +44,12 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext> {
+public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext> {
 
     private final static PluginStore PLUGIN_STORE = PluginStores.fake();
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
@@ -59,13 +64,22 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
+    private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
+
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
     private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with("Hello");
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
-    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.fake();
+    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
+        EnvironmentContexts.empty(
+            LINE_ENDING,
+            LOCALE,
+            HAS_NOW,
+            Optional.of(USER)
+        )
+    );
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
 
@@ -180,6 +194,41 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         );
     }
 
+    // setEnvironmentContext............................................................................................
+
+    @Test
+    public void testSetEnvironmentContextWithSame() {
+        final SpreadsheetProviderContext context = this.createContext(ENVIRONMENT_CONTEXT);
+        assertSame(
+            context,
+            context.setEnvironmentContext(ENVIRONMENT_CONTEXT)
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentContextWithDifferent() {
+        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .setLineEnding(LineEnding.CRNL);
+
+        this.checkNotEquals(
+            ENVIRONMENT_CONTEXT,
+            differentEnvironmentContext
+        );
+
+        final SpreadsheetProviderContext spreadsheetProviderContext = this.createContext(ENVIRONMENT_CONTEXT);
+        final SpreadsheetProviderContext afterSet = spreadsheetProviderContext.setEnvironmentContext(differentEnvironmentContext);
+
+        assertNotSame(
+            afterSet,
+            spreadsheetProviderContext
+        );
+
+        this.checkEquals(
+            this.createContext(differentEnvironmentContext),
+            afterSet
+        );
+    }
+
     // setLocale........................................................................................................
 
     @Test
@@ -205,19 +254,20 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Override
     public SpreadsheetProviderContext createContext() {
-        return SpreadsheetProviderContext.with(
-            PLUGIN_STORE,
+        return this.createContext(
             EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LINE_ENDING,
-                    LOCALE,
-                    () -> LocalDateTime.MIN,
-                    Optional.of(USER)
-                )
+                ENVIRONMENT_CONTEXT
             ).setEnvironmentValue(
                 ENVIRONMENT_VALUE_NAME,
                 ENVIRONMENT_VALUE
-            ),
+            )
+        );
+    }
+
+    private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
+        return SpreadsheetProviderContext.with(
+            PLUGIN_STORE,
+            environmentContext,
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             LOCALE_CONTEXT
         );
@@ -243,6 +293,62 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             ExpressionNumber.class,
             ExpressionNumber.with(123)
         );
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentPluginStore() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                PluginStores.fake(),
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentEnvironmentContext() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                PLUGIN_STORE,
+                ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setLineEnding(LineEnding.CRNL),
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentJsonNodeMarshallUnmarshallContext() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                PLUGIN_STORE,
+                ENVIRONMENT_CONTEXT,
+                JsonNodeMarshallUnmarshallContexts.fake(),
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLocaleContext() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                PLUGIN_STORE,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
+                LocaleContexts.jre(Locale.FRANCE)
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetProviderContext createObject() {
+        return this.createContext();
     }
 
     // class............................................................................................................

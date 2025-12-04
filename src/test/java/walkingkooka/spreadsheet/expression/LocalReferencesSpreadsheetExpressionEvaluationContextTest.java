@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -65,6 +67,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<LocalReferencesSpreadsheetExpressionEvaluationContext>,
+    HashCodeEqualsDefinedTesting2<LocalReferencesSpreadsheetExpressionEvaluationContext>,
     ToStringTesting<LocalReferencesSpreadsheetExpressionEvaluationContext> {
 
     private final static String NAME = "Name1234";
@@ -114,6 +117,10 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
             TEMPLATE_LOCAL_VALUE
         );
     };
+
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
+
+    private final static HasNow HAS_NOW = LocalDateTime::now;
 
     @Test
     public void testWithNullReferenceToValuesFails() {
@@ -363,204 +370,231 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         );
     }
 
+    // testSetEnvironmentContext........................................................................................
+
+    @Test
+    public void testSetEnvironmentContextWithDifferentEnvironmentContext() {
+        final LocalReferencesSpreadsheetExpressionEvaluationContext before = this.createContext();
+
+    }
+
     @Override
     public LocalReferencesSpreadsheetExpressionEvaluationContext createContext() {
+        return this.createContext(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    LOCALE_CONTEXT.locale(),
+                    HAS_NOW,
+                    Optional.of(
+                        EmailAddress.parse("user@example.com")
+                    )
+                )
+            )
+        );
+    }
+
+    private LocalReferencesSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
         return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
             REFERENCE_TO_VALUES,
-            new FakeSpreadsheetExpressionEvaluationContext() {
-
-                @Override
-                public Optional<SpreadsheetCell> cell() {
-                    return Optional.empty();
-                }
-
-                @Override
-                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-                    Objects.requireNonNull(cell, "cell");
-
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-                    Objects.requireNonNull(range, "range");
-
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-                    Objects.requireNonNull(labelName, "labelName");
-
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public String currencySymbol() {
-                    return CURRENCY_SYMBOL;
-                }
-
-                @Override
-                public char decimalSeparator() {
-                    return DECIMAL_SEPARATOR;
-                }
-
-                @Override
-                public String exponentSymbol() {
-                    return EXPONENT_SYMBOL;
-                }
-
-                @Override
-                public char groupSeparator() {
-                    return GROUP_SEPARATOR;
-                }
-
-                @Override
-                public String infinitySymbol() {
-                    return INFINITY_SYMBOL;
-                }
-
-                @Override
-                public MathContext mathContext() {
-                    return MATH_CONTEXT;
-                }
-
-                @Override
-                public char monetaryDecimalSeparator() {
-                    return MONETARY_DECIMAL_SEPARATOR;
-                }
-
-                @Override
-                public String nanSymbol() {
-                    return NAN_SYMBOL;
-                }
-
-                @Override
-                public char negativeSign() {
-                    return NEGATIVE_SYMBOL;
-                }
-
-                @Override
-                public char percentSymbol() {
-                    return PERCENT_SYMBOL;
-                }
-
-                @Override
-                public char permillSymbol() {
-                    return PERMILL_SYMBOL;
-                }
-
-                @Override
-                public char positiveSign() {
-                    return POSITIVE_SYMBOL;
-                }
-
-                @Override
-                public char zeroDigit() {
-                    return ZERO;
-                }
-
-                @Override
-                public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
-                    Objects.requireNonNull(reference, "reference");
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-                    Objects.requireNonNull(fields, "fields");
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public LineEnding lineEnding() {
-                    return this.environmentContext.lineEnding();
-                }
-
-                @Override
-                public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-                    this.environmentContext.setLineEnding(lineEnding);
-                    return this;
-                }
-
-                @Override
-                public Locale locale() {
-                    return this.environmentContext.locale();
-                }
-
-                @Override
-                public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-                    this.environmentContext.setLocale(locale);
-                    return this;
-                }
-
-                private final LocaleContext localeContext = LocaleContexts.jre(Locale.ENGLISH);
-
-                @Override
-                public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                    return this.environmentContext.environmentValue(name);
-                }
-
-                @Override
-                public Optional<EmailAddress> user() {
-                    return this.environmentContext.user();
-                }
-
-                @Override
-                public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-                    this.environmentContext.setUser(user);
-                    return this;
-                }
-
-                private final EnvironmentContext environmentContext = EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LineEnding.NL,
-                        this.localeContext.locale(),
-                        LocalDateTime::now,
-                        Optional.of(
-                            EmailAddress.parse("user@example.com")
-                        )
-                    )
-                );
-
-                @Override
-                public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-                    Objects.requireNonNull(reference, "reference");
-
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
-                    return this.localeContext.dateTimeSymbolsForLocale(locale);
-                }
-
-                @Override
-                public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
-                    return this.localeContext.decimalNumberSymbolsForLocale(locale);
-                }
-
-                @Override
-                public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
-                    Objects.requireNonNull(cell, "cell");
-                    return super.spreadsheetFormatterContext(cell);
-                }
-
-                @Override
-                public <T> FakeSpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                                          final T value) {
-                    Objects.requireNonNull(name, "name");
-                    Objects.requireNonNull(value, "value");
-                    throw new UnsupportedOperationException();
-                }
-
-                @Override
-                public FakeSpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-                    Objects.requireNonNull(name, "name");
-                    throw new UnsupportedOperationException();
-                }
-            }
+            new TestSpreadsheetExpressionEvaluationContext(environmentContext)
         );
+    }
+
+    final class TestSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetExpressionEvaluationContext {
+
+        TestSpreadsheetExpressionEvaluationContext(final EnvironmentContext environmentContext) {
+            this.environmentContext = environmentContext;
+        }
+
+        @Override
+        public Optional<SpreadsheetCell> cell() {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+            Objects.requireNonNull(cell, "cell");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+            Objects.requireNonNull(range, "range");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+            Objects.requireNonNull(labelName, "labelName");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String currencySymbol() {
+            return CURRENCY_SYMBOL;
+        }
+
+        @Override
+        public char decimalSeparator() {
+            return DECIMAL_SEPARATOR;
+        }
+
+        @Override
+        public String exponentSymbol() {
+            return EXPONENT_SYMBOL;
+        }
+
+        @Override
+        public char groupSeparator() {
+            return GROUP_SEPARATOR;
+        }
+
+        @Override
+        public String infinitySymbol() {
+            return INFINITY_SYMBOL;
+        }
+
+        @Override
+        public MathContext mathContext() {
+            return MATH_CONTEXT;
+        }
+
+        @Override
+        public char monetaryDecimalSeparator() {
+            return MONETARY_DECIMAL_SEPARATOR;
+        }
+
+        @Override
+        public String nanSymbol() {
+            return NAN_SYMBOL;
+        }
+
+        @Override
+        public char negativeSign() {
+            return NEGATIVE_SYMBOL;
+        }
+
+        @Override
+        public char percentSymbol() {
+            return PERCENT_SYMBOL;
+        }
+
+        @Override
+        public char permillSymbol() {
+            return PERMILL_SYMBOL;
+        }
+
+        @Override
+        public char positiveSign() {
+            return POSITIVE_SYMBOL;
+        }
+
+        @Override
+        public char zeroDigit() {
+            return ZERO;
+        }
+
+        @Override
+        public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+            Objects.requireNonNull(reference, "reference");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+            Objects.requireNonNull(fields, "fields");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+            Objects.requireNonNull(environmentContext, "environmentContext");
+
+            return this.environmentContext.equals(environmentContext) ?
+                this :
+                new TestSpreadsheetExpressionEvaluationContext(environmentContext);
+        }
+
+        private final EnvironmentContext environmentContext;
+
+        @Override
+        public LineEnding lineEnding() {
+            return this.environmentContext.lineEnding();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+            this.environmentContext.setLineEnding(lineEnding);
+            return this;
+        }
+
+        @Override
+        public Locale locale() {
+            return this.environmentContext.locale();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+            this.environmentContext.setLocale(locale);
+            return this;
+        }
+
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            return this.environmentContext.environmentValue(name);
+        }
+
+        @Override
+        public Optional<EmailAddress> user() {
+            return this.environmentContext.user();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+            this.environmentContext.setUser(user);
+            return this;
+        }
+
+        @Override
+        public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+            Objects.requireNonNull(reference, "reference");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+            return LOCALE_CONTEXT.dateTimeSymbolsForLocale(locale);
+        }
+
+        @Override
+        public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+            return LOCALE_CONTEXT.decimalNumberSymbolsForLocale(locale);
+        }
+
+        @Override
+        public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+            Objects.requireNonNull(cell, "cell");
+            return super.spreadsheetFormatterContext(cell);
+        }
+
+        @Override
+        public <T> FakeSpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                                  final T value) {
+            Objects.requireNonNull(name, "name");
+            Objects.requireNonNull(value, "value");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public FakeSpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+            Objects.requireNonNull(name, "name");
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override
@@ -661,6 +695,65 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     @Override
     public void testResolveLabelWithNullFails() {
         throw new UnsupportedOperationException();
+    }
+
+    // hashEquals/Object................................................................................................
+
+    @Test
+    @Override
+    public void testEquals() {
+        final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
+
+        this.checkEquals(
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                context
+            ),
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                context
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentReferenceToValues() {
+        final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
+
+        this.checkNotEquals(
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                context
+            ),
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                (l) -> {
+                    throw new UnsupportedOperationException();
+                },
+                context
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetExpressionEvaluationContext() {
+        this.checkNotEquals(
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                SpreadsheetExpressionEvaluationContexts.fake()
+            ),
+            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+                REFERENCE_TO_VALUES,
+                SpreadsheetExpressionEvaluationContexts.fake()
+            )
+        );
+    }
+
+    @Override
+    public LocalReferencesSpreadsheetExpressionEvaluationContext createObject() {
+        return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            REFERENCE_TO_VALUES,
+            SpreadsheetExpressionEvaluationContexts.fake()
+        );
     }
 
     // toString.........................................................................................................

@@ -700,6 +700,33 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // environmentContext...............................................................................................
 
     @Test
+    public void testSetEnvironmentContextWithDifferent() {
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext();
+
+        final LineEnding lineEnding = LineEnding.CRNL;
+
+        this.checkNotEquals(
+            LINE_ENDING,
+            lineEnding
+        );
+
+        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            lineEnding,
+            LOCALE,
+            NOW,
+            EnvironmentContext.ANONYMOUS
+        );
+
+        final SpreadsheetExpressionEvaluationContext afterSet = context.setEnvironmentContext(differentEnvironmentContext);
+        this.checkNotEquals(
+            context,
+            afterSet
+        );
+    }
+
+    // HasLineEndings...................................................................................................
+
+    @Test
     public void testLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
             LINE_ENDING,

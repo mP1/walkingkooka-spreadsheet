@@ -23,6 +23,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -406,6 +407,19 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     }
 
     @Override
+    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = before.setEnvironmentContext(environmentContext);
+
+        return before.equals(after) ?
+            this :
+            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+                this.localReferenceToValues,
+                Objects.requireNonNull(after, "environmentContext")
+            );
+    }
+
+    @Override
     public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                           final T value) {
         this.context.setEnvironmentValue(
@@ -422,6 +436,26 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     }
 
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.localReferenceToValues,
+            this.context
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof LocalReferencesSpreadsheetExpressionEvaluationContext &&
+                this.equals0((LocalReferencesSpreadsheetExpressionEvaluationContext) other));
+    }
+
+    private boolean equals0(final LocalReferencesSpreadsheetExpressionEvaluationContext other) {
+        return this.localReferenceToValues.equals(other.localReferenceToValues) &&
+            this.context.equals(other.context);
+    }
 
     @Override
     public String toString() {
