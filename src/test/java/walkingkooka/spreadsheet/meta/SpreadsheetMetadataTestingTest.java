@@ -23,7 +23,6 @@ import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.LineEnding;
