@@ -914,7 +914,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
-                NOW,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
@@ -931,7 +931,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
-                NOW,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
@@ -967,7 +967,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 Locale.FRANCE,
-                NOW,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
@@ -984,7 +984,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 Locale.FRANCE,
-                NOW,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
@@ -1513,7 +1513,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 EnvironmentContexts.empty(
                     LINE_ENDING,
                     LOCALE,
-                    NOW::now,
+                    HAS_NOW::now,
                     Optional.of(USER)
                 )
             )

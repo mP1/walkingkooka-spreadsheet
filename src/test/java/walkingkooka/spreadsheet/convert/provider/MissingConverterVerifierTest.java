@@ -238,7 +238,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         private final DateTimeContext dateTimeContext = METADATA_EN_AU.dateTimeContext(
             SpreadsheetMetadata.NO_CELL,
-            NOW,
+            HAS_NOW,
             LOCALE_CONTEXT
         );
 
