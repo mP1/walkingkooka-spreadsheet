@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -47,7 +48,8 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<BasicSpreadsheetStoreRepository> {
+public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<BasicSpreadsheetStoreRepository>,
+    HashCodeEqualsDefinedTesting2<BasicSpreadsheetStoreRepository> {
 
     private final static SpreadsheetCellStore CELLS = SpreadsheetCellStores.fake();
 
@@ -341,6 +343,253 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             STORAGES,
             USERS
         );
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentCells() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                SpreadsheetCellStores.fake(),
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentCellReferences() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                SpreadsheetCellReferencesStores.fake(),
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentColumns() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                SpreadsheetColumnStores.fake(),
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentForms() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                SpreadsheetFormStores.fake(),
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentGroups() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                SpreadsheetGroupStores.fake(),
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLabels() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                SpreadsheetLabelStores.fake(),
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLabelReferences() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                SpreadsheetLabelReferencesStores.fake(),
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMetadata() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                SpreadsheetMetadataStores.fake(),
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentRangeToCells() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                SpreadsheetCellRangeStores.fake(),
+                ROWS,
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentRows() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                SpreadsheetRowStores.fake(),
+                STORAGES,
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentStorages() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                Storages.fake(),
+                USERS
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentUsers() {
+        this.checkNotEquals(
+            BasicSpreadsheetStoreRepository.with(
+                CELLS,
+                CELL_REFERENCES,
+                COLUMNS,
+                FORMS,
+                GROUPS,
+                LABELS,
+                LABEL_REFERENCES,
+                METADATAS,
+                RANGE_TO_CELLS,
+                ROWS,
+                STORAGES,
+                SpreadsheetUserStores.fake()
+            )
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetStoreRepository createObject() {
+        return this.createStoreRepository();
     }
 
     // toString.........................................................................................................
