@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.Cast;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -55,6 +56,16 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
         return context == clone ?
             this :
             with(clone);
+    }
+
+    @Override
+    public SpreadsheetValidatorContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final ValidatorContext<SpreadsheetExpressionReference> before = this.context;
+        final ValidatorContext<SpreadsheetExpressionReference> after = before.setEnvironmentContext(environmentContext);
+
+        return before.equals(after) ?
+            this :
+            with(after);
     }
 
     @Override

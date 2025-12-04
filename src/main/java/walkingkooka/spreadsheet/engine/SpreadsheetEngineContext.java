@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.convert.CanConvert;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasMissingCellNumberValue;
@@ -125,6 +126,9 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext cloneEnvironment();
+
+    @Override
+    SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext);
 
     @Override
     SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding);

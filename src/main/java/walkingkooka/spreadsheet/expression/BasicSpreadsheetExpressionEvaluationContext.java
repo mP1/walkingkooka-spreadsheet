@@ -423,6 +423,26 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
+    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        return this.environmentContext.equals(environmentContext) ?
+            this :
+            new BasicSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
+                this.serverUrl,
+                this.spreadsheetMetadata,
+                this.spreadsheetStoreRepository,
+                this.spreadsheetConverterContext,
+                Objects.requireNonNull(environmentContext, "environmentContext"),
+                this.spreadsheetFormatterContextFactory,
+                this.formHandlerContext,
+                this.terminalContext,
+                this.expressionFunctionProvider,
+                this.providerContext
+            );
+    }
+
+    @Override
     public LineEnding lineEnding() {
         return this.environmentContext.lineEnding();
     }

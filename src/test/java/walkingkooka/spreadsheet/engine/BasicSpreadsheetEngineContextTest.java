@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
@@ -49,7 +50,6 @@ import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetContext;
-import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -80,6 +80,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.FakeSpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -92,6 +93,7 @@ import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContext;
+import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
@@ -120,10 +122,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext>,
-    SpreadsheetMetadataTesting {
+    SpreadsheetMetadataTesting,
+    HashCodeEqualsDefinedTesting2<BasicSpreadsheetEngineContext> {
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
 
@@ -391,7 +396,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         VALIDATOR_PROVIDER
     );
 
-    private final static SpreadsheetContext SPREADSHEET_CONTEXT = SpreadsheetContexts.fake();
+    private final static SpreadsheetContext SPREADSHEET_CONTEXT = new TestSpreadsheetContext();
 
     // with.............................................................................................................
 
@@ -1047,6 +1052,47 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    // setEnvironmentContext............................................................................................
+
+    @Test
+    public void testSetEnvironmentContextWithSame() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+
+        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        assertSame(
+            context,
+            context.setEnvironmentContext(environmentContext)
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentContextWithDifferent() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
+        );
+
+        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
+            .setLineEnding(LineEnding.CRNL);
+
+        this.checkNotEquals(
+            environmentContext,
+            differentEnvironmentContext
+        );
+
+        final BasicSpreadsheetEngineContext before = this.createContext(environmentContext);
+        final SpreadsheetEngineContext after = before.setEnvironmentContext(differentEnvironmentContext);
+
+        assertNotSame(
+            before,
+            after
+        );
+    }
+
+    // environmentValue.................................................................................................
+
     @Test
     public void testEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
@@ -1391,7 +1437,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(
             METADATA,
             environmentContext,
-            ProviderContexts.fake()
+            PROVIDER_CONTEXT
         );
     }
 
@@ -1536,20 +1582,51 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private final class TestSpreadsheetContext implements SpreadsheetContext,
+    private final static class TestSpreadsheetContext implements SpreadsheetContext,
         EnvironmentContextDelegator,
         LocaleContextDelegator,
         SpreadsheetProviderDelegator {
+
+        private final static SpreadsheetStoreRepository REPO = new FakeSpreadsheetStoreRepository() {
+            @Override
+            public SpreadsheetLabelStore labels() {
+                return new FakeSpreadsheetLabelStore();
+            }
+        };
+
+        private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
+
+        TestSpreadsheetContext() {
+            this(
+                EnvironmentContexts.map(
+                    EnvironmentContexts.empty(
+                        LineEnding.NL,
+                        Locale.forLanguageTag("en-AU"),
+                        LocalDateTime::now,
+                        EnvironmentContext.ANONYMOUS
+                    )
+                )
+            );
+        }
+
+        TestSpreadsheetContext(final EnvironmentContext environmentContext) {
+            this.metadata = METADATA;
+            this.storeRepository = REPO;
+
+            this.environmentContext = environmentContext;
+            this.localeContext = LOCALE_CONTEXT;
+            this.providerContext = PROVIDER_CONTEXT;
+        }
 
         TestSpreadsheetContext(final SpreadsheetMetadata metadata,
                                final SpreadsheetStoreRepository storeRepository,
                                final EnvironmentContext environmentContext,
                                final LocaleContext localeContext,
                                final ProviderContext providerContext) {
-            checkEquals(
-                BasicSpreadsheetEngineContextTest.SPREADSHEET_ID,
-                metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
-            );
+            final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+            if (false == BasicSpreadsheetEngineContextTest.SPREADSHEET_ID.equals(spreadsheetId)) {
+                throw new IllegalArgumentException("Invalid SpreadsheetId: " + spreadsheetId + " expected " + SPREADSHEET_ID);
+            }
             this.metadata = metadata;
             this.storeRepository = storeRepository;
 
@@ -1664,6 +1741,21 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
+        public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+            Objects.requireNonNull(environmentContext, "environmentContext");
+
+            return this.environmentContext.equals(environmentContext) ?
+                this :
+                new TestSpreadsheetContext(
+                    this.metadata,
+                    this.storeRepository,
+                    environmentContext,
+                    this.localeContext,
+                    this.providerContext
+                );
+        }
+
+        @Override
         public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                           final T value) {
             this.environmentContext.setEnvironmentValue(
@@ -1752,12 +1844,121 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             Objects.requireNonNull(id, "id");
             throw new UnsupportedOperationException();
         }
+
+        // Object.......................................................................................................
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(
+                this.metadata,
+                this.storeRepository,
+                this.environmentContext,
+                this.localeContext,
+                this.providerContext
+            );
+        }
+
+        @Override
+        public boolean equals(final Object other) {
+            return this == other ||
+                (other instanceof TestSpreadsheetContext &&
+                    this.equals0((TestSpreadsheetContext) other));
+        }
+
+        private boolean equals0(final TestSpreadsheetContext other) {
+            return this.metadata.equals(other.metadata) &&
+                this.storeRepository.equals(other.storeRepository) &&
+                this.environmentContext.equals(other.environmentContext) &&
+                this.localeContext.equals(other.localeContext) &&
+                this.providerContext.equals(other.providerContext);
+        }
     }
 
     // SpreadsheetProviderTesting.......................................................................................
 
     @Override
     public BasicSpreadsheetEngineContext createSpreadsheetProvider() {
+        return this.createContext();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    @Override
+    public void testEquals() {
+        this.checkEquals(
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            ),
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMode() {
+        this.checkNotEquals(
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            ),
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FIND,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetContext() {
+        this.checkNotEquals(
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            ),
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                new TestSpreadsheetContext(
+                    EnvironmentContexts.map(
+                        EnvironmentContexts.empty(
+                            LineEnding.CRNL,
+                            Locale.FRANCE,
+                            LocalDateTime::now,
+                            EnvironmentContext.ANONYMOUS
+                        )
+                    )
+                ),
+                TERMINAL_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentTerminalContext() {
+        this.checkNotEquals(
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TERMINAL_CONTEXT
+            ),
+            BasicSpreadsheetEngineContext.with(
+                SpreadsheetEngineContextMode.FORMULA,
+                SPREADSHEET_CONTEXT,
+                TerminalContexts.fake()
+            )
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetEngineContext createObject() {
         return this.createContext();
     }
 

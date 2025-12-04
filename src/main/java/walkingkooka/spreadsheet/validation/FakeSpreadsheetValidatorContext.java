@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.validation;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -34,6 +35,11 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
 
     @Override
     public SpreadsheetValidatorContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetValidatorContext setEnvironmentContext(final EnvironmentContext environmentContext) {
         throw new UnsupportedOperationException();
     }
 

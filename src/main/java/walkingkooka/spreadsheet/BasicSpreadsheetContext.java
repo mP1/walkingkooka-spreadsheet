@@ -310,6 +310,29 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     }
 
     @Override
+    public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final EnvironmentContext before = this.environmentContext;
+
+        return before.equals(environmentContext) ?
+            this :
+            new BasicSpreadsheetContext(
+                this.serverUrl,
+                this.spreadsheetId,
+                this.spreadsheetIdToStoreRepository,
+                this.storeRepository,
+                this.spreadsheetProvider,
+                null, // SpreadsheetEngineContextFactory
+                this.spreadsheetEngineContext,
+                null, // HttpRouterFactory
+                this.httpRouter,
+                Objects.requireNonNull(environmentContext, "environmentContext"),
+                this.localeContext,
+                this.providerContext,
+                this.terminalServerContext
+            );
+    }
+
+    @Override
     public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                       final T value) {
         this.environmentContext.setEnvironmentValue(

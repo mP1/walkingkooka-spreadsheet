@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -140,6 +141,19 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
             new CellSpreadsheetExpressionEvaluationContext(
                 this.cell,
                 Objects.requireNonNull(cloned, "environmentContext")
+            );
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetExpressionEvaluationContext before = this.context;
+        final SpreadsheetExpressionEvaluationContext after = before.setEnvironmentContext(environmentContext);
+
+        return before.equals(after) ?
+            this :
+            new CellSpreadsheetExpressionEvaluationContext(
+                this.cell,
+                Objects.requireNonNull(after, "environmentContext")
             );
     }
 

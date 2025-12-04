@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
@@ -237,6 +238,13 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public TestSpreadsheetExpressionEvaluationContextDelegator cloneEnvironment() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public TestSpreadsheetExpressionEvaluationContextDelegator setEnvironmentContext(final EnvironmentContext environmentContext) {
+            Objects.requireNonNull(environmentContext, "environmentContext");
+
             throw new UnsupportedOperationException();
         }
 

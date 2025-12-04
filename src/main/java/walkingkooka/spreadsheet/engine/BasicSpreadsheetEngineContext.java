@@ -542,6 +542,22 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
+    public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetContext before = this.spreadsheetContext;
+        final SpreadsheetContext after = before.setEnvironmentContext(environmentContext);
+
+        return before.equals(after) ?
+            this :
+            new BasicSpreadsheetEngineContext(
+                this.mode,
+                null, // force re-create
+                this.spreadsheetLabelNameResolver,
+                after,
+                this.terminalContext
+            );
+    }
+
+    @Override
     public LineEnding lineEnding() {
         return this.spreadsheetContext.lineEnding();
     }
@@ -620,6 +636,28 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.mode,
+            this.spreadsheetContext,
+            this.terminalContext
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof BasicSpreadsheetEngineContext &&
+                this.equals0((BasicSpreadsheetEngineContext) other));
+    }
+
+    private boolean equals0(final BasicSpreadsheetEngineContext other) {
+        return this.mode.equals(other.mode) &&
+            this.spreadsheetContext.equals(other.spreadsheetContext) &&
+            this.terminalContext.equals(other.terminalContext);
+    }
 
     @Override
     public String toString() {

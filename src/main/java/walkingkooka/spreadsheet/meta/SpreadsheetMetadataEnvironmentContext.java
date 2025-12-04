@@ -88,6 +88,16 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
     }
 
     @Override
+    public EnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        return this.context.equals(environmentContext) ?
+            this :
+            new SpreadsheetMetadataEnvironmentContext(
+                this.metadata,
+                Objects.requireNonNull(environmentContext, "environmentContext")
+            );
+    }
+
+    @Override
     public LineEnding lineEnding() {
         return this.environmentValueOrFail(LINE_ENDING);
     }

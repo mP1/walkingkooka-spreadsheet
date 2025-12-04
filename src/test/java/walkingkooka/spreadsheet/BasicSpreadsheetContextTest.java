@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -75,6 +76,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -106,11 +108,13 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         LocalDateTime.MIN
     );
 
+    private final static HasNow HAS_NOW = LocalDateTime::now;
+
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.map(
         EnvironmentContexts.empty(
             LINE_ENDING,
             LOCALE,
-            LocalDateTime::now,
+            HAS_NOW,
             Optional.empty() // no user
         )
     );
@@ -435,6 +439,59 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         );
     }
 
+    // setEnvironmentContext............................................................................................
+
+    @Test
+    public void testSetEnvironmentContextWithSame() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                Locale.ENGLISH,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        final BasicSpreadsheetContext context = this.createContext(environmentContext);
+        assertSame(
+            context,
+            context.setEnvironmentContext(environmentContext)
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentContext() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                Locale.ENGLISH,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
+            .setLocale(Locale.FRANCE);
+
+        this.checkNotEquals(
+            environmentContext,
+            differentEnvironmentContext
+        );
+
+        final BasicSpreadsheetContext basicSpreadsheetContext = this.createContext(environmentContext);
+        final SpreadsheetContext afterSet = basicSpreadsheetContext.setEnvironmentContext(differentEnvironmentContext);
+
+        assertNotSame(
+            basicSpreadsheetContext,
+            afterSet
+        );
+
+        this.checkNotEquals(
+            basicSpreadsheetContext,
+            afterSet
+        );
+    }
+
     // setEnvironment...................................................................................................
 
     @Test
@@ -546,6 +603,19 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Override
     public BasicSpreadsheetContext createContext() {
+        return this.createContext(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LINE_ENDING,
+                    LOCALE,
+                    HAS_NOW,
+                    Optional.empty() // no user
+                )
+            )
+        );
+    }
+
+    private BasicSpreadsheetContext createContext(final EnvironmentContext environmentContext) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
@@ -622,14 +692,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                     throw new UnsupportedOperationException();
                 }
             },
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LINE_ENDING,
-                    LOCALE,
-                    LocalDateTime::now,
-                    Optional.empty() // no user
-                )
-            ),
+            environmentContext,
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT,
             TERMINAL_SERVER_CONTEXT

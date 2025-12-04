@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContext;
 import walkingkooka.net.AbsoluteUrl;
@@ -227,6 +228,9 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     SpreadsheetExpressionEvaluationContext cloneEnvironment();
+
+    @Override
+    SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext);
 
     @Override
     <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,

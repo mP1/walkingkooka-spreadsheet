@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.validation.form;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
@@ -40,6 +41,7 @@ import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoad
 import walkingkooka.spreadsheet.reference.LabelNotFoundException;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -57,19 +59,23 @@ import walkingkooka.validation.form.FormName;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetFormHandlerContextTest implements SpreadsheetFormHandlerContextTesting<BasicSpreadsheetFormHandlerContext> {
+public final class BasicSpreadsheetFormHandlerContextTest implements SpreadsheetFormHandlerContextTesting<BasicSpreadsheetFormHandlerContext>,
+    HashCodeEqualsDefinedTesting2<BasicSpreadsheetFormHandlerContext> {
+
+    private final static Form<SpreadsheetExpressionReference> FORM = Form.with(
+        FormName.with("Form123")
+    );
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
-    private final static Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = (c) -> {
-        throw new UnsupportedOperationException();
-    };
+    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = (Set<SpreadsheetCell> cells) -> SpreadsheetDelta.EMPTY.setCells(cells);
 
     // with.............................................................................................................
 
@@ -379,6 +385,29 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     }
 
     private final static SpreadsheetCellReference A1_CELL = SpreadsheetSelection.A1;
+    private static final FakeSpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = new FakeSpreadsheetExpressionReferenceLoader() {
+        @Override
+        public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                                  final SpreadsheetExpressionEvaluationContext context) {
+            return Optional.ofNullable(
+                A1_CELL.equalsIgnoreReferenceKind(cell) ?
+                    cell.setFormula(SpreadsheetFormula.EMPTY) :
+                    null
+            );
+        }
+
+        @Override
+        public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
+                                                  final SpreadsheetExpressionEvaluationContext context) {
+            final SpreadsheetCell cell = this.loadCell(
+                cellRange.toCell(),
+                context
+            ).orElse(null);
+            return null == cell ?
+                Sets.empty() :
+                Sets.of(cell);
+        }
+    };
 
     private final static SpreadsheetLabelName A1LABEL = SpreadsheetSelection.labelName("A1LABEL");
 
@@ -435,33 +464,9 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Override
     public BasicSpreadsheetFormHandlerContext createContext() {
         return BasicSpreadsheetFormHandlerContext.with(
-            Form.with(
-                FormName.with("Form123")
-            ),
-            new FakeSpreadsheetExpressionReferenceLoader() {
-                @Override
-                public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                          final SpreadsheetExpressionEvaluationContext context) {
-                    return Optional.ofNullable(
-                        A1_CELL.equalsIgnoreReferenceKind(cell) ?
-                            cell.setFormula(SpreadsheetFormula.EMPTY) :
-                            null
-                    );
-                }
-
-                @Override
-                public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference cellRange,
-                                                          final SpreadsheetExpressionEvaluationContext context) {
-                    final SpreadsheetCell cell = this.loadCell(
-                        cellRange.toCell(),
-                        context
-                    ).orElse(null);
-                    return null == cell ?
-                        Sets.empty() :
-                        Sets.of(cell);
-                }
-            },
-            (Set<SpreadsheetCell> cells) -> SpreadsheetDelta.EMPTY.setCells(cells),
+            FORM,
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            CELLS_SAVER,
             new FakeSpreadsheetEngineContext() {
                 @Override
                 public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
@@ -512,6 +517,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
+                public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+                    Objects.requireNonNull(environmentContext, "environmentContext");
+
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
                 public LineEnding lineEnding() {
                     return this.environmentContext.lineEnding();
                 }
@@ -521,7 +533,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                     this.environmentContext.setLineEnding(lineEnding);
                     return this;
                 }
-                
+
                 @Override
                 public Locale locale() {
                     return this.environmentContext.locale();
@@ -585,6 +597,118 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
     @Override
     public void testUserNotNull() {
         throw new UnsupportedOperationException();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    @Override
+    public void testEquals() {
+        final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
+
+        this.checkEquals(
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                engineContext
+            ),
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                engineContext
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentForm() {
+        final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
+
+        this.checkNotEquals(
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(
+                    FormName.with("formName")
+                ),
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                engineContext
+            ),
+            BasicSpreadsheetFormHandlerContext.with(
+                Form.with(
+                    FormName.with("differentFormName")
+                ),
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                engineContext
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetExpressionReferenceLoader() {
+        final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
+
+        this.checkNotEquals(
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                CELLS_SAVER,
+                engineContext
+            ),
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SpreadsheetExpressionReferenceLoaders.fake(),
+                CELLS_SAVER,
+                engineContext
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentCellSaver() {
+        final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.fake();
+
+        this.checkNotEquals(
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                engineContext
+            ),
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                (c) -> {
+                    throw new UnsupportedOperationException();
+                },
+                engineContext
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentEngineContext() {
+        this.checkNotEquals(
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                SpreadsheetEngineContexts.fake()
+            ),
+            BasicSpreadsheetFormHandlerContext.with(
+                FORM,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                CELLS_SAVER,
+                SpreadsheetEngineContexts.fake()
+            )
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetFormHandlerContext createObject() {
+        return this.createContext();
     }
 
     // class............................................................................................................
