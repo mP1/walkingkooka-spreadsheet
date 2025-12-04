@@ -287,26 +287,9 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public SpreadsheetContext cloneEnvironment() {
-        final EnvironmentContext before = this.environmentContext;
-        final EnvironmentContext cloned = before.cloneEnvironment();
-
-        return before.equals(cloned) ?
-            this :
-            new BasicSpreadsheetContext(
-                this.serverUrl,
-                this.spreadsheetId,
-                this.spreadsheetIdToStoreRepository,
-                this.storeRepository,
-                this.spreadsheetProvider,
-                null, // SpreadsheetEngineContextFactory
-                this.spreadsheetEngineContext,
-                null, // HttpRouterFactory
-                this.httpRouter,
-                cloned,
-                this.localeContext,
-                this.providerContext,
-                this.terminalServerContext
-            );
+        return this.setEnvironmentContext(
+            this.environmentContext.cloneEnvironment()
+        );
     }
 
     @Override
