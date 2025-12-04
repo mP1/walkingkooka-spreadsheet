@@ -526,19 +526,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public SpreadsheetEngineContext cloneEnvironment() {
-        final SpreadsheetContext before = this.spreadsheetContext;
-        final SpreadsheetContext after = before.cloneEnvironment();
-
-        // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
-        return before.equals(after) ?
-            this :
-            new BasicSpreadsheetEngineContext(
-                this.mode,
-                this.canConvert,
-                this.spreadsheetLabelNameResolver,
-                after,
-                this.terminalContext
-            );
+        return this.setEnvironmentContext(
+            this.environmentContext()
+                .cloneEnvironment()
+        );
     }
 
     @Override
