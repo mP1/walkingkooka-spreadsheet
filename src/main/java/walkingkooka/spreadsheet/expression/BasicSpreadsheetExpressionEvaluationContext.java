@@ -424,7 +424,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.environmentContext.equals(environmentContext) ?
+        return this.environmentContext == environmentContext ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
                 this.cell,

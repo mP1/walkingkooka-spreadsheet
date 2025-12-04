@@ -245,7 +245,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         public TestSpreadsheetExpressionEvaluationContextDelegator setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
-            throw new UnsupportedOperationException();
+            return new TestSpreadsheetExpressionEvaluationContextDelegator();
         }
 
         @Override
@@ -264,7 +264,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public LineEnding lineEnding() {
-            throw new UnsupportedOperationException();
+            return LineEnding.NL;
         }
 
         @Override

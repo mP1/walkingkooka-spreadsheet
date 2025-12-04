@@ -149,7 +149,7 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
         final SpreadsheetExpressionEvaluationContext before = this.context;
         final SpreadsheetExpressionEvaluationContext after = before.setEnvironmentContext(environmentContext);
 
-        return before.equals(after) ?
+        return before == after ?
             this :
             new CellSpreadsheetExpressionEvaluationContext(
                 this.cell,

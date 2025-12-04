@@ -82,7 +82,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
-            throw new UnsupportedOperationException();
+            return new TestSpreadsheetContext();
         }
 
         @Override
@@ -138,6 +138,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         }
 
         @Override
+        public Locale locale() {
+            return Locale.ENGLISH;
+        }
+
+        @Override
         public SpreadsheetContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
@@ -181,6 +186,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
             Store.checkOffsetAndCount(offset, count);
 
             throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public LineEnding lineEnding() {
+            return LineEnding.NL;
         }
 
         @Override

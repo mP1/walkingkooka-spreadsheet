@@ -89,7 +89,8 @@ final class SpreadsheetMetadataEnvironmentContext implements EnvironmentContext 
 
     @Override
     public EnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.context.equals(environmentContext) ?
+        // difference EnvironmentContext instance create a new SpreadsheetMetadataEnvironmentContext
+        return this.context == environmentContext ?
             this :
             new SpreadsheetMetadataEnvironmentContext(
                 this.metadata,
