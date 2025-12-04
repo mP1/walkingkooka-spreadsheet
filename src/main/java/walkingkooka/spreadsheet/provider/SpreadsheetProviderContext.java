@@ -155,18 +155,9 @@ final class SpreadsheetProviderContext implements ProviderContext,
 
     @Override
     public SpreadsheetProviderContext cloneEnvironment() {
-        final EnvironmentContext before = this.environmentContext;
-        final EnvironmentContext after = before.cloneEnvironment();
-
-        return before.equals(after) ?
-            this :
-            new SpreadsheetProviderContext(
-                this.pluginStore,
-                this.converterContext, // keep, recreate only when locale changes
-                after,
-                this.jsonNodeMarshallUnmarshallContext,
-                this.localeContext
-            );
+        return this.setEnvironmentContext(
+            this.environmentContext.cloneEnvironment()
+        );
     }
 
     @Override
