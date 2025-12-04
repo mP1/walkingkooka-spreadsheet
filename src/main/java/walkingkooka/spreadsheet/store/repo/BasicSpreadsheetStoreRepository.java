@@ -191,6 +191,48 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     private final SpreadsheetUserStore users;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.cells,
+            this.cellReferences,
+            this.columns,
+            this.forms,
+            this.groups,
+            this.labels,
+            this.labelReferences,
+            this.metadatas,
+            this.rangeToCells,
+            this.rows,
+            this.storage,
+            this.users
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof BasicSpreadsheetStoreRepository &&
+                this.equals0((BasicSpreadsheetStoreRepository) other));
+    }
+
+    private boolean equals0(final BasicSpreadsheetStoreRepository other) {
+        return this.cells.equals(other.cells) &&
+            this.cellReferences.equals(other.cellReferences) &&
+            this.columns.equals(other.columns) &&
+            this.forms.equals(other.forms) &&
+            this.groups.equals(other.groups) &&
+            this.labels.equals(other.labels) &&
+            this.labelReferences.equals(other.labelReferences) &&
+            this.metadatas.equals(other.metadatas) &&
+            this.rangeToCells.equals(other.rangeToCells) &&
+            this.rows.equals(other.rows) &&
+            this.storage.equals(other.storage) &&
+            this.users.equals(other.users);
+    }
+
     @Override
     public String toString() {
         return this.cells + " " +
