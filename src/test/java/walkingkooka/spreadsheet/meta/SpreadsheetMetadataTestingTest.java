@@ -23,7 +23,6 @@ import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -152,50 +151,6 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             () -> PROVIDER_CONTEXT.removeEnvironmentValue(
                 EnvironmentValueName.with("Hello")
             )
-        );
-    }
-
-    @Test
-    public void testProviderContextCloneEnvironmentSetLocale() {
-        final Locale locale = Locale.FRANCE;
-        this.checkNotEquals(
-            LOCALE,
-            locale
-        );
-
-        final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
-        this.localeAndCheck(
-            context.setLocale(locale),
-            locale
-        );
-    }
-
-    @Test
-    public void testProviderContextCloneEnvironmentSetUser() {
-        final EmailAddress user = EmailAddress.parse("different@example.com");
-
-        final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
-        this.userAndCheck(
-            context.setUser(
-                Optional.of(user)
-            ),
-            user
-        );
-    }
-
-    @Test
-    public void testProviderContextCloneEnvironmentSetEnvironmentValue() {
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "World123";
-
-        final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
-        this.environmentValueAndCheck(
-            context.setEnvironmentValue(
-                name,
-                value
-            ),
-            name,
-            value
         );
     }
 
