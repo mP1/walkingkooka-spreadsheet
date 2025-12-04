@@ -120,7 +120,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     HasUser HAS_USER = () -> Optional.of(USER);
 
-    HasNow NOW = () -> LocalDateTime.of(
+    HasNow HAS_NOW = () -> LocalDateTime.of(
         1999,
         12,
         31,
@@ -169,7 +169,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     StorageContext STORAGE_CONTEXT = new FakeStorageContext() {
         @Override
         public LocalDateTime now() {
-            return NOW.now();
+            return HAS_NOW.now();
         }
 
         @Override
@@ -194,7 +194,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.create(
                 USER,
-                NOW.now()
+                HAS_NOW.now()
             )
         ).set(
             SpreadsheetMetadataPropertyName.AUTO_HIDE_SCROLLBARS,
@@ -383,7 +383,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         EnvironmentContexts.empty(
             LINE_ENDING,
             LOCALE,
-            NOW,
+            HAS_NOW,
             Optional.of(USER)
         )
     );
@@ -518,7 +518,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetParserContext SPREADSHEET_PARSER_CONTEXT = METADATA_EN_AU.spreadsheetParserContext(
         SpreadsheetMetadata.NO_CELL,
         LOCALE_CONTEXT,
-        NOW
+        HAS_NOW
     );
 
     static SpreadsheetFormula parseFormula(final String text) {

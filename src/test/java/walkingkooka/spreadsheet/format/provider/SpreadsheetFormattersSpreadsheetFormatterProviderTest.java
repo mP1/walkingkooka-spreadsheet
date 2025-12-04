@@ -93,7 +93,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
         @Override
         public LocalDateTime now() {
-            return NOW.now();
+            return HAS_NOW.now();
         }
     };
 
@@ -1655,7 +1655,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -1697,7 +1697,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -1744,7 +1744,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -1920,7 +1920,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            NOW,
+            HAS_NOW,
             "value must be different to now"
         );
 
@@ -1964,7 +1964,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            NOW,
+            HAS_NOW,
             "value must be different to now"
         );
 
@@ -2122,7 +2122,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -2151,7 +2151,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -2185,7 +2185,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -2275,7 +2275,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "date time must be different to now"
         );
 
@@ -2307,7 +2307,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "date time must be different to now"
         );
 
@@ -2344,7 +2344,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "date time must be different to now"
         );
 
@@ -2431,7 +2431,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -2460,7 +2460,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -2494,7 +2494,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -2683,7 +2683,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -2712,7 +2712,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -2746,7 +2746,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -2836,7 +2836,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "dateTime must be different to now"
         );
 
@@ -2868,7 +2868,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "dateTime must be different to now"
         );
 
@@ -2905,7 +2905,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "dateTime must be different to now"
         );
 
@@ -2992,7 +2992,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -3021,7 +3021,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -3055,7 +3055,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -3146,7 +3146,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -3175,7 +3175,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -3209,7 +3209,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -3299,7 +3299,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "date-time must be different to now"
         );
 
@@ -3331,7 +3331,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "date-time must be different to now"
         );
 
@@ -3368,7 +3368,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             dateTime,
-            NOW.now(),
+            HAS_NOW.now(),
             "date-time must be different to now"
         );
 
@@ -3455,7 +3455,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -3484,7 +3484,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -3518,7 +3518,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -3947,7 +3947,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -3976,7 +3976,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -4010,7 +4010,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -4097,7 +4097,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -4126,7 +4126,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -4160,7 +4160,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             date,
-            NOW.now(),
+            HAS_NOW.now(),
             "date must be different to now"
         );
 
@@ -4247,7 +4247,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -4276,7 +4276,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -4310,7 +4310,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             time,
-            NOW.now(),
+            HAS_NOW.now(),
             "time must be different to now"
         );
 
@@ -4509,7 +4509,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            NOW.now().toLocalTime(),
+            HAS_NOW.now().toLocalTime(),
             "value must be different to now"
         );
 
@@ -4546,7 +4546,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            NOW.now().toLocalTime(),
+            HAS_NOW.now().toLocalTime(),
             "value must be different to now"
         );
 
@@ -4580,7 +4580,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         );
         this.checkNotEquals(
             value,
-            NOW.now().toLocalTime(),
+            HAS_NOW.now().toLocalTime(),
             "value must be different to now"
         );
 

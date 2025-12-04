@@ -713,7 +713,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
             lineEnding,
             LOCALE,
-            NOW,
+            HAS_NOW,
             EnvironmentContext.ANONYMOUS
         );
 
@@ -731,7 +731,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
             LINE_ENDING,
             LOCALE,
-            NOW,
+            HAS_NOW,
             EnvironmentContext.ANONYMOUS
         );
 
@@ -747,7 +747,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
-                NOW,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
@@ -774,7 +774,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
             LINE_ENDING,
             Locale.FRANCE,
-            NOW,
+            HAS_NOW,
             EnvironmentContext.ANONYMOUS
         );
 
@@ -790,7 +790,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 Locale.FRANCE,
-                NOW,
+                HAS_NOW,
                 EnvironmentContext.ANONYMOUS
             )
         );
@@ -879,7 +879,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
             LINE_ENDING,
             LOCALE,
-            NOW,
+            HAS_NOW,
             Optional.of(user)
         );
 
