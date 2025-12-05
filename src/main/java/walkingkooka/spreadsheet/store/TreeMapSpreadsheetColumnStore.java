@@ -115,6 +115,24 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     // VisibleForTesting
     private final Store<SpreadsheetColumnReference, SpreadsheetColumn> store;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof TreeMapSpreadsheetColumnStore &&
+                this.equals0((TreeMapSpreadsheetColumnStore) other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetColumnStore other) {
+        return this.store.equals(other.store);
+    }
+
     @Override
     public String toString() {
         return this.store.toString();

@@ -19,13 +19,15 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.TreeMap;
 
-final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTestCase<TreeMapSpreadsheetColumnStore> {
+final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTestCase<TreeMapSpreadsheetColumnStore> 
+    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetColumnStore> {
 
     @Test
     public void testLoadColumns() {
@@ -81,6 +83,44 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         );
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final TreeMapSpreadsheetColumnStore store1 = this.createStore();
+        final TreeMapSpreadsheetColumnStore store2 = this.createStore();
+
+        final SpreadsheetColumn column = SpreadsheetColumn.with(
+            SpreadsheetSelection.parseColumn("A")
+        );
+
+        store1.save(column);
+        store2.save(column);
+
+        this.checkEquals(
+            store1,
+            store2
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final TreeMapSpreadsheetColumnStore different = this.createStore();
+
+        different.save(
+            SpreadsheetColumn.with(
+                SpreadsheetSelection.parseColumn("B")
+            )
+        );
+
+        this.checkNotEquals(different);
+    }
+
+    @Override
+    public TreeMapSpreadsheetColumnStore createObject() {
+        return this.createStore();
+    }
+    
     // toString.........................................................................................................
 
     @Test
