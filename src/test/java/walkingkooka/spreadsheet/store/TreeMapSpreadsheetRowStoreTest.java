@@ -89,6 +89,11 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
         );
     }
 
+    @Override
+    public TreeMapSpreadsheetRowStore createStore() {
+        return TreeMapSpreadsheetRowStore.create();
+    }
+
     // hashCode/equals..................................................................................................
 
     @Test
@@ -139,17 +144,12 @@ implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetRowStore> {
         this.toStringAndCheck(store, "[2]");
     }
 
-    @Override
-    public TreeMapSpreadsheetRowStore createStore() {
-        return TreeMapSpreadsheetRowStore.create();
-    }
+    // class............................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetRowStore> type() {
         return TreeMapSpreadsheetRowStore.class;
     }
-
-    // TypeNameTesting..................................................................
 
     @Override
     public String typeNamePrefix() {
