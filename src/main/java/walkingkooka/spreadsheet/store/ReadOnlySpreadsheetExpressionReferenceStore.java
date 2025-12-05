@@ -170,6 +170,24 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
 
     private final SpreadsheetExpressionReferenceStore<T> store;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof ReadOnlySpreadsheetExpressionReferenceStore &&
+                this.equals0((ReadOnlySpreadsheetExpressionReferenceStore<?>) other));
+    }
+
+    private boolean equals0(final ReadOnlySpreadsheetExpressionReferenceStore<?> other) {
+        return this.store.equals(other.store);
+    }
+
     @Override
     public String toString() {
         return this.store.toString();
