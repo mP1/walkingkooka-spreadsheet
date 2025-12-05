@@ -398,6 +398,34 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
 
     final ProviderContext providerContext;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.store,
+            this.metadata,
+            this.spreadsheetParserProvider,
+            this.localeContext,
+            this.providerContext
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore &&
+                this.equals0((SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore) other));
+    }
+
+    private boolean equals0(final SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore other) {
+        return this.store.equals(other.store) &&
+            this.metadata.equals(other.metadata) &&
+            this.spreadsheetParserProvider.equals(other.spreadsheetParserProvider) &&
+            this.localeContext.equals(other.localeContext) &&
+            this.providerContext.equals(other.providerContext);
+    }
+
     @Override
     public String toString() {
         return this.metadata + " " + this.store + " " + this.spreadsheetParserProvider + " " + this.localeContext + " " + this.providerContext;
