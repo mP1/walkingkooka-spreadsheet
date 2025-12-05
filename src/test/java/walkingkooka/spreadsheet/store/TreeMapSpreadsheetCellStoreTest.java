@@ -856,7 +856,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
             () -> "maxColumnWidth of " + column + " store=" + store);
     }
 
-    // maxRowHeight...................................................................................................
+    // maxRowHeight.....................................................................................................
 
     @Test
     public void testMaxRowHeightWithNullFails() {
@@ -1513,6 +1513,11 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
+    @Override
+    public TreeMapSpreadsheetCellStore createStore() {
+        return TreeMapSpreadsheetCellStore.create();
+    }
+
     // hashCode/equals..................................................................................................
 
     @Test
@@ -1570,17 +1575,12 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
-    @Override
-    public TreeMapSpreadsheetCellStore createStore() {
-        return TreeMapSpreadsheetCellStore.create();
-    }
+    // class.............................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetCellStore> type() {
         return TreeMapSpreadsheetCellStore.class;
     }
-
-    // TypeNameTesting..................................................................
 
     @Override
     public String typeNamePrefix() {
