@@ -142,6 +142,24 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
 
     private final SpreadsheetCellRangeStore<V> store;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof ReadOnlySpreadsheetCellRangeStore &&
+                this.equals0((ReadOnlySpreadsheetCellRangeStore<?>) other));
+    }
+
+    private boolean equals0(final ReadOnlySpreadsheetCellRangeStore<?> other) {
+        return this.store.equals(other.store);
+    }
+
     @Override
     public String toString() {
         return this.store.toString();
