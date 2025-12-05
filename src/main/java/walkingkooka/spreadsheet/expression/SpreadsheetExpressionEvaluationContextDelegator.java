@@ -40,6 +40,7 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
@@ -72,6 +73,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default LocaleContext localeContext() {
         return this.spreadsheetConverterContext();
+    }
+
+    @Override
+    default CaseSensitivity stringEqualsCaseSensitivity() {
+        return SpreadsheetExpressionEvaluationContext.super.stringEqualsCaseSensitivity();
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................

@@ -697,6 +697,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testStringEqualsCaseSensitivity() {
+        throw new UnsupportedOperationException();
+    }
+
     // hashEquals/Object................................................................................................
 
     @Test

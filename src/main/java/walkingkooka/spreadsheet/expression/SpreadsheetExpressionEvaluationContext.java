@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
@@ -119,6 +120,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * date/times and times will not actually return date/time or time values.
      */
     SpreadsheetFormulaParserToken parseFormula(final TextCursor formula);
+
+    @Override
+    default CaseSensitivity stringEqualsCaseSensitivity() {
+        return SpreadsheetStrings.CASE_SENSITIVITY;
+    }
 
     @Override
     default boolean isText(final Object value) {
