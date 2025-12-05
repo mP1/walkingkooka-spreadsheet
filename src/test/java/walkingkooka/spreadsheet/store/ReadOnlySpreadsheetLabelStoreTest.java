@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -32,7 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<ReadOnlySpreadsheetLabelStore>
-    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetLabelStore, SpreadsheetLabelName, SpreadsheetLabelMapping> {
+    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetLabelStore, SpreadsheetLabelName, SpreadsheetLabelMapping>,
+    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetLabelStore> {
 
     @Test
     public void testWithNullStoreFails() {
@@ -194,6 +196,44 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     private SpreadsheetCellReference reference() {
         return SpreadsheetSelection.A1;
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final SpreadsheetLabelStore store1 = SpreadsheetLabelStores.treeMap();
+        final SpreadsheetLabelStore store2 = SpreadsheetLabelStores.treeMap();
+
+        final SpreadsheetLabelMapping mapping = this.mapping("a", 1, 2);
+        store1.save(mapping);
+
+        store2.save(mapping);
+
+        this.checkEquals(
+            ReadOnlySpreadsheetLabelStore.with(store1),
+            ReadOnlySpreadsheetLabelStore.with(store2)
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final SpreadsheetLabelStore different = SpreadsheetLabelStores.treeMap();
+
+        different.save(
+            this.mapping("a", 1, 2)
+        );
+
+        this.checkNotEquals(
+            ReadOnlySpreadsheetLabelStore.with(different)
+        );
+    }
+
+    @Override
+    public ReadOnlySpreadsheetLabelStore createObject() {
+        return this.createStore();
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<ReadOnlySpreadsheetLabelStore> type() {

@@ -132,6 +132,24 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     private final SpreadsheetLabelStore store;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof ReadOnlySpreadsheetLabelStore &&
+                this.equals0((ReadOnlySpreadsheetLabelStore) other));
+    }
+
+    private boolean equals0(final ReadOnlySpreadsheetLabelStore other) {
+        return this.store.equals(other.store);
+    }
+    
     @Override
     public String toString() {
         return this.store.toString();
