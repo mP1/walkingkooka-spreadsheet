@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -43,8 +44,8 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
-
+final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore>
+    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetCellStore> {
 
     // between..........................................................................................................
 
@@ -1512,6 +1513,44 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final TreeMapSpreadsheetCellStore store1 = this.createStore();
+        final TreeMapSpreadsheetCellStore store2 = this.createStore();
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1")
+        );
+
+        store1.save(cell);
+        store2.save(cell);
+
+        this.checkEquals(
+            store1,
+            store2
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final TreeMapSpreadsheetCellStore different = this.createStore();
+
+        different.save(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
+            )
+        );
+
+        this.checkNotEquals(different);
+    }
+
+    @Override
+    public TreeMapSpreadsheetCellStore createObject() {
+        return this.createStore();
+    }
+    
     // toString.........................................................................................................
 
     @Test
