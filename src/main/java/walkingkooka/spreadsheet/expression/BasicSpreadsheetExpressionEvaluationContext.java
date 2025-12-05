@@ -448,6 +448,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
+    public LocalDateTime now() {
+        return this.environmentContext.now(); // inherit unrelated defaults
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        return this.environmentContext.user();
+    }
+
+    @Override
     public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
         this.environmentContext.setUser(user);
         return this;
@@ -467,16 +477,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.environmentContext.removeEnvironmentValue(name);
         return this;
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.environmentContext.now(); // inherit unrelated defaults
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        return this.environmentContext.user();
     }
 
     @Override
