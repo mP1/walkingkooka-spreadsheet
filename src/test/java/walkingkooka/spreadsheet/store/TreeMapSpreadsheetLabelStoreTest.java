@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -31,7 +32,8 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore> {
+public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore>
+    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetLabelStore> {
 
     // save.............................................................................................................
 
@@ -868,6 +870,46 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     @Override
     public TreeMapSpreadsheetLabelStore createStore() {
         return TreeMapSpreadsheetLabelStore.create();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final TreeMapSpreadsheetLabelStore store1 = this.createStore();
+        final TreeMapSpreadsheetLabelStore store2 = this.createStore();
+
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(
+            this.label1(),
+            this.a1()
+        );
+
+        store1.save(mapping);
+        store2.save(mapping);
+
+        this.checkEquals(
+            store1,
+            store2
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final TreeMapSpreadsheetLabelStore different = this.createStore();
+
+        different.save(
+            SpreadsheetLabelMapping.with(
+                this.label1(),
+                this.a1()
+            )
+        );
+
+        this.checkNotEquals(different);
+    }
+
+    @Override
+    public TreeMapSpreadsheetLabelStore createObject() {
+        return this.createStore();
     }
 
     // toString.........................................................................................................

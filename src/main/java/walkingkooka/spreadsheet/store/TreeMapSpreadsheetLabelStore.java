@@ -212,6 +212,24 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
      */
     private final SortedMap<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = SpreadsheetSelectionMaps.label();
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.mappings.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof TreeMapSpreadsheetLabelStore &&
+                this.equals0((TreeMapSpreadsheetLabelStore) other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetLabelStore other) {
+        return this.mappings.equals(other.mappings);
+    }
+    
     @Override
     public String toString() {
         return this.mappings.values().toString();
