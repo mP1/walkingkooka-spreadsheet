@@ -114,59 +114,17 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // with.............................................................................................................
 
     @Test
-    public void testWithNullCellFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                null,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                ENVIRONMENT_CONTEXT,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
-                TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                null,
-                SERVER_URL,
-                METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-                ENVIRONMENT_CONTEXT,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
-                TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullServerUrlFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -181,13 +139,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 null,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -202,13 +160,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 null,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -223,13 +181,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 null,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -244,12 +202,54 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                null,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_STORE_REPOSITORY,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                null,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                FORM_HANDLER_CONTEXT,
+                TERMINAL_CONTEXT,
+                EXPRESSION_FUNCTION_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetExpressionEvaluationContext.with(
+                SERVER_URL,
+                METADATA,
+                SPREADSHEET_STORE_REPOSITORY,
+                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                CELL,
                 null,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
@@ -265,13 +265,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -286,13 +286,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 null,
                 TERMINAL_CONTEXT,
@@ -307,13 +307,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 null,
@@ -328,13 +328,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -349,13 +349,13 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SERVER_URL,
                 METADATA,
                 SPREADSHEET_STORE_REPOSITORY,
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -431,8 +431,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.nextEmptyColumnAndCheck(
             BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SpreadsheetExpressionReferenceLoaders.fake(),
                 SERVER_URL,
                 METADATA,
                 new FakeSpreadsheetStoreRepository() {
@@ -443,6 +441,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 },
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -468,8 +468,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.nextEmptyRowAndCheck(
             BasicSpreadsheetExpressionEvaluationContext.with(
-                CELL,
-                SpreadsheetExpressionReferenceLoaders.fake(),
                 SERVER_URL,
                 METADATA,
                 new FakeSpreadsheetStoreRepository() {
@@ -480,6 +478,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 },
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                CELL,
+                SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
                 FORM_HANDLER_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -929,6 +929,17 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.referenceFails(
             this.createContext(
+                new FakeSpreadsheetConverterContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
+                        return Optional.ofNullable(
+                            label.equals(l) ?
+                                cell :
+                                null
+                        );
+                    }
+                },
+                environmentContext,
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
                     @Override
@@ -944,18 +955,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                                 null
                         );
                     }
-                },
-                new FakeSpreadsheetConverterContext() {
-                    @Override
-                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
-                        return Optional.ofNullable(
-                            label.equals(l) ?
-                                cell :
-                                null
-                        );
-                    }
-                },
-                environmentContext
+                }
             ),
             name,
             new IllegalArgumentException("Cycle detected from Hello with Hello")
@@ -981,6 +981,17 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.referenceAndCheck(
             this.createContext(
+                new FakeSpreadsheetConverterContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
+                        return Optional.ofNullable(
+                            label.equals(l) ?
+                                cell :
+                                null
+                        );
+                    }
+                },
+                environmentContext,
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
                     @Override
@@ -996,18 +1007,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                                 null
                         );
                     }
-                },
-                new FakeSpreadsheetConverterContext() {
-                    @Override
-                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
-                        return Optional.ofNullable(
-                            label.equals(l) ?
-                                cell :
-                                null
-                        );
-                    }
-                },
-                environmentContext
+                }
             ),
             name,
             value
@@ -1023,17 +1023,17 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
-            spreadsheetExpressionReferenceLoader,
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-            ENVIRONMENT_CONTEXT
+            ENVIRONMENT_CONTEXT,
+            spreadsheetExpressionReferenceLoader
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
-            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
-            environmentContext
+            environmentContext,
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER
         );
     }
 
@@ -1047,39 +1047,39 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
-            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             converterContext,
             ENVIRONMENT_CONTEXT,
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             expressionFunctionProvider,
             PROVIDER_CONTEXT
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                                      final SpreadsheetConverterContext converterContext,
-                                                                      final EnvironmentContext environmentContext) {
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
+                                                                      final EnvironmentContext environmentContext,
+                                                                      final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return createContext(
-            spreadsheetExpressionReferenceLoader,
             converterContext,
             environmentContext,
+            spreadsheetExpressionReferenceLoader,
             EXPRESSION_FUNCTION_PROVIDER,
             ProviderContexts.fake()
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                                      final SpreadsheetConverterContext converterContext,
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
                                                                       final EnvironmentContext environmentContext,
+                                                                      final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                       final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
-            CELL,
-            spreadsheetExpressionReferenceLoader,
             SERVER_URL,
             METADATA,
             SPREADSHEET_STORE_REPOSITORY,
             converterContext,
             environmentContext,
+            CELL,
+            spreadsheetExpressionReferenceLoader,
             SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
             FORM_HANDLER_CONTEXT,
             TERMINAL_CONTEXT,

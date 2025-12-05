@@ -47,26 +47,26 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see BasicSpreadsheetExpressionEvaluationContext}
      */
-    public static SpreadsheetExpressionEvaluationContext basic(final Optional<SpreadsheetCell> cell,
-                                                               final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                               final AbsoluteUrl serverUrl,
+    public static SpreadsheetExpressionEvaluationContext basic(final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
                                                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                                final SpreadsheetConverterContext spreadsheetConverterContext,
                                                                final EnvironmentContext environmentContext,
+                                                               final Optional<SpreadsheetCell> cell,
+                                                               final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                                final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                                final TerminalContext terminalContext,
                                                                final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
-            cell,
-            spreadsheetExpressionReferenceLoader,
             serverUrl,
             spreadsheetMetadata,
             spreadsheetStoreRepository,
             spreadsheetConverterContext,
             environmentContext,
+            cell,
+            spreadsheetExpressionReferenceLoader,
             spreadsheetFormatterContextFactory,
             formHandlerContext,
             terminalContext,

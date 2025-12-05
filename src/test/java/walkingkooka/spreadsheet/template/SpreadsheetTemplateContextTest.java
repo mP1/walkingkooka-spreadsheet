@@ -224,8 +224,6 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
         return SpreadsheetTemplateContext.with(
             SPREADSHEET_PARSER_CONTEXT,
             SpreadsheetExpressionEvaluationContexts.basic(
-                SpreadsheetExpressionEvaluationContext.NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake(),
                 Url.parseAbsolute("https://example.com"), // serverUrl
                 SpreadsheetMetadata.EMPTY,
                 new FakeSpreadsheetStoreRepository() {
@@ -239,6 +237,8 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                 },
                 SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                 ENVIRONMENT_CONTEXT,
+                SpreadsheetExpressionEvaluationContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake(),
                 (Optional<SpreadsheetCell> cell) -> {
                     throw new UnsupportedOperationException();
                 },

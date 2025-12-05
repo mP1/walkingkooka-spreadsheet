@@ -83,25 +83,25 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     SpreadsheetConverterContextDelegator,
     TerminalContextDelegator {
 
-    static BasicSpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
-                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                            final AbsoluteUrl serverUrl,
+    static BasicSpreadsheetExpressionEvaluationContext with(final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
                                                             final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                             final SpreadsheetConverterContext spreadsheetConverterContext,
                                                             final EnvironmentContext environmentContext,
+                                                            final Optional<SpreadsheetCell> cell,
+                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                             final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                             final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                             final TerminalContext terminalContext,
                                                             final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                             final ProviderContext providerContext) {
-        Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(spreadsheetStoreRepository, "spreadsheetStoreRepository");
         Objects.requireNonNull(spreadsheetConverterContext, "spreadsheetConverterContext");
         Objects.requireNonNull(environmentContext, "environmentContext");
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(spreadsheetFormatterContextFactory, "spreadsheetFormatterContextFactory");
         Objects.requireNonNull(formHandlerContext, "formHandlerContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
@@ -109,13 +109,13 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
-            cell,
-            spreadsheetExpressionReferenceLoader,
             serverUrl,
             spreadsheetMetadata,
             spreadsheetStoreRepository,
             spreadsheetConverterContext,
             environmentContext,
+            cell,
+            spreadsheetExpressionReferenceLoader,
             spreadsheetFormatterContextFactory,
             formHandlerContext,
             terminalContext,
@@ -124,25 +124,27 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
-                                                        final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                        final AbsoluteUrl serverUrl,
+    private BasicSpreadsheetExpressionEvaluationContext(final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
                                                         final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                         final SpreadsheetConverterContext spreadsheetConverterContext,
                                                         final EnvironmentContext environmentContext,
+                                                        final Optional<SpreadsheetCell> cell,
+                                                        final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                         final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
                                                         final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                         final TerminalContext terminalContext,
                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
         super();
-        this.cell = cell;
-        this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
 
         this.environmentContext = environmentContext;
+
+        this.cell = cell;
+        this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
+
         this.spreadsheetFormatterContextFactory = spreadsheetFormatterContextFactory;
         this.formHandlerContext = formHandlerContext;
         this.spreadsheetStoreRepository = spreadsheetStoreRepository;
@@ -403,13 +405,13 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this.environmentContext == environmentContext ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
-                this.cell,
-                this.spreadsheetExpressionReferenceLoader,
                 this.serverUrl,
                 this.spreadsheetMetadata,
                 this.spreadsheetStoreRepository,
                 this.spreadsheetConverterContext,
                 Objects.requireNonNull(environmentContext, "environmentContext"),
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetFormatterContextFactory,
                 this.formHandlerContext,
                 this.terminalContext,
@@ -520,8 +522,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return before.equals(after) ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
-                this.cell,
-                this.spreadsheetExpressionReferenceLoader,
                 this.serverUrl,
                 this.spreadsheetMetadata,
                 this.spreadsheetStoreRepository,
@@ -530,6 +530,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                     "spreadsheetConverterContext.setObjectPostProcessor returned null"
                 ),
                 this.environmentContext,
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetFormatterContextFactory,
                 this.formHandlerContext,
                 this.terminalContext,
@@ -546,8 +548,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return before.equals(after) ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
-                this.cell,
-                this.spreadsheetExpressionReferenceLoader,
                 this.serverUrl,
                 this.spreadsheetMetadata,
                 this.spreadsheetStoreRepository,
@@ -556,6 +556,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                     "spreadsheetConverterContext.setProcessor returned null"
                 ),
                 this.environmentContext,
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetFormatterContextFactory,
                 this.formHandlerContext,
                 this.terminalContext,
