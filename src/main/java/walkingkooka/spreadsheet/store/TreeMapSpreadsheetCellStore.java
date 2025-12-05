@@ -522,6 +522,24 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         SpreadsheetCellRangeReferencePath.BURL
     );
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof TreeMapSpreadsheetCellStore &&
+                this.equals0((TreeMapSpreadsheetCellStore) other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetCellStore other) {
+        return this.store.equals(other.store);
+    }
+
     @Override
     public String toString() {
         return this.store.toString();
