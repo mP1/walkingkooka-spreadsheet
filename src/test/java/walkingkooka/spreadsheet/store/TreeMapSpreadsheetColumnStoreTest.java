@@ -83,6 +83,11 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         );
     }
 
+    @Override
+    public TreeMapSpreadsheetColumnStore createStore() {
+        return TreeMapSpreadsheetColumnStore.create();
+    }
+
     // hashCode/equals..................................................................................................
 
     @Test
@@ -134,17 +139,12 @@ final class TreeMapSpreadsheetColumnStoreTest extends SpreadsheetColumnStoreTest
         this.toStringAndCheck(store, "[B]");
     }
 
-    @Override
-    public TreeMapSpreadsheetColumnStore createStore() {
-        return TreeMapSpreadsheetColumnStore.create();
-    }
+    // class............................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetColumnStore> type() {
         return TreeMapSpreadsheetColumnStore.class;
     }
-
-    // TypeNameTesting..................................................................
 
     @Override
     public String typeNamePrefix() {
