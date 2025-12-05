@@ -48,7 +48,6 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -421,11 +420,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     // misc.............................................................................................................
-
-    @Override
-    public CaseSensitivity stringEqualsCaseSensitivity() {
-        return this.context.stringEqualsCaseSensitivity();
-    }
 
     @Override
     public Locale locale() {

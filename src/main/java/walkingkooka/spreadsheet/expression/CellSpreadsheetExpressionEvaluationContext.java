@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -60,6 +61,11 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
                                                        final SpreadsheetExpressionEvaluationContext context) {
         this.cell = cell;
         this.context = context;
+    }
+
+    @Override
+    public CaseSensitivity stringEqualsCaseSensitivity() {
+        return SpreadsheetExpressionEvaluationContextDelegator.super.stringEqualsCaseSensitivity();
     }
 
     @Override
