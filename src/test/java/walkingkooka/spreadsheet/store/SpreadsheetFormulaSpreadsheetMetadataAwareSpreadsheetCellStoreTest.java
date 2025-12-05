@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.locale.LocaleContexts;
+import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -27,6 +30,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.Expression;
 
@@ -38,7 +42,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore> {
+final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore> {
 
     private final static char DECIMAL_SEPARATOR = ',';
     private final static char PERCENT = '^';
@@ -833,6 +838,78 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             loader.loadOrFail(requires.reference()),
             () -> "didnt rewrite formula"
         );
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentStore() {
+        this.checkNotEquals(
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                SpreadsheetCellStores.fake(),
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetMetadata() {
+        this.checkNotEquals(
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                SpreadsheetMetadata.EMPTY,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetParserProvider() {
+        this.checkNotEquals(
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                METADATA,
+                SpreadsheetParserProviders.fake(),
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLocaleContext() {
+        this.checkNotEquals(
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                LocaleContexts.fake(),
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentProvider() {
+        this.checkNotEquals(
+            SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore.with(
+                this.cellStore(),
+                METADATA,
+                SPREADSHEET_PARSER_PROVIDER,
+                LOCALE_CONTEXT,
+                ProviderContexts.fake()
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore createObject() {
+        return this.createStore();
     }
 
     // toString.........................................................................................................
