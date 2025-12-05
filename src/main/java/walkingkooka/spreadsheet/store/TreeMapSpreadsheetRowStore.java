@@ -115,6 +115,24 @@ final class TreeMapSpreadsheetRowStore implements SpreadsheetRowStore {
     // VisibleForTesting
     private final Store<SpreadsheetRowReference, SpreadsheetRow> store;
 
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof TreeMapSpreadsheetRowStore &&
+                this.equals0((TreeMapSpreadsheetRowStore) other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetRowStore other) {
+        return this.store.equals(other.store);
+    }
+
     @Override
     public String toString() {
         return this.store.toString();
