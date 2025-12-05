@@ -71,7 +71,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
     }
 
-    // save and load range ...................................................................................................
+    // save and load range .............................................................................................
 
     @Test
     public void testSaveAndLoadRange() {
@@ -236,7 +236,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         this.loadRangeAndCheck(store, RANGE2B, VALUE2);
     }
 
-    // ids....................................................................................
+    // ids..............................................................................................................
 
     @Test
     public void testIds() {
@@ -292,7 +292,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         this.idsAndCheck(store, 1, 4, RANGE1B, RANGE2A, RANGE2B, RANGE3);
     }
 
-    // values....................................................................................
+    // values...........................................................................................................
 
     @Test
     public void testValues() {
@@ -586,7 +586,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         this.findCellRangesIncludingCellAndCheck(store, mid, RANGE1A);
     }
 
-    // load cell reference ranges....................................................................................
+    // load cell reference ranges.......................................................................................
 
     @Test
     public void testFindValuesWithCellBeginRange() {
@@ -876,7 +876,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         this.loadRangeAndCheck(store, RANGE3, VALUE4);
     }
 
-    // replace value ......................................................................................
+    // replace value ...................................................................................................
 
     @Test
     public void testReplaceValueSame() {
@@ -997,7 +997,7 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         this.loadRangeAndCheck(store, RANGE2A, VALUE4, VALUE6);
     }
 
-    // delete value ......................................................................................
+    // delete value ....................................................................................................
 
     @Test
     public void testDeleteValueUnknownIgnored() {
@@ -1279,28 +1279,15 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         this.findCellRangesWithValueAndCheck(store, value3, range1);
     }
 
-    // ToStringTesting ...................................................................................................
-
-    @Test
-    public void testToString() {
-        final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
-
-        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
-        final String value1 = "value1";
-        store.addValue(range1, value1);
-
-        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
-        final String value2 = "value2";
-        store.addValue(range2, value2);
-
-        this.toStringAndCheck(store, "{A1=A1={A1=[value1]}, A2=A2={A2=[value2]}}");
-    }
-
-    // helpers ...................................................................................................
 
     @Override
     public TreeMapSpreadsheetCellRangeStore<String> createStore() {
         return TreeMapSpreadsheetCellRangeStore.create();
+    }
+
+    @Override
+    public String valueValue() {
+        return VALUE1;
     }
 
     // hashCode/equals..................................................................................................
@@ -1346,16 +1333,28 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
         return this.createStore();
     }
 
+    // ToString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
+
+        final SpreadsheetCellRangeReference range1 = SpreadsheetSelection.parseCellRange("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetCellRangeReference range2 = SpreadsheetSelection.parseCellRange("A2:A2");
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        this.toStringAndCheck(store, "{A1=A1={A1=[value1]}, A2=A2={A2=[value2]}}");
+    }
+
     // class............................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetCellRangeStore<String>> type() {
         return Cast.to(TreeMapSpreadsheetCellRangeStore.class);
-    }
-
-    @Override
-    public String valueValue() {
-        return VALUE1;
     }
 
     @Override
