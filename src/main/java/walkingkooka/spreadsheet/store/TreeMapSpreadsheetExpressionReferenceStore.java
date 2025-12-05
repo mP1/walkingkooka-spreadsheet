@@ -370,6 +370,22 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.referenceToCells.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof TreeMapSpreadsheetExpressionReferenceStore &&
+                this.equals0((TreeMapSpreadsheetExpressionReferenceStore<?>) other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetExpressionReferenceStore<?> other) {
+        return this.referenceToCells.equals(other.referenceToCells);
+    }
+
+    @Override
     public String toString() {
         return ToStringBuilder.empty()
             .label("referenceToCells")
