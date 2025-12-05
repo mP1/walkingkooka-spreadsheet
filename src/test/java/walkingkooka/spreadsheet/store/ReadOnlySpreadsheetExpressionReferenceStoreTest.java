@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -29,7 +30,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
-    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>> {
+    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>>,
+    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> {
 
     @Test
     public void testSaveAndLoad() {
@@ -273,15 +275,65 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     public Set<SpreadsheetCellReference> value() {
         return Sets.of(this.a1(), this.b1(), this.c1());
     }
-
-    // StoreTesting.................................................................................
-
+    
     @Override
     public ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createStore() {
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> s = SpreadsheetExpressionReferenceStores.treeMap();
         return ReadOnlySpreadsheetExpressionReferenceStore.with(s);
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store1 = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store2 = SpreadsheetExpressionReferenceStores.treeMap();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store1.saveCells(
+            a1,
+            Sets.of(b1, c1)
+        );
+
+        store2.saveCells(
+            a1,
+            Sets.of(b1, c1)
+        );
+
+        this.checkEquals(
+            ReadOnlySpreadsheetExpressionReferenceStore.with(store1),
+            ReadOnlySpreadsheetExpressionReferenceStore.with(store2)
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> different = SpreadsheetExpressionReferenceStores.treeMap();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        different.saveCells(
+            a1,
+            Sets.of(b1, c1)
+        );
+
+        this.checkNotEquals(
+            ReadOnlySpreadsheetExpressionReferenceStore.with(different)
+        );
+    }
+
+    @Override
+    public ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createObject() {
+        return this.createStore();
+    }
+    
+    // class............................................................................................................
+    
     @Override
     public Class<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> type() {
         return Cast.to(ReadOnlySpreadsheetExpressionReferenceStore.class);
