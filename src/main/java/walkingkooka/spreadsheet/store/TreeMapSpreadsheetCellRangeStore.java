@@ -470,7 +470,23 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
      */
     private final Map<V, Set<SpreadsheetCellRangeReference>> valueToRanges = Maps.ordered();
 
-    // toString.........................................................................................................
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.valueToRanges.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof TreeMapSpreadsheetCellRangeStore &&
+                this.equals0((TreeMapSpreadsheetCellRangeStore<?>) other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetCellRangeStore<?> other) {
+        return this.valueToRanges.equals(other.valueToRanges);
+    }
 
     @Override
     public String toString() {

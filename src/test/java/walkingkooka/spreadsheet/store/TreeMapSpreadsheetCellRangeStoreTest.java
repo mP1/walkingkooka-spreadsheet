@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -27,7 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadsheetCellRangeStoreTestCase<TreeMapSpreadsheetCellRangeStore<String>>
-    implements SpreadsheetCellRangeStoreTesting<TreeMapSpreadsheetCellRangeStore<String>, String> {
+    implements SpreadsheetCellRangeStoreTesting<TreeMapSpreadsheetCellRangeStore<String>, String>,
+    HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetCellRangeStore<String>> {
 
     /**
      * RANGE1A and RANGE1B share a common TOPLEFT.
@@ -1300,6 +1302,51 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     public TreeMapSpreadsheetCellRangeStore<String> createStore() {
         return TreeMapSpreadsheetCellRangeStore.create();
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final TreeMapSpreadsheetCellRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetCellRangeStore<String> different = this.createStore();
+
+        final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("A1:B2");
+        final String value = "ValueA1B2";
+
+        store.addValue(
+            range,
+            value
+        );
+
+        different.addValue(
+            range,
+            value
+        );
+
+        this.checkEquals(
+            store,
+            different
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final TreeMapSpreadsheetCellRangeStore<String> different = this.createStore();
+
+        different.addValue(
+            SpreadsheetSelection.parseCellRange("A1:B2"),
+            "ValueA1B2"
+        );
+
+        this.checkNotEquals(different);
+    }
+
+    @Override
+    public TreeMapSpreadsheetCellRangeStore<String> createObject() {
+        return this.createStore();
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetCellRangeStore<String>> type() {
