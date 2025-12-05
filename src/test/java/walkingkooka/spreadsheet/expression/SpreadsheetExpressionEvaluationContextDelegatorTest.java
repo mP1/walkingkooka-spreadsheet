@@ -168,13 +168,13 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         @Override
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             return SpreadsheetExpressionEvaluationContexts.basic(
-                SpreadsheetExpressionEvaluationContext.NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake(),
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
                 SpreadsheetStoreRepositories.fake(),
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                SpreadsheetExpressionEvaluationContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake(),
                 ((Optional<SpreadsheetCell> c) -> {
                     throw new UnsupportedOperationException();
                 }),

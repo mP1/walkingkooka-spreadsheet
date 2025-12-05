@@ -538,8 +538,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         return ConverterSpreadsheetExpressionEvaluationContext.with(
             converter,
             SpreadsheetExpressionEvaluationContexts.basic(
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SERVER_URL,
                 METADATA,
                 new FakeSpreadsheetStoreRepository() {
@@ -561,6 +559,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                     PROVIDER_CONTEXT
                 ),
                 EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+                CELL,
+                SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 ((Optional<SpreadsheetCell> cell) -> {
                     Objects.requireNonNull(cell, "cell");
                     throw new UnsupportedOperationException();

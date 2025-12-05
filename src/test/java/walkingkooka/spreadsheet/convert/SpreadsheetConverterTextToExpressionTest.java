@@ -104,13 +104,13 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
             expected,
             expression.toValue(
                 SpreadsheetExpressionEvaluationContexts.basic(
-                    SpreadsheetExpressionEvaluationContext.NO_CELL,
-                    SpreadsheetExpressionReferenceLoaders.fake(),
                     Url.parseAbsolute("https://example.com"), // serverUrl
                     METADATA_EN_AU,
                     SpreadsheetStoreRepositories.fake(),
                     SPREADSHEET_FORMATTER_CONTEXT,
                     ENVIRONMENT_CONTEXT,
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    SpreadsheetExpressionReferenceLoaders.fake(),
                     (Optional<SpreadsheetCell> c) -> {
                         throw new UnsupportedOperationException();
                     },

@@ -308,13 +308,13 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
-            cell,
-            loader,
             spreadsheetContext.serverUrl(),
             metadata,
             spreadsheetContext.storeRepository(),
             spreadsheetConverterContext,
             environmentContext,
+            cell,
+            loader,
             this::spreadsheetFormatterContext,
             formHandlerContext,
             this.terminalContext,

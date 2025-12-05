@@ -180,13 +180,13 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
             @Override
             public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
                 return SpreadsheetExpressionEvaluationContexts.basic(
-                    SpreadsheetExpressionEvaluationContext.NO_CELL,
-                    SpreadsheetExpressionReferenceLoaders.fake(),
                     Url.parseAbsolute("https://example.com"),
                     metadata,
                     SpreadsheetStoreRepositories.fake(),
                     converterContext,
                     EnvironmentContexts.fake(),
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    SpreadsheetExpressionReferenceLoaders.fake(),
                     ((Optional<SpreadsheetCell> c) -> {
                         throw new UnsupportedOperationException();
                     }),

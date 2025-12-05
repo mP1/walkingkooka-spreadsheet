@@ -101,13 +101,13 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         METADATA_EN_AU.spreadsheetFormatterContext(
             SpreadsheetMetadata.NO_CELL,
             (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.basic(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake(),
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
                 SpreadsheetStoreRepositories.fake(),
                 SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.fake(),
                 (Optional<SpreadsheetCell> cell) -> {
                     throw new UnsupportedOperationException();
                 }, // spreadsheetFormatterContextFactory
