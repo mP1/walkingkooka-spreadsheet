@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
@@ -103,7 +104,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
             expected,
             expression.toValue(
                 SpreadsheetExpressionEvaluationContexts.basic(
-                    Optional.empty(), // cell
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     Url.parseAbsolute("https://example.com"), // serverUrl
                     METADATA_EN_AU,
