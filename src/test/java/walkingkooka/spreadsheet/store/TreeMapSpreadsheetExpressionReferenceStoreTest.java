@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -32,7 +33,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
+public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
+    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> {
 
     @Override
     public void testAddSaveWatcherAndSave() {
@@ -2107,22 +2109,67 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
             "cellToReferences"
         );
     }
-
-    // StoreTesting.....................................................................................................
-
+    
     @Override
     public TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createStore() {
         return TreeMapSpreadsheetExpressionReferenceStore.create();
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEquals2() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store1 = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store2 = this.createStore();
+
+        store1.saveCells(
+            SpreadsheetSelection.A1,
+            Sets.of(
+                this.b1(),
+                this.c1()
+            )
+        );
+
+        store2.saveCells(
+            SpreadsheetSelection.A1,
+            Sets.of(
+                this.b1(),
+                this.c1()
+            )
+        );
+
+        this.checkEquals(
+            store1,
+            store2
+        );
+    }
+
+    @Test
+    public void testEqualsDifferent() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> different = this.createStore();
+
+        different.saveCells(
+            SpreadsheetSelection.A1,
+            Sets.of(
+                this.b1(),
+                this.c1()
+            )
+        );
+
+        this.checkNotEquals(different);
+    }
+
+    @Override
+    public TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createObject() {
+        return this.createStore();
+    }
+    
     // class............................................................................................................
 
     @Override
     public Class<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> type() {
         return Cast.to(TreeMapSpreadsheetExpressionReferenceStore.class);
     }
-
-    // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNamePrefix() {
