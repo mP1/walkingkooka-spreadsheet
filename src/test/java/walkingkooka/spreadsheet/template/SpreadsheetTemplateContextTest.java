@@ -224,7 +224,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
         return SpreadsheetTemplateContext.with(
             SPREADSHEET_PARSER_CONTEXT,
             SpreadsheetExpressionEvaluationContexts.basic(
-                Optional.empty(), // no cell
+                SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 Url.parseAbsolute("https://example.com"), // serverUrl
                 SpreadsheetMetadata.EMPTY,

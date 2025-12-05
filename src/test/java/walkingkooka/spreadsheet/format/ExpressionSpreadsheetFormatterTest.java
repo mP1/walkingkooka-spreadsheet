@@ -180,7 +180,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
             @Override
             public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
                 return SpreadsheetExpressionEvaluationContexts.basic(
-                    Optional.empty(), // cell
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     Url.parseAbsolute("https://example.com"),
                     metadata,

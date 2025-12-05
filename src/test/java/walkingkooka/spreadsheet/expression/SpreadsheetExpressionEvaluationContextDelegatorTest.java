@@ -168,7 +168,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         @Override
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             return SpreadsheetExpressionEvaluationContexts.basic(
-                Optional.empty(), // cell
+                SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
