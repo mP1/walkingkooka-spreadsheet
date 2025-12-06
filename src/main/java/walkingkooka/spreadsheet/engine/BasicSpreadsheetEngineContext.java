@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -51,7 +50,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -69,8 +67,6 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.validation.form.FormHandlerContext;
-import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.util.List;
 import java.util.Locale;
@@ -270,37 +266,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(loader, "loader");
 
-        final SpreadsheetEngineContextMode mode = this.mode;
-        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
-
-        if (null == this.expressionFunctionProvider) {
-            this.expressionFunctionProvider = metadata.expressionFunctionProvider(
-                mode.function(),
-                spreadsheetContext // spreadsheetProvider
-            );
-        }
-
-        final ProviderContext providerContext = spreadsheetContext.providerContext();
-
-        final SpreadsheetConverterContext spreadsheetConverterContext = metadata.spreadsheetConverterContext(
-            cell,
-            SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-            mode.converter(),
-            this, // SpreadsheetLabelNameResolver,
-            spreadsheetContext, // SpreadsheetConverterProvider
-            this, // LocaleContext
-            providerContext
-        );
-
-        final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
-        if (SpreadsheetEngineContextMode.VALIDATION.equals(mode)) {
-            // create from spreadsheetProvider using SpreadsheetMetadataPropertyName.VALIDATOR_FORM_HANDLER
-            // https://github.com/mP1/walkingkooka-spreadsheet/issues/6342
-            formHandlerContext = FormHandlerContexts.fake();
-        } else {
-            formHandlerContext = FormHandlerContexts.fake();
-        }
 
         EnvironmentContext environmentContext = spreadsheetContext;
         if (mode.isReadOnlyEnvironmentContext()) {
@@ -309,17 +275,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return SpreadsheetExpressionEvaluationContexts.basic(
             spreadsheetContext.serverUrl(),
-            metadata,
+            this.spreadsheetMetadata(),
+            this.mode,
             spreadsheetContext.storeRepository(),
-            spreadsheetConverterContext,
             environmentContext,
             cell,
             loader,
-            this::spreadsheetFormatterContext,
-            formHandlerContext,
+            this.spreadsheetLabelNameResolver,
+            this.localeContext(),
             this.terminalContext,
-            this.expressionFunctionProvider,
-            providerContext
+            this.spreadsheetProvider(),
+            spreadsheetContext.providerContext()
         );
     }
 

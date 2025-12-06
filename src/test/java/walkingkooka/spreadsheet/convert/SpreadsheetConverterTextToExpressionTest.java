@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -29,10 +29,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
-import walkingkooka.validation.form.FormHandlerContexts;
-
-import java.util.Optional;
 
 public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToExpression>
     implements SpreadsheetMetadataTesting {
@@ -106,17 +102,15 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                 SpreadsheetExpressionEvaluationContexts.basic(
                     Url.parseAbsolute("https://example.com"), // serverUrl
                     METADATA_EN_AU,
+                    SpreadsheetEngineContextMode.FORMULA,
                     SpreadsheetStoreRepositories.fake(),
-                    SPREADSHEET_FORMATTER_CONTEXT,
                     ENVIRONMENT_CONTEXT,
                     SpreadsheetExpressionEvaluationContext.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
-                    (Optional<SpreadsheetCell> c) -> {
-                        throw new UnsupportedOperationException();
-                    },
-                    FormHandlerContexts.fake(),
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
+                    LOCALE_CONTEXT,
                     TERMINAL_CONTEXT,
-                    ExpressionFunctionProviders.fake(),
+                    SPREADSHEET_PROVIDER,
                     ProviderContexts.fake()
                 )
             )

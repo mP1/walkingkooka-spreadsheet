@@ -28,36 +28,34 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.EnvironmentContexts;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
@@ -77,8 +75,8 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
-import walkingkooka.validation.form.FakeFormHandlerContext;
-import walkingkooka.validation.form.FormField;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.MathContext;
 import java.util.List;
@@ -90,6 +88,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CONTEXT;
+import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.SPREADSHEET_LABEL_NAME_RESOLVER;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.TERMINAL_CONTEXT;
 
 public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
@@ -119,6 +118,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 20)
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DEFAULT)
         .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(text, number, basic, spreadsheet-value)"))
+        .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, SpreadsheetExpressionFunctions.parseAliasSet("test-concat-1, test-echo-2"))
         .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT)
         .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
@@ -244,10 +244,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
         }
     };
-
-    private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
-
-    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     // tests............................................................................................................
 
@@ -540,6 +536,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             SpreadsheetExpressionEvaluationContexts.basic(
                 SERVER_URL,
                 METADATA,
+                SpreadsheetEngineContextMode.FORMULA,
                 new FakeSpreadsheetStoreRepository() {
 
                     @Override
@@ -549,55 +546,24 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
                     private final Storage<StorageExpressionEvaluationContext> storage = Storages.tree();
                 },
-                METADATA.spreadsheetConverterContext(
-                    CELL,
-                    SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                    SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    LABEL_NAME_RESOLVER,
-                    converterProvider,
-                    LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT
-                ),
                 EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
-                ((Optional<SpreadsheetCell> cell) -> {
-                    Objects.requireNonNull(cell, "cell");
-                    throw new UnsupportedOperationException();
-                }),
-                new FakeFormHandlerContext<>() {
-                    @Override
-                    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
-                        Objects.requireNonNull(reference, "reference");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-                        Objects.requireNonNull(fields, "fields");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                        Objects.requireNonNull(name, "name");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public Optional<EmailAddress> user() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-                        Objects.requireNonNull(reference, "reference");
-
-                        throw new UnsupportedOperationException();
-                    }
-                },
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                //EXPRESSION_FUNCTION_PROVIDER,
+                SpreadsheetProviders.basic(
+                    converterProvider,
+                    EXPRESSION_FUNCTION_PROVIDER,
+                    SpreadsheetComparatorProviders.fake(),
+                    SpreadsheetExporterProviders.fake(),
+                    SpreadsheetFormatterProviders.fake(),
+                    FormHandlerProviders.fake(),
+                    SpreadsheetImporterProviders.fake(),
+                    SpreadsheetParserProviders.fake(),
+                    ValidatorProviders.fake()
+                ),
                 ProviderContexts.basic(
                     ConverterContexts.fake(),
                     EnvironmentContexts.map(

@@ -25,9 +25,9 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
@@ -40,11 +40,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.validation.form.FormHandlerContexts;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -103,17 +101,15 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.basic(
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
+                SpreadsheetEngineContextMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
-                (Optional<SpreadsheetCell> cell) -> {
-                    throw new UnsupportedOperationException();
-                }, // spreadsheetFormatterContextFactory
-                FormHandlerContexts.fake(),
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                ExpressionFunctionProviders.fake(),
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             ),
             SPREADSHEET_LABEL_NAME_RESOLVER,

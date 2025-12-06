@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -34,21 +33,27 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -57,6 +62,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -66,17 +72,18 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContexts;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -98,12 +105,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SpreadsheetId.with(1)
+    ).set(
+        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+        SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
     );
 
-    private final static Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> SPREADSHEET_FORMATTER_CONTEXT_FACTORY = (Optional<SpreadsheetCell> cell) -> {
-        Objects.requireNonNull(cell, "cell");
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetEngineContextMode MODE = SpreadsheetEngineContextMode.FORMULA;
 
     private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 
@@ -120,15 +127,15 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 null,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
@@ -141,57 +148,57 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 null,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullStorageFails() {
+    public void testWithNullModeFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
                 null,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+                SPREADSHEET_STORE_REPOSITORY,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullSpreadsheetConverterContextFails() {
+    public void testWithNullSpreadsheetStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
-                SPREADSHEET_STORE_REPOSITORY,
+                MODE,
                 null,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
@@ -204,15 +211,15 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 null,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
@@ -225,15 +232,15 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 null,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
@@ -246,57 +253,57 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 null,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullSpreadsheetFormatterContextFactoryFails() {
+    public void testWithNullSpreadsheetLabelNameResolverFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
-                FORM_HANDLER_CONTEXT,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullFormHandlerContextFails() {
+    public void testWithNullLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 null,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
@@ -309,34 +316,34 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 null,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullExpressionFunctionProviderFails() {
+    public void testWithNullSpreadsheetProviderFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -351,15 +358,15 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 null
             )
         );
@@ -433,20 +440,20 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 new FakeSpreadsheetStoreRepository() {
                     @Override
                     public SpreadsheetCellStore cells() {
                         return cellStore;
                     }
                 },
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             ),
             SpreadsheetSelection.parseRow("1"),
@@ -470,20 +477,20 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             BasicSpreadsheetExpressionEvaluationContext.with(
                 SERVER_URL,
                 METADATA,
+                MODE,
                 new FakeSpreadsheetStoreRepository() {
                     @Override
                     public SpreadsheetCellStore cells() {
                         return cellStore;
                     }
                 },
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
-                SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-                FORM_HANDLER_CONTEXT,
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             ),
             SpreadsheetSelection.parseColumn("A"),
@@ -590,16 +597,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.evaluateExpressionAndCheck(
             this.createContext(
-                new FakeSpreadsheetConverterContext() {
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> target) {
-                        return this.failConversion(
-                            value,
-                            target
-                        );
-                    }
-                },
                 new FakeExpressionFunctionProvider<>() {
                     @Override
                     public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
@@ -614,9 +611,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             @Override
                             public List<ExpressionFunctionParameter<?>> parameters(final int count) {
                                 return Lists.of(
-                                    ExpressionFunctionParameter.NUMBER.setKinds(
-                                        ExpressionFunctionParameterKind.CONVERT_EVALUATE
-                                    )
+                                    ExpressionFunctionParameter.NUMBER.setType(Void.class)
+                                        .setKinds(
+                                            ExpressionFunctionParameterKind.CONVERT_EVALUATE
+                                        )
                                 );
                             }
 
@@ -628,6 +626,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                             }
                         };
                     }
+
+                    @Override
+                    public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                        return SpreadsheetExpressionFunctions.parseInfoSet("https://example.com/HelloFunction HelloFunction");
+                    }
+
+                    @Override
+                    public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                        return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
+                    }
                 }
             ),
             Expression.call(
@@ -637,7 +645,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 )
             ),
             SpreadsheetErrorKind.VALUE.setMessage(
-                "HelloFunction: number: Cannot convert \"String1\" to ExpressionNumber"
+                "HelloFunction: number: Cannot convert \"String1\" to Void"
             )
         );
     }
@@ -646,7 +654,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testEvaluateFunctionMissingParameters() {
-        final ExpressionFunctionName functionName = ExpressionFunctionName.with("TestFunction592");
+        final ExpressionFunctionName functionName = ExpressionFunctionName.with("HelloFunction");
 
         final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(
             new FakeExpressionFunctionProvider<>() {
@@ -678,6 +686,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         }
                     };
                 }
+
+                @Override
+                public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                    return SpreadsheetExpressionFunctions.parseInfoSet("https://example.com/HelloFunction HelloFunction");
+                }
+
+                @Override
+                public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                    return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
+                }
             }
         );
 
@@ -692,7 +710,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             ),
             Lists.of(1),
             Cast.to(
-                SpreadsheetErrorKind.VALUE.setMessage("TestFunction592: Missing parameter(s): date-time, time")
+                SpreadsheetErrorKind.VALUE.setMessage("HelloFunction: Missing parameter(s): date-time, time")
             )
         );
     }
@@ -929,16 +947,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.referenceFails(
             this.createContext(
-                new FakeSpreadsheetConverterContext() {
-                    @Override
-                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
-                        return Optional.ofNullable(
-                            label.equals(l) ?
-                                cell :
-                                null
-                        );
-                    }
-                },
                 environmentContext,
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
@@ -952,6 +960,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                                         Optional.of(name)
                                     )
                                 ) :
+                                null
+                        );
+                    }
+                },
+                new FakeSpreadsheetLabelNameResolver() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
+                        return Optional.ofNullable(
+                            label.equals(l) ?
+                                cell :
                                 null
                         );
                     }
@@ -981,16 +999,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.referenceAndCheck(
             this.createContext(
-                new FakeSpreadsheetConverterContext() {
-                    @Override
-                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
-                        return Optional.ofNullable(
-                            label.equals(l) ?
-                                cell :
-                                null
-                        );
-                    }
-                },
                 environmentContext,
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
@@ -1004,6 +1012,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                                         Optional.of(value)
                                     )
                                 ) :
+                                null
+                        );
+                    }
+                },
+                new FakeSpreadsheetConverterContext() {
+                    @Override
+                    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName l) {
+                        return Optional.ofNullable(
+                            label.equals(l) ?
+                                cell :
                                 null
                         );
                     }
@@ -1023,67 +1041,79 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
-            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
             ENVIRONMENT_CONTEXT,
-            spreadsheetExpressionReferenceLoader
+            spreadsheetExpressionReferenceLoader,
+            SPREADSHEET_LABEL_NAME_RESOLVER
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
-            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
             environmentContext,
-            SPREADSHEET_EXPRESSION_REFERENCE_LOADER
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            SPREADSHEET_LABEL_NAME_RESOLVER
         );
     }
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
-            SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
+            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            SPREADSHEET_LABEL_NAME_RESOLVER,
             expressionFunctionProvider
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final SpreadsheetLabelNameResolver labelNameResolver,
                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
-            converterContext,
             ENVIRONMENT_CONTEXT,
-            SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
+            spreadsheetExpressionReferenceLoader,
+            labelNameResolver,
             expressionFunctionProvider,
             PROVIDER_CONTEXT
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
-                                                                      final EnvironmentContext environmentContext,
-                                                                      final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext,
+                                                                      final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final SpreadsheetLabelNameResolver labelNameResolver) {
         return createContext(
-            converterContext,
             environmentContext,
             spreadsheetExpressionReferenceLoader,
+            labelNameResolver,
             EXPRESSION_FUNCTION_PROVIDER,
             ProviderContexts.fake()
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetConverterContext converterContext,
-                                                                      final EnvironmentContext environmentContext,
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext,
                                                                       final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                      final SpreadsheetLabelNameResolver labelNameResolver,
                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                       final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             SERVER_URL,
             METADATA,
+            MODE,
             SPREADSHEET_STORE_REPOSITORY,
-            converterContext,
             environmentContext,
             CELL,
             spreadsheetExpressionReferenceLoader,
-            SPREADSHEET_FORMATTER_CONTEXT_FACTORY,
-            FORM_HANDLER_CONTEXT,
+            labelNameResolver,
+            LOCALE_CONTEXT,
             TERMINAL_CONTEXT,
-            expressionFunctionProvider,
+            SpreadsheetProviders.basic(
+                CONVERTER_PROVIDER,
+                expressionFunctionProvider,
+                SpreadsheetComparatorProviders.fake(),
+                SpreadsheetExporterProviders.fake(),
+                SpreadsheetFormatterProviders.fake(),
+                FormHandlerProviders.fake(),
+                SpreadsheetImporterProviders.fake(),
+                SPREADSHEET_PARSER_PROVIDER,
+                ValidatorProviders.fake()
+            ),
             providerContext
         );
     }
