@@ -18,6 +18,23 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContextTesting;
+import walkingkooka.spreadsheet.SpreadsheetId;
 
 public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting {
+
+    // spreadsheetId....................................................................................................
+
+    default void spreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context,
+                                       final SpreadsheetId expected) {
+        this.checkEquals(
+            expected,
+            context.spreadsheetId()
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            expected
+        );
+    }
 }
