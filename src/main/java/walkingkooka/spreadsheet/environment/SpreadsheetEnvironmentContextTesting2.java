@@ -78,6 +78,15 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
 
     default void setSpreadsheetIdAndCheck(final C context,
                                           final SpreadsheetId spreadsheetId) {
+        final SpreadsheetEnvironmentContext after = context.setSpreadsheetId(spreadsheetId);
+        assertSame(
+            after,
+            context
+        );
 
+        this.spreadsheetIdAndCheck(
+            context,
+            spreadsheetId
+        );
     }
 }
