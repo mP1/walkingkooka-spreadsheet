@@ -53,9 +53,9 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default SpreadsheetEngineContext setSpreadsheetEngineContextMode(final SpreadsheetEngineContextMode mode) {
+    default SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
         return this.spreadsheetEngineContext()
-            .setSpreadsheetEngineContextMode(mode);
+            .setSpreadsheetMetadataMode(mode);
     }
 
     @Override

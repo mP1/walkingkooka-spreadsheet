@@ -27,7 +27,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
@@ -101,7 +101,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.basic(
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),
                 ENVIRONMENT_CONTEXT,
                 SpreadsheetMetadata.NO_CELL,

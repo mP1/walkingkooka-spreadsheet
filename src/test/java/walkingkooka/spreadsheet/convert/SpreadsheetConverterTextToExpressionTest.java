@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -102,7 +102,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                 SpreadsheetExpressionEvaluationContexts.basic(
                     Url.parseAbsolute("https://example.com"), // serverUrl
                     METADATA_EN_AU,
-                    SpreadsheetEngineContextMode.FORMULA,
+                    SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetStoreRepositories.fake(),
                     ENVIRONMENT_CONTEXT,
                     SpreadsheetExpressionEvaluationContext.NO_CELL,

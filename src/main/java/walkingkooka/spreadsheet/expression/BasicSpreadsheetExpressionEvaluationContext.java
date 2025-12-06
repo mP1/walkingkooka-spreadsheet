@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -91,7 +91,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     static BasicSpreadsheetExpressionEvaluationContext with(final AbsoluteUrl serverUrl,
                                                             final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final SpreadsheetEngineContextMode mode,
+                                                            final SpreadsheetMetadataMode mode,
                                                             final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                             final EnvironmentContext environmentContext,
                                                             final Optional<SpreadsheetCell> cell,
@@ -137,7 +137,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private BasicSpreadsheetExpressionEvaluationContext(final AbsoluteUrl serverUrl,
                                                         final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final SpreadsheetEngineContextMode mode,
+                                                        final SpreadsheetMetadataMode mode,
                                                         final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                         final EnvironmentContext environmentContext,
                                                         final Optional<SpreadsheetCell> cell,
@@ -278,7 +278,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
      */
     private SpreadsheetMetadata spreadsheetMetadata;
 
-    private BasicSpreadsheetExpressionEvaluationContext setMode(final SpreadsheetEngineContextMode mode) {
+    private BasicSpreadsheetExpressionEvaluationContext setMode(final SpreadsheetMetadataMode mode) {
         return this.mode.equals(mode) ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
@@ -302,7 +302,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
             );
     }
 
-    private final SpreadsheetEngineContextMode mode;
+    private final SpreadsheetMetadataMode mode;
 
     @Override
     public LocaleContext localeContext() {
@@ -340,7 +340,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this.spreadsheetMetadata.spreadsheetFormatterContext(
             cell,
             (final Optional<Object> v) -> this.setMode(
-                SpreadsheetEngineContextMode.FORMATTING
+                SpreadsheetMetadataMode.FORMATTING
             ).addLocalVariable(
                 SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                 v

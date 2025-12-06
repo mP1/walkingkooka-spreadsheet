@@ -26,7 +26,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final SpreadsheetEngineContextMode mode,
+    public static SpreadsheetEngineContext basic(final SpreadsheetMetadataMode mode,
                                                  final SpreadsheetContext spreadsheetContext,
                                                  final TerminalContext terminalContext) {
         return BasicSpreadsheetEngineContext.with(

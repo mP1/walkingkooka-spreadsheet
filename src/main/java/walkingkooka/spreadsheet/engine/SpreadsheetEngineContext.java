@@ -62,10 +62,10 @@ public interface SpreadsheetEngineContext extends Context,
     Optional<SpreadsheetCell> NO_CELL = Optional.empty();
 
     /**
-     * Returns a {@link SpreadsheetEngineContext} which will use the {@link SpreadsheetEngineContextMode} when fetching functions
+     * Returns a {@link SpreadsheetEngineContext} which will use the {@link SpreadsheetMetadataMode} when fetching functions
      * and a converter.
      */
-    SpreadsheetEngineContext setSpreadsheetEngineContextMode(final SpreadsheetEngineContextMode mode);
+    SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode);
 
     // parseFormula.....................................................................................................
 

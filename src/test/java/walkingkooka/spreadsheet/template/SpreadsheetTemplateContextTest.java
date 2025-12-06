@@ -23,7 +23,7 @@ import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -239,7 +239,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("hello")
                 ),
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 new FakeSpreadsheetStoreRepository() {
 
                     @Override
