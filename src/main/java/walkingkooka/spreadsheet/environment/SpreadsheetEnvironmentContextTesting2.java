@@ -24,7 +24,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends EnvironmentContextTesting2<C> {
+public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends SpreadsheetEnvironmentContextTesting,
+    EnvironmentContextTesting2<C> {
 
     // serverUrl........................................................................................................
 
