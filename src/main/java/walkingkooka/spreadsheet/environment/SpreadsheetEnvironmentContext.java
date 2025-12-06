@@ -18,9 +18,16 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.SpreadsheetId;
 
 /**
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
  */
 public interface SpreadsheetEnvironmentContext extends EnvironmentContext {
+
+    EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with("serverUrl");
+
+    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with("spreadsheetId");
 }
