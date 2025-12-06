@@ -37,7 +37,7 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext {
     SpreadsheetId spreadsheetId();
 
     /**
-     * Returns a {@link SpreadsheetEnvironmentContext} with the given {@link SpreadsheetId}, creating a new instance if different.
+     * Returns a {@link SpreadsheetEnvironmentContext} with the given {@link SpreadsheetId}
      */
     SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 }
