@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
-import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -48,7 +47,7 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
 
         this.environmentValueAndCheck(
             context,
-            SpreadsheetContext.SPREADSHEET_ID,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             context.spreadsheetId()
         );
     }
