@@ -36,7 +36,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -110,7 +110,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
     );
 
-    private final static SpreadsheetEngineContextMode MODE = SpreadsheetEngineContextMode.FORMULA;
+    private final static SpreadsheetMetadataMode MODE = SpreadsheetMetadataMode.FORMULA;
 
     private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY = SpreadsheetStoreRepositories.fake();
 

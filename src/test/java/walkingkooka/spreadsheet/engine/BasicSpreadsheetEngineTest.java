@@ -4826,7 +4826,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -4915,7 +4915,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Object value = "Value123";
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5008,7 +5008,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5116,7 +5116,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5243,7 +5243,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5377,7 +5377,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5518,7 +5518,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5705,7 +5705,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -5912,7 +5912,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -6770,7 +6770,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -17701,7 +17701,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -18814,7 +18814,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25128,7 +25128,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
                 spreadsheetStoreRepository(),
@@ -25158,7 +25158,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
                 spreadsheetStoreRepository(),
@@ -25216,7 +25216,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25301,7 +25301,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25428,7 +25428,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Optional<Object> cellValue = Optional.of("CellValue1");
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25558,7 +25558,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String message = "ValidationErrorMessage1";
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25721,7 +25721,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Optional<Object> cellValue1 = Optional.of("CellValue1");
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25866,7 +25866,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final Optional<Object> cellValue1 = Optional.of("CellValue1");
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -25985,7 +25985,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
                 spreadsheetStoreRepository(),
@@ -26017,7 +26017,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
                 spreadsheetStoreRepository(),
@@ -26075,7 +26075,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -26150,7 +26150,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -26265,7 +26265,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -26374,7 +26374,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -26503,7 +26503,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -26640,7 +26640,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 spreadsheetStoreRepository(),
@@ -26831,7 +26831,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                    final SpreadsheetMetadata metadata, // required by ranges tests with frozen columns/rows.
                                                    final SpreadsheetStoreRepository storeRepository) {
         return SpreadsheetEngineContexts.basic(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata.set(
                     SpreadsheetMetadataPropertyName.DEFAULT_YEAR,

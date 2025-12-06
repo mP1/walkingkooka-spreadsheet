@@ -25,7 +25,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
  * {@link SpreadsheetEngineContext} can operate in several modes where different functions and converter are available
  * as determined by {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata}.
  */
-public enum SpreadsheetEngineContextMode {
+public enum SpreadsheetMetadataMode {
 
     FIND(
         SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
@@ -43,7 +43,7 @@ public enum SpreadsheetEngineContextMode {
         SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS
     );
 
-    SpreadsheetEngineContextMode(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> function) {
+    SpreadsheetMetadataMode(final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> function) {
         this.converter = function.toConverterSelector();
         this.function = function;
     }

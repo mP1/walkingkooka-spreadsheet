@@ -24,7 +24,7 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -165,7 +165,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             return SpreadsheetExpressionEvaluationContexts.basic(
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),
                 ENVIRONMENT_CONTEXT,
                 SpreadsheetExpressionEvaluationContext.NO_CELL,

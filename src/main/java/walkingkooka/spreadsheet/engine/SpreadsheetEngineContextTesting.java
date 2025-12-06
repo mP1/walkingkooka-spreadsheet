@@ -163,24 +163,24 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         );
     }
 
-    // setSpreadsheetEngineContextMode..................................................................................
+    // setSpreadsheetMetadataMode.......................................................................................
 
     @Test
-    default void testSetSpreadsheetEngineContextModeWithNullFails() {
+    default void testSetSpreadsheetMetadataModeWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .setSpreadsheetEngineContextMode(null)
+                .setSpreadsheetMetadataMode(null)
         );
     }
 
-    default void setSpreadsheetEngineContextModeAndCheck(final SpreadsheetEngineContext context,
-                                                         final SpreadsheetEngineContextMode mode,
-                                                         final SpreadsheetEngineContext expected) {
+    default void setSpreadsheetMetadataModeAndCheck(final SpreadsheetEngineContext context,
+                                                    final SpreadsheetMetadataMode mode,
+                                                    final SpreadsheetEngineContext expected) {
         this.checkEquals(
             expected,
-            context.setSpreadsheetEngineContextMode(mode),
-            () -> "setSpreadsheetEngineContextMode " + mode
+            context.setSpreadsheetMetadataMode(mode),
+            () -> "setSpreadsheetMetadataMode " + mode
         );
     }
 

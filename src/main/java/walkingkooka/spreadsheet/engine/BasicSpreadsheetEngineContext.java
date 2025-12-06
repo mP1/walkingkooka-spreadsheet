@@ -87,7 +87,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final SpreadsheetEngineContextMode mode,
+    static BasicSpreadsheetEngineContext with(final SpreadsheetMetadataMode mode,
                                               final SpreadsheetContext spreadsheetContext,
                                               final TerminalContext terminalContext) {
         Objects.requireNonNull(mode, "mode");
@@ -111,7 +111,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final SpreadsheetEngineContextMode mode,
+    private BasicSpreadsheetEngineContext(final SpreadsheetMetadataMode mode,
                                           final CanConvert canConvert,
                                           final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                           final SpreadsheetContext spreadsheetContext,
@@ -126,7 +126,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
-        // canConvert will be null when this ctor is called by #setSpreadsheetEngineContextMode
+        // canConvert will be null when this ctor is called by #setSpreadsheetMetadataMode
         this.canConvert = null == canConvert ?
             metadata.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
@@ -199,10 +199,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private CanConvert canConvert;
 
-    // setSpreadsheetEngineContextMode..................................................................................
+    // setSpreadsheetMetadataMode.......................................................................................
 
     @Override
-    public SpreadsheetEngineContext setSpreadsheetEngineContextMode(final SpreadsheetEngineContextMode mode) {
+    public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
         Objects.requireNonNull(mode, "mode");
 
         return this.mode == mode ?
@@ -289,7 +289,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
     }
 
-    private final SpreadsheetEngineContextMode mode;
+    private final SpreadsheetMetadataMode mode;
 
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
@@ -398,8 +398,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return this.metadata.spreadsheetFormatterContext(
             cell,
-            (final Optional<Object> v) -> this.setSpreadsheetEngineContextMode(
-                SpreadsheetEngineContextMode.FORMATTING
+            (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
+                SpreadsheetMetadataMode.FORMATTING
             ).spreadsheetExpressionEvaluationContext(
                 cell,
                 SpreadsheetExpressionReferenceLoaders.fake()

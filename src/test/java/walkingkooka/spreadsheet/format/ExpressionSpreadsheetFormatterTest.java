@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -209,7 +209,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                 return SpreadsheetExpressionEvaluationContexts.basic(
                     Url.parseAbsolute("https://example.com"),
                     metadata,
-                    SpreadsheetEngineContextMode.FORMULA,
+                    SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetStoreRepositories.fake(),
                     EnvironmentContexts.fake(),
                     SpreadsheetExpressionEvaluationContext.NO_CELL,

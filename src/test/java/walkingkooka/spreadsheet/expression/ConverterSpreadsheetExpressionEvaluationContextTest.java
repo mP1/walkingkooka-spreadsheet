@@ -40,7 +40,7 @@ import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -536,7 +536,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             SpreadsheetExpressionEvaluationContexts.basic(
                 SERVER_URL,
                 METADATA,
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 new FakeSpreadsheetStoreRepository() {
 
                     @Override

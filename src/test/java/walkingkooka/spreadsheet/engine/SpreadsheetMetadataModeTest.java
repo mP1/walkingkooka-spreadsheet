@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class SpreadsheetEngineContextModeTest implements ClassTesting<SpreadsheetEngineContextMode> {
+public final class SpreadsheetMetadataModeTest implements ClassTesting<SpreadsheetMetadataMode> {
 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetEngineContextMode> type() {
-        return SpreadsheetEngineContextMode.class;
+    public Class<SpreadsheetMetadataMode> type() {
+        return SpreadsheetMetadataMode.class;
     }
 
     @Override

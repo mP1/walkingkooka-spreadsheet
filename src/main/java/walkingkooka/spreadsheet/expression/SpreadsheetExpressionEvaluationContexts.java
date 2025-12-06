@@ -25,7 +25,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
@@ -47,7 +47,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      */
     public static SpreadsheetExpressionEvaluationContext basic(final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final SpreadsheetEngineContextMode mode,
+                                                               final SpreadsheetMetadataMode mode,
                                                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                                                final EnvironmentContext environmentContext,
                                                                final Optional<SpreadsheetCell> cell,

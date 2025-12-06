@@ -401,7 +401,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // with.............................................................................................................
 
     @Test
-    public void testWithNullSpreadsheetEngineContextModeFails() {
+    public void testWithNullSpreadsheetMetadataModeFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
@@ -417,7 +417,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 null,
                 TERMINAL_CONTEXT
             )
@@ -429,7 +429,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 null
             )
@@ -1253,7 +1253,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSpreadsheetExpressionEvaluationContextWithScriptingIsEnvironmentContextUpdatable() {
-        final SpreadsheetEngineContextMode mode = SpreadsheetEngineContextMode.SCRIPTING;
+        final SpreadsheetMetadataMode mode = SpreadsheetMetadataMode.SCRIPTING;
 
         final BasicSpreadsheetEngineContext context = this.createContext(
             METADATA.set(
@@ -1262,7 +1262,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             )
         );
 
-        final SpreadsheetEngineContext after = context.setSpreadsheetEngineContextMode(mode);
+        final SpreadsheetEngineContext after = context.setSpreadsheetMetadataMode(mode);
         final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
             SpreadsheetExpressionEvaluationContext.NO_CELL,
             SpreadsheetExpressionReferenceLoaders.fake()
@@ -1298,25 +1298,25 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSpreadsheetExpressionEvaluationContextWithFindIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.FIND);
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.FIND);
     }
 
     @Test
     public void testSpreadsheetExpressionEvaluationContextWithFormulaIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.FORMULA);
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.FORMULA);
     }
 
     @Test
     public void testSpreadsheetExpressionEvaluationContextWithFormattingIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.FORMATTING);
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.FORMATTING);
     }
 
     @Test
     public void testSpreadsheetExpressionEvaluationContextWithValidationIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetEngineContextMode.VALIDATION);
+        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.VALIDATION);
     }
 
-    private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetEngineContextMode mode) {
+    private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetMetadataMode mode) {
         final BasicSpreadsheetEngineContext context = this.createContext(
             METADATA.set(
                 mode.function(),
@@ -1331,7 +1331,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             value
         );
 
-        final SpreadsheetEngineContext after = context.setSpreadsheetEngineContextMode(mode);
+        final SpreadsheetEngineContext after = context.setSpreadsheetMetadataMode(mode);
         final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
             SpreadsheetExpressionEvaluationContext.NO_CELL,
             SpreadsheetExpressionReferenceLoaders.fake()
@@ -1445,7 +1445,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final EnvironmentContext environmentContext,
                                                         final ProviderContext providerContext) {
         return BasicSpreadsheetEngineContext.with(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 SpreadsheetStoreRepositories.treeMap(
@@ -1524,7 +1524,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final EnvironmentContext environmentContext) {
         return BasicSpreadsheetEngineContext.with(
-            SpreadsheetEngineContextMode.FORMULA,
+            SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
                 storeRepository,
@@ -1888,12 +1888,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testEquals() {
         this.checkEquals(
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -1904,12 +1904,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testEqualsDifferentMode() {
         this.checkNotEquals(
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FIND,
+                SpreadsheetMetadataMode.FIND,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             )
@@ -1920,12 +1920,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testEqualsDifferentSpreadsheetContext() {
         this.checkNotEquals(
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 new TestSpreadsheetContext(
                     EnvironmentContexts.map(
                         EnvironmentContexts.empty(
@@ -1945,12 +1945,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testEqualsDifferentTerminalContext() {
         this.checkNotEquals(
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
             BasicSpreadsheetEngineContext.with(
-                SpreadsheetEngineContextMode.FORMULA,
+                SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TerminalContexts.fake()
             )

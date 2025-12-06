@@ -430,7 +430,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     BasicSpreadsheetEngineFilterCellsPredicate.with(
                         valueType,
                         expression,
-                        context.setSpreadsheetEngineContextMode(SpreadsheetEngineContextMode.FIND),
+                        context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.FIND),
                         changes
                     )
                 ).collect(Collectors.toCollection(Sets::ordered));
@@ -473,8 +473,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Predicate<SpreadsheetCell> filterPredicate = BasicSpreadsheetEngineFilterCellsPredicate.with(
                 valueType,
                 expression,
-                context.setSpreadsheetEngineContextMode(
-                    SpreadsheetEngineContextMode.FIND
+                context.setSpreadsheetMetadataMode(
+                    SpreadsheetMetadataMode.FIND
                 ),
                 changes
             );
@@ -1768,7 +1768,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             result = validate(
                 result,
                 loader,
-                context.setSpreadsheetEngineContextMode(SpreadsheetEngineContextMode.VALIDATION)
+                context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.VALIDATION)
             );
         }
 
