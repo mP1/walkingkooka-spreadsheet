@@ -18,15 +18,22 @@
 package walkingkooka.spreadsheet.template;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.storage.Storage;
@@ -34,15 +41,18 @@ import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.template.TemplateContextTesting2;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.validation.form.FormHandlerContexts;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.util.Collections;
 import java.util.List;
@@ -225,7 +235,11 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
             SPREADSHEET_PARSER_CONTEXT,
             SpreadsheetExpressionEvaluationContexts.basic(
                 Url.parseAbsolute("https://example.com"), // serverUrl
-                SpreadsheetMetadata.EMPTY,
+                METADATA_EN_AU.set(
+                    SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                    SpreadsheetExpressionFunctions.parseAliasSet("hello")
+                ),
+                SpreadsheetEngineContextMode.FORMULA,
                 new FakeSpreadsheetStoreRepository() {
 
                     @Override
@@ -235,28 +249,32 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
 
                     private final Storage<StorageExpressionEvaluationContext> storage = Storages.tree();
                 },
-                SPREADSHEET_FORMATTER_CONTEXT, // SpreadsheetConverterContext
                 ENVIRONMENT_CONTEXT,
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
-                (Optional<SpreadsheetCell> cell) -> {
-                    throw new UnsupportedOperationException();
-                },
-                FormHandlerContexts.fake(),
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                new FakeExpressionFunctionProvider<>() {
-                    @Override
-                    public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                            final List<?> values,
-                                                                                                            final ProviderContext context) {
-                        checkEquals(
-                            "hello",
-                            name.value(),
-                            "function name"
-                        );
+                SpreadsheetProviders.basic(
+                    SpreadsheetConvertersConverterProviders.spreadsheetConverters(
+                        (ProviderContext p) -> METADATA_EN_AU.dateTimeConverter(
+                            SPREADSHEET_FORMATTER_PROVIDER,
+                            SPREADSHEET_PARSER_PROVIDER,
+                            p
+                        )
+                    ),
+                    new FakeExpressionFunctionProvider<>() {
+                        @Override
+                        public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
+                                                                                                                final List<?> values,
+                                                                                                                final ProviderContext context) {
+                            checkEquals(
+                                "hello",
+                                name.value(),
+                                "function name"
+                            );
 
-                        return Cast.to(
-                            new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
+                            return new FakeExpressionFunction<String, SpreadsheetExpressionEvaluationContext>() {
                                 @Override
                                 public String apply(final List<Object> values,
                                                     final SpreadsheetExpressionEvaluationContext context) {
@@ -284,10 +302,27 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                                 public Optional<ExpressionFunctionName> name() {
                                     return Optional.of(name);
                                 }
-                            }
-                        );
-                    }
-                },
+                            };
+                        }
+
+                        @Override
+                        public ExpressionFunctionInfoSet expressionFunctionInfos() {
+                            return SpreadsheetExpressionFunctions.parseInfoSet("https://example.com/Hello Hello");
+                        }
+
+                        @Override
+                        public CaseSensitivity expressionFunctionNameCaseSensitivity() {
+                            return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
+                        }
+                    },
+                    SpreadsheetComparatorProviders.fake(),
+                    SpreadsheetExporterProviders.fake(),
+                    SpreadsheetFormatterProviders.fake(),
+                    FormHandlerProviders.fake(),
+                    SpreadsheetImporterProviders.fake(),
+                    SpreadsheetParserProviders.fake(),
+                    ValidatorProviders.fake()
+                ),
                 PROVIDER_CONTEXT
             ),
             (t) -> {

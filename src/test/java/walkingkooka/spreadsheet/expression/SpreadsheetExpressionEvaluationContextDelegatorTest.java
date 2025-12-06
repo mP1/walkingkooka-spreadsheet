@@ -24,26 +24,21 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
-import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
-import walkingkooka.validation.form.FakeFormHandlerContext;
-import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -170,47 +165,15 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             return SpreadsheetExpressionEvaluationContexts.basic(
                 Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
+                SpreadsheetEngineContextMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),
-                SPREADSHEET_FORMULA_CONVERTER_CONTEXT,
                 ENVIRONMENT_CONTEXT,
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
-                ((Optional<SpreadsheetCell> c) -> {
-                    throw new UnsupportedOperationException();
-                }),
-                new FakeFormHandlerContext<>() {
-                    @Override
-                    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
-                        Objects.requireNonNull(reference, "reference");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
-                        Objects.requireNonNull(fields, "fields");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-                        Objects.requireNonNull(name, "name");
-                        throw new UnsupportedOperationException();
-                    }
-
-                    @Override
-                    public Optional<EmailAddress> user() {
-                        return Optional.empty();
-                    }
-
-                    @Override
-                    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
-                        Objects.requireNonNull(reference, "reference");
-
-                        throw new UnsupportedOperationException();
-                    }
-                },
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                EXPRESSION_FUNCTION_PROVIDER,
+                SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             );
         }

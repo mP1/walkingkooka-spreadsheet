@@ -20,24 +20,22 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContextMode;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
-import walkingkooka.validation.form.FormHandlerContext;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -49,28 +47,28 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      */
     public static SpreadsheetExpressionEvaluationContext basic(final AbsoluteUrl serverUrl,
                                                                final SpreadsheetMetadata spreadsheetMetadata,
+                                                               final SpreadsheetEngineContextMode mode,
                                                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                               final SpreadsheetConverterContext spreadsheetConverterContext,
                                                                final EnvironmentContext environmentContext,
                                                                final Optional<SpreadsheetCell> cell,
                                                                final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                               final Function<Optional<SpreadsheetCell>, SpreadsheetFormatterContext> spreadsheetFormatterContextFactory,
-                                                               final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
+                                                               final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                               final LocaleContext localeContext,
                                                                final TerminalContext terminalContext,
-                                                               final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                               final SpreadsheetProvider spreadsheetProvider,
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
             serverUrl,
             spreadsheetMetadata,
+            mode,
             spreadsheetStoreRepository,
-            spreadsheetConverterContext,
             environmentContext,
             cell,
             spreadsheetExpressionReferenceLoader,
-            spreadsheetFormatterContextFactory,
-            formHandlerContext,
+            spreadsheetLabelNameResolver,
+            localeContext,
             terminalContext,
-            expressionFunctionProvider,
+            spreadsheetProvider,
             providerContext
         );
     }
