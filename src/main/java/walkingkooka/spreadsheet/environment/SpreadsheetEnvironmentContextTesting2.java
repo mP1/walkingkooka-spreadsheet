@@ -27,6 +27,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends EnvironmentContextTesting2<C> {
 
+    // serverUrl........................................................................................................
+
+    @Test
+    default void testEnvironmentValueNameWithServerUrl() {
+        final C context = this.createContext();
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            context.serverUrl()
+        );
+    }
+    
     // spreadsheetId....................................................................................................
 
     @Test

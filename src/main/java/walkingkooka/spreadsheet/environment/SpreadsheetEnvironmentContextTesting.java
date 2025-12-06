@@ -18,10 +18,27 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContextTesting;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
 public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting {
 
+    // serverUrl....................................................................................................
+
+    default void serverUrlAndCheck(final SpreadsheetEnvironmentContext context,
+                                       final AbsoluteUrl expected) {
+        this.checkEquals(
+            expected,
+            context.serverUrl()
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            expected
+        );
+    }
+    
     // spreadsheetId....................................................................................................
 
     default void spreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context,
