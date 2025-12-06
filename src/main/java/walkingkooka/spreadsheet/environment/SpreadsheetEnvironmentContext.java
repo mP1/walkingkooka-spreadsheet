@@ -29,6 +29,11 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext {
 
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with("serverUrl");
 
+    /**
+     * Getter that returns the server {@link AbsoluteUrl}
+     */
+    AbsoluteUrl serverUrl();
+
     EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with("spreadsheetId");
 
     /**
