@@ -17,7 +17,54 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
+import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetId;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends EnvironmentContextTesting2<C> {
+
+    // spreadsheetId....................................................................................................
+
+    @Test
+    default void testEnvironmentValueNameWithSpreadsheetId() {
+        final C context = this.createContext();
+
+        this.environmentValueAndCheck(
+            context,
+            SpreadsheetContext.SPREADSHEET_ID,
+            context.spreadsheetId()
+        );
+    }
+
+    // setSpreadsheetId.................................................................................................
+
+    @Test
+    default void testSetSpreadsheetIdWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .setSpreadsheetId(null)
+        );
+    }
+
+    @Test
+    default void testSetSpreadsheetIdWithSame() {
+        final C context = this.createContext();
+
+        assertSame(
+            context,
+            context.setSpreadsheetId(
+                context.spreadsheetId()
+            )
+        );
+    }
+
+    default void setSpreadsheetIdAndCheck(final C context,
+                                          final SpreadsheetId spreadsheetId) {
+
+    }
 }

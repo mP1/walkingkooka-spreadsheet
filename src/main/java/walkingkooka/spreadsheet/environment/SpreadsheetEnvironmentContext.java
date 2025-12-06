@@ -30,4 +30,14 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext {
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with("serverUrl");
 
     EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with("spreadsheetId");
+
+    /**
+     * The {@link SpreadsheetId} that identifies this spreadsheet.
+     */
+    SpreadsheetId spreadsheetId();
+
+    /**
+     * Returns a {@link SpreadsheetEnvironmentContext} with the given {@link SpreadsheetId}, creating a new instance if different.
+     */
+    SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 }
