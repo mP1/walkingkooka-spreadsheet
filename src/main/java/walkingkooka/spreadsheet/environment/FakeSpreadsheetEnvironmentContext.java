@@ -17,24 +17,28 @@
 
 package walkingkooka.spreadsheet.environment;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.environment.FakeEnvironmentContext;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.SpreadsheetId;
 
-/**
- * A collection of factory methods for {@link SpreadsheetEnvironmentContext}.
- */
-public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper {
+public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext implements SpreadsheetEnvironmentContext {
 
-    /**
-     * {@see FakeSpreadsheetEnvironmentContext}
-     */
-    public static FakeSpreadsheetEnvironmentContext fake() {
-        return new FakeSpreadsheetEnvironmentContext();
+    public FakeSpreadsheetEnvironmentContext() {
+        super();
     }
 
-    /**
-     * Stop creation
-     */
-    private SpreadsheetEnvironmentContexts() {
+    @Override
+    public AbsoluteUrl serverUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         throw new UnsupportedOperationException();
     }
 }
