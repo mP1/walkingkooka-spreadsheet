@@ -32,14 +32,19 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetEnvironmentContext} that wraps a {@link EnvironmentContext}, with guards to stop attempts to
  * set/remove {@link #SERVER_URL}.
+ * <br>
+ * Note if the given {@link EnvironmentContext} is a {@link SpreadsheetEnvironmentContext} it is not wrapped and returned.
  */
 final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator {
 
-    static BasicSpreadsheetEnvironmentContext with(final EnvironmentContext context) {
-        return new BasicSpreadsheetEnvironmentContext(
-            Objects.requireNonNull(context, "context")
-        );
+    static SpreadsheetEnvironmentContext with(final EnvironmentContext context) {
+
+        return context instanceof SpreadsheetEnvironmentContext ?
+            (SpreadsheetEnvironmentContext) context :
+            new BasicSpreadsheetEnvironmentContext(
+                Objects.requireNonNull(context, "context")
+            );
     }
 
     private BasicSpreadsheetEnvironmentContext(final EnvironmentContext context) {
