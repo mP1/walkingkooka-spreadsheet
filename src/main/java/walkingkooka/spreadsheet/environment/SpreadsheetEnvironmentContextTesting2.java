@@ -89,4 +89,12 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
             spreadsheetId
         );
     }
+
+    // type.............................................................................................................
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetEnvironmentContext.class.getSimpleName();
+    }
+
 }
