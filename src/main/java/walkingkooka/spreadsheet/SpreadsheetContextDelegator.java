@@ -94,6 +94,13 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     }
 
     @Override
+    default SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+        this.environmentContext()
+            .setUser(user);
+        return this;
+    }
+
+    @Override
     default EnvironmentContext environmentContext() {
         return this.spreadsheetContext();
     }
@@ -127,6 +134,13 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default Locale locale() {
         return this.environmentContext()
             .locale();
+    }
+
+    @Override
+    default SpreadsheetContext setLocale(final Locale locale) {
+        this.environmentContext()
+            .setLocale(locale);
+        return this;
     }
 
     @Override

@@ -21,6 +21,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
@@ -36,6 +37,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -145,6 +147,20 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
         this.spreadsheetEngineContext()
             .setLineEnding(lineEnding);
+        return this;
+    }
+
+    @Override
+    default SpreadsheetEngineContext setLocale(final Locale locale) {
+        this.spreadsheetEngineContext()
+            .setLocale(locale);
+        return this;
+    }
+
+    @Override
+    default SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+        this.spreadsheetEngineContext()
+            .setUser(user);
         return this;
     }
 
