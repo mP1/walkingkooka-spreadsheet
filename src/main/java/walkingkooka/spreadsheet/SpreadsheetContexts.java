@@ -17,15 +17,14 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.server.TerminalServerContext;
@@ -37,24 +36,20 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetContext}
      */
-    public static SpreadsheetContext basic(final AbsoluteUrl serverUrl,
-                                           final SpreadsheetId spreadsheetId,
-                                           final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+    public static SpreadsheetContext basic(final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                            final SpreadsheetProvider spreadsheetProvider,
                                            final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
-                                           final EnvironmentContext environmentContext,
+                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                            final LocaleContext localeContext,
                                            final ProviderContext providerContext,
                                            final TerminalServerContext terminalServerContext) {
         return BasicSpreadsheetContext.with(
-            serverUrl,
-            spreadsheetId,
             spreadsheetIdToStoreRepository,
             spreadsheetProvider,
             spreadsheetEngineContextFactory,
             httpRouterFactory,
-            environmentContext,
+            spreadsheetEnvironmentContext,
             localeContext,
             providerContext,
             terminalServerContext

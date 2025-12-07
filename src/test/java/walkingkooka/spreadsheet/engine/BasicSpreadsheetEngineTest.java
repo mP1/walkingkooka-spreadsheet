@@ -575,21 +575,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public AbsoluteUrl serverUrl() {
-            return SERVER_URL;
-        }
-
-        @Override
-        public SpreadsheetId spreadsheetId() {
-            return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
-        }
-
-        @Override
-        public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public SpreadsheetStoreRepository storeRepository() {
             return this.spreadsheetStoreRepository;
         }
@@ -679,6 +664,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         private final LocaleContext localeContext = LocaleContexts.jre(SpreadsheetMetadataTesting.LOCALE);
+
+        // SpreadsheetContext...........................................................................................
+
+        @Override
+        public AbsoluteUrl serverUrl() {
+            return BasicSpreadsheetEngineTest.SERVER_URL;
+        }
+
+        @Override
+        public SpreadsheetId spreadsheetId() {
+            return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+        }
+
+        @Override
+        public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+            throw new UnsupportedOperationException();
+        }
 
         // HasLineEnding................................................................................................
 

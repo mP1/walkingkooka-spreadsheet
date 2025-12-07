@@ -27,6 +27,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -45,20 +46,13 @@ import java.util.Optional;
  * viewing/editing.
  */
 public interface SpreadsheetContext extends SpreadsheetProvider,
-    EnvironmentContext,
+    SpreadsheetEnvironmentContext,
     HasProviderContext,
     HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl,
     LocaleContext,
     SpreadsheetMetadataContext,
     TerminalServerContext {
-
-    /**
-     * The {@link EnvironmentContext#environmentValue(EnvironmentValueName)} should always match {@link #spreadsheetId()}.
-     */
-    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with(
-        "spreadsheet-id"
-    );
 
     // SpreadsheetMetadataContext.......................................................................................
 
@@ -71,16 +65,6 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     }
 
     // SpreadsheetContext...............................................................................................
-
-    /**
-     * The {@link SpreadsheetId} that identifies this spreadsheet.
-     */
-    SpreadsheetId spreadsheetId();
-
-    /**
-     * Returns a {@link SpreadsheetContext} with the given {@link SpreadsheetId}, creating a new instance if different.
-     */
-    SpreadsheetContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 
     /**
      * The {@link SpreadsheetStoreRepository} for the selected spreadsheet.
@@ -117,6 +101,9 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
 
     @Override
     SpreadsheetContext setLocale(final Locale locale);
+
+    @Override
+    SpreadsheetContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 
     @Override
     SpreadsheetContext setUser(final Optional<EmailAddress> user);
