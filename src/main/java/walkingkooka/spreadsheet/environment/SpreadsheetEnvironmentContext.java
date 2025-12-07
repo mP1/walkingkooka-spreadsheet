@@ -21,6 +21,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.LineEnding;
 
@@ -30,14 +31,10 @@ import java.util.Optional;
 /**
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
  */
-public interface SpreadsheetEnvironmentContext extends EnvironmentContext {
+public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
+    HasSpreadsheetServerUrl {
 
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with("serverUrl");
-
-    /**
-     * Getter that returns the server {@link AbsoluteUrl}
-     */
-    AbsoluteUrl serverUrl();
 
     EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with("spreadsheetId");
 
