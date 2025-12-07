@@ -19,24 +19,30 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.spreadsheet.HasSpreadsheetServerUrl;
+import walkingkooka.spreadsheet.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
-public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting {
+public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting,
+    HasSpreadsheetServerUrlTesting {
 
-    // serverUrl....................................................................................................
+    // serverUrl........................................................................................................
 
-    default void serverUrlAndCheck(final SpreadsheetEnvironmentContext context,
-                                       final AbsoluteUrl expected) {
-        this.checkEquals(
-            expected,
-            context.serverUrl()
-        );
-
-        this.environmentValueAndCheck(
-            context,
-            SpreadsheetEnvironmentContext.SERVER_URL,
+    @Override
+    default void serverUrlAndCheck(final HasSpreadsheetServerUrl has,
+                                   final AbsoluteUrl expected) {
+        HasSpreadsheetServerUrlTesting.super.serverUrlAndCheck(
+            has,
             expected
         );
+
+        if (has instanceof SpreadsheetEnvironmentContext) {
+            this.environmentValueAndCheck(
+                (SpreadsheetEnvironmentContext) has,
+                SpreadsheetEnvironmentContext.SERVER_URL,
+                expected
+            );
+        }
     }
     
     // spreadsheetId....................................................................................................
