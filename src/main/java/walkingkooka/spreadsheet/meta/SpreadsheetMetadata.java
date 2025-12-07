@@ -743,7 +743,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * for the time and user.
      */
     public final EnvironmentContext environmentContext(final EnvironmentContext context) {
-        return SpreadsheetMetadataEnvironmentContext.with(
+        return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             this,
             context
         );
