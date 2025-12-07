@@ -17,12 +17,20 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.reflect.PublicStaticHelper;
 
 /**
  * A collection of factory methods for {@link SpreadsheetEnvironmentContext}.
  */
 public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetEnvironmentContext}
+     */
+    public static SpreadsheetEnvironmentContext with(final EnvironmentContext context) {
+        return BasicSpreadsheetEnvironmentContext.with(context);
+    }
 
     /**
      * {@see FakeSpreadsheetEnvironmentContext}
