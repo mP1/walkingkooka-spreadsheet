@@ -40,6 +40,8 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -85,7 +87,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
-    private final static SpreadsheetId ID = SpreadsheetId.with(1);
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static Function<SpreadsheetId, SpreadsheetStoreRepository> REPO = (i) -> SpreadsheetStoreRepositories.fake();
 
@@ -110,12 +112,20 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static HasNow HAS_NOW = LocalDateTime::now;
 
-    private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.map(
-        EnvironmentContexts.empty(
-            LINE_ENDING,
-            LOCALE,
-            HAS_NOW,
-            Optional.empty() // no user
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.with(
+        EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                Optional.empty() // no user
+            )
+        ).setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        ).setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
         )
     );
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
@@ -146,55 +156,15 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     };
 
     @Test
-    public void testWithNullServerUrlFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
-                null,
-                ID,
-                REPO,
-                SPREADSHEET_PROVIDER,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
-                HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT,
-                TERMINAL_SERVER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                null,
-                REPO,
-                SPREADSHEET_PROVIDER,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
-                HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT,
-                TERMINAL_SERVER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 null,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_SERVER_CONTEXT
@@ -207,13 +177,11 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 null,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_SERVER_CONTEXT
@@ -226,13 +194,11 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 null,
                 HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_SERVER_CONTEXT
@@ -245,13 +211,11 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 TERMINAL_SERVER_CONTEXT
@@ -260,12 +224,10 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     }
 
     @Test
-    public void testWithNullEnvironmentContextFails() {
+    public void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
@@ -283,13 +245,11 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
                 PROVIDER_CONTEXT,
                 TERMINAL_SERVER_CONTEXT
@@ -302,13 +262,11 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 null,
                 TERMINAL_SERVER_CONTEXT
@@ -321,13 +279,11 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetContext.with(
-                SERVER_URL,
-                ID,
                 REPO,
                 SPREADSHEET_PROVIDER,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT,
                 null
@@ -351,7 +307,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testSpreadsheetId() {
         this.spreadsheetIdAndCheck(
             this.createContext(),
-            ID
+            SPREADSHEET_ID
         );
     }
 
@@ -371,7 +327,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 LocaleContexts.jre(locale)
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                ID
+                SPREADSHEET_ID
             ).set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AUDIT_INFO
@@ -401,7 +357,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
         final SpreadsheetId id = SpreadsheetId.with(999);
         this.checkNotEquals(
-            ID,
+            SPREADSHEET_ID,
             id
         );
 
@@ -441,14 +397,36 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     // setEnvironmentContext............................................................................................
 
+    @Override
+    public void testSetEnvironmentContextWithEqualEnvironmentContext() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testSetEnvironmentContextWithThis() {
+        final BasicSpreadsheetContext context = this.createContext();
+        assertSame(
+            context,
+            context.setEnvironmentContext(context)
+        );
+    }
+
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LineEnding.NL,
-                Locale.ENGLISH,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
+        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.with(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    Locale.ENGLISH,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SERVER_URL,
+                SERVER_URL
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                SPREADSHEET_ID
             )
         );
 
@@ -461,12 +439,20 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSetEnvironmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LineEnding.NL,
-                Locale.ENGLISH,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
+        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.with(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    Locale.ENGLISH,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SERVER_URL,
+                SERVER_URL
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                SPREADSHEET_ID
             )
         );
 
@@ -552,7 +538,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                 LocaleContexts.jre(LOCALE)
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                ID
+                SPREADSHEET_ID
             ).set(
                 SpreadsheetMetadataPropertyName.AUDIT_INFO,
                 AUDIT_INFO
@@ -604,18 +590,26 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     @Override
     public BasicSpreadsheetContext createContext() {
         return this.createContext(
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    Optional.empty() // no user
+            SpreadsheetEnvironmentContexts.with(
+                EnvironmentContexts.map(
+                    EnvironmentContexts.empty(
+                        LINE_ENDING,
+                        LOCALE,
+                        HAS_NOW,
+                        Optional.empty() // no user
+                    )
+                ).setEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SERVER_URL,
+                    SERVER_URL
+                ).setEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                    SPREADSHEET_ID
                 )
             )
         );
     }
 
-    private BasicSpreadsheetContext createContext(final EnvironmentContext environmentContext) {
+    private BasicSpreadsheetContext createContext(final SpreadsheetEnvironmentContext environmentContext) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
@@ -623,7 +617,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
             LocaleContexts.jre(LOCALE)
         ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-            ID
+            SPREADSHEET_ID
         ).set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AUDIT_INFO
@@ -660,10 +654,8 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
         store.save(metadata);
 
         return BasicSpreadsheetContext.with(
-            SERVER_URL,
-            ID,
             (i) -> {
-                checkEquals(ID, i, "id -> SpreadsheetStoreRepository");
+                checkEquals(SPREADSHEET_ID, i, "id -> SpreadsheetStoreRepository");
                 return new FakeSpreadsheetStoreRepository() {
 
                     @Override
@@ -705,7 +697,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "spreadsheetId=1"
+            "{lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1}"
         );
     }
 

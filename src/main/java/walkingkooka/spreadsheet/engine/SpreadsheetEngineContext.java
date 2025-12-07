@@ -116,19 +116,18 @@ public interface SpreadsheetEngineContext extends Context,
 
     // SpreadsheetContext...............................................................................................
 
-    /**
-     * {@see SpreadsheetContext#setSpreadsheetId}
-     */
-    @Override
-    SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
-
-    // EnvironmentContext...............................................................................................
-
     @Override
     SpreadsheetEngineContext cloneEnvironment();
 
     @Override
     SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext);
+
+    @Override
+    <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                     final T value);
+
+    @Override
+    SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name);
 
     @Override
     SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding);
@@ -137,12 +136,8 @@ public interface SpreadsheetEngineContext extends Context,
     SpreadsheetEngineContext setLocale(final Locale locale);
 
     @Override
+    SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
+
+    @Override
     SpreadsheetEngineContext setUser(final Optional<EmailAddress> user);
-
-    @Override
-    <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                     final T value);
-
-    @Override
-    SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name);
 }

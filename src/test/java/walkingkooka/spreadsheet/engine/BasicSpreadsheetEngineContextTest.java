@@ -1641,26 +1641,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
 
         @Override
-        public AbsoluteUrl serverUrl() {
-            return SERVER_URL;
-        }
-
-        @Override
-        public SpreadsheetId spreadsheetId() {
-            return BasicSpreadsheetEngineContextTest.SPREADSHEET_ID;
-        }
-
-        @Override
-        public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
-            Objects.requireNonNull(id, "id");
-
-            if (this.spreadsheetId().equals(id)) {
-                return this;
-            }
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public SpreadsheetStoreRepository storeRepository() {
             return this.storeRepository;
         }
@@ -1738,6 +1718,26 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.localeContext,
                 this.providerContext
             );
+        }
+
+        @Override
+        public AbsoluteUrl serverUrl() {
+            return BasicSpreadsheetEngineContextTest.SERVER_URL;
+        }
+
+        @Override
+        public SpreadsheetId spreadsheetId() {
+            return BasicSpreadsheetEngineContextTest.SPREADSHEET_ID;
+        }
+
+        @Override
+        public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+            Objects.requireNonNull(id, "id");
+
+            if (this.spreadsheetId().equals(id)) {
+                return this;
+            }
+            throw new UnsupportedOperationException();
         }
 
         @Override

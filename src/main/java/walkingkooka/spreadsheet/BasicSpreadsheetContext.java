@@ -30,8 +30,8 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -51,19 +51,15 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    static BasicSpreadsheetContext with(final AbsoluteUrl serverUrl,
-                                        final SpreadsheetId spreadsheetId,
-                                        final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+    static BasicSpreadsheetContext with(final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                         final SpreadsheetProvider spreadsheetProvider,
                                         final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
-                                        final EnvironmentContext environmentContext,
+                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                         final LocaleContext localeContext,
                                         final ProviderContext providerContext,
                                         final TerminalServerContext terminalServerContext) {
         return new BasicSpreadsheetContext(
-            Objects.requireNonNull(serverUrl, "serverUrl"),
-            Objects.requireNonNull(spreadsheetId, "spreadsheetId"),
             Objects.requireNonNull(spreadsheetIdToStoreRepository, "spreadsheetIdToStoreRepository"),
             null, // SpreadsheetStoreRepository
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
@@ -71,31 +67,27 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             null, // SpreadsheetEngineContext will created later in ctor
             Objects.requireNonNull(httpRouterFactory, "httpRouterFactory"),
             null, // HttpRouter
-            Objects.requireNonNull(environmentContext, "environmentContext"),
+            Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext"),
             Objects.requireNonNull(localeContext, "localeContext"),
             Objects.requireNonNull(providerContext, "providerContext"),
             Objects.requireNonNull(terminalServerContext, "terminalServerContext")
         );
     }
 
-    private BasicSpreadsheetContext(final AbsoluteUrl serverUrl,
-                                    final SpreadsheetId spreadsheetId,
-                                    final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+    private BasicSpreadsheetContext(final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                     final SpreadsheetStoreRepository storeRepository,
                                     final SpreadsheetProvider spreadsheetProvider,
                                     final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                     final SpreadsheetEngineContext spreadsheetEngineContext,
                                     final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                     final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter,
-                                    final EnvironmentContext environmentContext,
+                                    final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                     final LocaleContext localeContext,
                                     final ProviderContext providerContext,
                                     final TerminalServerContext terminalServerContext) {
         super();
 
-        this.serverUrl = serverUrl;
-
-        this.spreadsheetId = spreadsheetId;
+        final SpreadsheetId spreadsheetId = spreadsheetEnvironmentContext.spreadsheetId();
 
         this.spreadsheetIdToStoreRepository = spreadsheetIdToStoreRepository;
         this.storeRepository = null != storeRepository ?
@@ -104,7 +96,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
         this.spreadsheetProvider = spreadsheetProvider;
         
-        this.environmentContext = environmentContext;
+        this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
         this.localeContext = LocaleContexts.readOnly(localeContext);
         this.providerContext = providerContext;
 
@@ -117,51 +109,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
         this.httpRouterFactory = httpRouterFactory;
 
         this.terminalServerContext = terminalServerContext;
-
-        this.setEnvironmentValue(
-            SPREADSHEET_ID,
-            spreadsheetId
-        );
-    }
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return this.serverUrl;
-    }
-
-    private final AbsoluteUrl serverUrl;
-
-    // SpreadsheetId....................................................................................................
-
-    @Override
-    public SpreadsheetId spreadsheetId() {
-        return this.spreadsheetId;
-    }
-
-    private final SpreadsheetId spreadsheetId;
-
-
-    @Override
-    public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
-        Objects.requireNonNull(id, "id");
-
-        return this.spreadsheetId.equals(id) ?
-            this :
-            new BasicSpreadsheetContext(
-                this.serverUrl,
-                id,
-                this.spreadsheetIdToStoreRepository,
-                null, // SpreadsheetStoreRepository
-                this.spreadsheetProvider,
-                this.spreadsheetEngineContextFactory,
-                null, // SpreadsheetEngineContext
-                this.httpRouterFactory,
-                null, // httpRouter
-                this.environmentContext,
-                this.localeContext,
-                this.providerContext,
-                this.terminalServerContext
-            );
     }
 
     // StoreRepository..................................................................................................
@@ -182,7 +129,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.loadMetadataOrFail(this.spreadsheetId);
+        return this.loadMetadataOrFail(this.spreadsheetId());
     }
 
     // SpreadsheetContext...............................................................................................
@@ -288,19 +235,21 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
     @Override
     public SpreadsheetContext cloneEnvironment() {
         return this.setEnvironmentContext(
-            this.environmentContext.cloneEnvironment()
+            this.spreadsheetEnvironmentContext.cloneEnvironment()
         );
     }
 
     @Override
     public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final EnvironmentContext before = this.environmentContext;
+        final SpreadsheetContext spreadsheetContext;
 
-        return before == environmentContext ?
-            this :
-            new BasicSpreadsheetContext(
-                this.serverUrl,
-                this.spreadsheetId,
+        if(this == environmentContext || this.spreadsheetEnvironmentContext == environmentContext) {
+            spreadsheetContext = this;
+        } else {
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext.cloneEnvironment()
+                .setEnvironmentContext(environmentContext);
+
+            spreadsheetContext = new BasicSpreadsheetContext(
                 this.spreadsheetIdToStoreRepository,
                 this.storeRepository,
                 this.spreadsheetProvider,
@@ -308,17 +257,20 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
                 this.spreadsheetEngineContext,
                 null, // HttpRouterFactory
                 this.httpRouter,
-                Objects.requireNonNull(environmentContext, "environmentContext"),
+                spreadsheetEnvironmentContext,
                 this.localeContext,
                 this.providerContext,
                 this.terminalServerContext
             );
+        }
+
+        return spreadsheetContext;
     }
 
     @Override
     public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                       final T value) {
-        this.environmentContext.setEnvironmentValue(
+        this.spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
@@ -327,45 +279,87 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.environmentContext.removeEnvironmentValue(name);
+        this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         return this;
     }
 
     @Override
     public LineEnding lineEnding() {
-        return this.environmentContext.lineEnding();
+        return this.spreadsheetEnvironmentContext.lineEnding();
     }
 
     @Override
     public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext.setLineEnding(lineEnding);
+        this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
         return this;
     }
 
     @Override
     public Locale locale() {
-        return this.environmentContext.locale();
+        return this.spreadsheetEnvironmentContext.locale();
     }
 
     @Override
     public SpreadsheetContext setLocale(final Locale locale) {
-        this.environmentContext.setLocale(locale);
+        this.spreadsheetEnvironmentContext.setLocale(locale);
 
         return this;
     }
 
     @Override
+    public AbsoluteUrl serverUrl() {
+        return this.spreadsheetEnvironmentContext.serverUrl();
+    }
+
+    // SpreadsheetId....................................................................................................
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.spreadsheetEnvironmentContext.spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+        Objects.requireNonNull(id, "id");
+
+        SpreadsheetContext spreadsheetContext;
+
+        if(this.spreadsheetId().equals(id)) {
+            spreadsheetContext = this;
+        } else {
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext.cloneEnvironment()
+                .setSpreadsheetId(id);
+
+            spreadsheetContext = new BasicSpreadsheetContext(
+                this.spreadsheetIdToStoreRepository,
+                null, // SpreadsheetStoreRepository
+                this.spreadsheetProvider,
+                this.spreadsheetEngineContextFactory,
+                null, // SpreadsheetEngineContext
+                this.httpRouterFactory,
+                null, // httpRouter
+                spreadsheetEnvironmentContext, // cloned SpreadsheetEnvironmentContext with new spreadsheetId
+                this.localeContext,
+                this.providerContext,
+                this.terminalServerContext
+            );
+        }
+
+        return spreadsheetContext;
+    }
+
+    @Override
     public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
-        this.environmentContext.setUser(user);
+        this.spreadsheetEnvironmentContext.setUser(user);
         return this;
     }
 
     @Override
     public EnvironmentContext environmentContext() {
-        return this.environmentContext;
+        return this.spreadsheetEnvironmentContext;
     }
 
-    private final EnvironmentContext environmentContext;
+    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
     // LocaleContext....................................................................................................
 
@@ -393,7 +387,7 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
             this.setSpreadsheetProvider(this.metadata);
 
             if(null == this.metadataSpreadsheetProvider) {
-                throw new IllegalStateException("SpreadsheetMetadata " + this.spreadsheetId + " deleted");
+                throw new IllegalStateException("SpreadsheetMetadata " + this.spreadsheetId() + " deleted");
             }
         }
         return this.metadataSpreadsheetProvider;
@@ -433,6 +427,6 @@ final class BasicSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public String toString() {
-        return SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this.spreadsheetId.toString();
+        return this.spreadsheetEnvironmentContext.toString();
     }
 }
