@@ -28,7 +28,7 @@ public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper 
     /**
      * {@see BasicSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetEnvironmentContext with(final EnvironmentContext context) {
+    public static SpreadsheetEnvironmentContext basic(final EnvironmentContext context) {
         return BasicSpreadsheetEnvironmentContext.with(context);
     }
 
