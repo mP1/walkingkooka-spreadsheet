@@ -112,7 +112,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     private final static HasNow HAS_NOW = LocalDateTime::now;
 
-    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.with(
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
         EnvironmentContexts.map(
             EnvironmentContexts.empty(
                 LINE_ENDING,
@@ -413,7 +413,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.with(
+        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.basic(
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LineEnding.NL,
@@ -436,7 +436,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
 
     @Test
     public void testSetEnvironmentContext() {
-        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.with(
+        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.basic(
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LineEnding.NL,
@@ -584,7 +584,7 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
     @Override
     public BasicSpreadsheetContext createContext() {
         return this.createContext(
-            SpreadsheetEnvironmentContexts.with(
+            SpreadsheetEnvironmentContexts.basic(
                 EnvironmentContexts.map(
                     EnvironmentContexts.empty(
                         LINE_ENDING,
