@@ -73,6 +73,12 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
     }
 
     @Override
+    default SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        this.environmentContext().setSpreadsheetId(spreadsheetId);
+        return this;
+    }
+
+    @Override
     default SpreadsheetEnvironmentContext setUser(Optional<EmailAddress> user) {
         this.environmentContext().setUser(user);
         return this;
