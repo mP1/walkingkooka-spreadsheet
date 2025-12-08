@@ -557,9 +557,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 this.spreadsheetMetadata,
                 this.mode,
                 this.spreadsheetStoreRepository,
-                this.spreadsheetEnvironmentContext.setEnvironmentContext(
-                    Objects.requireNonNull(environmentContext, "environmentContext")
-                ),
+                this.spreadsheetEnvironmentContext.setEnvironmentContext(environmentContext),
                 this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
