@@ -40,6 +40,13 @@ public final class SpreadsheetEnvironmentContexts implements PublicStaticHelper 
     }
 
     /**
+     * {@see ReadOnlySpreadsheetEnvironmentContext}
+     */
+    public static SpreadsheetEnvironmentContext readOnly(final SpreadsheetEnvironmentContext context) {
+        return ReadOnlySpreadsheetEnvironmentContext.with(context);
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetEnvironmentContexts() {
