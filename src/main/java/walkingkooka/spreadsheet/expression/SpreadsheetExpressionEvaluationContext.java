@@ -230,9 +230,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     // EnvironmentContext...............................................................................................
 
     @Override
-    SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user);
-
-    @Override
     SpreadsheetExpressionEvaluationContext cloneEnvironment();
 
     @Override
@@ -245,15 +242,14 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     @Override
     SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name);
 
-    // HasLineEnding....................................................................................................
-
     @Override
     SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding);
 
-    // LocaleContext....................................................................................................
-
     @Override
     SpreadsheetExpressionEvaluationContext setLocale(final Locale locale);
+
+    @Override
+    SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user);
 
     // validation.......................................................................................................
 
