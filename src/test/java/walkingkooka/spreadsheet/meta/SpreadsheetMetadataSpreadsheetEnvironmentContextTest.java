@@ -498,8 +498,14 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            this.createContext(),
-            METADATA.toString()
+            SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+                SpreadsheetMetadata.EMPTY.set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    SpreadsheetId.with(1)
+                ),
+                EnvironmentContexts.map(CONTEXT)
+            ),
+            "{lineEnding=\\n, locale=fr, spreadsheetId=1, user=user@example.com}"
         );
     }
 
