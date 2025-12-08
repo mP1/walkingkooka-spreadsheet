@@ -19,13 +19,12 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
@@ -45,11 +44,10 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see BasicSpreadsheetExpressionEvaluationContext}
      */
-    public static SpreadsheetExpressionEvaluationContext basic(final AbsoluteUrl serverUrl,
-                                                               final SpreadsheetMetadata spreadsheetMetadata,
+    public static SpreadsheetExpressionEvaluationContext basic(final SpreadsheetMetadata spreadsheetMetadata,
                                                                final SpreadsheetMetadataMode mode,
                                                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                               final EnvironmentContext environmentContext,
+                                                               final SpreadsheetEnvironmentContext spreadsheeEnvironmentContext,
                                                                final Optional<SpreadsheetCell> cell,
                                                                final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
@@ -58,11 +56,10 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                final SpreadsheetProvider spreadsheetProvider,
                                                                final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
-            serverUrl,
             spreadsheetMetadata,
             mode,
             spreadsheetStoreRepository,
-            environmentContext,
+            spreadsheeEnvironmentContext,
             cell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,

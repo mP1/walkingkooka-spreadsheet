@@ -30,6 +30,7 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -65,6 +66,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -277,11 +279,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public AbsoluteUrl serverUrl() {
-        return this.context.serverUrl();
-    }
-
-    @Override
     public SpreadsheetExpressionReference validationReference() {
         return this.context.validationReference();
     }
@@ -419,13 +416,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         return this.context.referenceNotFound(reference);
     }
 
-    // misc.............................................................................................................
-
-    @Override
-    public Locale locale() {
-        return this.context.locale();
-    }
-
     // DateTimeContext.................................................................................................
 
     @Override
@@ -475,12 +465,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public LocaleContext localeContext() {
         return this.context;
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.context.setLocale(locale);
-        return this;
     }
 
     // EnvironmentContext...............................................................................................
@@ -539,19 +523,6 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     }
 
     @Override
-    public Optional<EmailAddress> user() {
-        return this.context.user();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.context.setUser(user);
-        return this;
-    }
-
-    // HasLineEnding....................................................................................................
-
-    @Override
     public LineEnding lineEnding() {
         return this.context.lineEnding();
     }
@@ -559,6 +530,49 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     @Override
     public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
         this.context.setLineEnding(lineEnding);
+        return this;
+    }
+
+    @Override
+    public Locale locale() {
+        return this.context.locale();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.context.now(); // inherit unrelated defaults
+    }
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.context.serverUrl();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.context.spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        this.context.setSpreadsheetId(spreadsheetId);
+        return this;
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        return this.context.user();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
         return this;
     }
     

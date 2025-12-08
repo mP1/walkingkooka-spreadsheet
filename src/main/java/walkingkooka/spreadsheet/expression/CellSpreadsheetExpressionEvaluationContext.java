@@ -18,8 +18,10 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -166,6 +168,22 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
     @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         this.context.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.context.serverUrl();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.context.spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        this.context.setSpreadsheetId(spreadsheetId);
         return this;
     }
 

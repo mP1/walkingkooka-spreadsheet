@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.Url;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
@@ -99,7 +98,6 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         METADATA_EN_AU.spreadsheetFormatterContext(
             SpreadsheetMetadata.NO_CELL,
             (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.basic(
-                Url.parseAbsolute("https://example.com"),
                 METADATA_EN_AU,
                 SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),

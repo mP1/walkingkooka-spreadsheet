@@ -21,11 +21,12 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -86,6 +87,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
     @Override
     public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetSpreadsheetIdWithSame() {
         throw new UnsupportedOperationException();
     }
 
@@ -162,12 +168,17 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
+            final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
+
             return SpreadsheetExpressionEvaluationContexts.basic(
-                Url.parseAbsolute("https://example.com"),
-                METADATA_EN_AU,
+                METADATA_EN_AU.set(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    spreadsheetId
+                ),
                 SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setSpreadsheetId(spreadsheetId),
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -239,6 +250,12 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         @Override
         public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+            Objects.requireNonNull(spreadsheetId, "spreadsheetId");
             throw new UnsupportedOperationException();
         }
 

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -100,7 +99,6 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
             expected,
             expression.toValue(
                 SpreadsheetExpressionEvaluationContexts.basic(
-                    Url.parseAbsolute("https://example.com"), // serverUrl
                     METADATA_EN_AU,
                     SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetStoreRepositories.fake(),

@@ -23,7 +23,6 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -38,6 +37,8 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -268,17 +269,16 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-        EnvironmentContext environmentContext = spreadsheetContext;
+        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = spreadsheetContext;
         if (mode.isReadOnlyEnvironmentContext()) {
-            environmentContext = EnvironmentContexts.readOnly(environmentContext);
+            spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext);
         }
 
         return SpreadsheetExpressionEvaluationContexts.basic(
-            spreadsheetContext.serverUrl(),
             this.spreadsheetMetadata(),
             this.mode,
             spreadsheetContext.storeRepository(),
-            environmentContext,
+            spreadsheetEnvironmentContext,
             cell,
             loader,
             this.spreadsheetLabelNameResolver,

@@ -30,6 +30,7 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -108,11 +109,6 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     }
 
     @Override
-    public Locale locale() {
-        return this.context.locale();
-    }
-
-    @Override
     public Optional<SpreadsheetCell> cell() {
         return this.context.cell();
     }
@@ -158,11 +154,6 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         this.context.setSpreadsheetMetadata(metadata);
-    }
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return this.context.serverUrl();
     }
 
     @Override
@@ -306,11 +297,6 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         return this.context.mathContext();
     }
 
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
-
     // FormHandlerContextDelegator......................................................................................
 
     @Override
@@ -353,19 +339,6 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
             );
     }
 
-    // HasLineEnding....................................................................................................
-
-    @Override
-    public LineEnding lineEnding() {
-        return this.context.lineEnding();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.context.setLineEnding(lineEnding);
-        return this;
-    }
-
     // LocaleContextDelegator...........................................................................................
 
     @Override
@@ -373,24 +346,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         return this.context;
     }
 
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.context.setLocale(locale);
-        return this;
-    }
-
     // EnvironmentContext...............................................................................................
-
-    @Override
-    public Optional<EmailAddress> user() {
-        return this.context.user();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.context.setUser(user);
-        return this;
-    }
 
     @Override
     public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
@@ -432,6 +388,60 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.context.removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.context.lineEnding();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        this.context.setLineEnding(lineEnding);
+        return this;
+    }
+
+    @Override
+    public Locale locale() {
+        return this.context.locale();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        this.context.setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.context.now(); // inherit unrelated defaults
+    }
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.context.serverUrl();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.context.spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        this.context.setSpreadsheetId(spreadsheetId);
+        return this;
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        return this.context.user();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.context.setUser(user);
         return this;
     }
 

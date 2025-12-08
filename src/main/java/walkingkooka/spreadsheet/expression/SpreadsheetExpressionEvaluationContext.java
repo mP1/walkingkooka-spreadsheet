@@ -21,7 +21,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContext;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -29,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -84,6 +84,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     HasSpreadsheetMetadata,
     EnvironmentExpressionEvaluationContext,
     FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    SpreadsheetEnvironmentContext,
     TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
@@ -193,12 +194,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
      */
     SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
-
-    /**
-     * Returns the base server url, which can then be used to create links to cells and more.
-     * This is necessary for functions such as hyperlink which creates a link to a cell.
-     */
-    AbsoluteUrl serverUrl();
 
     /**
      * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.

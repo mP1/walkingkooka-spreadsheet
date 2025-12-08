@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -89,11 +90,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     SpreadsheetConverterContextDelegator,
     TerminalContextDelegator {
 
-    static BasicSpreadsheetExpressionEvaluationContext with(final AbsoluteUrl serverUrl,
-                                                            final SpreadsheetMetadata spreadsheetMetadata,
+    static BasicSpreadsheetExpressionEvaluationContext with(final SpreadsheetMetadata spreadsheetMetadata,
                                                             final SpreadsheetMetadataMode mode,
                                                             final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                            final EnvironmentContext environmentContext,
+                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                             final Optional<SpreadsheetCell> cell,
                                                             final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                             final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
@@ -101,11 +101,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                             final TerminalContext terminalContext,
                                                             final SpreadsheetProvider spreadsheetProvider,
                                                             final ProviderContext providerContext) {
-        Objects.requireNonNull(serverUrl, "serverUrl");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(mode, "mode");
         Objects.requireNonNull(spreadsheetStoreRepository, "spreadsheetStoreRepository");
-        Objects.requireNonNull(environmentContext, "environmentContext");
+        Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
@@ -115,11 +114,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new BasicSpreadsheetExpressionEvaluationContext(
-            serverUrl,
             spreadsheetMetadata,
             mode,
             spreadsheetStoreRepository,
-            environmentContext,
+            spreadsheetEnvironmentContext,
             cell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,
@@ -135,11 +133,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext(final AbsoluteUrl serverUrl,
-                                                        final SpreadsheetMetadata spreadsheetMetadata,
+    private BasicSpreadsheetExpressionEvaluationContext(final SpreadsheetMetadata spreadsheetMetadata,
                                                         final SpreadsheetMetadataMode mode,
                                                         final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                        final EnvironmentContext environmentContext,
+                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                         final Optional<SpreadsheetCell> cell,
                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                         final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
@@ -153,13 +150,12 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                         final ProviderContext providerContext) {
         super();
-        this.serverUrl = serverUrl;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.mode = mode;
 
         this.spreadsheetStoreRepository = spreadsheetStoreRepository;
 
-        this.environmentContext = environmentContext;
+        this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
 
         this.cell = cell;
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
@@ -227,7 +223,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
             .spreadsheetParserContext(
                 this.cell,
                 this.localeContext,
-                this.environmentContext
+                this.spreadsheetEnvironmentContext
             );
 
         return SpreadsheetFormulaParsers.expression()
@@ -282,11 +278,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         return this.mode.equals(mode) ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
-                this.serverUrl,
                 this.spreadsheetMetadata,
                 Objects.requireNonNull(mode, "mode"),
                 this.spreadsheetStoreRepository,
-                this.environmentContext,
+                this.spreadsheetEnvironmentContext,
                 this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
@@ -327,13 +322,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     private final SpreadsheetProvider spreadsheetProvider;
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return serverUrl;
-    }
-
-    private final AbsoluteUrl serverUrl;
 
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
@@ -533,11 +521,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                                                                                   final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                                   final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new BasicSpreadsheetExpressionEvaluationContext(
-            this.serverUrl,
             this.spreadsheetMetadata,
             this.mode,
             this.spreadsheetStoreRepository,
-            this.environmentContext,
+            this.spreadsheetEnvironmentContext,
             this.cell,
             this.spreadsheetExpressionReferenceLoader,
             this.spreadsheetLabelNameResolver,
@@ -558,20 +545,21 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
         return this.setEnvironmentContext(
-            this.environmentContext.cloneEnvironment()
+            this.spreadsheetEnvironmentContext.cloneEnvironment()
         );
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.environmentContext == environmentContext ?
+        return this.spreadsheetEnvironmentContext == environmentContext ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
-                this.serverUrl,
                 this.spreadsheetMetadata,
                 this.mode,
                 this.spreadsheetStoreRepository,
-                Objects.requireNonNull(environmentContext, "environmentContext"),
+                this.spreadsheetEnvironmentContext.setEnvironmentContext(
+                    Objects.requireNonNull(environmentContext, "environmentContext")
+                ),
                 this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
@@ -590,7 +578,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                           final T value) {
-        this.environmentContext.setEnvironmentValue(
+        this.spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
@@ -599,54 +587,70 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.environmentContext.removeEnvironmentValue(name);
+        this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         return this;
     }
 
     @Override
     public LineEnding lineEnding() {
-        return this.environmentContext.lineEnding();
+        return this.spreadsheetEnvironmentContext.lineEnding();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext.setLineEnding(lineEnding);
+        this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
         return this;
     }
 
     @Override
     public Locale locale() {
-        return this.environmentContext.locale();
+        return this.spreadsheetEnvironmentContext.locale();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.environmentContext.setLocale(locale);
+        this.spreadsheetEnvironmentContext.setLocale(locale);
         return this;
     }
 
     @Override
     public LocalDateTime now() {
-        return this.environmentContext.now(); // inherit unrelated defaults
+        return this.spreadsheetEnvironmentContext.now(); // inherit unrelated defaults
     }
 
     @Override
+    public AbsoluteUrl serverUrl() {
+        return this.spreadsheetEnvironmentContext.serverUrl();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.spreadsheetEnvironmentContext.spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        return this;
+    }
+    
+    @Override
     public Optional<EmailAddress> user() {
-        return this.environmentContext.user();
+        return this.spreadsheetEnvironmentContext.user();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.environmentContext.setUser(user);
+        this.spreadsheetEnvironmentContext.setUser(user);
         return this;
     }
 
     @Override
     public EnvironmentContext environmentContext() {
-        return this.environmentContext;
+        return this.spreadsheetEnvironmentContext;
     }
 
-    private final EnvironmentContext environmentContext;
+    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
     // FormHandlerContext...............................................................................................
 

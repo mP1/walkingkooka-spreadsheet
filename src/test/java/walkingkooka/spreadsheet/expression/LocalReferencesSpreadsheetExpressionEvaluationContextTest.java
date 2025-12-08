@@ -31,9 +31,14 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -381,20 +386,27 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     @Override
     public LocalReferencesSpreadsheetExpressionEvaluationContext createContext() {
         return this.createContext(
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    LOCALE_CONTEXT.locale(),
-                    HAS_NOW,
-                    Optional.of(
-                        EmailAddress.parse("user@example.com")
+            SpreadsheetEnvironmentContexts.basic(
+                EnvironmentContexts.map(
+                    EnvironmentContexts.empty(
+                        LineEnding.NL,
+                        LOCALE_CONTEXT.locale(),
+                        HAS_NOW,
+                        Optional.of(
+                            EmailAddress.parse("user@example.com")
+                        )
                     )
+                ).setEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SERVER_URL,
+                    Url.parseAbsolute("https://example.com")
                 )
+            ).setSpreadsheetId(
+                SpreadsheetId.with(1)
             )
         );
     }
 
-    private LocalReferencesSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
+    private LocalReferencesSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetEnvironmentContext environmentContext) {
         return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
             REFERENCE_TO_VALUES,
             new TestSpreadsheetExpressionEvaluationContext(environmentContext)
@@ -403,8 +415,8 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
 
     final class TestSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetExpressionEvaluationContext {
 
-        TestSpreadsheetExpressionEvaluationContext(final EnvironmentContext environmentContext) {
-            this.environmentContext = environmentContext;
+        TestSpreadsheetExpressionEvaluationContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+            this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
         }
 
         @Override
@@ -514,48 +526,66 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
-            return this.environmentContext.equals(environmentContext) ?
+            return this.spreadsheetEnvironmentContext.equals(environmentContext) ?
                 this :
-                new TestSpreadsheetExpressionEvaluationContext(environmentContext);
+                new TestSpreadsheetExpressionEvaluationContext(
+                    this.spreadsheetEnvironmentContext.setEnvironmentContext(environmentContext)
+                );
         }
 
-        private final EnvironmentContext environmentContext;
+        private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
         @Override
         public LineEnding lineEnding() {
-            return this.environmentContext.lineEnding();
+            return this.spreadsheetEnvironmentContext.lineEnding();
         }
 
         @Override
         public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-            this.environmentContext.setLineEnding(lineEnding);
+            this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
             return this;
         }
 
         @Override
         public Locale locale() {
-            return this.environmentContext.locale();
+            return this.spreadsheetEnvironmentContext.locale();
         }
 
         @Override
         public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-            this.environmentContext.setLocale(locale);
+            this.spreadsheetEnvironmentContext.setLocale(locale);
             return this;
         }
 
         @Override
         public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-            return this.environmentContext.environmentValue(name);
+            return this.spreadsheetEnvironmentContext.environmentValue(name);
+        }
+
+        @Override
+        public AbsoluteUrl serverUrl() {
+            return this.spreadsheetEnvironmentContext.serverUrl();
+        }
+
+        @Override
+        public SpreadsheetId spreadsheetId() {
+            return this.spreadsheetEnvironmentContext.spreadsheetId();
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+            this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+            return this;
         }
 
         @Override
         public Optional<EmailAddress> user() {
-            return this.environmentContext.user();
+            return this.spreadsheetEnvironmentContext.user();
         }
 
         @Override
         public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-            this.environmentContext.setUser(user);
+            this.spreadsheetEnvironmentContext.setUser(user);
             return this;
         }
 
