@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
@@ -26,10 +27,12 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -258,6 +261,27 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
 
     @Override
     public String toString() {
-        return this.metadata.toString();
+        final Map<EnvironmentValueName<?>, Object> nameToValue = Maps.sorted();
+
+        this.metadata.value()
+            .forEach((n, v) -> nameToValue.put(
+                n.toEnvironmentValueName(),
+                v
+            ));
+
+        final EnvironmentContext context = this.context;
+        for (final EnvironmentValueName<?> name : context.environmentValueNames()) {
+            final Object value = context.environmentValue(name)
+                .orElse(null);
+
+            nameToValue.put(
+                name,
+                value instanceof LineEnding ?
+                    CharSequences.escape(value.toString()) :
+                    value
+            );
+        }
+
+        return nameToValue.toString();
     }
 }
