@@ -433,7 +433,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).set(
                 SpreadsheetMetadataPropertyName.TIME_PARSER,
                 METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
-            ).environmentContext(
+            ).spreadsheetEnvironmentContext(
                 EnvironmentContexts.readOnly(
                     EnvironmentContexts.map(ENVIRONMENT_CONTEXT)
                         .setEnvironmentValue(

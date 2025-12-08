@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -736,19 +737,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    // EnvironmentContext...............................................................................................
-
-    /**
-     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata} using the given {@link EnvironmentContext}
-     * for the time and user.
-     */
-    public final EnvironmentContext environmentContext(final EnvironmentContext context) {
-        return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
-            this,
-            context
-        );
-    }
-
     // ExpressionFunctionProvider.......................................................................................
 
     /**
@@ -1136,6 +1124,19 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     }
 
     public final static Optional<SpreadsheetExpressionReference> NO_VALIDATION_REFERENCE = SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE;
+
+    // SpreadsheetEnvironmentContext....................................................................................
+
+    /**
+     * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata} using the given {@link EnvironmentContext}
+     * for the time and user.
+     */
+    public final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext(final EnvironmentContext context) {
+        return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            this,
+            context
+        );
+    }
 
     // SpreadsheetFormatter.............................................................................................
 

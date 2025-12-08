@@ -129,23 +129,6 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         );
     }
 
-    // EnvironmentContext...............................................................................................
-
-    @Test
-    public void testEnvironmentContext() {
-        this.environmentValueAndCheck(
-            SpreadsheetMetadata.EMPTY.environmentContext(
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    LOCALE_CONTEXT.locale(),
-                    LocalDateTime::now,
-                    EnvironmentContext.ANONYMOUS
-                )
-            ),
-            EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO)
-        );
-    }
-
     // HasExpressionNumberContext.......................................................................................
 
     @Test
@@ -161,6 +144,23 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             "Metadata missing: expressionNumberKind, locale, precision, roundingMode",
             thrown.getMessage(),
             "message"
+        );
+    }
+
+    // SpreadsheetEnvironmentContext....................................................................................
+
+    @Test
+    public void testSpreadsheetEnvironmentContext() {
+        this.environmentValueAndCheck(
+            SpreadsheetMetadata.EMPTY.spreadsheetEnvironmentContext(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    LOCALE_CONTEXT.locale(),
+                    LocalDateTime::now,
+                    EnvironmentContext.ANONYMOUS
+                )
+            ),
+            EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO)
         );
     }
 
