@@ -32,15 +32,16 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -104,9 +105,9 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
     private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT = SpreadsheetExpressionReferenceLoaders.fake();
 
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DOUBLE;
+
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.EMPTY
         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
@@ -123,7 +124,8 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
         .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
         .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-        .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("$#.##").spreadsheetFormatterSelector());
+        .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("$#.##").spreadsheetFormatterSelector())
+        .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SPREADSHEET_ID);
 
     /**
      * Concats all the given parameters.
@@ -534,7 +536,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         return ConverterSpreadsheetExpressionEvaluationContext.with(
             converter,
             SpreadsheetExpressionEvaluationContexts.basic(
-                SERVER_URL,
                 METADATA,
                 SpreadsheetMetadataMode.FORMULA,
                 new FakeSpreadsheetStoreRepository() {
@@ -546,7 +547,10 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
                     private final Storage<StorageExpressionEvaluationContext> storage = Storages.tree();
                 },
-                EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT),
+                SpreadsheetEnvironmentContexts.basic(
+                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                        .setSpreadsheetId(SPREADSHEET_ID)
+                ),
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SPREADSHEET_LABEL_NAME_RESOLVER,

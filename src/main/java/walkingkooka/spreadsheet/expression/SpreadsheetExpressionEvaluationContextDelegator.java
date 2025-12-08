@@ -23,6 +23,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -166,6 +167,18 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default AbsoluteUrl serverUrl() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .serverUrl();
+    }
+
+    @Override
+    default SpreadsheetId spreadsheetId() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .spreadsheetId();
+    }
+
+    @Override
     default Optional<EmailAddress> user() {
         return this.spreadsheetExpressionEvaluationContext()
             .user();
@@ -218,12 +231,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default Optional<SpreadsheetCell> cell() {
         return this.spreadsheetExpressionEvaluationContext()
             .cell();
-    }
-
-    @Override
-    default AbsoluteUrl serverUrl() {
-        return this.spreadsheetExpressionEvaluationContext()
-            .serverUrl();
     }
 
     @Override

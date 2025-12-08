@@ -24,6 +24,7 @@ import walkingkooka.io.TextReader;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -105,11 +106,6 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public AbsoluteUrl serverUrl() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         throw new UnsupportedOperationException();
     }
@@ -181,6 +177,21 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public Set<EnvironmentValueName<?>> environmentValueNames() {
+        throw new UnsupportedOperationException();
+    }
+    
+    @Override
+    public AbsoluteUrl serverUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         throw new UnsupportedOperationException();
     }
 

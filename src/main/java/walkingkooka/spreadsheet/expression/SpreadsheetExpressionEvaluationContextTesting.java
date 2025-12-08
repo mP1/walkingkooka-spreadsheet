@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -50,6 +51,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
     EnvironmentExpressionEvaluationContextTesting<C>,
     HasSpreadsheetCellTesting<C>,
+    SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
     ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C>,
     SpreadsheetProviderContextTesting<C> {

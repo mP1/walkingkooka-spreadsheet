@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.template;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.net.Url;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
@@ -234,7 +233,6 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
         return SpreadsheetTemplateContext.with(
             SPREADSHEET_PARSER_CONTEXT,
             SpreadsheetExpressionEvaluationContexts.basic(
-                Url.parseAbsolute("https://example.com"), // serverUrl
                 METADATA_EN_AU.set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("hello")

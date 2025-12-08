@@ -25,8 +25,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -37,6 +35,8 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -100,8 +100,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = SpreadsheetExpressionReferenceLoaders.fake(); // SpreadsheetExpressionReferenceContextREPOSITORY
 
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
-
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
         SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
         SpreadsheetId.with(1)
@@ -121,32 +119,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     // with.............................................................................................................
 
     @Test
-    public void testWithNullServerUrlFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                null,
-                METADATA,
-                MODE,
-                SPREADSHEET_STORE_REPOSITORY,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                CELL,
-                SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
-                SPREADSHEET_LABEL_NAME_RESOLVER,
-                LOCALE_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullMetadataFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 null,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -167,7 +143,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 null,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -188,7 +163,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 null,
@@ -209,7 +183,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -230,7 +203,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -251,7 +223,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -272,7 +243,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -293,7 +263,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -314,7 +283,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -335,7 +303,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -356,7 +323,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
@@ -438,7 +404,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.nextEmptyColumnAndCheck(
             BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 new FakeSpreadsheetStoreRepository() {
@@ -475,7 +440,6 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.nextEmptyRowAndCheck(
             BasicSpreadsheetExpressionEvaluationContext.with(
-                SERVER_URL,
                 METADATA,
                 MODE,
                 new FakeSpreadsheetStoreRepository() {
@@ -746,22 +710,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testLineEnding() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
-            LINE_ENDING,
-            LOCALE,
-            HAS_NOW,
-            EnvironmentContext.ANONYMOUS
-        );
-
-        this.lineEndingAndCheck(
-            this.createContext(environmentContext),
-            environmentContext.lineEnding()
-        );
-    }
-
-    @Test
-    public void testSetLineEnding() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
@@ -770,7 +719,26 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             )
         );
 
-        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+        this.lineEndingAndCheck(
+            this.createContext(context),
+            context.lineEnding()
+        );
+    }
+
+    @Test
+    public void testSetLineEnding() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LINE_ENDING,
+                    LOCALE,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            )
+        );
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(spreadsheetEnvironmentContext);
 
         final LineEnding lineEnding = LineEnding.CRNL;
 
@@ -786,25 +754,10 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             lineEnding
         );
     }
-    
+
     @Test
     public void testLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
-            LINE_ENDING,
-            Locale.FRANCE,
-            HAS_NOW,
-            EnvironmentContext.ANONYMOUS
-        );
-
-        this.localeAndCheck(
-            this.createContext(environmentContext),
-            environmentContext.locale()
-        );
-    }
-
-    @Test
-    public void testSetLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -813,7 +766,26 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
             )
         );
 
-        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+        this.localeAndCheck(
+            this.createContext(context),
+            context.locale()
+        );
+    }
+
+    @Test
+    public void testSetLocale() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LINE_ENDING,
+                    Locale.FRANCE,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            )
+        );
+
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(spreadsheetEnvironmentContext);
 
         final Locale locale = Locale.GERMAN;
         context.setLocale(locale);
@@ -826,20 +798,22 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
         this.environmentValueAndCheck(
-            this.createContext(environmentContext),
+            this.createContext(spreadsheetEnvironmentContext),
             name,
             value
         );
@@ -847,14 +821,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testSetEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(spreadsheetEnvironmentContext);
         context.setEnvironmentValue(
             name,
             value
@@ -869,19 +845,21 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testRemoveEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
-        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(environmentContext);
+        final BasicSpreadsheetExpressionEvaluationContext context = this.createContext(spreadsheetEnvironmentContext);
         context.removeEnvironmentValue(name);
 
         this.environmentValueAndCheck(
@@ -894,35 +872,39 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     public void testUser() {
         final EmailAddress user = EmailAddress.parse("user123@example.com");
 
-        final EnvironmentContext environmentContext = EnvironmentContexts.empty(
-            LINE_ENDING,
-            LOCALE,
-            HAS_NOW,
-            Optional.of(user)
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                Optional.of(user)
+            )
         );
 
         this.userAndCheck(
-            this.createContext(environmentContext),
+            this.createContext(spreadsheetEnvironmentContext),
             user
         );
     }
 
     @Test
     public void testReferenceWithEnvironmentValueName() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
         this.referenceAndCheck(
-            this.createContext(environmentContext),
+            this.createContext(spreadsheetEnvironmentContext),
             name,
             value
         );
@@ -930,14 +912,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testReferenceWithEnvironmentValueNameCycle() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
         );
 
         final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             label
         );
@@ -947,7 +931,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.referenceFails(
             this.createContext(
-                environmentContext,
+                spreadsheetEnvironmentContext,
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
                     @Override
@@ -982,14 +966,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     @Test
     public void testReferenceWithEnvironmentValueNameEqualsLabel() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
         );
 
         final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             label
         );
@@ -999,7 +985,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
         this.referenceAndCheck(
             this.createContext(
-                environmentContext,
+                spreadsheetEnvironmentContext,
                 new FakeSpreadsheetExpressionReferenceLoader() {
 
                     @Override
@@ -1041,15 +1027,18 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
-            SPREADSHEET_ENVIRONMENT_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                .setSpreadsheetId(
+                    SpreadsheetId.with(1)
+                ),
             spreadsheetExpressionReferenceLoader,
             SPREADSHEET_LABEL_NAME_RESOLVER
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext) {
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             SPREADSHEET_LABEL_NAME_RESOLVER
         );
@@ -1075,11 +1064,11 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext,
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                       final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                       final SpreadsheetLabelNameResolver labelNameResolver) {
         return createContext(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
             EXPRESSION_FUNCTION_PROVIDER,
@@ -1087,17 +1076,16 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext createContext(final EnvironmentContext environmentContext,
+    private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                       final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
                                                                       final SpreadsheetLabelNameResolver labelNameResolver,
                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                       final ProviderContext providerContext) {
         return BasicSpreadsheetExpressionEvaluationContext.with(
-            SERVER_URL,
             METADATA,
             MODE,
             SPREADSHEET_STORE_REPOSITORY,
-            environmentContext,
+            spreadsheetEnvironmentContext,
             CELL,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
