@@ -25,7 +25,6 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUser;
@@ -33,6 +32,8 @@ import walkingkooka.io.TextReaders;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
@@ -45,6 +46,8 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -379,12 +382,24 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     LineEnding LINE_ENDING = LineEnding.NL;
 
-    EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
-        EnvironmentContexts.empty(
-            LINE_ENDING,
-            LOCALE,
-            HAS_NOW,
-            Optional.of(USER)
+    AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
+
+    /**
+     * A {@link SpreadsheetEnvironmentContext} that contains {@link SpreadsheetEnvironmentContext#SERVER_URL} but not
+     * {@link SpreadsheetEnvironmentContext#SPREADSHEET_ID}.
+     */
+    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.with(
+        EnvironmentContexts.readOnly(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LINE_ENDING,
+                    LOCALE,
+                    HAS_NOW,
+                    Optional.of(USER)
+                )).setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SERVER_URL,
+                SERVER_URL
+            )
         )
     );
 
@@ -435,7 +450,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
             ).spreadsheetEnvironmentContext(
                 EnvironmentContexts.readOnly(
-                    EnvironmentContexts.map(ENVIRONMENT_CONTEXT)
+                    EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT)
                         .setEnvironmentValue(
                             DUMMY_ENVIRONMENTAL_VALUE_NAME,
                             DUMMY_ENVIRONMENTAL_VALUE
@@ -451,8 +466,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
         TerminalId.with(1),
         HAS_USER,
         TextReaders.fake(),
-        Printers.sink(ENVIRONMENT_CONTEXT), // output
-        Printers.sink(ENVIRONMENT_CONTEXT) // error
+        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
+        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT) // error
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(

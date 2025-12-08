@@ -262,7 +262,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public BasicSpreadsheetEnvironmentContext createContext() {
         return (BasicSpreadsheetEnvironmentContext)
             BasicSpreadsheetEnvironmentContext.with(
-                EnvironmentContexts.map(ENVIRONMENT_CONTEXT)
+                EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT)
                     .setEnvironmentValue(
                         SpreadsheetEnvironmentContext.SERVER_URL,
                         SERVER_URL

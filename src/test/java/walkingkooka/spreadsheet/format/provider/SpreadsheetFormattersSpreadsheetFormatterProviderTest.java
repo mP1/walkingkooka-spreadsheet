@@ -103,7 +103,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 METADATA_EN_AU,
                 SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetStoreRepositories.fake(),
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,

@@ -86,8 +86,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.LOCALE_CONTEXT;
+import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.SPREADSHEET_LABEL_NAME_RESOLVER;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.TERMINAL_CONTEXT;
 
@@ -546,7 +546,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
 
                     private final Storage<StorageExpressionEvaluationContext> storage = Storages.tree();
                 },
-                EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+                EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT),
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_CONTEXT,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -567,7 +567,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 ProviderContexts.basic(
                     ConverterContexts.fake(),
                     EnvironmentContexts.map(
-                        ENVIRONMENT_CONTEXT
+                        SPREADSHEET_ENVIRONMENT_CONTEXT
                     ),
                     PluginStores.fake()
                 )

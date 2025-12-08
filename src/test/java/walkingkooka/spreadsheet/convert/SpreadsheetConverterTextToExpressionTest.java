@@ -104,7 +104,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
                     METADATA_EN_AU,
                     SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetStoreRepositories.fake(),
-                    ENVIRONMENT_CONTEXT,
+                    SPREADSHEET_ENVIRONMENT_CONTEXT,
                     SpreadsheetExpressionEvaluationContext.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SPREADSHEET_LABEL_NAME_RESOLVER,

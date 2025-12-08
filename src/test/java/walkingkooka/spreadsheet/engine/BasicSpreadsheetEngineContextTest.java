@@ -1011,7 +1011,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testCloneEnvironment() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -1057,7 +1057,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testSetEnvironmentContextWithSame() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
 
@@ -1071,7 +1071,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testSetEnvironmentContextWithDifferent() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
@@ -1096,7 +1096,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -1117,7 +1117,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testSetEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -1139,7 +1139,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testSetEnvironmentValueWithLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<Locale> name = EnvironmentValueName.LOCALE;
@@ -1166,7 +1166,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testRemoveEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -1189,7 +1189,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testExpressionEvaluationContextAndEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -1214,7 +1214,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testExpressionEvaluationContextAndNow() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
@@ -1232,7 +1232,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testExpressionEvaluationContextAndUser() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
@@ -1428,7 +1428,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
             metadata,
-            EnvironmentContexts.map(ENVIRONMENT_CONTEXT),
+            EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT),
             PROVIDER_CONTEXT
         );
     }

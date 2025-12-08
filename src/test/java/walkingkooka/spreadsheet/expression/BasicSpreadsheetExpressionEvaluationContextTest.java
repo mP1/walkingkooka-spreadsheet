@@ -129,7 +129,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -150,7 +150,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 null,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -171,7 +171,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 null,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -192,7 +192,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 null,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -234,7 +234,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -255,7 +255,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 null,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -276,7 +276,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 null,
@@ -297,7 +297,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -318,7 +318,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -339,7 +339,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -360,7 +360,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                 METADATA,
                 MODE,
                 SPREADSHEET_STORE_REPOSITORY,
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -447,7 +447,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         return cellStore;
                     }
                 },
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -484,7 +484,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                         return cellStore;
                     }
                 },
-                ENVIRONMENT_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -827,7 +827,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -848,7 +848,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testSetEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -870,7 +870,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testRemoveEnvironmentValue() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -910,7 +910,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testReferenceWithEnvironmentValueName() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
@@ -931,7 +931,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testReferenceWithEnvironmentValueNameCycle() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
@@ -983,7 +983,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
     @Test
     public void testReferenceWithEnvironmentValueNameEqualsLabel() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
@@ -1041,7 +1041,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
 
     private BasicSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
-            ENVIRONMENT_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             spreadsheetExpressionReferenceLoader,
             SPREADSHEET_LABEL_NAME_RESOLVER
         );
@@ -1067,7 +1067,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextTest implements Sp
                                                                       final SpreadsheetLabelNameResolver labelNameResolver,
                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
-            ENVIRONMENT_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             spreadsheetExpressionReferenceLoader,
             labelNameResolver,
             expressionFunctionProvider,
