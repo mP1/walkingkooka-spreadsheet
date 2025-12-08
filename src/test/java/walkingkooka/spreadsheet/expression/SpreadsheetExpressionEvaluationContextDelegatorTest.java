@@ -18,13 +18,14 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -40,6 +41,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -223,46 +225,15 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
-        public <T> TestSpreadsheetExpressionEvaluationContextDelegator setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                                           final T value) {
-            Objects.requireNonNull(name, "name");
-            Objects.requireNonNull(value, "value");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public TestSpreadsheetExpressionEvaluationContextDelegator removeEnvironmentValue(final EnvironmentValueName<?> name) {
-            Objects.requireNonNull(name, "name");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public LineEnding lineEnding() {
-            return LineEnding.NL;
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-            Objects.requireNonNull(lineEnding, "lineEnding");
-            throw new UnsupportedOperationException();
-        }
-        
-        @Override
-        public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-            Objects.requireNonNull(spreadsheetId, "spreadsheetId");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-            Objects.requireNonNull(user, "user");
-            throw new UnsupportedOperationException();
+        public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+            return SpreadsheetEnvironmentContexts.basic(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    Locale.forLanguageTag("en-AU"),
+                    LocalDateTime::now,
+                    EnvironmentContext.ANONYMOUS
+                )
+            );
         }
 
         @Override

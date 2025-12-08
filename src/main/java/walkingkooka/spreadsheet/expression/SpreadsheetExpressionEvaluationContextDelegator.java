@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -51,6 +52,7 @@ import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextDe
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextDelegator;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -68,6 +70,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     SpreadsheetConverterContextDelegator,
     FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
     ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
+    SpreadsheetEnvironmentContextDelegator,
     StorageExpressionEvaluationContextDelegator,
     TerminalContextDelegator {
 
@@ -109,32 +112,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
         return SpreadsheetExpressionEvaluationContext.super.isText(value);
     }
 
-    // HasLineEnding....................................................................................................
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.storageExpressionEvaluationContext()
-            .setLineEnding(lineEnding);
-        return this;
-    }
-
-    // SpreadsheetExpressionEvaluationContextDelegator..................................................................
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
-        return this.spreadsheetExpressionEvaluationContext();
-    }
-
-    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
-
-    // StorageExpressionEvaluationContextDelegator......................................................................
-
-    @Override
-    default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
-        return this.spreadsheetExpressionEvaluationContext();
-    }
-
-    // TerminalContextDelegator.........................................................................................
+    // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
     default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
@@ -167,6 +145,26 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        this.storageExpressionEvaluationContext()
+            .setLineEnding(lineEnding);
+        return this;
+    }
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        this.storageExpressionEvaluationContext()
+            .setLocale(locale);
+        return this;
+    }
+
+    @Override
+    default LocalDateTime now() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .now();
+    }
+
+    @Override
     default AbsoluteUrl serverUrl() {
         return this.spreadsheetExpressionEvaluationContext()
             .serverUrl();
@@ -179,10 +177,42 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId id) {
+        this.spreadsheetExpressionEvaluationContext()
+            .setSpreadsheetId(id);
+        return this;
+    }
+
+    @Override
     default Optional<EmailAddress> user() {
         return this.spreadsheetExpressionEvaluationContext()
             .user();
     }
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.storageExpressionEvaluationContext()
+            .setUser(user);
+        return this;
+    }
+
+    // SpreadsheetExpressionEvaluationContextDelegator..................................................................
+
+    @Override
+    default SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
+
+    // StorageExpressionEvaluationContextDelegator......................................................................
+
+    @Override
+    default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    // TerminalContextDelegator.........................................................................................
 
     @Override
     default SpreadsheetExpressionEvaluationContext exitTerminal() {
