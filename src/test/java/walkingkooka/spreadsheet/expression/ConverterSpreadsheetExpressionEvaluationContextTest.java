@@ -552,7 +552,6 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 LOCALE_CONTEXT,
                 TERMINAL_CONTEXT,
-                //EXPRESSION_FUNCTION_PROVIDER,
                 SpreadsheetProviders.basic(
                     converterProvider,
                     EXPRESSION_FUNCTION_PROVIDER,
