@@ -49,7 +49,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testEnvironmentContextSetEnvironmentValueFails() {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> ENVIRONMENT_CONTEXT.setEnvironmentValue(
+            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setEnvironmentValue(
                 EnvironmentValueName.with("Hello"),
                 "World"
             )
@@ -60,7 +60,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testEnvironmentContextRemoveEnvironmentValueFails() {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> ENVIRONMENT_CONTEXT.removeEnvironmentValue(
+            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.removeEnvironmentValue(
                 EnvironmentValueName.with("Hello")
             )
         );
@@ -126,11 +126,11 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         
         assertThrows(
             UnsupportedOperationException.class,
-            () -> ENVIRONMENT_CONTEXT.setLocale(locale)
+            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setLocale(locale)
         );
         
         this.localeAndCheck(
-            ENVIRONMENT_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             LOCALE
         );
     }
@@ -260,13 +260,13 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> ENVIRONMENT_CONTEXT.setUser(
+            () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setUser(
                 Optional.of(user)
             )
         );
 
         this.userAndCheck(
-            ENVIRONMENT_CONTEXT,
+            SPREADSHEET_ENVIRONMENT_CONTEXT,
             USER
         );
     }

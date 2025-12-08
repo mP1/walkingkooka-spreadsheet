@@ -136,7 +136,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
         @Override
         public EnvironmentContext environmentContext() {
-            return SpreadsheetMetadataTesting.ENVIRONMENT_CONTEXT;
+            return SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT;
         }
 
         @Override

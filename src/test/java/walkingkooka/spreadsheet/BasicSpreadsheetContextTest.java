@@ -422,9 +422,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                     EnvironmentContext.ANONYMOUS
                 )
             ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SERVER_URL,
-                SERVER_URL
-            ).setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SPREADSHEET_ID,
                 SPREADSHEET_ID
             )
@@ -447,9 +444,6 @@ public final class BasicSpreadsheetContextTest implements SpreadsheetContextTest
                     HAS_NOW,
                     EnvironmentContext.ANONYMOUS
                 )
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SERVER_URL,
-                SERVER_URL
             ).setEnvironmentValue(
                 SpreadsheetEnvironmentContext.SPREADSHEET_ID,
                 SPREADSHEET_ID

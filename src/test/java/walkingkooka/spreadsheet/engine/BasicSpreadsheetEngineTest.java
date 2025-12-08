@@ -723,7 +723,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public EnvironmentContext environmentContext() {
-            return ENVIRONMENT_CONTEXT;
+            return SPREADSHEET_ENVIRONMENT_CONTEXT;
         }
 
         // HasProviderContext...........................................................................................
