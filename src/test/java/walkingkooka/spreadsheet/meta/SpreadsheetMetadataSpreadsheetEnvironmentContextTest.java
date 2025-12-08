@@ -270,7 +270,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
                             RoundingMode.FLOOR
                         )
-                ).environmentContext(
+                ).spreadsheetEnvironmentContext(
                     EnvironmentContexts.map(CONTEXT)
                 ),
             SpreadsheetEnvironmentContext.LINE_ENDING,

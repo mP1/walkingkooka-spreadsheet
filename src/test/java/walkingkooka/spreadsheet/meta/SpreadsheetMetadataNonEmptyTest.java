@@ -1806,34 +1806,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    // EnvironmentContext...............................................................................................
-
-    @Test
-    public void testEnvironmentContext() {
-        final SpreadsheetMetadataPropertyName<Integer> propertyName = SpreadsheetMetadataPropertyName.PRECISION;
-        int precision = 123;
-
-        this.environmentValueAndCheck(
-            SpreadsheetMetadata.EMPTY
-                .set(propertyName, precision)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-                .environmentContext(
-                    EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            LineEnding.NL,
-                            LOCALE_CONTEXT.locale(),
-                            NOW,
-                            EnvironmentContext.ANONYMOUS
-                        )
-                    )
-                ),
-            EnvironmentValueName.with(
-                propertyName.value()
-            ),
-            precision
-        );
-    }
-
     // ExpressionNumberContext..........................................................................................
 
     @Test
@@ -1890,6 +1862,34 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             );
         this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
         this.checkNotEquals(null, context.mathContext(), "mathContext");
+    }
+
+    // SpreadsheetEnvironmentContext....................................................................................
+
+    @Test
+    public void testSpreadsheetEnvironmentContext() {
+        final SpreadsheetMetadataPropertyName<Integer> propertyName = SpreadsheetMetadataPropertyName.PRECISION;
+        int precision = 123;
+
+        this.environmentValueAndCheck(
+            SpreadsheetMetadata.EMPTY
+                .set(propertyName, precision)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+                .spreadsheetEnvironmentContext(
+                    EnvironmentContexts.map(
+                        EnvironmentContexts.empty(
+                            LineEnding.NL,
+                            LOCALE_CONTEXT.locale(),
+                            NOW,
+                            EnvironmentContext.ANONYMOUS
+                        )
+                    )
+                ),
+            EnvironmentValueName.with(
+                propertyName.value()
+            ),
+            precision
+        );
     }
 
     // SpreadsheetFormatter.............................................................................................

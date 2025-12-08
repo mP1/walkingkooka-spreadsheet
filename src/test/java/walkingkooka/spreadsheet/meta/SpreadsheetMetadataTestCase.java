@@ -501,14 +501,14 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
     }
 
-    // EnvironmentContext...............................................................................................
+    // SpreadsheetEnvironmentContext....................................................................................
 
     @Test
-    public void testEnvironmentContextWithNullFails() {
+    public void testSpreadsheetEnvironmentContextWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createObject()
-                .environmentContext(null)
+                .spreadsheetEnvironmentContext(null)
         );
     }
 
