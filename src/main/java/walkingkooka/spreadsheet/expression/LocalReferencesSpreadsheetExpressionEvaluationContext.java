@@ -477,6 +477,8 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
      */
     private final SpreadsheetExpressionEvaluationContext context;
 
+    // UsesToStringBuilder..............................................................................................
+
     @Override
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.localReferenceToValues);
