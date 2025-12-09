@@ -234,18 +234,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     @Override
-    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
-        return this.spreadsheetStoreRepository.cells()
-            .nextEmptyColumn(row);
-    }
-
-    @Override
-    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
-        return this.spreadsheetStoreRepository.cells()
-            .nextEmptyRow(column);
-    }
-
-    @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetMetadata;
     }
@@ -340,114 +328,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         );
     }
 
-
-    @Override
-    public Optional<Object> validationValue() {
-        return this.reference(VALIDATION_VALUE)
-            .orElse(Optional.empty());
-    }
-
-    // StorageExpressionEvaluationContext...............................................................................
-
-    @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
-        return this.spreadsheetStoreRepository.storage();
-    }
-
-    private final SpreadsheetStoreRepository spreadsheetStoreRepository;
-
-    // ExpressionEvaluationContext......................................................................................
-
-    @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
-        return Cast.to(
-            this.expressionFunctionProvider()
-                .expressionFunction(
-                    name,
-                    Lists.empty(),
-                    this.providerContext
-                )
-        );
-    }
-
-    private final ProviderContext providerContext;
-
-    @Override
-    public boolean isPure(final ExpressionFunctionName name) {
-        return this.expressionFunction(name)
-            .isPure(this);
-    }
-
-    @Override
-    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
-                                  final Object value) {
-        return parameter.convertOrFail(value, this);
-    }
-
-    @Override
-    public Object handleException(final RuntimeException exception) {
-        return SpreadsheetErrorKind.translate(exception);
-    }
-
-    /**
-     * Resolves several types of {@link ExpressionReference} into values.
-     * <ul>
-     * <li>Resolves {@link SpreadsheetLabelName} to a {@link SpreadsheetCell} returning its value.</li>
-     * <li>Loads a {@link SpreadsheetCell} to a {@link SpreadsheetCell} returning its value.</li>
-     * <li>For {@link EnvironmentValueName} loads the {@link EnvironmentContext#environmentValue(EnvironmentValueName)}.</li>
-     * </ul>
-     */
-    @Override
-    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        Optional<Optional<Object>> value = Optional.empty();
-
-        final Set<Object> cycle = Sets.ordered();
-
-        Object temp = reference;
-
-        while (temp instanceof ExpressionReference) {
-            // cycle detection
-            if (false == cycle.add(temp)) {
-                throw new IllegalArgumentException("Cycle detected from " + reference + " with " + temp);
-            }
-
-            if (temp instanceof SpreadsheetExpressionReference) {
-                SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) temp;
-                final SpreadsheetSelection selection = this.resolveIfLabel(
-                    (ExpressionReference) temp
-                ).orElse(null);
-
-                if (null != selection) {
-                    spreadsheetExpressionReference = selection.toExpressionReference();
-                }
-                if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
-                    value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
-                        spreadsheetExpressionReference,
-                        this.spreadsheetExpressionReferenceLoader,
-                        this
-                    );
-                }
-            } else {
-                if (temp instanceof EnvironmentValueName) {
-                    value = Optional.ofNullable(
-                        Cast.to(
-                            this.environmentValue(
-                                (EnvironmentValueName<?>) temp
-                            )
-                        )
-                    );
-                }
-            }
-
-            temp = value.map(v -> v.orElse(null))
-                .orElse(null);
-        }
-
-        return value;
-    }
-
     // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
@@ -482,63 +362,6 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
      * Lazily created using {@link #mode} to select a {@link SpreadsheetMetadata}.
      */
     private SpreadsheetConverterContext spreadsheetConverterContext;
-
-    // JsonNodeUnmarshallContext........................................................................................
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final SpreadsheetConverterContext before = this.spreadsheetConverterContext();
-        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
-
-        return before.equals(after) ?
-            this :
-            this.setSpreadsheetConverterContext(
-                after,
-                processor,
-                this.jsonNodeUnmarshallContextPreProcessor
-            );
-    }
-
-    private final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor;
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetConverterContext before = this.spreadsheetConverterContext();
-        final SpreadsheetConverterContext after = before.setPreProcessor(processor);
-
-        return before.equals(after) ?
-            this :
-            this.setSpreadsheetConverterContext(
-                after,
-                this.jsonNodeMarshallContextObjectPostProcessor,
-                processor
-            );
-    }
-
-    private final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor;
-
-    private SpreadsheetExpressionEvaluationContext setSpreadsheetConverterContext(final SpreadsheetConverterContext context,
-                                                                                  final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
-                                                                                  final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
-        return new BasicSpreadsheetExpressionEvaluationContext(
-            this.spreadsheetMetadata,
-            this.mode,
-            this.spreadsheetStoreRepository,
-            this.spreadsheetEnvironmentContext,
-            this.cell,
-            this.spreadsheetExpressionReferenceLoader,
-            this.spreadsheetLabelNameResolver,
-            context,
-            jsonNodeMarshallContextObjectPostProcessor,
-            jsonNodeUnmarshallContextPreProcessor,
-            this.formHandlerContext,
-            this.localeContext,
-            this.terminalContext,
-            this.spreadsheetProvider,
-            this.expressionFunctionProvider,
-            this.providerContext
-        );
-    }
 
     // EnvironmentContext...............................................................................................
 
@@ -653,6 +476,98 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
+    // ExpressionEvaluationContext......................................................................................
+
+    @Override
+    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
+        return Cast.to(
+            this.expressionFunctionProvider()
+                .expressionFunction(
+                    name,
+                    Lists.empty(),
+                    this.providerContext
+                )
+        );
+    }
+
+    private final ProviderContext providerContext;
+
+    @Override
+    public boolean isPure(final ExpressionFunctionName name) {
+        return this.expressionFunction(name)
+            .isPure(this);
+    }
+
+    @Override
+    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
+                                  final Object value) {
+        return parameter.convertOrFail(value, this);
+    }
+
+    @Override
+    public Object handleException(final RuntimeException exception) {
+        return SpreadsheetErrorKind.translate(exception);
+    }
+
+    /**
+     * Resolves several types of {@link ExpressionReference} into values.
+     * <ul>
+     * <li>Resolves {@link SpreadsheetLabelName} to a {@link SpreadsheetCell} returning its value.</li>
+     * <li>Loads a {@link SpreadsheetCell} to a {@link SpreadsheetCell} returning its value.</li>
+     * <li>For {@link EnvironmentValueName} loads the {@link EnvironmentContext#environmentValue(EnvironmentValueName)}.</li>
+     * </ul>
+     */
+    @Override
+    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        Optional<Optional<Object>> value = Optional.empty();
+
+        final Set<Object> cycle = Sets.ordered();
+
+        Object temp = reference;
+
+        while (temp instanceof ExpressionReference) {
+            // cycle detection
+            if (false == cycle.add(temp)) {
+                throw new IllegalArgumentException("Cycle detected from " + reference + " with " + temp);
+            }
+
+            if (temp instanceof SpreadsheetExpressionReference) {
+                SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) temp;
+                final SpreadsheetSelection selection = this.resolveIfLabel(
+                    (ExpressionReference) temp
+                ).orElse(null);
+
+                if (null != selection) {
+                    spreadsheetExpressionReference = selection.toExpressionReference();
+                }
+                if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
+                    value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+                        spreadsheetExpressionReference,
+                        this.spreadsheetExpressionReferenceLoader,
+                        this
+                    );
+                }
+            } else {
+                if (temp instanceof EnvironmentValueName) {
+                    value = Optional.ofNullable(
+                        Cast.to(
+                            this.environmentValue(
+                                (EnvironmentValueName<?>) temp
+                            )
+                        )
+                    );
+                }
+            }
+
+            temp = value.map(v -> v.orElse(null))
+                .orElse(null);
+        }
+
+        return value;
+    }
+
     // FormHandlerContext...............................................................................................
 
     @Override
@@ -684,6 +599,72 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
 
+    // JsonNodeUnmarshallContext........................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+        final SpreadsheetConverterContext before = this.spreadsheetConverterContext();
+        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            this.setSpreadsheetConverterContext(
+                after,
+                processor,
+                this.jsonNodeUnmarshallContextPreProcessor
+            );
+    }
+
+    private final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor;
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+        final SpreadsheetConverterContext before = this.spreadsheetConverterContext();
+        final SpreadsheetConverterContext after = before.setPreProcessor(processor);
+
+        return before.equals(after) ?
+            this :
+            this.setSpreadsheetConverterContext(
+                after,
+                this.jsonNodeMarshallContextObjectPostProcessor,
+                processor
+            );
+    }
+
+    private final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor;
+
+    private SpreadsheetExpressionEvaluationContext setSpreadsheetConverterContext(final SpreadsheetConverterContext context,
+                                                                                  final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
+                                                                                  final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
+        return new BasicSpreadsheetExpressionEvaluationContext(
+            this.spreadsheetMetadata,
+            this.mode,
+            this.spreadsheetStoreRepository,
+            this.spreadsheetEnvironmentContext,
+            this.cell,
+            this.spreadsheetExpressionReferenceLoader,
+            this.spreadsheetLabelNameResolver,
+            context,
+            jsonNodeMarshallContextObjectPostProcessor,
+            jsonNodeUnmarshallContextPreProcessor,
+            this.formHandlerContext,
+            this.localeContext,
+            this.terminalContext,
+            this.spreadsheetProvider,
+            this.expressionFunctionProvider,
+            this.providerContext
+        );
+    }
+
+    // StorageExpressionEvaluationContext...............................................................................
+
+    @Override
+    public Storage<StorageExpressionEvaluationContext> storage() {
+        return this.spreadsheetStoreRepository.storage();
+    }
+
+    private final SpreadsheetStoreRepository spreadsheetStoreRepository;
+
     // TerminalContextDelegator.........................................................................................
 
     @Override
@@ -698,6 +679,26 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     }
 
     private final TerminalContext terminalContext;
+
+    // ValidationExpressionEvaluationContext............................................................................
+
+    @Override
+    public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
+        return this.spreadsheetStoreRepository.cells()
+            .nextEmptyColumn(row);
+    }
+
+    @Override
+    public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
+        return this.spreadsheetStoreRepository.cells()
+            .nextEmptyRow(column);
+    }
+
+    @Override
+    public Optional<Object> validationValue() {
+        return this.reference(VALIDATION_VALUE)
+            .orElse(Optional.empty());
+    }
 
     // Object...........................................................................................................
 
