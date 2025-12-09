@@ -269,6 +269,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
+        final SpreadsheetMetadataMode mode = this.mode;
         SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = spreadsheetContext;
         if (mode.isReadOnlyEnvironmentContext()) {
             spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext);
@@ -276,7 +277,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return SpreadsheetExpressionEvaluationContexts.basic(
             this.spreadsheetMetadata(),
-            this.mode,
+            mode,
             spreadsheetContext.storeRepository(),
             spreadsheetEnvironmentContext,
             cell,
