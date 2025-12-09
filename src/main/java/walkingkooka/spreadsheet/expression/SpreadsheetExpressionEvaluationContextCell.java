@@ -45,7 +45,7 @@ import java.util.Set;
 /**
  * Wraps another {@link SpreadsheetExpressionEvaluationContext}, but holds a local {@link SpreadsheetCell} property.
  */
-final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContextDelegator {
+final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExpressionEvaluationContextDelegator {
 
     static SpreadsheetExpressionEvaluationContext with(final Optional<SpreadsheetCell> cell,
                                                        final SpreadsheetExpressionEvaluationContext context) {
@@ -54,13 +54,13 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
         return cell.equals(context.cell()) ?
             context :
-            new CellSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextCell(
                 cell,
                 context
             );
     }
 
-    private CellSpreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
+    private SpreadsheetExpressionEvaluationContextCell(final Optional<SpreadsheetCell> cell,
                                                        final SpreadsheetExpressionEvaluationContext context) {
         this.cell = cell;
         this.context = context;
@@ -149,7 +149,7 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
         // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
         return context == cloned ?
             this :
-            new CellSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextCell(
                 this.cell,
                 Objects.requireNonNull(cloned, "environmentContext")
             );
@@ -162,7 +162,7 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
         return before == after ?
             this :
-            new CellSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextCell(
                 this.cell,
                 Objects.requireNonNull(after, "environmentContext")
             );
@@ -210,7 +210,7 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
         return before.equals(after) ?
             this :
-            new CellSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextCell(
                 this.cell,
                 after
             );
@@ -223,15 +223,15 @@ final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExp
 
         return before.equals(after) ?
             this :
-            new CellSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextCell(
                 this.cell,
                 after
             );
     }
 
     // 2025-05-25T06:25:48.9704295Z [DEBUG]         Originally at:
-    // 2025-05-25T06:25:48.9706780Z [DEBUG]         /home/runner/work/walkingkooka-spreadsheet-expression-function/walkingkooka-spreadsheet-expression-function/target/it-tests/j2cl-test/target/walkingkooka-j2cl-maven-plugin-cache/walkingkooka--walkingkooka.spreadsheet.expression.function.ittest--jar--1.0-382f02da09e5aff2ae595ff39e411f70680e6c57/7-closure-compile/sources/walkingkooka/spreadsheet/expression/CellSpreadsheetExpressionEvaluationContext.java:36: ERROR - [JSC_DUPLICATE_CLASS_METHODS] Class contains duplicate method name "m_validatorContext__walkingkooka_spreadsheet_reference_SpreadsheetExpressionReference"
-    // 2025-05-25T06:25:48.9709413Z [DEBUG]           36| final class CellSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContextDelegator {
+    // 2025-05-25T06:25:48.9706780Z [DEBUG]         /home/runner/work/walkingkooka-spreadsheet-expression-function/walkingkooka-spreadsheet-expression-function/target/it-tests/j2cl-test/target/walkingkooka-j2cl-maven-plugin-cache/walkingkooka--walkingkooka.spreadsheet.expression.function.ittest--jar--1.0-382f02da09e5aff2ae595ff39e411f70680e6c57/7-closure-compile/sources/walkingkooka/spreadsheet/expression/SpreadsheetExpressionEvaluationContextCell.java:36: ERROR - [JSC_DUPLICATE_CLASS_METHODS] Class contains duplicate method name "m_validatorContext__walkingkooka_spreadsheet_reference_SpreadsheetExpressionReference"
+    // 2025-05-25T06:25:48.9709413Z [DEBUG]           36| final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExpressionEvaluationContextDelegator {
     // 2025-05-25T06:25:48.9710024Z [DEBUG]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     // 2025-05-25T06:25:48.9710315Z [DEBUG]         1 error(s), 0 warning(s)
     // 2025-05-25T06:25:48.9710546Z [INFO]               Closure compiler
