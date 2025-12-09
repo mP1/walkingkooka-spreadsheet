@@ -163,7 +163,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     };
 
     /**
-     * A namedFunction that expects a number and returns that.
+     * A {@link ExpressionFunction} that expects a number and returns that.
      */
     private final static ExpressionFunction<ExpressionNumber, SpreadsheetExpressionEvaluationContext> ECHO = new FakeExpressionFunction<>() {
         @Override

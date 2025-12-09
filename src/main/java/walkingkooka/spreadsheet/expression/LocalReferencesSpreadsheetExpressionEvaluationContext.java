@@ -258,7 +258,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     public boolean isPure(final ExpressionFunctionName functionName) {
         this.failIfParameterName(functionName);
 
-        // $functionName is not a named parameter let the wrapped context test the namedFunction for purity.
+        // $functionName is not a named parameter let the wrapped context test the ExpressionFunction for purity.
         return this.context.isPure(functionName);
     }
 
