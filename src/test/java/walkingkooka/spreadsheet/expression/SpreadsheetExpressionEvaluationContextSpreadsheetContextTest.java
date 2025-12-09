@@ -91,7 +91,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         CELL_REFERENCE.setFormula(SpreadsheetFormula.EMPTY.setText("'CurrentCell"))
     );
 
-    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = SpreadsheetExpressionReferenceLoaders.fake(); // SpreadsheetExpressionReferenceContextREPOSITORY
+    private final static SpreadsheetExpressionReferenceLoader SPREADSHEET_EXPRESSION_REFERENCE_LOADER = SpreadsheetExpressionReferenceLoaders.fake();
 
     private final static SpreadsheetMetadataMode MODE = SpreadsheetMetadataMode.FORMULA;
 
