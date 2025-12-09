@@ -92,7 +92,7 @@ import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.SPREADSHE
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.SPREADSHEET_LABEL_NAME_RESOLVER;
 import static walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting.TERMINAL_CONTEXT;
 
-public final class ConverterSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
+public final class SpreadsheetExpressionEvaluationContextConverterTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContext>,
     DecimalNumberContextDelegator {
 
     private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL128);
@@ -253,7 +253,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testWithNullConverterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ConverterSpreadsheetExpressionEvaluationContext.with(
+            () -> SpreadsheetExpressionEvaluationContextConverter.with(
                 null,
                 SpreadsheetExpressionEvaluationContexts.fake()
             )
@@ -264,7 +264,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ConverterSpreadsheetExpressionEvaluationContext.with(
+            () -> SpreadsheetExpressionEvaluationContextConverter.with(
                 Converters.fake(),
                 null
             )
@@ -276,7 +276,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
-        final ConverterSpreadsheetExpressionEvaluationContext created = ConverterSpreadsheetExpressionEvaluationContext.with(
+        final SpreadsheetExpressionEvaluationContextConverter created = SpreadsheetExpressionEvaluationContextConverter.with(
             converter,
             context
         );
@@ -289,13 +289,13 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     public void testWithDoubleWrap() {
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
-        final ConverterSpreadsheetExpressionEvaluationContext first = ConverterSpreadsheetExpressionEvaluationContext.with(
+        final SpreadsheetExpressionEvaluationContextConverter first = SpreadsheetExpressionEvaluationContextConverter.with(
             Converters.fake(),
             context
         );
 
         final Converter<SpreadsheetExpressionEvaluationContext> converter = Converters.fake();
-        final ConverterSpreadsheetExpressionEvaluationContext doubleWrapped = ConverterSpreadsheetExpressionEvaluationContext.with(
+        final SpreadsheetExpressionEvaluationContextConverter doubleWrapped = SpreadsheetExpressionEvaluationContextConverter.with(
             converter,
             first
         );
@@ -473,7 +473,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     private <T> void executeNamedFunctionAndCheck(final ExpressionFunctionName functionName,
                                                   final List<Expression> parameters,
                                                   final T expected) {
-        final ConverterSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final SpreadsheetExpressionEvaluationContextConverter context = this.createContext();
         final ExpressionFunction<T, ExpressionEvaluationContext> function2 =
             Cast.to(
                 context.expressionFunction(functionName)
@@ -498,7 +498,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
     // helpers..........................................................................................................
 
     @Override
-    public ConverterSpreadsheetExpressionEvaluationContext createContext() {
+    public SpreadsheetExpressionEvaluationContextConverter createContext() {
         final Converter<SpreadsheetExpressionEvaluationContext> converter = new Converter<>() {
             @Override
             public boolean canConvert(final Object value,
@@ -533,7 +533,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
             )
         );
 
-        return ConverterSpreadsheetExpressionEvaluationContext.with(
+        return SpreadsheetExpressionEvaluationContextConverter.with(
             converter,
             SpreadsheetExpressionEvaluationContexts.basic(
                 METADATA,
@@ -616,7 +616,7 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.toStringAndCheck(
-            ConverterSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextConverter.with(
                 converter,
                 context
             ),
@@ -638,10 +638,15 @@ public final class ConverterSpreadsheetExpressionEvaluationContextTest implement
         return DECIMAL_NUMBER_CONTEXT;
     }
 
-    // ClassTesting.....................................................................................................
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetExpressionEvaluationContext> type() {
-        return Cast.to(ConverterSpreadsheetExpressionEvaluationContext.class);
+        return Cast.to(SpreadsheetExpressionEvaluationContextConverter.class);
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
