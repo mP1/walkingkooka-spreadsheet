@@ -84,39 +84,39 @@ import java.util.Set;
  * {@link SpreadsheetExpressionEvaluationContext} is useful.
  * <br>
  */
-final class ConverterSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+final class SpreadsheetExpressionEvaluationContextConverter implements SpreadsheetExpressionEvaluationContext,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
     TerminalContextDelegator {
 
-    static ConverterSpreadsheetExpressionEvaluationContext with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+    static SpreadsheetExpressionEvaluationContextConverter with(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                 final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(context, "context");
 
-        return context instanceof ConverterSpreadsheetExpressionEvaluationContext ?
+        return context instanceof SpreadsheetExpressionEvaluationContextConverter ?
             unwrap(
                 converter,
-                (ConverterSpreadsheetExpressionEvaluationContext) context
+                (SpreadsheetExpressionEvaluationContextConverter) context
             ) :
-            new ConverterSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextConverter(
                 converter,
                 context
             );
     }
 
-    private static ConverterSpreadsheetExpressionEvaluationContext unwrap(final Converter<SpreadsheetExpressionEvaluationContext> converter,
-                                                                          final ConverterSpreadsheetExpressionEvaluationContext context) {
-        return new ConverterSpreadsheetExpressionEvaluationContext(
+    private static SpreadsheetExpressionEvaluationContextConverter unwrap(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+                                                                          final SpreadsheetExpressionEvaluationContextConverter context) {
+        return new SpreadsheetExpressionEvaluationContextConverter(
             converter,
             context.context
         );
     }
 
 
-    private ConverterSpreadsheetExpressionEvaluationContext(final Converter<SpreadsheetExpressionEvaluationContext> converter,
+    private SpreadsheetExpressionEvaluationContextConverter(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                             final SpreadsheetExpressionEvaluationContext context) {
         this.converter = converter;
         this.context = context;
@@ -449,7 +449,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
     private SpreadsheetExpressionEvaluationContext setSpreadsheetExpressionEvaluationContext(final SpreadsheetExpressionEvaluationContext context) {
         return this.context.equals(context) ?
             this :
-            new ConverterSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextConverter(
                 this.converter,
                 context
             );
@@ -477,7 +477,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
         // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
         return context == cloned ?
             this :
-            new ConverterSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextConverter(
                 this.converter,
                 Objects.requireNonNull(cloned, "environmentContext")
             );
@@ -491,7 +491,7 @@ final class ConverterSpreadsheetExpressionEvaluationContext implements Spreadshe
 
         return before == after ?
             this :
-            new ConverterSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextConverter(
                 this.converter,
                 Objects.requireNonNull(after, "environmentContext")
             );
