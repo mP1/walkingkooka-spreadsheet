@@ -80,7 +80,7 @@ import java.util.Set;
  *
  * <br>
  * This is necessary because some functions do not need the default conversion of values to another using the format or
- * parse patterns and more. The <pre>lower</pre> namedFunction handling of numbers is an example where this
+ * parse patterns and more. The <pre>lower</pre> {@link ExpressionFunction} handling of numbers is an example where this
  * {@link SpreadsheetExpressionEvaluationContext} is useful.
  * <br>
  */
