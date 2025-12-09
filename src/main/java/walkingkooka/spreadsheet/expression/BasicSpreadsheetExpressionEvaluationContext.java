@@ -551,13 +551,16 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.spreadsheetEnvironmentContext == environmentContext ?
+        final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
+        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+
+        return before == after ?
             this :
             new BasicSpreadsheetExpressionEvaluationContext(
                 this.spreadsheetMetadata,
                 this.mode,
                 this.spreadsheetStoreRepository,
-                this.spreadsheetEnvironmentContext.setEnvironmentContext(environmentContext),
+                after,
                 this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
