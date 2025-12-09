@@ -37,11 +37,11 @@ import java.util.function.Function;
 public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
 
     /**
-     * {@see CellSpreadsheetExpressionEvaluationContext}
+     * {@see SpreadsheetExpressionEvaluationContextCell}
      */
     public static SpreadsheetExpressionEvaluationContext cell(final Optional<SpreadsheetCell> cell,
                                                               final SpreadsheetExpressionEvaluationContext context) {
-        return CellSpreadsheetExpressionEvaluationContext.with(
+        return SpreadsheetExpressionEvaluationContextCell.with(
             cell,
             context
         );
