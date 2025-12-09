@@ -48,18 +48,18 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see FakeSpreadsheetExpressionEvaluationContext}
-     */
-    public static FakeSpreadsheetExpressionEvaluationContext fake() {
-        return new FakeSpreadsheetExpressionEvaluationContext();
-    }
-
-    /**
      * {@see SpreadsheetExpressionEvaluationContextConverter}
      */
     public static SpreadsheetExpressionEvaluationContext converter(final Converter<SpreadsheetExpressionEvaluationContext> converter,
                                                                    final SpreadsheetExpressionEvaluationContext context) {
         return SpreadsheetExpressionEvaluationContextConverter.with(converter, context);
+    }
+
+    /**
+     * {@see FakeSpreadsheetExpressionEvaluationContext}
+     */
+    public static FakeSpreadsheetExpressionEvaluationContext fake() {
+        return new FakeSpreadsheetExpressionEvaluationContext();
     }
 
     /**
