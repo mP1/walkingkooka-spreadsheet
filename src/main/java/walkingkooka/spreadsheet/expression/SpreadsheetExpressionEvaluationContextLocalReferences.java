@@ -76,7 +76,7 @@ import java.util.function.Function;
  * A {@link SpreadsheetExpressionEvaluationContext} that uses a {@link Function} to try and verify if a reference
  * has a local value.
  */
-final class LocalReferencesSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+final class SpreadsheetExpressionEvaluationContextLocalReferences implements SpreadsheetExpressionEvaluationContext,
     ConverterContextDelegator,
     FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -84,19 +84,19 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     TerminalContextDelegator,
     UsesToStringBuilder {
 
-    static LocalReferencesSpreadsheetExpressionEvaluationContext with(
+    static SpreadsheetExpressionEvaluationContextLocalReferences with(
         final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
         final SpreadsheetExpressionEvaluationContext context) {
         Objects.requireNonNull(localReferenceToValues, "localReferenceToValues");
         Objects.requireNonNull(context, "context");
 
-        return new LocalReferencesSpreadsheetExpressionEvaluationContext(
+        return new SpreadsheetExpressionEvaluationContextLocalReferences(
             localReferenceToValues,
             context
         );
     }
 
-    private LocalReferencesSpreadsheetExpressionEvaluationContext(final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
+    private SpreadsheetExpressionEvaluationContextLocalReferences(final Function<ExpressionReference, Optional<Optional<Object>>> localReferenceToValues,
                                                                   final SpreadsheetExpressionEvaluationContext context) {
         super();
         this.localReferenceToValues = localReferenceToValues;
@@ -333,7 +333,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     private SpreadsheetExpressionEvaluationContext setSpreadsheetExpressionEvaluationContext(final SpreadsheetExpressionEvaluationContext context) {
         return this.context.equals(context) ?
             this :
-            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextLocalReferences(
                 this.localReferenceToValues,
                 context
             );
@@ -356,7 +356,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
         // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
         return context == cloned ?
             this :
-            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextLocalReferences(
                 this.localReferenceToValues,
                 Objects.requireNonNull(cloned, "environmentContext")
             );
@@ -369,7 +369,7 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
 
         return before == after ?
             this :
-            new LocalReferencesSpreadsheetExpressionEvaluationContext(
+            new SpreadsheetExpressionEvaluationContextLocalReferences(
                 this.localReferenceToValues,
                 Objects.requireNonNull(after, "environmentContext")
             );
@@ -458,11 +458,11 @@ final class LocalReferencesSpreadsheetExpressionEvaluationContext implements Spr
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof LocalReferencesSpreadsheetExpressionEvaluationContext &&
-                this.equals0((LocalReferencesSpreadsheetExpressionEvaluationContext) other));
+            (other instanceof SpreadsheetExpressionEvaluationContextLocalReferences &&
+                this.equals0((SpreadsheetExpressionEvaluationContextLocalReferences) other));
     }
 
-    private boolean equals0(final LocalReferencesSpreadsheetExpressionEvaluationContext other) {
+    private boolean equals0(final SpreadsheetExpressionEvaluationContextLocalReferences other) {
         return this.localReferenceToValues.equals(other.localReferenceToValues) &&
             this.context.equals(other.context);
     }
