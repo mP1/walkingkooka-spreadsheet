@@ -310,7 +310,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
      * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever the {@link SpreadsheetMetadata} changes.
      */
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
-        if(null == this.expressionFunctionProvider) {
+        if (null == this.expressionFunctionProvider) {
             this.expressionFunctionProvider = this.spreadsheetMetadata.expressionFunctionProvider(
                 this.mode.function(),
                 this.spreadsheetProvider
@@ -464,7 +464,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {
-        if(null == this.spreadsheetConverterContext) {
+        if (null == this.spreadsheetConverterContext) {
             this.spreadsheetConverterContext = this.spreadsheetMetadata.spreadsheetConverterContext(
                 this.cell,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
@@ -634,7 +634,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
         return this;
     }
-    
+
     @Override
     public Optional<EmailAddress> user() {
         return this.spreadsheetEnvironmentContext.user();
