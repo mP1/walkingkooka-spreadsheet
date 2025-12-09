@@ -267,26 +267,23 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(loader, "loader");
 
-        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+        SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
         final SpreadsheetMetadataMode mode = this.mode;
         SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = spreadsheetContext;
         if (mode.isReadOnlyEnvironmentContext()) {
-            spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext);
+            spreadsheetContext = spreadsheetContext.setEnvironmentContext(
+                SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext)
+            );
         }
 
-        return SpreadsheetExpressionEvaluationContexts.basic(
-            this.spreadsheetMetadata(),
+        return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
             mode,
-            spreadsheetContext.storeRepository(),
-            spreadsheetEnvironmentContext,
             cell,
             loader,
             this.spreadsheetLabelNameResolver,
-            this.localeContext(),
-            this.terminalContext,
-            this.spreadsheetProvider(),
-            spreadsheetContext.providerContext()
+            spreadsheetContext,
+            this.terminalContext
         );
     }
 

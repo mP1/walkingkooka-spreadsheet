@@ -18,31 +18,30 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.store.FakeSpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
-import walkingkooka.text.LineEnding;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -172,22 +171,49 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-            return SpreadsheetExpressionEvaluationContexts.basic(
-                METADATA_EN_AU.set(
-                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                    spreadsheetId
-                ),
+            return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
-                SpreadsheetStoreRepositories.fake(),
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setSpreadsheetId(spreadsheetId),
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                LOCALE_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
+                SpreadsheetContexts.basic(
+                    (id) -> {
+                        if (spreadsheetId.equals(id)) {
+                            return new FakeSpreadsheetStoreRepository() {
+                                @Override
+                                public SpreadsheetMetadataStore metadatas() {
+                                    return new FakeSpreadsheetMetadataStore() {
+                                        @Override
+                                        public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
+                                            return Optional.ofNullable(
+                                                id.equals(spreadsheetId) ?
+                                                    METADATA_EN_AU.set(
+                                                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                                        spreadsheetId
+                                                    ) :
+                                                    null
+                                            );
+                                        }
+                                    };
+                                }
+                            };
+                        }
+                        throw new IllegalArgumentException("Unknown SpreadsheetId: " + id);
+                    },
+                    SPREADSHEET_PROVIDER,
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                        .setSpreadsheetId(spreadsheetId),
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT,
+                    TERMINAL_SERVER_CONTEXT
+                ),
+                TERMINAL_CONTEXT
             );
         }
 
@@ -226,14 +252,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-            return SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    Locale.forLanguageTag("en-AU"),
-                    LocalDateTime::now,
-                    EnvironmentContext.ANONYMOUS
-                )
-            );
+            return SPREADSHEET_ENVIRONMENT_CONTEXT;
         }
 
         @Override

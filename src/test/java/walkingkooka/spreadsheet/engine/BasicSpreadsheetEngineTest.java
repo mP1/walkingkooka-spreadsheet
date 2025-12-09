@@ -38,7 +38,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -67,6 +66,8 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadshe
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -499,11 +500,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static String TEST_VALUE = "BasicSpreadsheetEngineTestValue";
 
+    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
+        .cloneEnvironment()
+        .setSpreadsheetId(SPREADSHEET_ID);
+
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
 
         METADATA = METADATA_EN_AU
-            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(1))
+            .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SPREADSHEET_ID)
             .set(
                 SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                 DecimalNumberSymbols.with(
@@ -562,15 +569,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private static Object VALUE;
 
     private final static class TestSpreadsheetContext implements SpreadsheetContext,
-        EnvironmentContextDelegator,
+        SpreadsheetEnvironmentContextDelegator,
         LocaleContextDelegator,
         SpreadsheetProviderDelegator {
 
         TestSpreadsheetContext(final SpreadsheetMetadata metadata,
                                final SpreadsheetStoreRepository spreadsheetStoreRepository,
                                final SpreadsheetProvider spreadsheetProvider) {
+            this(
+                metadata,
+                spreadsheetStoreRepository,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                spreadsheetProvider
+            );
+        }
+
+        TestSpreadsheetContext(final SpreadsheetMetadata metadata,
+                               final SpreadsheetStoreRepository spreadsheetStoreRepository,
+                               final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                               final SpreadsheetProvider spreadsheetProvider) {
             this.metadata = metadata;
             this.spreadsheetStoreRepository = spreadsheetStoreRepository;
+            this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
             this.spreadsheetProvider = spreadsheetProvider;
         }
 
@@ -668,16 +688,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // SpreadsheetContext...........................................................................................
 
         @Override
-        public AbsoluteUrl serverUrl() {
-            return BasicSpreadsheetEngineTest.SERVER_URL;
-        }
-
-        @Override
-        public SpreadsheetId spreadsheetId() {
-            return this.metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
-        }
-
-        @Override
         public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
             throw new UnsupportedOperationException();
         }
@@ -707,7 +717,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         public SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 
-            throw new UnsupportedOperationException();
+            return new TestSpreadsheetContext(
+                this.metadata,
+                this.spreadsheetStoreRepository,
+                spreadsheetEnvironmentContext,
+                this.spreadsheetProvider
+            );
         }
 
         @Override
@@ -722,9 +737,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public EnvironmentContext environmentContext() {
-            return SPREADSHEET_ENVIRONMENT_CONTEXT;
+        public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+            return this.spreadsheetEnvironmentContext;
         }
+
+        private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
         // HasProviderContext...........................................................................................
 

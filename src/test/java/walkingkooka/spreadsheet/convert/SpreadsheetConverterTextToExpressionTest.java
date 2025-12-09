@@ -18,16 +18,15 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
+import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+
+import java.math.MathContext;
 
 public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToExpression>
     implements SpreadsheetMetadataTesting {
@@ -98,19 +97,27 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
         this.checkEquals(
             expected,
             expression.toValue(
-                SpreadsheetExpressionEvaluationContexts.basic(
-                    METADATA_EN_AU,
-                    SpreadsheetMetadataMode.FORMULA,
-                    SpreadsheetStoreRepositories.fake(),
-                    SPREADSHEET_ENVIRONMENT_CONTEXT,
-                    SpreadsheetExpressionEvaluationContext.NO_CELL,
-                    SpreadsheetExpressionReferenceLoaders.fake(),
-                    SPREADSHEET_LABEL_NAME_RESOLVER,
-                    LOCALE_CONTEXT,
-                    TERMINAL_CONTEXT,
-                    SPREADSHEET_PROVIDER,
-                    ProviderContexts.fake()
-                )
+                new FakeSpreadsheetExpressionEvaluationContext() {
+
+                    @Override
+                    public boolean isText(final Object value) {
+                        return SpreadsheetStrings.isText(value);
+                    }
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
+                        return this.successfulConversion(
+                            target.cast(value),
+                            target
+                        );
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.DECIMAL32;
+                    }
+                }
             )
         );
     }

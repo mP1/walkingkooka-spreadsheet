@@ -32,16 +32,16 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor} that fails by throwing a {@link walkingkooka.spreadsheet.SpreadsheetErrorException}
+ * A {@link SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor} that fails by throwing a {@link walkingkooka.spreadsheet.SpreadsheetErrorException}
  * if a {@link SpreadsheetExpressionReference} does not exist.
  */
-final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
+final class SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
     static Optional<Optional<Object>> values(final SpreadsheetExpressionReference reference,
                                              final SpreadsheetExpressionReferenceLoader loader,
                                              final SpreadsheetExpressionEvaluationContext context) {
-        final BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor visitor =
-            new BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor(
+        final SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor visitor =
+            new SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor(
                 loader,
                 context
             );
@@ -50,8 +50,8 @@ final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelec
     }
 
     // @VisibleForTesting
-    BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor(final SpreadsheetExpressionReferenceLoader loader,
-                                                                                    final SpreadsheetExpressionEvaluationContext context) {
+    SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor(final SpreadsheetExpressionReferenceLoader loader,
+                                                                                                 final SpreadsheetExpressionEvaluationContext context) {
         super();
         this.loader = loader;
         this.context = context;

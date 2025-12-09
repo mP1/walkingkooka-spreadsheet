@@ -19,18 +19,13 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -40,35 +35,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetExpressionEvaluationContexts implements PublicStaticHelper {
-
-    /**
-     * {@see BasicSpreadsheetExpressionEvaluationContext}
-     */
-    public static SpreadsheetExpressionEvaluationContext basic(final SpreadsheetMetadata spreadsheetMetadata,
-                                                               final SpreadsheetMetadataMode mode,
-                                                               final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                               final SpreadsheetEnvironmentContext spreadsheeEnvironmentContext,
-                                                               final Optional<SpreadsheetCell> cell,
-                                                               final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                               final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                               final LocaleContext localeContext,
-                                                               final TerminalContext terminalContext,
-                                                               final SpreadsheetProvider spreadsheetProvider,
-                                                               final ProviderContext providerContext) {
-        return BasicSpreadsheetExpressionEvaluationContext.with(
-            spreadsheetMetadata,
-            mode,
-            spreadsheetStoreRepository,
-            spreadsheeEnvironmentContext,
-            cell,
-            spreadsheetExpressionReferenceLoader,
-            spreadsheetLabelNameResolver,
-            localeContext,
-            terminalContext,
-            spreadsheetProvider,
-            providerContext
-        );
-    }
 
     /**
      * {@see CellSpreadsheetExpressionEvaluationContext}
@@ -126,6 +92,25 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                 r
             );
         };
+    }
+
+    /**
+     * {@see SpreadsheetExpressionEvaluationContextSpreadsheetContext}
+     */
+    public static SpreadsheetExpressionEvaluationContext spreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                                            final Optional<SpreadsheetCell> cell,
+                                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                            final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                                            final SpreadsheetContext spreadsheetContext,
+                                                                            final TerminalContext terminalContext) {
+        return SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            mode,
+            cell,
+            spreadsheetExpressionReferenceLoader,
+            spreadsheetLabelNameResolver,
+            spreadsheetContext,
+            terminalContext
+        );
     }
 
     /**
