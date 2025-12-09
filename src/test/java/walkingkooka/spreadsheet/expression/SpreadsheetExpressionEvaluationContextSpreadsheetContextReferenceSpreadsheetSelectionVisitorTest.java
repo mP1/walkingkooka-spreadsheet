@@ -36,8 +36,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
 import java.util.Optional;
 import java.util.Set;
 
-public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitorTest
-    implements SpreadsheetSelectionVisitorTesting<BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor> {
+public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitorTest
+    implements SpreadsheetSelectionVisitorTesting<SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor> {
 
     @Test
     public void testValuesWithCellNonNullValue() {
@@ -287,7 +287,7 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
                                 final Optional<Optional<Object>> value) {
         this.checkEquals(
             value,
-            BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+            SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor.values(
                 reference,
                 loader,
                 SpreadsheetExpressionEvaluationContexts.fake()
@@ -297,8 +297,8 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
     }
 
     @Override
-    public BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor createVisitor() {
-        return new BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor(
+    public SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor(
             null, // loader
             null // context
         );
@@ -308,12 +308,12 @@ public final class BasicSpreadsheetExpressionEvaluationContextReferenceSpreadshe
 
     @Override
     public String typeNamePrefix() {
-        return BasicSpreadsheetExpressionEvaluationContext.class.getSimpleName() + "Reference";
+        return SpreadsheetExpressionEvaluationContextSpreadsheetContext.class.getSimpleName() + "Reference";
     }
 
     @Override
-    public Class<BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor> type() {
-        return BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.class;
+    public Class<SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor.class;
     }
 
     @Override

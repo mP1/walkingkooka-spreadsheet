@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -1010,9 +1011,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testCloneEnvironment() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
@@ -1056,10 +1055,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
-
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
         assertSame(
@@ -1070,9 +1066,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSetEnvironmentContextWithDifferent() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
             .setLineEnding(LineEnding.CRNL);
@@ -1095,9 +1089,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
@@ -1116,14 +1108,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSetEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
-
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final BasicSpreadsheetEngineContext context = this.createContext(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
         context.setEnvironmentValue(
             name,
             value
@@ -1138,14 +1128,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSetEnvironmentValueWithLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
-
         final EnvironmentValueName<Locale> name = EnvironmentValueName.LOCALE;
         final Locale value = Locale.FRANCE;
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final BasicSpreadsheetEngineContext context = this.createContext(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
         context.setEnvironmentValue(
             name,
             value
@@ -1165,9 +1153,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testRemoveEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
@@ -1188,9 +1174,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testExpressionEvaluationContextAndEnvironmentValue() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
@@ -1213,11 +1197,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testExpressionEvaluationContextAndNow() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
-
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final BasicSpreadsheetEngineContext context = this.createContext();
         final LocalDateTime now = context.now();
 
         this.checkEquals(
@@ -1231,11 +1211,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testExpressionEvaluationContextAndUser() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            SPREADSHEET_ENVIRONMENT_CONTEXT
-        );
-
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final BasicSpreadsheetEngineContext context = this.createContext();
         final Optional<EmailAddress> user = context.user();
         this.checkNotEquals(
             Optional.empty(),
@@ -1428,7 +1404,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
             metadata,
-            EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT),
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
             PROVIDER_CONTEXT
         );
     }
@@ -1516,6 +1492,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     HAS_NOW::now,
                     Optional.of(USER)
                 )
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                SPREADSHEET_ID
             )
         );
     }
@@ -1613,7 +1592,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             this.metadata = METADATA;
             this.storeRepository = REPO;
 
-            this.environmentContext = environmentContext;
+            this.environmentContext = environmentContext;;
             this.localeContext = LOCALE_CONTEXT;
             this.providerContext = PROVIDER_CONTEXT;
         }
@@ -1633,11 +1612,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             this.environmentContext = environmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
-
-            environmentContext.setEnvironmentValue(
-                SPREADSHEET_ID,
-                BasicSpreadsheetEngineContextTest.SPREADSHEET_ID
-            );
         }
 
         @Override

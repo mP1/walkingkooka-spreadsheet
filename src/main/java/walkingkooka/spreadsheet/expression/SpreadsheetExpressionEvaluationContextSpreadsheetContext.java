@@ -27,8 +27,8 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -42,7 +42,6 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -53,7 +52,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
@@ -85,94 +83,65 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} that includes a {@link SpreadsheetMetadata}.
  */
-final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetExpressionEvaluationContext,
+final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements SpreadsheetExpressionEvaluationContext,
     EnvironmentContextDelegator,
     SpreadsheetConverterContextDelegator,
     TerminalContextDelegator {
 
-    static BasicSpreadsheetExpressionEvaluationContext with(final SpreadsheetMetadata spreadsheetMetadata,
-                                                            final SpreadsheetMetadataMode mode,
-                                                            final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                            final Optional<SpreadsheetCell> cell,
-                                                            final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                            final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                            final LocaleContext localeContext,
-                                                            final TerminalContext terminalContext,
-                                                            final SpreadsheetProvider spreadsheetProvider,
-                                                            final ProviderContext providerContext) {
-        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+    static SpreadsheetExpressionEvaluationContextSpreadsheetContext with(final SpreadsheetMetadataMode mode,
+                                                                         final Optional<SpreadsheetCell> cell,
+                                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                         final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                                         final SpreadsheetContext spreadsheetContext,
+                                                                         final TerminalContext terminalContext) {
         Objects.requireNonNull(mode, "mode");
-        Objects.requireNonNull(spreadsheetStoreRepository, "spreadsheetStoreRepository");
-        Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionReferenceLoader, "spreadsheetExpressionReferenceLoader");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
-        Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
-        Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
-        Objects.requireNonNull(providerContext, "providerContext");
 
-        return new BasicSpreadsheetExpressionEvaluationContext(
-            spreadsheetMetadata,
+        return new SpreadsheetExpressionEvaluationContextSpreadsheetContext(
             mode,
-            spreadsheetStoreRepository,
-            spreadsheetEnvironmentContext,
             cell,
             spreadsheetExpressionReferenceLoader,
             spreadsheetLabelNameResolver,
             null, // SpreadsheetConverterContext
+            null, // ExpressionFunctionProvider
             null, // formHandlerContext
             null, // JsonNodeMarshallContextObjectPostProcessor
             null, // JsonNodeUnmarshallContextPreProcessor
-            localeContext,
-            terminalContext,
-            spreadsheetProvider,
-            null, // ExpressionFunctionProvider
-            providerContext
+            spreadsheetContext,
+            terminalContext
         );
     }
 
-    private BasicSpreadsheetExpressionEvaluationContext(final SpreadsheetMetadata spreadsheetMetadata,
-                                                        final SpreadsheetMetadataMode mode,
-                                                        final SpreadsheetStoreRepository spreadsheetStoreRepository,
-                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                        final Optional<SpreadsheetCell> cell,
-                                                        final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                        final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                        final SpreadsheetConverterContext spreadsheetConverterContext,
-                                                        final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
-                                                        final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
-                                                        final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
-                                                        final LocaleContext localeContext,
-                                                        final TerminalContext terminalContext,
-                                                        final SpreadsheetProvider spreadsheetProvider,
-                                                        final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                        final ProviderContext providerContext) {
+    private SpreadsheetExpressionEvaluationContextSpreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                                     final Optional<SpreadsheetCell> cell,
+                                                                     final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                                     final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                                     final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
+                                                                     final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
+                                                                     final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
+                                                                     final SpreadsheetContext spreadsheetContext,
+                                                                     final TerminalContext terminalContext) {
         super();
-        this.spreadsheetMetadata = spreadsheetMetadata;
         this.mode = mode;
-
-        this.spreadsheetStoreRepository = spreadsheetStoreRepository;
-
-        this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
 
         this.cell = cell;
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
+        this.expressionFunctionProvider = expressionFunctionProvider; // may be null
         this.spreadsheetConverterContext = spreadsheetConverterContext; // may be null
         this.jsonNodeMarshallContextObjectPostProcessor = jsonNodeMarshallContextObjectPostProcessor;
         this.jsonNodeUnmarshallContextPreProcessor = jsonNodeUnmarshallContextPreProcessor;
 
         this.formHandlerContext = formHandlerContext;
-        this.localeContext = localeContext;
+        this.spreadsheetContext = spreadsheetContext;
         this.terminalContext = terminalContext;
-
-        this.expressionFunctionProvider = expressionFunctionProvider; // may be null
-        this.spreadsheetProvider = spreadsheetProvider;
-
-        this.providerContext = providerContext;
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
@@ -222,8 +191,8 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
         final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
             .spreadsheetParserContext(
                 this.cell,
-                this.localeContext,
-                this.spreadsheetEnvironmentContext
+                this, // LocaleContext
+                this // now
             );
 
         return SpreadsheetFormulaParsers.expression()
@@ -235,53 +204,42 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        return this.spreadsheetMetadata;
+        return this.spreadsheetContext.spreadsheetMetadata();
     }
 
     @Override
     public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
         Objects.requireNonNull(metadata, "metadata");
 
-        final SpreadsheetMetadata old = this.spreadsheetMetadata;
+        final SpreadsheetMetadata old = this.spreadsheetMetadata();
         final SpreadsheetId oldId = old.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
         final SpreadsheetId newId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
         if (false == oldId.equals(newId)) {
             throw new IllegalArgumentException("Invalid metadata id " + newId + " is different from " + oldId);
         }
 
-        this.spreadsheetMetadata = this.spreadsheetStoreRepository.metadatas()
-            .save(metadata);
         // TODO maybe should clear parsed cell formulas.
+        this.spreadsheetContext.saveMetadata(metadata);
 
         this.spreadsheetConverterContext = null;
         this.expressionFunctionProvider = null;
     }
 
-    /**
-     * The current {@link SpreadsheetMetadata}. It will be replaced if a {@link #setSpreadsheetMetadata(SpreadsheetMetadata)} happens.
-     */
-    private SpreadsheetMetadata spreadsheetMetadata;
-
-    private BasicSpreadsheetExpressionEvaluationContext setMode(final SpreadsheetMetadataMode mode) {
+    private SpreadsheetExpressionEvaluationContextSpreadsheetContext setMode(final SpreadsheetMetadataMode mode) {
         return this.mode.equals(mode) ?
             this :
-            new BasicSpreadsheetExpressionEvaluationContext(
-                this.spreadsheetMetadata,
+            new SpreadsheetExpressionEvaluationContextSpreadsheetContext(
                 Objects.requireNonNull(mode, "mode"),
-                this.spreadsheetStoreRepository,
-                this.spreadsheetEnvironmentContext,
                 this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
+                null, // expressionFunctionProvider clear force recreate
                 null, // spreadsheetConverterContext  clear force recreate!
                 this.jsonNodeMarshallContextObjectPostProcessor,
                 this.jsonNodeUnmarshallContextPreProcessor,
                 this.formHandlerContext,
-                this.localeContext,
-                this.terminalContext,
-                this.spreadsheetProvider,
-                null, // expressionFunctionProvider clear force recreate
-                this.providerContext
+                this.spreadsheetContext,
+                this.terminalContext
             );
     }
 
@@ -289,19 +247,18 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public LocaleContext localeContext() {
-        return this.localeContext; // short circuit SpreadsheetConverterContextDelegator
+        return this.spreadsheetContext; // short circuit SpreadsheetConverterContextDelegator
     }
-
-    private final LocaleContext localeContext;
 
     /**
      * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever the {@link SpreadsheetMetadata} changes.
      */
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
         if (null == this.expressionFunctionProvider) {
-            this.expressionFunctionProvider = this.spreadsheetMetadata.expressionFunctionProvider(
+            this.expressionFunctionProvider = this.spreadsheetMetadata()
+                    .expressionFunctionProvider(
                 this.mode.function(),
-                this.spreadsheetProvider
+                this.spreadsheetContext // SpreadsheetProvider
             );
         }
         return this.expressionFunctionProvider;
@@ -309,23 +266,24 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
-    private final SpreadsheetProvider spreadsheetProvider;
-
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
-        return this.spreadsheetMetadata.spreadsheetFormatterContext(
-            cell,
-            (final Optional<Object> v) -> this.setMode(
-                SpreadsheetMetadataMode.FORMATTING
-            ).addLocalVariable(
-                SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
-                v
-            ),
-            this.spreadsheetLabelNameResolver,
-            this.localeContext,
-            this.spreadsheetProvider,
-            this.providerContext
-        );
+        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+
+        return this.spreadsheetMetadata()
+            .spreadsheetFormatterContext(
+                cell,
+                (final Optional<Object> v) -> this.setMode(
+                    SpreadsheetMetadataMode.FORMATTING
+                ).addLocalVariable(
+                    SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
+                    v
+                ),
+                this.spreadsheetLabelNameResolver,
+                spreadsheetContext, // LocaleContext
+                spreadsheetContext, // SpreadsheetProvider
+                spreadsheetContext.providerContext() // ProviderContext
+            );
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................
@@ -345,15 +303,18 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     @Override
     public SpreadsheetConverterContext spreadsheetConverterContext() {
         if (null == this.spreadsheetConverterContext) {
-            this.spreadsheetConverterContext = this.spreadsheetMetadata.spreadsheetConverterContext(
-                this.cell,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                this.mode.converter(),
-                this.spreadsheetLabelNameResolver,
-                this.spreadsheetProvider, // SpreadsheetConverterProvider
-                this.localeContext,
-                this.providerContext
-            );
+            final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+
+            this.spreadsheetConverterContext = this.spreadsheetMetadata()
+                .spreadsheetConverterContext(
+                    this.cell,
+                    SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                    this.mode.converter(),
+                    this.spreadsheetLabelNameResolver,
+                    spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
+                    this, // LocaleContext
+                    spreadsheetContext.providerContext()
+                );
         }
         return this.spreadsheetConverterContext;
     }
@@ -367,114 +328,126 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
-        return this.setEnvironmentContext(
-            this.spreadsheetEnvironmentContext.cloneEnvironment()
+        return this.setSpreadsheetContext(
+            this.spreadsheetContext.setEnvironmentContext(
+                this.spreadsheetContext.cloneEnvironment()
+            )
         );
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
-        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+        return this.setSpreadsheetContext(
+            this.spreadsheetContext.setEnvironmentContext(environmentContext)
+        );
+    }
 
-        return before == after ?
+    private SpreadsheetExpressionEvaluationContext setSpreadsheetContext(final SpreadsheetContext spreadsheetContext) {
+        final SpreadsheetContext before = this.spreadsheetContext;;
+
+        return before == spreadsheetContext ?
             this :
-            new BasicSpreadsheetExpressionEvaluationContext(
-                this.spreadsheetMetadata,
+            new SpreadsheetExpressionEvaluationContextSpreadsheetContext(
                 this.mode,
-                this.spreadsheetStoreRepository,
-                after,
                 this.cell,
                 this.spreadsheetExpressionReferenceLoader,
                 this.spreadsheetLabelNameResolver,
                 null, // spreadsheetConverterContext  clear force recreate!
+                this.expressionFunctionProvider,
                 this.jsonNodeMarshallContextObjectPostProcessor,
                 this.jsonNodeUnmarshallContextPreProcessor,
                 this.formHandlerContext,
-                this.localeContext,
-                this.terminalContext,
-                this.spreadsheetProvider,
-                this.expressionFunctionProvider,
-                this.providerContext
+                spreadsheetContext,
+                this.terminalContext
             );
     }
 
     @Override
     public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                           final T value) {
-        this.spreadsheetEnvironmentContext.setEnvironmentValue(
-            name,
-            value
-        );
+        this.environmentContext()
+            .setEnvironmentValue(
+                name,
+                value
+            );
         return this;
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
+        this.environmentContext()
+            .removeEnvironmentValue(name);
         return this;
     }
 
     @Override
     public LineEnding lineEnding() {
-        return this.spreadsheetEnvironmentContext.lineEnding();
+        return this.environmentContext()
+            .lineEnding();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
+        this.environmentContext()
+            .setLineEnding(lineEnding);
         return this;
     }
 
     @Override
     public Locale locale() {
-        return this.spreadsheetEnvironmentContext.locale();
+        return this.environmentContext()
+            .locale();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.spreadsheetEnvironmentContext.setLocale(locale);
+        this.environmentContext()
+            .setLocale(locale);
         return this;
     }
 
     @Override
     public LocalDateTime now() {
-        return this.spreadsheetEnvironmentContext.now(); // inherit unrelated defaults
+        return this.environmentContext()
+            .now(); // inherit unrelated defaults
     }
 
     @Override
     public AbsoluteUrl serverUrl() {
-        return this.spreadsheetEnvironmentContext.serverUrl();
+        return this.environmentContext()
+            .serverUrl();
     }
 
     @Override
     public SpreadsheetId spreadsheetId() {
-        return this.spreadsheetEnvironmentContext.spreadsheetId();
+        return this.environmentContext()
+            .spreadsheetId();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        this.environmentContext()
+            .setSpreadsheetId(spreadsheetId);
         return this;
     }
 
     @Override
     public Optional<EmailAddress> user() {
-        return this.spreadsheetEnvironmentContext.user();
+        return this.environmentContext()
+            .user();
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetEnvironmentContext.setUser(user);
+        this.environmentContext()
+            .setUser(user);
         return this;
     }
 
     @Override
-    public EnvironmentContext environmentContext() {
-        return this.spreadsheetEnvironmentContext;
+    public SpreadsheetEnvironmentContext environmentContext() {
+        return this.spreadsheetContext;
     }
-
-    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
     // ExpressionEvaluationContext......................................................................................
 
@@ -485,12 +458,10 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                 .expressionFunction(
                     name,
                     Lists.empty(),
-                    this.providerContext
+                    this.spreadsheetContext.providerContext() // ProviderContext
                 )
         );
     }
-
-    private final ProviderContext providerContext;
 
     @Override
     public boolean isPure(final ExpressionFunctionName name) {
@@ -543,7 +514,7 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
                     spreadsheetExpressionReference = selection.toExpressionReference();
                 }
                 if (spreadsheetExpressionReference instanceof SpreadsheetExpressionReference) {
-                    value = BasicSpreadsheetExpressionEvaluationContextReferenceSpreadsheetSelectionVisitor.values(
+                    value = SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor.values(
                         spreadsheetExpressionReference,
                         this.spreadsheetExpressionReferenceLoader,
                         this
@@ -636,23 +607,18 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
     private SpreadsheetExpressionEvaluationContext setSpreadsheetConverterContext(final SpreadsheetConverterContext context,
                                                                                   final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                                   final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
-        return new BasicSpreadsheetExpressionEvaluationContext(
-            this.spreadsheetMetadata,
+        return new SpreadsheetExpressionEvaluationContextSpreadsheetContext(
             this.mode,
-            this.spreadsheetStoreRepository,
-            this.spreadsheetEnvironmentContext,
             this.cell,
             this.spreadsheetExpressionReferenceLoader,
             this.spreadsheetLabelNameResolver,
             context,
+            this.expressionFunctionProvider,
             jsonNodeMarshallContextObjectPostProcessor,
             jsonNodeUnmarshallContextPreProcessor,
             this.formHandlerContext,
-            this.localeContext,
-            this.terminalContext,
-            this.spreadsheetProvider,
-            this.expressionFunctionProvider,
-            this.providerContext
+            this.spreadsheetContext,
+            this.terminalContext
         );
     }
 
@@ -660,10 +626,11 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Storage<StorageExpressionEvaluationContext> storage() {
-        return this.spreadsheetStoreRepository.storage();
+        return this.spreadsheetContext.storeRepository()
+            .storage();
     }
 
-    private final SpreadsheetStoreRepository spreadsheetStoreRepository;
+    private final SpreadsheetContext spreadsheetContext;
 
     // TerminalContextDelegator.........................................................................................
 
@@ -684,13 +651,15 @@ final class BasicSpreadsheetExpressionEvaluationContext implements SpreadsheetEx
 
     @Override
     public Optional<SpreadsheetColumnReference> nextEmptyColumn(final SpreadsheetRowReference row) {
-        return this.spreadsheetStoreRepository.cells()
+        return this.spreadsheetContext.storeRepository()
+            .cells()
             .nextEmptyColumn(row);
     }
 
     @Override
     public Optional<SpreadsheetRowReference> nextEmptyRow(final SpreadsheetColumnReference column) {
-        return this.spreadsheetStoreRepository.cells()
+        return this.spreadsheetContext.storeRepository()
+            .cells()
             .nextEmptyRow(column);
     }
 
