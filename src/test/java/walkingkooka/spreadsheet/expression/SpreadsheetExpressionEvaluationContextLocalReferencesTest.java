@@ -71,9 +71,9 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest implements SpreadsheetExpressionEvaluationContextTesting<LocalReferencesSpreadsheetExpressionEvaluationContext>,
-    HashCodeEqualsDefinedTesting2<LocalReferencesSpreadsheetExpressionEvaluationContext>,
-    ToStringTesting<LocalReferencesSpreadsheetExpressionEvaluationContext> {
+public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
+    HashCodeEqualsDefinedTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
+    ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences> {
 
     private final static String NAME = "Name1234";
 
@@ -131,7 +131,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     public void testWithNullReferenceToValuesFails() {
         assertThrows(
             NullPointerException.class,
-            () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            () -> SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 null,
                 SpreadsheetExpressionEvaluationContexts.fake()
             )
@@ -142,7 +142,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     public void testWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            () -> SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 null
             )
@@ -318,7 +318,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         );
 
         this.referenceAndCheck2(
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 (r) -> Optional.empty(),
                 new FakeSpreadsheetExpressionEvaluationContext() {
                     @Override
@@ -337,7 +337,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
                                     final ExpressionReference reference,
                                     final Optional<Object> expected) {
         this.referenceAndCheck(
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 referenceToValues,
                 SpreadsheetExpressionEvaluationContexts.fake()
             ),
@@ -350,7 +350,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
 
     @Test
     public void testResolveIfLabelLocalLabelFails() {
-        final LocalReferencesSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final SpreadsheetExpressionEvaluationContextLocalReferences context = this.createContext();
 
         final IllegalArgumentException thrown = assertThrows(
             IllegalArgumentException.class,
@@ -365,7 +365,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
 
     @Test
     public void testResolveLocalLabelFails() {
-        final LocalReferencesSpreadsheetExpressionEvaluationContext context = this.createContext();
+        final SpreadsheetExpressionEvaluationContextLocalReferences context = this.createContext();
 
         this.checkEquals(
             Optional.of(
@@ -379,12 +379,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
 
     @Test
     public void testSetEnvironmentContextWithDifferentEnvironmentContext() {
-        final LocalReferencesSpreadsheetExpressionEvaluationContext before = this.createContext();
+        final SpreadsheetExpressionEvaluationContextLocalReferences before = this.createContext();
 
     }
 
     @Override
-    public LocalReferencesSpreadsheetExpressionEvaluationContext createContext() {
+    public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
                 EnvironmentContexts.map(
@@ -406,8 +406,8 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         );
     }
 
-    private LocalReferencesSpreadsheetExpressionEvaluationContext createContext(final SpreadsheetEnvironmentContext environmentContext) {
-        return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+    private SpreadsheetExpressionEvaluationContextLocalReferences createContext(final SpreadsheetEnvironmentContext environmentContext) {
+        return SpreadsheetExpressionEvaluationContextLocalReferences.with(
             REFERENCE_TO_VALUES,
             new TestSpreadsheetExpressionEvaluationContext(environmentContext)
         );
@@ -740,11 +740,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.checkEquals(
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 context
             ),
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 context
             )
@@ -756,11 +756,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.checkNotEquals(
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 context
             ),
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 (l) -> {
                     throw new UnsupportedOperationException();
                 },
@@ -772,11 +772,11 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     @Test
     public void testEqualsDifferentSpreadsheetExpressionEvaluationContext() {
         this.checkNotEquals(
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 SpreadsheetExpressionEvaluationContexts.fake()
             ),
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 SpreadsheetExpressionEvaluationContexts.fake()
             )
@@ -784,8 +784,8 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     }
 
     @Override
-    public LocalReferencesSpreadsheetExpressionEvaluationContext createObject() {
-        return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+    public SpreadsheetExpressionEvaluationContextLocalReferences createObject() {
+        return SpreadsheetExpressionEvaluationContextLocalReferences.with(
             REFERENCE_TO_VALUES,
             SpreadsheetExpressionEvaluationContexts.fake()
         );
@@ -798,7 +798,7 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
         final SpreadsheetExpressionEvaluationContext context = SpreadsheetExpressionEvaluationContexts.fake();
 
         this.toStringAndCheck(
-            LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+            SpreadsheetExpressionEvaluationContextLocalReferences.with(
                 REFERENCE_TO_VALUES,
                 context
             ),
@@ -809,7 +809,12 @@ public final class LocalReferencesSpreadsheetExpressionEvaluationContextTest imp
     // class............................................................................................................
 
     @Override
-    public Class<LocalReferencesSpreadsheetExpressionEvaluationContext> type() {
-        return LocalReferencesSpreadsheetExpressionEvaluationContext.class;
+    public Class<SpreadsheetExpressionEvaluationContextLocalReferences> type() {
+        return SpreadsheetExpressionEvaluationContextLocalReferences.class;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }

@@ -97,12 +97,12 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see LocalReferencesSpreadsheetExpressionEvaluationContext}
+     * {@see SpreadsheetExpressionEvaluationContextLocalReferences}
      */
     public static SpreadsheetExpressionEvaluationContext localReferences(final Function<ExpressionReference, Optional<Optional<Object>>> referenceToValues,
                                                                          final SpreadsheetExpressionEvaluationContext context) {
 
-        return LocalReferencesSpreadsheetExpressionEvaluationContext.with(
+        return SpreadsheetExpressionEvaluationContextLocalReferences.with(
             referenceToValues,
             context
         );
