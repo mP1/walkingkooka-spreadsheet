@@ -17,17 +17,16 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
@@ -43,23 +42,11 @@ import java.util.Locale;
 import java.util.Optional;
 
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
-    EnvironmentContextDelegator,
+    SpreadsheetEnvironmentContextDelegator,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetProviderDelegator,
     TerminalServerContextDelegator {
-
-    @Override
-    default AbsoluteUrl serverUrl() {
-        return this.spreadsheetContext()
-            .serverUrl();
-    }
-
-    @Override
-    default SpreadsheetId spreadsheetId() {
-        return this.spreadsheetContext()
-            .spreadsheetId();
-    }
 
     @Override
     default SpreadsheetStoreRepository storeRepository() {
@@ -78,7 +65,7 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     @Override
     default <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                        final T value) {
-        this.spreadsheetContext()
+        this.spreadsheetEnvironmentContext()
             .setEnvironmentValue(
                 name,
                 value
@@ -88,20 +75,32 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
 
     @Override
     default SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetContext()
+        this.spreadsheetEnvironmentContext()
             .removeEnvironmentValue(name);
         return this;
     }
 
     @Override
+    default SpreadsheetId spreadsheetId() {
+        return this.spreadsheetContext()
+            .spreadsheetId();
+    }
+
+    @Override
+    default SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+        return this.spreadsheetContext()
+            .setSpreadsheetId(id);
+    }
+
+    @Override
     default SpreadsheetContext setUser(final Optional<EmailAddress> user) {
-        this.environmentContext()
+        this.spreadsheetEnvironmentContext()
             .setUser(user);
         return this;
     }
 
     @Override
-    default EnvironmentContext environmentContext() {
+    default SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetContext();
     }
 

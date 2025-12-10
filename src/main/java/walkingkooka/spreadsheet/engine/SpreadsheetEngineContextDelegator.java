@@ -25,6 +25,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -158,6 +159,19 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
+    default SpreadsheetId spreadsheetId() {
+        return this.spreadsheetEngineContext()
+            .spreadsheetId();
+    }
+
+    @Override
+    default SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+        this.spreadsheetEngineContext()
+            .setSpreadsheetId(id);
+        return this;
+    }
+
+    @Override
     default SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
         this.spreadsheetEngineContext()
             .setUser(user);
@@ -169,5 +183,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
         return this.spreadsheetEngineContext();
     }
 
+    @Override
     SpreadsheetEngineContext spreadsheetEngineContext();
 }
