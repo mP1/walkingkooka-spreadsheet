@@ -184,6 +184,12 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
     }
 
+
+    @Override
+    public void testSetLineEndingWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
     // locale...........................................................................................................
 
     @Test
@@ -198,6 +204,11 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     @Override
     public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetLocaleWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -258,7 +269,12 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 )
         );
     }
-    
+
+    @Override
+    public void testSetUserWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
     // environmentValue.................................................................................................
 
     @Test

@@ -23,6 +23,7 @@ import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -233,6 +234,16 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     @Override
     public LocalDateTime now() {
         return this.context.now();
+    }
+
+    @Override
+    public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
+        return this.context.addEventValueWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+        return this.context.addEventValueWatcher(watcher);
     }
 
     private final EnvironmentContext context;
