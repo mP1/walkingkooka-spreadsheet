@@ -23,6 +23,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
@@ -575,7 +576,17 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
         this.context.setUser(user);
         return this;
     }
-    
+
+    @Override
+    public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
+        return this.context.addEventValueWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+        return this.context.addEventValueWatcher(watcher);
+    }
+
     // Object...........................................................................................................
 
     @Override

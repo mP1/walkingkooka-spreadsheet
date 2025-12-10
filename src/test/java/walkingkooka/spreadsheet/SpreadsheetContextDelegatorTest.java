@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
@@ -45,7 +46,22 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
     }
 
     @Override
+    public void testSetLineEndingWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetLocaleWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetUserWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -245,6 +261,18 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
                 Objects.requireNonNull(user, "user");
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
+                Objects.requireNonNull(watcher, "watcher");
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+                Objects.requireNonNull(watcher, "watcher");
                 throw new UnsupportedOperationException();
             }
 

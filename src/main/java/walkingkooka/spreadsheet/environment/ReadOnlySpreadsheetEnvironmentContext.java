@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -150,6 +151,18 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     @Override
     public SpreadsheetEnvironmentContext setUser(final Optional<EmailAddress> user) {
         Objects.requireNonNull(user, "user");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
+        Objects.requireNonNull(watcher, "watcher");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+        Objects.requireNonNull(watcher, "watcher");
         throw new UnsupportedOperationException();
     }
 
