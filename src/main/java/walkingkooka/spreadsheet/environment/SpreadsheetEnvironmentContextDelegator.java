@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
@@ -74,7 +75,8 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
 
     @Override
     default SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.environmentContext().setSpreadsheetId(spreadsheetId);
+        this.spreadsheetEnvironmentContext().
+            setSpreadsheetId(spreadsheetId);
         return this;
     }
 
@@ -87,7 +89,7 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
     // EnvironmentContextDelegator......................................................................................
 
     @Override
-    default SpreadsheetEnvironmentContext environmentContext() {
+    default EnvironmentContext environmentContext() {
         return this.spreadsheetEnvironmentContext();
     }
 
