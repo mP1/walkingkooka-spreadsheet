@@ -1694,6 +1694,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             ),
             this.parserContext(
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '-',
                         '+',
@@ -1760,6 +1761,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             ),
             this.parserContext(
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '-',
                         '+',
@@ -1882,6 +1884,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             ),
             this.parserContext(
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '-',
                         '+',

@@ -1539,6 +1539,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             DecimalNumberSymbols.with(
                 MINUS,
                 PLUS,

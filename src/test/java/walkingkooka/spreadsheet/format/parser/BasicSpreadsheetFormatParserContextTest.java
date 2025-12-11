@@ -76,6 +76,12 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     // DecimalNumberContext.............................................................................................
 
     @Override
+    public int decimalNumberDigitCount() {
+        return this.decimalNumberContext()
+            .decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
         return MathContext.UNLIMITED;
     }

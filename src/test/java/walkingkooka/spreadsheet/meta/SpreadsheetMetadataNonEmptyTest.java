@@ -142,6 +142,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private final static int DEFAULT_YEAR = 1900;
 
+    private final static int DECIMAL_NUMBER_DIGIT_COUNT = DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT - 1;
+
     private final static Locale LOCALE = Locale.ENGLISH;
 
     private final static HasNow NOW = LocalDateTime::now;
@@ -1665,7 +1667,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             )
         );
         this.checkEquals(
-            "Metadata missing: locale, precision, roundingMode",
+            "Metadata missing: generalNumberFormatDigitCount, locale, precision, roundingMode",
             thrown.getMessage(),
             "message"
         );
@@ -1708,6 +1710,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
@@ -1744,6 +1747,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
@@ -1784,6 +1788,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
@@ -1820,7 +1825,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 )
         );
         this.checkEquals(
-            "Metadata missing: locale, roundingMode",
+            "Metadata missing: generalNumberFormatDigitCount, locale, roundingMode",
             thrown.getMessage(),
             "message"
         );
@@ -1839,7 +1844,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 )
         );
         this.checkEquals(
-            "Metadata missing: locale, precision",
+            "Metadata missing: generalNumberFormatDigitCount, locale, precision",
             thrown.getMessage(),
             "message"
         );
@@ -1852,6 +1857,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final ExpressionNumberContext context = SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS, DECIMAL_NUMBER_SYMBOLS)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind)
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
@@ -2326,6 +2332,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
             .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
+            .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, DECIMAL_NUMBER_DIGIT_COUNT)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
@@ -2365,6 +2372,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             ).set(
                 SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
                 EXPRESSION_NUMBER_KIND
+            ).set(
+                SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                DECIMAL_NUMBER_DIGIT_COUNT
             ).set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale

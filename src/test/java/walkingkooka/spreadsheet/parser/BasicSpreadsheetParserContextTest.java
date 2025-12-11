@@ -69,6 +69,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(
         EXPRESSION_NUMBER_KIND,
         DecimalNumberContexts.basic(
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             DecimalNumberSymbols.with(
                 NEGATIVE,
                 POSITIVE,
@@ -159,6 +160,11 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     // DecimalNumberContextDelegator....................................................................................
+
+    @Override
+    public int decimalNumberDigitCount() {
+        return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+    }
 
     @Override
     public MathContext mathContext() {

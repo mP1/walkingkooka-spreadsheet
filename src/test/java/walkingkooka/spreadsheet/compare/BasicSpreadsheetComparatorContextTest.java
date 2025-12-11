@@ -130,6 +130,11 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     );
 
     @Override
+    public int decimalNumberDigitCount() {
+        return CONVERTER_CONTEXT.decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
         return CONVERTER_CONTEXT.mathContext();
     }

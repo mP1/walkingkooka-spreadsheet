@@ -63,6 +63,11 @@ public final class BasicSpreadsheetFormatterProviderSamplesContextTest implement
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
+    public int decimalNumberDigitCount() {
+        return SPREADSHEET_FORMATTER_CONTEXT.decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
         return SPREADSHEET_FORMATTER_CONTEXT.mathContext();
     }

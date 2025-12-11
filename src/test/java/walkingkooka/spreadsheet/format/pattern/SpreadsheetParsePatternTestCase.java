@@ -823,6 +823,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
     }
 
     final DecimalNumberContext ARABIC_DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(
+        DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
         DecimalNumberSymbols.fromDecimalFormatSymbols(
             '+',
             new DecimalFormatSymbols(ARABIC_ZERO_DIGIT_LOCALE)

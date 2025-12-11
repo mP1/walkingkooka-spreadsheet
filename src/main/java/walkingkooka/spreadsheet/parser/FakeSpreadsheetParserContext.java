@@ -35,6 +35,11 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
     }
 
     @Override
+    public int decimalNumberDigitCount() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public char decimalSeparator() {
         throw new UnsupportedOperationException();
     }
