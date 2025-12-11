@@ -197,6 +197,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameIntegerDefaultYear.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimalNumberDigitCount</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Integer> DECIMAL_NUMBER_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>errorFormatter</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> ERROR_FORMATTER = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorError.instance());
@@ -276,11 +281,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>functions</code>
      */
     public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFunctions.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>generalNumberFormatDigitCount</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Integer> GENERAL_NUMBER_FORMAT_DIGIT_COUNT = registerConstant(SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>hideZeroValues</code>

@@ -142,6 +142,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDecimalNumberDigitCount(final int decimalNumberDigitCount) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitDecimalNumberSymbols(final DecimalNumberSymbols symbols) {
         throw new UnsupportedOperationException();
     }
@@ -228,11 +233,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitFunctions(final ExpressionFunctionAliasSet aliases) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitGeneralNumberFormatDigitCount(final int generalFormatDigitCount) {
         throw new UnsupportedOperationException();
     }
 

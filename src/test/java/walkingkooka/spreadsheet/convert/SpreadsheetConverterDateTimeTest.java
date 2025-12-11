@@ -986,7 +986,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
                 return SpreadsheetMetadata.EMPTY.set(
-                    SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                     DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
                 );
             }

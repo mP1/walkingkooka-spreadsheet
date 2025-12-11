@@ -223,7 +223,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             Optional.of(
                 DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
             ),
-            nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT)
+            nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT)
         );
         this.checkEquals(
             Optional.of(false),
@@ -917,7 +917,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-            "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, findConverter, generalNumberFormatDigitCount, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+            "Metadata missing: dateTimeOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, findConverter, locale, precision, roundingMode, twoDigitYear, valueSeparator",
             thrown.getMessage(),
             "message"
         );
@@ -966,7 +966,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             ConverterSelector.parse("simple")
         ).set(
-            SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
             DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
         ).set(
             SpreadsheetMetadataPropertyName.PRECISION,

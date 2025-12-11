@@ -235,7 +235,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitGeneralNumberFormatDigitCount(final int generalFormatDigitCount) {
+    protected void visitDecimalNumberDigitCount(final int decimalNumberDigitCount) {
         // nop
     }
 

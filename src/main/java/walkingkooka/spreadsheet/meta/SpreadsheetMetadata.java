@@ -689,7 +689,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
-        final Integer decimalNumberDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+        final Integer decimalNumberDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
         final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
         MathContext mathContext;
@@ -1219,7 +1219,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         final Integer characterWidth = missing.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
-        final Integer generalNumberFormatDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+        final Integer generalNumberFormatDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
 
         missing.reportIfMissing();
 
