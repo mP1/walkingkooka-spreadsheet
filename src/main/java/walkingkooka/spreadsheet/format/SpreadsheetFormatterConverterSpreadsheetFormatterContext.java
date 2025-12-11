@@ -33,12 +33,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextDelegator;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
@@ -48,8 +45,7 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
     ConverterContextDelegator,
-    JsonNodeMarshallContextDelegator,
-    JsonNodeUnmarshallContextDelegator,
+    JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator {
 
     static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
@@ -135,22 +131,10 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         return this.context.mathContext();
     }
 
-    // JsonNodeMarshallContextDelegator.................................................................................
+    // JsonNodeMarshallUnmarshallContextDelegator.......................................................................
 
     @Override
-    public JsonNodeMarshallContext jsonNodeMarshallContext() {
-        return this.context;
-    }
-
-    // JsonNodeUnmarshallContextDelegator...............................................................................
-
-    @Override
-    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
-        return this.context;
-    }
-
-    @Override
-    public JsonNodeContext jsonNodeContext() {
+    public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
         return this.context;
     }
 
