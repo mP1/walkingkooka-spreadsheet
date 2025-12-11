@@ -64,7 +64,6 @@ import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -1834,7 +1833,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         public SpreadsheetMetadata spreadsheetMetadata() {
             return SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
+                DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
             );
         }
     };
@@ -3284,7 +3283,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 public SpreadsheetMetadata spreadsheetMetadata() {
                     return SpreadsheetMetadata.EMPTY.set(
                         SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                        SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
+                        DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
                     );
                 }
 

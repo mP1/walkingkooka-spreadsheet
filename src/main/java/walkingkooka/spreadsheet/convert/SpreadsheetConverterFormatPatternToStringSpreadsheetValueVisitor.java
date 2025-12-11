@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.Color;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -229,7 +229,7 @@ final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor ext
                         this::numberToColor,
                         this::nameToColor,
                         1,
-                        SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT, // default general-format-number-digit-count
+                        DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT, // default general-format-number-digit-count
                         SpreadsheetFormatters.fake(), // should never be called
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();

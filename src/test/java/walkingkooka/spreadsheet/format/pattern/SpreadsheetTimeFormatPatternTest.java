@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -535,7 +536,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
 
             @Override
             public int generalFormatNumberDigitCount() {
-                return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override

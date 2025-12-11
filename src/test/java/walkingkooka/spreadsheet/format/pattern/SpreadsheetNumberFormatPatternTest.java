@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -654,7 +655,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
 
             @Override
             public int generalFormatNumberDigitCount() {
-                return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override

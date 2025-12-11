@@ -30,6 +30,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
@@ -671,7 +672,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public int generalFormatNumberDigitCount() {
-                    return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
@@ -885,7 +886,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public int generalFormatNumberDigitCount() {
-                    return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
@@ -1180,7 +1181,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public int generalFormatNumberDigitCount() {
-                    return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
@@ -1231,7 +1232,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public int generalFormatNumberDigitCount() {
-                    return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
@@ -1295,7 +1296,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public int generalFormatNumberDigitCount() {
-                    return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
@@ -2081,7 +2082,7 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
 
                 @Override
                 public int generalFormatNumberDigitCount() {
-                    return SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT;
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override

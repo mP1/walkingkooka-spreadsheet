@@ -51,7 +51,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatZeroBigDecimal() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.zero(),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "0"
         );
     }
@@ -60,7 +60,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatZeroDouble() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.zero(),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "0"
         );
     }
@@ -69,7 +69,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatSmallNumberBigDecimal() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(1),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "1"
         );
     }
@@ -78,7 +78,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatSmallNumberDouble() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(1),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "1"
         );
     }
@@ -87,7 +87,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatSmallNumberBigDecimal2() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(1.5),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "1!5"
         );
     }
@@ -96,7 +96,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatSmallNumberDouble2() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(1.5),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "1!5"
         );
     }
@@ -105,7 +105,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatSmallNumberBigDecimal3() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(-12.5),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "N12!5"
         );
     }
@@ -114,7 +114,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatSmallNumberDouble3() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(-12.5),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "N12!5"
         );
     }
@@ -171,7 +171,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberBigDecimal() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(1E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "1!X12"
         );
     }
@@ -180,7 +180,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberDouble() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(1E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "1!X12"
         );
     }
@@ -189,7 +189,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberBigDecimal2() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(2.3E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "2!3X12"
         );
     }
@@ -198,7 +198,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberDouble2() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(2.3E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "2!3X12"
         );
     }
@@ -207,7 +207,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberBigDecimal3() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(-1.2E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "N1!2X12"
         );
     }
@@ -216,7 +216,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberDouble3() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(-1.2E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "N1!2X12"
         );
     }
@@ -225,7 +225,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberBigDecimal4() {
         this.formatAndCheck2(
             ExpressionNumberKind.BIG_DECIMAL.create(-1.2345678901E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "N1!23456789X12"
         );
     }
@@ -234,7 +234,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
     public void testFormatScientificNumberDouble4() {
         this.formatAndCheck2(
             ExpressionNumberKind.DOUBLE.create(-1.2345678901E12),
-            SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT,
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             "N1!23456789X12"
         );
     }
