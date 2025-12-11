@@ -965,21 +965,6 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testEvaluateFunctionWithNullFunctionNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testEvaluateFunctionWithNullParametersFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testReferenceWithNullReferenceFails() {
-        throw new UnsupportedOperationException();
-    }
-
     // HasConverter.....................................................................................................
 
     @Test
@@ -1016,62 +1001,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     );
 
     @Override
-    public void testExpressionFunctionWithNullFunctionNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testIsPureNullNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testLoadLabelWithNullLabelFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testEnvironmentValueWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testRemoveEnvironmentValueWithNullNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testLoadFormFieldValueWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveFormFieldValuesWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testSetEnvironmentContextWithEqualEnvironmentContext() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetLocaleWithDifferent() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testUserNotNull() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testValidateFormWithNullFormFieldsFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testValidatorContextWithNullReferenceFails() {
         throw new UnsupportedOperationException();
     }
 
