@@ -86,7 +86,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     @Override
     public int generalFormatNumberDigitCount() {
         return this.context.spreadsheetMetadata()
-            .getOrFail(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
+            .getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
     }
 
     @Override

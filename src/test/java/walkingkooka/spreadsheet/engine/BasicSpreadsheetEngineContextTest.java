@@ -2072,6 +2072,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "      \"Sat.\"\n" +
                     "    ]\n" +
                     "  },\n" +
+                    "  \"decimalNumberDigitCount\": 9,\n" +
                     "  \"decimalNumberSymbols\": {\n" +
                     "    \"negativeSign\": \"!\",\n" +
                     "    \"positiveSign\": \"@\",\n" +
@@ -2100,7 +2101,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                     "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                     "  \"functions\": \"@\",\n" +
-                    "  \"generalNumberFormatDigitCount\": 9,\n" +
                     "  \"hideZeroValues\": false,\n" +
                     "  \"importers\": \"collection, empty, json\",\n" +
                     "  \"locale\": \"en-AU\",\n" +
@@ -2297,6 +2297,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "      \"Sat.\"\n" +
                 "    ]\n" +
                 "  },\n" +
+                "  \"decimalNumberDigitCount\": 9,\n" +
                 "  \"decimalNumberSymbols\": {\n" +
                 "    \"negativeSign\": \"!\",\n" +
                 "    \"positiveSign\": \"@\",\n" +
@@ -2325,7 +2326,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 "  \"formulaConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
-                "  \"generalNumberFormatDigitCount\": 9,\n" +
                 "  \"hideZeroValues\": false,\n" +
                 "  \"importers\": \"collection, empty, json\",\n" +
                 "  \"locale\": \"en-AU\",\n" +

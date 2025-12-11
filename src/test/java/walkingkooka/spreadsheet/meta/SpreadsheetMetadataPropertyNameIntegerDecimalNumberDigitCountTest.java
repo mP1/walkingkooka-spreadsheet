@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCountTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount> {
+public final class SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCountTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount> {
 
     @Test
     public void testNegativeValueFails() {
         this.checkValueFails(
             -1,
-            "Metadata generalNumberFormatDigitCount=-1, < 0"
+            "Metadata decimalNumberDigitCount=-1, < 0"
         );
     }
 
@@ -42,20 +42,20 @@ public final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigi
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance(),
-            "generalNumberFormatDigitCount"
+            SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount.instance(),
+            "decimalNumberDigitCount"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount createName() {
-        return SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.instance();
+    SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount createName() {
+        return SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount> type() {
-        return SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount.class;
+    public Class<SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount> type() {
+        return SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount.class;
     }
 }

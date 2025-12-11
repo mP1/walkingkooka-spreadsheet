@@ -17,20 +17,20 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount instance() {
-        return new SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount();
+    static SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount instance() {
+        return new SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount() {
-        super("generalNumberFormatDigitCount");
+    private SpreadsheetMetadataPropertyNameIntegerDecimalNumberDigitCount() {
+        super("decimalNumberDigitCount");
     }
 
     @Override
@@ -45,6 +45,6 @@ final class SpreadsheetMetadataPropertyNameIntegerGeneralNumberFormatDigitCount 
     @Override
     void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitGeneralNumberFormatDigitCount(value);
+        visitor.visitDecimalNumberDigitCount(value);
     }
 }

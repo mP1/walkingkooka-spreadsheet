@@ -1832,7 +1832,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
             return SpreadsheetMetadata.EMPTY.set(
-                SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                 DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
             );
         }
@@ -3282,7 +3282,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 @Override
                 public SpreadsheetMetadata spreadsheetMetadata() {
                     return SpreadsheetMetadata.EMPTY.set(
-                        SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
+                        SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
                         DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
                     );
                 }

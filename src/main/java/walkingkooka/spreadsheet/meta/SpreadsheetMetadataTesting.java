@@ -232,6 +232,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
             DATE_TIME_SYMBOLS
         ).set(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
+            8
+        ).set(
             SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
             DECIMAL_NUMBER_SYMBOLS
         ).set(
@@ -280,9 +283,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
         ).set(
             SpreadsheetMetadataPropertyName.FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-        ).set(
-            SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-            8
         ).set(
             SpreadsheetMetadataPropertyName.IMPORTERS,
             SPREADSHEET_IMPORTER_PROVIDER.spreadsheetImporterInfos()

@@ -297,6 +297,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDecimalNumberDigitCount() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDecimalNumberDigitCount(final int decimalNumberDigitCount) {
+                this.visited = decimalNumberDigitCount;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, 123);
+    }
+
+    @Test
     public void testVisitDecimalNumberSymbols() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -511,16 +521,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             SpreadsheetMetadataPropertyName.FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet("abs")
         );
-    }
-
-    @Test
-    public void testVisitGeneralNumberFormatDigitCount() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitGeneralNumberFormatDigitCount(final int i) {
-                this.visited = i;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, 123);
     }
 
     @Test

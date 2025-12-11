@@ -210,60 +210,60 @@ public class J2clTest {
     private static SpreadsheetMetadata metadata() {
         if (null == metadata) {
             SpreadsheetMetadata m = SpreadsheetMetadata.EMPTY
-                    .set(
-                            SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                            AuditInfo.with(
-                                    EmailAddress.parse("creator@example.com"),
-                                    LocalDateTime.of(1999, 12, 31, 12, 58, 59),
-                                    EmailAddress.parse("modified@example.com"),
-                                    LocalDateTime.of(2000, 1, 2, 3, 4, 5)
-                            )
-                    ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
-                    .set(
-                            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-                            DecimalNumberSymbols.with(
-                                    '-',
-                                    '+',
-                                    '0',
-                                    "$AUD",
-                                    '.',
-                                    "E",
-                                    ',',
-                                    "Infinity!",
-                                    ':',
-                                    "Nan!",
-                                    '%',
-                                    '^'
-                            )
-                    ).set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
-                    .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-                    .set(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER, ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, net)"))
-                    .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, template, net)"))
-                    .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
-                    .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
-                    .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+                .set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AuditInfo.with(
+                        EmailAddress.parse("creator@example.com"),
+                        LocalDateTime.of(1999, 12, 31, 12, 58, 59),
+                        EmailAddress.parse("modified@example.com"),
+                        LocalDateTime.of(2000, 1, 2, 3, 4, 5)
+                    )
+                ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
+                .set(
+                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
+                    DecimalNumberSymbols.with(
+                        '-',
+                        '+',
+                        '0',
+                        "$AUD",
+                        '.',
+                        "E",
+                        ',',
+                        "Infinity!",
+                        ':',
+                        "Nan!",
+                        '%',
+                        '^'
+                    )
+                ).set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYYDDMMYYYY").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1900)
+                .set(SpreadsheetMetadataPropertyName.ERROR_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("\"Error\" @").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
+                .set(SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER, ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, net)"))
+                .set(SpreadsheetMetadataPropertyName.FORMULA_CONVERTER, ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, template, net)"))
+                .set(SpreadsheetMetadataPropertyName.FROZEN_COLUMNS, SpreadsheetSelection.parseColumnRange("A:B"))
+                .set(SpreadsheetMetadataPropertyName.FROZEN_ROWS, SpreadsheetSelection.parseRowRange("1:2"))
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
 
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT, DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT)
-                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
-                    .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR)
-                    .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123))
-                    .set(
-                            SpreadsheetMetadataPropertyName.STYLE,
-                            TextStyle.EMPTY.set(TextStylePropertyName.WIDTH, Length.pixel(50.0))
-                                    .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0)))
-                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector())
-                    .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mmhh:mm:ss.000").spreadsheetParserSelector())
-                    .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
-                    .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMATTER, SpreadsheetPattern.parseNumberFormatPattern("#0.0").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 123)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR)
+                .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123))
+                .set(
+                    SpreadsheetMetadataPropertyName.STYLE,
+                    TextStyle.EMPTY.set(TextStylePropertyName.WIDTH, Length.pixel(50.0))
+                        .set(TextStylePropertyName.HEIGHT, Length.pixel(50.0)))
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@@").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMATTER, SpreadsheetPattern.parseTimeFormatPattern("hh:mm").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mmhh:mm:ss.000").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
+                .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',');
 
             for (int i = SpreadsheetColors.MIN; i < SpreadsheetColors.MAX + 1; i++) {
                 m = m.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
