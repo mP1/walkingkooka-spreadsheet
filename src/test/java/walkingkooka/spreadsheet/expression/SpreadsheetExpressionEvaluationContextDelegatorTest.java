@@ -129,6 +129,12 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     // DecimalNumberContext.............................................................................................
 
     @Override
+    public int decimalNumberDigitCount() {
+        return new TestSpreadsheetExpressionEvaluationContextDelegator()
+            .decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
         return new TestSpreadsheetExpressionEvaluationContextDelegator()
             .mathContext();

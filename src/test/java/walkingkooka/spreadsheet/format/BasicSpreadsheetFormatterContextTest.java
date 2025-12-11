@@ -154,6 +154,11 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         }
 
         @Override
+        public int decimalNumberDigitCount() {
+            return DEFAULT_NUMBER_DIGIT_COUNT;
+        }
+
+        @Override
         public char decimalSeparator() {
             return '!';
         }
@@ -572,6 +577,11 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Override
     public String currencySymbol() {
         return DECIMAL_NUMBER_CONTEXT.currencySymbol();
+    }
+
+    @Override
+    public int decimalNumberDigitCount() {
+        return DECIMAL_NUMBER_CONTEXT.decimalNumberDigitCount();
     }
 
     @Override

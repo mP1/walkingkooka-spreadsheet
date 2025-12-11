@@ -255,6 +255,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
             this.createParser("0"),
             this.createContext(
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     decimalNumberSymbols,
                     ARABIC_ZERO_DIGIT_LOCALE,
                     MathContext.DECIMAL32
@@ -294,6 +295,7 @@ public final class SpreadsheetNumberParsePatternSpreadsheetParserTest extends Sp
             this.createContext(
                 this.createContext(
                     DecimalNumberContexts.basic(
+                        DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                         decimalNumberSymbols,
                         ARABIC_ZERO_DIGIT_LOCALE,
                         MathContext.DECIMAL32

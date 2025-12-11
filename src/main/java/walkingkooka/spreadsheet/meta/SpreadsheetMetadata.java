@@ -689,6 +689,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
+        final Integer decimalNumberDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT);
         final Locale locale = missing.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
         MathContext mathContext;
@@ -731,6 +732,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         return DecimalNumberContexts.basic(
+            decimalNumberDigitCount,
             decimalNumberSymbols,
             locale,
             mathContext

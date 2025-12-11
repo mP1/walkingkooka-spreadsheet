@@ -52,6 +52,11 @@ public final class SpreadsheetParserContextDelegatorTest implements SpreadsheetP
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
+    public int decimalNumberDigitCount() {
+        return EXPRESSION_NUMBER_CONTEXT.decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
         return EXPRESSION_NUMBER_CONTEXT.mathContext();
     }

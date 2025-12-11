@@ -28,6 +28,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -137,6 +138,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                             environmentContext
                         ),
                         DecimalNumberContexts.basic(
+                            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                             localeContext.decimalNumberSymbolsForLocale(locale)
                                 .orElseThrow(() -> new IllegalArgumentException("DecimalNumberSymbols missing for " + locale)),
                             locale,

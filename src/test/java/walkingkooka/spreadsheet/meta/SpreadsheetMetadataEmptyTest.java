@@ -141,7 +141,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             )
         );
         this.checkEquals(
-            "Metadata missing: expressionNumberKind, locale, precision, roundingMode",
+            "Metadata missing: expressionNumberKind, generalNumberFormatDigitCount, locale, precision, roundingMode",
             thrown.getMessage(),
             "message"
         );
@@ -210,7 +210,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             )
         );
         this.checkEquals(
-            "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+            "Metadata missing: defaultYear, expressionNumberKind, generalNumberFormatDigitCount, locale, precision, roundingMode, twoDigitYear, valueSeparator",
             thrown.getMessage(),
             "message"
         );
@@ -228,7 +228,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 )
         );
         this.checkEquals(
-            "Metadata missing: defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+            "Metadata missing: defaultYear, expressionNumberKind, generalNumberFormatDigitCount, locale, precision, roundingMode, twoDigitYear, valueSeparator",
             thrown.getMessage(),
             "message"
         );
@@ -256,7 +256,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             )
         );
         this.checkEquals(
-            "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter, valueSeparator",
+            "Metadata missing: dateTimeOffset, defaultYear, expressionNumberKind, generalNumberFormatDigitCount, locale, precision, roundingMode, twoDigitYear, validationConverter, valueSeparator",
             thrown.getMessage(),
             "message"
         );

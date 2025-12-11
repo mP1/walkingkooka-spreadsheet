@@ -207,8 +207,15 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     }
 
     @Override
+    public int decimalNumberDigitCount() {
+        return this.decimalNumberContext()
+            .decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
-        return this.decimalNumberContext().mathContext();
+        return this.decimalNumberContext()
+            .mathContext();
     }
 
     // DecimalNumberContextDelegator....................................................................................

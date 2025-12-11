@@ -125,6 +125,12 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     @Override
+    public int decimalNumberDigitCount() {
+        return this.decimalNumberContext()
+            .decimalNumberDigitCount();
+    }
+
+    @Override
     public char decimalSeparator() {
         return this.decimalNumberContext().decimalSeparator();
     }
@@ -203,6 +209,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             DecimalNumberSymbols.fromDecimalFormatSymbols(
                 '+',
                 DecimalFormatSymbols.getInstance(LOCALE)

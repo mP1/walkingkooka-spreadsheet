@@ -711,7 +711,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         );
         checkMessage(
             thrown,
-            "Metadata missing: locale, precision, roundingMode"
+            "Metadata missing: generalNumberFormatDigitCount, locale, precision, roundingMode"
         );
     }
 

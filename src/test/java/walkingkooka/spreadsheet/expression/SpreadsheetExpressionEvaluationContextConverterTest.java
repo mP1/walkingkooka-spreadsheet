@@ -628,6 +628,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
     // DecimalNumberContext.............................................................................................
 
     @Override
+    public int decimalNumberDigitCount() {
+        return DECIMAL_NUMBER_CONTEXT.decimalNumberDigitCount();
+    }
+
+    @Override
     public MathContext mathContext() {
         return DECIMAL_NUMBER_CONTEXT.mathContext();
     }

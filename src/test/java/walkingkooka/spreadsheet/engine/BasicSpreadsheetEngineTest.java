@@ -27007,6 +27007,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         ).orElse(dateTimeContext),
                     cell.decimalNumberSymbols()
                         .map(s -> DecimalNumberContexts.basic(
+                                DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                                 s,
                                 decimalNumberContext.locale(),
                                 decimalNumberContext.mathContext()

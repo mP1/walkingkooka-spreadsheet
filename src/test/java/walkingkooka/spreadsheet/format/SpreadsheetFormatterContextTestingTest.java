@@ -54,6 +54,11 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
     }
 
     @Override
+    public int decimalNumberDigitCount() {
+        return SPREADSHEET_FORMATTER_CONTEXT.decimalNumberDigitCount();
+    }
+
+    @Override
     public char decimalSeparator() {
         return DECIMAL_NUMBER_SYMBOLS.decimalSeparator();
     }
