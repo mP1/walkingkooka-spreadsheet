@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ConstantsTesting;
@@ -155,6 +156,87 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         this.checkEquals(
             Optional.empty(),
             SpreadsheetMetadataPropertyName.tryWith("???")
+        );
+    }
+
+    // fromEnvironmentValueName.........................................................................................
+
+    @Test
+    public void testFromEnvironmentValueNameWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadataPropertyName.fromEnvironmentValueName(null)
+        );
+    }
+
+    @Test
+    public void testFromEnvironmentValueNameWithUnknownFails() {
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> SpreadsheetMetadataPropertyName.fromEnvironmentValueName(
+                EnvironmentValueName.with("Unknown123")
+            )
+        );
+
+        this.checkEquals(
+            "Unknown metadata property name \"Unknown123\"",
+            thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testFromEnvironmentValueNameWithExpressionNumberKindAllLowerCase() {
+        this.fromEnvironmentValueNameAndCheck(
+            EnvironmentValueName.with("expressionnumberkind"),
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND
+        );
+    }
+
+    @Test
+    public void testFromEnvironmentValueNameWithExpressionNumberKindAllUpperCase() {
+        this.fromEnvironmentValueNameAndCheck(
+            EnvironmentValueName.with("EXPRESSIONNUMBERKIND"),
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND
+        );
+    }
+
+    @Test
+    public void testFromEnvironmentValueNameWithDecimalNumberSymbols() {
+        this.fromEnvironmentValueNameAndCheck(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS
+        );
+    }
+
+    @Test
+    public void testFromEnvironmentValueNameWithLocale() {
+        this.fromEnvironmentValueNameAndCheck(
+            EnvironmentValueName.LOCALE,
+            SpreadsheetMetadataPropertyName.LOCALE
+        );
+    }
+
+    @Test
+    public void testFromEnvironmentValueNameWithRoundingMode() {
+        System.out.println(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        this.fromEnvironmentValueNameAndCheck(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE
+        );
+    }
+
+    private <T> void fromEnvironmentValueNameAndCheck(final SpreadsheetMetadataPropertyName<T> name) {
+        this.fromEnvironmentValueNameAndCheck(
+            EnvironmentValueName.with(
+                name.value()
+            ),
+            name
+        );
+    }
+
+    private <T> void fromEnvironmentValueNameAndCheck(final EnvironmentValueName<T> name,
+                                                      final SpreadsheetMetadataPropertyName<T> expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
         );
     }
 

@@ -97,10 +97,22 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     static final Map<String, SpreadsheetMetadataPropertyName<?>> CONSTANTS = Maps.sorted(SpreadsheetMetadataPropertyName.CASE_SENSITIVITY.comparator());
 
     /**
+     * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
+     */
+    private static final Map<String, SpreadsheetMetadataPropertyName<?>> ENVIRONMENT_VALUE_NAME_CONSTANTS = Maps.sorted();
+
+    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final SpreadsheetMetadataPropertyName<T> constant) {
-        SpreadsheetMetadataPropertyName.CONSTANTS.put(constant.name, constant);
+        SpreadsheetMetadataPropertyName.CONSTANTS.put(
+            constant.name,
+            constant
+        );
+        SpreadsheetMetadataPropertyName.ENVIRONMENT_VALUE_NAME_CONSTANTS.put(
+            constant.name.toLowerCase(),
+            constant
+        );
         return constant;
     }
 
@@ -781,6 +793,21 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
         }
 
         return converterSelector;
+    }
+
+    /**
+     * Returns the matching {@link SpreadsheetMetadataPropertyName} given an {@link EnvironmentValueName}.
+     */
+    public static <T> SpreadsheetMetadataPropertyName<T> fromEnvironmentValueName(final EnvironmentValueName<T> name) {
+        Objects.requireNonNull(name, "name");
+
+        final String nameString = name.value();
+        final SpreadsheetMetadataPropertyName<?> spreadsheetMetadataPropertyName = ENVIRONMENT_VALUE_NAME_CONSTANTS.get(nameString.toLowerCase());
+        if(null == spreadsheetMetadataPropertyName) {
+            throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(nameString));
+        }
+
+        return Cast.to(spreadsheetMetadataPropertyName);
     }
 
     // toEnvironmentValueName...........................................................................................
