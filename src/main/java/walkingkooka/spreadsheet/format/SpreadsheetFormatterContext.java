@@ -67,11 +67,6 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     }
 
     /**
-     * A useful default number of digits constant
-     */
-    int DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT = 9;
-
-    /**
      * Returns the number of digits when formatting a number.
      */
     int generalFormatNumberDigitCount();

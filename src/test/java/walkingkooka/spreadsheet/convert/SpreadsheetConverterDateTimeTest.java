@@ -23,7 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.ShortCircuitingConverter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -987,7 +987,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
             public SpreadsheetMetadata spreadsheetMetadata() {
                 return SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                    SpreadsheetFormatterContext.DEFAULT_GENERAL_FORMAT_NUMBER_DIGIT_COUNT
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
                 );
             }
         };
