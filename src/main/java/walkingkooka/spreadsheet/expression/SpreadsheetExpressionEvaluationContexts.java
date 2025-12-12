@@ -19,10 +19,14 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -110,6 +114,23 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
             spreadsheetLabelNameResolver,
             spreadsheetContext,
             terminalContext
+        );
+    }
+
+    /**
+     * {@see SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext}
+     */
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final LocaleContext localeContext,
+                                                                                       final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                       final TerminalContext terminalContext,
+                                                                                       final SpreadsheetProvider spreadsheetProvider,
+                                                                                       final ProviderContext providerContext) {
+        return SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.with(
+            localeContext,
+            spreadsheetEnvironmentContext,
+            terminalContext,
+            spreadsheetProvider,
+            providerContext
         );
     }
 
