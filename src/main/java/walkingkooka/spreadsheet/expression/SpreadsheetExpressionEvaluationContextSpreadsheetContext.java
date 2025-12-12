@@ -162,47 +162,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     private final Optional<SpreadsheetCell> cell;
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
-        return this.spreadsheetExpressionReferenceLoader.loadCell(
-            cell,
-            this
-        );
-    }
-
-    @Override
-    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
-        return this.spreadsheetExpressionReferenceLoader.loadCellRange(
-            range,
-            this
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-        return this.spreadsheetExpressionReferenceLoader.loadLabel(labelName);
-    }
-
-    final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader;
-
-    @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
-        Objects.requireNonNull(expression, "expression");
-
-        final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
-            .spreadsheetParserContext(
-                this.cell,
-                this, // LocaleContext
-                this // now
-            );
-
-        return SpreadsheetFormulaParsers.expression()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .parse(expression, parserContext)
-            .get()
-            .cast(SpreadsheetFormulaParserToken.class);
-    }
-
-    @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.spreadsheetContext.spreadsheetMetadata();
     }
@@ -246,44 +205,31 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     private final SpreadsheetMetadataMode mode;
 
     @Override
-    public LocaleContext localeContext() {
-        return this.spreadsheetContext; // short circuit SpreadsheetConverterContextDelegator
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
+        return this.spreadsheetExpressionReferenceLoader.loadCell(
+            cell,
+            this
+        );
     }
-
-    /**
-     * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever the {@link SpreadsheetMetadata} changes.
-     */
-    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
-        if (null == this.expressionFunctionProvider) {
-            this.expressionFunctionProvider = this.spreadsheetMetadata()
-                    .expressionFunctionProvider(
-                this.mode.function(),
-                this.spreadsheetContext // SpreadsheetProvider
-            );
-        }
-        return this.expressionFunctionProvider;
-    }
-
-    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     @Override
-    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
-        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+    public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
+        return this.spreadsheetExpressionReferenceLoader.loadCellRange(
+            range,
+            this
+        );
+    }
 
-        return this.spreadsheetMetadata()
-            .spreadsheetFormatterContext(
-                cell,
-                (final Optional<Object> v) -> this.setMode(
-                    SpreadsheetMetadataMode.FORMATTING
-                ).addLocalVariable(
-                    SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
-                    v
-                ),
-                this.spreadsheetLabelNameResolver,
-                spreadsheetContext, // LocaleContext
-                spreadsheetContext, // SpreadsheetProvider
-                spreadsheetContext.providerContext() // ProviderContext
-            );
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
+        return this.spreadsheetExpressionReferenceLoader.loadLabel(labelName);
+    }
+
+    final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader;
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.spreadsheetContext; // short circuit SpreadsheetConverterContextDelegator
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................
@@ -324,129 +270,58 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
      */
     private SpreadsheetConverterContext spreadsheetConverterContext;
 
-    // EnvironmentContext...............................................................................................
-
     @Override
-    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
-        return this.setSpreadsheetContext(
-            this.spreadsheetContext.setEnvironmentContext(
-                this.spreadsheetContext.cloneEnvironment()
-            )
-        );
-    }
+    public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
+        Objects.requireNonNull(expression, "expression");
 
-    @Override
-    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.setSpreadsheetContext(
-            this.spreadsheetContext.setEnvironmentContext(environmentContext)
-        );
-    }
-
-    private SpreadsheetExpressionEvaluationContext setSpreadsheetContext(final SpreadsheetContext spreadsheetContext) {
-        final SpreadsheetContext before = this.spreadsheetContext;;
-
-        return before == spreadsheetContext ?
-            this :
-            new SpreadsheetExpressionEvaluationContextSpreadsheetContext(
-                this.mode,
+        final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
+            .spreadsheetParserContext(
                 this.cell,
-                this.spreadsheetExpressionReferenceLoader,
+                this, // LocaleContext
+                this // now
+            );
+
+        return SpreadsheetFormulaParsers.expression()
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(expression, parserContext)
+            .get()
+            .cast(SpreadsheetFormulaParserToken.class);
+    }
+
+    /**
+     * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever the {@link SpreadsheetMetadata} changes.
+     */
+    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
+        if (null == this.expressionFunctionProvider) {
+            this.expressionFunctionProvider = this.spreadsheetMetadata()
+                .expressionFunctionProvider(
+                    this.mode.function(),
+                    this.spreadsheetContext // SpreadsheetProvider
+                );
+        }
+        return this.expressionFunctionProvider;
+    }
+
+    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
+
+    @Override
+    public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
+        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+
+        return this.spreadsheetMetadata()
+            .spreadsheetFormatterContext(
+                cell,
+                (final Optional<Object> v) -> this.setMode(
+                    SpreadsheetMetadataMode.FORMATTING
+                ).addLocalVariable(
+                    SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
+                    v
+                ),
                 this.spreadsheetLabelNameResolver,
-                null, // spreadsheetConverterContext  clear force recreate!
-                this.expressionFunctionProvider,
-                this.jsonNodeMarshallContextObjectPostProcessor,
-                this.jsonNodeUnmarshallContextPreProcessor,
-                this.formHandlerContext,
-                spreadsheetContext,
-                this.terminalContext
+                spreadsheetContext, // LocaleContext
+                spreadsheetContext, // SpreadsheetProvider
+                spreadsheetContext.providerContext() // ProviderContext
             );
-    }
-
-    @Override
-    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                          final T value) {
-        this.environmentContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-        return this;
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.environmentContext()
-            .removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    public LineEnding lineEnding() {
-        return this.environmentContext()
-            .lineEnding();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext()
-            .setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    public Locale locale() {
-        return this.environmentContext()
-            .locale();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.environmentContext()
-            .setLocale(locale);
-        return this;
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.environmentContext()
-            .now(); // inherit unrelated defaults
-    }
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return this.environmentContext()
-            .serverUrl();
-    }
-
-    @Override
-    public SpreadsheetId spreadsheetId() {
-        return this.environmentContext()
-            .spreadsheetId();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.environmentContext()
-            .setSpreadsheetId(spreadsheetId);
-        return this;
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        return this.environmentContext()
-            .user();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.environmentContext()
-            .setUser(user);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext environmentContext() {
-        return this.spreadsheetContext;
     }
 
     // ExpressionEvaluationContext......................................................................................
@@ -667,6 +542,131 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     public Optional<Object> validationValue() {
         return this.reference(VALIDATION_VALUE)
             .orElse(Optional.empty());
+    }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        return this.setSpreadsheetContext(
+            this.spreadsheetContext.setEnvironmentContext(
+                this.spreadsheetContext.cloneEnvironment()
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        return this.setSpreadsheetContext(
+            this.spreadsheetContext.setEnvironmentContext(environmentContext)
+        );
+    }
+
+    private SpreadsheetExpressionEvaluationContext setSpreadsheetContext(final SpreadsheetContext spreadsheetContext) {
+        final SpreadsheetContext before = this.spreadsheetContext;;
+
+        return before == spreadsheetContext ?
+            this :
+            new SpreadsheetExpressionEvaluationContextSpreadsheetContext(
+                this.mode,
+                this.cell,
+                this.spreadsheetExpressionReferenceLoader,
+                this.spreadsheetLabelNameResolver,
+                null, // spreadsheetConverterContext  clear force recreate!
+                this.expressionFunctionProvider,
+                this.jsonNodeMarshallContextObjectPostProcessor,
+                this.jsonNodeUnmarshallContextPreProcessor,
+                this.formHandlerContext,
+                spreadsheetContext,
+                this.terminalContext
+            );
+    }
+
+    @Override
+    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                                          final T value) {
+        this.environmentContext()
+            .setEnvironmentValue(
+                name,
+                value
+            );
+        return this;
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.environmentContext()
+            .removeEnvironmentValue(name);
+        return this;
+    }
+
+    @Override
+    public LineEnding lineEnding() {
+        return this.environmentContext()
+            .lineEnding();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        this.environmentContext()
+            .setLineEnding(lineEnding);
+        return this;
+    }
+
+    @Override
+    public Locale locale() {
+        return this.environmentContext()
+            .locale();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        this.environmentContext()
+            .setLocale(locale);
+        return this;
+    }
+
+    @Override
+    public LocalDateTime now() {
+        return this.environmentContext()
+            .now(); // inherit unrelated defaults
+    }
+
+    @Override
+    public AbsoluteUrl serverUrl() {
+        return this.environmentContext()
+            .serverUrl();
+    }
+
+    @Override
+    public SpreadsheetId spreadsheetId() {
+        return this.environmentContext()
+            .spreadsheetId();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        this.environmentContext()
+            .setSpreadsheetId(spreadsheetId);
+        return this;
+    }
+
+    @Override
+    public Optional<EmailAddress> user() {
+        return this.environmentContext()
+            .user();
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        this.environmentContext()
+            .setUser(user);
+        return this;
+    }
+
+    @Override
+    public SpreadsheetEnvironmentContext environmentContext() {
+        return this.spreadsheetContext;
     }
 
     // Object...........................................................................................................
