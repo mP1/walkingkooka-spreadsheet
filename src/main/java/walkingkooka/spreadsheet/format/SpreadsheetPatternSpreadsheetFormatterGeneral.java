@@ -111,8 +111,8 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
 
     private boolean isScientificFormatBigDecimal(final BigDecimal number,
                                                  final SpreadsheetFormatterContext context) {
-        final int digitCount = context.generalFormatNumberDigitCount();
-        final Map<Integer, BigDecimal> map = this.generalNumberFormatDigitCountToMaxBigDouble;
+        final int digitCount = context.decimalNumberDigitCount();
+        final Map<Integer, BigDecimal> map = this.decimalNumberDigitCountToMaxBigDouble;
 
         BigDecimal value = map.get(digitCount);
         if (null == value) {
@@ -128,11 +128,11 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
             .compareTo(value) >= 0;
     }
 
-    private final Map<Integer, BigDecimal> generalNumberFormatDigitCountToMaxBigDouble = Maps.concurrent();
+    private final Map<Integer, BigDecimal> decimalNumberDigitCountToMaxBigDouble = Maps.concurrent();
 
     private boolean isScientificFormatDouble(final double number,
                                              final SpreadsheetFormatterContext context) {
-        final int digitCount = context.generalFormatNumberDigitCount();
+        final int digitCount = context.decimalNumberDigitCount();
         final Map<Integer, Double> map = this.generalNumberFormatDigitCountToMaxDouble;
         Double value = map.get(digitCount);
         if (null == value) {
@@ -153,9 +153,9 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
      * The number format pattern for large numbers that should be formatted in scientific format.
      */
     private SpreadsheetPatternSpreadsheetFormatter scientificFormatter(final SpreadsheetFormatterContext context) {
-        final int digitCount = context.generalFormatNumberDigitCount();
+        final int digitCount = context.decimalNumberDigitCount();
 
-        final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = this.generalNumberFormatDigitCountToScientificFormatter;
+        final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = this.decimalNumberDigitCountToScientificFormatter;
 
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);
         if (null == formatter) {
@@ -173,11 +173,11 @@ final class SpreadsheetPatternSpreadsheetFormatterGeneral implements Spreadsheet
         return formatter;
     }
 
-    private final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> generalNumberFormatDigitCountToScientificFormatter = Maps.concurrent();
+    private final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> decimalNumberDigitCountToScientificFormatter = Maps.concurrent();
 
 
     private SpreadsheetPatternSpreadsheetFormatter nonScientificFormatter(final SpreadsheetFormatterContext context) {
-        final int digitCount = context.generalFormatNumberDigitCount();
+        final int digitCount = context.decimalNumberDigitCount();
 
         final Map<Integer, SpreadsheetPatternSpreadsheetFormatter> map = this.generalNumberFormatDigitCountToNonScientificFormatter;
         SpreadsheetPatternSpreadsheetFormatter formatter = map.get(digitCount);

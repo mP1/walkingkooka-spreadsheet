@@ -109,8 +109,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         }
     };
 
-    private final int GENERAL_NUMBER_FORMAT_DIGIT_COUNT = 8;
-
     private final static SpreadsheetFormatter FORMATTER = new FakeSpreadsheetFormatter() {
 
         @Override
@@ -274,7 +272,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -293,7 +290,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 null,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -312,7 +308,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 null,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -331,7 +326,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 -1,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -349,45 +343,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 CELL,
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
-                0,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
-                FORMATTER,
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithInvalidGeneralFormatNumberDigitCountFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
-                CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
-                CELL_CHARACTER_WIDTH,
-                -1,
-                FORMATTER,
-                SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
-                CONVERTER_CONTEXT,
-                SPREADSHEET_FORMATTER_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithInvalidGeneralFormatNumberDigitCountFails2() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> BasicSpreadsheetFormatterContext.with(
-                CELL,
-                NUMBER_TO_COLOR,
-                NAME_TO_COLOR,
-                CELL_CHARACTER_WIDTH,
                 0,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -407,7 +362,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 null,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -426,7 +380,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 null,
@@ -445,7 +398,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -464,7 +416,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 NUMBER_TO_COLOR,
                 NAME_TO_COLOR,
                 CELL_CHARACTER_WIDTH,
-                GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
                 FORMATTER,
                 SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                 CONVERTER_CONTEXT,
@@ -563,7 +514,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             NUMBER_TO_COLOR,
             NAME_TO_COLOR,
             CELL_CHARACTER_WIDTH,
-            GENERAL_NUMBER_FORMAT_DIGIT_COUNT,
             FORMATTER,
             SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
             CONVERTER_CONTEXT,

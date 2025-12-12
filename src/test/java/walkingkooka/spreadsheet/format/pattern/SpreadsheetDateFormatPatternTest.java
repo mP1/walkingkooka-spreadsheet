@@ -494,6 +494,11 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             }
 
             @Override
+            public int decimalNumberDigitCount() {
+                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+            }
+
+            @Override
             public char decimalSeparator() {
                 return '.';
             }
@@ -501,11 +506,6 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return ExpressionNumberKind.BIG_DECIMAL;
-            }
-
-            @Override
-            public int generalFormatNumberDigitCount() {
-                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override

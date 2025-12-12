@@ -58,11 +58,6 @@ public class FakeSpreadsheetFormatterContext extends FakeSpreadsheetConverterCon
     }
 
     @Override
-    public int generalFormatNumberDigitCount() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
         throw new UnsupportedOperationException();
     }

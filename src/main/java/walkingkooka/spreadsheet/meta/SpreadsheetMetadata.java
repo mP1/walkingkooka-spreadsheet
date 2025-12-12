@@ -1219,7 +1219,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         }
 
         final Integer characterWidth = missing.getOrNull(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH);
-        final Integer generalNumberFormatDigitCount = missing.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
 
         missing.reportIfMissing();
 
@@ -1228,7 +1227,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             this.numberToColor(),
             this.nameToColor(),
             characterWidth,
-            generalNumberFormatDigitCount,
             spreadsheetFormatter,
             spreadsheetExpressionEvaluationContext,
             formatSpreadsheetConverterContext,

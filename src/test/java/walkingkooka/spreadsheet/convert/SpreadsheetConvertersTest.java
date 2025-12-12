@@ -1823,6 +1823,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
 
         @Override
+        public int decimalNumberDigitCount() {
+            return this.decimalNumberContext.decimalNumberDigitCount();
+        }
+
+        @Override
         public MathContext mathContext() {
             return this.decimalNumberContext.mathContext();
         }
@@ -3188,6 +3193,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 @Override
                 public Locale locale() {
                     return this.decimalNumberContext.locale();
+                }
+
+                @Override
+                public int decimalNumberDigitCount() {
+                    return this.decimalNumberContext.decimalNumberDigitCount();
                 }
 
                 @Override

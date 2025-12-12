@@ -38,6 +38,8 @@ import java.util.Optional;
 public final class SpreadsheetFormatterContextTestingTest implements SpreadsheetFormatterContextTesting2<TestSpreadsheetFormatterContext>,
     SpreadsheetMetadataTesting {
 
+    private final static int DECIMAL_NUMBER_DIGIT_COUNT = 123;
+
     @Override
     public TestSpreadsheetFormatterContext createContext() {
         return new TestSpreadsheetFormatterContext();
@@ -55,7 +57,7 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
 
     @Override
     public int decimalNumberDigitCount() {
-        return SPREADSHEET_FORMATTER_CONTEXT.decimalNumberDigitCount();
+        return DECIMAL_NUMBER_DIGIT_COUNT;
     }
 
     @Override
@@ -146,13 +148,13 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public Optional<TextNode> formatValue(final Optional<Object> value) {
-            return Optional.empty();
+        public int decimalNumberDigitCount() {
+            return DECIMAL_NUMBER_DIGIT_COUNT;
         }
 
         @Override
-        public int generalFormatNumberDigitCount() {
-            return 0;
+        public Optional<TextNode> formatValue(final Optional<Object> value) {
+            return Optional.empty();
         }
 
         @Override
