@@ -67,11 +67,6 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     }
 
     /**
-     * Returns the number of digits when formatting a number.
-     */
-    int generalFormatNumberDigitCount();
-
-    /**
      * Creates a {@link SpreadsheetExpressionEvaluationContext} which will hold the given value supporting
      * the execution of an {@link walkingkooka.tree.expression.Expression}.
      */

@@ -351,7 +351,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
         );
     }
 
-    private SpreadsheetFormatterContext createContext(final int generalFormatNumberDigitCount,
+    private SpreadsheetFormatterContext createContext(final int decimalNumberDigitCount,
                                                       final char zeroDigit) {
         return new FakeSpreadsheetFormatterContext() {
 
@@ -388,6 +388,11 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
             }
 
             @Override
+            public int decimalNumberDigitCount() {
+                return decimalNumberDigitCount;
+            }
+
+            @Override
             public char decimalSeparator() {
                 return '!';
             }
@@ -395,11 +400,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterGeneralTest extends Spr
             @Override
             public String exponentSymbol() {
                 return "X";
-            }
-
-            @Override
-            public int generalFormatNumberDigitCount() {
-                return generalFormatNumberDigitCount;
             }
 
             @Override

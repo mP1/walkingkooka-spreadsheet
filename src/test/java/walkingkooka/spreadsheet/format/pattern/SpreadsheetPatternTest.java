@@ -666,13 +666,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public char decimalSeparator() {
-                    return '.';
+                public int decimalNumberDigitCount() {
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
-                public int generalFormatNumberDigitCount() {
-                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+                public char decimalSeparator() {
+                    return '.';
                 }
 
                 @Override
@@ -880,13 +880,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public char decimalSeparator() {
-                    return '.';
+                public int decimalNumberDigitCount() {
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
-                public int generalFormatNumberDigitCount() {
-                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+                public char decimalSeparator() {
+                    return '.';
                 }
 
                 @Override
@@ -1175,13 +1175,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public char decimalSeparator() {
-                    return '.';
+                public int decimalNumberDigitCount() {
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
-                public int generalFormatNumberDigitCount() {
-                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+                public char decimalSeparator() {
+                    return '.';
                 }
 
                 @Override
@@ -1226,13 +1226,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public char decimalSeparator() {
-                    return '.';
+                public int decimalNumberDigitCount() {
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
-                public int generalFormatNumberDigitCount() {
-                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+                public char decimalSeparator() {
+                    return '.';
                 }
 
                 @Override
@@ -1290,13 +1290,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public char decimalSeparator() {
-                    return '.';
+                public int decimalNumberDigitCount() {
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
-                public int generalFormatNumberDigitCount() {
-                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+                public char decimalSeparator() {
+                    return '.';
                 }
 
                 @Override
@@ -2076,13 +2076,13 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
                 }
 
                 @Override
-                public char decimalSeparator() {
-                    return '.';
+                public int decimalNumberDigitCount() {
+                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
                 }
 
                 @Override
-                public int generalFormatNumberDigitCount() {
-                    return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+                public char decimalSeparator() {
+                    return '.';
                 }
 
                 @Override

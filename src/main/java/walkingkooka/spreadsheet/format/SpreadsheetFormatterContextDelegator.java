@@ -77,12 +77,6 @@ public interface SpreadsheetFormatterContextDelegator extends SpreadsheetFormatt
     }
 
     @Override
-    default int generalFormatNumberDigitCount() {
-        return this.spreadsheetFormatterContext()
-            .generalFormatNumberDigitCount();
-    }
-
-    @Override
     default SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
         return this.spreadsheetFormatterContext()
             .spreadsheetExpressionEvaluationContext(value);

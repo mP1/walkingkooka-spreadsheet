@@ -48,7 +48,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int cellCharacterWidth,
-                                                 final int generalFormatNumberDigitCount,
                                                  final SpreadsheetFormatter formatter,
                                                  final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
@@ -59,9 +58,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (cellCharacterWidth <= 0) {
             throw new IllegalArgumentException("Invalid cellCharacterWidth " + cellCharacterWidth + " <= 0");
-        }
-        if (generalFormatNumberDigitCount <= 0) {
-            throw new IllegalArgumentException("Invalid generalFormatNumberDigitCount " + generalFormatNumberDigitCount + " <= 0");
         }
         Objects.requireNonNull(formatter, "formatter");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
@@ -74,7 +70,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
             numberToColor,
             nameToColor,
             cellCharacterWidth,
-            generalFormatNumberDigitCount,
             formatter,
             spreadsheetExpressionEvaluationContext,
             spreadsheetConverterContext,
@@ -87,7 +82,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                              final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int cellCharacterWidth,
-                                             final int generalFormatNumberDigitCount,
                                              final SpreadsheetFormatter formatter,
                                              final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                              final SpreadsheetConverterContext spreadsheetConverterContext,
@@ -100,7 +94,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.numberToColor = numberToColor;
         this.nameToColor = nameToColor;
         this.cellCharacterWidth = cellCharacterWidth;
-        this.generalFormatNumberDigitCount = generalFormatNumberDigitCount;
 
         this.formatter = formatter;
         this.spreadsheetExpressionEvaluationContext = spreadsheetExpressionEvaluationContext;
@@ -198,13 +191,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     private final ProviderContext providerContext;
 
-    @Override
-    public int generalFormatNumberDigitCount() {
-        return this.generalFormatNumberDigitCount;
-    }
-
-    private final int generalFormatNumberDigitCount;
-
     // SpreadsheetConverterContextDelegator.............................................................................
 
     @Override
@@ -252,7 +238,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 this.numberToColor,
                 this.nameToColor,
                 this.cellCharacterWidth,
-                this.generalFormatNumberDigitCount,
                 this.formatter,
                 this.spreadsheetExpressionEvaluationContext,
                 context,

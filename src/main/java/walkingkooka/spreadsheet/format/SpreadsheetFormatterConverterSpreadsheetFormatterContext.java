@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -81,12 +80,6 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     @Override
     public Optional<TextNode> formatValue(final Optional<Object> value) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int generalFormatNumberDigitCount() {
-        return this.context.spreadsheetMetadata()
-            .getOrFail(SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT);
     }
 
     @Override

@@ -105,7 +105,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             }),
             1, // cellCharacterWidth
-            8, // generalNumberFormatDigitCount
             SpreadsheetFormatters.fake(),
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();

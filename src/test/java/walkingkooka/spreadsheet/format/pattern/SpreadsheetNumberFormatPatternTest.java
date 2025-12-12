@@ -654,13 +654,13 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
             }
 
             @Override
-            public int generalFormatNumberDigitCount() {
-                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+            public String currencySymbol() {
+                return "c";
             }
 
             @Override
-            public String currencySymbol() {
-                return "c";
+            public int decimalNumberDigitCount() {
+                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override

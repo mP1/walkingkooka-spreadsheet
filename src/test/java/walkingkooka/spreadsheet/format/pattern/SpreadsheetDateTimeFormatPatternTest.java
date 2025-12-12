@@ -873,13 +873,13 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
             }
 
             @Override
-            public ExpressionNumberKind expressionNumberKind() {
-                return ExpressionNumberKind.BIG_DECIMAL;
+            public int decimalNumberDigitCount() {
+                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override
-            public int generalFormatNumberDigitCount() {
-                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
+            public ExpressionNumberKind expressionNumberKind() {
+                return ExpressionNumberKind.BIG_DECIMAL;
             }
 
             @Override

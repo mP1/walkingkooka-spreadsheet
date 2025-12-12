@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -525,6 +524,11 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             }
 
             @Override
+            public int decimalNumberDigitCount() {
+                return DEFAULT_NUMBER_DIGIT_COUNT;
+            }
+
+            @Override
             public char decimalSeparator() {
                 return 'D';
             }
@@ -532,11 +536,6 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return ExpressionNumberKind.BIG_DECIMAL;
-            }
-
-            @Override
-            public int generalFormatNumberDigitCount() {
-                return DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override

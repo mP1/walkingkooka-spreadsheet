@@ -19,9 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -80,11 +77,8 @@ public final class SpreadsheetConverterNumberToTextTest extends SpreadsheetConve
             }
 
             @Override
-            public SpreadsheetMetadata spreadsheetMetadata() {
-                return SpreadsheetMetadata.EMPTY.set(
-                    SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
-                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
-                );
+            public int decimalNumberDigitCount() {
+                return DEFAULT_NUMBER_DIGIT_COUNT;
             }
 
             @Override
