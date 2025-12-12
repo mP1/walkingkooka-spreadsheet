@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -134,8 +133,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     final static EnvironmentValueName<ExpressionFunctionAliasSet> FUNCTIONS = SpreadsheetMetadataPropertyName.FUNCTIONS.toEnvironmentValueName();
 
     final static EnvironmentValueName<Locale> LOCALE = EnvironmentContext.LOCALE;
-
-    final static EnvironmentValueName<SpreadsheetParserAliasSet> PARSER = SpreadsheetMetadataPropertyName.PARSERS.toEnvironmentValueName();
 
     final static EnvironmentValueName<Integer> PRECISION = SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName();
 
