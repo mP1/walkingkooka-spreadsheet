@@ -88,6 +88,16 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
+    @Override
+    default CaseSensitivity stringEqualsCaseSensitivity() {
+        return SpreadsheetStrings.CASE_SENSITIVITY;
+    }
+
+    @Override
+    default boolean isText(final Object value) {
+        return SpreadsheetStrings.isText(value);
+    }
+
     /**
      * Helper that makes it easy to add a variable with a value. This is especially useful when executing a {@link Expression}
      * with a parameter such as a Validator.
@@ -115,22 +125,15 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     }
 
     /**
-     * Parses the {@link TextCursor formula} into an {@link SpreadsheetFormulaParserToken} which can then be transformed into an {@link Expression}.
-     * Note a formula here is an expression without the leading equals sign. Value literals such as date like 1/2/2000 will actually probably
-     * be parsed into a series of division operations and not an actual date. Apostrophe string literals will fail,
-     * date/times and times will not actually return date/time or time values.
+     * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
      */
-    SpreadsheetFormulaParserToken parseFormula(final TextCursor formula);
+    SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
 
-    @Override
-    default CaseSensitivity stringEqualsCaseSensitivity() {
-        return SpreadsheetStrings.CASE_SENSITIVITY;
-    }
-
-    @Override
-    default boolean isText(final Object value) {
-        return SpreadsheetStrings.isText(value);
-    }
+    /**
+     * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.
+     * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
+     */
+    void setSpreadsheetMetadata(final SpreadsheetMetadata metadata);
 
     /**
      * If the {@link ExpressionReference} cannot be found an {@link SpreadsheetError} is created with {@link SpreadsheetError#referenceNotFound(ExpressionReference)}.
@@ -191,15 +194,12 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     }
 
     /**
-     * Returns a {@link SpreadsheetExpressionEvaluationContext} with the given {@link SpreadsheetCell} as the current cell.
+     * Parses the {@link TextCursor formula} into an {@link SpreadsheetFormulaParserToken} which can then be transformed into an {@link Expression}.
+     * Note a formula here is an expression without the leading equals sign. Value literals such as date like 1/2/2000 will actually probably
+     * be parsed into a series of division operations and not an actual date. Apostrophe string literals will fail,
+     * date/times and times will not actually return date/time or time values.
      */
-    SpreadsheetExpressionEvaluationContext setCell(final Optional<SpreadsheetCell> cell);
-
-    /**
-     * Saves or replaces the current {@link SpreadsheetMetadata} with a new copy.
-     * This is necessary to support a function that allows updating/replacing a {@link SpreadsheetMetadata}.
-     */
-    void setSpreadsheetMetadata(final SpreadsheetMetadata metadata);
+    SpreadsheetFormulaParserToken parseFormula(final TextCursor formula);
 
     // formatting.......................................................................................................
 
