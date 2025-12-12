@@ -217,6 +217,18 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     }
 
     @Override
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
+        Objects.requireNonNull(metadata, "metadata");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
         return Optional.empty();
@@ -352,13 +364,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
     private SpreadsheetParserContext spreadsheetParserContext;
 
-    @Override
-    public LocaleContext localeContext() {
-        return this.localeContext;
-    }
-
-    private final LocaleContext localeContext;
-
     /**
      * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever environment changes.
      */
@@ -483,18 +488,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     }
 
     private SpreadsheetConverterContext spreadsheetConverterContext;
-
-    @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setSpreadsheetMetadata(final SpreadsheetMetadata metadata) {
-        Objects.requireNonNull(metadata, "metadata");
-
-        throw new UnsupportedOperationException();
-    }
 
     // converter........................................................................................................
 
@@ -674,6 +667,13 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     }
 
     private MathContext mathContext;
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    private final LocaleContext localeContext;
 
     // EnvironmentContext...............................................................................................
 
