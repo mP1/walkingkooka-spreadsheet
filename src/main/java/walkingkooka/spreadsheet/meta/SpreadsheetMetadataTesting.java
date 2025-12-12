@@ -467,7 +467,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
         HAS_USER,
         TextReaders.fake(),
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
-        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT) // error
+        Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
+        (c) -> {
+            throw new UnsupportedOperationException();
+        }
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(
