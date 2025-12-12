@@ -111,8 +111,9 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A {@link SpreadsheetExpressionEvaluationContext} without a {@link walkingkooka.spreadsheet.SpreadsheetContext} or {@link SpreadsheetMetadata}.
- * Most of the core components are created using {@link EnvironmentValueName}, see the constants below.
+ * A {@link SpreadsheetExpressionEvaluationContext} using {@link EnvironmentValueName} to create each of the core components
+ * required during evaluation, such as a {@link Converter} using the {@link #CONVERTER}. A full list of required
+ * {@link EnvironmentValueName} are listed below.
  */
 final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext implements SpreadsheetExpressionEvaluationContext,
     EnvironmentContextDelegator,
