@@ -53,8 +53,10 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -74,6 +76,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -118,7 +121,11 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
     final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with("converter");
 
+    final static EnvironmentValueName<SpreadsheetParserSelector> DATE_PARSER = SpreadsheetMetadataPropertyName.DATE_PARSER.toEnvironmentValueName();
+
     final static EnvironmentValueName<Long> DATE_TIME_OFFSET = SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName();
+
+    final static EnvironmentValueName<SpreadsheetParserSelector> DATE_TIME_PARSER = SpreadsheetMetadataPropertyName.DATE_TIME_PARSER.toEnvironmentValueName();
 
     final static EnvironmentValueName<DateTimeSymbols> DATE_TIME_SYMBOLS = SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS.toEnvironmentValueName();
 
@@ -134,9 +141,13 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
     final static EnvironmentValueName<Locale> LOCALE = EnvironmentContext.LOCALE;
 
+    final static EnvironmentValueName<SpreadsheetParserSelector> NUMBER_PARSER = SpreadsheetMetadataPropertyName.NUMBER_PARSER.toEnvironmentValueName();
+
     final static EnvironmentValueName<Integer> PRECISION = SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName();
 
     final static EnvironmentValueName<RoundingMode> ROUNDING_MODE = SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName();
+
+    final static EnvironmentValueName<SpreadsheetParserSelector> TIME_PARSER = SpreadsheetMetadataPropertyName.TIME_PARSER.toEnvironmentValueName();
 
     final static EnvironmentValueName<Integer> TWO_DIGIT_YEAR = SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName();
 
@@ -228,7 +239,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
         final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
 
-        return SpreadsheetFormulaParsers.expression()
+        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(expression, parserContext)
             .get()
@@ -262,6 +273,39 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     }
 
     private ExpressionNumberContext expressionNumberContext;
+
+    public SpreadsheetParser spreadsheetParser() {
+        if (null == this.spreadsheetParser) {
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
+            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
+
+            final SpreadsheetParserSelector date = missing.getOrNull(DATE_PARSER);
+            final SpreadsheetParserSelector dateTime = missing.getOrNull(DATE_TIME_PARSER);
+            final SpreadsheetParserSelector number = missing.getOrNull(NUMBER_PARSER);
+            final SpreadsheetParserSelector time = missing.getOrNull(TIME_PARSER);
+
+            missing.reportIfMissing();
+
+            final SpreadsheetProvider provider = this.spreadsheetProvider;
+            final ProviderContext providerContext = this.providerContext;
+
+            this.spreadsheetParser = SpreadsheetFormulaParsers.valueOrExpression(
+                Parsers.alternatives(
+                    Lists.of(
+                        provider.spreadsheetParser(date, providerContext),
+                        provider.spreadsheetParser(dateTime, providerContext),
+                        provider.spreadsheetParser(number, providerContext)
+                            .andEmptyTextCursor(),
+                        provider.spreadsheetParser(time, providerContext)
+                    )
+                )
+            );
+        }
+
+        return this.spreadsheetParser;
+    }
+
+    private SpreadsheetParser spreadsheetParser;
 
     /**
      * Returns a {@link SpreadsheetParserContext}, built from a few {@link EnvironmentValueName}.

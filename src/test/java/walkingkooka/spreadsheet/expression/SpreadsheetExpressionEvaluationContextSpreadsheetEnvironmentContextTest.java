@@ -403,19 +403,51 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     // parseFormula.....................................................................................................
 
     @Test
-    public void testParseFormulaQuotedString() {
-        final String text = "abc123";
-        final String expression = '"' + text + '"';
+    public void testParseFormulaDoubleQuotedStringFails() {
+        this.parseFormulaAndFail(
+            "\"abc123\"",
+            "Invalid character '\\\"' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
+        );
+    }
+
+    @Test
+    public void testParseFormulaDate() {
+        final String text = "1999/12/31";
 
         this.parseFormulaAndCheck(
-            expression,
-            SpreadsheetFormulaParserToken.text(
+            text,
+            SpreadsheetFormulaParserToken.date(
                 Lists.of(
-                    SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\""),
-                    SpreadsheetFormulaParserToken.textLiteral(text, text),
-                    SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"")
+                    SpreadsheetFormulaParserToken.year(1999, "1999"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.dayNumber(31, "31")
                 ),
-                expression
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseFormulaDateTime() {
+        final String text = "1999/12/31 12:58";
+
+        this.parseFormulaAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.dateTime(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.year(1999, "1999"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                    SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58")
+                ),
+                text
             )
         );
     }
@@ -455,25 +487,66 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     }
 
     @Test
-    public void testParseFormulaAdditionExpression() {
-        final String text = "1+2";
+    public void testParseFormulaApostropheString() {
+        final String text = "'Hello";
 
         this.parseFormulaAndCheck(
             text,
-            SpreadsheetFormulaParserToken.addition(
+            SpreadsheetFormulaParserToken.text(
                 Lists.of(
-                    SpreadsheetFormulaParserToken.number(
+                    SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                    SpreadsheetFormulaParserToken.textLiteral("Hello", "Hello")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseFormulaTime() {
+        final String text = "12:58:59";
+
+        this.parseFormulaAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.time(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.seconds(59, "59")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseFormulaEqualsAdditionExpression() {
+        final String text = "=1+2";
+
+        this.parseFormulaAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.expression(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                    SpreadsheetFormulaParserToken.addition(
                         Lists.of(
-                            SpreadsheetFormulaParserToken.digits("1", "1")
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits("1", "1")
+                                ),
+                                "1"
+                            ),
+                            SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits("2", "2")
+                                ),
+                                "2"
+                            )
                         ),
-                        "1"
-                    ),
-                    SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                    SpreadsheetFormulaParserToken.number(
-                        Lists.of(
-                            SpreadsheetFormulaParserToken.digits("2", "2")
-                        ),
-                        "2"
+                        "1+2"
                     )
                 ),
                 text
@@ -482,12 +555,12 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     }
 
     @Test
-    public void testParseFormulaEqualsAdditionExpressionFails() {
-        final String text = "=1+2";
+    public void testParseFormulaAdditionExpressionFails() {
+        final String text = "1+2";
 
         this.parseFormulaAndFail(
             text,
-            "Invalid character '=' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "Invalid character '1' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
         );
     }
 
