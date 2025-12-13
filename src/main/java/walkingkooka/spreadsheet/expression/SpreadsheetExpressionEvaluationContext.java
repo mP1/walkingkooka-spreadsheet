@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -82,7 +81,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     SpreadsheetConverterContext,
     HasSpreadsheetCell,
     HasSpreadsheetMetadata,
-    EnvironmentExpressionEvaluationContext,
     FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
     SpreadsheetEnvironmentContext,
     TerminalExpressionEvaluationContext,

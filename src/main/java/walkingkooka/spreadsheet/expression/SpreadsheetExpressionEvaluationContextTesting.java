@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.environment.expression.EnvironmentExpressionEvaluationContextTesting;
 import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -49,7 +48,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
-    EnvironmentExpressionEvaluationContextTesting<C>,
     HasSpreadsheetCellTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
@@ -352,14 +350,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
             expected,
             context.nextEmptyRow(column)
         );
-    }
-
-    // EnvironmentContext...............................................................................................
-
-    @Test
-    @Override
-    default void testSetLocaleWithNullFails() {
-        EnvironmentExpressionEvaluationContextTesting.super.testSetLocaleWithNullFails();
     }
 
     // spreadsheetFormatterContext......................................................................................
