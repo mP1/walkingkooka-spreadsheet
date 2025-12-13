@@ -447,7 +447,11 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
                             @Override
                             public Object apply(final List<Object> values,
                                                 final SpreadsheetExpressionEvaluationContext context) {
-                                ExpressionFunctionParameter.NUMBER.getOrFail(values, 0);
+                                ExpressionFunctionParameter.NUMBER.getOrFail(
+                                    values,
+                                    0,
+                                    context
+                                );
                                 throw new UnsupportedOperationException();
                             }
                         };

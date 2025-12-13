@@ -247,7 +247,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                                             final ExpressionEvaluationContext context) {
                             return this.parameters(1)
                                 .get(0)
-                                .getOrFail(values, 0);
+                                .getOrFail(values, 0, context);
                         }
 
                         private final ExpressionFunctionParameter<String> PARAMETER = ExpressionFunctionParameter.STRING.setKinds(
