@@ -316,7 +316,8 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                                                                 final SpreadsheetExpressionEvaluationContext context) {
                                                 return VALUE.getOrFail(
                                                     parameters,
-                                                    0
+                                                    0,
+                                                    context
                                                 );
                                             }
                                         }

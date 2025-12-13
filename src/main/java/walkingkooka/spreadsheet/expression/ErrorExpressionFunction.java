@@ -77,7 +77,7 @@ final class ErrorExpressionFunction implements ExpressionFunction<SpreadsheetErr
                                   final ExpressionEvaluationContext context) {
         this.checkParameterCount(parameters);
         return SpreadsheetErrorKind.withValue(
-            ERROR_VALUE.getOrFail(parameters, 0)
+            ERROR_VALUE.getOrFail(parameters, 0, context)
                 .intValueExact()
         ).toError();
     }
