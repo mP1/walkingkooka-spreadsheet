@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.ContextTesting;
-import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextTesting;
 

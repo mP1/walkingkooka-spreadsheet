@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.locale.convert.LocaleConverterContextTesting;
-import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextTesting;
 
