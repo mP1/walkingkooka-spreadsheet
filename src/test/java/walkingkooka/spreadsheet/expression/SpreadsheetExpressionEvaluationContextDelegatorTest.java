@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
@@ -37,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -157,7 +157,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     final static class TestSpreadsheetExpressionEvaluationContextDelegator implements SpreadsheetExpressionEvaluationContextDelegator {
 
         @Override
-        public SpreadsheetExpressionEvaluationContextDelegator setCell(final Optional<walkingkooka.spreadsheet.SpreadsheetCell> cell) {
+        public SpreadsheetExpressionEvaluationContextDelegator setCell(final Optional<SpreadsheetCell> cell) {
             throw new UnsupportedOperationException();
         }
 

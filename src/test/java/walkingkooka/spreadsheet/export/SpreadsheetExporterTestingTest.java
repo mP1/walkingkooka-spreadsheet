@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 
 import java.util.Objects;
 import java.util.Optional;

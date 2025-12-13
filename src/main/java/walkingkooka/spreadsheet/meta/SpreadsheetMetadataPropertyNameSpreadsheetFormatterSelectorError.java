@@ -20,11 +20,12 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 
 import java.util.Optional;
 
 /**
- * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link walkingkooka.spreadsheet.SpreadsheetError} values.
+ * This {@link SpreadsheetMetadataPropertyName} holds the default formatter for {@link SpreadsheetError} values.
  */
 final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorError extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector {
 

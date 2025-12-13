@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.TextNode;
 

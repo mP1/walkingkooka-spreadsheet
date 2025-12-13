@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.export;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
+import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 import walkingkooka.text.CharacterConstant;
 
 import java.util.List;

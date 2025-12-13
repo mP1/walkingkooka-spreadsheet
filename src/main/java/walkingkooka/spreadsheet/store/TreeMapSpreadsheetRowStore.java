@@ -18,8 +18,8 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
 

@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 
 public final class EmptySpreadsheetExporterTest implements SpreadsheetExporterTesting<EmptySpreadsheetExporter>,
     ToStringTesting<EmptySpreadsheetExporter> {

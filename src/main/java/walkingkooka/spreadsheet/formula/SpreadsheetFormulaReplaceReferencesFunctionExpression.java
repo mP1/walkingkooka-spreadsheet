@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ReferenceExpression;
 

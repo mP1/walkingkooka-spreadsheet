@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -28,6 +27,7 @@ import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelecto
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;

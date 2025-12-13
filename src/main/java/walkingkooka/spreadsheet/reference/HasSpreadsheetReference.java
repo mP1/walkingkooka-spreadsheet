@@ -17,16 +17,20 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
+
 import java.util.Comparator;
 
 /**
  * Declares that a spreadsheet component includes a reference which may be used to identify itself, such as a
- * {@link walkingkooka.spreadsheet.SpreadsheetCell}, {@link walkingkooka.spreadsheet.SpreadsheetColumn} or {@link walkingkooka.spreadsheet.SpreadsheetRow}.
+ * {@link SpreadsheetCell}, {@link SpreadsheetColumn} or {@link SpreadsheetRow}.
  */
 public interface HasSpreadsheetReference<R extends Comparable<R>> {
 
     /**
-     * Returns a {@link Comparator} that may be used to sort a {@link HasSpreadsheetReference} such as a {@link walkingkooka.spreadsheet.SpreadsheetCell}
+     * Returns a {@link Comparator} that may be used to sort a {@link HasSpreadsheetReference} such as a {@link SpreadsheetCell}
      */
     static <H extends HasSpreadsheetReference<R>, R extends Comparable<R>> Comparator<H> hasSpreadsheetReferenceComparator() {
         return (l, r) -> l.reference().compareTo(r.reference());

@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
 
 import java.util.Objects;
 import java.util.Optional;

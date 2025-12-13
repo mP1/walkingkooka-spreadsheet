@@ -19,8 +19,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 
 public final class SpreadsheetConverterSpreadsheetErrorToSpreadsheetErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetErrorToSpreadsheetError> {
 

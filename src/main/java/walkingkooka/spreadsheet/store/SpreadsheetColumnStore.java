@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 
 import java.util.Objects;
 import java.util.Optional;

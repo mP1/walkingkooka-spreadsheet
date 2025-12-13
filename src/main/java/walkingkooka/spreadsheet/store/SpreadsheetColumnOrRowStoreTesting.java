@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetColumnOrRow;
 
 public interface SpreadsheetColumnOrRowStoreTesting<S extends SpreadsheetColumnOrRowStore<R, V>, R extends SpreadsheetSelection & Comparable<R>, V extends SpreadsheetColumnOrRow<R>> extends SpreadsheetStoreTesting<S, R, V> {
 

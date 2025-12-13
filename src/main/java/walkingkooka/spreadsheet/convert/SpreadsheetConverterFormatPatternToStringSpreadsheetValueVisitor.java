@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.color.Color;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.HasSpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -35,6 +33,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetValueVisitor;
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;

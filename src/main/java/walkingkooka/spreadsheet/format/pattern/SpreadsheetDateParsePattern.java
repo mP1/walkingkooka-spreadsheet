@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.formula.parser.DateSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.validation.ValueType;
 

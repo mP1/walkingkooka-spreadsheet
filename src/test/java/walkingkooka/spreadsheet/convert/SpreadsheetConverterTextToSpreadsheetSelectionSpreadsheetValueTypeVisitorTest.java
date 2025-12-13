@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitorTesting;
+import walkingkooka.spreadsheet.value.SpreadsheetValueTypeVisitorTesting;
 
 public final class SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterTextToSpreadsheetSelectionSpreadsheetValueTypeVisitor> {
 

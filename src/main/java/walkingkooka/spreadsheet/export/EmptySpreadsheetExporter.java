@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
+import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 
 import java.util.Objects;
 

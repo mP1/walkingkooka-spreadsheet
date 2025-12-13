@@ -32,7 +32,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonCells() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_CELL,
-            "application/json+walkingkooka.spreadsheet.SpreadsheetCell"
+            "application/json+walkingkooka.spreadsheet.value.SpreadsheetCell"
         );
     }
 
@@ -130,7 +130,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testObjectCell() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_CELL,
-            "application/memory+walkingkooka.spreadsheet.SpreadsheetCell"
+            "application/memory+walkingkooka.spreadsheet.value.SpreadsheetCell"
         );
     }
 

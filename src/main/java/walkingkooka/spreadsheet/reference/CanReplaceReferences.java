@@ -18,12 +18,13 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Describes a value such as a {@link walkingkooka.spreadsheet.SpreadsheetCell} or {@link SpreadsheetFormula}
+ * Describes a value such as a {@link SpreadsheetCell} or {@link SpreadsheetFormula}
  * that supports visiting all references and replacing or removing them one by one.
  */
 public interface CanReplaceReferences<T extends CanReplaceReferences<T>> {

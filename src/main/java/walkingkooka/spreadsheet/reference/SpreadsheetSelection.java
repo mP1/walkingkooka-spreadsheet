@@ -30,8 +30,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
@@ -43,6 +41,10 @@ import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
@@ -1544,7 +1546,7 @@ public abstract class SpreadsheetSelection implements HasText,
     /**
      * Constructs a human pretty message that a {@link SpreadsheetSelection} was deleted.
      * <br>
-     * This is used with a {@link walkingkooka.spreadsheet.SpreadsheetErrorKind#REF} to create a {@link walkingkooka.spreadsheet.SpreadsheetError}
+     * This is used with a {@link SpreadsheetErrorKind#REF} to create a {@link SpreadsheetError}
      * when a cell is deleted.
      */
     public final String deleteText() {

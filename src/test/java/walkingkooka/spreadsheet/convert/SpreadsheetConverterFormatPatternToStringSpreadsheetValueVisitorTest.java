@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
+import walkingkooka.spreadsheet.value.SpreadsheetValueVisitorTesting;
 
 public final class SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetConverterFormatPatternToStringSpreadsheetValueVisitor> {
     @Override

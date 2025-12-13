@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.predicate.Predicates;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.validation.ValueType;
 

@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormHandlerContext;
 

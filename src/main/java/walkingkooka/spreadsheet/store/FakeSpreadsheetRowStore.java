@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
 import walkingkooka.store.FakeStore;
 
 public class FakeSpreadsheetRowStore extends FakeStore<SpreadsheetRowReference, SpreadsheetRow> implements SpreadsheetRowStore {
