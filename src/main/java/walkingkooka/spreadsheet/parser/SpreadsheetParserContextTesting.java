@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.SpreadsheetProviderContextTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.text.cursor.parser.ParserContextTesting;
 
 /**
