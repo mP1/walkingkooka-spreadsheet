@@ -155,11 +155,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         @Override
         public ExpressionNumber apply(final List<Object> parameters,
                                       final SpreadsheetExpressionEvaluationContext context) {
-            return NUMBER.getOrFail(
-                parameters,
-                0,
-                context
-            );
+            return NUMBER.getOrFail(parameters, 0);
         }
 
         @Override

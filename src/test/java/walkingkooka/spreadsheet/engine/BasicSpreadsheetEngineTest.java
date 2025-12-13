@@ -801,8 +801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 final SpreadsheetExpressionEvaluationContext context) {
                                 return NUMBER.getOrFail(
                                     parameters,
-                                    0,
-                                    context
+                                    0
                                 );
                             }
 
@@ -835,8 +834,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 final SpreadsheetExpressionEvaluationContext context) {
                                 return STRING.getOrFail(
                                     parameters,
-                                    0,
-                                    context
+                                    0
                                 );
                             }
 
