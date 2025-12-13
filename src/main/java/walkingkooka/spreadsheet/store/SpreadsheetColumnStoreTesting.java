@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 
 import java.util.Set;
 

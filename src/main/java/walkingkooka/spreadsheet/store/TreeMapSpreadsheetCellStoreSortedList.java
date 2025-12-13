@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -22,11 +22,11 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Optional;
 

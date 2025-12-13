@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
-import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 
 final class SpreadsheetConverterSpreadsheetErrorToSpreadsheetError extends SpreadsheetConverterSpreadsheetError {
 

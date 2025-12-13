@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -26,13 +26,14 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor} that fails by throwing a {@link walkingkooka.spreadsheet.SpreadsheetErrorException}
+ * A {@link SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor} that fails by throwing a {@link SpreadsheetErrorException}
  * if a {@link SpreadsheetExpressionReference} does not exist.
  */
 final class SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {

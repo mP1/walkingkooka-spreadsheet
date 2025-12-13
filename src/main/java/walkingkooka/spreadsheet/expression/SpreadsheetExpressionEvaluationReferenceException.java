@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.spreadsheet.HasSpreadsheetErrorKind;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.value.HasSpreadsheetErrorKind;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
 

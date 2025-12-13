@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.HasSpreadsheetCellTesting;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -37,6 +35,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting;

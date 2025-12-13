@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -26,6 +24,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
 
 import java.util.Collection;
 import java.util.Optional;

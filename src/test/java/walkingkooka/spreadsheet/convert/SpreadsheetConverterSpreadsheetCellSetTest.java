@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Set;
 

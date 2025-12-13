@@ -17,13 +17,14 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.store.Store;
 import walkingkooka.validation.ValueType;
 
@@ -142,7 +143,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
 
     /**
      * Finds all cells with a value type equal to the given. This means empty cells without a formula will never be found,
-     * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
+     * while those with errors will have a value type of {@link SpreadsheetError}.
      */
     Set<SpreadsheetCell> findCellsWithValueType(final SpreadsheetCellRangeReference range,
                                                 final ValueType valueType,
@@ -156,7 +157,7 @@ public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellRe
 
     /**
      * Counts all cells with a value type equal to the given. This means empty cells without a formula will never be found,
-     * while those with errors will have a value type of {@link walkingkooka.spreadsheet.SpreadsheetError}.
+     * while those with errors will have a value type of {@link SpreadsheetError}.
      */
     int countCellsWithValueType(final SpreadsheetCellRangeReference range,
                                 final ValueType valueType);

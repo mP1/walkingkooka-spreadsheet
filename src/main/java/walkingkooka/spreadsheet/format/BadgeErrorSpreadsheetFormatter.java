@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.Either;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.Badge;
 import walkingkooka.tree.text.TextNode;
@@ -31,7 +31,7 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatter} that outputs a {@link Badge} with the error text, and uses the
- * given {@link SpreadsheetFormatter} to format the {@link walkingkooka.spreadsheet.SpreadsheetError}.
+ * given {@link SpreadsheetFormatter} to format the {@link SpreadsheetError}.
  */
 final class BadgeErrorSpreadsheetFormatter implements SpreadsheetFormatter {
 

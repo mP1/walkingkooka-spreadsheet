@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Context;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 
 import java.util.Optional;
 import java.util.Set;

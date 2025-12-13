@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetValueTypeVisitor;
 
 final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectionSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 

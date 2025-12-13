@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.ExpressionReference;
 

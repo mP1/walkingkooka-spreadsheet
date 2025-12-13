@@ -20,14 +20,14 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 public enum SpreadsheetDeltaProperties {
 
     /**
-     * Returns any loaded or changed {@link walkingkooka.spreadsheet.SpreadsheetCell}.
+     * Returns any loaded or changed {@link SpreadsheetCell}.
      */
     CELLS,
 

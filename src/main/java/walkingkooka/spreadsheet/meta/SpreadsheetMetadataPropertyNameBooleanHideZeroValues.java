@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 /**
  * When true the UI will hide rather than display zero values. The {@link SpreadsheetCell#formattedValue()} will still contain the zero value formatted as text.

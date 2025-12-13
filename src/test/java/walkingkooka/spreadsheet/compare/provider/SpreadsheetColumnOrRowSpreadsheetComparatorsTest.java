@@ -28,7 +28,6 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.compare.FakeSpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -39,6 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.test.ParseStringTesting;
 
 import java.time.LocalDate;

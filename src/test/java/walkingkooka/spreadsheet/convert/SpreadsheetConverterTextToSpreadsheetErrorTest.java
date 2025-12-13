@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 
 public final class SpreadsheetConverterTextToSpreadsheetErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetError> {
 

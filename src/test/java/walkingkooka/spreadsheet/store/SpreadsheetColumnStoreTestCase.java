@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.TypeNameTesting;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 

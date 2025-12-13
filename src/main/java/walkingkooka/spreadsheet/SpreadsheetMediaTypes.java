@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.Validator;

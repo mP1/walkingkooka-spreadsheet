@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Set;
 

@@ -19,7 +19,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 
 /**
  * A {@link Converter} that converts an SpreadsheetError as a {@link String} into a {@link SpreadsheetError}.

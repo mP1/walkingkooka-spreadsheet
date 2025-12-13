@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Iterator;
 import java.util.Map;

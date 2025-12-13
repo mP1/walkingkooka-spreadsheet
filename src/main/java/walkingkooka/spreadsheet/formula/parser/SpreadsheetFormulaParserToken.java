@@ -18,11 +18,11 @@ package walkingkooka.spreadsheet.formula.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.expression.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;

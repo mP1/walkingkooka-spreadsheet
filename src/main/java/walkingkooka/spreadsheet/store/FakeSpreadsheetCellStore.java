@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.validation.ValueType;

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.json.JsonNode;

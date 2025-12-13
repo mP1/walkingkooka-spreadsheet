@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 

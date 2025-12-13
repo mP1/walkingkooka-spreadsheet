@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 public final class SpreadsheetConverterSpreadsheetSelectionToTextTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetSelectionToText> {
 

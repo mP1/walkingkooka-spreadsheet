@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
+import walkingkooka.spreadsheet.value.SpreadsheetValueVisitor;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 
 import java.time.LocalDate;

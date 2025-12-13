@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Objects;
 import java.util.Optional;

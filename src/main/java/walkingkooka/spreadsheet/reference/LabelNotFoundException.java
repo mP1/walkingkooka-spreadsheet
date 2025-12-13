@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.HasSpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.value.HasSpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.text.CharSequences;
 
 import java.util.Objects;

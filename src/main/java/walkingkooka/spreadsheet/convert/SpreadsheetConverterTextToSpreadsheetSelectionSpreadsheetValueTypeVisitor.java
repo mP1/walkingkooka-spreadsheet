@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitor;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetValueTypeVisitor;
 
 import java.util.function.Function;
 

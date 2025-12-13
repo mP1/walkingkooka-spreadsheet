@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.formula;
 
-import walkingkooka.spreadsheet.SpreadsheetValueType;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.IllegalColumnArgumentException;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;

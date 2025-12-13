@@ -19,7 +19,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ConverterSelector} used during

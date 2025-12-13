@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionPurityContext;

@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorException;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 
 /**
  * A {@link Converter} that throws {@link SpreadsheetErrorException} with any given {@link SpreadsheetError}.

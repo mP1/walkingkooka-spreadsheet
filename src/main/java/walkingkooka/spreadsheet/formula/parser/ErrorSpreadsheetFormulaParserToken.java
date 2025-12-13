@@ -17,7 +17,7 @@
  */
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
 
 /**
  * A token that holds a {@link SpreadsheetError}.

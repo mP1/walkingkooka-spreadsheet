@@ -24,7 +24,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.parser.AdditionSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.AmPmSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.ApostropheSymbolSpreadsheetFormulaParserToken;
@@ -105,6 +104,7 @@ import walkingkooka.spreadsheet.formula.parser.WhitespaceSpreadsheetFormulaParse
 import walkingkooka.spreadsheet.formula.parser.YearSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 

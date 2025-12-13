@@ -46,8 +46,6 @@ import walkingkooka.naming.HasOptionalName;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.HasMissingCellNumberValue;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.SpreadsheetStartup;
@@ -92,6 +90,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
+import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -150,7 +150,7 @@ import java.util.function.Function;
  * <br>
  * For more information examine the {@link SpreadsheetMetadataPropertyName} properties.
  * <br>
- * Cell specific data such as individual format patterns are not stored here but on the {@link walkingkooka.spreadsheet.SpreadsheetCell}.
+ * Cell specific data such as individual format patterns are not stored here but on the {@link SpreadsheetCell}.
  */
 public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HasExpressionNumberKind,

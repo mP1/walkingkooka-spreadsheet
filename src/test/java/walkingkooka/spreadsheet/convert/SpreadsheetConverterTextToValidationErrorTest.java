@@ -20,14 +20,14 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.validation.ValidationError;
 
 public final class SpreadsheetConverterTextToValidationErrorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToValidationError>

@@ -17,8 +17,8 @@
 package walkingkooka.spreadsheet.formula.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetErrorKind;
+import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;

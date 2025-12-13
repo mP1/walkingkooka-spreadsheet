@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.WebEntity;
-import walkingkooka.spreadsheet.SpreadsheetCellRange;
-import walkingkooka.spreadsheet.SpreadsheetCellValueKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
+import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

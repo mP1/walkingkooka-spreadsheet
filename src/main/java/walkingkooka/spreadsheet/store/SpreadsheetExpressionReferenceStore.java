@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.store.Store;
 
 import java.util.Objects;

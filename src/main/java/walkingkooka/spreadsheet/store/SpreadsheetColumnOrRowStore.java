@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetColumn;
-import walkingkooka.spreadsheet.SpreadsheetColumnOrRow;
-import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetColumn;
+import walkingkooka.spreadsheet.value.SpreadsheetColumnOrRow;
+import walkingkooka.spreadsheet.value.SpreadsheetRow;
 
 import java.util.Optional;
 
