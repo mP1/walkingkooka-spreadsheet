@@ -21,25 +21,33 @@ import walkingkooka.Either;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -50,6 +58,7 @@ import java.util.function.Function;
 final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext implements ExpressionEvaluationContext,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
+    ExpressionEvaluationContextDelegator,
     LocaleContextDelegator {
 
     static SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext with(final SpreadsheetCell cell,
@@ -162,6 +171,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     private final SpreadsheetCell cell;
 
+    @Override
+    public LocalDateTime now() {
+        return this.now.now();
+    }
+
     private final HasNow now;
 
     // DecimalNumberContext.............................................................................................
@@ -179,6 +193,50 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     private DecimalNumberContext decimalNumberContext;
 
+    // ExpressionEvaluationContextDelegator.............................................................................
+
+    @Override
+    public ExpressionEvaluationContext cloneEnvironment() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        Objects.requireNonNull(environmentContext, "environmentContext");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> ExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                               final T value) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(value, "value");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        Objects.requireNonNull(name, "name");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        Objects.requireNonNull(lineEnding, "lineEnding");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public TerminalExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        Objects.requireNonNull(user);
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionEvaluationContext expressionEvaluationContext() {
+        throw new UnsupportedOperationException();
+    }
+
     // LocaleContextDelegator...........................................................................................
 
     @Override
@@ -195,8 +253,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
 
     @Override
     public ExpressionEvaluationContext setLocale(final Locale locale) {
-        this.localeContext.setLocale(locale);
-        return this;
+        Objects.requireNonNull(locale, "locale");
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -205,6 +263,8 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     private final SpreadsheetMetadata metadata;
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

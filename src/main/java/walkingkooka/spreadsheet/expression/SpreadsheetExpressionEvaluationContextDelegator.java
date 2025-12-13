@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
@@ -52,7 +53,6 @@ import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextDe
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextDelegator;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -139,12 +139,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default Set<EnvironmentValueName<?>> environmentValueNames() {
-        return this.spreadsheetExpressionEvaluationContext()
-            .environmentValueNames();
-    }
-
-    @Override
     default SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
         this.storageExpressionEvaluationContext()
             .setLineEnding(lineEnding);
@@ -156,12 +150,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
         this.storageExpressionEvaluationContext()
             .setLocale(locale);
         return this;
-    }
-
-    @Override
-    default LocalDateTime now() {
-        return this.spreadsheetExpressionEvaluationContext()
-            .now();
     }
 
     @Override
@@ -197,6 +185,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................
+
+    @Override
+    default EnvironmentContext environmentContext() {
+        return this.spreadsheetEnvironmentContext();
+    }
 
     @Override
     default SpreadsheetExpressionEvaluationContext expressionEvaluationContext() {
