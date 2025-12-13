@@ -596,7 +596,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
                             @Override
                             public Object apply(final List<Object> values,
                                                 final SpreadsheetExpressionEvaluationContext context) {
-                                ExpressionFunctionParameter.NUMBER.getOrFail(values, 0, context);
+                                ExpressionFunctionParameter.NUMBER.getOrFail(values, 0);
                                 throw new UnsupportedOperationException();
                             }
                         };
