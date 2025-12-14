@@ -47,6 +47,7 @@ import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -189,6 +190,31 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
             .orElseThrow(
                 () -> SpreadsheetError.selectionNotFound(labelName).exception()
             );
+    }
+
+    /**
+     * Parses the given text into an {@link Expression} and then evaluates the {@link Expression} into a value.
+     * Thrown {@link Expression} should be converted into a {@link SpreadsheetError}.
+     */
+    default Optional<Object> evaluate(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        Object value;
+        try {
+            final SpreadsheetFormulaParserToken token = this.parseValueOrExpression(
+                TextCursors.charSequence(text)
+            );
+
+            value = this.evaluateExpression(
+                token.toExpressionOrFail(this)
+            );
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException exception) {
+            value = this.handleException(exception);
+        }
+
+        return Optional.ofNullable(value);
     }
 
     /**
