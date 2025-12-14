@@ -247,7 +247,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     }
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor expression) {
+    public SpreadsheetFormulaParserToken parseExpression(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
         final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();

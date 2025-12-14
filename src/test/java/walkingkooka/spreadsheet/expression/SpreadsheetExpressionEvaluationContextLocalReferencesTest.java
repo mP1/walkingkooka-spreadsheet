@@ -162,7 +162,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     }
 
     @Override
-    public void testParseFormulaNullFails() {
+    public void testParseExpressionNullFails() {
         throw new UnsupportedOperationException();
     }
 
