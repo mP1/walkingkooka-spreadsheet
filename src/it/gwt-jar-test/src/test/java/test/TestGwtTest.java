@@ -61,6 +61,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
@@ -292,8 +293,9 @@ public class TestGwtTest extends GWTTestCase {
             public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                               final Optional<SpreadsheetCell> cell) {
                 return Cast.to(
-                    SpreadsheetFormulaParsers.expression()
-                        .orFailIfCursorNotEmpty(ParserReporters.basic())
+                    SpreadsheetFormulaParsers.valueOrExpression(
+                            Parsers.never()
+                        ).orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                             formula,
                             metadata.spreadsheetParserContext(
