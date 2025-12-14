@@ -153,7 +153,9 @@ public final class SpreadsheetFormula implements CanBeEmpty,
             ).setToken(
                 token.map(t -> t.cast(SpreadsheetFormulaParserToken.class))
             );
-        } catch (final Exception cause) {
+        } catch (final UnsupportedOperationException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException cause) {
             text.end();
 
             formula = EMPTY.setText(
