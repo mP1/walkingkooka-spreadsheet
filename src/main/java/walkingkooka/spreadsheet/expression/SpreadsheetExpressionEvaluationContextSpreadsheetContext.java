@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -274,18 +275,45 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     public SpreadsheetFormulaParserToken parseExpression(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
-        final SpreadsheetParserContext parserContext = this.spreadsheetMetadata()
-            .spreadsheetParserContext(
-                this.cell,
-                this, // LocaleContext
-                this // now
-            );
+        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
 
         return SpreadsheetFormulaParsers.expression()
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(expression, parserContext)
             .get()
             .cast(SpreadsheetFormulaParserToken.class);
+    }
+
+    @Override
+    public SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor expression) {
+        Objects.requireNonNull(expression, "expression");
+
+        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
+
+        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(expression, parserContext)
+            .get()
+            .cast(SpreadsheetFormulaParserToken.class);
+    }
+
+    private SpreadsheetParser spreadsheetParser() {
+        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+
+        return this.spreadsheetMetadata()
+            .spreadsheetParser(
+                spreadsheetContext, // SpreadsheetParserProvider
+                spreadsheetContext.providerContext()
+            );
+    }
+
+    private SpreadsheetParserContext spreadsheetParserContext() {
+        return this.spreadsheetMetadata()
+            .spreadsheetParserContext(
+                this.cell,
+                this, // LocaleContext
+                this // now
+            );
     }
 
     /**

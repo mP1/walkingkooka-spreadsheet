@@ -122,6 +122,62 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
+    // parseValueOrExpression...........................................................................................
+
+    @Test
+    default void testParseValueOrExpressionNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .parseValueOrExpression(null)
+        );
+    }
+
+    default void parseValueOrExpressionAndCheck(final String valueOrExpression,
+                                                final SpreadsheetFormulaParserToken expected) {
+        this.parseValueOrExpressionAndCheck(
+            this.createContext(),
+            valueOrExpression,
+            expected
+        );
+    }
+
+    default void parseValueOrExpressionAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                                final String valueOrExpression,
+                                                final SpreadsheetFormulaParserToken expected) {
+        this.checkEquals(
+            expected,
+            context.parseValueOrExpression(
+                TextCursors.charSequence(valueOrExpression)
+            ),
+            () -> "parseValueOrExpression " + CharSequences.quoteAndEscape(valueOrExpression) + " with context " + context);
+    }
+
+    default void parseValueOrExpressionAndFail(final String valueOrExpression,
+                                               final String expected) {
+        this.parseValueOrExpressionAndFail(
+            this.createContext(),
+            valueOrExpression,
+            expected
+        );
+    }
+
+    default void parseValueOrExpressionAndFail(final SpreadsheetExpressionEvaluationContext context,
+                                               final String valueOrExpression,
+                                               final String expected) {
+        final RuntimeException thrown = assertThrows(
+            RuntimeException.class,
+            () -> context.parseValueOrExpression(
+                TextCursors.charSequence(valueOrExpression)
+            )
+        );
+        this.checkEquals(
+            expected,
+            thrown.getMessage(),
+            "message"
+        );
+    }
+
     // loadCell.........................................................................................................
 
     @Test

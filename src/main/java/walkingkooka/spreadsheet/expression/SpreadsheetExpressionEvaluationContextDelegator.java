@@ -227,6 +227,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor formula) {
+        return this.spreadsheetExpressionEvaluationContext()
+            .parseValueOrExpression(formula);
+    }
+
+    @Override
     default Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         return this.spreadsheetExpressionEvaluationContext()
             .loadCell(cell);

@@ -166,6 +166,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testParseValueOrExpressionNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testEvaluateFunctionContextReferenceWithLocalLabel() {
         this.checkEquals(
