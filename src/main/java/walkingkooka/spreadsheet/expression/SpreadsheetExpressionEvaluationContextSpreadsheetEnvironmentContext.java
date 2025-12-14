@@ -252,7 +252,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
         final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
 
-        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
+        return SpreadsheetFormulaParsers.expression()
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(expression, parserContext)
             .get()
