@@ -112,6 +112,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
             null, // formHandlerContext
             null, // JsonNodeMarshallContextObjectPostProcessor
             null, // JsonNodeUnmarshallContextPreProcessor
+            null, // SpreadsheetParser
             spreadsheetContext,
             terminalContext
         );
@@ -125,6 +126,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
                                                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                      final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                      final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
+                                                                     final SpreadsheetParser spreadsheetParser,
                                                                      final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                                      final SpreadsheetContext spreadsheetContext,
                                                                      final TerminalContext terminalContext) {
@@ -139,6 +141,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
         this.spreadsheetConverterContext = spreadsheetConverterContext; // may be null
         this.jsonNodeMarshallContextObjectPostProcessor = jsonNodeMarshallContextObjectPostProcessor;
         this.jsonNodeUnmarshallContextPreProcessor = jsonNodeUnmarshallContextPreProcessor;
+        this.spreadsheetParser = spreadsheetParser;
 
         this.formHandlerContext = formHandlerContext;
         this.spreadsheetContext = spreadsheetContext;
@@ -197,6 +200,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
                 null, // spreadsheetConverterContext  clear force recreate!
                 this.jsonNodeMarshallContextObjectPostProcessor,
                 this.jsonNodeUnmarshallContextPreProcessor,
+                null, // recreate SpreadsheetParser
                 this.formHandlerContext,
                 this.spreadsheetContext,
                 this.terminalContext
@@ -298,14 +302,19 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     }
 
     private SpreadsheetParser spreadsheetParser() {
-        final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
+        if (null == this.spreadsheetParser) {
+            final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-        return this.spreadsheetMetadata()
-            .spreadsheetParser(
-                spreadsheetContext, // SpreadsheetParserProvider
-                spreadsheetContext.providerContext()
-            );
+            this.spreadsheetParser = this.spreadsheetMetadata()
+                .spreadsheetParser(
+                    spreadsheetContext, // SpreadsheetParserProvider
+                    spreadsheetContext.providerContext()
+                );
+        }
+        return this.spreadsheetParser;
     }
+
+    private SpreadsheetParser spreadsheetParser;
 
     private SpreadsheetParserContext spreadsheetParserContext() {
         return this.spreadsheetMetadata()
@@ -519,6 +528,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
             this.expressionFunctionProvider,
             jsonNodeMarshallContextObjectPostProcessor,
             jsonNodeUnmarshallContextPreProcessor,
+            this.spreadsheetParser,
             this.formHandlerContext,
             this.spreadsheetContext,
             this.terminalContext
@@ -604,6 +614,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
                 this.expressionFunctionProvider,
                 this.jsonNodeMarshallContextObjectPostProcessor,
                 this.jsonNodeUnmarshallContextPreProcessor,
+                null, // re-create SpreadsheetParser
                 this.formHandlerContext,
                 spreadsheetContext,
                 this.terminalContext
