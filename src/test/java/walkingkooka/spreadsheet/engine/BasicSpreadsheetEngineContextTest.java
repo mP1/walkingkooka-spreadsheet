@@ -632,6 +632,57 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
+    @Test
+    public void testParseFormulaWithCellWithoutParser() {
+        final String text = "12:58:59";
+
+        this.parseFormulaAndCheck(
+            this.createContext(),
+            text,
+            Optional.of(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+            ),
+            SpreadsheetFormulaParserToken.time(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.seconds(59, "59")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseFormulaWithCellParser() {
+        final String text = "12::58::";
+
+        this.parseFormulaAndCheck(
+            this.createContext(),
+            text,
+            Optional.of(
+                SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                    .setParser(
+                        Optional.of(
+                            SpreadsheetPattern.parseTimeParsePattern("hh::mm::")
+                                .spreadsheetParserSelector()
+                        )
+                    )
+            ),
+            SpreadsheetFormulaParserToken.time(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("::", "::"),
+                    SpreadsheetFormulaParserToken.minute(58, "58"),
+                    SpreadsheetFormulaParserToken.textLiteral("::", "::")
+                ),
+                text
+            )
+        );
+    }
+
     // toExpression.....................................................................................................
 
     @Test
