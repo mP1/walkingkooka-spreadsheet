@@ -78,6 +78,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
+    public Object evaluate(final String expression) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetFormulaParserToken parseExpression(final TextCursor formula) {
         throw new UnsupportedOperationException();
     }

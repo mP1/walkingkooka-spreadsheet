@@ -178,37 +178,6 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
-    // evaluate.........................................................................................................
-
-    @Test
-    default void testEvaluateWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .evaluate(null)
-        );
-    }
-
-    default void evaluateAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                  final String text,
-                                  final Object expected) {
-        this.evaluateAndCheck(
-            context,
-            text,
-            Optional.of(expected)
-        );
-    }
-
-    default void evaluateAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                  final String text,
-                                  final Optional<Object> expected) {
-        this.checkEquals(
-            expected,
-            context.evaluate(text),
-            text
-        );
-    }
-
     // loadCell.........................................................................................................
 
     @Test
