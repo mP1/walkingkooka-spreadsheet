@@ -403,18 +403,18 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     // parseFormula.....................................................................................................
 
     @Test
-    public void testParseFormulaDateTimeFails() {
-        this.parseFormulaAndFail(
+    public void testParseExpressionDateTimeFails() {
+        this.parseExpressionAndFail(
             "1999/12/31 12:58",
             "Invalid character '1' at (12,1) expected EXPRESSION"
         );
     }
 
     @Test
-    public void testParseFormulaNumber() {
+    public void testParseExpressionNumber() {
         final String text = "123";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.number(
                 Lists.of(
@@ -426,26 +426,26 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     }
 
     @Test
-    public void testParseFormulaApostropheStringFails() {
-        this.parseFormulaAndFail(
+    public void testParseExpressionApostropheStringFails() {
+        this.parseExpressionAndFail(
             "'Hello",
             "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
     @Test
-    public void testParseFormulaTimeFails() {
-        this.parseFormulaAndFail(
+    public void testParseExpressionTimeFails() {
+        this.parseExpressionAndFail(
             "12:58:59",
             "Invalid character ':' at (3,1) expected EXPRESSION"
         );
     }
 
     @Test
-    public void testParseFormulaWithDoubleQuotedString() {
+    public void testParseExpressionWithDoubleQuotedString() {
         final String text = "\"Hello\"";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.text(
                 Lists.of(
@@ -459,10 +459,10 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     }
 
     @Test
-    public void testParseFormulaWithAdditionExpression() {
+    public void testParseExpressionWithAdditionExpression() {
         final String text = "1+2";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             text,
 
             SpreadsheetFormulaParserToken.addition(

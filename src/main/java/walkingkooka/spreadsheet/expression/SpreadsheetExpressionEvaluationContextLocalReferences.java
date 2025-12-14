@@ -189,8 +189,8 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     // ExpressionEvaluationContext......................................................................................
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor cursor) {
-        return this.context.parseFormula(cursor);
+    public SpreadsheetFormulaParserToken parseExpression(final TextCursor cursor) {
+        return this.context.parseExpression(cursor);
     }
 
     @Override

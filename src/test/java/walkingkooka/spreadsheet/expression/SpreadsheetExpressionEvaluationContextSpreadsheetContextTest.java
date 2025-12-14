@@ -327,11 +327,11 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     // parseFormula.....................................................................................................
 
     @Test
-    public void testParseFormulaQuotedString() {
+    public void testParseExpressionQuotedString() {
         final String text = "abc123";
         final String expression = '"' + text + '"';
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             expression,
             SpreadsheetFormulaParserToken.text(
                 Lists.of(
@@ -345,10 +345,10 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     }
 
     @Test
-    public void testParseFormulaNumber() {
+    public void testParseExpressionNumber() {
         final String text = "123";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.number(
                 Lists.of(
@@ -362,10 +362,10 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     private final static char DECIMAL = '.';
 
     @Test
-    public void testParseFormulaNumber2() {
+    public void testParseExpressionNumber2() {
         final String text = "1" + DECIMAL + "5";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.number(
                 Lists.of(
@@ -379,10 +379,10 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     }
 
     @Test
-    public void testParseFormulaAdditionExpression() {
+    public void testParseExpressionAdditionExpression() {
         final String text = "1+2";
 
-        this.parseFormulaAndCheck(
+        this.parseExpressionAndCheck(
             text,
             SpreadsheetFormulaParserToken.addition(
                 Lists.of(
@@ -406,10 +406,10 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     }
 
     @Test
-    public void testParseFormulaEqualsAdditionExpressionFails() {
+    public void testParseExpressionEqualsAdditionExpressionFails() {
         final String text = "=1+2";
 
-        this.parseFormulaAndFail(
+        this.parseExpressionAndFail(
             text,
             "Invalid character '=' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );

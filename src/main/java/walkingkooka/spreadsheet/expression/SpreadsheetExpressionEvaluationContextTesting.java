@@ -68,49 +68,49 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     // parseExpression......................................................................................................
 
     @Test
-    default void testParseFormulaNullFails() {
+    default void testParseExpressionNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .parseFormula(null)
+                .parseExpression(null)
         );
     }
 
-    default void parseFormulaAndCheck(final String formula,
-                                      final SpreadsheetFormulaParserToken expected) {
-        this.parseFormulaAndCheck(
+    default void parseExpressionAndCheck(final String formula,
+                                         final SpreadsheetFormulaParserToken expected) {
+        this.parseExpressionAndCheck(
             this.createContext(),
             formula,
             expected
         );
     }
 
-    default void parseFormulaAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                      final String formula,
-                                      final SpreadsheetFormulaParserToken expected) {
+    default void parseExpressionAndCheck(final SpreadsheetExpressionEvaluationContext context,
+                                         final String formula,
+                                         final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
             expected,
-            context.parseFormula(
+            context.parseExpression(
                 TextCursors.charSequence(formula)
             ),
             () -> "parseFormula " + formula + " with context " + context);
     }
 
-    default void parseFormulaAndFail(final String formula,
-                                     final String expected) {
-        this.parseFormulaAndFail(
+    default void parseExpressionAndFail(final String formula,
+                                        final String expected) {
+        this.parseExpressionAndFail(
             this.createContext(),
             formula,
             expected
         );
     }
 
-    default void parseFormulaAndFail(final SpreadsheetExpressionEvaluationContext context,
-                                     final String formula,
-                                     final String expected) {
+    default void parseExpressionAndFail(final SpreadsheetExpressionEvaluationContext context,
+                                        final String formula,
+                                        final String expected) {
         final RuntimeException thrown = assertThrows(
             RuntimeException.class,
-            () -> context.parseFormula(
+            () -> context.parseExpression(
                 TextCursors.charSequence(formula)
             )
         );

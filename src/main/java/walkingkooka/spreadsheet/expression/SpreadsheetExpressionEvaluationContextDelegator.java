@@ -221,9 +221,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetExpressionEvaluationContext...........................................................................
 
     @Override
-    default SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    default SpreadsheetFormulaParserToken parseExpression(final TextCursor formula) {
         return this.spreadsheetExpressionEvaluationContext()
-            .parseFormula(formula);
+            .parseExpression(formula);
     }
 
     @Override

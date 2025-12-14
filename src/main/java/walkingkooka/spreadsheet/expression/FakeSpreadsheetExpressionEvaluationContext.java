@@ -78,7 +78,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula) {
+    public SpreadsheetFormulaParserToken parseExpression(final TextCursor formula) {
         throw new UnsupportedOperationException();
     }
 
