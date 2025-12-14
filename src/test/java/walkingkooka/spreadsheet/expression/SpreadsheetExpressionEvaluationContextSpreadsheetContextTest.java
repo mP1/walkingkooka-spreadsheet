@@ -74,6 +74,9 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProvider;
 
 import java.math.MathContext;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -700,6 +703,87 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
             Cast.to(
                 SpreadsheetErrorKind.VALUE.setMessage("HelloFunction: Missing parameter(s): date-time, time")
             )
+        );
+    }
+
+    // evaluate.........................................................................................................
+
+    @Test
+    public void testEvaluateIncompleteExpressionFails() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "=1+",
+            SpreadsheetErrorKind.ERROR.setMessage(
+                "End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateApostrophe() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "'Hello",
+            "Hello"
+        );
+    }
+
+    @Test
+    public void testEvaluateDate() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "1999/12/31",
+            LocalDate.of(
+                1999,
+                12,
+                31
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateDateTime() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "1999/12/31 12:58",
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                58
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateNumberValue() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "123.5",
+            EXPRESSION_NUMBER_KIND.create(123.5)
+        );
+    }
+
+    @Test
+    public void testEvaluateTime() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "12:58:59",
+            LocalTime.of(
+                12,
+                58,
+                59
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateExpression() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "=1+2",
+            EXPRESSION_NUMBER_KIND.create(3)
         );
     }
 
