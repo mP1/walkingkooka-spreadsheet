@@ -249,8 +249,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 )
             );
 
-        return SpreadsheetFormulaParsers.valueOrExpression(parser)
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
+        return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 formula,
                 this.metadata.spreadsheetParserContext(
