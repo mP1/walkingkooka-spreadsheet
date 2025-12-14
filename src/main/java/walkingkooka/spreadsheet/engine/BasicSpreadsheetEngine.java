@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadshe
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -1644,33 +1643,26 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 SpreadsheetFormulaParserToken token = formula.token()
                     .orElse(null);
                 if (null == token) {
-                    final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
-                    final ProviderContext providerContext = context.providerContext();
+                    try {
+                        token = context.parseFormula(
+                            TextCursors.charSequence(formulaText),
+                            Optional.of(cell)
+                        );
+                        formula = SpreadsheetFormula.EMPTY.setText(
+                            formulaText
+                        );
+                    } catch (final UnsupportedOperationException rethrow) {
+                        throw rethrow;
+                    } catch (final RuntimeException cause) {
+                        formula = SpreadsheetFormula.EMPTY.setText(
+                            formulaText
+                        ).setValue(
+                            Optional.of(
+                                SpreadsheetErrorKind.translate(cause)
+                            )
+                        );
+                    }
 
-                    formula = SpreadsheetFormula.parse(
-                        TextCursors.charSequence(formulaText),
-                        cell.parser()
-                            .map(p -> context.spreadsheetParser(
-                                    p,
-                                    providerContext
-                                )
-                            ).orElseGet(
-                                () -> SpreadsheetFormulaParsers.valueOrExpression(
-                                    metadata.spreadsheetParser(
-                                        context, // SpreadsheetParserProvider
-                                        providerContext
-                                    ) // SpreadsheetEngineContext implements SpreadsheetParserProvider
-                                )
-                            ),
-                        metadata.spreadsheetParserContext(
-                            Optional.of(cell),
-                            context,
-                            context
-                        )
-                    );
-
-                    token = formula.token()
-                        .orElse(null);
                 }
                 if (null != token) {
                     token = postTokenHandler.apply(token);
