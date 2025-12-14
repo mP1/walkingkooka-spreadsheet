@@ -259,6 +259,19 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
             .cast(SpreadsheetFormulaParserToken.class);
     }
 
+    @Override
+    public SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor expression) {
+        Objects.requireNonNull(expression, "expression");
+
+        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
+
+        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
+            .orFailIfCursorNotEmpty(ParserReporters.basic())
+            .parse(expression, parserContext)
+            .get()
+            .cast(SpreadsheetFormulaParserToken.class);
+    }
+
     private ExpressionNumberContext expressionNumberContext() {
         if (null == this.expressionNumberContext) {
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;

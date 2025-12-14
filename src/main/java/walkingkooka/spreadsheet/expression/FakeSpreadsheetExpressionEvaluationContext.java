@@ -83,6 +83,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
+    public SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor formula) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         throw new UnsupportedOperationException();
     }

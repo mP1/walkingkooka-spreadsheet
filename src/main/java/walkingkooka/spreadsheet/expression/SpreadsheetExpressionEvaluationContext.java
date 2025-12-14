@@ -199,6 +199,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      */
     SpreadsheetFormulaParserToken parseExpression(final TextCursor formula);
 
+    /**
+     * Parses the given {@link TextCursor} which may contain value literals or expression preceeded by equals sign.
+     */
+    SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor formula);
+
     // formatting.......................................................................................................
 
     /**

@@ -476,6 +476,168 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         );
     }
 
+    // parseValueOrExpression...........................................................................................
+
+    @Test
+    public void testParseValueOrExpressionDoubleQuotedStringFails() {
+        this.parseValueOrExpressionAndFail(
+            "\"abc123\"",
+            "Invalid character '\\\"' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionDate() {
+        final String text = "1999/12/31";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.date(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.year(1999, "1999"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.dayNumber(31, "31")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionDateTime() {
+        final String text = "1999/12/31 12:58";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.dateTime(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.year(1999, "1999"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
+                    SpreadsheetFormulaParserToken.dayNumber(31, "31"),
+                    SpreadsheetFormulaParserToken.whitespace(" ", " "),
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionNumber() {
+        final String text = "123";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.number(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.digits(text, text)
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionNumber2() {
+        final String text = "1" + DECIMAL + "5";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.number(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.digits("1", "1"),
+                    SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
+                    SpreadsheetFormulaParserToken.digits("5", "5")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionApostropheString() {
+        final String text = "'Hello";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.text(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
+                    SpreadsheetFormulaParserToken.textLiteral("Hello", "Hello")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionTime() {
+        final String text = "12:58:59";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.time(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.hour(12, "12"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.minute(58, "58"),
+                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
+                    SpreadsheetFormulaParserToken.seconds(59, "59")
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionEqualsAdditionExpression() {
+        final String text = "=1+2";
+
+        this.parseValueOrExpressionAndCheck(
+            text,
+            SpreadsheetFormulaParserToken.expression(
+                Lists.of(
+                    SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
+                    SpreadsheetFormulaParserToken.addition(
+                        Lists.of(
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits("1", "1")
+                                ),
+                                "1"
+                            ),
+                            SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
+                            SpreadsheetFormulaParserToken.number(
+                                Lists.of(
+                                    SpreadsheetFormulaParserToken.digits("2", "2")
+                                ),
+                                "2"
+                            )
+                        ),
+                        "1+2"
+                    )
+                ),
+                text
+            )
+        );
+    }
+
+    @Test
+    public void testParseValueOrExpressionAdditionExpressionFails() {
+        final String text = "1+2";
+
+        this.parseValueOrExpressionAndFail(
+            text,
+            "Invalid character '1' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
+        );
+    }
+
     // evaluateFunction.................................................................................................
 
     @Test
