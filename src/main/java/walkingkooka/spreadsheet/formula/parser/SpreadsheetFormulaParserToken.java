@@ -1298,6 +1298,15 @@ public abstract class SpreadsheetFormulaParserToken implements ParserToken {
         );
     }
 
+    /**
+     * Throws an {@link IllegalStateException} if this {@link SpreadsheetFormulaParserToken} cannot be converted into an
+     * {@link Expression}, which can happen for symbols like a {@link WhitespaceSpreadsheetFormulaParserToken}.
+     */
+    public final Expression toExpressionOrFail(final ExpressionEvaluationContext context) {
+        return this.toExpression(context)
+            .orElseThrow(() -> new IllegalStateException("Unable to make Expression from token"));
+    }
+
     // Object ...........................................................................................................
 
     @Override

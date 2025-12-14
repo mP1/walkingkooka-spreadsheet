@@ -97,8 +97,7 @@ final class SpreadsheetTemplateContext implements TemplateContext {
         return Templates.expression(
             formula.token()
                 .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
-                .toExpression(this.spreadsheetExpressionEvaluationContext)
-                .orElseThrow(() -> new IllegalArgumentException("Failed to parse expression"))
+                .toExpressionOrFail(this.spreadsheetExpressionEvaluationContext)
         );
     }
 

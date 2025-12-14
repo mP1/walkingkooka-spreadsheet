@@ -61,14 +61,14 @@ final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTex
                     context.valueSeparator()
                 )
             ).cast(SpreadsheetFormulaParserToken.class)
-            .toExpression(
+            .toExpressionOrFail(
                 new FakeSpreadsheetExpressionEvaluationContext() {
                     @Override
                     public ExpressionNumberKind expressionNumberKind() {
                         return context.expressionNumberKind();
                     }
                 }
-            ).get();
+            );
     }
 
     @Override
