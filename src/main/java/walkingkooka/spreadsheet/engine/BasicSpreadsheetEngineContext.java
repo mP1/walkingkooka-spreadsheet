@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
@@ -231,12 +232,24 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public SpreadsheetFormulaParserToken parseFormula(final TextCursor formula,
                                                       final Optional<SpreadsheetCell> cell) {
-        return SpreadsheetFormulaParsers.valueOrExpression(
-                this.metadata.spreadsheetParser(
-                    this, // SpreadsheetParserProvider
-                    this.spreadsheetContext.providerContext()
+        Objects.requireNonNull(formula, "formula");
+        Objects.requireNonNull(cell, "cell");
+
+        final SpreadsheetParser parser = cell.flatMap(SpreadsheetCell::parserSelector)
+            .map(s -> this.spreadsheetParser(
+                    s,
+                    this.providerContext()
                 )
-            )
+            ).orElse(
+                SpreadsheetFormulaParsers.valueOrExpression(
+                    this.metadata.spreadsheetParser(
+                        this, // SpreadsheetParserProvider
+                        this.spreadsheetContext.providerContext()
+                    )
+                )
+            );
+
+        return SpreadsheetFormulaParsers.valueOrExpression(parser)
             .orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 formula,
