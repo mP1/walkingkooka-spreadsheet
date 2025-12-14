@@ -114,6 +114,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
             null, // JsonNodeUnmarshallContextPreProcessor
             null, // SpreadsheetParser
             spreadsheetContext,
+            null, // SpreadsheetParserContext
             terminalContext
         );
     }
@@ -129,6 +130,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
                                                                      final SpreadsheetParser spreadsheetParser,
                                                                      final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
                                                                      final SpreadsheetContext spreadsheetContext,
+                                                                     final SpreadsheetParserContext spreadsheetParserContext,
                                                                      final TerminalContext terminalContext) {
         super();
         this.mode = mode;
@@ -145,6 +147,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
 
         this.formHandlerContext = formHandlerContext;
         this.spreadsheetContext = spreadsheetContext;
+        this.spreadsheetParserContext = spreadsheetParserContext;
         this.terminalContext = terminalContext;
     }
 
@@ -184,8 +187,10 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
         // TODO maybe should clear parsed cell formulas.
         this.spreadsheetContext.saveMetadata(metadata);
 
+        // re-create these instances which use SpreadsheetMetadata properties
         this.spreadsheetConverterContext = null;
         this.expressionFunctionProvider = null;
+        this.spreadsheetParserContext = null;
     }
 
     private SpreadsheetExpressionEvaluationContextSpreadsheetContext setMode(final SpreadsheetMetadataMode mode) {
@@ -203,6 +208,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
                 null, // recreate SpreadsheetParser
                 this.formHandlerContext,
                 this.spreadsheetContext,
+                null, // re-create SpreadsheetParserContext
                 this.terminalContext
             );
     }
@@ -317,13 +323,18 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     private SpreadsheetParser spreadsheetParser;
 
     private SpreadsheetParserContext spreadsheetParserContext() {
-        return this.spreadsheetMetadata()
-            .spreadsheetParserContext(
-                this.cell,
-                this, // LocaleContext
-                this // now
-            );
+        if (null == this.spreadsheetParserContext) {
+            this.spreadsheetParserContext = this.spreadsheetMetadata()
+                .spreadsheetParserContext(
+                    this.cell,
+                    this, // LocaleContext
+                    this // now
+                );
+        }
+        return this.spreadsheetParserContext;
     }
+
+    private SpreadsheetParserContext spreadsheetParserContext;
 
     /**
      * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever the {@link SpreadsheetMetadata} changes.
@@ -531,6 +542,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
             this.spreadsheetParser,
             this.formHandlerContext,
             this.spreadsheetContext,
+            this.spreadsheetParserContext,
             this.terminalContext
         );
     }
@@ -617,6 +629,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
                 null, // re-create SpreadsheetParser
                 this.formHandlerContext,
                 spreadsheetContext,
+                null, // re-create SpreadsheetParserContext
                 this.terminalContext
             );
     }
