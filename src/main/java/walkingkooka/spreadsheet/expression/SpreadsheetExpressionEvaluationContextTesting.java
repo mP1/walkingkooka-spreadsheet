@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting;
@@ -65,7 +66,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
-    // parseExpression......................................................................................................
+    // parseExpression..................................................................................................
 
     @Test
     default void testParseExpressionNullFails() {
@@ -86,32 +87,32 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     }
 
     default void parseExpressionAndCheck(final SpreadsheetExpressionEvaluationContext context,
-                                         final String formula,
+                                         final String expression,
                                          final SpreadsheetFormulaParserToken expected) {
         this.checkEquals(
             expected,
             context.parseExpression(
-                TextCursors.charSequence(formula)
+                TextCursors.charSequence(expression)
             ),
-            () -> "parseFormula " + formula + " with context " + context);
+            () -> "parseExpression " + CharSequences.quoteAndEscape(expression) + " with context " + context);
     }
 
-    default void parseExpressionAndFail(final String formula,
+    default void parseExpressionAndFail(final String expression,
                                         final String expected) {
         this.parseExpressionAndFail(
             this.createContext(),
-            formula,
+            expression,
             expected
         );
     }
 
     default void parseExpressionAndFail(final SpreadsheetExpressionEvaluationContext context,
-                                        final String formula,
+                                        final String expression,
                                         final String expected) {
         final RuntimeException thrown = assertThrows(
             RuntimeException.class,
             () -> context.parseExpression(
-                TextCursors.charSequence(formula)
+                TextCursors.charSequence(expression)
             )
         );
         this.checkEquals(
