@@ -3929,6 +3929,9 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
             spreadsheetFormulaParserToken.toExpression(
                     ExpressionEvaluationContexts.basic(
                         ExpressionNumberKind.DEFAULT,
+                        (e, c) -> {
+                            throw new UnsupportedOperationException();
+                        },
                         (n) -> {
                             throw new UnsupportedOperationException();
                         },

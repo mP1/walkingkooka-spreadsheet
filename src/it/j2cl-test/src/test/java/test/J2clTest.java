@@ -338,6 +338,9 @@ public class J2clTest {
                     cell,
                     ExpressionEvaluationContexts.basic(
                         EXPRESSION_NUMBER_KIND,
+                        (e, c) -> {
+                            throw new UnsupportedOperationException();
+                        },
                         n -> ExpressionFunctionProviders.fake()
                             .expressionFunction(
                                 n,

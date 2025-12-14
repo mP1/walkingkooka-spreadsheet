@@ -221,6 +221,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetExpressionEvaluationContext...........................................................................
 
     @Override
+    default Object evaluate(final String expression) {
+        return SpreadsheetExpressionEvaluationContext.super.evaluate(expression);
+    }
+
+    @Override
     default SpreadsheetFormulaParserToken parseExpression(final TextCursor formula) {
         return this.spreadsheetExpressionEvaluationContext()
             .parseExpression(formula);

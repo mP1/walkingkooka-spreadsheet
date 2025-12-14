@@ -196,7 +196,8 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * Parses the given text into an {@link Expression} and then evaluates the {@link Expression} into a value.
      * Thrown {@link Expression} should be converted into a {@link SpreadsheetError}.
      */
-    default Optional<Object> evaluate(final String text) {
+    @Override
+    default Object evaluate(final String text) {
         Objects.requireNonNull(text, "text");
 
         Object value;
@@ -214,7 +215,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
             value = this.handleException(exception);
         }
 
-        return Optional.ofNullable(value);
+        return value;
     }
 
     /**
