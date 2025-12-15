@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.text.CharSequences;
@@ -33,7 +34,7 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetPatternSpreadsheetFormatter} that converts any given value to a {@link ExpressionNumber} and then proceeds to format.
- * Formatting as a scientific number is controlled by {@link SpreadsheetFormatterContext#generalFormatNumberDigitCount}.
+ * Formatting as a scientific number is controlled by {@link ConverterContext#decimalNumberDigitCount()}.
  */
 final class SpreadsheetPatternSpreadsheetFormatterGeneral implements SpreadsheetPatternSpreadsheetFormatter {
 
