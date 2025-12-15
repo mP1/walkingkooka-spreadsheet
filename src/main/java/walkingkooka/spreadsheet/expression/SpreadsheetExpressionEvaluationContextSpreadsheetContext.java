@@ -613,7 +613,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     }
 
     private SpreadsheetExpressionEvaluationContext setSpreadsheetContext(final SpreadsheetContext spreadsheetContext) {
-        final SpreadsheetContext before = this.spreadsheetContext;;
+        final SpreadsheetContext before = this.spreadsheetContext;
 
         return before == spreadsheetContext ?
             this :
