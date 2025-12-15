@@ -420,7 +420,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
     }
 
-    final class TestSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetExpressionEvaluationContext {
+    final static class TestSpreadsheetExpressionEvaluationContext extends FakeSpreadsheetExpressionEvaluationContext {
 
         TestSpreadsheetExpressionEvaluationContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
             this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
