@@ -1644,7 +1644,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             this.metadata = METADATA;
             this.storeRepository = REPO;
 
-            this.environmentContext = environmentContext;;
+            this.environmentContext = environmentContext;
             this.localeContext = LOCALE_CONTEXT;
             this.providerContext = PROVIDER_CONTEXT;
         }
