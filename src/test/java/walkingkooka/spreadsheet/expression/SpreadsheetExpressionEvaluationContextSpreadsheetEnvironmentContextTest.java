@@ -1110,45 +1110,9 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     );
 
     @Override
-    public void testExpressionFunctionWithNullFunctionNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testIsPureNullNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testLoadLabelWithNullLabelFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testEnvironmentValueWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testRemoveEnvironmentValueWithNullNameFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testSetLocaleWithDifferent() {
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public void testUserNotNull() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testValidateFormWithNullFormFieldsFails() {
-        throw new UnsupportedOperationException();
-    }
-
 
     // Class............................................................................................................
 
