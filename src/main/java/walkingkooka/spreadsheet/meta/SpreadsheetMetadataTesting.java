@@ -475,11 +475,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         }
     );
 
-    TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.basic(
-        () -> {
-            throw new UnsupportedOperationException();
-        }
-    );
+    TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.fake();
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
