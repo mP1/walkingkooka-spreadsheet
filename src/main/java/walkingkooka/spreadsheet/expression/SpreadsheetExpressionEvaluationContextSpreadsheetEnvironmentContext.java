@@ -184,6 +184,8 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
             this.jsonNodeMarshallContext = null;
             this.jsonNodeUnmarshallContext = null;
             this.mathContext = null;
+            this.spreadsheetParser = null;
+            this.spreadsheetParserContext = null;
             this.spreadsheetConverterContext = null;
         }
     }
