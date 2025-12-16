@@ -320,7 +320,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
         return this.spreadsheetParser;
     }
 
-    private SpreadsheetParser spreadsheetParser;
+    private transient SpreadsheetParser spreadsheetParser;
 
     private SpreadsheetParserContext spreadsheetParserContext() {
         if (null == this.spreadsheetParserContext) {
