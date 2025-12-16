@@ -50,7 +50,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -119,40 +118,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     EnvironmentContextDelegator,
     SpreadsheetConverterContextDelegator,
     TerminalContextDelegator {
-
-    final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with("converter");
-
-    final static EnvironmentValueName<SpreadsheetParserSelector> DATE_PARSER = SpreadsheetMetadataPropertyName.DATE_PARSER.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Long> DATE_TIME_OFFSET = SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName();
-
-    final static EnvironmentValueName<SpreadsheetParserSelector> DATE_TIME_PARSER = SpreadsheetMetadataPropertyName.DATE_TIME_PARSER.toEnvironmentValueName();
-
-    final static EnvironmentValueName<DateTimeSymbols> DATE_TIME_SYMBOLS = SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Integer> DECIMAL_NUMBER_DIGIT_COUNT = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT.toEnvironmentValueName();
-
-    final static EnvironmentValueName<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Integer> DEFAULT_YEAR = SpreadsheetMetadataPropertyName.DEFAULT_YEAR.toEnvironmentValueName();
-
-    final static EnvironmentValueName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName();
-
-    final static EnvironmentValueName<ExpressionFunctionAliasSet> FUNCTIONS = SpreadsheetMetadataPropertyName.FUNCTIONS.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Locale> LOCALE = EnvironmentContext.LOCALE;
-
-    final static EnvironmentValueName<SpreadsheetParserSelector> NUMBER_PARSER = SpreadsheetMetadataPropertyName.NUMBER_PARSER.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Integer> PRECISION = SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName();
-
-    final static EnvironmentValueName<RoundingMode> ROUNDING_MODE = SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName();
-
-    final static EnvironmentValueName<SpreadsheetParserSelector> TIME_PARSER = SpreadsheetMetadataPropertyName.TIME_PARSER.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Integer> TWO_DIGIT_YEAR = SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName();
-
-    final static EnvironmentValueName<Character> VALUE_SEPARATOR = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName();
 
     static SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext with(final LocaleContext localeContext,
                                                                                     final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,

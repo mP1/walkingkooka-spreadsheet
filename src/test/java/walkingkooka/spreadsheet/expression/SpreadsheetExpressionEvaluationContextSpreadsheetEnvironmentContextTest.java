@@ -80,7 +80,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
         try {
             SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            for (final Field field : SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.class.getDeclaredFields()) {
+            for (final Field field : SpreadsheetExpressionEvaluationContext.class.getDeclaredFields()) {
                 if (false == FieldAttributes.STATIC.is(field)) {
                     continue;
                 }
@@ -91,7 +91,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
                     field.get(null)
                 );
 
-                if(name.equals(SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.CONVERTER)) {
+                if(name.equals(SpreadsheetExpressionEvaluationContext.CONVERTER)) {
                     continue;
                 }
 
@@ -106,12 +106,12 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
             }
 
             SPREADSHEET_ENVIRONMENT_CONTEXT = context.setEnvironmentValue(
-                SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.CONVERTER,
+                SpreadsheetExpressionEvaluationContext.CONVERTER,
                 METADATA_EN_AU.getOrFail(
                     SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
                 )
             ).setEnvironmentValue(
-                SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.DECIMAL_NUMBER_DIGIT_COUNT,
+                SpreadsheetExpressionEvaluationContext.DECIMAL_NUMBER_DIGIT_COUNT,
                 DECIMAL_NUMBER_DIGIT_COUNT
             );
         } catch (final Exception cause) {
@@ -997,7 +997,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
         return createContext(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 .setEnvironmentValue(
-                    SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.FUNCTIONS,
+                    SpreadsheetExpressionEvaluationContext.FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
                 ),
             expressionFunctionProvider,
