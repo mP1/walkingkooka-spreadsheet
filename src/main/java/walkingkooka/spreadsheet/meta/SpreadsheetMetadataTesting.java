@@ -114,6 +114,8 @@ import java.util.function.Function;
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends Testing {
 
+    int DECIMAL_NUMBER_DIGIT_COUNT = 8;
+
     ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
     /**
@@ -233,7 +235,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             DATE_TIME_SYMBOLS
         ).set(
             SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT,
-            8
+            DECIMAL_NUMBER_DIGIT_COUNT
         ).set(
             SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
             DECIMAL_NUMBER_SYMBOLS
