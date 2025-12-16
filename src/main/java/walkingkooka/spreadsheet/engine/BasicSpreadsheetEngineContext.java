@@ -67,7 +67,6 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
@@ -301,8 +300,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     private final SpreadsheetMetadataMode mode;
 
-    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
-
     private final TerminalContext terminalContext;
 
     @Override
@@ -464,7 +461,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             this.metadata = saved;
 
             // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, CanConvert
-            this.expressionFunctionProvider = null;
             this.canConvert = null;
         }
         return saved;
@@ -475,7 +471,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.spreadsheetContext.deleteMetadata(id);
         if (this.spreadsheetId().equals(id)) {
             this.metadata = null;
-            this.expressionFunctionProvider = null;
             this.canConvert = null;
         }
     }
