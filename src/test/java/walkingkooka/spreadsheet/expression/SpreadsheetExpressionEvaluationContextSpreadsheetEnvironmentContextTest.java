@@ -61,6 +61,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.lang.reflect.Field;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -68,6 +69,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext>,
@@ -981,6 +983,48 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
                 .spreadsheetFormatterContext(
                     SpreadsheetExpressionEvaluationContext.NO_CELL
                 )
+        );
+    }
+
+    // EnvironmentValueName.............................................................................................
+
+    @Test
+    public void testFireEnvironmentValueNameChangeWithRoundingMode() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .setEnvironmentValue(
+                SpreadsheetExpressionEvaluationContext.FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
+            );
+
+        final SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
+
+        final DecimalNumberContext decimalNumberContext = context.decimalNumberContext();
+
+        RoundingMode roundingMode = RoundingMode.UP;
+        if (roundingMode == decimalNumberContext.mathContext()
+            .getRoundingMode()) {
+            roundingMode = RoundingMode.CEILING;
+        }
+
+        this.setEnvironmentValueAndCheck(
+            context,
+            SpreadsheetExpressionEvaluationContext.ROUNDING_MODE,
+            roundingMode
+        );
+
+        final DecimalNumberContext decimalNumberContext2 = context.decimalNumberContext();
+
+        assertNotSame(
+            decimalNumberContext,
+            decimalNumberContext2,
+            "DecimalNumberCoontext should have been recreated with new RoundingMode"
+        );
+
+        this.checkEquals(
+            roundingMode,
+            decimalNumberContext2.mathContext()
+                .getRoundingMode(),
+            "DecimalNumberContext.roundingMode"
         );
     }
 
