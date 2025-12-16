@@ -77,7 +77,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
 
     @Override
     default LocaleContext localeContext() {
-        return this.spreadsheetConverterContext();
+        return this.spreadsheetExpressionEvaluationContext();
     }
 
     @Override
@@ -89,7 +89,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
 
     @Override
     default Locale locale() {
-        return this.spreadsheetConverterContext()
+        return this.spreadsheetExpressionEvaluationContext()
             .locale();
     }
 
@@ -105,7 +105,8 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
 
     @Override
     default ExpressionNumberKind expressionNumberKind() {
-        return SpreadsheetConverterContextDelegator.super.expressionNumberKind();
+        return spreadsheetExpressionEvaluationContext()
+            .expressionNumberKind();
     }
 
     @Override
@@ -148,7 +149,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
 
     @Override
     default SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.storageExpressionEvaluationContext()
+        this.spreadsheetExpressionEvaluationContext()
             .setLocale(locale);
         return this;
     }
@@ -180,7 +181,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
 
     @Override
     default SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.storageExpressionEvaluationContext()
+        this.spreadsheetExpressionEvaluationContext()
             .setUser(user);
         return this;
     }
