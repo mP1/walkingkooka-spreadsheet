@@ -279,7 +279,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
     /**
      * Lazily created using {@link #mode} to select a {@link SpreadsheetMetadata}.
      */
-    private SpreadsheetConverterContext spreadsheetConverterContext;
+    private transient SpreadsheetConverterContext spreadsheetConverterContext;
 
     @Override
     public SpreadsheetFormulaParserToken parseExpression(final TextCursor expression) {
@@ -334,7 +334,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
         return this.spreadsheetParserContext;
     }
 
-    private SpreadsheetParserContext spreadsheetParserContext;
+    private transient SpreadsheetParserContext spreadsheetParserContext;
 
     /**
      * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever the {@link SpreadsheetMetadata} changes.
@@ -350,7 +350,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetContext implements 
         return this.expressionFunctionProvider;
     }
 
-    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
+    private transient ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
