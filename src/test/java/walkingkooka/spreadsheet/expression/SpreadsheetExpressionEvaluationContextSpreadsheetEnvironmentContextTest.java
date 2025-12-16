@@ -1135,16 +1135,6 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
     }
 
     @Override
-    public void testLoadFormFieldValueWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveFormFieldValuesWithNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testSetLocaleWithDifferent() {
         throw new UnsupportedOperationException();
     }
@@ -1159,10 +1149,6 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentC
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testValidatorContextWithNullReferenceFails() {
-        throw new UnsupportedOperationException();
-    }
 
     // Class............................................................................................................
 
