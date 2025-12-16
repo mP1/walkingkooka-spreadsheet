@@ -175,7 +175,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Will be updated whenever a new metadata is saved.
      */
-    private SpreadsheetMetadata metadata;
+    private transient SpreadsheetMetadata metadata;
 
     // CanConvertDelegator..............................................................................................
 
