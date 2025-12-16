@@ -166,6 +166,26 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         this.spreadsheetProvider = spreadsheetProvider;
 
         this.providerContext = providerContext;
+
+        spreadsheetEnvironmentContext.addEventValueWatcher(this::onEnvironmentValueName);
+    }
+
+    /**
+     * If one of the core component {@link EnvironmentValueName} changes clear the cached properties so that component will be re-created.
+     */
+    private void onEnvironmentValueName(final EnvironmentValueName<?> name,
+                                        final Optional<?> oldValue,
+                                        final Optional<?> newValue) {
+        if (SpreadsheetExpressionEvaluationContext.isSpreadsheetEnvironmentContextEnvironmentValueName(name)) {
+            this.converter = null;
+            this.dateTimeContext = null;
+            this.decimalNumberContext = null;
+            this.expressionNumberContext = null;
+            this.jsonNodeMarshallContext = null;
+            this.jsonNodeUnmarshallContext = null;
+            this.mathContext = null;
+            this.spreadsheetConverterContext = null;
+        }
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
