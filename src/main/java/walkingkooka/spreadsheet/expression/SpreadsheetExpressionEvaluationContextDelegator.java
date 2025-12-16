@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -182,6 +183,11 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
         this.storageExpressionEvaluationContext()
             .setUser(user);
         return this;
+    }
+
+    @Override
+    default SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.spreadsheetExpressionEvaluationContext();
     }
 
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................

@@ -23,7 +23,6 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -269,11 +268,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             Objects.requireNonNull(environmentContext, "environmentContext");
 
             return new TestSpreadsheetExpressionEvaluationContextDelegator();
-        }
-
-        @Override
-        public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-            return SPREADSHEET_ENVIRONMENT_CONTEXT;
         }
 
         @Override
