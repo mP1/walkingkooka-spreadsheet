@@ -75,8 +75,8 @@ import walkingkooka.storage.StorageContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
+import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
-import walkingkooka.terminal.server.TerminalServerContexts;
 import walkingkooka.test.Testing;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
@@ -475,7 +475,25 @@ public interface SpreadsheetMetadataTesting extends Testing {
         }
     );
 
-    TerminalServerContext TERMINAL_SERVER_CONTEXT = TerminalServerContexts.fake();
+    TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
+        @Override
+        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
+            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<TerminalContext> terminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public TerminalServerContext removeTerminalContext(final TerminalId id) {
+            Objects.requireNonNull(id, "id");
+            throw new UnsupportedOperationException();
+        }
+    };
 
     SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
