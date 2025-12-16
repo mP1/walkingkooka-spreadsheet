@@ -316,7 +316,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.spreadsheetParser;
     }
 
-    private SpreadsheetParser spreadsheetParser;
+    private transient SpreadsheetParser spreadsheetParser;
 
     /**
      * Returns a {@link SpreadsheetParserContext}, built from a few {@link EnvironmentValueName}.
@@ -485,7 +485,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.spreadsheetConverterContext;
     }
 
-    private SpreadsheetConverterContext spreadsheetConverterContext;
+    private transient SpreadsheetConverterContext spreadsheetConverterContext;
 
     // converter........................................................................................................
 
@@ -512,7 +512,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.converter;
     }
 
-    private Converter<SpreadsheetConverterContext> converter;
+    private transient Converter<SpreadsheetConverterContext> converter;
 
     // dateTimeContext..................................................................................................
 
@@ -547,7 +547,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.dateTimeContext;
     }
 
-    private DateTimeContext dateTimeContext;
+    private transient DateTimeContext dateTimeContext;
 
     // DecimalNumberContext.............................................................................................
 
@@ -590,7 +590,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.decimalNumberContext;
     }
 
-    private DecimalNumberContext decimalNumberContext;
+    private transient DecimalNumberContext decimalNumberContext;
 
     @Override
     public JsonNodeMarshallContext jsonNodeMarshallContext() {
@@ -607,7 +607,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.jsonNodeMarshallContext;
     }
 
-    private JsonNodeMarshallContext jsonNodeMarshallContext;
+    private transient JsonNodeMarshallContext jsonNodeMarshallContext;
 
     @Override
     public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
@@ -642,7 +642,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.jsonNodeUnmarshallContext;
     }
 
-    private JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
+    private transient JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
 
     @Override
     public MathContext mathContext() {
@@ -664,7 +664,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return this.mathContext;
     }
 
-    private MathContext mathContext;
+    private transient MathContext mathContext;
 
     @Override
     public LocaleContext localeContext() {
