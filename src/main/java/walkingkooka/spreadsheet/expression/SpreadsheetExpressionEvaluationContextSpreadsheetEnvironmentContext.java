@@ -824,16 +824,19 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
     @Override
     public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
         throw new UnsupportedOperationException();
     }
 
     @Override
     public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> formFields) {
+        Objects.requireNonNull(formFields, "formFields");
         throw new UnsupportedOperationException();
     }
 
     @Override
     public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
         throw new UnsupportedOperationException();
     }
 
