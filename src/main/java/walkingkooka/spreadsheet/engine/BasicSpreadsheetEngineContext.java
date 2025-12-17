@@ -160,22 +160,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return this.spreadsheetContext.serverUrl();
     }
 
-    // HasSpreadsheetMetadata...........................................................................................
-
-    @Override
-    public SpreadsheetMetadata spreadsheetMetadata() {
-        if(null == this.metadata) {
-            this.metadata = this.spreadsheetContext.spreadsheetMetadata();
-        }
-
-        return this.metadata;
-    }
-
-    /**
-     * Will be updated whenever a new metadata is saved.
-     */
-    private transient SpreadsheetMetadata metadata;
-
     // CanConvertDelegator..............................................................................................
 
     @Override
@@ -199,23 +183,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     private CanConvert canConvert;
-
-    // setSpreadsheetMetadataMode.......................................................................................
-
-    @Override
-    public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
-        Objects.requireNonNull(mode, "mode");
-
-        return this.mode == mode ?
-            this :
-            new BasicSpreadsheetEngineContext(
-                mode,
-                null,
-                this.spreadsheetLabelNameResolver,
-                this.spreadsheetContext,
-                this.terminalContext
-            );
-    }
 
     // resolveLabel.....................................................................................................
 
@@ -297,10 +264,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             this.terminalContext
         );
     }
-
-    private final SpreadsheetMetadataMode mode;
-
-    private final TerminalContext terminalContext;
 
     @Override
     public boolean isPure(final ExpressionFunctionName function) {
@@ -424,6 +387,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     // SpreadsheetContextDelegator......................................................................................
 
     @Override
+    public SpreadsheetStoreRepository storeRepository() {
+        return this.spreadsheetContext.storeRepository();
+    }
+
+    @Override
     public SpreadsheetId spreadsheetId() {
         return this.spreadsheetContext.spreadsheetId();
     }
@@ -445,9 +413,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
-    public SpreadsheetStoreRepository storeRepository() {
-        return this.spreadsheetContext.storeRepository();
+    public SpreadsheetMetadata spreadsheetMetadata() {
+        if(null == this.metadata) {
+            this.metadata = this.spreadsheetContext.spreadsheetMetadata();
+        }
+
+        return this.metadata;
     }
+
+    /**
+     * Will be updated whenever a new metadata is saved.
+     */
+    private transient SpreadsheetMetadata metadata;
 
     @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
@@ -486,12 +463,22 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         );
     }
 
+    // setSpreadsheetMetadataMode.......................................................................................
+
     @Override
-    public ProviderContext providerContext() {
-        return this.spreadsheetContext.providerContext();
+    public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
+        return this.mode == mode ?
+            this :
+            new BasicSpreadsheetEngineContext(
+                Objects.requireNonNull(mode, "mode"),
+                null, // force CanConvert to be recreated
+                this.spreadsheetLabelNameResolver,
+                this.spreadsheetContext,
+                this.terminalContext
+            );
     }
 
-    private final SpreadsheetContext spreadsheetContext;
+    private final SpreadsheetMetadataMode mode;
 
     // EnvironmentContextDelegator......................................................................................
 
@@ -517,6 +504,19 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 after,
                 this.terminalContext
             );
+    }
+
+    @Override
+    public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                            final T value) {
+        this.spreadsheetContext.setEnvironmentValue(name, value);
+        return this;
+    }
+
+    @Override
+    public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        this.spreadsheetContext.removeEnvironmentValue(name);
+        return this;
     }
 
     @Override
@@ -548,19 +548,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     }
 
     @Override
-    public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                            final T value) {
-        this.spreadsheetContext.setEnvironmentValue(name, value);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetContext.removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
     public EnvironmentContext environmentContext() {
         return this.spreadsheetContext;
     }
@@ -571,6 +558,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public LocaleContext localeContext() {
         return this.spreadsheetContext;
     }
+
+    // HasProviderContext...............................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.spreadsheetContext.providerContext();
+    }
+
+    private final SpreadsheetContext spreadsheetContext;
 
     // SpreadsheetProvider..............................................................................................
 
@@ -596,6 +592,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         this.spreadsheetContext.removeTerminalContext(id);
         return this;
     }
+
+    private final TerminalContext terminalContext;
 
     // Object...........................................................................................................
 
