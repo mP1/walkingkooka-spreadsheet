@@ -4844,7 +4844,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -4933,7 +4933,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final Object value = "Value123";
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5026,7 +5026,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5134,7 +5134,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5261,7 +5261,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5395,7 +5395,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5536,7 +5536,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5723,7 +5723,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -5930,7 +5930,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -6788,7 +6788,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetFormatterAliasSet.parse(formatterSelector.valueText())
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -17719,7 +17719,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetExpressionFunctions.parseAliasSet(functionName)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -18832,7 +18832,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -25146,7 +25146,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithUnknownFormNameFails() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
@@ -25176,7 +25176,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testPrepareFormWithSquareSelectionFails() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
@@ -25234,7 +25234,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -25319,7 +25319,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -25446,7 +25446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final Optional<Object> cellValue = Optional.of("CellValue1");
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -25576,7 +25576,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final String message = "ValidationErrorMessage1";
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -25739,7 +25739,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final Optional<Object> cellValue1 = Optional.of("CellValue1");
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -25884,7 +25884,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final Optional<Object> cellValue1 = Optional.of("CellValue1");
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26003,7 +26003,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithUnknownFormNameFails() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
@@ -26035,7 +26035,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testSubmitFormWithSquareSelectionFails() {
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 METADATA,
@@ -26093,7 +26093,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26168,7 +26168,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26283,7 +26283,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             OptionalInt.of(0)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26392,7 +26392,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             OptionalInt.of(0)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26521,7 +26521,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             OptionalInt.of(0)
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26658,7 +26658,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.basic(
+        final SpreadsheetEngineContext context = SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -26849,7 +26849,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetEngineContext createContext(final int defaultYear,
                                                    final SpreadsheetMetadata metadata, // required by ranges tests with frozen columns/rows.
                                                    final SpreadsheetStoreRepository storeRepository) {
-        return SpreadsheetEngineContexts.basic(
+        return SpreadsheetEngineContexts.spreadsheetContext(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata.set(
