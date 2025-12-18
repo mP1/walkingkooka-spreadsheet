@@ -31,12 +31,12 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetEngineContextSpreadsheetContext}
+     * {@see SpreadsheetEngineContextSharedSpreadsheetContext}
      */
     public static SpreadsheetEngineContext spreadsheetContext(final SpreadsheetMetadataMode mode,
                                                               final SpreadsheetContext spreadsheetContext,
                                                               final TerminalContext terminalContext) {
-        return SpreadsheetEngineContextSpreadsheetContext.with(
+        return SpreadsheetEngineContextSharedSpreadsheetContext.with(
             mode,
             spreadsheetContext,
             terminalContext

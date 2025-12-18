@@ -18,20 +18,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.CanConvert;
-import walkingkooka.convert.CanConvertDelegator;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.http.server.HttpHandler;
-import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -48,7 +38,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -62,15 +51,11 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -79,18 +64,14 @@ import java.util.function.Function;
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
  * public methods requests.
  */
-final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEngineContext,
-    EnvironmentContextDelegator,
-    LocaleContextDelegator,
-    CanConvertDelegator,
-    SpreadsheetProviderDelegator {
+final class SpreadsheetEngineContextSharedSpreadsheetContext extends SpreadsheetEngineContextShared {
 
     /**
-     * Creates a new {@link SpreadsheetEngineContextSpreadsheetContext}
+     * Creates a new {@link SpreadsheetEngineContextSharedSpreadsheetContext}
      */
-    static SpreadsheetEngineContextSpreadsheetContext with(final SpreadsheetMetadataMode mode,
-                                                           final SpreadsheetContext spreadsheetContext,
-                                                           final TerminalContext terminalContext) {
+    static SpreadsheetEngineContextSharedSpreadsheetContext with(final SpreadsheetMetadataMode mode,
+                                                                 final SpreadsheetContext spreadsheetContext,
+                                                                 final TerminalContext terminalContext) {
         Objects.requireNonNull(mode, "mode");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
@@ -100,7 +81,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
                 .labels()
         );
 
-        return new SpreadsheetEngineContextSpreadsheetContext(
+        return new SpreadsheetEngineContextSharedSpreadsheetContext(
             mode,
             null, // force cnConvert to be created.
             spreadsheetLabelNameResolver,
@@ -112,11 +93,11 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetEngineContextSpreadsheetContext(final SpreadsheetMetadataMode mode,
-                                                       final CanConvert canConvert,
-                                                       final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                                       final SpreadsheetContext spreadsheetContext,
-                                                       final TerminalContext terminalContext) {
+    private SpreadsheetEngineContextSharedSpreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                             final CanConvert canConvert,
+                                                             final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                             final SpreadsheetContext spreadsheetContext,
+                                                             final TerminalContext terminalContext) {
         super();
 
         final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadata();
@@ -131,28 +112,11 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
         this.terminalContext = terminalContext;
     }
 
-    @Override
-    public SpreadsheetEngineContext spreadsheetEngineContext() {
-        return this;
-    }
-
-    @Override
-    public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
-        throw new UnsupportedOperationException();
-    }
-
-    // HasSpreadsheetServerUrl..........................................................................................
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return this.spreadsheetContext.serverUrl();
-    }
-
     // CanConvertDelegator..............................................................................................
 
     @Override
     public CanConvert canConvert() {
-        if(null == this.canConvert) {
+        if (null == this.canConvert) {
             final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
             this.canConvert = this.spreadsheetMetadata()
@@ -218,18 +182,6 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
     }
 
     @Override
-    public Optional<Expression> toExpression(final SpreadsheetFormulaParserToken token) {
-        Objects.requireNonNull(token, "token");
-
-        return token.toExpression(
-            this.spreadsheetExpressionEvaluationContext(
-                NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake() // toExpression never loads references
-            )
-        );
-    }
-
-    @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                          final SpreadsheetExpressionReferenceLoader loader) {
         Objects.requireNonNull(cell, "cell");
@@ -253,15 +205,6 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
             spreadsheetContext,
             this.terminalContext
         );
-    }
-
-    @Override
-    public boolean isPure(final ExpressionFunctionName function) {
-        return this.expressionFunction(
-            function,
-            Lists.empty(),
-            this.spreadsheetContext.providerContext()
-        ).isPure(this);
     }
 
     // formatValue......................................................................................................
@@ -327,7 +270,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
             throw rethrow;
         } catch (final RuntimeException cause) {
             String message = cause.getMessage();
-            if(CharSequences.isNullOrEmpty(message)) {
+            if (CharSequences.isNullOrEmpty(message)) {
                 message = cause.getClass().getSimpleName();
             }
 
@@ -394,7 +337,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
 
         return before.equals(after) ?
             this :
-            new SpreadsheetEngineContextSpreadsheetContext(
+            new SpreadsheetEngineContextSharedSpreadsheetContext(
                 this.mode,
                 this.canConvert,
                 this.spreadsheetLabelNameResolver,
@@ -405,7 +348,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        if(null == this.spreadsheetMetadata) {
+        if (null == this.spreadsheetMetadata) {
             this.spreadsheetMetadata = this.spreadsheetContext.spreadsheetMetadata();
         }
 
@@ -460,7 +403,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
         return this.mode == mode ?
             this :
-            new SpreadsheetEngineContextSpreadsheetContext(
+            new SpreadsheetEngineContextSharedSpreadsheetContext(
                 Objects.requireNonNull(mode, "mode"),
                 null, // force CanConvert to be recreated
                 this.spreadsheetLabelNameResolver,
@@ -470,78 +413,6 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
     }
 
     private final SpreadsheetMetadataMode mode;
-
-    // EnvironmentContextDelegator......................................................................................
-
-    @Override
-    public SpreadsheetEngineContext cloneEnvironment() {
-        return this.setEnvironmentContext(
-            this.environmentContext()
-                .cloneEnvironment()
-        );
-    }
-
-    @Override
-    public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final SpreadsheetContext before = this.spreadsheetContext;
-        final SpreadsheetContext after = before.setEnvironmentContext(environmentContext);
-
-        return before == after ?
-            this :
-            new SpreadsheetEngineContextSpreadsheetContext(
-                this.mode,
-                null, // force re-create
-                this.spreadsheetLabelNameResolver,
-                after,
-                this.terminalContext
-            );
-    }
-
-    @Override
-    public <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                            final T value) {
-        this.spreadsheetContext.setEnvironmentValue(name, value);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetContext.removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    public LineEnding lineEnding() {
-        return this.spreadsheetContext.lineEnding();
-    }
-
-    @Override
-    public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
-        this.spreadsheetContext.setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    public Locale locale() {
-        return this.spreadsheetContext.locale();
-    }
-
-    @Override
-    public SpreadsheetEngineContext setLocale(final Locale locale) {
-        this.spreadsheetContext.setLocale(locale);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetContext.setUser(user);
-        return this;
-    }
-
-    @Override
-    public EnvironmentContext environmentContext() {
-        return this.spreadsheetContext;
-    }
 
     // LocaleContext....................................................................................................
 
@@ -586,6 +457,29 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
 
     private final TerminalContext terminalContext;
 
+    // EnvironmentContextDelegator......................................................................................
+
+    @Override
+    public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetContext before = this.spreadsheetContext;
+        final SpreadsheetContext after = before.setEnvironmentContext(environmentContext);
+
+        return before == after ?
+            this :
+            new SpreadsheetEngineContextSharedSpreadsheetContext(
+                this.mode,
+                null, // force re-create
+                this.spreadsheetLabelNameResolver,
+                after,
+                this.terminalContext
+            );
+    }
+
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.spreadsheetContext;
+    }
+
     // Object...........................................................................................................
 
     @Override
@@ -600,11 +494,11 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof SpreadsheetEngineContextSpreadsheetContext &&
-                this.equals0((SpreadsheetEngineContextSpreadsheetContext) other));
+            (other instanceof SpreadsheetEngineContextSharedSpreadsheetContext &&
+                this.equals0((SpreadsheetEngineContextSharedSpreadsheetContext) other));
     }
 
-    private boolean equals0(final SpreadsheetEngineContextSpreadsheetContext other) {
+    private boolean equals0(final SpreadsheetEngineContextSharedSpreadsheetContext other) {
         return this.mode.equals(other.mode) &&
             this.spreadsheetContext.equals(other.spreadsheetContext) &&
             this.terminalContext.equals(other.terminalContext);
