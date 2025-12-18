@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -32,12 +31,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitorTesting;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitorTest
-    implements SpreadsheetSelectionVisitorTesting<SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor> {
+public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitorTest
+    implements SpreadsheetSelectionVisitorTesting<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor> {
 
     @Test
     public void testValuesWithCellNonNullValue() {
@@ -287,7 +287,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextRefer
                                 final Optional<Optional<Object>> value) {
         this.checkEquals(
             value,
-            SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor.values(
+            SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor.values(
                 reference,
                 loader,
                 SpreadsheetExpressionEvaluationContexts.fake()
@@ -297,8 +297,8 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextRefer
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor createVisitor() {
-        return new SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor(
+    public SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor createVisitor() {
+        return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor(
             null, // loader
             null // context
         );
@@ -308,12 +308,12 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextRefer
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetExpressionEvaluationContextSpreadsheetContext.class.getSimpleName() + "Reference";
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.class.getSimpleName() + "Reference";
     }
 
     @Override
-    public Class<SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor> type() {
-        return SpreadsheetExpressionEvaluationContextSpreadsheetContextReferenceSpreadsheetSelectionVisitor.class;
+    public Class<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor> type() {
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextReferenceSpreadsheetSelectionVisitor.class;
     }
 
     @Override

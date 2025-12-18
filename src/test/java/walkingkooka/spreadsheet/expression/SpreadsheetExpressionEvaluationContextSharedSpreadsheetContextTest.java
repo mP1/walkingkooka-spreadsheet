@@ -84,7 +84,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextSpreadsheetContext>,
+public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext>,
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
@@ -137,7 +137,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testWithNullModeFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 null,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
@@ -152,7 +152,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testWithNullCellFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 null,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
@@ -167,7 +167,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testWithNullSpreadsheetExpressionReferenceLoaderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 CELL,
                 null,
@@ -182,7 +182,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testWithNullSpreadsheetLabelNameResolverFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
@@ -197,7 +197,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testWithNullSpreadsheetContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
@@ -212,7 +212,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testWithNullTerminalContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 CELL,
                 SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
@@ -227,7 +227,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
 
     @Test
     public void testSetCellDifferentCell() {
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext();
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
 
         final Optional<SpreadsheetCell> differentCell = Optional.of(
             SpreadsheetSelection.parseCell("B2")
@@ -288,7 +288,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         cellStore.save(spreadsheetCell);
 
         this.nextEmptyColumnAndCheck(
-            SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
@@ -314,7 +314,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         cellStore.save(spreadsheetCell);
 
         this.nextEmptyRowAndCheck(
-            SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+            SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
                 MODE,
                 CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
@@ -647,7 +647,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testEvaluateFunctionMissingParameters() {
         final ExpressionFunctionName functionName = ExpressionFunctionName.with("HelloFunction");
 
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext(
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(
             new FakeExpressionFunctionProvider<>() {
 
                 @Override
@@ -791,7 +791,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
 
     @Test
     public void testSetEnvironmentContextWithDifferent() {
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext();
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
 
         final LineEnding lineEnding = LineEnding.CRNL;
 
@@ -825,7 +825,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     public void testSetLineEnding() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT;
 
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
 
         final LineEnding lineEnding = LineEnding.CRNL;
 
@@ -854,7 +854,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
 
     @Test
     public void testSetLocale() {
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
 
         final Locale locale = Locale.GERMAN;
         context.setLocale(locale);
@@ -891,7 +891,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
         context.setEnvironmentValue(
             name,
             value
@@ -916,7 +916,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
             value
         );
 
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
         context.removeEnvironmentValue(name);
 
         this.environmentValueAndCheck(
@@ -1062,11 +1062,11 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
-    public SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext() {
+    public SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext() {
         return this.createContext(SPREADSHEET_EXPRESSION_REFERENCE_LOADER);
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader) {
         return this.createContext(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
             spreadsheetExpressionReferenceLoader,
@@ -1074,7 +1074,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
             spreadsheetEnvironmentContext,
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
@@ -1082,7 +1082,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
             SPREADSHEET_EXPRESSION_REFERENCE_LOADER,
             SPREADSHEET_LABEL_NAME_RESOLVER,
@@ -1090,9 +1090,9 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                                                   final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                                   final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                                         final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         return this.createContext(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
             spreadsheetExpressionReferenceLoader,
@@ -1102,9 +1102,9 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                                   final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                                                   final SpreadsheetLabelNameResolver labelNameResolver) {
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                                         final SpreadsheetLabelNameResolver labelNameResolver) {
         return createContext(
             spreadsheetEnvironmentContext,
             spreadsheetExpressionReferenceLoader,
@@ -1114,12 +1114,12 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                                   final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
-                                                                                   final SpreadsheetLabelNameResolver labelNameResolver,
-                                                                                   final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                                                   final ProviderContext providerContext) {
-        return SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                         final SpreadsheetExpressionReferenceLoader spreadsheetExpressionReferenceLoader,
+                                                                                         final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                                         final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                                                         final ProviderContext providerContext) {
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             MODE,
             CELL,
             spreadsheetExpressionReferenceLoader,
@@ -1215,7 +1215,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
 
     @Test
     public void testConverter() {
-        final SpreadsheetExpressionEvaluationContextSpreadsheetContext context = this.createContext();
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext();
 
         final ExpressionNumber from = context.expressionNumberKind().create(123);
         final String to = context.convertOrFail(from, String.class);
@@ -1264,7 +1264,7 @@ public final class SpreadsheetExpressionEvaluationContextSpreadsheetContextTest 
     }
 
     @Override
-    public Class<SpreadsheetExpressionEvaluationContextSpreadsheetContext> type() {
-        return SpreadsheetExpressionEvaluationContextSpreadsheetContext.class;
+    public Class<SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext> type() {
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.class;
     }
 }
