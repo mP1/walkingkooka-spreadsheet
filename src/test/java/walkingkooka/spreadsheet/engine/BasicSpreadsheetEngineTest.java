@@ -951,6 +951,138 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         VALIDATOR_PROVIDER
     );
 
+    // evaluate.........................................................................................................
+
+    @Test
+    public void testEvaluateIncompleteExpressionFails() {
+        this.evaluateAndCheck(
+            "=1+",
+            SpreadsheetErrorKind.ERROR.setMessage("End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
+        );
+    }
+
+    @Test
+    public void testEvaluateStringLiteral() {
+        this.evaluateAndCheck(
+            "'Hello World String Literal",
+            "Hello World String Literal"
+        );
+    }
+
+    @Test
+    public void testEvaluateDateLiteral() {
+        this.evaluateAndCheck(
+            "1999/12/31",
+            LocalDate.of(
+                1999,
+                12,
+                31
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateDateTimeLiteral() {
+        this.evaluateAndCheck(
+            "1999/12/31 12:58",
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                58,
+                0
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateNumberLiteral() {
+        this.evaluateAndCheck(
+            "1",
+            EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testEvaluateTimeLiteral() {
+        this.evaluateAndCheck(
+            "12:58",
+            LocalTime.of(
+                12,
+                58
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithDivideByZero() {
+        this.evaluateAndCheck(
+            "=1/0",
+            SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithAddition() {
+        this.evaluateAndCheck(
+            "=1+2",
+            EXPRESSION_NUMBER_KIND.create(3)
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithAdditionWithMissingCellReference() {
+        this.evaluateAndCheck(
+            "=1+2+A1",
+            EXPRESSION_NUMBER_KIND.create(3)
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithAdditionWithCellReferenceWithValue() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        engine.saveCell(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(
+                        EXPRESSION_NUMBER_KIND.create(1000)
+                    )
+                )
+            ),
+            context
+        );
+
+        this.evaluateAndCheck(
+            engine,
+            "=1+2+A1",
+            context,
+            EXPRESSION_NUMBER_KIND.create(1 + 2 + 1000)
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithAdditionWithCellReferenceWithFormula() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        engine.saveCell(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=10*10")
+            ),
+            context
+        );
+
+        this.evaluateAndCheck(
+            engine,
+            "=1+2+A1",
+            context,
+            EXPRESSION_NUMBER_KIND.create(1 + 2 + 10 * 10)
+        );
+    }
+
     // loadCells........................................................................................................
 
     @Test

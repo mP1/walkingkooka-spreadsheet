@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadshe
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparators;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -122,6 +123,60 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private BasicSpreadsheetEngine() {
         super();
+    }
+
+    // EVALUATE.........................................................................................................
+
+    @Override
+    public Object evaluate(final String expression,
+                           final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(expression, "expression");
+        Objects.requireNonNull(context, "context");
+
+        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.changes(
+            this,
+            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+            Sets.of(SpreadsheetDeltaProperties.CELLS),
+            context
+        );
+
+        try {
+            Object value = null;
+
+            SpreadsheetFormulaParserToken token = null;
+            try {
+                token = context.parseFormula(
+                    TextCursors.charSequence(expression),
+                    SpreadsheetEngineContext.NO_CELL
+                );
+            } catch (final UnsupportedOperationException rethrow) {
+                throw rethrow;
+            } catch (final RuntimeException cause) {
+                value = SpreadsheetErrorKind.translate(cause);
+            }
+
+            if (null != token) {
+                final Expression expressionExpression = context.toExpression(token)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid expression")); // if parsing gave a token toExpression should(will) always work
+
+                value = context.spreadsheetExpressionEvaluationContext(
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    changes
+                ).evaluateExpression(expressionExpression);
+            }
+
+            // finish evaluating loaded cells
+            changes.commit();
+
+            this.prepareResponse(
+                changes,
+                context
+            );
+
+            return value;
+        } finally {
+            changes.close();
+        }
     }
 
     // LOAD CELL........................................................................................................
