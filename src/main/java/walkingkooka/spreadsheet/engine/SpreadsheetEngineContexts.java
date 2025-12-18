@@ -24,23 +24,23 @@ import walkingkooka.terminal.TerminalContext;
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
 
     /**
+     * {@see FakeSpreadsheetEngineContext}
+     */
+    public static SpreadsheetEngineContext fake() {
+        return new FakeSpreadsheetEngineContext();
+    }
+
+    /**
      * {@see SpreadsheetEngineContextSpreadsheetContext}
      */
-    public static SpreadsheetEngineContext basic(final SpreadsheetMetadataMode mode,
-                                                 final SpreadsheetContext spreadsheetContext,
-                                                 final TerminalContext terminalContext) {
+    public static SpreadsheetEngineContext spreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                              final SpreadsheetContext spreadsheetContext,
+                                                              final TerminalContext terminalContext) {
         return SpreadsheetEngineContextSpreadsheetContext.with(
             mode,
             spreadsheetContext,
             terminalContext
         );
-    }
-
-    /**
-     * {@see FakeSpreadsheetEngineContext}
-     */
-    public static SpreadsheetEngineContext fake() {
-        return new FakeSpreadsheetEngineContext();
     }
 
     /**
