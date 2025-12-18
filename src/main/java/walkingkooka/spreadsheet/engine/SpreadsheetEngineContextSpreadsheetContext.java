@@ -155,7 +155,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
         if(null == this.canConvert) {
             final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-            this.spreadsheetMetadata()
+            this.canConvert = this.spreadsheetMetadata()
                 .spreadsheetConverterContext(
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
@@ -170,7 +170,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
         return this.canConvert;
     }
 
-    private CanConvert canConvert;
+    private transient CanConvert canConvert;
 
     // resolveLabel.....................................................................................................
 
