@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.CanConvert;
@@ -29,7 +28,6 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentContextMissingValues;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValuesException;
@@ -37,18 +35,13 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
-import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -66,25 +59,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalContextDelegator;
-import walkingkooka.text.LineEnding;
-import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
-import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -101,7 +84,6 @@ import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -114,23 +96,20 @@ import java.util.Set;
  * required during evaluation, such as a {@link Converter} using the {@link #CONVERTER}. A full list of required
  * {@link EnvironmentValueName} are listed below.
  */
-final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext implements SpreadsheetExpressionEvaluationContext,
-    EnvironmentContextDelegator,
-    SpreadsheetConverterContextDelegator,
-    TerminalContextDelegator {
+final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared {
 
-    static SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext with(final LocaleContext localeContext,
-                                                                                    final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                                    final TerminalContext terminalContext,
-                                                                                    final SpreadsheetProvider spreadsheetProvider,
-                                                                                    final ProviderContext providerContext) {
+    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final LocaleContext localeContext,
+                                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                          final TerminalContext terminalContext,
+                                                                                          final SpreadsheetProvider spreadsheetProvider,
+                                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
-        return new SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext(
+        return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
             null, // SpreadsheetConverterContext
             spreadsheetEnvironmentContext,
             null, // JsonNodeMarshallContextObjectPostProcessor
@@ -143,16 +122,18 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext(final SpreadsheetConverterContext spreadsheetConverterContext,
-                                                                                final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                                final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
-                                                                                final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
-                                                                                final LocaleContext localeContext,
-                                                                                final TerminalContext terminalContext,
-                                                                                final SpreadsheetProvider spreadsheetProvider,
-                                                                                final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                                                final ProviderContext providerContext) {
-        super();
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetConverterContext spreadsheetConverterContext,
+                                                                                      final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                      final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
+                                                                                      final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
+                                                                                      final LocaleContext localeContext,
+                                                                                      final TerminalContext terminalContext,
+                                                                                      final SpreadsheetProvider spreadsheetProvider,
+                                                                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                                                      final ProviderContext providerContext) {
+        super(
+            terminalContext
+        );
 
         this.spreadsheetConverterContext = spreadsheetConverterContext; // may be null
         this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
@@ -160,7 +141,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         this.jsonNodeUnmarshallContextPreProcessor = jsonNodeUnmarshallContextPreProcessor;
 
         this.localeContext = localeContext;
-        this.terminalContext = terminalContext;
 
         this.expressionFunctionProvider = expressionFunctionProvider; // may be null
         this.spreadsheetProvider = spreadsheetProvider;
@@ -188,6 +168,40 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
             this.spreadsheetParserContext = null;
             this.spreadsheetConverterContext = null;
         }
+    }
+
+    /**
+     * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever environment changes.
+     */
+    @Override
+    ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
+        if (null == this.expressionFunctionProvider) {
+            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
+
+            final ExpressionFunctionAliasSet functions = missing.getOrNull(FUNCTIONS);
+
+            missing.reportIfMissing();
+
+            this.expressionFunctionProvider = ExpressionFunctionProviders.aliases(
+                functions,
+                this.spreadsheetProvider
+            );
+        }
+        return this.expressionFunctionProvider;
+    }
+
+    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
+
+    @Override
+    ProviderContext providerContext() {
+        return this.providerContext;
+    }
+
+    private final ProviderContext providerContext;
+
+    @Override
+    Optional<Optional<Object>> handleSpreadsheetExpressionReference(final SpreadsheetExpressionReference reference) {
+        return Optional.empty();
     }
 
     // SpreadsheetExpressionEvaluationContext............................................................................
@@ -233,32 +247,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
         return Optional.empty();
     }
 
-    @Override
-    public SpreadsheetFormulaParserToken parseExpression(final TextCursor expression) {
-        Objects.requireNonNull(expression, "expression");
-
-        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
-
-        return SpreadsheetFormulaParsers.expression()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .parse(expression, parserContext)
-            .get()
-            .cast(SpreadsheetFormulaParserToken.class);
-    }
-
-    @Override
-    public SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor expression) {
-        Objects.requireNonNull(expression, "expression");
-
-        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
-
-        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .parse(expression, parserContext)
-            .get()
-            .cast(SpreadsheetFormulaParserToken.class);
-    }
-
     private ExpressionNumberContext expressionNumberContext() {
         if (null == this.expressionNumberContext) {
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
@@ -287,7 +275,8 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
     private ExpressionNumberContext expressionNumberContext;
 
-    public SpreadsheetParser spreadsheetParser() {
+    @Override
+    SpreadsheetParser spreadsheetParser() {
         if (null == this.spreadsheetParser) {
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
@@ -323,7 +312,8 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     /**
      * Returns a {@link SpreadsheetParserContext}, built from a few {@link EnvironmentValueName}.
      */
-    private SpreadsheetParserContext spreadsheetParserContext() {
+    @Override
+    SpreadsheetParserContext spreadsheetParserContext() {
         if (null == this.spreadsheetParserContext) {
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
@@ -363,27 +353,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     }
 
     private SpreadsheetParserContext spreadsheetParserContext;
-
-    /**
-     * Lazily created {@link ExpressionFunctionProvider}, should be nulled whenever environment changes.
-     */
-    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
-        if (null == this.expressionFunctionProvider) {
-            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final ExpressionFunctionAliasSet functions = missing.getOrNull(FUNCTIONS);
-
-            missing.reportIfMissing();
-
-            this.expressionFunctionProvider = ExpressionFunctionProviders.aliases(
-                functions,
-                this.spreadsheetProvider
-            );
-        }
-        return this.expressionFunctionProvider;
-    }
-
-    private ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider;
 
     private final SpreadsheetProvider spreadsheetProvider;
 
@@ -675,162 +644,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
 
     private final LocaleContext localeContext;
 
-    // EnvironmentContext...............................................................................................
 
-    @Override
-    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
-        return this.setEnvironmentContext(
-            this.spreadsheetEnvironmentContext.cloneEnvironment()
-        );
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
-        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
-
-        return before == after ?
-            this :
-            new SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext(
-                null,// spreadsheetConverterContext  clear force recreate!
-                after,
-                this.jsonNodeMarshallContextObjectPostProcessor,
-                this.jsonNodeUnmarshallContextPreProcessor,
-                this.localeContext,
-                this.terminalContext,
-                this.spreadsheetProvider,
-                this.expressionFunctionProvider,
-                this.providerContext
-            );
-    }
-
-    @Override
-    public <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                          final T value) {
-        this.spreadsheetEnvironmentContext.setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    public LineEnding lineEnding() {
-        return this.spreadsheetEnvironmentContext.lineEnding();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    public Locale locale() {
-        return this.spreadsheetEnvironmentContext.locale();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
-        this.spreadsheetEnvironmentContext.setLocale(locale);
-        return this;
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.spreadsheetEnvironmentContext.now(); // inherit unrelated defaults
-    }
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return this.spreadsheetEnvironmentContext.serverUrl();
-    }
-
-    @Override
-    public SpreadsheetId spreadsheetId() {
-        return this.spreadsheetEnvironmentContext.spreadsheetId();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
-        return this;
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        return this.spreadsheetEnvironmentContext.user();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetEnvironmentContext.setUser(user);
-        return this;
-    }
-
-    @Override
-    public EnvironmentContext environmentContext() {
-        return this.spreadsheetEnvironmentContext;
-    }
-
-    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
-
-    // ExpressionEvaluationContext......................................................................................
-
-    @Override
-    public ExpressionFunction<?, ExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name) {
-        return Cast.to(
-            this.expressionFunctionProvider()
-                .expressionFunction(
-                    name,
-                    Lists.empty(),
-                    this.providerContext
-                )
-        );
-    }
-
-    private final ProviderContext providerContext;
-
-    @Override
-    public boolean isPure(final ExpressionFunctionName name) {
-        return this.expressionFunction(name)
-            .isPure(this);
-    }
-
-    @Override
-    public <T> T prepareParameter(final ExpressionFunctionParameter<T> parameter,
-                                  final Object value) {
-        return parameter.convertOrFail(value, this);
-    }
-
-    @Override
-    public Object handleException(final RuntimeException exception) {
-        return SpreadsheetErrorKind.translate(exception);
-    }
-
-    /**
-     * If the {@link ExpressionReference} is a {@link EnvironmentValueName} resolves the environment value.
-     */
-    @Override
-    public Optional<Optional<Object>> reference(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        return Optional.ofNullable(
-            reference instanceof EnvironmentValueName ?
-                Cast.to(
-                    this.environmentValue(
-                        (EnvironmentValueName<?>) reference
-                    )
-                ) :
-                null
-        );
-    }
 
     // FormHandlerContext...............................................................................................
 
@@ -899,7 +713,7 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     private SpreadsheetExpressionEvaluationContext setSpreadsheetConverterContext(final SpreadsheetConverterContext context,
                                                                                   final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                                   final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
-        return new SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext(
+        return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
             context,
             this.spreadsheetEnvironmentContext,
             jsonNodeMarshallContextObjectPostProcessor,
@@ -918,21 +732,6 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     public Storage<StorageExpressionEvaluationContext> storage() {
         throw new UnsupportedOperationException();
     }
-
-    // TerminalContextDelegator.........................................................................................
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext exitTerminal() {
-        this.terminalContext.exitTerminal();
-        return this;
-    }
-
-    @Override
-    public TerminalContext terminalContext() {
-        return this.terminalContext;
-    }
-
-    private final TerminalContext terminalContext;
 
     // ValidationExpressionEvaluationContext............................................................................
 
@@ -954,6 +753,42 @@ final class SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext 
     public Optional<Object> validationValue() {
         return Optional.empty();
     }
+
+    // EnvironmentContext...............................................................................................
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
+        return this.setEnvironmentContext(
+            this.spreadsheetEnvironmentContext.cloneEnvironment()
+        );
+    }
+
+    @Override
+    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+        final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
+        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+
+        return before == after ?
+            this :
+            new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+                null,// spreadsheetConverterContext  clear force recreate!
+                after,
+                this.jsonNodeMarshallContextObjectPostProcessor,
+                this.jsonNodeUnmarshallContextPreProcessor,
+                this.localeContext,
+                this.terminalContext,
+                this.spreadsheetProvider,
+                this.expressionFunctionProvider,
+                this.providerContext
+            );
+    }
+
+    @Override
+    public SpreadsheetEnvironmentContext environmentContext() {
+        return this.spreadsheetEnvironmentContext;
+    }
+
+    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
     // Object...........................................................................................................
 

@@ -99,7 +99,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see SpreadsheetExpressionEvaluationContextSpreadsheetContext}
+     * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext}
      */
     public static SpreadsheetExpressionEvaluationContext spreadsheetContext(final SpreadsheetMetadataMode mode,
                                                                             final Optional<SpreadsheetCell> cell,
@@ -107,7 +107,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                             final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                                             final SpreadsheetContext spreadsheetContext,
                                                                             final TerminalContext terminalContext) {
-        return SpreadsheetExpressionEvaluationContextSpreadsheetContext.with(
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext.with(
             mode,
             cell,
             spreadsheetExpressionReferenceLoader,
@@ -118,14 +118,14 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     }
 
     /**
-     * {@see SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext}
+     * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
     public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final LocaleContext localeContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                        final TerminalContext terminalContext,
                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                        final ProviderContext providerContext) {
-        return SpreadsheetExpressionEvaluationContextSpreadsheetEnvironmentContext.with(
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
             localeContext,
             spreadsheetEnvironmentContext,
             terminalContext,
