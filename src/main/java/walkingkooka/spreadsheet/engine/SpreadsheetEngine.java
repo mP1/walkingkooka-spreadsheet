@@ -62,6 +62,12 @@ public interface SpreadsheetEngine {
     }
 
     /**
+     * Parses the expression and then evaluates it given a value.
+     */
+    Object evaluate(final String expression,
+                    final SpreadsheetEngineContext context);
+
+    /**
      * Loads the requested {@link SpreadsheetColumnReference} which may include parsing the formula as necessary and then
      * evaluating the value of the requested cells.<br>
      * <ul>

@@ -87,6 +87,55 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     SpreadsheetCellReference CELL_REFERENCE = COLUMN.setRow(ROW);
     SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("LABEL123");
 
+    // evaluate.........................................................................................................
+
+    @Test
+    default void testEvaluateWithNullExpressionFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .evaluate(
+                    null,
+                    this.createContext()
+                )
+        );
+    }
+
+    @Test
+    default void testEvaluateWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .evaluate(
+                    "",
+                    null
+                )
+        );
+    }
+
+    default void evaluateAndCheck(final String expression,
+                                  final Object expected) {
+        this.evaluateAndCheck(
+            this.createSpreadsheetEngine(),
+            expression,
+            this.createContext(),
+            expected
+        );
+    }
+
+    default void evaluateAndCheck(final E engine,
+                                  final String expression,
+                                  final SpreadsheetEngineContext context,
+                                  final Object expected) {
+        this.checkEquals(
+            expected,
+            engine.evaluate(
+                expression,
+                context
+            )
+        );
+    }
+
     // cells............................................................................................................
 
     @Test

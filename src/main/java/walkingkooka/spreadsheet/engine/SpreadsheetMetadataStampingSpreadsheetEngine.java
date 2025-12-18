@@ -72,6 +72,15 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public Object evaluate(final String expression,
+                           final SpreadsheetEngineContext context) {
+        return this.engine.evaluate(
+            expression,
+            context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,

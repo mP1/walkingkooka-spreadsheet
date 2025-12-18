@@ -47,6 +47,12 @@ import java.util.Set;
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
 
     @Override
+    public Object evaluate(final String expression,
+                           final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta loadCells(final SpreadsheetSelection selection,
                                       final SpreadsheetEngineEvaluation evaluation,
                                       final Set<SpreadsheetDeltaProperties> deltaProperties,
