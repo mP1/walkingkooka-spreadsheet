@@ -24,12 +24,12 @@ import walkingkooka.terminal.TerminalContext;
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetEngineContext}
+     * {@see SpreadsheetEngineContextSpreadsheetContext}
      */
     public static SpreadsheetEngineContext basic(final SpreadsheetMetadataMode mode,
                                                  final SpreadsheetContext spreadsheetContext,
                                                  final TerminalContext terminalContext) {
-        return BasicSpreadsheetEngineContext.with(
+        return SpreadsheetEngineContextSpreadsheetContext.with(
             mode,
             spreadsheetContext,
             terminalContext

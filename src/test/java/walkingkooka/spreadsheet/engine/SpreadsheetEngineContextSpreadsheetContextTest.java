@@ -127,9 +127,9 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext>,
+public final class SpreadsheetEngineContextSpreadsheetContextTest implements SpreadsheetEngineContextTesting<SpreadsheetEngineContextSpreadsheetContext>,
     SpreadsheetMetadataTesting,
-    HashCodeEqualsDefinedTesting2<BasicSpreadsheetEngineContext> {
+    HashCodeEqualsDefinedTesting2<SpreadsheetEngineContextSpreadsheetContext> {
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
 
@@ -405,7 +405,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullSpreadsheetMetadataModeFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
+            () -> SpreadsheetEngineContextSpreadsheetContext.with(
                 null,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
@@ -417,7 +417,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullSpreadsheetContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
+            () -> SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 null,
                 TERMINAL_CONTEXT
@@ -429,7 +429,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullTerminalContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetEngineContext.with(
+            () -> SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 null
@@ -687,7 +687,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testToExpression() {
-        final BasicSpreadsheetEngineContext context = this.createContext();
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext();
 
         this.toExpressionAndCheck(
             context,
@@ -988,7 +988,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             )
         );
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(environmentContext);
 
         final LineEnding lineEnding = LineEnding.CRNL;
 
@@ -1041,7 +1041,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             )
         );
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(environmentContext);
 
         final Locale locale = Locale.GERMAN;
         context.setLocale(locale);
@@ -1072,7 +1072,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             value
         );
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(environmentContext);
 
         this.environmentValueAndCheck(
             environmentContext,
@@ -1108,7 +1108,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testSetEnvironmentContextWithSame() {
         final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(environmentContext);
         assertSame(
             context,
             context.setEnvironmentContext(environmentContext)
@@ -1127,7 +1127,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             differentEnvironmentContext
         );
 
-        final BasicSpreadsheetEngineContext before = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSpreadsheetContext before = this.createContext(environmentContext);
         final SpreadsheetEngineContext after = before.setEnvironmentContext(differentEnvironmentContext);
 
         assertNotSame(
@@ -1162,7 +1162,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
         final String value = "Hello World123";
 
-        final BasicSpreadsheetEngineContext context = this.createContext(
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         context.setEnvironmentValue(
@@ -1182,7 +1182,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final EnvironmentValueName<Locale> name = EnvironmentValueName.LOCALE;
         final Locale value = Locale.FRANCE;
 
-        final BasicSpreadsheetEngineContext context = this.createContext(
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         context.setEnvironmentValue(
@@ -1214,7 +1214,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             value
         );
 
-        final BasicSpreadsheetEngineContext context = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(environmentContext);
         context.removeEnvironmentValue(name);
 
         this.environmentValueAndCheck(
@@ -1248,7 +1248,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testExpressionEvaluationContextAndNow() {
-        final BasicSpreadsheetEngineContext context = this.createContext();
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext();
         final LocalDateTime now = context.now();
 
         this.checkEquals(
@@ -1262,7 +1262,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testExpressionEvaluationContextAndUser() {
-        final BasicSpreadsheetEngineContext context = this.createContext();
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext();
         final Optional<EmailAddress> user = context.user();
         this.checkNotEquals(
             Optional.empty(),
@@ -1282,7 +1282,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testSpreadsheetExpressionEvaluationContextWithScriptingIsEnvironmentContextUpdatable() {
         final SpreadsheetMetadataMode mode = SpreadsheetMetadataMode.SCRIPTING;
 
-        final BasicSpreadsheetEngineContext context = this.createContext(
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(
             METADATA.set(
                 mode.function(),
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
@@ -1344,7 +1344,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetMetadataMode mode) {
-        final BasicSpreadsheetEngineContext context = this.createContext(
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext(
             METADATA.set(
                 mode.function(),
                 SpreadsheetExpressionFunctions.parseAliasSet("hello")
@@ -1400,7 +1400,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSaveMetadata() {
-        final BasicSpreadsheetEngineContext context = this.createContext();
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetMetadata saved = context.saveMetadata(
             METADATA.set(
@@ -1420,7 +1420,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testSaveMetadataDifferent() {
-        final BasicSpreadsheetEngineContext context = this.createContext();
+        final SpreadsheetEngineContextSpreadsheetContext context = this.createContext();
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(999);
 
@@ -1448,11 +1448,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // createContext....................................................................................................
 
     @Override
-    public BasicSpreadsheetEngineContext createContext() {
+    public SpreadsheetEngineContextSpreadsheetContext createContext() {
         return this.createContext(SpreadsheetLabelStores.treeMap());
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata) {
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
             metadata,
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
@@ -1460,7 +1460,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final EnvironmentContext environmentContext) {
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
             METADATA,
             environmentContext,
@@ -1468,10 +1468,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final EnvironmentContext environmentContext,
-                                                        final ProviderContext providerContext) {
-        return BasicSpreadsheetEngineContext.with(
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
+                                                                     final EnvironmentContext environmentContext,
+                                                                     final ProviderContext providerContext) {
+        return SpreadsheetEngineContextSpreadsheetContext.with(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -1486,15 +1486,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore) {
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final SpreadsheetLabelStore labelStore) {
         return this.createContext(
             METADATA,
             labelStore
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetLabelStore labelStore) {
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
+                                                                     final SpreadsheetLabelStore labelStore) {
         final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
         cells.save(
             LOAD_CELL_REFERENCE.setFormula(
@@ -1514,9 +1514,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetCellStore cellStore,
-                                                        final SpreadsheetLabelStore labelStore) {
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
+                                                                     final SpreadsheetCellStore cellStore,
+                                                                     final SpreadsheetLabelStore labelStore) {
         return this.createContext(
             metadata,
             new FakeSpreadsheetStoreRepository() {
@@ -1550,10 +1550,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetMetadata metadata,
-                                                        final SpreadsheetStoreRepository storeRepository,
-                                                        final EnvironmentContext environmentContext) {
-        return BasicSpreadsheetEngineContext.with(
+    private SpreadsheetEngineContextSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
+                                                                     final SpreadsheetStoreRepository storeRepository,
+                                                                     final EnvironmentContext environmentContext) {
+        return SpreadsheetEngineContextSpreadsheetContext.with(
             SpreadsheetMetadataMode.FORMULA,
             new TestSpreadsheetContext(
                 metadata,
@@ -1655,7 +1655,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                                final LocaleContext localeContext,
                                final ProviderContext providerContext) {
             final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
-            if (false == BasicSpreadsheetEngineContextTest.SPREADSHEET_ID.equals(spreadsheetId)) {
+            if (false == SpreadsheetEngineContextSpreadsheetContextTest.SPREADSHEET_ID.equals(spreadsheetId)) {
                 throw new IllegalArgumentException("Invalid SpreadsheetId: " + spreadsheetId + " expected " + SPREADSHEET_ID);
             }
             this.metadata = metadata;
@@ -1748,12 +1748,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         @Override
         public AbsoluteUrl serverUrl() {
-            return BasicSpreadsheetEngineContextTest.SERVER_URL;
+            return SpreadsheetEngineContextSpreadsheetContextTest.SERVER_URL;
         }
 
         @Override
         public SpreadsheetId spreadsheetId() {
-            return BasicSpreadsheetEngineContextTest.SPREADSHEET_ID;
+            return SpreadsheetEngineContextSpreadsheetContextTest.SPREADSHEET_ID;
         }
 
         @Override
@@ -1903,7 +1903,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     // SpreadsheetProviderTesting.......................................................................................
 
     @Override
-    public BasicSpreadsheetEngineContext createSpreadsheetProvider() {
+    public SpreadsheetEngineContextSpreadsheetContext createSpreadsheetProvider() {
         return this.createContext();
     }
 
@@ -1913,12 +1913,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Override
     public void testEquals() {
         this.checkEquals(
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
@@ -1929,12 +1929,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEqualsDifferentMode() {
         this.checkNotEquals(
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FIND,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
@@ -1945,12 +1945,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEqualsDifferentSpreadsheetContext() {
         this.checkNotEquals(
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 new TestSpreadsheetContext(
                     EnvironmentContexts.map(
@@ -1970,12 +1970,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testEqualsDifferentTerminalContext() {
         this.checkNotEquals(
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             ),
-            BasicSpreadsheetEngineContext.with(
+            SpreadsheetEngineContextSpreadsheetContext.with(
                 SpreadsheetMetadataMode.FORMULA,
                 SPREADSHEET_CONTEXT,
                 TerminalContexts.fake()
@@ -1984,7 +1984,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Override
-    public BasicSpreadsheetEngineContext createObject() {
+    public SpreadsheetEngineContextSpreadsheetContext createObject() {
         return this.createContext();
     }
 
@@ -2431,15 +2431,25 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    // ClassTesting.....................................................................................................
+    // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetEngineContext> type() {
-        return BasicSpreadsheetEngineContext.class;
+    public Class<SpreadsheetEngineContextSpreadsheetContext> type() {
+        return SpreadsheetEngineContextSpreadsheetContext.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public String typeNamePrefix() {
+        return SpreadsheetEngineContext.class.getSimpleName();
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return SpreadsheetContext.class.getSimpleName();
     }
 }
