@@ -109,7 +109,7 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     }
 
     @Override
-    public AbsoluteUrl serverUrl() {
+    public final AbsoluteUrl serverUrl() {
         return this.environmentContext()
             .environmentValueOrFail(SERVER_URL);
     }
