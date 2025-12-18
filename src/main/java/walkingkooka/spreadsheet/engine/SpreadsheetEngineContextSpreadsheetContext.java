@@ -126,19 +126,7 @@ final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEng
         spreadsheetContext.setLocale(metadata.locale());
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
-
-        // canConvert will be null when this ctor is called by #setSpreadsheetMetadataMode
-        this.canConvert = null == canConvert ?
-            metadata.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                mode.converter(),
-                spreadsheetLabelNameResolver,
-                spreadsheetContext, // SpreadsheetProvider
-                spreadsheetContext, // LocaleContext
-                spreadsheetContext.providerContext()
-            ) :
-            canConvert;
+        this.canConvert = canConvert;
         this.spreadsheetContext = spreadsheetContext;
         this.terminalContext = terminalContext;
     }
