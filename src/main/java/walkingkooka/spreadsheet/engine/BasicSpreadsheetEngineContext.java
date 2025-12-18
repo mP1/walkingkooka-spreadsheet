@@ -120,7 +120,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         super();
 
         final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadata();
-        this.metadata = metadata;
+        this.spreadsheetMetadata = metadata;
         this.mode = mode;
 
         spreadsheetContext.setLocale(metadata.locale());
@@ -201,6 +201,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         Objects.requireNonNull(formula, "formula");
         Objects.requireNonNull(cell, "cell");
 
+        final SpreadsheetMetadata metadata = this.spreadsheetMetadata();
+
         final SpreadsheetParser parser = cell.flatMap(SpreadsheetCell::parserSelector)
             .map(s -> this.spreadsheetParser(
                     s,
@@ -208,7 +210,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 )
             ).orElse(
                 SpreadsheetFormulaParsers.valueOrExpression(
-                    this.metadata.spreadsheetParser(
+                    metadata.spreadsheetParser(
                         this, // SpreadsheetParserProvider
                         this.spreadsheetContext.providerContext()
                     )
@@ -218,7 +220,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
             .parse(
                 formula,
-                this.metadata.spreadsheetParserContext(
+                metadata.spreadsheetParserContext(
                     cell,
                     this, // LocaleContext
                     this // HasNow
@@ -366,22 +368,23 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     private SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
         final SpreadsheetContext context = this.spreadsheetContext;
 
-        return this.metadata.spreadsheetFormatterContext(
-            cell,
-            (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
-                SpreadsheetMetadataMode.FORMATTING
-            ).spreadsheetExpressionEvaluationContext(
+        return this.spreadsheetMetadata()
+            .spreadsheetFormatterContext(
                 cell,
-                SpreadsheetExpressionReferenceLoaders.fake()
-            ).addLocalVariable(
-                SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
-                v
-            ),
-            this, // SpreadsheetLabelNameResolver,
-            context, // LocaleContext
-            context, // spreadsheetProvider,
-            context.providerContext() // ProviderContext
-        );
+                (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
+                    SpreadsheetMetadataMode.FORMATTING
+                ).spreadsheetExpressionEvaluationContext(
+                    cell,
+                    SpreadsheetExpressionReferenceLoaders.fake()
+                ).addLocalVariable(
+                    SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
+                    v
+                ),
+                this, // SpreadsheetLabelNameResolver,
+                context, // LocaleContext
+                context, // spreadsheetProvider,
+                context.providerContext() // ProviderContext
+            );
     }
 
     // SpreadsheetContextDelegator......................................................................................
@@ -414,17 +417,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        if(null == this.metadata) {
-            this.metadata = this.spreadsheetContext.spreadsheetMetadata();
+        if(null == this.spreadsheetMetadata) {
+            this.spreadsheetMetadata = this.spreadsheetContext.spreadsheetMetadata();
         }
 
-        return this.metadata;
+        return this.spreadsheetMetadata;
     }
 
     /**
      * Will be updated whenever a new metadata is saved.
      */
-    private transient SpreadsheetMetadata metadata;
+    private transient SpreadsheetMetadata spreadsheetMetadata;
 
     @Override
     public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
@@ -435,7 +438,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadata saved = this.spreadsheetContext.saveMetadata(metadata);
         if (this.spreadsheetId().equals(saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
-            this.metadata = saved;
+            this.spreadsheetMetadata = saved;
 
             // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, CanConvert
             this.canConvert = null;
@@ -447,7 +450,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public void deleteMetadata(final SpreadsheetId id) {
         this.spreadsheetContext.deleteMetadata(id);
         if (this.spreadsheetId().equals(id)) {
-            this.metadata = null;
+            this.spreadsheetMetadata = null;
             this.canConvert = null;
         }
     }
@@ -627,7 +630,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
             .label("mode")
             .value(this.mode)
             .label("metadata")
-            .value(this.metadata)
+            .value(this.spreadsheetMetadata)
             .build();
     }
 }
