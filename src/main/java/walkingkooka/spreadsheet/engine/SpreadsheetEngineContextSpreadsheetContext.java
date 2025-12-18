@@ -79,18 +79,18 @@ import java.util.function.Function;
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
  * public methods requests.
  */
-final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
+final class SpreadsheetEngineContextSpreadsheetContext implements SpreadsheetEngineContext,
     EnvironmentContextDelegator,
     LocaleContextDelegator,
     CanConvertDelegator,
     SpreadsheetProviderDelegator {
 
     /**
-     * Creates a new {@link BasicSpreadsheetEngineContext}
+     * Creates a new {@link SpreadsheetEngineContextSpreadsheetContext}
      */
-    static BasicSpreadsheetEngineContext with(final SpreadsheetMetadataMode mode,
-                                              final SpreadsheetContext spreadsheetContext,
-                                              final TerminalContext terminalContext) {
+    static SpreadsheetEngineContextSpreadsheetContext with(final SpreadsheetMetadataMode mode,
+                                                           final SpreadsheetContext spreadsheetContext,
+                                                           final TerminalContext terminalContext) {
         Objects.requireNonNull(mode, "mode");
         Objects.requireNonNull(spreadsheetContext, "spreadsheetContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
@@ -100,7 +100,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
                 .labels()
         );
 
-        return new BasicSpreadsheetEngineContext(
+        return new SpreadsheetEngineContextSpreadsheetContext(
             mode,
             null, // force cnConvert to be created.
             spreadsheetLabelNameResolver,
@@ -112,11 +112,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final SpreadsheetMetadataMode mode,
-                                          final CanConvert canConvert,
-                                          final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
-                                          final SpreadsheetContext spreadsheetContext,
-                                          final TerminalContext terminalContext) {
+    private SpreadsheetEngineContextSpreadsheetContext(final SpreadsheetMetadataMode mode,
+                                                       final CanConvert canConvert,
+                                                       final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
+                                                       final SpreadsheetContext spreadsheetContext,
+                                                       final TerminalContext terminalContext) {
         super();
 
         final SpreadsheetMetadata metadata = spreadsheetContext.spreadsheetMetadata();
@@ -406,7 +406,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return before.equals(after) ?
             this :
-            new BasicSpreadsheetEngineContext(
+            new SpreadsheetEngineContextSpreadsheetContext(
                 this.mode,
                 this.canConvert,
                 this.spreadsheetLabelNameResolver,
@@ -472,7 +472,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
         return this.mode == mode ?
             this :
-            new BasicSpreadsheetEngineContext(
+            new SpreadsheetEngineContextSpreadsheetContext(
                 Objects.requireNonNull(mode, "mode"),
                 null, // force CanConvert to be recreated
                 this.spreadsheetLabelNameResolver,
@@ -500,7 +500,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
 
         return before == after ?
             this :
-            new BasicSpreadsheetEngineContext(
+            new SpreadsheetEngineContextSpreadsheetContext(
                 this.mode,
                 null, // force re-create
                 this.spreadsheetLabelNameResolver,
@@ -612,11 +612,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof BasicSpreadsheetEngineContext &&
-                this.equals0((BasicSpreadsheetEngineContext) other));
+            (other instanceof SpreadsheetEngineContextSpreadsheetContext &&
+                this.equals0((SpreadsheetEngineContextSpreadsheetContext) other));
     }
 
-    private boolean equals0(final BasicSpreadsheetEngineContext other) {
+    private boolean equals0(final SpreadsheetEngineContextSpreadsheetContext other) {
         return this.mode.equals(other.mode) &&
             this.spreadsheetContext.equals(other.spreadsheetContext) &&
             this.terminalContext.equals(other.terminalContext);
