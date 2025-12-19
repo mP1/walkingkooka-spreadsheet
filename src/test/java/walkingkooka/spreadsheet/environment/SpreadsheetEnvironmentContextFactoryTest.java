@@ -1,0 +1,555 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.environment;
+
+import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.convert.ConverterTesting;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
+import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.FieldAttributes;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.text.LineEnding;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.validation.form.provider.FormHandlerProviders;
+import walkingkooka.validation.provider.ValidatorProviders;
+
+import java.lang.reflect.Field;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.Locale;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class SpreadsheetEnvironmentContextFactoryTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextFactory>,
+    ConverterTesting,
+    SpreadsheetMetadataTesting,
+    ClassTesting2<SpreadsheetEnvironmentContextFactory> {
+
+    private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
+
+    static {
+        try {
+            SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+            for (final Field field : SpreadsheetEnvironmentContextFactory.class.getDeclaredFields()) {
+                if (false == FieldAttributes.STATIC.is(field)) {
+                    continue;
+                }
+                if (EnvironmentValueName.class != field.getType()) {
+                    continue;
+                }
+                final EnvironmentValueName<?> name = Cast.to(
+                    field.get(null)
+                );
+
+                if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
+                    continue;
+                }
+
+                context = context.setEnvironmentValue(
+                    name,
+                    Cast.to(
+                        METADATA_EN_AU.getOrFail(
+                            SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
+                        )
+                    )
+                );
+            }
+
+            SPREADSHEET_ENVIRONMENT_CONTEXT = context.setEnvironmentValue(
+                SpreadsheetEnvironmentContextFactory.CONVERTER,
+                METADATA_EN_AU.getOrFail(
+                    SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
+                )
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
+                DECIMAL_NUMBER_DIGIT_COUNT
+            );
+        } catch (final Exception cause) {
+            throw new RuntimeException(cause);
+        }
+    }
+
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
+
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullSpreadsheetEnvironmentContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                null,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                null,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                null
+            )
+        );
+    }
+
+    // environmentContext...............................................................................................
+
+    @Test
+    public void testSetEnvironmentContextWithDifferent() {
+        final SpreadsheetEnvironmentContextFactory context = this.createContext();
+
+        final LineEnding lineEnding = LineEnding.CRNL;
+
+        this.checkNotEquals(
+            LINE_ENDING,
+            lineEnding
+        );
+
+        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            lineEnding,
+            LOCALE,
+            HAS_NOW,
+            EnvironmentContext.ANONYMOUS
+        );
+
+        final SpreadsheetEnvironmentContextFactory afterSet = context.setEnvironmentContext(differentEnvironmentContext);
+        this.checkNotEquals(
+            context,
+            afterSet
+        );
+    }
+
+    // HasLineEndings...................................................................................................
+
+    @Test
+    public void testLineEnding() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.lineEndingAndCheck(
+            this.createContext(context),
+            context.lineEnding()
+        );
+    }
+
+    @Test
+    public void testSetLineEnding() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LINE_ENDING,
+                    LOCALE,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            )
+        );
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+
+        final LineEnding lineEnding = LineEnding.CRNL;
+
+        this.checkNotEquals(
+            LINE_ENDING,
+            lineEnding
+        );
+
+        context.setLineEnding(lineEnding);
+
+        this.lineEndingAndCheck(
+            context,
+            lineEnding
+        );
+    }
+
+    @Test
+    public void testLocale() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                Locale.FRANCE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.localeAndCheck(
+            this.createContext(context),
+            context.locale()
+        );
+    }
+
+    @Test
+    public void testSetLocale() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LINE_ENDING,
+                    Locale.FRANCE,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            )
+        );
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+
+        final Locale locale = Locale.GERMAN;
+        context.setLocale(locale);
+
+        this.localeAndCheck(
+            context,
+            locale
+        );
+    }
+
+    @Test
+    public void testEnvironmentValue() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            this.createContext(spreadsheetEnvironmentContext),
+            name,
+            value
+        );
+    }
+
+    @Test
+    public void testSetEnvironmentValue() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+        context.setEnvironmentValue(
+            name,
+            value
+        );
+
+        this.environmentValueAndCheck(
+            context,
+            name,
+            value
+        );
+    }
+
+    @Test
+    public void testRemoveEnvironmentValue() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(
+                SPREADSHEET_ENVIRONMENT_CONTEXT
+            )
+        );
+
+        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final String value = "Hello World123";
+
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            name,
+            value
+        );
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+        context.removeEnvironmentValue(name);
+
+        this.environmentValueAndCheck(
+            context,
+            name
+        );
+    }
+
+    @Test
+    public void testUser() {
+        final EmailAddress user = EmailAddress.parse("user123@example.com");
+
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                Optional.of(user)
+            )
+        );
+
+        this.userAndCheck(
+            this.createContext(spreadsheetEnvironmentContext),
+            user
+        );
+    }
+
+    // spreadsheetId....................................................................................................
+
+    @Override
+    public void testEnvironmentValueNameWithSpreadsheetId() {
+        throw new UnsupportedOperationException();
+    }
+
+    // setSpreadsheetId.................................................................................................
+
+    @Override
+    public void testSetSpreadsheetIdWithSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    // EnvironmentValueName.............................................................................................
+
+    @Test
+    public void testFireEnvironmentValueNameChangeWithRoundingMode() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .setEnvironmentValue(
+                SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
+            );
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+
+        final DecimalNumberContext decimalNumberContext = context.decimalNumberContext();
+
+        RoundingMode roundingMode = RoundingMode.UP;
+        if (roundingMode == decimalNumberContext.mathContext()
+            .getRoundingMode()) {
+            roundingMode = RoundingMode.CEILING;
+        }
+
+        this.setEnvironmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContextFactory.ROUNDING_MODE,
+            roundingMode
+        );
+
+        final DecimalNumberContext decimalNumberContext2 = context.decimalNumberContext();
+
+        assertNotSame(
+            decimalNumberContext,
+            decimalNumberContext2,
+            "DecimalNumberCoontext should have been recreated with new RoundingMode"
+        );
+
+        this.checkEquals(
+            roundingMode,
+            decimalNumberContext2.mathContext()
+                .getRoundingMode(),
+            "DecimalNumberContext.roundingMode"
+        );
+    }
+
+    // ExpressionEvaluationContextTesting................................................................................
+
+    @Override
+    public SpreadsheetEnvironmentContextFactory createContext() {
+        return this.createContext(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
+    }
+
+    private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+        return createContext(
+            spreadsheetEnvironmentContext,
+            ProviderContexts.fake()
+        );
+    }
+
+    private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                               final ProviderContext providerContext) {
+        return SpreadsheetEnvironmentContextFactory.with(
+            spreadsheetEnvironmentContext,
+            LOCALE_CONTEXT,
+            SpreadsheetProviders.basic(
+                CONVERTER_PROVIDER,
+                ExpressionFunctionProviders.fake(),
+                SpreadsheetComparatorProviders.fake(),
+                SpreadsheetExporterProviders.fake(),
+                SpreadsheetFormatterProviders.fake(),
+                FormHandlerProviders.fake(),
+                SpreadsheetImporterProviders.fake(),
+                SPREADSHEET_PARSER_PROVIDER,
+                ValidatorProviders.fake()
+            ),
+            providerContext
+        );
+    }
+
+    // HasConverter.....................................................................................................
+
+    @Test
+    public void testConverter() {
+        this.createContext()
+            .converter();
+    }
+
+    @Test
+    public void testConverterConvertExpressionNumberToString() {
+        this.convertAndCheck(
+            EXPRESSION_NUMBER_KIND.create(123),
+            String.class,
+            "123"
+        );
+    }
+
+
+    @Test
+    public void testConverterConvertStringToExpressionNumber() {
+        this.convertAndCheck(
+            "123",
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.create(123)
+        );
+    }
+
+    @Test
+    public void testConverterConvertStringToExpressionNumber2() {
+        this.convertAndCheck(
+            "123.5",
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.create(123.5)
+        );
+    }
+
+    private <T> T convertAndCheck(final Object value,
+                                  final Class<T> target,
+                                  final T expected) {
+        final SpreadsheetEnvironmentContextFactory factory = this.createContext();
+
+        return this.convertAndCheck(
+            factory.converter(),
+            value,
+            target,
+            factory.spreadsheetConverterContext(),
+            expected
+        );
+    }
+
+    // DecimalNumberContext.............................................................................................
+
+    public int decimalNumberDigitCount() {
+        return DECIMAL_NUMBER_DIGIT_COUNT;
+    }
+
+    public MathContext mathContext() {
+        return DECIMAL_NUMBER_CONTEXT.mathContext();
+    }
+
+    // DecimalNumberContextDelegator....................................................................................
+
+    public DecimalNumberContext decimalNumberContext() {
+        return DECIMAL_NUMBER_CONTEXT;
+    }
+
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA_EN_AU.decimalNumberContext(
+        SpreadsheetExpressionEvaluationContext.NO_CELL,
+        LOCALE_CONTEXT
+    );
+
+    @Override
+    public void testSetLocaleWithDifferent() {
+        throw new UnsupportedOperationException();
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Class<SpreadsheetEnvironmentContextFactory> type() {
+        return SpreadsheetEnvironmentContextFactory.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
+    }
+}
