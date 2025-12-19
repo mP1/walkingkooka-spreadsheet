@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -66,6 +67,7 @@ import java.math.RoundingMode;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Wraps a {@link SpreadsheetEnvironmentContext} with numerous factory methods that cache various components built from the given {@link EnvironmentValueName}.
@@ -106,6 +108,29 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     public final static EnvironmentValueName<Integer> TWO_DIGIT_YEAR = SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName();
 
     public final static EnvironmentValueName<Character> VALUE_SEPARATOR = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName();
+
+    /**
+     * A {@link Set} of all the {@link EnvironmentValueName} constants in this class.
+     */
+    public final static Set<EnvironmentValueName<?>> ENVIRONMENT_VALUE_NAMES = Sets.of(
+        CONVERTER,
+        DATE_PARSER,
+        DATE_TIME_OFFSET,
+        DATE_TIME_PARSER,
+        DATE_TIME_SYMBOLS,
+        DECIMAL_NUMBER_DIGIT_COUNT,
+        DECIMAL_NUMBER_SYMBOLS,
+        DEFAULT_YEAR,
+        EXPRESSION_NUMBER_KIND,
+        FUNCTIONS,
+        LOCALE,
+        NUMBER_PARSER,
+        PRECISION,
+        ROUNDING_MODE,
+        TIME_PARSER,
+        TWO_DIGIT_YEAR,
+        VALUE_SEPARATOR
+    );
 
     /**
      * Tests if the given {@link EnvironmentValueName} is one of the above constants.
