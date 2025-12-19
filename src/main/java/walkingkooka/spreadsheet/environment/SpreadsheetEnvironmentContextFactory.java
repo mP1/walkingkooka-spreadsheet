@@ -105,7 +105,34 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     public final static EnvironmentValueName<Integer> TWO_DIGIT_YEAR = SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName();
 
     public final static EnvironmentValueName<Character> VALUE_SEPARATOR = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName();
-    
+
+    /**
+     * Tests if the given {@link EnvironmentValueName} is one of the above constants.
+     */
+    public static boolean isEnvironmentValueName(final EnvironmentValueName<?> name) {
+        return null != name &&
+            (
+                CONVERTER.equals(name) ||
+                    DATE_PARSER.equals(name) ||
+                    DATE_TIME_OFFSET.equals(name) ||
+                    DATE_TIME_PARSER.equals(name) ||
+                    DATE_TIME_SYMBOLS.equals(name) ||
+                    DECIMAL_NUMBER_DIGIT_COUNT.equals(name) ||
+                    DECIMAL_NUMBER_SYMBOLS.equals(name) ||
+                    DEFAULT_YEAR.equals(name) ||
+                    EXPRESSION_NUMBER_KIND.equals(name) ||
+                    FUNCTIONS.equals(name) ||
+                    LOCALE.equals(name) ||
+                    NUMBER_PARSER.equals(name) ||
+                    PRECISION.equals(name) ||
+                    ROUNDING_MODE.equals(name) ||
+                    TIME_PARSER.equals(name) ||
+                    TWO_DIGIT_YEAR.equals(name) ||
+                    VALUE_SEPARATOR.equals(name)
+            );
+    }
+
+
     public static SpreadsheetEnvironmentContextFactory with(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                             final LocaleContext localeContext,
                                                             final SpreadsheetProvider spreadsheetProvider,
@@ -173,7 +200,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     private void onEnvironmentValueName(final EnvironmentValueName<?> name,
                                         final Optional<?> oldValue,
                                         final Optional<?> newValue) {
-        if (SpreadsheetExpressionEvaluationContext.isSpreadsheetEnvironmentContextEnvironmentValueName(name)) {
+        if (isEnvironmentValueName(name)) {
             this.clear();
         }
     }
