@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetName;
@@ -28,7 +29,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.TreeMap;
 
-public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<TreeMapSpreadsheetMetadataStore> {
+public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetadataStoreTestCase<TreeMapSpreadsheetMetadataStore>
+    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetMetadataStore> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -168,6 +170,23 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     @Override
     public TreeMapSpreadsheetMetadataStore createStore() {
         return TreeMapSpreadsheetMetadataStore.empty();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentStore() {
+        final TreeMapSpreadsheetMetadataStore store = TreeMapSpreadsheetMetadataStore.empty();
+        store.save(
+            this.createMetadata("Different")
+        );
+
+        this.checkNotEquals(store);
+    }
+
+    @Override
+    public TreeMapSpreadsheetMetadataStore createObject() {
+        return this.createStore();
     }
 
     // toString.........................................................................................................

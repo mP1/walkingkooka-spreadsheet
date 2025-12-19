@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -155,6 +156,24 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     }
 
     private final Store<SpreadsheetId, SpreadsheetMetadata> store;
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.store.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            other instanceof TreeMapSpreadsheetMetadataStore &&
+                this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final TreeMapSpreadsheetMetadataStore other) {
+        return this.store.equals(other.store);
+    }
 
     @Override
     public String toString() {
