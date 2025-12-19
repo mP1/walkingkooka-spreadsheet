@@ -19,15 +19,11 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentContexts;
@@ -35,17 +31,12 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetColors;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -53,7 +44,6 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -68,14 +58,10 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
-import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
-import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -96,26 +82,12 @@ import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionFunctionName;
-import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ValueExpression;
-import walkingkooka.tree.expression.function.ExpressionFunction;
-import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
-import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
-import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
-import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionInfoSet;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -123,279 +95,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implements SpreadsheetEngineContextTesting<SpreadsheetEngineContextSharedSpreadsheetContext>,
-    SpreadsheetMetadataTesting,
-    HashCodeEqualsDefinedTesting2<SpreadsheetEngineContextSharedSpreadsheetContext> {
-
-    private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com/path123");
-
-    private final static String CURRENCY = "CURR";
-    private final static char DECIMAL = '.';
-    private final static String EXPONENT = "e";
-    private final static char GROUP_SEPARATOR = ',';
-    private final static String INFINITY = "Infinity!";
-    private final static char MINUS = '!';
-    private final static char MONETARY_DECIMAL_SEPARATOR = ':';
-    private final static String NAN = "Nan!";
-    private final static char PERCENT = '#';
-    private final static char PERMILL_SYMBOL = '^';
-    private final static char PLUS = '@';
-    private final static char ZERO_DIGIT = '0';
-
-    private final static char VALUE_SEPARATOR = ',';
-    private final static int WIDTH = 1;
-
-    private final static String TEST_CONTEXT_LOADCELL = "test-context-loadCell";
-
-    private final static String TEST_CONTEXT_SERVER_URL = "test-context-serverUrl";
-
-    private final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
-
-    private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
-
-    private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-        .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
-        .loadFromLocale(
-            LocaleContexts.jre(LOCALE)
-        ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SPREADSHEET_ID)
-        .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dd/mm/yyyy hh:mm").spreadsheetParserSelector())
-        .set(SpreadsheetMetadataPropertyName.TEXT_FORMATTER, SpreadsheetPattern.parseTextFormatPattern("@").spreadsheetFormatterSelector())
-        .set(
-            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
-            DecimalNumberSymbols.with(
-                MINUS,
-                PLUS,
-                ZERO_DIGIT,
-                CURRENCY,
-                DECIMAL,
-                EXPONENT,
-                GROUP_SEPARATOR,
-                INFINITY,
-                MONETARY_DECIMAL_SEPARATOR,
-                NAN,
-                PERCENT,
-                PERMILL_SYMBOL
-            )
-        ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, WIDTH)
-        .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
-        .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, VALUE_SEPARATOR)
-        .set(SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS, SpreadsheetExpressionFunctions.parseAliasSet("xyz, " + TEST_CONTEXT_LOADCELL + ", " + TEST_CONTEXT_SERVER_URL + ", " + TEST_CONTEXT_SPREADSHEET_METADATA));
-
-    private final static SpreadsheetExpressionReferenceLoader LOADER = new FakeSpreadsheetExpressionReferenceLoader() {
-        @Override
-        public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                                  final SpreadsheetExpressionEvaluationContext context) {
-            if (cell.equalsIgnoreReferenceKind(LOAD_CELL_REFERENCE)) {
-                return Optional.of(
-                    LOAD_CELL_REFERENCE.setFormula(
-                        SpreadsheetFormula.EMPTY.setValue(
-                            Optional.of(LOAD_CELL_VALUE)
-                        )
-                    )
-                );
-            }
-            return Optional.empty();
-        }
-    };
-
-    private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
-        CONVERTER_PROVIDER,
-        new ExpressionFunctionProvider<>() {
-
-            @Override
-            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionSelector selector,
-                                                                                                    final ProviderContext context) {
-                Objects.requireNonNull(selector, "selector");
-                Objects.requireNonNull(context, "context");
-
-                return selector.evaluateValueText(
-                    this,
-                    context
-                );
-            }
-
-            @Override
-            public ExpressionFunction<?, SpreadsheetExpressionEvaluationContext> expressionFunction(final ExpressionFunctionName name,
-                                                                                                    final List<?> values,
-                                                                                                    final ProviderContext context) {
-                Objects.requireNonNull(name, "name");
-                Objects.requireNonNull(values, "values");
-                Objects.requireNonNull(context, "context");
-
-                switch (name.value()) {
-                    case "xyz":
-                        return new FakeExpressionFunction<>() {
-
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    ExpressionFunctionName.with("xyz")
-                                );
-                            }
-
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return parameters.stream()
-                                    .mapToLong(p -> context.convertOrFail(p, Long.class))
-                                    .sum();
-                            }
-
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                        .variable(Object.class)
-                                        .setKinds(ExpressionFunctionParameterKind.CONVERT_EVALUATE_RESOLVE_REFERENCES)
-                                );
-                            }
-
-                            @Override
-                            public String toString() {
-                                return "xyz";
-                            }
-                        };
-                    case TEST_CONTEXT_LOADCELL:
-                        return new FakeExpressionFunction<>() {
-
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    ExpressionFunctionName.with(TEST_CONTEXT_LOADCELL)
-                                );
-                            }
-
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return context.loadCell(
-                                        (SpreadsheetCellReference) parameters.get(0)
-                                    ).get()
-                                    .formula()
-                                    .errorOrValue()
-                                    .get();
-                            }
-
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                        .variable(Object.class)
-                                        .setKinds(
-                                            Sets.of(ExpressionFunctionParameterKind.EVALUATE)
-                                        )
-                                );
-                            }
-
-                            @Override
-                            public String toString() {
-                                return TEST_CONTEXT_LOADCELL;
-                            }
-                        };
-                    case TEST_CONTEXT_SERVER_URL:
-                        return new FakeExpressionFunction<>() {
-
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    ExpressionFunctionName.with(TEST_CONTEXT_SERVER_URL)
-                                );
-                            }
-
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return context.serverUrl();
-                            }
-
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                        .variable(Object.class)
-                                );
-                            }
-
-                            @Override
-                            public String toString() {
-                                return TEST_CONTEXT_SERVER_URL;
-                            }
-                        };
-                    case TEST_CONTEXT_SPREADSHEET_METADATA:
-                        return new FakeExpressionFunction<>() {
-
-                            @Override
-                            public Optional<ExpressionFunctionName> name() {
-                                return Optional.of(
-                                    ExpressionFunctionName.with(TEST_CONTEXT_SPREADSHEET_METADATA)
-                                );
-                            }
-
-                            @Override
-                            public Object apply(final List<Object> parameters,
-                                                final SpreadsheetExpressionEvaluationContext context) {
-                                return context.spreadsheetMetadata();
-                            }
-
-                            @Override
-                            public List<ExpressionFunctionParameter<?>> parameters(final int count) {
-                                return Lists.of(
-                                    ExpressionFunctionParameterName.with("parameters")
-                                        .variable(Object.class)
-                                );
-                            }
-
-                            @Override
-                            public String toString() {
-                                return TEST_CONTEXT_SPREADSHEET_METADATA;
-                            }
-                        };
-                    default:
-                        throw new UnsupportedOperationException("Unknown function: " + name);
-                }
-            }
-
-            @Override
-            public ExpressionFunctionInfoSet expressionFunctionInfos() {
-                return SpreadsheetExpressionFunctions.infoSet(
-                    Sets.of(
-                        SpreadsheetExpressionFunctions.info(
-                            Url.parseAbsolute("https://example.com/test/xyz"),
-                            SpreadsheetExpressionFunctions.name("xyz")
-                        ),
-                        SpreadsheetExpressionFunctions.info(
-                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_LOADCELL),
-                            SpreadsheetExpressionFunctions.name(TEST_CONTEXT_LOADCELL)
-                        ),
-                        SpreadsheetExpressionFunctions.info(
-                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SERVER_URL),
-                            SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
-                        ),
-                        SpreadsheetExpressionFunctions.info(
-                            Url.parseAbsolute("https://example.com/test/" + TEST_CONTEXT_SPREADSHEET_METADATA),
-                            SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SPREADSHEET_METADATA)
-                        )
-                    )
-                );
-            }
-
-            @Override
-            public CaseSensitivity expressionFunctionNameCaseSensitivity() {
-                return SpreadsheetExpressionFunctions.NAME_CASE_SENSITIVITY;
-            }
-        },
-        SPREADSHEET_COMPARATOR_PROVIDER,
-        SPREADSHEET_EXPORTER_PROVIDER,
-        SPREADSHEET_FORMATTER_PROVIDER,
-        FORM_HANDLER_PROVIDER,
-        SPREADSHEET_IMPORTER_PROVIDER,
-        SPREADSHEET_PARSER_PROVIDER,
-        VALIDATOR_PROVIDER
-    );
+public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends SpreadsheetEngineContextSharedTestCase<SpreadsheetEngineContextSharedSpreadsheetContext> {
 
     private final static SpreadsheetContext SPREADSHEET_CONTEXT = new TestSpreadsheetContext();
 
@@ -434,16 +136,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
                 SPREADSHEET_CONTEXT,
                 null
             )
-        );
-    }
-
-    // serverUrl........................................................................................................
-
-    @Test
-    public void testServerUrl() {
-        this.serverUrlAndCheck(
-            this.createContext(),
-            SERVER_URL
         );
     }
 
@@ -686,7 +378,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
     // toExpression.....................................................................................................
 
     @Test
-    public void testToExpression() {
+    public void testToExpression2() {
         final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
 
         this.toExpressionAndCheck(
@@ -709,37 +401,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
     // evaluate.........................................................................................................
 
     @Test
-    public void testEvaluate() {
-        this.evaluateAndCheck(
-            Expression.add(
-                this.expression(1),
-                this.expression(2)
-            ),
-            this.number(1 + 2)
-        );
-    }
-
-    @Test
-    public void testEvaluateWithFunction() {
-        this.evaluateAndCheck(
-            Expression.call(
-                Expression.namedFunction(
-                    SpreadsheetExpressionFunctions.name("xyz")
-                ),
-                Lists.of(
-                    this.expression(1),
-                    this.expression(2),
-                    this.expression(3)
-                )
-            ),
-            1L + 2 + 3
-        );
-    }
-
-    private final static SpreadsheetCellReference LOAD_CELL_REFERENCE = SpreadsheetSelection.parseCell("Z99");
-    private final static Object LOAD_CELL_VALUE = "LoadCellTextValue";
-
-    @Test
     public void testEvaluateWithFunctionContextLoadCell() {
         this.evaluateAndCheck(
             Expression.call(
@@ -758,20 +419,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
     }
 
     @Test
-    public void testEvaluateWithFunctionContextServerUrl() {
-        this.evaluateAndCheck(
-            Expression.call(
-                Expression.namedFunction(
-                    SpreadsheetExpressionFunctions.name(TEST_CONTEXT_SERVER_URL)
-                ),
-                Lists.empty()
-            ),
-            SERVER_URL
-        );
-    }
-
-    @Test
-    public void testEvaluateWithFunctionContextSpreadsheetMetadata() {
+    public final void testEvaluateWithFunctionContextSpreadsheetMetadata() {
         this.evaluateAndCheck(
             Expression.call(
                 Expression.namedFunction(
@@ -958,325 +606,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
         );
     }
 
-    // lineEnding.......................................................................................................
-
-    @Test
-    public void testLineEnding() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
-        );
-
-        this.lineEndingAndCheck(
-            this.createContext(environmentContext),
-            environmentContext.lineEnding()
-        );
-    }
-
-    @Test
-    public void testSetLineEnding() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LINE_ENDING,
-                LOCALE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
-        );
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(environmentContext);
-
-        final LineEnding lineEnding = LineEnding.CRNL;
-
-        this.checkNotEquals(
-            LINE_ENDING,
-            lineEnding
-        );
-
-        context.setLineEnding(lineEnding);
-
-        this.lineEndingAndCheck(
-            context,
-            lineEnding
-        );
-
-        this.environmentValueAndCheck(
-            context,
-            EnvironmentValueName.LINE_ENDING,
-            lineEnding
-        );
-    }
-
-    // locale(EnvironmentContext).......................................................................................
-
-    @Test
-    public void testLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LINE_ENDING,
-                Locale.FRANCE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
-        );
-
-        this.localeAndCheck(
-            this.createContext(environmentContext),
-            environmentContext.locale()
-        );
-    }
-
-    @Test
-    public void testSetLocale() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            EnvironmentContexts.empty(
-                LINE_ENDING,
-                Locale.FRANCE,
-                HAS_NOW,
-                EnvironmentContext.ANONYMOUS
-            )
-        );
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(environmentContext);
-
-        final Locale locale = Locale.GERMAN;
-        context.setLocale(locale);
-
-        this.localeAndCheck(
-            context,
-            locale
-        );
-
-        this.environmentValueAndCheck(
-            context,
-            EnvironmentValueName.LOCALE,
-            locale
-        );
-    }
-
-    // environmentContext...............................................................................................
-
-    @Test
-    public void testCloneEnvironment() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "Hello World123";
-
-        environmentContext.setEnvironmentValue(
-            name,
-            value
-        );
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(environmentContext);
-
-        this.environmentValueAndCheck(
-            environmentContext,
-            name,
-            value
-        );
-
-        final SpreadsheetEngineContext clone = context.cloneEnvironment();
-        this.environmentValueAndCheck(
-            clone,
-            name,
-            value
-        );
-
-        // remove name and verify gone from $context
-        context.removeEnvironmentValue(name);
-        this.environmentValueAndCheck(
-            context,
-            name
-        );
-
-        // $name should remain set in $clone
-        this.environmentValueAndCheck(
-            clone,
-            name,
-            value
-        );
-    }
-
-    // setEnvironmentContext............................................................................................
-
-    @Test
-    public void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(environmentContext);
-        assertSame(
-            context,
-            context.setEnvironmentContext(environmentContext)
-        );
-    }
-
-    @Test
-    public void testSetEnvironmentContextWithDifferent() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
-            .setLineEnding(LineEnding.CRNL);
-
-        this.checkNotEquals(
-            environmentContext,
-            differentEnvironmentContext
-        );
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext before = this.createContext(environmentContext);
-        final SpreadsheetEngineContext after = before.setEnvironmentContext(differentEnvironmentContext);
-
-        assertNotSame(
-            before,
-            after
-        );
-    }
-
-    // environmentValue.................................................................................................
-
-    @Test
-    public void testEnvironmentValue() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "Hello World123";
-
-        environmentContext.setEnvironmentValue(
-            name,
-            value
-        );
-
-        this.environmentValueAndCheck(
-            this.createContext(environmentContext),
-            name,
-            value
-        );
-    }
-
-    @Test
-    public void testSetEnvironmentValue() {
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "Hello World123";
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-        context.setEnvironmentValue(
-            name,
-            value
-        );
-
-        this.environmentValueAndCheck(
-            context,
-            name,
-            value
-        );
-    }
-
-    @Test
-    public void testSetEnvironmentValueWithLocale() {
-        final EnvironmentValueName<Locale> name = EnvironmentValueName.LOCALE;
-        final Locale value = Locale.FRANCE;
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-        );
-        context.setEnvironmentValue(
-            name,
-            value
-        );
-
-        this.environmentValueAndCheck(
-            context,
-            name,
-            value
-        );
-
-        this.localeAndCheck(
-            context,
-            value
-        );
-    }
-
-    @Test
-    public void testRemoveEnvironmentValue() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "Hello World123";
-
-        environmentContext.setEnvironmentValue(
-            name,
-            value
-        );
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(environmentContext);
-        context.removeEnvironmentValue(name);
-
-        this.environmentValueAndCheck(
-            context,
-            name
-        );
-    }
-
-    @Test
-    public void testExpressionEvaluationContextAndEnvironmentValue() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "Hello World123";
-
-        environmentContext.setEnvironmentValue(
-            name,
-            value
-        );
-
-        this.environmentValueAndCheck(
-            this.createContext(environmentContext)
-                .spreadsheetExpressionEvaluationContext(
-                    SpreadsheetEngineContext.NO_CELL,
-                    SpreadsheetExpressionReferenceLoaders.fake()
-                ),
-            name,
-            value
-        );
-    }
-
-    @Test
-    public void testExpressionEvaluationContextAndNow() {
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
-        final LocalDateTime now = context.now();
-
-        this.checkEquals(
-            context.spreadsheetExpressionEvaluationContext(
-                SpreadsheetEngineContext.NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake()
-            ).now(),
-            now
-        );
-    }
-
-    @Test
-    public void testExpressionEvaluationContextAndUser() {
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext();
-        final Optional<EmailAddress> user = context.user();
-        this.checkNotEquals(
-            Optional.empty(),
-            user
-        );
-
-        this.userAndCheck(
-            context.spreadsheetExpressionEvaluationContext(
-                SpreadsheetEngineContext.NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake()
-            ),
-            user
-        );
-    }
+    // SpreadsheetEnvironmentContext....................................................................................
 
     @Test
     public void testSpreadsheetExpressionEvaluationContextWithScriptingIsEnvironmentContextUpdatable() {
@@ -1447,11 +777,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
 
     // createContext....................................................................................................
 
-    @Override
-    public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
-        return this.createContext(SpreadsheetLabelStores.treeMap());
-    }
-
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata) {
         return this.createContext(
             metadata,
@@ -1460,7 +785,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
         );
     }
 
-    private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final EnvironmentContext environmentContext) {
+    @Override
+    SpreadsheetEngineContextSharedSpreadsheetContext createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
             METADATA,
             environmentContext,
@@ -1509,14 +835,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
         return this.createContext(
             metadata,
             cells,
-            labelStore
+            labelStore,
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
     }
 
 
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
                                                                            final SpreadsheetCellStore cellStore,
-                                                                           final SpreadsheetLabelStore labelStore) {
+                                                                           final SpreadsheetLabelStore labelStore,
+                                                                           final EnvironmentContext environmentContext) {
         return this.createContext(
             metadata,
             new FakeSpreadsheetStoreRepository() {
@@ -1536,20 +864,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
                     return Storages.fake();
                 }
             },
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW::now,
-                    Optional.of(USER)
-                )
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                SPREADSHEET_ID
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SERVER_URL,
-                SERVER_URL
-            )
+            environmentContext
+        );
+    }
+
+    // createContext....................................................................................................
+
+    @Override
+    public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
+        return this.createContext(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                .setSpreadsheetId(SPREADSHEET_ID)
         );
     }
 
@@ -1566,53 +891,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
                 PROVIDER_CONTEXT
             ),
             TERMINAL_CONTEXT
-        );
-    }
-
-    private ExpressionNumber number(final Number value) {
-        return EXPRESSION_NUMBER_KIND.create(value);
-    }
-
-    private ValueExpression<?> expression(final Number value) {
-        return Expression.value(
-            this.number(value)
-        );
-    }
-
-    @Override
-    public DateTimeContext dateTimeContext() {
-        return new FakeDateTimeContext() {
-
-            @Override
-            public String toString() {
-                return "DateTimeContext123";
-            }
-        };
-    }
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic(
-            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
-            DecimalNumberSymbols.with(
-                MINUS,
-                PLUS,
-                ZERO_DIGIT,
-                CURRENCY,
-                DECIMAL,
-                EXPONENT,
-                GROUP_SEPARATOR,
-                INFINITY,
-                MONETARY_DECIMAL_SEPARATOR,
-                NAN,
-                PERCENT,
-                PERMILL_SYMBOL
-            ),
-            LOCALE,
-            new MathContext(
-                MathContext.DECIMAL32.getPrecision(),
-                RoundingMode.HALF_UP
-            )
         );
     }
 
@@ -2435,16 +1713,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
     @Override
     public Class<SpreadsheetEngineContextSharedSpreadsheetContext> type() {
         return SpreadsheetEngineContextSharedSpreadsheetContext.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
-    public String typeNamePrefix() {
-        return SpreadsheetEngineContext.class.getSimpleName();
     }
 
     @Override

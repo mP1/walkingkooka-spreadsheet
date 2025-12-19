@@ -1,0 +1,396 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.engine;
+
+import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.MissingEnvironmentValueException;
+import walkingkooka.locale.LocaleContexts;
+import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.reflect.FieldAttributes;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.terminal.TerminalContexts;
+
+import java.lang.reflect.Field;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.function.BiFunction;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest extends SpreadsheetEngineContextSharedTestCase<SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext> {
+
+    private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
+
+    static {
+        try {
+            SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+            for (final Field field : SpreadsheetExpressionEvaluationContext.class.getDeclaredFields()) {
+                if (false == FieldAttributes.STATIC.is(field)) {
+                    continue;
+                }
+                if (EnvironmentValueName.class != field.getType()) {
+                    continue;
+                }
+                final EnvironmentValueName<?> name = Cast.to(
+                    field.get(null)
+                );
+
+                if(name.equals(SpreadsheetExpressionEvaluationContext.CONVERTER)) {
+                    continue;
+                }
+
+                context = context.setEnvironmentValue(
+                    name,
+                    Cast.to(
+                        METADATA_EN_AU.getOrFail(
+                            SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
+                        )
+                    )
+                );
+            }
+
+            SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+                context.setEnvironmentValue(
+                    SpreadsheetExpressionEvaluationContext.CONVERTER,
+                    METADATA_EN_AU.getOrFail(
+                        SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
+                    )
+                ).setEnvironmentValue(
+                    SpreadsheetExpressionEvaluationContext.DECIMAL_NUMBER_DIGIT_COUNT,
+                    DECIMAL_NUMBER_DIGIT_COUNT
+                ).setEnvironmentValue(
+                    SpreadsheetExpressionEvaluationContext.FUNCTIONS,
+                    SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
+                )
+            );
+        } catch (final Exception cause) {
+            throw new RuntimeException(cause);
+        }
+    }
+
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
+
+    private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = SpreadsheetMetadataContexts.fake();
+
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullSpreadsheetEnvironmentContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                null,
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullLocaleContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                null,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetMetadataContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                null,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                null,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                null
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final EnvironmentContext environmentContext) {
+        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            SpreadsheetEnvironmentContexts.basic(environmentContext),
+            LOCALE_CONTEXT,
+            SpreadsheetMetadataContexts.basic(
+                CREATE_METADATA,
+                SpreadsheetMetadataStores.treeMap()
+            ),
+            TERMINAL_CONTEXT,
+            SPREADSHEET_PROVIDER,
+            PROVIDER_CONTEXT
+        );
+    }
+
+    private final static BiFunction<EmailAddress, Optional<Locale>, SpreadsheetMetadata> CREATE_METADATA = (e, l) -> METADATA_EN_AU;
+
+    @Test
+    public void testSaveMetadata() {
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with(this.getClass().getName())
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        ).set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.create(
+                USER,
+                HAS_NOW.now()
+            )
+        );
+
+        final SpreadsheetMetadata saved = context.saveMetadata(metadata);
+
+        this.loadMetadataAndCheck(
+            context,
+            SPREADSHEET_ID,
+            saved
+        );
+    }
+
+    // spreadsheetId....................................................................................................
+
+    @Override
+    public void testEnvironmentValueNameWithSpreadsheetId() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Test
+    public void testEnvironmentValueNameWithSpreadsheetIdMissing() {
+        this.environmentValueAndCheck(SpreadsheetEngineContext.SPREADSHEET_ID);
+    }
+
+    @Test
+    public void testSpreadsheetIdFails() {
+        assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createContext()
+                .spreadsheetId()
+        );
+    }
+
+    // setSpreadsheetId.................................................................................................
+
+    @Test
+    public void testSetSpreadsheetId() {
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(222);
+        context.setSpreadsheetId(spreadsheetId);
+
+        this.spreadsheetIdAndCheck(
+            context,
+            spreadsheetId
+        );
+    }
+
+    @Override
+    public void testSetSpreadsheetIdWithSame() {
+        throw new UnsupportedOperationException();
+    }
+
+    // createContext....................................................................................................
+
+    @Override
+    public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext() {
+        return this.createContext(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        );
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentSpreadsheetEnvironmentContext() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setEnvironmentValue(
+                        EnvironmentValueName.with("different"),
+                        1
+                    ),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLocaleContext() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LocaleContexts.jre(Locale.FRANCE),
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetMetadataContext() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SpreadsheetMetadataContexts.fake(),
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentTerminalContext() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TerminalContexts.fake(),
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetProvider() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SpreadsheetProviders.fake(),
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentProviderContext() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                ProviderContexts.fake()
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createObject() {
+        return this.createContext();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            this.createContext(),
+            "{converter=collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template), dateParser=date yyyy/mm/dd, dateTimeOffset=-25569, dateTimeParser=date-time yyyy/mm/dd hh:mm, dateTimeSymbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\", decimalNumberDigitCount=6, decimalNumberSymbols=negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰', defaultYear=2000, expressionNumberKind=BIG_DECIMAL, functions=[test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz], lineEnding=\"\\n\", locale=en_AU, numberParser=number 0.#;0.#;0, precision=7, roundingMode=HALF_UP, serverUrl=https://example.com, timeParser=time hh:mm:ss, twoDigitYear=50, user=user@example.com, valueSeparator=,}"
+        );
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext> type() {
+        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.class;
+    }
+
+
+    @Override
+    public String typeNameSuffix() {
+        return SpreadsheetEnvironmentContext.class.getSimpleName();
+    }
+}

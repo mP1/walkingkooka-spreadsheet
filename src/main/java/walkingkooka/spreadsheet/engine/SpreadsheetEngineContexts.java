@@ -17,8 +17,13 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.locale.LocaleContext;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.terminal.TerminalContext;
 
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
@@ -40,6 +45,25 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
             mode,
             spreadsheetContext,
             terminalContext
+        );
+    }
+
+    /**
+     * {@see SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext}
+     */
+    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                         final LocaleContext localeContext,
+                                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
+                                                                         final TerminalContext terminalContext,
+                                                                         final SpreadsheetProvider spreadsheetProvider,
+                                                                         final ProviderContext providerContext) {
+        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            spreadsheetEnvironmentContext,
+            localeContext,
+            spreadsheetMetadataContext,
+            terminalContext,
+            spreadsheetProvider,
+            providerContext
         );
     }
 
