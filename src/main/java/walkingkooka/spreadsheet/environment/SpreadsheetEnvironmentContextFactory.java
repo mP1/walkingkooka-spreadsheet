@@ -33,6 +33,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
@@ -70,7 +71,8 @@ import java.util.Optional;
 /**
  * Wraps a {@link SpreadsheetEnvironmentContext} with numerous factory methods that cache various components built from the given {@link EnvironmentValueName}.
  */
-public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEnvironmentContextDelegator {
+public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEnvironmentContextDelegator,
+    HasProviderContext {
 
     public final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with("converter");
 
@@ -643,7 +645,18 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     private final LocaleContext localeContext;
 
+    public SpreadsheetProvider spreadsheetProvider() {
+        return this.spreadsheetProvider;
+    }
+
     private final SpreadsheetProvider spreadsheetProvider;
+
+    // HasProviderContext...............................................................................................
+
+    @Override
+    public ProviderContext providerContext() {
+        return this.providerContext;
+    }
 
     private final ProviderContext providerContext;
 
