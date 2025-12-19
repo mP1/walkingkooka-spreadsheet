@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -69,7 +68,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                     field.get(null)
                 );
 
-                if(name.equals(SpreadsheetExpressionEvaluationContext.CONVERTER)) {
+                if(name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
                     continue;
                 }
 
@@ -85,7 +84,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
             SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
                 context.setEnvironmentValue(
-                    SpreadsheetExpressionEvaluationContext.CONVERTER,
+                    SpreadsheetEnvironmentContextFactory.CONVERTER,
                     METADATA_EN_AU.getOrFail(
                         SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
                     )

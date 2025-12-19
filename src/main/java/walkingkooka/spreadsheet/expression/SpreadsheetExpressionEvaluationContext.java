@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -87,8 +86,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     SpreadsheetEnvironmentContext,
     TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
-
-    EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with("converter");
 
     @Override
     default CaseSensitivity stringEqualsCaseSensitivity() {

@@ -81,7 +81,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
-            if (name.equals(SpreadsheetExpressionEvaluationContext.CONVERTER)) {
+            if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
                 continue;
             }
 
@@ -96,7 +96,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         }
 
         SPREADSHEET_ENVIRONMENT_CONTEXT = context.setEnvironmentValue(
-            SpreadsheetExpressionEvaluationContext.CONVERTER,
+            SpreadsheetEnvironmentContextFactory.CONVERTER,
             METADATA_EN_AU.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
