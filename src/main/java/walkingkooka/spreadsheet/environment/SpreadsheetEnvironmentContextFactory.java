@@ -680,6 +680,27 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     // Object...........................................................................................................
 
     @Override
+    public int hashCode() {
+        return this.spreadsheetEnvironmentContext.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            (other instanceof SpreadsheetEnvironmentContextFactory &&
+                this.equals0((SpreadsheetEnvironmentContextFactory) other));
+    }
+
+    private boolean equals0(final SpreadsheetEnvironmentContextFactory other) {
+        return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
+            Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
+            this.spreadsheetEnvironmentContext.equals(other.spreadsheetEnvironmentContext) &&
+            this.localeContext.equals(other.localeContext) &&
+            this.spreadsheetProvider.equals(other.spreadsheetProvider) &&
+            this.providerContext.equals(other.providerContext);
+    }
+
+    @Override
     public String toString() {
         return this.spreadsheetEnvironmentContext.toString();
     }

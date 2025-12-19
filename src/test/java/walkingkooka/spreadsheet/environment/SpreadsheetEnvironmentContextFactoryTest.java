@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -38,6 +40,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -57,6 +60,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetEnvironmentContextFactoryTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetEnvironmentContextFactory>,
     ConverterTesting,
     SpreadsheetMetadataTesting,
+    HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
     ClassTesting2<SpreadsheetEnvironmentContextFactory> {
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
@@ -105,6 +109,20 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
+
+    private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
+        CONVERTER_PROVIDER,
+        ExpressionFunctionProviders.fake(),
+        SpreadsheetComparatorProviders.fake(),
+        SpreadsheetExporterProviders.fake(),
+        SpreadsheetFormatterProviders.fake(),
+        FormHandlerProviders.fake(),
+        SpreadsheetImporterProviders.fake(),
+        SPREADSHEET_PARSER_PROVIDER,
+        ValidatorProviders.fake()
+    );
+
+    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
     // with.............................................................................................................
 
@@ -436,7 +454,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return createContext(
             spreadsheetEnvironmentContext,
-            ProviderContexts.fake()
+            PROVIDER_CONTEXT
         );
     }
 
@@ -445,17 +463,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         return SpreadsheetEnvironmentContextFactory.with(
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
-            SpreadsheetProviders.basic(
-                CONVERTER_PROVIDER,
-                ExpressionFunctionProviders.fake(),
-                SpreadsheetComparatorProviders.fake(),
-                SpreadsheetExporterProviders.fake(),
-                SpreadsheetFormatterProviders.fake(),
-                FormHandlerProviders.fake(),
-                SpreadsheetImporterProviders.fake(),
-                SPREADSHEET_PARSER_PROVIDER,
-                ValidatorProviders.fake()
-            ),
+            SPREADSHEET_PROVIDER,
             providerContext
         );
     }
@@ -534,6 +542,65 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Override
     public void testSetLocaleWithDifferent() {
         throw new UnsupportedOperationException();
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentSpreadsheetEnvironmentContext() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setEnvironmentValue(
+                        EnvironmentValueName.with("Different"),
+                        1
+                    ),
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentLocaleContext() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LocaleContexts.fake(),
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetProvider() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SpreadsheetProviders.fake(),
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentProviderContext() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                ProviderContexts.fake()
+            )
+        );
+    }
+
+    @Override
+    public SpreadsheetEnvironmentContextFactory createObject() {
+        return this.createContext();
     }
 
     // class............................................................................................................
