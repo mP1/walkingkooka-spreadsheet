@@ -19,10 +19,8 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -33,8 +31,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -55,9 +51,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
@@ -67,7 +61,6 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContext;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContext;
 
-import java.math.RoundingMode;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -96,36 +89,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
 
     EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with("converter");
-
-    EnvironmentValueName<SpreadsheetParserSelector> DATE_PARSER = SpreadsheetMetadataPropertyName.DATE_PARSER.toEnvironmentValueName();
-
-    EnvironmentValueName<Long> DATE_TIME_OFFSET = SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName();
-
-    EnvironmentValueName<SpreadsheetParserSelector> DATE_TIME_PARSER = SpreadsheetMetadataPropertyName.DATE_TIME_PARSER.toEnvironmentValueName();
-
-    EnvironmentValueName<DateTimeSymbols> DATE_TIME_SYMBOLS = SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS.toEnvironmentValueName();
-
-    EnvironmentValueName<Integer> DECIMAL_NUMBER_DIGIT_COUNT = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT.toEnvironmentValueName();
-
-    EnvironmentValueName<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS.toEnvironmentValueName();
-
-    EnvironmentValueName<Integer> DEFAULT_YEAR = SpreadsheetMetadataPropertyName.DEFAULT_YEAR.toEnvironmentValueName();
-
-    EnvironmentValueName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName();
-
-    EnvironmentValueName<ExpressionFunctionAliasSet> FUNCTIONS = SpreadsheetMetadataPropertyName.FUNCTIONS.toEnvironmentValueName();
-
-    EnvironmentValueName<SpreadsheetParserSelector> NUMBER_PARSER = SpreadsheetMetadataPropertyName.NUMBER_PARSER.toEnvironmentValueName();
-
-    EnvironmentValueName<Integer> PRECISION = SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName();
-
-    EnvironmentValueName<RoundingMode> ROUNDING_MODE = SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName();
-
-    EnvironmentValueName<SpreadsheetParserSelector> TIME_PARSER = SpreadsheetMetadataPropertyName.TIME_PARSER.toEnvironmentValueName();
-
-    EnvironmentValueName<Integer> TWO_DIGIT_YEAR = SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName();
-
-    EnvironmentValueName<Character> VALUE_SEPARATOR = SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName();
 
     @Override
     default CaseSensitivity stringEqualsCaseSensitivity() {

@@ -119,7 +119,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         if (null == this.expressionFunctionProvider) {
             final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContextFactory.environmentContextMissingValues();
 
-            final ExpressionFunctionAliasSet functions = missing.getOrNull(FUNCTIONS);
+            final ExpressionFunctionAliasSet functions = missing.getOrNull(SpreadsheetEnvironmentContextFactory.FUNCTIONS);
 
             missing.reportIfMissing();
 
