@@ -37,7 +37,6 @@ import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -93,6 +92,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     public final static EnvironmentValueName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName();
 
     public final static EnvironmentValueName<ExpressionFunctionAliasSet> FUNCTIONS = SpreadsheetMetadataPropertyName.FUNCTIONS.toEnvironmentValueName();
+
+    public final static EnvironmentValueName<Locale> LOCALE = SpreadsheetMetadataPropertyName.LOCALE.toEnvironmentValueName();
 
     public final static EnvironmentValueName<SpreadsheetParserSelector> NUMBER_PARSER = SpreadsheetMetadataPropertyName.NUMBER_PARSER.toEnvironmentValueName();
 
@@ -268,9 +269,9 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 missing.addMissing(cause);
             }
 
-            final Long dateOffset = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DATE_TIME_OFFSET);
-            final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetExpressionEvaluationContext.EXPRESSION_NUMBER_KIND);
-            final Character valueSeparator = missing.getOrNull(SpreadsheetExpressionEvaluationContext.VALUE_SEPARATOR);
+            final Long dateOffset = missing.getOrNull(DATE_TIME_OFFSET);
+            final ExpressionNumberKind expressionNumberKind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
+            final Character valueSeparator = missing.getOrNull(VALUE_SEPARATOR);
 
             missing.reportIfMissing();
 
@@ -311,7 +312,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         if (null == this.converter) {
             final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final ConverterSelector converterSelector = missing.getOrNull(SpreadsheetExpressionEvaluationContext.CONVERTER);
+            final ConverterSelector converterSelector = missing.getOrNull(CONVERTER);
 
             missing.reportIfMissing();
 
@@ -338,13 +339,13 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final Locale locale = missing.getOrNull(SpreadsheetExpressionEvaluationContext.LOCALE);
-            final Integer defaultYear = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DEFAULT_YEAR);
-            final Integer twoYearDigit = missing.getOrNull(SpreadsheetExpressionEvaluationContext.TWO_DIGIT_YEAR);
+            final Locale locale = missing.getOrNull(LOCALE);
+            final Integer defaultYear = missing.getOrNull(DEFAULT_YEAR);
+            final Integer twoYearDigit = missing.getOrNull(TWO_DIGIT_YEAR);
 
             missing.reportIfMissing();
 
-            DateTimeSymbols dateTimeSymbols = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DATE_TIME_SYMBOLS);
+            DateTimeSymbols dateTimeSymbols = missing.getOrNull(DATE_TIME_SYMBOLS);
 
             if (null == dateTimeSymbols) {
                 dateTimeSymbols = this.localeContext.dateTimeSymbolsForLocale(locale)
@@ -372,8 +373,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final Integer decimalNumberDigitCount = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DECIMAL_NUMBER_DIGIT_COUNT);
-            final Locale locale = missing.getOrNull(SpreadsheetExpressionEvaluationContext.LOCALE);
+            final Integer decimalNumberDigitCount = missing.getOrNull(DECIMAL_NUMBER_DIGIT_COUNT);
+            final Locale locale = missing.getOrNull(LOCALE);
 
             MathContext mathContext;
             try {
@@ -385,7 +386,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             missing.reportIfMissing();
 
-            DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DECIMAL_NUMBER_SYMBOLS);
+            DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(DECIMAL_NUMBER_SYMBOLS);
 
             if (null == decimalNumberSymbols) {
                 decimalNumberSymbols = this.localeContext.decimalNumberSymbolsForLocale(locale)
@@ -414,7 +415,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final ExpressionNumberKind kind = missing.getOrNull(SpreadsheetExpressionEvaluationContext.EXPRESSION_NUMBER_KIND);
+            final ExpressionNumberKind kind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
 
             DecimalNumberContext decimalNumberContext;
             try {
@@ -444,7 +445,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final ExpressionNumberKind kind = missing.getOrNull(SpreadsheetExpressionEvaluationContext.EXPRESSION_NUMBER_KIND);
+            final ExpressionNumberKind kind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
 
             missing.reportIfMissing();
 
@@ -478,7 +479,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetExpressionEvaluationContext.EXPRESSION_NUMBER_KIND);
+            final ExpressionNumberKind expressionNumberKind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
 
             MathContext mathContext;
             try {
@@ -567,8 +568,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final Integer precision = missing.getOrNull(SpreadsheetExpressionEvaluationContext.PRECISION);
-            final RoundingMode roundingMode = missing.getOrNull(SpreadsheetExpressionEvaluationContext.ROUNDING_MODE);
+            final Integer precision = missing.getOrNull(PRECISION);
+            final RoundingMode roundingMode = missing.getOrNull(ROUNDING_MODE);
 
             missing.reportIfMissing();
 
@@ -590,10 +591,10 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
 
-            final SpreadsheetParserSelector date = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DATE_PARSER);
-            final SpreadsheetParserSelector dateTime = missing.getOrNull(SpreadsheetExpressionEvaluationContext.DATE_TIME_PARSER);
-            final SpreadsheetParserSelector number = missing.getOrNull(SpreadsheetExpressionEvaluationContext.NUMBER_PARSER);
-            final SpreadsheetParserSelector time = missing.getOrNull(SpreadsheetExpressionEvaluationContext.TIME_PARSER);
+            final SpreadsheetParserSelector date = missing.getOrNull(DATE_PARSER);
+            final SpreadsheetParserSelector dateTime = missing.getOrNull(DATE_TIME_PARSER);
+            final SpreadsheetParserSelector number = missing.getOrNull(NUMBER_PARSER);
+            final SpreadsheetParserSelector time = missing.getOrNull(TIME_PARSER);
 
             missing.reportIfMissing();
 
@@ -647,7 +648,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             }
 
             // valueSeparator
-            final Character valueSeparator = missing.getOrNull(SpreadsheetExpressionEvaluationContext.VALUE_SEPARATOR);
+            final Character valueSeparator = missing.getOrNull(VALUE_SEPARATOR);
 
             missing.reportIfMissing();
 

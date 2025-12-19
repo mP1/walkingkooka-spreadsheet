@@ -161,7 +161,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testIsEnvironmentValueNameWithConverter() {
         this.isEnvironmentValueNameAndCheck(
-            SpreadsheetExpressionEvaluationContext.CONVERTER,
+            SpreadsheetEnvironmentContextFactory.CONVERTER,
             true
         );
     }
@@ -169,7 +169,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testIsEnvironmentValueNameWithRoundingMode() {
         this.isEnvironmentValueNameAndCheck(
-            SpreadsheetExpressionEvaluationContext.ROUNDING_MODE,
+            SpreadsheetEnvironmentContextFactory.ROUNDING_MODE,
             true
         );
     }

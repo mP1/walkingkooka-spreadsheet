@@ -30,6 +30,7 @@ import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -57,7 +58,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         try {
             SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            for (final Field field : SpreadsheetExpressionEvaluationContext.class.getDeclaredFields()) {
+            for (final Field field : SpreadsheetEnvironmentContextFactory.class.getDeclaredFields()) {
                 if (false == FieldAttributes.STATIC.is(field)) {
                     continue;
                 }
@@ -89,10 +90,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                         SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
                     )
                 ).setEnvironmentValue(
-                    SpreadsheetExpressionEvaluationContext.DECIMAL_NUMBER_DIGIT_COUNT,
+                    SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
                     DECIMAL_NUMBER_DIGIT_COUNT
                 ).setEnvironmentValue(
-                    SpreadsheetExpressionEvaluationContext.FUNCTIONS,
+                    SpreadsheetEnvironmentContextFactory.FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
                 )
             );

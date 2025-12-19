@@ -31,6 +31,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
@@ -82,7 +83,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         try {
             SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            for (final Field field : SpreadsheetExpressionEvaluationContext.class.getDeclaredFields()) {
+            for (final Field field : SpreadsheetEnvironmentContextFactory.class.getDeclaredFields()) {
                 if (false == FieldAttributes.STATIC.is(field)) {
                     continue;
                 }
@@ -113,7 +114,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                     SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
                 )
             ).setEnvironmentValue(
-                SpreadsheetExpressionEvaluationContext.DECIMAL_NUMBER_DIGIT_COUNT,
+                SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
                 DECIMAL_NUMBER_DIGIT_COUNT
             );
         } catch (final Exception cause) {
@@ -992,7 +993,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public void testFireEnvironmentValueNameChangeWithRoundingMode() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             .setEnvironmentValue(
-                SpreadsheetExpressionEvaluationContext.FUNCTIONS,
+                SpreadsheetEnvironmentContextFactory.FUNCTIONS,
                 SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
             );
 
@@ -1008,7 +1009,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         this.setEnvironmentValueAndCheck(
             context,
-            SpreadsheetExpressionEvaluationContext.ROUNDING_MODE,
+            SpreadsheetEnvironmentContextFactory.ROUNDING_MODE,
             roundingMode
         );
 
@@ -1041,7 +1042,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         return createContext(
             SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                 .setEnvironmentValue(
-                    SpreadsheetExpressionEvaluationContext.FUNCTIONS,
+                    SpreadsheetEnvironmentContextFactory.FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
                 ),
             expressionFunctionProvider,
