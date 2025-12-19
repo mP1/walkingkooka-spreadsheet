@@ -1906,13 +1906,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest implemen
         }
     }
 
-    // SpreadsheetProviderTesting.......................................................................................
-
-    @Override
-    public SpreadsheetEngineContextSharedSpreadsheetContext createSpreadsheetProvider() {
-        return this.createContext();
-    }
-
     // hashCode/equals..................................................................................................
 
     @Test
