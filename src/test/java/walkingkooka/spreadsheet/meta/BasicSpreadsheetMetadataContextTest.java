@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
@@ -30,7 +31,8 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMetadataContextTesting<BasicSpreadsheetMetadataContext> {
+public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMetadataContextTesting<BasicSpreadsheetMetadataContext>,
+    HashCodeEqualsDefinedTesting2<BasicSpreadsheetMetadataContext> {
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -111,6 +113,35 @@ public final class BasicSpreadsheetMetadataContextTest implements SpreadsheetMet
             CREATE_METADATA,
             SpreadsheetMetadataStores.treeMap()
         );
+    }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentCreateMetadataFunction() {
+        this.checkNotEquals(
+            BasicSpreadsheetMetadataContext.with(
+                (e, l) -> {
+                    throw new UnsupportedOperationException();
+                },
+                SpreadsheetMetadataStores.treeMap()
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMetadataStore() {
+        this.checkNotEquals(
+            BasicSpreadsheetMetadataContext.with(
+                CREATE_METADATA,
+                SpreadsheetMetadataStores.fake()
+            )
+        );
+    }
+
+    @Override
+    public BasicSpreadsheetMetadataContext createObject() {
+        return this.createContext();
     }
 
     // class............................................................................................................

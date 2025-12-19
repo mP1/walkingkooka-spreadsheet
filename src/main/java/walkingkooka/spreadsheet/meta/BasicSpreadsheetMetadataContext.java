@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.Cast;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
@@ -96,6 +97,26 @@ final class BasicSpreadsheetMetadataContext implements SpreadsheetMetadataContex
     private final SpreadsheetMetadataStore store;
 
     // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            this.createMetadata,
+            this.store
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+            other instanceof BasicSpreadsheetMetadataContext &&
+                this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final BasicSpreadsheetMetadataContext other) {
+        return this.createMetadata.equals(other.createMetadata) &&
+            this.store.equals(other.store);
+    }
 
     @Override
     public String toString() {
