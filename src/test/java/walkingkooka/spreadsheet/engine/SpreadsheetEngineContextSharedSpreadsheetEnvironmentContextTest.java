@@ -26,7 +26,6 @@ import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -42,7 +41,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.terminal.TerminalContexts;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -54,51 +52,37 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
     static {
-        try {
-            SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        SpreadsheetEnvironmentContext context = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-            for (final Field field : SpreadsheetEnvironmentContextFactory.class.getDeclaredFields()) {
-                if (false == FieldAttributes.STATIC.is(field)) {
-                    continue;
-                }
-                if (EnvironmentValueName.class != field.getType()) {
-                    continue;
-                }
-                final EnvironmentValueName<?> name = Cast.to(
-                    field.get(null)
-                );
-
-                if(name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
-                    continue;
-                }
-
-                context = context.setEnvironmentValue(
-                    name,
-                    Cast.to(
-                        METADATA_EN_AU.getOrFail(
-                            SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
-                        )
-                    )
-                );
+        for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
+            if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER)) {
+                continue;
             }
 
-            SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
-                context.setEnvironmentValue(
-                    SpreadsheetEnvironmentContextFactory.CONVERTER,
+            context = context.setEnvironmentValue(
+                name,
+                Cast.to(
                     METADATA_EN_AU.getOrFail(
-                        SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
+                        SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name)
                     )
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
-                    DECIMAL_NUMBER_DIGIT_COUNT
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContextFactory.FUNCTIONS,
-                    SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
                 )
             );
-        } catch (final Exception cause) {
-            throw new RuntimeException(cause);
         }
+
+        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            context.setEnvironmentValue(
+                SpreadsheetEnvironmentContextFactory.CONVERTER,
+                METADATA_EN_AU.getOrFail(
+                    SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
+                )
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
+                DECIMAL_NUMBER_DIGIT_COUNT
+            ).setEnvironmentValue(
+                SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+                SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
+            )
+        );
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
