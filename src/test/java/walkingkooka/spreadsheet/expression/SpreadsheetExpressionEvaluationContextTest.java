@@ -18,11 +18,8 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.reflect.ClassTesting;
-import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -30,93 +27,12 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.lang.reflect.Field;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext> {
-
-    // isSpreadsheetEnvironmentContextEnvironmentValueName..............................................................
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithNull() {
-        this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-            null,
-            false
-        );
-    }
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithLocale() {
-        this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-            EnvironmentValueName.LOCALE,
-            true
-        );
-    }
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithUser() {
-        this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-            EnvironmentValueName.USER,
-            false
-        );
-    }
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithSpreadsheetId() {
-        this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
-            false
-        );
-    }
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithConverter() {
-        this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-            SpreadsheetExpressionEvaluationContext.CONVERTER,
-            true
-        );
-    }
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithRoundingMode() {
-        this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-            SpreadsheetExpressionEvaluationContext.ROUNDING_MODE,
-            true
-        );
-    }
-
-    @Test
-    public void testIsSpreadsheetEnvironmentContextEnvironmentValueNameWithAllConstants() throws Exception {
-        int i = 0;
-
-        for(final Field field : SpreadsheetExpressionEvaluationContext.class.getDeclaredFields()) {
-            if(FieldAttributes.STATIC.is(field) && field.getType() == EnvironmentValueName.class) {
-                this.isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(
-                    (EnvironmentValueName<?>) field.get(null),
-                    true
-                );
-                i++;
-            }
-        }
-
-        this.checkNotEquals(
-            0,
-            i,
-            "no constants of type " + EnvironmentValueName.class.getName() + " found"
-        );
-    }
-
-    private void isSpreadsheetEnvironmentContextEnvironmentValueNameAndCheck(final EnvironmentValueName<?> name,
-                                                                             final boolean expected) {
-        this.checkEquals(
-            expected,
-            SpreadsheetExpressionEvaluationContext.isSpreadsheetEnvironmentContextEnvironmentValueName(name),
-            () -> String.valueOf(name)
-        );
-    }
 
     @Test
     public void testAddLocalVariableWithNullReferenceFails() {

@@ -124,6 +124,86 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
+    // istEnvironmentValueName..........................................................................................
+
+    @Test
+    public void testIsEnvironmentValueNameWithNull() {
+        this.isEnvironmentValueNameAndCheck(
+            null,
+            false
+        );
+    }
+
+    @Test
+    public void testIsEnvironmentValueNameWithLocale() {
+        this.isEnvironmentValueNameAndCheck(
+            EnvironmentValueName.LOCALE,
+            true
+        );
+    }
+
+    @Test
+    public void testIsEnvironmentValueNameWithUser() {
+        this.isEnvironmentValueNameAndCheck(
+            EnvironmentValueName.USER,
+            false
+        );
+    }
+
+    @Test
+    public void testIsEnvironmentValueNameWithSpreadsheetId() {
+        this.isEnvironmentValueNameAndCheck(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
+            false
+        );
+    }
+
+    @Test
+    public void testIsEnvironmentValueNameWithConverter() {
+        this.isEnvironmentValueNameAndCheck(
+            SpreadsheetExpressionEvaluationContext.CONVERTER,
+            true
+        );
+    }
+
+    @Test
+    public void testIsEnvironmentValueNameWithRoundingMode() {
+        this.isEnvironmentValueNameAndCheck(
+            SpreadsheetExpressionEvaluationContext.ROUNDING_MODE,
+            true
+        );
+    }
+
+    @Test
+    public void testIsEnvironmentValueNameWithAllConstants() throws Exception {
+        int i = 0;
+
+        for(final Field field : SpreadsheetEnvironmentContextFactory.class.getDeclaredFields()) {
+            if(FieldAttributes.STATIC.is(field) && field.getType() == EnvironmentValueName.class) {
+                this.isEnvironmentValueNameAndCheck(
+                    (EnvironmentValueName<?>) field.get(null),
+                    true
+                );
+                i++;
+            }
+        }
+
+        this.checkNotEquals(
+            0,
+            i,
+            "no constants of type " + EnvironmentValueName.class.getName() + " found"
+        );
+    }
+
+    private void isEnvironmentValueNameAndCheck(final EnvironmentValueName<?> name,
+                                                final boolean expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetEnvironmentContextFactory.isEnvironmentValueName(name),
+            () -> String.valueOf(name)
+        );
+    }
+
     // with.............................................................................................................
 
     @Test
