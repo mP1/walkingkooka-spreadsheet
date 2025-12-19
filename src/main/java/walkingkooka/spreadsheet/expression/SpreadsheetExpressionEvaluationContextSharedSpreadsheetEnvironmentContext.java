@@ -17,36 +17,25 @@
 
 package walkingkooka.spreadsheet.expression;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
-import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextMissingValues;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.MissingEnvironmentValuesException;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegate;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -54,7 +43,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
@@ -62,31 +50,21 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
-import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
-import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -96,7 +74,8 @@ import java.util.Set;
  * required during evaluation, such as a {@link Converter} using the {@link #CONVERTER}. A full list of required
  * {@link EnvironmentValueName} are listed below.
  */
-final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared {
+final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
+    implements SpreadsheetEnvironmentContextFactoryDelegate {
 
     static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final LocaleContext localeContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -110,64 +89,26 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
-            null, // SpreadsheetConverterContext
-            spreadsheetEnvironmentContext,
-            null, // JsonNodeMarshallContextObjectPostProcessor
-            null, // JsonNodeUnmarshallContextPreProcessor
-            localeContext,
+            SpreadsheetEnvironmentContextFactory.with(
+                spreadsheetEnvironmentContext,
+                localeContext,
+                spreadsheetProvider,
+                providerContext
+            ),
             terminalContext,
-            spreadsheetProvider,
-            null, // ExpressionFunctionProvider
-            providerContext
+            null // ExpressionFunctionProvider
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetConverterContext spreadsheetConverterContext,
-                                                                                      final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                                      final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
-                                                                                      final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
-                                                                                      final LocaleContext localeContext,
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                                       final TerminalContext terminalContext,
-                                                                                      final SpreadsheetProvider spreadsheetProvider,
-                                                                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
-                                                                                      final ProviderContext providerContext) {
+                                                                                      final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         super(
             terminalContext
         );
 
-        this.spreadsheetConverterContext = spreadsheetConverterContext; // may be null
-        this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
-        this.jsonNodeMarshallContextObjectPostProcessor = jsonNodeMarshallContextObjectPostProcessor;
-        this.jsonNodeUnmarshallContextPreProcessor = jsonNodeUnmarshallContextPreProcessor;
-
-        this.localeContext = localeContext;
-
+        this.spreadsheetEnvironmentContextFactory = spreadsheetEnvironmentContextFactory;
         this.expressionFunctionProvider = expressionFunctionProvider; // may be null
-        this.spreadsheetProvider = spreadsheetProvider;
-
-        this.providerContext = providerContext;
-
-        spreadsheetEnvironmentContext.addEventValueWatcher(this::onEnvironmentValueName);
-    }
-
-    /**
-     * If one of the core component {@link EnvironmentValueName} changes clear the cached properties so that component will be re-created.
-     */
-    private void onEnvironmentValueName(final EnvironmentValueName<?> name,
-                                        final Optional<?> oldValue,
-                                        final Optional<?> newValue) {
-        if (SpreadsheetExpressionEvaluationContext.isSpreadsheetEnvironmentContextEnvironmentValueName(name)) {
-            this.converter = null;
-            this.dateTimeContext = null;
-            this.decimalNumberContext = null;
-            this.expressionNumberContext = null;
-            this.jsonNodeMarshallContext = null;
-            this.jsonNodeUnmarshallContext = null;
-            this.mathContext = null;
-            this.spreadsheetParser = null;
-            this.spreadsheetParserContext = null;
-            this.spreadsheetConverterContext = null;
-        }
     }
 
     /**
@@ -176,7 +117,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     @Override
     ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider() {
         if (null == this.expressionFunctionProvider) {
-            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
+            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContextFactory.environmentContextMissingValues();
 
             final ExpressionFunctionAliasSet functions = missing.getOrNull(FUNCTIONS);
 
@@ -184,7 +125,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
             this.expressionFunctionProvider = ExpressionFunctionProviders.aliases(
                 functions,
-                this.spreadsheetProvider
+                this.spreadsheetEnvironmentContextFactory.spreadsheetProvider()
             );
         }
         return this.expressionFunctionProvider;
@@ -194,10 +135,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     ProviderContext providerContext() {
-        return this.providerContext;
+        return this.spreadsheetEnvironmentContextFactory.providerContext();
     }
-
-    private final ProviderContext providerContext;
 
     @Override
     Optional<Optional<Object>> handleSpreadsheetExpressionReference(final SpreadsheetExpressionReference reference) {
@@ -247,115 +186,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return Optional.empty();
     }
 
-    private ExpressionNumberContext expressionNumberContext() {
-        if (null == this.expressionNumberContext) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final ExpressionNumberKind kind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
-
-            DecimalNumberContext decimalNumberContext;
-            try {
-                decimalNumberContext = this.decimalNumberContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                decimalNumberContext = null;
-            }
-
-            missing.reportIfMissing();
-
-            this.expressionNumberContext = ExpressionNumberContexts.basic(
-                kind,
-                decimalNumberContext
-            );
-        }
-
-        return this.expressionNumberContext;
-    }
-
-    private ExpressionNumberContext expressionNumberContext;
-
-    @Override
-    SpreadsheetParser spreadsheetParser() {
-        if (null == this.spreadsheetParser) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final SpreadsheetParserSelector date = missing.getOrNull(DATE_PARSER);
-            final SpreadsheetParserSelector dateTime = missing.getOrNull(DATE_TIME_PARSER);
-            final SpreadsheetParserSelector number = missing.getOrNull(NUMBER_PARSER);
-            final SpreadsheetParserSelector time = missing.getOrNull(TIME_PARSER);
-
-            missing.reportIfMissing();
-
-            final SpreadsheetProvider provider = this.spreadsheetProvider;
-            final ProviderContext providerContext = this.providerContext;
-
-            this.spreadsheetParser = SpreadsheetFormulaParsers.valueOrExpression(
-                Parsers.alternatives(
-                    Lists.of(
-                        provider.spreadsheetParser(date, providerContext),
-                        provider.spreadsheetParser(dateTime, providerContext),
-                        provider.spreadsheetParser(number, providerContext)
-                            .andEmptyTextCursor(),
-                        provider.spreadsheetParser(time, providerContext)
-                    )
-                )
-            );
-        }
-
-        return this.spreadsheetParser;
-    }
-
-    private transient SpreadsheetParser spreadsheetParser;
-
-    /**
-     * Returns a {@link SpreadsheetParserContext}, built from a few {@link EnvironmentValueName}.
-     */
-    @Override
-    SpreadsheetParserContext spreadsheetParserContext() {
-        if (null == this.spreadsheetParserContext) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            // DateTimeContext
-            DateTimeContext dateTimeContext;
-            try {
-                dateTimeContext = this.dateTimeContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                dateTimeContext = null;
-            }
-
-            // ExpressionNumberContext
-            ExpressionNumberContext expressionNumberContext;
-            try {
-                expressionNumberContext = this.expressionNumberContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                expressionNumberContext = null;
-            }
-
-            // valueSeparator
-            final Character valueSeparator = missing.getOrNull(VALUE_SEPARATOR);
-
-            missing.reportIfMissing();
-
-            this.spreadsheetParserContext = SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
-                dateTimeContext,
-                expressionNumberContext,
-                valueSeparator
-            );
-        }
-
-        return this.spreadsheetParserContext;
-    }
-
-    private SpreadsheetParserContext spreadsheetParserContext;
-
-    private final SpreadsheetProvider spreadsheetProvider;
-
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
         Objects.requireNonNull(cell, "cell");
@@ -373,278 +203,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     public CanConvert canConvert() {
-        return this.spreadsheetConverterContext(); // inherit unrelated defaults
+        return this.spreadsheetConverterContext(); // inherit unrelated publics
     }
-
-    @Override
-    public SpreadsheetConverterContext spreadsheetConverterContext() {
-        if (null == this.spreadsheetConverterContext) {
-            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            Converter<SpreadsheetConverterContext> converter;
-            try {
-                converter = this.converter();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                converter = null;
-            }
-
-            DateTimeContext dateTimeContext;
-            try {
-                dateTimeContext = this.dateTimeContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                dateTimeContext = null;
-            }
-
-            DecimalNumberContext decimalNumberContext;
-            try {
-                decimalNumberContext = this.decimalNumberContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                decimalNumberContext = null;
-                missing.addMissing(cause);
-            }
-
-            JsonNodeMarshallContext jsonNodeMarshallContext;
-            try {
-                jsonNodeMarshallContext = this.jsonNodeMarshallContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                jsonNodeMarshallContext = null;
-                missing.addMissing(cause);
-            }
-
-            JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
-            try {
-                jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                jsonNodeUnmarshallContext = null;
-                missing.addMissing(cause);
-            }
-
-            final Long dateOffset = missing.getOrNull(DATE_TIME_OFFSET);
-            final ExpressionNumberKind expressionNumberKind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
-            final Character valueSeparator = missing.getOrNull(VALUE_SEPARATOR);
-
-            missing.reportIfMissing();
-
-            this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContexts.NO_METADATA,
-                SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-                converter,
-                SpreadsheetLabelNameResolvers.empty(),
-                JsonNodeConverterContexts.basic(
-                    ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
-                        ConverterContexts.basic(
-                            false, // canNumbersHaveGroupSeparator
-                            dateOffset,
-                            valueSeparator, // valueSeparator
-                            Converters.fake(),
-                            dateTimeContext,
-                            decimalNumberContext
-                        ),
-                        expressionNumberKind
-                    ),
-                    JsonNodeMarshallUnmarshallContexts.basic(
-                        jsonNodeMarshallContext,
-                        jsonNodeUnmarshallContext
-                    )
-                ),
-                this.localeContext
-            );
-        }
-        return this.spreadsheetConverterContext;
-    }
-
-    private transient SpreadsheetConverterContext spreadsheetConverterContext;
-
-    // converter........................................................................................................
-
-    @Override
-    public Converter<SpreadsheetConverterContext> converter() {
-        if (null == this.converter) {
-            final EnvironmentContextMissingValues missing = this.spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final ConverterSelector converterSelector = missing.getOrNull(CONVERTER);
-
-            missing.reportIfMissing();
-
-            final Converter<SpreadsheetConverterContext> converter = converterSelector.evaluateValueText(
-                this.spreadsheetProvider,
-                this.providerContext
-            );
-
-            // prefix toString with property name
-            this.converter = converter.setToString(
-                converterSelector.toString()
-            );
-        }
-
-        return this.converter;
-    }
-
-    private transient Converter<SpreadsheetConverterContext> converter;
-
-    // dateTimeContext..................................................................................................
-
-    @Override
-    public DateTimeContext dateTimeContext() {
-        if (null == this.dateTimeContext) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final Locale locale = missing.getOrNull(LOCALE);
-            final Integer defaultYear = missing.getOrNull(DEFAULT_YEAR);
-            final Integer twoYearDigit = missing.getOrNull(TWO_DIGIT_YEAR);
-
-            missing.reportIfMissing();
-
-            DateTimeSymbols dateTimeSymbols = missing.getOrNull(DATE_TIME_SYMBOLS);
-
-            if (null == dateTimeSymbols) {
-                dateTimeSymbols = this.localeContext.dateTimeSymbolsForLocale(locale)
-                    // Missing DateTimeSymbols for locale EN-AU
-                    .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
-            }
-
-            this.dateTimeContext = DateTimeContexts.basic(
-                dateTimeSymbols,
-                locale,
-                defaultYear,
-                twoYearDigit,
-                spreadsheetEnvironmentContext
-            );
-        }
-        return this.dateTimeContext;
-    }
-
-    private transient DateTimeContext dateTimeContext;
-
-    // DecimalNumberContext.............................................................................................
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        if (null == this.decimalNumberContext) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final Integer decimalNumberDigitCount = missing.getOrNull(DECIMAL_NUMBER_DIGIT_COUNT);
-            final Locale locale = missing.getOrNull(LOCALE);
-
-            MathContext mathContext;
-            try {
-                mathContext = this.mathContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                mathContext = null;
-            }
-
-            missing.reportIfMissing();
-
-            DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(DECIMAL_NUMBER_SYMBOLS);
-
-            if (null == decimalNumberSymbols) {
-                decimalNumberSymbols = this.localeContext.decimalNumberSymbolsForLocale(locale)
-                    .orElseThrow(
-                        // Missing DecimalNumberSymbols for locale EN-AU
-                        () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
-                    );
-            }
-
-            this.decimalNumberContext = DecimalNumberContexts.basic(
-                decimalNumberDigitCount,
-                decimalNumberSymbols,
-                locale,
-                mathContext
-            );
-        }
-        return this.decimalNumberContext;
-    }
-
-    private transient DecimalNumberContext decimalNumberContext;
-
-    @Override
-    public JsonNodeMarshallContext jsonNodeMarshallContext() {
-        if(null == this.jsonNodeMarshallContext) {
-            JsonNodeMarshallContext jsonNodeMarshallContext = JsonNodeMarshallContexts.basic();
-
-            final JsonNodeMarshallContextObjectPostProcessor postProcessor = this.jsonNodeMarshallContextObjectPostProcessor;
-            if(null != postProcessor) {
-                jsonNodeMarshallContext = jsonNodeMarshallContext.setObjectPostProcessor(postProcessor);
-            }
-
-            this.jsonNodeMarshallContext = jsonNodeMarshallContext;
-        }
-        return this.jsonNodeMarshallContext;
-    }
-
-    private transient JsonNodeMarshallContext jsonNodeMarshallContext;
-
-    @Override
-    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
-        if (null == this.jsonNodeUnmarshallContext) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final ExpressionNumberKind expressionNumberKind = missing.getOrNull(EXPRESSION_NUMBER_KIND);
-
-            MathContext mathContext;
-            try {
-                mathContext = this.mathContext();
-            } catch (final MissingEnvironmentValuesException cause) {
-                missing.addMissing(cause);
-                mathContext = null;
-            }
-
-            missing.reportIfMissing();
-
-            JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
-                expressionNumberKind,
-                mathContext
-            );
-
-            final JsonNodeUnmarshallContextPreProcessor preProcessor = this.jsonNodeUnmarshallContextPreProcessor;
-            if(null != preProcessor) {
-                jsonNodeUnmarshallContext = jsonNodeUnmarshallContext.setPreProcessor(preProcessor);
-            }
-            this.jsonNodeUnmarshallContext = jsonNodeUnmarshallContext;
-        }
-
-        return this.jsonNodeUnmarshallContext;
-    }
-
-    private transient JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
-
-    @Override
-    public MathContext mathContext() {
-        if (null == this.mathContext) {
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final EnvironmentContextMissingValues missing = spreadsheetEnvironmentContext.environmentContextMissingValues();
-
-            final Integer precision = missing.getOrNull(PRECISION);
-            final RoundingMode roundingMode = missing.getOrNull(ROUNDING_MODE);
-
-            missing.reportIfMissing();
-
-            this.mathContext = new MathContext(
-                precision,
-                roundingMode
-            );
-        }
-
-        return this.mathContext;
-    }
-
-    private transient MathContext mathContext;
-
-    @Override
-    public LocaleContext localeContext() {
-        return this.localeContext;
-    }
-
-    private final LocaleContext localeContext;
-
-
 
     // FormHandlerContext...............................................................................................
 
@@ -680,49 +240,29 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-        final SpreadsheetConverterContext before = this.spreadsheetConverterContext();
-        final SpreadsheetConverterContext after = before.setObjectPostProcessor(processor);
+        final SpreadsheetEnvironmentContextFactory before = this.spreadsheetEnvironmentContextFactory;
+        final SpreadsheetEnvironmentContextFactory after = before.setObjectPostProcessor(processor);
 
         return before.equals(after) ?
             this :
-            this.setSpreadsheetConverterContext(
-                after,
-                processor,
-                this.jsonNodeUnmarshallContextPreProcessor
-            );
+            this.setSpreadsheetEnvironmentContextFactory(after);
     }
-
-    private final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor;
 
     @Override
     public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        final SpreadsheetConverterContext before = this.spreadsheetConverterContext();
-        final SpreadsheetConverterContext after = before.setPreProcessor(processor);
+        final SpreadsheetEnvironmentContextFactory before = this.spreadsheetEnvironmentContextFactory;
+        final SpreadsheetEnvironmentContextFactory after = before.setPreProcessor(processor);
 
         return before.equals(after) ?
             this :
-            this.setSpreadsheetConverterContext(
-                after,
-                this.jsonNodeMarshallContextObjectPostProcessor,
-                processor
-            );
+            this.setSpreadsheetEnvironmentContextFactory(after);
     }
 
-    private final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor;
-
-    private SpreadsheetExpressionEvaluationContext setSpreadsheetConverterContext(final SpreadsheetConverterContext context,
-                                                                                  final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
-                                                                                  final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
+    private SpreadsheetExpressionEvaluationContext setSpreadsheetEnvironmentContextFactory(final SpreadsheetEnvironmentContextFactory factory) {
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
-            context,
-            this.spreadsheetEnvironmentContext,
-            jsonNodeMarshallContextObjectPostProcessor,
-            jsonNodeUnmarshallContextPreProcessor,
-            this.localeContext,
+            factory,
             this.terminalContext,
-            this.spreadsheetProvider,
-            this.expressionFunctionProvider,
-            this.providerContext
+            this.expressionFunctionProvider
         );
     }
 
@@ -754,46 +294,100 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return Optional.empty();
     }
 
-    // EnvironmentContext...............................................................................................
+    // SpreadsheetEnvironmentContextFactoryDelegator....................................................................
 
     @Override
     public SpreadsheetExpressionEvaluationContext cloneEnvironment() {
         return this.setEnvironmentContext(
-            this.spreadsheetEnvironmentContext.cloneEnvironment()
+            this.spreadsheetEnvironmentContextFactory.cloneEnvironment()
         );
     }
 
     @Override
     public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
-        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+        final SpreadsheetEnvironmentContextFactory before = this.spreadsheetEnvironmentContextFactory;
+        final SpreadsheetEnvironmentContextFactory after = before.setEnvironmentContext(environmentContext);
 
         return before == after ?
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
-                null,// spreadsheetConverterContext  clear force recreate!
                 after,
-                this.jsonNodeMarshallContextObjectPostProcessor,
-                this.jsonNodeUnmarshallContextPreProcessor,
-                this.localeContext,
                 this.terminalContext,
-                this.spreadsheetProvider,
-                this.expressionFunctionProvider,
-                this.providerContext
+                this.expressionFunctionProvider
             );
     }
 
     @Override
-    public SpreadsheetEnvironmentContext environmentContext() {
-        return this.spreadsheetEnvironmentContext;
+    public Converter<SpreadsheetConverterContext> converter() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.converter();
     }
 
-    private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
+    @Override
+    public SpreadsheetConverterContext spreadsheetConverterContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.spreadsheetConverterContext();
+    }
+
+    @Override
+    public DateTimeContext dateTimeContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.dateTimeContext();
+    }
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.decimalNumberContext();
+    }
+
+    @Override
+    public ExpressionNumberContext expressionNumberContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.expressionNumberContext();
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.expressionNumberKind();
+    }
+
+    @Override
+    public JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.jsonNodeMarshallContext();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.jsonNodeUnmarshallContext();
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.mathContext();
+    }
+
+    @Override
+    public SpreadsheetParser spreadsheetParser() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.spreadsheetParser();
+    }
+
+    @Override
+    public SpreadsheetParserContext spreadsheetParserContext() {
+        return SpreadsheetEnvironmentContextFactoryDelegate.super.spreadsheetParserContext();
+    }
+
+    @Override
+    public SpreadsheetEnvironmentContext environmentContext() {
+        return this.spreadsheetEnvironmentContext();
+    }
+
+    @Override
+    public SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory() {
+        return this.spreadsheetEnvironmentContextFactory;
+    }
+
+    private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.spreadsheetEnvironmentContext.toString();
+        return this.spreadsheetEnvironmentContextFactory.toString();
     }
 }
