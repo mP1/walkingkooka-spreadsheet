@@ -551,4 +551,11 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default C createSpreadsheetParserProvider() {
         return this.createContext();
     }
+
+    // SpreadsheetProvider..............................................................................................
+
+    @Override
+    default C createSpreadsheetProvider() {
+        return this.createContext();
+    }
 }
