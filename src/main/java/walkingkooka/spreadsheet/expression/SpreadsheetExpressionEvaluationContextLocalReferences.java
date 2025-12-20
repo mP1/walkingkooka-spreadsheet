@@ -450,6 +450,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
         return this;
     }
 
+    @Override
+    public EnvironmentContext environmentContext() {
+        return this.context;
+    }
+
     // Object...........................................................................................................
 
     @Override
