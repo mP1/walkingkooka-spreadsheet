@@ -1953,20 +1953,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    // SpreadsheetEngineEvaluation #evaluateXXX.........................................................................
+    // SpreadsheetEngineEvaluation #evaluateCellXXX.....................................................................
 
     /**
      * If a formatted value is present and the {@link Expression#isPure(ExpressionPurityContext)} then return
      * the current {@link SpreadsheetFormula#value()} otherwise evaluate the expression again.
      */
     // SpreadsheetEngineEvaluation#COMPUTE_IF_NECESSARY
-    Optional<Object> evaluateIfNecessary(final SpreadsheetCell cell,
-                                         final SpreadsheetExpressionReferenceLoader loader,
-                                         final SpreadsheetEngineContext context) {
+    Optional<Object> evaluateCellIfNecessary(final SpreadsheetCell cell,
+                                             final SpreadsheetExpressionReferenceLoader loader,
+                                             final SpreadsheetEngineContext context) {
         return cell.formattedValue().isPresent() && expressionRequired(cell).isPure(context) ?
             cell.formula()
                 .value() :
-            this.evaluate(
+            this.evaluateCell(
                 cell,
                 loader,
                 context
@@ -1977,9 +1977,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Unconditionally evaluate the {@link Expression} returning the value.
      */
     // SpreadsheetEngineEvaluation#FORCE_RECOMPUTE
-    Optional<Object> evaluate(final SpreadsheetCell cell,
-                              final SpreadsheetExpressionReferenceLoader loader,
-                              final SpreadsheetEngineContext context) {
+    Optional<Object> evaluateCell(final SpreadsheetCell cell,
+                                  final SpreadsheetExpressionReferenceLoader loader,
+                                  final SpreadsheetEngineContext context) {
 
         return Optional.ofNullable(
             expressionRequired(cell)
