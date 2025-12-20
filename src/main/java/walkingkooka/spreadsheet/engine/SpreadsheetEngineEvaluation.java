@@ -105,7 +105,7 @@ public enum SpreadsheetEngineEvaluation {
                                   final SpreadsheetCell cell,
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
-            return engine.evaluate(
+            return engine.evaluateCell(
                 cell,
                 loader,
                 context
@@ -135,7 +135,7 @@ public enum SpreadsheetEngineEvaluation {
                                   final SpreadsheetCell cell,
                                   final SpreadsheetExpressionReferenceLoader loader,
                                   final SpreadsheetEngineContext context) {
-            return engine.evaluateIfNecessary(
+            return engine.evaluateCellIfNecessary(
                 cell,
                 loader,
                 context
