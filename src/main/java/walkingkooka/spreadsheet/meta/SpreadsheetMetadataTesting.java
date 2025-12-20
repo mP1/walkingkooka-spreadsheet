@@ -473,9 +473,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
         final TerminalContext terminalContext) -> {
             throw new UnsupportedOperationException();
         },
-        (c) -> {
-            throw new UnsupportedOperationException();
-        },
         SPREADSHEET_ENVIRONMENT_CONTEXT
     );
 

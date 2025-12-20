@@ -43,7 +43,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalId;
-import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.printer.Printer;
@@ -431,11 +430,6 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public Printer error() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public TerminalExpressionEvaluationContext terminalExpressionEvaluationContext() {
         throw new UnsupportedOperationException();
     }
 }
