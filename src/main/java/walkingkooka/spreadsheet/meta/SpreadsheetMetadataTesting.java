@@ -466,7 +466,6 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
-        HAS_USER,
         TextReaders.fake(),
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
@@ -476,7 +475,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
         },
         (c) -> {
             throw new UnsupportedOperationException();
-        }
+        },
+        SPREADSHEET_ENVIRONMENT_CONTEXT
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
