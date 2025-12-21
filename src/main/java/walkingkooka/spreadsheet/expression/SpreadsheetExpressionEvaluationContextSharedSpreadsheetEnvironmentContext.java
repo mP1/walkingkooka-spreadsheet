@@ -27,6 +27,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -43,6 +44,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -176,23 +179,40 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         throw new UnsupportedOperationException();
     }
 
+    // SpreadsheetExpressionReferenceLoader.............................................................................
+
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
-        return Optional.empty();
+        return this.spreadsheetExpressionReferenceLoader()
+            .flatMap(l -> l.loadCell(cell, this));
     }
 
     @Override
     public Set<SpreadsheetCell> loadCellRange(final SpreadsheetCellRangeReference range) {
         Objects.requireNonNull(range, "range");
-        return Sets.empty();
+        return this.spreadsheetExpressionReferenceLoader()
+            .map(l -> l.loadCellRange(range, this))
+            .orElse(Sets.empty());
     }
 
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
-        return Optional.empty();
+        return this.spreadsheetExpressionReferenceLoader()
+            .flatMap(l -> l.loadLabel(labelName));
     }
+
+    private Optional<SpreadsheetExpressionReferenceLoader> spreadsheetExpressionReferenceLoader() {
+        return this.spreadsheetContext()
+            .map(c ->
+                SpreadsheetExpressionReferenceLoaders.spreadsheetStoreRepository(
+                    c.storeRepository()
+                )
+            );
+    }
+
+    // spreadsheetFormatterContext......................................................................................
 
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell) {
@@ -207,15 +227,20 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
 
+        return this.spreadsheetContext()
+            .flatMap(
+                c -> c.storeRepository()
+                    .labels()
+                    .resolveLabel(labelName)
+            );
+    }
+
+    private Optional<SpreadsheetContext> spreadsheetContext() {
         final SpreadsheetId spreadsheetIdOrNull = this.environmentValue(SPREADSHEET_ID)
             .orElse(null);
         return null == spreadsheetIdOrNull ?
             Optional.empty() :
-            this.spreadsheetContextSupplier.spreadsheetContext(spreadsheetIdOrNull)
-                .flatMap(c -> c.storeRepository()
-                    .labels()
-                    .resolveLabel(labelName)
-                );
+            this.spreadsheetContextSupplier.spreadsheetContext(spreadsheetIdOrNull);
     }
 
     @Override
