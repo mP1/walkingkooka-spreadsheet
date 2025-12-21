@@ -424,6 +424,31 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
         );
     }
 
+    @Test
+    public void testSetEnvironmentValueWithSpreadsheetIdFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createContext()
+                .setEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                    SPREADSHEET_ID
+                )
+        );
+    }
+
+    // removeEnvironment................................................................................................
+
+    @Test
+    public void testRemoveEnvironmentValueWithSpreadsheetIdFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createContext()
+                .removeEnvironmentValue(
+                    SpreadsheetEnvironmentContext.SPREADSHEET_ID
+                )
+        );
+    }
+    
     // setLocale........................................................................................................
 
     @Test
