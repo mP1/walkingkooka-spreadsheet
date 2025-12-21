@@ -40,18 +40,23 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
@@ -929,11 +934,193 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // loadCell.........................................................................................................
 
     @Test
-    public void testLoadCellFails() {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> this.createContext()
-                .setCell(SpreadsheetExpressionEvaluationContext.NO_CELL)
+    public void testLoadCellMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContext,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+
+        this.loadCellAndCheck(
+            this.createContext(spreadsheetEnvironmentContext),
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testLoadCellWithSpreadsheetIdEnvironmentContextValue() {
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(123);
+
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+
+        final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetCell spreadsheetCell = cells.save(
+            cellReference.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of("text")
+                )
+            )
+        );
+
+        this.loadCellAndCheck(
+            this.createContext(
+                new FakeSpreadsheetContextSupplier() {
+                    @Override
+                    public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                        return Optional.ofNullable(
+                            spreadsheetId.equals(id) ?
+                                new FakeSpreadsheetContext() {
+
+                                    @Override
+                                    public SpreadsheetStoreRepository storeRepository() {
+                                        return new FakeSpreadsheetStoreRepository() {
+
+                                            @Override
+                                            public SpreadsheetCellStore cells() {
+                                                return cells;
+                                            }
+                                        };
+                                    }
+                                } :
+                                null
+                        );
+                    }
+                },
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setSpreadsheetId(spreadsheetId)
+            ),
+            cellReference,
+            spreadsheetCell
+        );
+    }
+
+    // loadCellRange....................................................................................................
+
+    @Test
+    public void testLoadCellRangeMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContext,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+
+        this.loadCellRangeAndCheck(
+            this.createContext(spreadsheetEnvironmentContext),
+            SpreadsheetSelection.A1.toCellRange()
+        );
+    }
+
+    @Test
+    public void testLoadCellRangeWithSpreadsheetIdEnvironmentContextValue() {
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(123);
+
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+
+        final SpreadsheetCellStore cells = SpreadsheetCellStores.treeMap();
+
+        final SpreadsheetCell spreadsheetCell = cells.save(
+            cellReference.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of("text")
+                )
+            )
+        );
+
+        this.loadCellRangeAndCheck(
+            this.createContext(
+                new FakeSpreadsheetContextSupplier() {
+                    @Override
+                    public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                        return Optional.ofNullable(
+                            spreadsheetId.equals(id) ?
+                                new FakeSpreadsheetContext() {
+
+                                    @Override
+                                    public SpreadsheetStoreRepository storeRepository() {
+                                        return new FakeSpreadsheetStoreRepository() {
+
+                                            @Override
+                                            public SpreadsheetCellStore cells() {
+                                                return cells;
+                                            }
+                                        };
+                                    }
+                                } :
+                                null
+                        );
+                    }
+                },
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setSpreadsheetId(spreadsheetId)
+            ),
+            SpreadsheetSelection.ALL_CELLS,
+            spreadsheetCell
+        );
+    }
+
+    // loadLabel........................................................................................................
+
+    @Test
+    public void testLoadLabelMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContext,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+
+        this.loadLabelAndCheck(
+            this.createContext(spreadsheetEnvironmentContext),
+            SpreadsheetSelection.labelName("UnknownLabel")
+        );
+    }
+
+    @Test
+    public void testLoadLabelWithSpreadsheetIdEnvironmentContextValue() {
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(123);
+
+        final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
+
+        final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
+
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
+
+        final SpreadsheetLabelMapping mapping = labels.save(
+            label.setLabelMappingReference(SpreadsheetSelection.A1)
+        );
+
+        this.loadLabelAndCheck(
+            this.createContext(
+                new FakeSpreadsheetContextSupplier() {
+                    @Override
+                    public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                        return Optional.ofNullable(
+                            spreadsheetId.equals(id) ?
+                                new FakeSpreadsheetContext() {
+
+                                    @Override
+                                    public SpreadsheetStoreRepository storeRepository() {
+                                        return new FakeSpreadsheetStoreRepository() {
+
+                                            @Override
+                                            public SpreadsheetLabelStore labels() {
+                                                return labels;
+                                            }
+                                        };
+                                    }
+                                } :
+                                null
+                        );
+                    }
+                },
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setSpreadsheetId(spreadsheetId)
+            ),
+            label,
+            mapping
         );
     }
 
