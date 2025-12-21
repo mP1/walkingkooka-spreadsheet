@@ -28,6 +28,8 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.SpreadsheetContextSuppliers;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
@@ -75,6 +77,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
+    private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = SpreadsheetContextSuppliers.fake();
+
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
     static {
@@ -113,10 +117,26 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // with.............................................................................................................
 
     @Test
+    public void testWithNullSpreadsheetContextSupplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                null,
+                LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -131,6 +151,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 null,
                 TERMINAL_CONTEXT,
@@ -145,6 +166,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
@@ -159,6 +181,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -173,6 +196,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -1046,6 +1070,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                                                     final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            SPREADSHEET_CONTEXT_SUPPLIER,
             LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             TERMINAL_CONTEXT,

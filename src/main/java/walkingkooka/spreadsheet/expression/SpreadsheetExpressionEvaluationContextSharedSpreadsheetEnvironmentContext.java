@@ -27,6 +27,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -77,11 +78,13 @@ import java.util.Set;
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final LocaleContext localeContext,
+    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                          final LocaleContext localeContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                           final TerminalContext terminalContext,
                                                                                           final SpreadsheetProvider spreadsheetProvider,
                                                                                           final ProviderContext providerContext) {
+        Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
@@ -89,6 +92,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+            spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
                 spreadsheetEnvironmentContext,
                 localeContext,
@@ -100,12 +104,15 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                      final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                                       final TerminalContext terminalContext,
                                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         super(
             terminalContext
         );
+
+        this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
         this.spreadsheetEnvironmentContextFactory = spreadsheetEnvironmentContextFactory;
         this.expressionFunctionProvider = expressionFunctionProvider; // may be null
@@ -260,6 +267,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     private SpreadsheetExpressionEvaluationContext setSpreadsheetEnvironmentContextFactory(final SpreadsheetEnvironmentContextFactory factory) {
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+            this.spreadsheetContextSupplier,
             factory,
             this.terminalContext,
             this.expressionFunctionProvider
@@ -311,6 +319,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return before == after ?
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+                this.spreadsheetContextSupplier,
                 after,
                 this.terminalContext,
                 this.expressionFunctionProvider
@@ -383,6 +392,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
+
+    private final SpreadsheetContextSupplier spreadsheetContextSupplier;
 
     // Object...........................................................................................................
 

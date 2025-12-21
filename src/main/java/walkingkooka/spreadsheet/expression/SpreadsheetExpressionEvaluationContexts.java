@@ -23,6 +23,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -120,12 +121,14 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final LocaleContext localeContext,
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                       final LocaleContext localeContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                        final TerminalContext terminalContext,
                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                        final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            spreadsheetContextSupplier,
             localeContext,
             spreadsheetEnvironmentContext,
             terminalContext,
