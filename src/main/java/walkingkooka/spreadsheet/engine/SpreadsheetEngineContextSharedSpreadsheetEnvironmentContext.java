@@ -206,7 +206,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
-        throw new UnsupportedOperationException();
+        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(this.spreadsheetId())
+            .storeRepository();
     }
 
     @Override

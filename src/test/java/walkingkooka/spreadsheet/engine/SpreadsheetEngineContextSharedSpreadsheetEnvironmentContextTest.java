@@ -26,6 +26,9 @@ import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.FakeSpreadsheetContext;
+import walkingkooka.spreadsheet.FakeSpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContextSuppliers;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -41,6 +44,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
 
 import java.util.Locale;
@@ -193,8 +198,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final EnvironmentContext environmentContext) {
-        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+        return this.createContext(
             SPREADSHEET_CONTEXT_SUPPLIER,
+            environmentContext
+        );
+    }
+
+    public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                     final EnvironmentContext environmentContext) {
+        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            spreadsheetContextSupplier,
             SpreadsheetEnvironmentContexts.basic(environmentContext),
             LOCALE_CONTEXT,
             SpreadsheetMetadataContexts.basic(
@@ -326,6 +339,57 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     @Override
     public void testSetSpreadsheetIdWithSame() {
         throw new UnsupportedOperationException();
+    }
+
+    // storeRepository..................................................................................................
+
+    @Test
+    public void testStoreRepositoryMissingSpreadsheetIdFails() {
+        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        this.environmentValueAndCheck(
+            environmentContext,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(environmentContext);
+
+        assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> context.storeRepository()
+        );
+    }
+
+    @Test
+    public void testStoreRepository() {
+        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .setSpreadsheetId(SPREADSHEET_ID);
+
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.fake();
+
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(
+            new FakeSpreadsheetContextSupplier() {
+                @Override
+                public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                    return Optional.ofNullable(
+                        SPREADSHEET_ID.equals(id) ?
+                            new FakeSpreadsheetContext() {
+
+                                @Override
+                                public SpreadsheetStoreRepository storeRepository() {
+                                    return repo;
+                                }
+                            } :
+                            null
+                    );
+                }
+            },
+            environmentContext
+        );
+
+        this.checkEquals(
+            repo,
+            context.storeRepository()
+        );
     }
 
     // createContext....................................................................................................
