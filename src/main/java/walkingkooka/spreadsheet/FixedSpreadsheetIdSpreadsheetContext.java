@@ -90,7 +90,6 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
         this.spreadsheetEngineContext = spreadsheetEngineContext;
         this.spreadsheetEngineContextFactory = spreadsheetEngineContextFactory;
 
-        this.spreadsheetEngineContext = spreadsheetEngineContextFactory.apply(spreadsheetEngineContext);
         this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
 
         this.httpRouter = httpRouter;
