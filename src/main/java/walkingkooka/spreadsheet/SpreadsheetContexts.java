@@ -57,6 +57,27 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     }
 
     /**
+     * {@see FixedSpreadsheetIdSpreadsheetContext}
+     */
+    public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetStoreRepository storeRepository,
+                                                        final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+                                                        final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
+                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                        final LocaleContext localeContext,
+                                                        final SpreadsheetProvider spreadsheetProvider,
+                                                        final ProviderContext providerContext) {
+        return FixedSpreadsheetIdSpreadsheetContext.with(
+            storeRepository,
+            spreadsheetEngineContextFactory,
+            httpRouterFactory,
+            spreadsheetEnvironmentContext,
+            localeContext,
+            spreadsheetProvider,
+            providerContext
+        );
+    }
+
+    /**
      * {@see FakeSpreadsheetContext}
      */
     public static SpreadsheetContext fake() {
