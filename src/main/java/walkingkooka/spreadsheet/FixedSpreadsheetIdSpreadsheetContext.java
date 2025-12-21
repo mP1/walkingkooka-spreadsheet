@@ -249,6 +249,10 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
     @Override
     public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                       final T value) {
+        if (SPREADSHEET_ID.equals(name)) {
+            throw new UnsupportedOperationException("Unable to set " + name + " with value " + value);
+        }
+
         this.spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
@@ -258,6 +262,10 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
 
     @Override
     public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        if (SPREADSHEET_ID.equals(name)) {
+            throw new UnsupportedOperationException("Unable to remove " + name);
+        }
+
         this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
         return this;
     }
