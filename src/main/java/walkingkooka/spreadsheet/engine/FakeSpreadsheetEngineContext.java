@@ -40,8 +40,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.test.Fake;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -55,7 +53,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implements SpreadsheetEngineContext, Fake {
 
@@ -312,23 +309,6 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
-        throw new UnsupportedOperationException();
-    }
-
-    // TerminalServerContext............................................................................................
-
-    @Override
-    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<TerminalContext> terminalContext(final TerminalId id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
         throw new UnsupportedOperationException();
     }
 }

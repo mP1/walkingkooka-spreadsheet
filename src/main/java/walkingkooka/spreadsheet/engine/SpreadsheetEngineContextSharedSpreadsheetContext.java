@@ -49,7 +49,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -58,7 +57,6 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * A basic and simple {@link SpreadsheetEngineContext}. Its accepts a variety of dependencies and uses them to handle
@@ -435,24 +433,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetContext;
-    }
-
-    // TerminalServerContext............................................................................................
-
-    @Override
-    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        return this.spreadsheetContext.addTerminalContext(terminalContextFactory);
-    }
-
-    @Override
-    public Optional<TerminalContext> terminalContext(final TerminalId id) {
-        return this.spreadsheetContext.terminalContext(id);
-    }
-
-    @Override
-    public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
-        this.spreadsheetContext.removeTerminalContext(id);
-        return this;
     }
 
     private final TerminalContext terminalContext;

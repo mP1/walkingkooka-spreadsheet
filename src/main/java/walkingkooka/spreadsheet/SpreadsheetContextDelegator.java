@@ -33,9 +33,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.terminal.TerminalId;
-import walkingkooka.terminal.server.TerminalServerContext;
-import walkingkooka.terminal.server.TerminalServerContextDelegator;
 import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
@@ -45,8 +42,7 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     SpreadsheetEnvironmentContextDelegator,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
-    SpreadsheetProviderDelegator,
-    TerminalServerContextDelegator {
+    SpreadsheetProviderDelegator {
 
     @Override
     default SpreadsheetStoreRepository storeRepository() {
@@ -174,20 +170,6 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     @Override
     default SpreadsheetMetadataContext spreadsheetMetadataContext() {
         return this.spreadsheetContext();
-    }
-
-    // TerminalServerContextDelegator...................................................................................
-
-    @Override
-    default TerminalServerContext terminalServerContext() {
-        return this.spreadsheetContext();
-    }
-
-    @Override
-    default SpreadsheetContext removeTerminalContext(final TerminalId terminalId) {
-        this.terminalServerContext()
-            .removeTerminalContext(terminalId);
-        return this;
     }
 
     SpreadsheetContext spreadsheetContext();

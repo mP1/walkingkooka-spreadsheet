@@ -136,8 +136,6 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
-import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
@@ -208,7 +206,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -758,23 +755,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         private final SpreadsheetProvider spreadsheetProvider;
-
-        // TerminalServerContext........................................................................................
-
-        @Override
-        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<TerminalContext> terminalContext(final TerminalId id) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
-            throw new UnsupportedOperationException();
-        }
     }
 
     private final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(

@@ -36,8 +36,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.MissingStoreException;
-import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
@@ -368,29 +366,6 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
      * The {@link SpreadsheetProvider} that will be filtered by the {@link SpreadsheetMetadata}.
      */
     private final SpreadsheetProvider spreadsheetProvider;
-
-    // TerminalServerContext............................................................................................
-
-    @Override
-    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<TerminalContext> terminalContext(final TerminalId id) {
-        Objects.requireNonNull(id, "id");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetContext removeTerminalContext(final TerminalId id) {
-        Objects.requireNonNull(id, "id");
-
-        throw new UnsupportedOperationException();
-    }
 
     // Object...........................................................................................................
 

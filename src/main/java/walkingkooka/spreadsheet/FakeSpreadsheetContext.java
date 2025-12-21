@@ -32,8 +32,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -42,7 +40,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements SpreadsheetContext {
 
@@ -225,23 +222,6 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
-    }
-
-    // TerminalServerContext............................................................................................
-
-    @Override
-    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<TerminalContext> terminalContext(final TerminalId id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetContext removeTerminalContext(final TerminalId id) {
         throw new UnsupportedOperationException();
     }
 }
