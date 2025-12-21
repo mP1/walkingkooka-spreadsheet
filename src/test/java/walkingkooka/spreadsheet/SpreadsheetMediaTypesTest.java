@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 
 import java.lang.reflect.Method;
 

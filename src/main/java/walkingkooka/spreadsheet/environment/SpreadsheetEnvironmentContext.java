@@ -21,8 +21,8 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.text.LineEnding;
 
 import java.util.Locale;

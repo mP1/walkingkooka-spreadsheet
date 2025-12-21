@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.net;
 
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.reflect.PublicStaticHelper;

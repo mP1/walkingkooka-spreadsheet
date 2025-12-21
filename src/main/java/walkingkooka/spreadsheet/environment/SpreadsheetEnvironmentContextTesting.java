@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.HasSpreadsheetServerUrl;
-import walkingkooka.spreadsheet.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
+import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 
 public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
