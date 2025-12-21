@@ -28,6 +28,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -205,7 +206,16 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
-        return Optional.empty();
+
+        final SpreadsheetId spreadsheetIdOrNull = this.environmentValue(SPREADSHEET_ID)
+            .orElse(null);
+        return null == spreadsheetIdOrNull ?
+            Optional.empty() :
+            this.spreadsheetContextSupplier.spreadsheetContext(spreadsheetIdOrNull)
+                .flatMap(c -> c.storeRepository()
+                    .labels()
+                    .resolveLabel(labelName)
+                );
     }
 
     @Override

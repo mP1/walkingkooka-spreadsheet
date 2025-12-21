@@ -28,8 +28,12 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.spreadsheet.FakeSpreadsheetContext;
+import walkingkooka.spreadsheet.FakeSpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContextSuppliers;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
@@ -41,7 +45,13 @@ import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
@@ -956,10 +966,53 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // resolveLabel.....................................................................................................
 
     @Test
-    public void testResolveLabel() {
+    public void testResolveLabelWhenMissingSpreadsheetId() {
         this.resolveIfLabelAndCheck(
             this.createContext(),
             SpreadsheetSelection.labelName("HelloLabel")
+        );
+    }
+
+    @Test
+    public void testResolveLabelWhenSpreadsheetIdAvailable() {
+        final SpreadsheetLabelName label = SpreadsheetSelection.labelName("HelloLabel");
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(999);
+
+        this.resolveIfLabelAndCheck(
+            this.createContext(
+                new FakeSpreadsheetContextSupplier() {
+                    @Override
+                    public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                        return Optional.ofNullable(
+                            spreadsheetId.equals(id) ?
+                                new FakeSpreadsheetContext() {
+
+                                    @Override
+                                    public SpreadsheetStoreRepository storeRepository() {
+                                        return new FakeSpreadsheetStoreRepository() {
+                                            @Override
+                                            public SpreadsheetLabelStore labels() {
+                                                final SpreadsheetLabelStore store = SpreadsheetLabelStores.treeMap();
+                                                store.save(
+                                                    label.setLabelMappingReference(cell)
+                                                );
+                                                return store;
+                                            }
+                                        };
+                                    }
+
+                                } :
+                                null
+                        );
+                    }
+                },
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setSpreadsheetId(spreadsheetId)
+            ),
+            label,
+            cell
         );
     }
 
@@ -1069,8 +1122,30 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                                                     final ProviderContext providerContext) {
-        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+        return this.createContext(
             SPREADSHEET_CONTEXT_SUPPLIER,
+            spreadsheetEnvironmentContext,
+            expressionFunctionProvider,
+            providerContext
+        );
+    }
+
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                                    final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+        return this.createContext(
+            spreadsheetContextSupplier,
+            spreadsheetEnvironmentContext,
+            EXPRESSION_FUNCTION_PROVIDER,
+            PROVIDER_CONTEXT
+        );
+    }
+
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                                    final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                                    final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
+                                                                                                    final ProviderContext providerContext) {
+        return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            spreadsheetContextSupplier,
             LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             TERMINAL_CONTEXT,
