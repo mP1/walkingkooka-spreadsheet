@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.naming.Name;
-import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.text.CharSequences;
 
 import java.util.Optional;

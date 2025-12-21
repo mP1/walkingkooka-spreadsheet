@@ -28,7 +28,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
-import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;

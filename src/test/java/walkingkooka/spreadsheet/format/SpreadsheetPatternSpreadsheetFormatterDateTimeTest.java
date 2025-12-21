@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
-import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.parser.DateTimeSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;

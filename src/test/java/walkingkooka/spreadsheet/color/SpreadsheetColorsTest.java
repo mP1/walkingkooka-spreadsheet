@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.color;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;

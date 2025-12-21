@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
-import walkingkooka.spreadsheet.SpreadsheetColors;
+import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
