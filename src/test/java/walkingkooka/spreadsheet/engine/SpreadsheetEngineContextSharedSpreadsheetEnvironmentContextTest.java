@@ -210,6 +210,57 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         );
     }
 
+    // spreadsheetMetadata..............................................................................................
+
+    @Test
+    public void testSpreadsheetMetadataMissingSpreadsheetIdFails() {
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        this.environmentValueAndCheck(
+            environmentContext,
+            SpreadsheetEngineContext.SPREADSHEET_ID
+        );
+
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(environmentContext);
+
+        assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> context.spreadsheetMetadata()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadata() {
+        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .setSpreadsheetId(SPREADSHEET_ID);
+
+        this.environmentValueAndCheck(
+            environmentContext,
+            SpreadsheetEngineContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(environmentContext);
+
+        final SpreadsheetMetadata metadata = METADATA.set(
+            SpreadsheetMetadataPropertyName.AUDIT_INFO,
+            AuditInfo.create(
+                USER,
+                HAS_NOW.now()
+            )
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
+        context.saveMetadata(metadata);
+
+        this.spreadsheetMetadataAndCheck(
+            context,
+            metadata
+        );
+    }
+
     // spreadsheetId....................................................................................................
 
     @Override
