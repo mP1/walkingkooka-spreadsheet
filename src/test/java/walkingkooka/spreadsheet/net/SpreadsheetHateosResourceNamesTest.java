@@ -15,13 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.net;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
-import walkingkooka.spreadsheet.net.SpreadsheetHateosResourceNames;
 
 import java.lang.reflect.Method;
 import java.util.Set;

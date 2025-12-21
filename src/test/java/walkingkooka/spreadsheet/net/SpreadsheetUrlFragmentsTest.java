@@ -15,11 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.net;
 
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
-import walkingkooka.spreadsheet.net.SpreadsheetUrlFragments;
 
 import java.lang.reflect.Method;
 
