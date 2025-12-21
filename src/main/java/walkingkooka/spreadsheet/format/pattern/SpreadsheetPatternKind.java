@@ -21,12 +21,12 @@ import walkingkooka.NeverError;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
-import walkingkooka.spreadsheet.SpreadsheetUrlFragments;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenKind;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.net.SpreadsheetUrlFragments;
 import walkingkooka.text.CaseKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 

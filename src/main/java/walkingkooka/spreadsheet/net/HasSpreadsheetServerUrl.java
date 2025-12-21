@@ -15,19 +15,17 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.net;
 
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.text.printer.TreePrintableTesting;
 
-public interface HasSpreadsheetServerUrlTesting extends TreePrintableTesting {
+/**
+ * Defines a getter to get the server url.
+ */
+public interface HasSpreadsheetServerUrl {
 
-    default void serverUrlAndCheck(final HasSpreadsheetServerUrl has,
-                                   final AbsoluteUrl expected) {
-        this.checkEquals(
-            expected,
-            has.serverUrl(),
-            has::toString
-        );
-    }
+    /**
+     * Getter that returns the server address.
+     */
+    AbsoluteUrl serverUrl();
 }

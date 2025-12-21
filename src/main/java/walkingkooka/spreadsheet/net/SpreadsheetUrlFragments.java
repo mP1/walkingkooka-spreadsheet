@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.net;
 
 import walkingkooka.net.UrlFragment;
 import walkingkooka.plugin.store.Plugin;

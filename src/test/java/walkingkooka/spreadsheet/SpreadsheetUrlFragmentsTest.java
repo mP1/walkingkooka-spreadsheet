@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.net.SpreadsheetUrlFragments;
 
 import java.lang.reflect.Method;
 
