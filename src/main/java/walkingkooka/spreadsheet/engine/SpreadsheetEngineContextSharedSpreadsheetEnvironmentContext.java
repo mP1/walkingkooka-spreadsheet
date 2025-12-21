@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -109,8 +111,22 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
 
-        return Optional.empty();
+        if (null == this.spreadsheetLabelNameResolver) {
+            final SpreadsheetId spreadsheetIdOrNull = this.environmentValue(SPREADSHEET_ID)
+                .orElse(null);
+
+            this.spreadsheetLabelNameResolver = null == spreadsheetIdOrNull ?
+                SpreadsheetLabelNameResolvers.empty() :
+                SpreadsheetLabelNameResolvers.labelStore(
+                    this.storeRepository()
+                        .labels()
+                );
+        }
+
+        return this.spreadsheetLabelNameResolver.resolveLabel(labelName);
     }
+
+    private transient SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
     // parsing formula and executing....................................................................................
 
