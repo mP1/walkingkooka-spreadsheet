@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.email.EmailAddress;
@@ -43,6 +44,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
@@ -1121,6 +1123,58 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             ),
             label,
             mapping
+        );
+    }
+
+    // spreadsheetMetadata..............................................................................................
+
+    @Test
+    public void testSpreadsheetMetadataMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        this.environmentValueAndCheck(
+            spreadsheetEnvironmentContext,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
+        );
+
+        assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createContext(spreadsheetEnvironmentContext)
+                .spreadsheetMetadata()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetMetadataWithSpreadsheetIdEnvironmentContextValue() {
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(123);
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            spreadsheetId
+        );
+
+        this.checkEquals(
+            metadata,
+            this.createContext(
+                new FakeSpreadsheetContextSupplier() {
+                    @Override
+                    public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                        return Optional.ofNullable(
+                            spreadsheetId.equals(id) ?
+                                new FakeSpreadsheetContext() {
+
+                                    @Override
+                                    public SpreadsheetMetadata spreadsheetMetadata() {
+                                        return metadata;
+                                    }
+                                } :
+                                null
+                        );
+                    }
+                },
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                    .setSpreadsheetId(spreadsheetId)
+            ).spreadsheetMetadata()
         );
     }
 
