@@ -55,7 +55,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
-import walkingkooka.terminal.server.TerminalServerContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.tree.expression.Expression;
@@ -526,27 +525,31 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
-                SpreadsheetContexts.basic(
-                    (id) -> {
-                        if (SPREADSHEET_ID.equals(id)) {
-                            return new FakeSpreadsheetStoreRepository() {
+                SpreadsheetContexts.fixedSpreadsheetId(
+                    new FakeSpreadsheetStoreRepository() {
+                        @Override
+                        public SpreadsheetMetadataStore metadatas() {
+                            return new FakeSpreadsheetMetadataStore() {
                                 @Override
-                                public SpreadsheetMetadataStore metadatas() {
-                                    return new FakeSpreadsheetMetadataStore() {
-                                        @Override
-                                        public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
-                                            return Optional.ofNullable(
-                                                id.equals(SPREADSHEET_ID) ?
-                                                    METADATA :
-                                                    null
-                                            );
-                                        }
-                                    };
+                                public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
+                                    return Optional.ofNullable(
+                                        id.equals(SPREADSHEET_ID) ?
+                                            METADATA :
+                                            null
+                                    );
                                 }
                             };
                         }
-                        throw new IllegalArgumentException("Unknown SpreadsheetId: " + id);
                     },
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                        .setSpreadsheetId(SPREADSHEET_ID),
+                    LOCALE_CONTEXT,
                     SpreadsheetProviders.basic(
                         converterProvider,
                         EXPRESSION_FUNCTION_PROVIDER,
@@ -558,21 +561,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                         SpreadsheetParserProviders.empty(),
                         ValidatorProviders.empty()
                     ),
-                    (c) -> {
-                        throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
-                    (c) -> {
-                        throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        .setSpreadsheetId(SPREADSHEET_ID),
-                    LOCALE_CONTEXT,
                     ProviderContexts.basic(
                         ConverterContexts.fake(),
                         SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                         PluginStores.fake()
-                    ),
-                    TerminalServerContexts.fake()
+                    )
                 ),
                 TerminalContexts.fake()
             )
@@ -606,6 +599,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
 
     @Override
     public void testSetEnvironmentValueWithNullValueFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetSpreadsheetIdWithSame() {
         throw new UnsupportedOperationException();
     }
 
