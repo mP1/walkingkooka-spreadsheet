@@ -241,36 +241,40 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                SpreadsheetContexts.basic(
-                    (id) -> {
-                        if (spreadsheetId.equals(id)) {
-                            return new FakeSpreadsheetStoreRepository() {
+                SpreadsheetContexts.fixedSpreadsheetId(
+                    new FakeSpreadsheetStoreRepository() {
+                        @Override
+                        public SpreadsheetMetadataStore metadatas() {
+                            return new FakeSpreadsheetMetadataStore() {
                                 @Override
-                                public SpreadsheetMetadataStore metadatas() {
-                                    return new FakeSpreadsheetMetadataStore() {
-                                        @Override
-                                        public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
-                                            return Optional.ofNullable(
-                                                id.equals(spreadsheetId) ?
-                                                    METADATA_EN_AU.set(
-                                                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                                                        spreadsheetId
-                                                    ).set(
-                                                        SpreadsheetMetadataPropertyName.FUNCTIONS,
-                                                        SpreadsheetExpressionFunctions.parseAliasSet("hello")
-                                                    ).set(
-                                                        SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-                                                        SpreadsheetExpressionFunctions.parseAliasSet("hello")
-                                                    ) :
-                                                    null
-                                            );
-                                        }
-                                    };
+                                public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
+                                    return Optional.ofNullable(
+                                        id.equals(spreadsheetId) ?
+                                            METADATA_EN_AU.set(
+                                                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                                spreadsheetId
+                                            ).set(
+                                                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                                                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+                                            ).set(
+                                                SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
+                                                SpreadsheetExpressionFunctions.parseAliasSet("hello")
+                                            ) :
+                                            null
+                                    );
                                 }
                             };
                         }
-                        throw new IllegalArgumentException("Unknown SpreadsheetId: " + id);
                     },
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                        .setSpreadsheetId(spreadsheetId),
+                    LOCALE_CONTEXT,
                     SpreadsheetProviders.basic(
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                             (ProviderContext p) -> METADATA_EN_AU.dateTimeConverter(
@@ -339,17 +343,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                         SpreadsheetParserProviders.empty(),
                         ValidatorProviders.empty()
                     ),
-                    (c) -> {
-                        throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
-                    (c) -> {
-                        throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        .setSpreadsheetId(spreadsheetId),
-                    LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT,
-                    TERMINAL_SERVER_CONTEXT
+                    PROVIDER_CONTEXT
                 ),
                 TERMINAL_CONTEXT
             ),

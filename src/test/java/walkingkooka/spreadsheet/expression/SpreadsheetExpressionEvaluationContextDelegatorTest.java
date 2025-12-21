@@ -196,31 +196,25 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                SpreadsheetContexts.basic(
-                    (id) -> {
-                        if (spreadsheetId.equals(id)) {
-                            return new FakeSpreadsheetStoreRepository() {
+                SpreadsheetContexts.fixedSpreadsheetId(
+                    new FakeSpreadsheetStoreRepository() {
+                        @Override
+                        public SpreadsheetMetadataStore metadatas() {
+                            return new FakeSpreadsheetMetadataStore() {
                                 @Override
-                                public SpreadsheetMetadataStore metadatas() {
-                                    return new FakeSpreadsheetMetadataStore() {
-                                        @Override
-                                        public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
-                                            return Optional.ofNullable(
-                                                id.equals(spreadsheetId) ?
-                                                    METADATA_EN_AU.set(
-                                                        SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                                                        spreadsheetId
-                                                    ) :
-                                                    null
-                                            );
-                                        }
-                                    };
+                                public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
+                                    return Optional.ofNullable(
+                                        id.equals(spreadsheetId) ?
+                                            METADATA_EN_AU.set(
+                                                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                                spreadsheetId
+                                            ) :
+                                            null
+                                    );
                                 }
                             };
                         }
-                        throw new IllegalArgumentException("Unknown SpreadsheetId: " + id);
                     },
-                    SPREADSHEET_PROVIDER,
                     (c) -> {
                         throw new UnsupportedOperationException();
                     }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
@@ -230,8 +224,8 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                     SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                         .setSpreadsheetId(spreadsheetId),
                     LOCALE_CONTEXT,
-                    PROVIDER_CONTEXT,
-                    TERMINAL_SERVER_CONTEXT
+                    SPREADSHEET_PROVIDER,
+                    PROVIDER_CONTEXT
                 ),
                 TERMINAL_CONTEXT
             );
@@ -259,7 +253,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         }
 
         @Override
-        public TestSpreadsheetExpressionEvaluationContextDelegator cloneEnvironment() {
+        public SpreadsheetExpressionEvaluationContextDelegatorTest.TestSpreadsheetExpressionEvaluationContextDelegator cloneEnvironment() {
             throw new UnsupportedOperationException();
         }
 

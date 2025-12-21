@@ -58,7 +58,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
-import walkingkooka.terminal.server.TerminalServerContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -925,6 +924,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
     }
 
+    @Override
+    public void testSetSpreadsheetIdWithSame() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testUser() {
         final EmailAddress user = EmailAddress.parse("user123@example.com");
@@ -1171,14 +1175,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                          final ProviderContext providerContext) {
-        return SpreadsheetContexts.basic(
-            (id) -> {
-                if(SPREADSHEET_ID.equals(id)) {
-                    return storeRepository;
-                }
-                throw new IllegalArgumentException("Unknown SpreadsheetId: " + id);
-            },
-            spreadsheetProvider(expressionFunctionProvider),
+        return SpreadsheetContexts.fixedSpreadsheetId(
+            storeRepository,
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
@@ -1187,8 +1185,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
-            providerContext,
-            TerminalServerContexts.fake()
+            spreadsheetProvider(expressionFunctionProvider),
+            providerContext
         );
     }
 
