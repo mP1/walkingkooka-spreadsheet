@@ -26,8 +26,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextTestingTest.TestSpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
-import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
@@ -35,7 +33,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 public final class SpreadsheetContextTestingTest implements SpreadsheetContextTesting<TestSpreadsheetContext> {
 
@@ -223,24 +220,6 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
             Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<TerminalContext> terminalContext(final TerminalId id) {
-            Objects.requireNonNull(id, "id");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetContext removeTerminalContext(final TerminalId id) {
-            Objects.requireNonNull(id, "id");
             throw new UnsupportedOperationException();
         }
     }

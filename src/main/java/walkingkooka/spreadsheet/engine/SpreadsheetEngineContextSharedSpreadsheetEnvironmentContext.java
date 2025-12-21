@@ -41,7 +41,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.text.TextNode;
@@ -49,7 +48,6 @@ import walkingkooka.tree.text.TextNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends SpreadsheetEngineContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
@@ -239,29 +237,6 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     @Override
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
         Objects.requireNonNull(mode, "mode");
-
-        throw new UnsupportedOperationException();
-    }
-
-    // TerminalServerContext............................................................................................
-
-    @Override
-    public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-        Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<TerminalContext> terminalContext(final TerminalId id) {
-        Objects.requireNonNull(id, "id");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
-        Objects.requireNonNull(id, "id");
 
         throw new UnsupportedOperationException();
     }

@@ -33,8 +33,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.terminal.TerminalId;
-import walkingkooka.terminal.server.TerminalServerContext;
 import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
@@ -51,8 +49,7 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl,
     LocaleContext,
-    SpreadsheetMetadataContext,
-    TerminalServerContext {
+    SpreadsheetMetadataContext {
 
     // SpreadsheetMetadataContext.......................................................................................
 
@@ -107,9 +104,4 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
 
     @Override
     SpreadsheetContext setUser(final Optional<EmailAddress> user);
-
-    // TerminalServerContext............................................................................................
-
-    @Override
-    SpreadsheetContext removeTerminalContext(final TerminalId terminalId);
 }

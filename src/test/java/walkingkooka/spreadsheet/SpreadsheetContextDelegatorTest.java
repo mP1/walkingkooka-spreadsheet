@@ -27,8 +27,6 @@ import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetC
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
-import walkingkooka.terminal.TerminalContext;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
@@ -36,7 +34,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting<TestSpreadsheetContextDelegator> {
     
@@ -273,24 +270,6 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             @Override
             public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
                 Objects.requireNonNull(watcher, "watcher");
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-                Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public Optional<TerminalContext> terminalContext(final TerminalId id) {
-                Objects.requireNonNull(id, "id");
-                throw new UnsupportedOperationException();
-            }
-
-            @Override
-            public SpreadsheetContext removeTerminalContext(final TerminalId id) {
-                Objects.requireNonNull(id, "id");
                 throw new UnsupportedOperationException();
             }
         };

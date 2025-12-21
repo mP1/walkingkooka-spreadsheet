@@ -79,9 +79,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
-import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
-import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -93,7 +91,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -1133,26 +1130,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         @Override
         public SpreadsheetProvider spreadsheetProvider() {
             return SPREADSHEET_PROVIDER;
-        }
-
-        // TerminalServerContext........................................................................................
-
-        @Override
-        public TerminalContext addTerminalContext(final Function<TerminalId, TerminalContext> terminalContextFactory) {
-            Objects.requireNonNull(terminalContextFactory, "terminalContextFactory");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Optional<TerminalContext> terminalContext(final TerminalId id) {
-            Objects.requireNonNull(id, "id");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetEngineContext removeTerminalContext(final TerminalId id) {
-            Objects.requireNonNull(id, "id");
-            throw new UnsupportedOperationException();
         }
 
         // Object.......................................................................................................
