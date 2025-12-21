@@ -71,7 +71,7 @@ import java.util.Set;
 
 /**
  * A {@link SpreadsheetExpressionEvaluationContext} using {@link EnvironmentValueName} to create each of the core components
- * required during evaluation, such as a {@link Converter} using the {@link #CONVERTER}. A full list of required
+ * required during evaluation, such as a {@link Converter} using the {@link SpreadsheetEnvironmentContextFactory#CONVERTER}. A full list of required
  * {@link EnvironmentValueName} are listed below.
  */
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
