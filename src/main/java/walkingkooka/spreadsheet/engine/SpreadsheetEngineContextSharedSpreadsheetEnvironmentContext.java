@@ -21,6 +21,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
@@ -52,12 +53,14 @@ import java.util.Optional;
 final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends SpreadsheetEngineContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+    static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                             final LocaleContext localeContext,
                                                                             final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                             final TerminalContext terminalContext,
                                                                             final SpreadsheetProvider spreadsheetProvider,
                                                                             final ProviderContext providerContext) {
+        Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
@@ -66,6 +69,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
+            spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
                 spreadsheetEnvironmentContext,
                 localeContext,
@@ -77,10 +81,13 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         );
     }
 
-    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
+    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                        final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                         final TerminalContext terminalContext) {
         super();
+
+        this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
         this.spreadsheetEnvironmentContextFactory = spreadsheetEnvironmentContextFactory;
         this.spreadsheetMetadataContext = spreadsheetMetadataContext;
@@ -150,6 +157,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory = this.spreadsheetEnvironmentContextFactory;
 
         return SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
+            this.spreadsheetContextSupplier,
             spreadsheetEnvironmentContextFactory.localeContext(),
             spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(),
             this.terminalContext,
@@ -157,6 +165,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             spreadsheetEnvironmentContextFactory.providerContext()
         );
     }
+
+    private final SpreadsheetContextSupplier spreadsheetContextSupplier;
 
     // formatValue......................................................................................................
 
@@ -253,6 +263,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return before == after ?
             this :
             new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
+                this.spreadsheetContextSupplier,
                 after,
                 this.spreadsheetMetadataContext,
                 this.terminalContext
@@ -292,6 +303,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     @Override
     public int hashCode() {
         return Objects.hash(
+            this.spreadsheetContextSupplier,
             this.spreadsheetEnvironmentContextFactory,
             this.spreadsheetMetadataContext,
             this.terminalContext
@@ -306,7 +318,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     private boolean equals0(final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext other) {
-        return this.spreadsheetEnvironmentContextFactory.equals(other.spreadsheetEnvironmentContextFactory) &&
+        return this.spreadsheetContextSupplier.equals(other.spreadsheetContextSupplier) &&
+            this.spreadsheetEnvironmentContextFactory.equals(other.spreadsheetEnvironmentContextFactory) &&
             this.spreadsheetMetadataContext.equals(other.spreadsheetMetadataContext) &&
             this.terminalContext.equals(other.terminalContext);
     }
