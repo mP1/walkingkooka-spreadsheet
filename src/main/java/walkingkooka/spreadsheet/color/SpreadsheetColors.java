@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.color;
 
 import walkingkooka.reflect.PublicStaticHelper;
 
