@@ -201,7 +201,9 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        throw new UnsupportedOperationException();
+        return this.loadMetadataOrFail(
+            this.spreadsheetId()
+        );
     }
 
     @Override
