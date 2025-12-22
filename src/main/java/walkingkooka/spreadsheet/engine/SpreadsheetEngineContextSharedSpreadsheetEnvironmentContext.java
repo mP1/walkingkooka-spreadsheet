@@ -168,22 +168,46 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             .cast(SpreadsheetFormulaParserToken.class);
     }
 
+    // spreadsheetExpressionEvaluationContext...........................................................................
+
     @Override
     public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                          final SpreadsheetExpressionReferenceLoader loader) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(loader, "loader");
 
-        final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory = this.spreadsheetEnvironmentContextFactory;
+        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext;
 
-        return SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
-            this.spreadsheetContextSupplier,
-            spreadsheetEnvironmentContextFactory.localeContext(),
-            spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(),
-            this.terminalContext,
-            spreadsheetEnvironmentContextFactory.spreadsheetProvider(),
-            spreadsheetEnvironmentContextFactory.providerContext()
-        );
+        final SpreadsheetId spreadsheetIdOrNull = this.environmentValue(SPREADSHEET_ID)
+            .orElse(null);
+        final TerminalContext terminalContext = this.terminalContext;
+
+        if (null == spreadsheetIdOrNull) {
+            // ignore cell parameter for now
+
+            final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory = this.spreadsheetEnvironmentContextFactory;
+
+            spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
+                this.spreadsheetContextSupplier,
+                spreadsheetEnvironmentContextFactory.localeContext(),
+                spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(),
+                terminalContext,
+                spreadsheetEnvironmentContextFactory.spreadsheetProvider(),
+                spreadsheetEnvironmentContextFactory.providerContext()
+            );
+
+        } else {
+            spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
+                SpreadsheetMetadataMode.FORMULA,
+                cell,
+                loader,
+                this.spreadsheetLabelNameResolver(),
+                this.spreadsheetContextSupplier.spreadsheetContextOrFail(spreadsheetIdOrNull),
+                terminalContext
+            );
+        }
+
+        return spreadsheetExpressionEvaluationContext;
     }
 
     private final SpreadsheetContextSupplier spreadsheetContextSupplier;
