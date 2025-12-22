@@ -19,12 +19,16 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.FakeSpreadsheetContextSupplier;
@@ -36,18 +40,23 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
+import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.tree.expression.Expression;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -389,6 +398,81 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkEquals(
             repo,
             context.storeRepository()
+        );
+    }
+
+    // evaluate.........................................................................................................
+
+    @Test
+    public void testEvaluateWhenSpreadsheetId() {
+        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .setSpreadsheetId(SPREADSHEET_ID);
+
+        final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
+
+        final SpreadsheetMetadata metadata = metadataStore.save(
+            METADATA.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SPREADSHEET_ID
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    USER,
+                    HAS_NOW.now()
+                )
+            )
+        );
+
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
+
+        this.evaluateAndCheck(
+            this.createContext(
+                new FakeSpreadsheetContextSupplier() {
+                    @Override
+                    public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                        return Optional.ofNullable(
+                            SPREADSHEET_ID.equals(id) ?
+                                new FakeSpreadsheetContext() {
+
+                                    @Override
+                                    public SpreadsheetStoreRepository storeRepository() {
+                                        return repo;
+                                    }
+
+                                    @Override
+                                    public SpreadsheetMetadata spreadsheetMetadata() {
+                                        return metadata;
+                                    }
+
+                                    @Override
+                                    public ProviderContext providerContext() {
+                                        return PROVIDER_CONTEXT;
+                                    }
+
+                                    @Override
+                                    public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                               final List<?> value,
+                                                                                               final ProviderContext context) {
+                                        return CONVERTER_PROVIDER.converter(
+                                            name,
+                                            value,
+                                            context
+                                        );
+                                    }
+                                } :
+                                null
+                        );
+                    }
+                },
+                environmentContext
+            ),
+            Expression.add(
+                this.expression(1),
+                this.expression(2)
+            ),
+            SpreadsheetExpressionEvaluationContext.NO_CELL,
+            SpreadsheetExpressionReferenceLoaders.fake(),
+            this.number(1 + 2)
         );
     }
 
