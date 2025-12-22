@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.Converter;
@@ -231,11 +232,17 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
 
+        // Inserted cast because GWT compiler complains
+        //
+        // [ERROR] Line 234: Type mismatch: cannot convert from Optional<Object> to Optional<SpreadsheetSelection>
+        // [ERROR] Line 236: Type mismatch: cannot convert from Optional<SpreadsheetCellReferenceOrRange> to Optional<Object>
         return this.spreadsheetContext()
             .flatMap(
-                c -> c.storeRepository()
-                    .labels()
-                    .resolveLabel(labelName)
+                c -> Cast.to(
+                    c.storeRepository()
+                        .labels()
+                        .resolveLabel(labelName)
+                )
             );
     }
 
