@@ -414,7 +414,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     @Test
-    public final void testEvaluateWithFunctionContextSpreadsheetMetadata() {
+    public void testEvaluateWithFunctionContextSpreadsheetMetadata() {
         this.evaluateAndCheck(
             Expression.call(
                 Expression.namedFunction(
