@@ -68,7 +68,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             return this.factory;
         }
 
-        private SpreadsheetEnvironmentContextFactory factory = SpreadsheetEnvironmentContextFactory.with(
+        private final SpreadsheetEnvironmentContextFactory factory = SpreadsheetEnvironmentContextFactory.with(
             SpreadsheetEnvironmentContexts.basic(
                 EnvironmentContexts.map(
                         EnvironmentContexts.empty(
