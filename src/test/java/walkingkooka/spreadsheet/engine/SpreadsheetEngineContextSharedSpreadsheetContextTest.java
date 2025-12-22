@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
-import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -62,7 +61,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetLabelStore;
@@ -600,126 +598,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             pattern.spreadsheetParserSelector(),
             pattern.toFormat()
                 .spreadsheetFormatterSelector()
-        );
-    }
-
-    // SpreadsheetEnvironmentContext....................................................................................
-
-    @Test
-    public void testSpreadsheetExpressionEvaluationContextWithScriptingIsEnvironmentContextUpdatable() {
-        final SpreadsheetMetadataMode mode = SpreadsheetMetadataMode.SCRIPTING;
-
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(
-            METADATA.set(
-                mode.function(),
-                SpreadsheetExpressionFunctions.parseAliasSet("hello")
-            )
-        );
-
-        final SpreadsheetEngineContext after = context.setSpreadsheetMetadataMode(mode);
-        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
-            SpreadsheetExpressionEvaluationContext.NO_CELL,
-            SpreadsheetExpressionReferenceLoaders.fake()
-        );
-
-        final Locale locale = Locale.GERMAN;
-        spreadsheetExpressionEvaluationContext.setLocale(locale);
-        this.localeAndCheck(
-            spreadsheetExpressionEvaluationContext,
-            locale
-        );
-
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "World111";
-
-        spreadsheetExpressionEvaluationContext.setEnvironmentValue(
-            name,
-            value
-        );
-        this.environmentValueAndCheck(
-            spreadsheetExpressionEvaluationContext,
-            name,
-            value
-        );
-
-        spreadsheetExpressionEvaluationContext.removeEnvironmentValue(name);
-
-        this.environmentValueAndCheck(
-            spreadsheetExpressionEvaluationContext,
-            name
-        );
-    }
-
-    @Test
-    public void testSpreadsheetExpressionEvaluationContextWithFindIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.FIND);
-    }
-
-    @Test
-    public void testSpreadsheetExpressionEvaluationContextWithFormulaIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.FORMULA);
-    }
-
-    @Test
-    public void testSpreadsheetExpressionEvaluationContextWithFormattingIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.FORMATTING);
-    }
-
-    @Test
-    public void testSpreadsheetExpressionEvaluationContextWithValidationIsEnvironmentContextReadOnly() {
-        this.spreadsheetExpressionEvaluationContextAndReadOnlyCheck(SpreadsheetMetadataMode.VALIDATION);
-    }
-
-    private void spreadsheetExpressionEvaluationContextAndReadOnlyCheck(final SpreadsheetMetadataMode mode) {
-        final SpreadsheetEngineContextSharedSpreadsheetContext context = this.createContext(
-            METADATA.set(
-                mode.function(),
-                SpreadsheetExpressionFunctions.parseAliasSet("hello")
-            )
-        );
-
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
-        final String value = "World111";
-        context.setEnvironmentValue(
-            name,
-            value
-        );
-
-        final SpreadsheetEngineContext after = context.setSpreadsheetMetadataMode(mode);
-        final SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext = after.spreadsheetExpressionEvaluationContext(
-            SpreadsheetExpressionEvaluationContext.NO_CELL,
-            SpreadsheetExpressionReferenceLoaders.fake()
-        );
-
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> spreadsheetExpressionEvaluationContext.setLocale(
-                Locale.GERMAN
-            )
-        );
-
-        this.localeAndCheck(
-            spreadsheetExpressionEvaluationContext,
-            LOCALE
-        );
-
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> spreadsheetExpressionEvaluationContext.setEnvironmentValue(
-                name,
-                "World222"
-            )
-        );
-
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> spreadsheetExpressionEvaluationContext.removeEnvironmentValue(name)
-        );
-
-        this.environmentValueAndCheck(
-            spreadsheetExpressionEvaluationContext,
-            name,
-            value
         );
     }
 

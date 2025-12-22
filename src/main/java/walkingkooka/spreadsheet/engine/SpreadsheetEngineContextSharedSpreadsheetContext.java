@@ -24,8 +24,6 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -185,22 +183,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(loader, "loader");
 
-        SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
-
-        final SpreadsheetMetadataMode mode = this.mode;
-        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = spreadsheetContext;
-        if (mode.isReadOnlyEnvironmentContext()) {
-            spreadsheetContext = spreadsheetContext.setEnvironmentContext(
-                SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext)
-            );
-        }
-
         return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
-            mode,
+            this.mode,
             cell,
             loader,
             this.spreadsheetLabelNameResolver,
-            spreadsheetContext,
+            this.spreadsheetContext,
             this.terminalContext
         );
     }
