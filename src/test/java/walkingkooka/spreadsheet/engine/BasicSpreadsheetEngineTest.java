@@ -19970,6 +19970,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month,month-of-year,year"),
                     SpreadsheetDeltaProperties.ALL,
                     new FakeSpreadsheetEngineContext() {
+
+                        @Override
+                        public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
+                            return this;
+                        }
+
                         @Override
                         public SpreadsheetStoreRepository storeRepository() {
                             return SpreadsheetStoreRepositories.treeMap(

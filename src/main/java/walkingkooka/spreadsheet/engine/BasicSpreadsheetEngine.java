@@ -729,7 +729,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             cellRange,
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(comparators),
             deltaProperties,
-            context
+            context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.FORMULA)
         );
     }
 
