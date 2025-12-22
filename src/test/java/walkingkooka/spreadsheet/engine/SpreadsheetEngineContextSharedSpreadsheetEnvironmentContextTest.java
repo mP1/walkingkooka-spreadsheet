@@ -404,6 +404,26 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // evaluate.........................................................................................................
 
     @Test
+    public void testEvaluateMissingSpreadsheetId() {
+        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            .removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
+
+        this.evaluateAndCheck(
+            this.createContext(
+                SpreadsheetContextSuppliers.fake(), // SpreadsheetContext should never be fetched
+                environmentContext
+            ),
+            Expression.add(
+                this.expression(1),
+                this.expression(2)
+            ),
+            SpreadsheetExpressionEvaluationContext.NO_CELL,
+            SpreadsheetExpressionReferenceLoaders.fake(),
+            this.number(1 + 2)
+        );
+    }
+
+    @Test
     public void testEvaluateWhenSpreadsheetId() {
         final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             .setSpreadsheetId(SPREADSHEET_ID);
