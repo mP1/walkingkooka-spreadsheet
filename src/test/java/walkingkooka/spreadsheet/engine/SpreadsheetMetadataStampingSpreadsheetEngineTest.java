@@ -425,6 +425,11 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         return new FakeSpreadsheetEngineContext() {
 
             @Override
+            public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
+                return this;
+            }
+
+            @Override
             public SpreadsheetMetadata spreadsheetMetadata() {
                 return BEFORE;
             }

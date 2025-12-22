@@ -86,7 +86,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
-        return new FakeSpreadsheetEngineContext();
+        throw new UnsupportedOperationException();
     }
 
     // formula..........................................................................................................
