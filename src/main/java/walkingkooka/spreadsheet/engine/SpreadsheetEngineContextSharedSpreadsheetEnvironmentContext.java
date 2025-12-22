@@ -111,6 +111,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
 
+        return this.spreadsheetLabelNameResolver()
+            .resolveLabel(labelName);
+    }
+
+    private SpreadsheetLabelNameResolver spreadsheetLabelNameResolver() {
         if (null == this.spreadsheetLabelNameResolver) {
             final SpreadsheetId spreadsheetIdOrNull = this.environmentValue(SPREADSHEET_ID)
                 .orElse(null);
@@ -122,8 +127,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                         .labels()
                 );
         }
-
-        return this.spreadsheetLabelNameResolver.resolveLabel(labelName);
+        return this.spreadsheetLabelNameResolver;
     }
 
     private transient SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
