@@ -53,7 +53,9 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
@@ -61,6 +63,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
@@ -75,8 +79,10 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -136,6 +142,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
+import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
@@ -499,9 +506,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
-    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
-        .cloneEnvironment()
-        .setSpreadsheetId(SPREADSHEET_ID);
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+        SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
+            .cloneEnvironment()
+            .setSpreadsheetId(SPREADSHEET_ID)
+    );
 
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
@@ -934,7 +943,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // evaluate.........................................................................................................
 
     @Test
-    public void testEvaluateIncompleteExpressionFails() {
+    public void testEvaluateIncompleteExpressionWithSpreadsheetContextFails() {
         this.evaluateAndCheck(
             "=1+",
             SpreadsheetErrorKind.ERROR.setMessage("End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
@@ -942,7 +951,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateStringLiteral() {
+    public void testEvaluateIncompleteExpressionWithSpreadsheetEnvironmentContextFails2() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "=1+",
+            SpreadsheetErrorKind.ERROR.setMessage("End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\"")
+        );
+    }
+
+    @Test
+    public void testEvaluateStringLiteralWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "'Hello World String Literal",
             "Hello World String Literal"
@@ -950,7 +967,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateDateLiteral() {
+    public void testEvaluateStringLiteralWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "'Hello World String Literal",
+            "Hello World String Literal"
+        );
+    }
+
+    @Test
+    public void testEvaluateDateLiteralWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "1999/12/31",
             LocalDate.of(
@@ -962,7 +987,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateDateTimeLiteral() {
+    public void testEvaluateDateLiteralWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "1999/12/31",
+            LocalDate.of(
+                1999,
+                12,
+                31
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateDateTimeLiteralWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "1999/12/31 12:58",
             LocalDateTime.of(
@@ -977,7 +1014,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateNumberLiteral() {
+    public void testEvaluateDateTimeLiteralWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "1999/12/31 12:58",
+            LocalDateTime.of(
+                1999,
+                12,
+                31,
+                12,
+                58,
+                0
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateNumberLiteralWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "1",
             EXPRESSION_NUMBER_KIND.one()
@@ -985,7 +1037,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateTimeLiteral() {
+    public void testEvaluateNumberLiteralWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "1",
+            EXPRESSION_NUMBER_KIND.one()
+        );
+    }
+
+    @Test
+    public void testEvaluateTimeLiteralWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "12:58",
             LocalTime.of(
@@ -996,7 +1056,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithDivideByZero() {
+    public void testEvaluateTimeLiteralWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "12:58",
+            LocalTime.of(
+                12,
+                58
+            )
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithDivideByZeroWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "=1/0",
             SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
@@ -1004,7 +1075,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAddition() {
+    public void testEvaluateExpressionWithDivideByZeroWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "=1/0",
+            SpreadsheetErrorKind.DIV0.setMessage("Division by zero")
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithAdditionWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "=1+2",
             EXPRESSION_NUMBER_KIND.create(3)
@@ -1012,7 +1091,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithMissingCellReference() {
+    public void testEvaluateExpressionWithAdditionWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "=1+2",
+            EXPRESSION_NUMBER_KIND.create(3)
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionWithAdditionWithMissingCellReferenceWithSpreadsheetContext() {
         this.evaluateAndCheck(
             "=1+2+A1",
             EXPRESSION_NUMBER_KIND.create(3)
@@ -1020,7 +1107,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithCellReferenceWithValue() {
+    public void testEvaluateExpressionWithAdditionWithMissingCellReferenceWithSpreadsheetEnvironmentContext() {
+        this.evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(
+            "=1+2+A1",
+            EXPRESSION_NUMBER_KIND.create(3)
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionCellReferenceWithSpreadsheetContext() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
@@ -1044,22 +1139,126 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testEvaluateExpressionWithAdditionWithCellReferenceWithFormula() {
+    public void testEvaluateExpressionCellReferenceWithSpreadsheetEnvironmentContextMissingSpreadsheetId() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        final SpreadsheetEngineContext context = this.createContext();
-
-        engine.saveCell(
-            SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("=10*10")
-            ),
-            context
-        );
+        final SpreadsheetEngineContext context = this.createSpreadsheetEnvironmentContextEngineContext(false); // includeSpreadsheetId=false
 
         this.evaluateAndCheck(
             engine,
             "=1+2+A1",
             context,
-            EXPRESSION_NUMBER_KIND.create(1 + 2 + 10 * 10)
+            EXPRESSION_NUMBER_KIND.create(1 + 2 + 0)
+        );
+    }
+
+    private void evaluateAndCheck(final String expression,
+                                  final SpreadsheetEngineContext context,
+                                  final Object expected) {
+        this.evaluateAndCheck(
+            this.createSpreadsheetEngine(),
+            expression,
+            context,
+            expected
+        );
+    }
+
+    private void evaluateSpreadsheetEnvironmentContextMissingSpreadsheetIdAndCheck(final String expression,
+                                                                                   final Object expected) {
+
+        this.evaluateAndCheck(
+            expression,
+            this.createSpreadsheetEnvironmentContextEngineContext(false), // environmentIncludesSpreadsheetId=false
+            expected
+        );
+    }
+
+    private void evaluateSpreadsheetEnvironmentContextWithSpreadsheetIdAndCheck(final String expression, 
+                                                                                final Object expected) {
+
+        this.evaluateAndCheck(
+            expression,
+            this.createSpreadsheetEnvironmentContextEngineContext(true), // environmentIncludesSpreadsheetId=true
+            expected
+        );
+    }
+
+    private SpreadsheetEngineContext createSpreadsheetEnvironmentContextEngineContext(final boolean environmentIncludesSpreadsheetId) {
+        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        SpreadsheetMetadata metadata = METADATA;
+
+        for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
+            if (name.equals(SpreadsheetEnvironmentContextFactory.CONVERTER) || name.equals(EnvironmentContext.LOCALE)) {
+                continue;
+            }
+
+            final SpreadsheetMetadataPropertyName<?> metadataPropertyName = SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name);
+
+            spreadsheetEnvironmentContext = spreadsheetEnvironmentContext.setEnvironmentValue(
+                name,
+                Cast.to(
+                    metadata.getOrFail(metadataPropertyName)
+                )
+            );
+
+            metadata = metadata.remove(metadataPropertyName);
+        }
+
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.CONVERTER,
+            metadata.getOrFail(
+                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
+            )
+        ).setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
+            DECIMAL_NUMBER_DIGIT_COUNT
+        ).setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("")
+        );
+
+        metadata.remove(SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER);
+
+        final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
+        metadata = metadataStore.save(metadata);
+
+        final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
+
+        if(environmentIncludesSpreadsheetId) {
+            spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        } else {
+            spreadsheetEnvironmentContext.removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
+        }
+
+        return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            new SpreadsheetContextSupplier() {
+                @Override
+                public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
+                    return Optional.ofNullable(
+                        spreadsheetId.equals(id) ?
+                            new FakeSpreadsheetContext() {
+
+                                @Override
+                                public SpreadsheetStoreRepository storeRepository() {
+                                    return this.repo;
+                                }
+
+                                private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
+                            } :
+                            null
+                    );
+                }
+            },
+            spreadsheetEnvironmentContext,
+            LocaleContexts.jre(SpreadsheetMetadataTesting.LOCALE),
+            SpreadsheetMetadataContexts.basic(
+                (EmailAddress user, Optional<Locale> defaultLocale) -> {
+                    throw new UnsupportedOperationException();
+                },
+                metadataStore
+            ),
+            TerminalContexts.fake(),
+            SPREADSHEET_PROVIDER,
+            PROVIDER_CONTEXT
         );
     }
 
