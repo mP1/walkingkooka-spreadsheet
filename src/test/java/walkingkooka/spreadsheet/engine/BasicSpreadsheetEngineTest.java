@@ -53,9 +53,9 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
-import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
@@ -142,7 +142,6 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
-import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
@@ -1151,6 +1150,50 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testEvaluateExpressionCellReferenceWithSpreadsheetEnvironmentContextWithSpreadsheetId() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createSpreadsheetEnvironmentContextEngineContext(true); // includeSpreadsheetId=true
+
+        engine.saveCell(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setValue(
+                    Optional.of(
+                        EXPRESSION_NUMBER_KIND.create(1000)
+                    )
+                )
+            ),
+            context
+        );
+
+        this.evaluateAndCheck(
+            engine,
+            "=1+2+A1",
+            context,
+            EXPRESSION_NUMBER_KIND.create(1 + 2 + 1000)
+        );
+    }
+
+    @Test
+    public void testEvaluateExpressionCellReferenceWithSpreadsheetEnvironmentContextWithSpreadsheetId2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createSpreadsheetEnvironmentContextEngineContext(true); // includeSpreadsheetId=true
+
+        engine.saveCell(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=10*100")
+            ),
+            context
+        );
+
+        this.evaluateAndCheck(
+            engine,
+            "=1+2+A1",
+            context,
+            EXPRESSION_NUMBER_KIND.create(1 + 2 + 1000)
+        );
+    }
+
     private void evaluateAndCheck(final String expression,
                                   final SpreadsheetEngineContext context,
                                   final Object expected) {
@@ -1183,7 +1226,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetEngineContext createSpreadsheetEnvironmentContextEngineContext(final boolean environmentIncludesSpreadsheetId) {
-        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         SpreadsheetMetadata metadata = METADATA;
 
         for (final EnvironmentValueName<?> name : SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES) {
@@ -1193,14 +1236,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             final SpreadsheetMetadataPropertyName<?> metadataPropertyName = SpreadsheetMetadataPropertyName.fromEnvironmentValueName(name);
 
-            spreadsheetEnvironmentContext = spreadsheetEnvironmentContext.setEnvironmentValue(
+            spreadsheetEnvironmentContext.setEnvironmentValue(
                 name,
                 Cast.to(
                     metadata.getOrFail(metadataPropertyName)
                 )
             );
-
-            metadata = metadata.remove(metadataPropertyName);
         }
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -1229,34 +1270,42 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetEnvironmentContext.removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
         }
 
+        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
+
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             new SpreadsheetContextSupplier() {
                 @Override
                 public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                     return Optional.ofNullable(
                         spreadsheetId.equals(id) ?
-                            new FakeSpreadsheetContext() {
-
-                                @Override
-                                public SpreadsheetStoreRepository storeRepository() {
-                                    return this.repo;
-                                }
-
-                                private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
-                            } :
+                            SpreadsheetContexts.fixedSpreadsheetId(
+                                this.repo, // SpreadsheetStoreRepository
+                                (c) -> {
+                                    throw new UnsupportedOperationException();
+                                }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
+                                (c) -> {
+                                    throw new UnsupportedOperationException();
+                                }, // httpRouterFactory
+                                spreadsheetEnvironmentContext,
+                                localeContext,
+                                SPREADSHEET_PROVIDER,
+                                PROVIDER_CONTEXT
+                            ) :
                             null
                     );
                 }
+
+                private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
             },
             spreadsheetEnvironmentContext,
-            LocaleContexts.jre(SpreadsheetMetadataTesting.LOCALE),
+            localeContext,
             SpreadsheetMetadataContexts.basic(
                 (EmailAddress user, Optional<Locale> defaultLocale) -> {
                     throw new UnsupportedOperationException();
                 },
                 metadataStore
             ),
-            TerminalContexts.fake(),
+            TERMINAL_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );

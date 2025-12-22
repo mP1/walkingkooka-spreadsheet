@@ -21,6 +21,7 @@ import walkingkooka.convert.CanConvert;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -291,11 +292,19 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     // setSpreadsheetMetadataMode.......................................................................................
 
+    /**
+     * Always returns a {@link SpreadsheetEngineContexts#spreadsheetContext(SpreadsheetMetadataMode, SpreadsheetContext, TerminalContext)},
+     * which should allow cells to be parsed, evaluated and formatted.
+     */
     @Override
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
-        Objects.requireNonNull(mode, "mode");
-
-        throw new UnsupportedOperationException();
+        return SpreadsheetEngineContexts.spreadsheetContext(
+            Objects.requireNonNull(mode, "mode"),
+            this.spreadsheetContextSupplier.spreadsheetContextOrFail(
+                this.spreadsheetId()
+            ),
+            this.terminalContext
+        );
     }
 
     // EnvironmentContextDelegator......................................................................................
