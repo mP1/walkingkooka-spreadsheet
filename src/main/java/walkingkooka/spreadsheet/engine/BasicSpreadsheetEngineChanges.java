@@ -88,7 +88,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         this.evaluation = evaluation;
         this.deltaProperties = deltaProperties;
         this.mode = mode;
-        this.context = context;
+        this.context = context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.FORMULA);
 
         this.scopedCells = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
