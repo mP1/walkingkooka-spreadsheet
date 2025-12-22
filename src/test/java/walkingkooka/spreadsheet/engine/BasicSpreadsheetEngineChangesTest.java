@@ -62,6 +62,11 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
             new FakeSpreadsheetEngineContext() {
 
                 @Override
+                public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
+                    return this;
+                }
+
+                @Override
                 public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<SpreadsheetCell> cell,
                                                                                                      final SpreadsheetExpressionReferenceLoader loader) {
                     return new FakeSpreadsheetExpressionEvaluationContext() {
