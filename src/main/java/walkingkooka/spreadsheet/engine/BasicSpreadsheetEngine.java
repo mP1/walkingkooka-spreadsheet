@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparators;
@@ -133,50 +134,43 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(expression, "expression");
         Objects.requireNonNull(context, "context");
 
-        final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.changes(
-            this,
-            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-            Sets.of(SpreadsheetDeltaProperties.CELLS),
-            context
-        );
+        final Object value;
 
-        try {
-            Object value = null;
-
-            SpreadsheetFormulaParserToken token = null;
-            try {
-                token = context.parseFormula(
-                    TextCursors.charSequence(expression),
-                    SpreadsheetEngineContext.NO_CELL
-                );
-            } catch (final UnsupportedOperationException rethrow) {
-                throw rethrow;
-            } catch (final RuntimeException cause) {
-                value = SpreadsheetErrorKind.translate(cause);
-            }
-
-            if (null != token) {
-                final Expression expressionExpression = context.toExpression(token)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid expression")); // if parsing gave a token toExpression should(will) always work
-
-                value = context.spreadsheetExpressionEvaluationContext(
-                    SpreadsheetExpressionEvaluationContext.NO_CELL,
-                    changes
-                ).evaluateExpression(expressionExpression);
-            }
-
-            // finish evaluating loaded cells
-            changes.commit();
-
-            this.prepareResponse(
-                changes,
+        final SpreadsheetId spreadsheetIdOrNull = context.environmentValue(SpreadsheetEngineContext.SPREADSHEET_ID)
+            .orElse(null);
+        if (null == spreadsheetIdOrNull) {
+            value = context.spreadsheetExpressionEvaluationContext(
+                SpreadsheetExpressionEvaluationContext.NO_CELL,
+                SpreadsheetExpressionReferenceLoaders.empty()
+            ).evaluate(expression);
+        } else {
+            // BasicSpreadsheetEngineChanges will fail when stores are not available because SpreadsheetId is missing
+            final BasicSpreadsheetEngineChanges changes = BasicSpreadsheetEngineChangesMode.IMMEDIATE.changes(
+                this,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                Sets.of(SpreadsheetDeltaProperties.CELLS),
                 context
             );
 
-            return value;
-        } finally {
-            changes.close();
+            try {
+                value = context.spreadsheetExpressionEvaluationContext(
+                    SpreadsheetExpressionEvaluationContext.NO_CELL,
+                    changes
+                ).evaluate(expression);
+
+                // finish evaluating loaded cells
+                changes.commit();
+
+                this.prepareResponse(
+                    changes,
+                    context
+                );
+            } finally {
+                changes.close();
+            }
         }
+
+        return value;
     }
 
     // LOAD CELL........................................................................................................
