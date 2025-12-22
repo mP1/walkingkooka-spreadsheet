@@ -1628,7 +1628,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         );
     }
 
-    // cell eval........................................................................................................
+    // PARSE FORMULA....................................................................................................
 
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineEvaluation}
@@ -1672,8 +1672,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context
         );
     }
-
-    // PARSE FORMULA....................................................................................................
 
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
