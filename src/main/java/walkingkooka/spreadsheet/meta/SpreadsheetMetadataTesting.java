@@ -466,6 +466,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
+        () -> false, // closed
+        () -> {}, // closer
         TextReaders.fake(),
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
