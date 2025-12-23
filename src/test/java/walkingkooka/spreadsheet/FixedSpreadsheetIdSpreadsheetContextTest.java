@@ -325,6 +325,17 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
         );
     }
 
+    // cloneEnvironmentContext..........................................................................................
+
+    @Test
+    public void testCloneEnvironmentDifferentInstance() {
+        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        assertNotSame(
+            context,
+            context.cloneEnvironment()
+        );
+    }
+    
     // setEnvironmentContext............................................................................................
 
     @Override
