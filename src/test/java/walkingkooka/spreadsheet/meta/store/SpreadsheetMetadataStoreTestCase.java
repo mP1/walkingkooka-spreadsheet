@@ -135,7 +135,6 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(b);
         store.save(c);
 
-        //noinspection OptionalGetWithoutIsPresent
         this.valuesAndCheck(
             store,
             0,
@@ -160,7 +159,6 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(c);
         store.save(d);
 
-        //noinspection OptionalGetWithoutIsPresent
         this.valuesAndCheck(
             store,
             1,

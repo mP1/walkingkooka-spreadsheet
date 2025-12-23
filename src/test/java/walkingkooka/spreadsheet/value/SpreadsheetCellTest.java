@@ -1760,7 +1760,6 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testUnmarshallObjectLocale() {
         final JsonNodeMarshallContext context = this.marshallContext();
