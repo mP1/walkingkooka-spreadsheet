@@ -475,7 +475,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         final TerminalContext terminalContext) -> {
             throw new UnsupportedOperationException();
         },
-        SPREADSHEET_ENVIRONMENT_CONTEXT
+        SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
