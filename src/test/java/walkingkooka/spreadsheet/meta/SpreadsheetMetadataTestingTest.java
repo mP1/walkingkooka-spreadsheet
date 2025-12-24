@@ -24,6 +24,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.LineEnding;
@@ -61,7 +62,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         assertThrows(
             UnsupportedOperationException.class,
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.removeEnvironmentValue(
-                EnvironmentValueName.with("Hello")
+                SpreadsheetEnvironmentContext.LINE_ENDING
             )
         );
     }
