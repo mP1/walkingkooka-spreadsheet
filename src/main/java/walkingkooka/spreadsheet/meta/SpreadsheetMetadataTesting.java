@@ -467,15 +467,22 @@ public interface SpreadsheetMetadataTesting extends Testing {
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
         () -> false, // closed
-        () -> {}, // closer
+        () -> {
+        }, // closer
         TextReaders.fake(),
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
         (final String expression,
-        final TerminalContext terminalContext) -> {
+         final TerminalContext terminalContext) -> {
             throw new UnsupportedOperationException();
         },
-        SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+        EnvironmentContexts.readOnly(
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+                .setEnvironmentValue(
+                    TerminalContext.TERMINAL_ID,
+                    TerminalId.with(1)
+                )
+        )
     );
 
     TerminalServerContext TERMINAL_SERVER_CONTEXT = new FakeTerminalServerContext() {
