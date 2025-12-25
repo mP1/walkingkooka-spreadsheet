@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
@@ -63,6 +64,26 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
             SpreadsheetStrings.CASE_SENSITIVITY,
             this.createContext()
                 .stringEqualsCaseSensitivity()
+        );
+    }
+
+    // evaluate.........................................................................................................
+
+    @Test
+    default void testEvaluateWithEmptyStringReturnsError() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            "",
+            SpreadsheetErrorKind.ERROR.setMessage("End of text, expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
+        );
+    }
+
+    @Test
+    default void testEvaluateWithWhitespaceStringReturnsError() {
+        this.evaluateAndCheck(
+            this.createContext(),
+            " ",
+            SpreadsheetErrorKind.ERROR.setMessage("Invalid character \' \' at (1,1) expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
         );
     }
 

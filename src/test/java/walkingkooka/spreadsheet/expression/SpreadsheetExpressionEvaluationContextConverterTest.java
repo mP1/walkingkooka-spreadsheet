@@ -289,7 +289,19 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         assertSame(context, doubleWrapped.context, "context");
     }
 
-    // evaluate........................................................................................................
+    // evaluate.........................................................................................................
+
+    @Override
+    public void testEvaluateWithEmptyStringReturnsError() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testEvaluateWithWhitespaceStringReturnsError() {
+        throw new UnsupportedOperationException();
+    }
+
+    // evaluateExpression...............................................................................................
 
     @Override
     public void testEvaluateExpressionUnknownFunctionNameFails() {
