@@ -25,7 +25,6 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
@@ -42,7 +41,6 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -78,11 +76,7 @@ import walkingkooka.tree.expression.function.provider.FakeExpressionFunctionProv
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
-import java.math.MathContext;
 import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -90,9 +84,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext>,
-    SpreadsheetMetadataTesting,
-    DecimalNumberContextDelegator {
+public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextTest extends SpreadsheetExpressionEvaluationContextSharedTestCase<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext> {
 
     private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = SpreadsheetContextSuppliers.fake();
 
@@ -431,256 +423,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // parseFormula.....................................................................................................
-
-    @Test
-    public void testParseExpressionDateTimeFails() {
-        this.parseExpressionAndFail(
-            "1999/12/31 12:58",
-            "Invalid character '1' at (12,1) expected EXPRESSION"
-        );
-    }
-
-    @Test
-    public void testParseExpressionNumber() {
-        final String text = "123";
-
-        this.parseExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.digits(text, text)
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseExpressionApostropheStringFails() {
-        this.parseExpressionAndFail(
-            "'Hello",
-            "Invalid character '\\'' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
-        );
-    }
-
-    @Test
-    public void testParseExpressionTimeFails() {
-        this.parseExpressionAndFail(
-            "12:58:59",
-            "Invalid character ':' at (3,1) expected EXPRESSION"
-        );
-    }
-
-    @Test
-    public void testParseExpressionWithDoubleQuotedString() {
-        final String text = "\"Hello\"";
-
-        this.parseExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.text(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\""),
-                    SpreadsheetFormulaParserToken.textLiteral("Hello", "Hello"),
-                    SpreadsheetFormulaParserToken.doubleQuoteSymbol("\"", "\"")
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseExpressionWithAdditionExpression() {
-        final String text = "1+2";
-
-        this.parseExpressionAndCheck(
-            text,
-
-            SpreadsheetFormulaParserToken.addition(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.number(
-                        Lists.of(
-                            SpreadsheetFormulaParserToken.digits("1", "1")
-                        ),
-                        "1"
-                    ),
-                    SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                    SpreadsheetFormulaParserToken.number(
-                        Lists.of(
-                            SpreadsheetFormulaParserToken.digits("2", "2")
-                        ),
-                        "2"
-                    )
-                ),
-                text
-            )
-        );
-    }
-
-    // parseValueOrExpression...........................................................................................
-
-    @Test
-    public void testParseValueOrExpressionDoubleQuotedStringFails() {
-        this.parseValueOrExpressionAndFail(
-            "\"abc123\"",
-            "Invalid character '\\\"' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionDate() {
-        final String text = "1999/12/31";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.date(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.year(1999, "1999"),
-                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
-                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                    SpreadsheetFormulaParserToken.dayNumber(31, "31")
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionDateTime() {
-        final String text = "1999/12/31 12:58";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.dateTime(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.year(1999, "1999"),
-                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                    SpreadsheetFormulaParserToken.monthNumber(12, "12"),
-                    SpreadsheetFormulaParserToken.textLiteral("/", "/"),
-                    SpreadsheetFormulaParserToken.dayNumber(31, "31"),
-                    SpreadsheetFormulaParserToken.whitespace(" ", " "),
-                    SpreadsheetFormulaParserToken.hour(12, "12"),
-                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                    SpreadsheetFormulaParserToken.minute(58, "58")
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionNumber() {
-        final String text = "123";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.digits(text, text)
-                ),
-                text
-            )
-        );
-    }
-
-    private final static char DECIMAL = '.';
-
-    @Test
-    public void testParseValueOrExpressionNumber2() {
-        final String text = "1" + DECIMAL + "5";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.number(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.digits("1", "1"),
-                    SpreadsheetFormulaParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
-                    SpreadsheetFormulaParserToken.digits("5", "5")
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionApostropheString() {
-        final String text = "'Hello";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.text(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.apostropheSymbol("'", "'"),
-                    SpreadsheetFormulaParserToken.textLiteral("Hello", "Hello")
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionTime() {
-        final String text = "12:58:59";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.time(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.hour(12, "12"),
-                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                    SpreadsheetFormulaParserToken.minute(58, "58"),
-                    SpreadsheetFormulaParserToken.textLiteral(":", ":"),
-                    SpreadsheetFormulaParserToken.seconds(59, "59")
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionEqualsAdditionExpression() {
-        final String text = "=1+2";
-
-        this.parseValueOrExpressionAndCheck(
-            text,
-            SpreadsheetFormulaParserToken.expression(
-                Lists.of(
-                    SpreadsheetFormulaParserToken.equalsSymbol("=", "="),
-                    SpreadsheetFormulaParserToken.addition(
-                        Lists.of(
-                            SpreadsheetFormulaParserToken.number(
-                                Lists.of(
-                                    SpreadsheetFormulaParserToken.digits("1", "1")
-                                ),
-                                "1"
-                            ),
-                            SpreadsheetFormulaParserToken.plusSymbol("+", "+"),
-                            SpreadsheetFormulaParserToken.number(
-                                Lists.of(
-                                    SpreadsheetFormulaParserToken.digits("2", "2")
-                                ),
-                                "2"
-                            )
-                        ),
-                        "1+2"
-                    )
-                ),
-                text
-            )
-        );
-    }
-
-    @Test
-    public void testParseValueOrExpressionAdditionExpressionFails() {
-        final String text = "1+2";
-
-        this.parseValueOrExpressionAndFail(
-            text,
-            "Invalid character '1' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
-        );
-    }
-
     // evaluateExpression...............................................................................................
 
     @Test
@@ -825,87 +567,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public void testReferenceWithNullReferenceFails() {
         throw new UnsupportedOperationException();
-    }
-
-    // evaluate.........................................................................................................
-
-    @Test
-    public void testEvaluateIncompleteExpressionFails() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "=1+",
-            SpreadsheetErrorKind.ERROR.setMessage(
-                "End of text, expected LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateApostrophe() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "'Hello",
-            "Hello"
-        );
-    }
-
-    @Test
-    public void testEvaluateDate() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "1999/12/31",
-            LocalDate.of(
-                1999,
-                12,
-                31
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateDateTime() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "1999/12/31 12:58",
-            LocalDateTime.of(
-                1999,
-                12,
-                31,
-                12,
-                58
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateNumberValue() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "123.5",
-            EXPRESSION_NUMBER_KIND.create(123.5)
-        );
-    }
-
-    @Test
-    public void testEvaluateTime() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "12:58:59",
-            LocalTime.of(
-                12,
-                58,
-                59
-            )
-        );
-    }
-
-    @Test
-    public void testEvaluateExpression() {
-        this.evaluateAndCheck(
-            this.createContext(),
-            "=1+2",
-            EXPRESSION_NUMBER_KIND.create(3)
-        );
     }
 
     // cell.............................................................................................................
@@ -1455,41 +1116,18 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    // DecimalNumberContext.............................................................................................
-
-    @Override
-    public int decimalNumberDigitCount() {
-        return DECIMAL_NUMBER_DIGIT_COUNT;
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return DECIMAL_NUMBER_CONTEXT.mathContext();
-    }
-
-    // DecimalNumberContextDelegator....................................................................................
-
-    @Override
-    public DecimalNumberContext decimalNumberContext() {
-        return DECIMAL_NUMBER_CONTEXT;
-    }
-
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = METADATA_EN_AU.decimalNumberContext(
-        SpreadsheetExpressionEvaluationContext.NO_CELL,
-        LOCALE_CONTEXT
-    );
-
     @Override
     public void testSetLocaleWithDifferent() {
         throw new UnsupportedOperationException();
     }
 
-    // Class............................................................................................................
+    // DecimalNumberContextDelegator....................................................................................
 
     @Override
-    public void testTypeNaming() {
-        throw new UnsupportedOperationException();
+    public int decimalNumberDigitCount() {
+        return DECIMAL_NUMBER_DIGIT_COUNT;
     }
+    // Class............................................................................................................
 
     @Override
     public Class<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext> type() {
