@@ -77,6 +77,39 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         );
     }
 
+    @Test
+    default void testParseExpressionWithEmptyStringFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .parseExpression(
+                    TextCursors.charSequence("")
+                )
+        );
+    }
+
+    @Test
+    default void testParseExpressionWithOnlyWhitespaceStringFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .parseExpression(
+                    TextCursors.charSequence(" ")
+                )
+        );
+    }
+
+    @Test
+    default void testParseExpressionWithOnlyWhitespaceStringFails2() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .parseExpression(
+                    TextCursors.charSequence(" ")
+                )
+        );
+    }
+
     default void parseExpressionAndCheck(final String formula,
                                          final SpreadsheetFormulaParserToken expected) {
         this.parseExpressionAndCheck(

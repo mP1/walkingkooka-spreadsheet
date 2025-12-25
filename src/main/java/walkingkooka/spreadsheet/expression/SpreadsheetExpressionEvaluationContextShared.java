@@ -71,23 +71,43 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     public final SpreadsheetFormulaParserToken parseExpression(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
-        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
-
-        return SpreadsheetFormulaParsers.expression()
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
-            .parse(expression, parserContext)
-            .get()
-            .cast(SpreadsheetFormulaParserToken.class);
+//        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
+//
+//        return SpreadsheetFormulaParsers.expression()
+//            .orFailIfCursorNotEmpty(ParserReporters.basic())
+//            .parse(expression, parserContext)
+//            .orElseThrow(() -> ParserReporters.basic().report())
+//            .cast(SpreadsheetFormulaParserToken.class);
+        return this.parseOrFail(
+            expression,
+            SpreadsheetFormulaParsers.expression()
+        );
     }
 
     @Override
     public final SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
+//        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
+//
+//        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
+//            .orReport(ParserReporters.basic())
+//            .parse(expression, parserContext)
+//            .get()
+//            .cast(SpreadsheetFormulaParserToken.class);
+//
+        return this.parseOrFail(
+            expression,
+            SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
+        );
+    }
+
+    private SpreadsheetFormulaParserToken parseOrFail(final TextCursor expression,
+                                                      final SpreadsheetParser parser) {
+
         final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
 
-        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
-            .orFailIfCursorNotEmpty(ParserReporters.basic())
+        return parser.orReport(ParserReporters.basic())
             .parse(expression, parserContext)
             .get()
             .cast(SpreadsheetFormulaParserToken.class);
