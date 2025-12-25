@@ -399,6 +399,22 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         throw new UnsupportedOperationException();
     }
 
+    // testParseValueOrExpression.......................................................................................
+
+    @Override
+    public void testParseValueOrExpressionWithEmptyStringFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testParseValueOrExpressionWithOnlyWhitespaceStringFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testParseValueOrExpressionWithOnlyWhitespaceStringFails2() {
+        throw new UnsupportedOperationException();
+    }
 
     // testSetEnvironmentContext........................................................................................
 
