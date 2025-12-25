@@ -1116,11 +1116,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
-    @Override
-    public void testSetLocaleWithDifferent() {
-        throw new UnsupportedOperationException();
-    }
-
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
