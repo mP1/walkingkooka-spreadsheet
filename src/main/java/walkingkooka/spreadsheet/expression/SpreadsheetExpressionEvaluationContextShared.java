@@ -71,13 +71,6 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     public final SpreadsheetFormulaParserToken parseExpression(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
-//        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
-//
-//        return SpreadsheetFormulaParsers.expression()
-//            .orFailIfCursorNotEmpty(ParserReporters.basic())
-//            .parse(expression, parserContext)
-//            .orElseThrow(() -> ParserReporters.basic().report())
-//            .cast(SpreadsheetFormulaParserToken.class);
         return this.parseOrFail(
             expression,
             SpreadsheetFormulaParsers.expression()
@@ -88,14 +81,6 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     public final SpreadsheetFormulaParserToken parseValueOrExpression(final TextCursor expression) {
         Objects.requireNonNull(expression, "expression");
 
-//        final SpreadsheetParserContext parserContext = this.spreadsheetParserContext();
-//
-//        return SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
-//            .orReport(ParserReporters.basic())
-//            .parse(expression, parserContext)
-//            .get()
-//            .cast(SpreadsheetFormulaParserToken.class);
-//
         return this.parseOrFail(
             expression,
             SpreadsheetFormulaParsers.valueOrExpression(this.spreadsheetParser())
