@@ -382,6 +382,18 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
     }
 
+    // evaluate.........................................................................................................
+
+    @Override
+    public void testEvaluateWithEmptyStringReturnsError() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testEvaluateWithWhitespaceStringReturnsError() {
+        throw new UnsupportedOperationException();
+    }
+
     // testParseExpression..............................................................................................
 
     @Override
