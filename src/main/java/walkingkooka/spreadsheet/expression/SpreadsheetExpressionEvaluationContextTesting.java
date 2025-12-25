@@ -105,7 +105,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
             IllegalArgumentException.class,
             () -> this.createContext()
                 .parseExpression(
-                    TextCursors.charSequence(" ")
+                    TextCursors.charSequence("  ")
                 )
         );
     }
@@ -194,7 +194,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
             IllegalArgumentException.class,
             () -> this.createContext()
                 .parseValueOrExpression(
-                    TextCursors.charSequence(" ")
+                    TextCursors.charSequence("  ")
                 )
         );
     }
