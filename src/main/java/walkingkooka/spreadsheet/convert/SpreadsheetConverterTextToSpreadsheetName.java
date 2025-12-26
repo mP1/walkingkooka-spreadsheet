@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 
 /**
  * A {@link Converter} that converts an SpreadsheetName as a {@link String} into a {@link SpreadsheetName}.

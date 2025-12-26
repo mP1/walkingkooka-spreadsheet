@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.spreadsheet.SpreadsheetName;
 
 import java.util.Locale;
 
