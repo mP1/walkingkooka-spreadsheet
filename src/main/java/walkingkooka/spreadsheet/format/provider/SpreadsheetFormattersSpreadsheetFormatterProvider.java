@@ -590,7 +590,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
 
     private static EnvironmentValueName<SpreadsheetFormatterSelector> environmentValueName(final SpreadsheetMetadataPropertyName<SpreadsheetFormatterSelector> formatter) {
         return EnvironmentValueName.with(
-            formatter.text()
+            formatter.text(),
+            SpreadsheetFormatterSelector.class
         );
     }
 

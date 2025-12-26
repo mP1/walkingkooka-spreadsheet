@@ -285,7 +285,10 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     @Test
     public void testEnvironmentValueWithPrefixButUnknown() {
         this.environmentValueAndCheck(
-            EnvironmentValueName.with("missing")
+            EnvironmentValueName.with(
+                "missing",
+                Void.class
+            )
         );
     }
 

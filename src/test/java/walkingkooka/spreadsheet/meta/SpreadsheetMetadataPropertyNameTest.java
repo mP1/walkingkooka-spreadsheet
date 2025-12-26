@@ -172,7 +172,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         final IllegalArgumentException thrown = assertThrows(
             IllegalArgumentException.class,
             () -> SpreadsheetMetadataPropertyName.fromEnvironmentValueName(
-                EnvironmentValueName.with("Unknown123")
+                EnvironmentValueName.with(
+                    "Unknown123",
+                    Void.class
+                )
             )
         );
 
@@ -185,7 +188,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testFromEnvironmentValueNameWithExpressionNumberKindAllLowerCase() {
         this.fromEnvironmentValueNameAndCheck(
-            EnvironmentValueName.with("expressionnumberkind"),
+            EnvironmentValueName.with(
+                "expressionnumberkind",
+                ExpressionNumberKind.class
+            ),
             SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND
         );
     }
@@ -193,7 +199,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testFromEnvironmentValueNameWithExpressionNumberKindAllUpperCase() {
         this.fromEnvironmentValueNameAndCheck(
-            EnvironmentValueName.with("EXPRESSIONNUMBERKIND"),
+            EnvironmentValueName.with(
+                "EXPRESSIONNUMBERKIND",
+                ExpressionNumberKind.class
+            ),
             SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND
         );
     }
@@ -224,7 +233,8 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     private <T> void fromEnvironmentValueNameAndCheck(final SpreadsheetMetadataPropertyName<T> name) {
         this.fromEnvironmentValueNameAndCheck(
             EnvironmentValueName.with(
-                name.value()
+                name.value(),
+                name.type()
             ),
             name
         );

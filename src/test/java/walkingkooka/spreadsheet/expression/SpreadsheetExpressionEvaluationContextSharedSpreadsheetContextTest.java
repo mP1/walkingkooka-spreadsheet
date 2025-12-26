@@ -525,7 +525,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -544,7 +547,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testSetEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
@@ -564,7 +570,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testRemoveEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -605,7 +614,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testReferenceWithEnvironmentValueName() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -624,7 +636,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testReferenceWithEnvironmentValueNameCycle() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with(
+            "Hello",
+            SpreadsheetLabelName.class
+        );
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -674,7 +689,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testReferenceWithEnvironmentValueNameEqualsLabel() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<SpreadsheetLabelName> name = EnvironmentValueName.with(
+            "Hello",
+            SpreadsheetLabelName.class
+        );
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
 
         spreadsheetEnvironmentContext.setEnvironmentValue(

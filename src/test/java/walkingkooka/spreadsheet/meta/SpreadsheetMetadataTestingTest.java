@@ -51,7 +51,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         assertThrows(
             UnsupportedOperationException.class,
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setEnvironmentValue(
-                EnvironmentValueName.with("Hello"),
+                EnvironmentValueName.with(
+                    "Hello",
+                    String.class
+                ),
                 "World"
             )
         );
@@ -141,7 +144,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         assertThrows(
             UnsupportedOperationException.class,
             () -> PROVIDER_CONTEXT.setEnvironmentValue(
-                EnvironmentValueName.with("Hello"),
+                EnvironmentValueName.with(
+                    "Hello",
+                    String.class
+                ),
                 "World"
             )
         );
@@ -152,7 +158,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         assertThrows(
             UnsupportedOperationException.class,
             () -> PROVIDER_CONTEXT.removeEnvironmentValue(
-                EnvironmentValueName.with("Hello")
+                EnvironmentValueName.with(
+                    "Hello",
+                    String.class
+                )
             )
         );
     }
@@ -202,7 +211,10 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
     @Test
     public void testProviderContextCloneEnvironmentSetEnvironmentValue() {
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "World123";
 
         final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();

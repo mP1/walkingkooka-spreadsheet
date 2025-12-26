@@ -34,9 +34,15 @@ import java.util.Optional;
 public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
     HasSpreadsheetServerUrl {
 
-    EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with("serverUrl");
+    EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with(
+        "serverUrl",
+        AbsoluteUrl.class
+    );
 
-    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with("spreadsheetId");
+    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with(
+        "spreadsheetId",
+        SpreadsheetId.class
+    );
 
     /**
      * The {@link SpreadsheetId} that identifies this spreadsheet.

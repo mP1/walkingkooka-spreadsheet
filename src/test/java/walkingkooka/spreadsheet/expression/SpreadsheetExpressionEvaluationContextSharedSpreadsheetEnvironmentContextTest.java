@@ -340,7 +340,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -363,7 +366,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
@@ -387,7 +393,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(

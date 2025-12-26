@@ -160,7 +160,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                     EnvironmentContext.ANONYMOUS
                 )
             ),
-            EnvironmentValueName.with("metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO)
+            EnvironmentValueName.with(
+                "metadata." + SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.class
+            )
         );
     }
 
