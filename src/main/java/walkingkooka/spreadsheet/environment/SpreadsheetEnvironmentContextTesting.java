@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 

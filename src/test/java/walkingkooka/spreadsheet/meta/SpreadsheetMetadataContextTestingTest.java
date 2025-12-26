@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTestingTest.TestSpreadsheetMetadataContext;
 import walkingkooka.store.Store;
 
