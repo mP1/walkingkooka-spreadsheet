@@ -24,7 +24,6 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.PluginNameSet;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;

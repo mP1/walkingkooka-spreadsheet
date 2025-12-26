@@ -51,6 +51,7 @@ import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfo;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterInfoSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterName;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserInfo;

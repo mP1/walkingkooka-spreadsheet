@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;

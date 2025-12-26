@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 
 import java.util.function.Function;

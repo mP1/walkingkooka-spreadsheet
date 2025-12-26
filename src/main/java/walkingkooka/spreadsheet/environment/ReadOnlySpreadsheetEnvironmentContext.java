@@ -22,7 +22,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;

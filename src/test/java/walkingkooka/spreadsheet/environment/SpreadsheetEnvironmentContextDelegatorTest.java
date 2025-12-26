@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.net.Url;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;

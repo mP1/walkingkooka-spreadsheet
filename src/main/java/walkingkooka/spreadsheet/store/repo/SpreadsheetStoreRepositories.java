@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store.repo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;

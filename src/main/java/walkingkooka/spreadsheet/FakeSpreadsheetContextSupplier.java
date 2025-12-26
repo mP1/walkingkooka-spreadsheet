@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
+
 import java.util.Optional;
 
 public class FakeSpreadsheetContextSupplier implements SpreadsheetContextSupplier {

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.store.MissingStoreException;
 
 import java.util.Optional;
