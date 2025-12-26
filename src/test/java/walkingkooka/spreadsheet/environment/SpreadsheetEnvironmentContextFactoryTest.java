@@ -369,7 +369,10 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             )
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -392,7 +395,10 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             )
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
@@ -416,7 +422,10 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             )
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         spreadsheetEnvironmentContext.setEnvironmentValue(
@@ -618,7 +627,10 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             SpreadsheetEnvironmentContextFactory.with(
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                     .setEnvironmentValue(
-                        EnvironmentValueName.with("Different"),
+                        EnvironmentValueName.with(
+                            "Different",
+                            Integer.class
+                        ),
                         1
                     ),
                 LOCALE_CONTEXT,

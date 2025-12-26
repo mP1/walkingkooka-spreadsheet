@@ -815,7 +815,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      */
     public EnvironmentValueName<T> toEnvironmentValueName() {
         if (null == this.environmentValueName) {
-            this.environmentValueName = EnvironmentValueName.with(this.name);
+            this.environmentValueName = EnvironmentValueName.with(
+                this.name,
+                this.type()
+            );
         }
         return this.environmentValueName;
     }

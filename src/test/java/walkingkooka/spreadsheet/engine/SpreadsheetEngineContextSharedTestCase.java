@@ -563,7 +563,10 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testCloneEnvironment() {
         final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         environmentContext.setEnvironmentValue(
@@ -641,7 +644,10 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testEnvironmentValue() {
         final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         environmentContext.setEnvironmentValue(
@@ -658,7 +664,10 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testSetEnvironmentValue() {
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         final C context = this.createContext(
@@ -705,7 +714,10 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testRemoveEnvironmentValue() {
         final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         environmentContext.setEnvironmentValue(
@@ -726,7 +738,10 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testExpressionEvaluationContextAndEnvironmentValue() {
         final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "Hello World123";
 
         environmentContext.setEnvironmentValue(

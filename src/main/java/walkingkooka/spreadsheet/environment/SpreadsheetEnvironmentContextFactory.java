@@ -75,7 +75,10 @@ import java.util.Set;
 public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEnvironmentContextDelegator,
     HasProviderContext {
 
-    public final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with("converter");
+    public final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with(
+        "converter",
+        ConverterSelector.class
+    );
 
     public final static EnvironmentValueName<SpreadsheetParserSelector> DATE_PARSER = SpreadsheetMetadataPropertyName.DATE_PARSER.toEnvironmentValueName();
 

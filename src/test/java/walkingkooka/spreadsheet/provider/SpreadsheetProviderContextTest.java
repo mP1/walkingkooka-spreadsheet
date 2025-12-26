@@ -68,7 +68,10 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
-    private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with("Hello");
+    private final static EnvironmentValueName<String> ENVIRONMENT_VALUE_NAME = EnvironmentValueName.with(
+        "Hello",
+        String.class
+    );
 
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
@@ -180,7 +183,10 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testCloneEnvironmentContextAndSetEnvironmentValue() {
         final SpreadsheetProviderContext context = this.createContext();
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("Hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "Hello",
+            String.class
+        );
         final String value = "World456";
 
         this.environmentValueAndCheck(

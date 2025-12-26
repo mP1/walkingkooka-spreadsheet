@@ -88,7 +88,10 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             cloned
         );
 
-        final EnvironmentValueName<String> name = EnvironmentValueName.with("hello");
+        final EnvironmentValueName<String> name = EnvironmentValueName.with(
+            "hello",
+            String.class
+        );
         final String value = "World123";
 
         this.environmentValueAndCheck(
@@ -281,7 +284,10 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testEnvironmentalValue() {
         this.environmentValueAndCheck(
             this.createContext(),
-            EnvironmentValueName.with("Hello123")
+            EnvironmentValueName.with(
+                "Hello123",
+                String.class
+            )
         );
     }
 

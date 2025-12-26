@@ -632,7 +632,10 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testEnvironmentSymbolsConvertEnvironmentValueNameToEnvironmentValueName() {
-        final EnvironmentValueName<?> name = EnvironmentValueName.with("CurrentPath");
+        final EnvironmentValueName<?> name = EnvironmentValueName.with(
+            "CurrentPath",
+            String.class
+        );
 
         this.environmentConvertAndCheck(
             name,
@@ -643,7 +646,10 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testEnvironmentSymbolsConvertStringToEnvironmentValueName() {
-        final EnvironmentValueName<?> name = EnvironmentValueName.with("CurrentPath");
+        final EnvironmentValueName<?> name = EnvironmentValueName.with(
+            "CurrentPath",
+            String.class
+        );
 
         this.environmentConvertAndCheck(
             name.value(),

@@ -378,7 +378,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
             2
         );
 
-    EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with("Dummy123");
+    EnvironmentValueName<String> DUMMY_ENVIRONMENTAL_VALUE_NAME = EnvironmentValueName.with(
+        "Dummy123",
+        String.class
+    );
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 

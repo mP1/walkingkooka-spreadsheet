@@ -1891,7 +1891,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     )
                 ),
             EnvironmentValueName.with(
-                propertyName.value()
+                propertyName.value(),
+                propertyName.type()
             ),
             precision
         );

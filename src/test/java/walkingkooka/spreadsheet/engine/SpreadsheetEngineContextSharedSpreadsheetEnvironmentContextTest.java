@@ -529,7 +529,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
                     .setEnvironmentValue(
-                        EnvironmentValueName.with("different"),
+                        EnvironmentValueName.with(
+                            "different",
+                            Integer.class
+                        ),
                         1
                     ),
                 LOCALE_CONTEXT,
