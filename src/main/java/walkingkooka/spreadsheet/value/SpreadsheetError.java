@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
-import walkingkooka.terminal.HasTerminalText;
+import walkingkooka.terminal.HasTerminalOutputText;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -62,7 +62,7 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     UsesToStringBuilder,
     HasConvertError,
     HasValidationPromptValue,
-    HasTerminalText {
+    HasTerminalOutputText {
 
     /**
      * The message component is optional.
@@ -606,10 +606,10 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
         return ToStringBuilder.buildFrom(this);
     }
 
-    // HasTerminalText..................................................................................................
+    // HasTerminalOutputText............................................................................................
 
     @Override
-    public String terminalText() {
+    public String terminalOutputText() {
         return this.toString();
     }
 
