@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.HasId;

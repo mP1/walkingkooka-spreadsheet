@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.store.Store;
 
 import java.util.List;

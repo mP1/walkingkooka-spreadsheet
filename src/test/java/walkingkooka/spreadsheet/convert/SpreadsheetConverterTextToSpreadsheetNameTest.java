@@ -21,7 +21,7 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.spreadsheet.SpreadsheetName;
+import walkingkooka.spreadsheet.meta.SpreadsheetName;
 
 public final class SpreadsheetConverterTextToSpreadsheetNameTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetName> {
 
