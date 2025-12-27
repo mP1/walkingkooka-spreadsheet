@@ -33,7 +33,7 @@ import java.util.function.Function;
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
     /**
-     * {@see SpreadsheetContextFixedSpreadsheetId}
+     * {@see SpreadsheetContextSharedFixedSpreadsheetId}
      */
     public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
@@ -42,7 +42,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final LocaleContext localeContext,
                                                         final SpreadsheetProvider spreadsheetProvider,
                                                         final ProviderContext providerContext) {
-        return SpreadsheetContextFixedSpreadsheetId.with(
+        return SpreadsheetContextSharedFixedSpreadsheetId.with(
             storeRepository,
             spreadsheetEngineContextFactory,
             httpRouterFactory,
