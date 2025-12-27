@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -18,15 +19,14 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.http.server.HttpHandler;
-import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -38,18 +38,20 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
-import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
+import java.math.RoundingMode;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -57,24 +59,24 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends SpreadsheetContextSharedTestCase<SpreadsheetContextSharedFixedSpreadsheetId> {
+public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends SpreadsheetContextSharedTestCase<SpreadsheetContextSharedMutableSpreadsheetId> {
 
-    private final static SpreadsheetStoreRepository REPO = SpreadsheetStoreRepositories.fake();
+    private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = SpreadsheetMetadataContexts.fake();
 
-    final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
-        throw new UnsupportedOperationException();
-    };
+    private final static SpreadsheetId OTHER_SPREADSHEET_ID = SpreadsheetId.with(999);
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
+    private final static Locale OTHER_SPREADSHEET_LOCALE = Locale.FRANCE;
+
     @Test
-    public void testWithNullStoreRepositoryFails() {
+    public void testWithNullSpreadsheetIdToStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 null,
+                SPREADSHEET_METADATA_CONTEXT,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
-                HTTP_ROUTER_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -84,13 +86,15 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     @Test
-    public void testWithNullHttpRouterFactoryFails() {
+    public void testWithNullSpreadsheetMetadataContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
-                REPO,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                (id) -> {
+                    throw new UnsupportedOperationException();
+                },
                 null,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -103,7 +107,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     @Test
     public void testSaveMetadataWithSameId() {
-        final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
 
@@ -141,7 +145,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     @Test
     public void testSaveMetadataWithDifferentId() {
-        final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
 
         final SpreadsheetId id = SpreadsheetId.with(999);
         this.checkNotEquals(
@@ -183,45 +187,88 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         );
     }
 
+    // loadSpreadsheet...................................................................................................
+
+    @Test
+    public void testLoadSpreadsheet() {
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
+
+        final SpreadsheetMetadata metadata = context.loadMetadataOrFail(SPREADSHEET_ID);
+
+        this.checkNotEquals(
+            null,
+            metadata
+        );
+
+        this.checkEquals(
+            SPREADSHEET_ID,
+            metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+        );
+    }
+
+    // setSpreadsheetId.................................................................................................
+
+    @Test
+    public void testSpreadsheetIdWithDifferent() {
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
+
+        this.localeAndCheck(
+            context,
+            LOCALE
+        );
+
+        this.setEnvironmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
+        this.localeAndCheck(
+            context,
+            LOCALE
+        );
+
+        final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
+        final SpreadsheetMetadata otherMetadata = context.loadMetadataOrFail(OTHER_SPREADSHEET_ID);
+
+        this.loadMetadataAndCheck(
+            context,
+            SPREADSHEET_ID,
+            metadata
+        );
+
+        this.setEnvironmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            OTHER_SPREADSHEET_ID
+        );
+
+        this.loadMetadataAndCheck(
+            context,
+            OTHER_SPREADSHEET_ID,
+            otherMetadata
+        );
+
+        this.localeAndCheck(
+            context,
+            LOCALE
+        );
+    }
+
     // removeEnvironment................................................................................................
 
     @Test
-    public void testRemoveEnvironmentValueWithSpreadsheetIdFails() {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> this.createContext()
-                .removeEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SPREADSHEET_ID
-                )
+    public void testRemoveEnvironmentValueWithSpreadsheetId() {
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
+
+        this.removeEnvironmentValueAndCheck(
+            context,
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
         );
-    }
-
-    // spreadsheetId....................................................................................................
-
-    @Test
-    public void testSetEnvironmentValueWithSpreadsheetIdFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                    SPREADSHEET_ID
-                )
-        );
-    }
-
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Test
-    public void testSetSpreadsheetIdFails() {
-        final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();
 
         assertThrows(
-            IllegalArgumentException.class,
-            () -> context.setSpreadsheetId(SpreadsheetId.with(999))
+            MissingEnvironmentValueException.class,
+            () -> context.spreadsheetId()
         );
     }
 
@@ -229,7 +276,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     @Test
     public void testSpreadsheetProviderAfterSpreadsheetMetadataDelete() {
-        final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();
+        final SpreadsheetContextSharedMutableSpreadsheetId context = this.createContext();
 
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
@@ -289,7 +336,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     @Override
-    public SpreadsheetContextSharedFixedSpreadsheetId createContext() {
+    public SpreadsheetContextSharedMutableSpreadsheetId createContext() {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
                 EnvironmentContexts.map(
@@ -311,7 +358,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     @Override
-    SpreadsheetContextSharedFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
+    SpreadsheetContextSharedMutableSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
             (c) -> SpreadsheetEngineContexts.fake(),
             spreadsheetEnvironmentContext,
@@ -322,11 +369,11 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     @Override
-    SpreadsheetContextSharedFixedSpreadsheetId createContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
-                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                             final LocaleContext localeContext,
-                                                             final SpreadsheetProvider spreadsheetProvider,
-                                                             final ProviderContext providerContext) {
+    SpreadsheetContextSharedMutableSpreadsheetId createContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+                                                               final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                               final LocaleContext localeContext,
+                                                               final SpreadsheetProvider spreadsheetProvider,
+                                                               final ProviderContext providerContext) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
@@ -369,22 +416,53 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
         store.save(metadata);
+        
+        final Map<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToSpreadsheetStoreRepository = Maps.sorted();
+        spreadsheetIdToSpreadsheetStoreRepository.put(
+            SPREADSHEET_ID,
+            SpreadsheetStoreRepositories.treeMap(store)
+        );
 
-        return SpreadsheetContextSharedFixedSpreadsheetId.with(
-            new FakeSpreadsheetStoreRepository() {
+        final SpreadsheetMetadata otherMetadata = metadata.set(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE,
+            RoundingMode.HALF_DOWN
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            OTHER_SPREADSHEET_ID
+        ).set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            OTHER_SPREADSHEET_LOCALE
+        ).loadFromLocale(
+            LocaleContexts.jre(OTHER_SPREADSHEET_LOCALE)
+        );
 
-                @Override
-                public SpreadsheetMetadataStore metadatas() {
-                    return store;
+        store.save(otherMetadata);
+
+        spreadsheetIdToSpreadsheetStoreRepository.put(
+            OTHER_SPREADSHEET_ID,
+            SpreadsheetStoreRepositories.treeMap(store)
+        );
+
+        this.checkNotEquals(
+            metadata,
+            otherMetadata
+        );
+
+        return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            (SpreadsheetId id) -> {
+                final SpreadsheetStoreRepository repo = spreadsheetIdToSpreadsheetStoreRepository.get(id);
+                if(null == repo) {
+                    throw new IllegalArgumentException("SpreadsheetId " + id + " not found");
                 }
+                return repo;
             },
-            spreadsheetEngineContextFactory,
-            (c) -> new Router<>() {
-                @Override
-                public Optional<HttpHandler> route(final Map<HttpRequestAttribute<?>, Object> attributes) {
+            SpreadsheetMetadataContexts.basic(
+                (u, dl) -> {
                     throw new UnsupportedOperationException();
-                }
-            },
+                },
+                store
+            ),
+            spreadsheetEngineContextFactory,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,
@@ -392,11 +470,10 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         );
     }
 
-
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetContextSharedFixedSpreadsheetId> type() {
-        return SpreadsheetContextSharedFixedSpreadsheetId.class;
+    public Class<SpreadsheetContextSharedMutableSpreadsheetId> type() {
+        return SpreadsheetContextSharedMutableSpreadsheetId.class;
     }
 }

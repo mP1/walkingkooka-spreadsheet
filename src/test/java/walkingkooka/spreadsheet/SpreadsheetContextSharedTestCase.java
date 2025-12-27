@@ -301,18 +301,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
     }
 
-    @Test
-    public final void testSetEnvironmentValueWithSpreadsheetIdFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                    SPREADSHEET_ID
-                )
-        );
-    }
-
     // setLocale........................................................................................................
 
     @Test
