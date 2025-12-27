@@ -248,7 +248,7 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
     public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
                                                       final T value) {
         if (SPREADSHEET_ID.equals(name)) {
-            throw new UnsupportedOperationException("Unable to set " + name + " with value " + value);
+            throw new IllegalArgumentException("Unable to set " + name + " with value " + value);
         }
 
         this.spreadsheetEnvironmentContext.setEnvironmentValue(
