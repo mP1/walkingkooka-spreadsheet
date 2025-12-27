@@ -30,12 +30,9 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.MissingStoreException;
 import walkingkooka.text.LineEnding;
 
@@ -53,25 +50,13 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    SpreadsheetContextShared(final SpreadsheetStoreRepository storeRepository,
-                             final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                             final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+    SpreadsheetContextShared(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final LocaleContext localeContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext) {
         super();
-
-        this.storeRepository = storeRepository;
-
-        // lazy create
-        this.spreadsheetMetadataContext = null != spreadsheetMetadataContext ?
-            spreadsheetMetadataContext :
-            SpreadsheetMetadataContexts.basic(
-                SpreadsheetContext.super::createMetadata,
-                storeRepository.metadatas()
-            );
 
         this.spreadsheetEngineContext = spreadsheetEngineContext;
         this.spreadsheetEngineContextFactory = spreadsheetEngineContextFactory;
@@ -82,13 +67,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
     }
-
-    @Override
-    public final SpreadsheetStoreRepository storeRepository() {
-        return this.storeRepository;
-    }
-
-    private final SpreadsheetStoreRepository storeRepository;
 
     // HasSpreadsheetMetadata...........................................................................................
 
@@ -137,13 +115,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         );
     }
 
-    @Override
-    public final SpreadsheetMetadataContext spreadsheetMetadataContext() {
-        return this.spreadsheetMetadataContext;
-    }
-
-    final SpreadsheetMetadataContext spreadsheetMetadataContext;
-
     // SpreadsheetEngineContext.........................................................................................
 
     @Override
@@ -178,8 +149,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
                 .setEnvironmentContext(environmentContext);
 
             spreadsheetContext = this.replaceEnvironmentContext(
-                this.storeRepository,
-                null, // SpreadsheetMetadataContext
                 this.spreadsheetEngineContextFactory,
                 this.spreadsheetEngineContext,
                 spreadsheetEnvironmentContext,
@@ -192,9 +161,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         return spreadsheetContext;
     }
 
-    abstract SpreadsheetContext replaceEnvironmentContext(final SpreadsheetStoreRepository storeRepository,
-                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                                                          final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+    abstract SpreadsheetContext replaceEnvironmentContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                           final SpreadsheetEngineContext spreadsheetEngineContext,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                           final LocaleContext localeContext,

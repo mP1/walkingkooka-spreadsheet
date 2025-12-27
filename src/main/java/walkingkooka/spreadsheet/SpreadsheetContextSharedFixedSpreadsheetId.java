@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
@@ -77,8 +78,6 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final SpreadsheetProvider spreadsheetProvider,
                                                        final ProviderContext providerContext) {
         super(
-            storeRepository,
-            spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,
             spreadsheetEngineContext,
             spreadsheetEnvironmentContext,
@@ -87,9 +86,37 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
             providerContext
         );
 
+        this.storeRepository = storeRepository;
+
+        // lazy create
+        this.spreadsheetMetadataContext = null != spreadsheetMetadataContext ?
+            spreadsheetMetadataContext :
+            SpreadsheetMetadataContexts.basic(
+                this::createMetadata,
+                storeRepository.metadatas()
+            );
+
         this.httpRouter = httpRouter;
         this.httpRouterFactory = httpRouterFactory;
     }
+
+    // storeRepository..................................................................................................
+
+    @Override
+    public SpreadsheetStoreRepository storeRepository() {
+        return this.storeRepository;
+    }
+
+    private final SpreadsheetStoreRepository storeRepository;
+
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    public SpreadsheetMetadataContext spreadsheetMetadataContext() {
+        return this.spreadsheetMetadataContext;
+    }
+
+    private final SpreadsheetMetadataContext spreadsheetMetadataContext;
 
     // httpRouter......................................................................................................
 
@@ -111,19 +138,17 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
     // EnvironmentContext...............................................................................................
 
     @Override
-    SpreadsheetContext replaceEnvironmentContext(final SpreadsheetStoreRepository storeRepository,
-                                                 final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                                                 final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+    SpreadsheetContext replaceEnvironmentContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                  final SpreadsheetEngineContext spreadsheetEngineContext,
                                                  final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                  final LocaleContext localeContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedFixedSpreadsheetId(
-            storeRepository, // keep
-            spreadsheetMetadataContext, // keep
+            this.storeRepository, // keep
+            this.spreadsheetMetadataContext, // keep
             spreadsheetEngineContextFactory,
-            null, // recreate SpreadsheetEngineContext
+            spreadsheetEngineContext,
             this.httpRouterFactory,
             null, // recreate HttpRouter,
             spreadsheetEnvironmentContext,
