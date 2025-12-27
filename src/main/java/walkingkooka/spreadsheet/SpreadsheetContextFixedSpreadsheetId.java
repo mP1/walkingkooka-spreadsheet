@@ -48,19 +48,19 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetContext} for a single unchanging {@link SpreadsheetId}.
  */
-final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
+final class SpreadsheetContextFixedSpreadsheetId implements SpreadsheetContext,
     EnvironmentContextDelegator,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    static FixedSpreadsheetIdSpreadsheetContext with(final SpreadsheetStoreRepository storeRepository,
+    static SpreadsheetContextFixedSpreadsheetId with(final SpreadsheetStoreRepository storeRepository,
                                                      final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                      final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                                      final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                      final LocaleContext localeContext,
                                                      final SpreadsheetProvider spreadsheetProvider,
                                                      final ProviderContext providerContext) {
-        return new FixedSpreadsheetIdSpreadsheetContext(
+        return new SpreadsheetContextFixedSpreadsheetId(
             Objects.requireNonNull(storeRepository, "storeRepository"),
             Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory"),
             null, // SpreadsheetEngineContext will created later in ctor
@@ -73,7 +73,7 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
         );
     }
 
-    private FixedSpreadsheetIdSpreadsheetContext(final SpreadsheetStoreRepository storeRepository,
+    private SpreadsheetContextFixedSpreadsheetId(final SpreadsheetStoreRepository storeRepository,
                                                  final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                  final SpreadsheetEngineContext spreadsheetEngineContext,
                                                  final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -228,7 +228,7 @@ final class FixedSpreadsheetIdSpreadsheetContext implements SpreadsheetContext,
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext.cloneEnvironment()
                 .setEnvironmentContext(environmentContext);
 
-            spreadsheetContext = new FixedSpreadsheetIdSpreadsheetContext(
+            spreadsheetContext = new SpreadsheetContextFixedSpreadsheetId(
                 this.storeRepository,
                 this.spreadsheetEngineContextFactory,
                 null, // null force SpreadsheetEngineContext to be re-created

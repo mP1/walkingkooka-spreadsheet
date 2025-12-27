@@ -78,8 +78,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class FixedSpreadsheetIdSpreadsheetContextTest implements SpreadsheetContextTesting<FixedSpreadsheetIdSpreadsheetContext>,
-    ToStringTesting<FixedSpreadsheetIdSpreadsheetContext> {
+public final class SpreadsheetContextFixedSpreadsheetIdTest implements SpreadsheetContextTesting<SpreadsheetContextFixedSpreadsheetId>,
+    ToStringTesting<SpreadsheetContextFixedSpreadsheetId> {
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -134,7 +134,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 null,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
@@ -150,7 +150,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullSpreadsheetEngineContextFactoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 REPO,
                 null,
                 HTTP_ROUTER_FACTORY,
@@ -166,7 +166,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullHttpRouterFactoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 REPO,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
@@ -182,7 +182,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 REPO,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
@@ -198,7 +198,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 REPO,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
@@ -214,7 +214,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullSpreadsheetProviderFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 REPO,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
@@ -230,7 +230,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     public void testWithNullProviderContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> FixedSpreadsheetIdSpreadsheetContext.with(
+            () -> SpreadsheetContextFixedSpreadsheetId.with(
                 REPO,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
@@ -246,7 +246,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSaveMetadataWithSameId() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
 
@@ -284,7 +284,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSaveMetadataWithDifferentId() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         final SpreadsheetId id = SpreadsheetId.with(999);
         this.checkNotEquals(
@@ -330,7 +330,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testCloneEnvironmentDifferentInstance() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
         assertNotSame(
             context,
             context.cloneEnvironment()
@@ -346,7 +346,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSetEnvironmentContextWithThis() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
         assertSame(
             context,
             context.setEnvironmentContext(context)
@@ -369,7 +369,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
             )
         );
 
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext(environmentContext);
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext(environmentContext);
         assertSame(
             context,
             context.setEnvironmentContext(environmentContext)
@@ -400,7 +400,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
             differentEnvironmentContext
         );
 
-        final FixedSpreadsheetIdSpreadsheetContext basicSpreadsheetContext = this.createContext(environmentContext);
+        final SpreadsheetContextFixedSpreadsheetId basicSpreadsheetContext = this.createContext(environmentContext);
         final SpreadsheetContext afterSet = basicSpreadsheetContext.setEnvironmentContext(differentEnvironmentContext);
 
         assertNotSame(
@@ -418,7 +418,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSetEnvironmentLocaleDifferent() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
         this.localeAndCheck(
@@ -465,7 +465,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSetLocaleDifferent() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
         this.localeAndCheck(
@@ -503,7 +503,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSetSpreadsheetIdFails() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         assertThrows(
             UnsupportedOperationException.class,
@@ -515,7 +515,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSpreadsheetProvider() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         final SpreadsheetProvider spreadsheetProvider = context.spreadsheetProvider();
         assertSame(
@@ -526,7 +526,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
 
     @Test
     public void testSpreadsheetProviderAfterSpreadsheetMetadataDelete() {
-        final FixedSpreadsheetIdSpreadsheetContext context = this.createContext();
+        final SpreadsheetContextFixedSpreadsheetId context = this.createContext();
 
         final SpreadsheetMetadata saved = context.saveMetadata(
             SpreadsheetMetadata.EMPTY.set(
@@ -586,7 +586,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     }
 
     @Override
-    public FixedSpreadsheetIdSpreadsheetContext createContext() {
+    public SpreadsheetContextFixedSpreadsheetId createContext() {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
                 EnvironmentContexts.map(
@@ -607,7 +607,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
         );
     }
 
-    private FixedSpreadsheetIdSpreadsheetContext createContext(final SpreadsheetEnvironmentContext environmentContext) {
+    private SpreadsheetContextFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext environmentContext) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
@@ -651,7 +651,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
         store.save(metadata);
 
-        return FixedSpreadsheetIdSpreadsheetContext.with(
+        return SpreadsheetContextFixedSpreadsheetId.with(
             new FakeSpreadsheetStoreRepository() {
 
                 @Override
@@ -698,7 +698,17 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     // class............................................................................................................
 
     @Override
-    public Class<FixedSpreadsheetIdSpreadsheetContext> type() {
-        return FixedSpreadsheetIdSpreadsheetContext.class;
+    public Class<SpreadsheetContextFixedSpreadsheetId> type() {
+        return SpreadsheetContextFixedSpreadsheetId.class;
+    }
+
+    @Override
+    public String typeNamePrefix() {
+        return SpreadsheetContext.class.getSimpleName();
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return "";
     }
 }
