@@ -34,12 +34,12 @@ import java.util.Optional;
 public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
     HasSpreadsheetServerUrl {
 
-    EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.with(
+    EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.registerConstant(
         "serverUrl",
         AbsoluteUrl.class
     );
 
-    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.with(
+    EnvironmentValueName<SpreadsheetId> SPREADSHEET_ID = EnvironmentValueName.registerConstant(
         "spreadsheetId",
         SpreadsheetId.class
     );
