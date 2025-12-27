@@ -439,7 +439,7 @@ public final class FixedSpreadsheetIdSpreadsheetContextTest implements Spreadshe
     @Test
     public void testSetEnvironmentValueWithSpreadsheetIdFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            IllegalArgumentException.class,
             () -> this.createContext()
                 .setEnvironmentValue(
                     SpreadsheetEnvironmentContext.SPREADSHEET_ID,
