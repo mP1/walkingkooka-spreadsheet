@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -53,6 +54,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -241,6 +243,18 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
                 SPREADSHEET_PROVIDER,
                 null
             )
+        );
+    }
+
+    // ENVIRONMENT_VALUE_NAMES..........................................................................................
+
+    @Test
+    public void testEnvironmentValueNamesAreConstants() {
+        this.checkEquals(
+            Sets.empty(),
+            SpreadsheetEnvironmentContextFactory.ENVIRONMENT_VALUE_NAMES.stream()
+                .filter(n -> n != EnvironmentValueName.with(n.value(), n.type()))
+                .collect(Collectors.toSet())
         );
     }
 

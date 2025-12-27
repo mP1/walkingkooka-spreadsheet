@@ -75,7 +75,7 @@ import java.util.Set;
 public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEnvironmentContextDelegator,
     HasProviderContext {
 
-    public final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.with(
+    public final static EnvironmentValueName<ConverterSelector> CONVERTER = EnvironmentValueName.registerConstant(
         "converter",
         ConverterSelector.class
     );
