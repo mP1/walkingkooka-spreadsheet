@@ -38,6 +38,11 @@ import java.util.Set;
 public final class SpreadsheetContextTestingTest implements SpreadsheetContextTesting<TestSpreadsheetContext> {
 
     @Override
+    public void testEnvironmentValueLineEndingEqualsLineEnding() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testEnvironmentValueLocaleEqualsLocale() {
         throw new UnsupportedOperationException();
     }
