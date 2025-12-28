@@ -108,8 +108,6 @@ public class J2clTest {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
-    private final static HasNow NOW = LocalDateTime::now;
-
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     @Test
@@ -321,7 +319,7 @@ public class J2clTest {
                             metadata.spreadsheetParserContext(
                                 cell,
                                 this.localeContext,
-                                NOW
+                                LocalDateTime::now
                             )
                         ) // TODO should fetch parse metadata prop
                         .get()

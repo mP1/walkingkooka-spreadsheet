@@ -218,6 +218,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.USER
         );
     }
@@ -239,6 +240,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SpreadsheetEnvironmentContext.USER
         );
@@ -272,6 +274,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     EnvironmentContexts.map(CONTEXT)
                 ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
+            SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.USER,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.toEnvironmentValueName(),
@@ -506,7 +509,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 EnvironmentContexts.map(CONTEXT)
             ),
-            "{lineEnding=\\n, locale=fr, spreadsheetId=1, user=user@example.com}"
+            "{lineEnding=\\n, locale=fr, now=1999-12-31T12:58, spreadsheetId=1, user=user@example.com}"
         );
     }
 

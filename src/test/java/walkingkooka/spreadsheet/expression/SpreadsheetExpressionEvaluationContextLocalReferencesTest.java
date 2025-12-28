@@ -822,6 +822,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testRemoveEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // hashEquals/Object................................................................................................
 
     @Test
