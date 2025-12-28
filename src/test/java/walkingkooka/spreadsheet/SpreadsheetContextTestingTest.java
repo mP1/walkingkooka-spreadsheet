@@ -72,11 +72,6 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testCheckToStringOverridden() {
-        throw new UnsupportedOperationException();
-    }
-
     static class TestSpreadsheetContext extends FakeSpreadsheetContext {
 
         private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
@@ -232,6 +227,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
             Objects.requireNonNull(watcher, "watcher");
             throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
         }
     }
 
