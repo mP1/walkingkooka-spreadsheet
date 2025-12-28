@@ -27,7 +27,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
@@ -105,8 +104,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class Sample {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-
-    private final static HasNow NOW = LocalDateTime::now;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -319,7 +316,7 @@ public final class Sample {
                             metadata.spreadsheetParserContext(
                                 cell,
                                 this.localeContext,
-                                NOW
+                                LocalDateTime::now
                             )
                         ) // TODO should fetch parse metadata prop
                         .get()

@@ -492,6 +492,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         );
     }
 
+    @Override
+    public void testRemoveEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // helpers..........................................................................................................
 
     @Override

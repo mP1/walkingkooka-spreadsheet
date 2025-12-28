@@ -301,6 +301,16 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     }
 
     @Override
+    public void testRemoveEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
         return ReadOnlySpreadsheetEnvironmentContext.with(
             SpreadsheetEnvironmentContexts.basic(
@@ -327,6 +337,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         this.environmentValueNamesAndCheck(
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
+            SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SpreadsheetEnvironmentContext.USER

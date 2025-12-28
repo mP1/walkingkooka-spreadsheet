@@ -114,8 +114,6 @@ public class TestGwtTest extends GWTTestCase {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
-    private final static HasNow NOW = LocalDateTime::now;
-
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     public void testFormula() {
@@ -307,7 +305,7 @@ public class TestGwtTest extends GWTTestCase {
                             metadata.spreadsheetParserContext(
                                 cell,
                                 this.localeContext,
-                                NOW
+                                LocalDateTime::now
                             )
                         ) // TODO should fetch parse metadata prop
                         .get()
