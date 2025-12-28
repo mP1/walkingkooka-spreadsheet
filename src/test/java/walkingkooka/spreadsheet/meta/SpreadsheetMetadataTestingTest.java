@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -49,7 +50,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testEnvironmentContextSetEnvironmentValueFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setEnvironmentValue(
                 EnvironmentValueName.with(
                     "Hello",
@@ -63,7 +64,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testEnvironmentContextRemoveEnvironmentValueFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.removeEnvironmentValue(
                 SpreadsheetEnvironmentContext.LINE_ENDING
             )
@@ -129,7 +130,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         );
         
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setLocale(locale)
         );
         
@@ -272,7 +273,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         );
 
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.setUser(
                 Optional.of(user)
             )
