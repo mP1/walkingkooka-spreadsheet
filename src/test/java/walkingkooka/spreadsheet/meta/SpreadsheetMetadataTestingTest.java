@@ -259,7 +259,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             .spreadsheetParserContext(
                 SpreadsheetMetadata.NO_CELL,
                 LOCALE_CONTEXT,
-                LocalDateTime::now
+                () -> LocalDateTime.MIN
             );
     }
 

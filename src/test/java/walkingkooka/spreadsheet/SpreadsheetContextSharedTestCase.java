@@ -78,7 +78,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         LocalDateTime.MIN
     );
 
-    final static HasNow HAS_NOW = LocalDateTime::now;
+    final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         SpreadsheetEnvironmentContexts.basic(
