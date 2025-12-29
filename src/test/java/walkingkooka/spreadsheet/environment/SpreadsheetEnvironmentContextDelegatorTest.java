@@ -97,7 +97,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
                     EnvironmentContexts.empty(
                         LineEnding.NL,
                         Locale.ENGLISH,
-                        LocalDateTime::now,
+                        () -> LocalDateTime.MIN,
                         EnvironmentContext.ANONYMOUS
                     )
                 ).setEnvironmentValue(

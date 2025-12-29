@@ -48,6 +48,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
     }
 
     @Override
+    public void testEnvironmentValueNowEqualsNow() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testRemoveEnvironmentValueWithNowFails() {
         throw new UnsupportedOperationException();
     }

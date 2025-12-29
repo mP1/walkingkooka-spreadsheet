@@ -547,6 +547,11 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
+                public LocalDateTime now() {
+                    return this.environmentContext.now();
+                }
+
+                @Override
                 public Optional<EmailAddress> user() {
                     return this.environmentContext.user();
                 }
@@ -582,7 +587,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                     EnvironmentContexts.empty(
                         LineEnding.NL,
                         Locale.ENGLISH,
-                        LocalDateTime::now,
+                        () -> LocalDateTime.MIN,
                         EnvironmentContext.ANONYMOUS
                     )
                 );

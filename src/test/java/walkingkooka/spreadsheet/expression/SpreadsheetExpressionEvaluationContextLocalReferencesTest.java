@@ -127,7 +127,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
 
-    private final static HasNow HAS_NOW = LocalDateTime::now;
+    private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
     @Test
     public void testWithNullReferenceToValuesFails() {
@@ -613,6 +613,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
             this.spreadsheetEnvironmentContext.setLocale(locale);
             return this;
+        }
+
+        @Override
+        public LocalDateTime now() {
+            return this.spreadsheetEnvironmentContext.now();
         }
 
         @Override

@@ -74,7 +74,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
                         EnvironmentContexts.empty(
                             LineEnding.NL,
                             SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,
-                            LocalDateTime::now,
+                            () -> LocalDateTime.MIN,
                             EnvironmentContext.ANONYMOUS
                         )
                     ).setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE)
