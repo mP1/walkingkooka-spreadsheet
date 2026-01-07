@@ -23,7 +23,7 @@
     <inherits name="walkingkooka.locale.Locale"/>
     <inherits name="walkingkooka.net.Net"/>
     <inherits name="walkingkooka.net.http.server.hateos.Hateos"/>
-    <inherits name="walkingkooka.storage.expression.function.StorageExpressionFunction"/>
+    <inherits name="walkingkooka.storage.expression.function.StorageExpressionEvaluationFunction"/>
     <inherits name="walkingkooka.template.Template"/>
     <inherits name="walkingkooka.terminal.Terminal"/>
     <inherits name="walkingkooka.tree.json.convert.WalkingkookaTreeJsonConvert"/>
