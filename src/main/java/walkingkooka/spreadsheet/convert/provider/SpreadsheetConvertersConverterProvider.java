@@ -303,6 +303,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.spreadsheetValue();
                 break;
+            case STORAGE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.storage();
+                break;
             case STYLE_STRING:
                 noParameterCheck(copy);
 
@@ -781,6 +786,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName SPREADSHEET_VALUE = ConverterName.with(SPREADSHEET_VALUE_STRING);
 
+    private final static String STORAGE_STRING = "storage";
+
+    final static ConverterName STORAGE = ConverterName.with(STORAGE_STRING);
+
     private final static String STYLE_STRING = "style";
 
     final static ConverterName STYLE = ConverterName.with(STYLE_STRING);
@@ -1056,6 +1065,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION),
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
             converterInfo(SPREADSHEET_VALUE),
+            converterInfo(STORAGE),
             converterInfo(STYLE),
             converterInfo(SYSTEM),
             converterInfo(TEMPLATE),
