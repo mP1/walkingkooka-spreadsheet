@@ -1293,7 +1293,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, text-to-line-ending, template, net)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, text-to-line-ending, text-to-storage-path, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +
@@ -1518,7 +1518,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, text-to-line-ending, template, net)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, text-to-line-ending, text-to-storage-path, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +

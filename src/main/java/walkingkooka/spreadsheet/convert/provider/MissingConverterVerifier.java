@@ -68,6 +68,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -1093,6 +1094,17 @@ final class MissingConverterVerifier {
                     SpreadsheetValueType.TEXT.value(),
                     ValueType.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_VALUE_TYPE
+                );
+            }
+        }
+
+        // storage......................................................................................................
+        {
+            if (scripting) {
+                finder.addIfConversionFail(
+                    "/path1/file2.txt",
+                    StoragePath.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH
                 );
             }
         }
