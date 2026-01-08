@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserTok
 import walkingkooka.spreadsheet.formula.parser.TimeSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.storage.convert.StorageConverters;
 import walkingkooka.template.convert.TemplateConverters;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -853,6 +854,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetText() {
         return SpreadsheetConverterTextToSpreadsheetText.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetConverterTextToSpreadsheetText}
+     */
+    public static Converter<SpreadsheetConverterContext> textToStoragePath() {
+        return StorageConverters.textToStoragePath();
     }
 
     /**
