@@ -539,6 +539,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A converter for storage
+     */
+    public static Converter<SpreadsheetConverterContext> storage() {
+        return STORAGE;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> STORAGE = namedCollection(
+        "storage",
+        textToStoragePath()
+    );
+
+    /**
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {
