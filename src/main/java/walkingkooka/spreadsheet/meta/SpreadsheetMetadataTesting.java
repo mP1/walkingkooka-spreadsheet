@@ -310,7 +310,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             RoundingMode.HALF_UP
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, style, text-node, text-to-line-ending, text-to-storage-path, template, net)"
+            ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)"
             )
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
