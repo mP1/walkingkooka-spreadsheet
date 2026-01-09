@@ -516,6 +516,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStorageValueInfoListToText() {
+        this.converterAndCheck(
+            "storage-value-info-list-to-text",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storageValueInfoListToText()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",
