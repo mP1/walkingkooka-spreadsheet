@@ -108,8 +108,6 @@ public final class Sample {
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
-    private final static LineEnding LINE_ENDING = LineEnding.NL;
-
     public static void main(final String[] args) {
         final Sample sample = new Sample();
         sample.testFormula();
@@ -293,6 +291,7 @@ public final class Sample {
             )
         );
 
+        final LineEnding lineEnding = LineEnding.NL;
         final ProviderContext providerContext = ProviderContexts.fake();
 
         return new FakeSpreadsheetEngineContext() {
@@ -364,7 +363,7 @@ public final class Sample {
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                             LABEL_NAME_RESOLVER,
-                            Sample.LINE_ENDING,
+                            lineEnding,
                             converterProvider,
                             this.localeContext,
                             providerContext
@@ -418,7 +417,7 @@ public final class Sample {
                             throw new UnsupportedOperationException();
                         },
                         LABEL_NAME_RESOLVER,
-                        Sample.LINE_ENDING,
+                        lineEnding,
                         this.localeContext,
                         SpreadsheetProviders.basic(
                             converterProvider,
