@@ -34,6 +34,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
@@ -69,6 +70,8 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageValueInfoList;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -1101,6 +1104,26 @@ final class MissingConverterVerifier {
         // storage......................................................................................................
         {
             if (scripting) {
+                finder.addIfConversionFail(
+                    StorageValueInfoList.EMPTY.concat(
+                        StorageValueInfo.with(
+                            StoragePath.parse("/path1/file2.txt"),
+                            AuditInfo.create(
+                                emailAddress,
+                                LocalDateTime.of(
+                                    1999,
+                                    12,
+                                    31,
+                                    12,
+                                    58
+                                )
+                            )
+                        )
+                    ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT
+                );
+
                 finder.addIfConversionFail(
                     "/path1/file2.txt",
                     StoragePath.class,
