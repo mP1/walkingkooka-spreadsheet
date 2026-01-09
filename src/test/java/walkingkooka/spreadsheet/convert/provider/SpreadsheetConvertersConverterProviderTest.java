@@ -507,6 +507,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStorage() {
+        this.converterAndCheck(
+            "storage",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storage()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStyle() {
         this.converterAndCheck(
             "style",
