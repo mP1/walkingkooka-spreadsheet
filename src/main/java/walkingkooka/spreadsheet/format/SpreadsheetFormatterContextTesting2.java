@@ -29,7 +29,7 @@ public interface SpreadsheetFormatterContextTesting2<C extends SpreadsheetFormat
     ExpressionNumberConverterContextTesting<C> {
 
     @Override
-    default C createCanConvert() {
+    default C createConverterLike() {
         return this.createContext();
     }
 

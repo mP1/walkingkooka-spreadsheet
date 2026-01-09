@@ -36,7 +36,7 @@ public interface SpreadsheetFormatterProviderSamplesContextDelegator extends Spr
     SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext();
 
     @Override
-    default ConverterContext canConvert() {
+    default ConverterContext converterLike() {
         return this.spreadsheetFormatterProviderSamplesContext();
     }
 

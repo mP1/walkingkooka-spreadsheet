@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.convert.CanConvertDelegator;
+import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
@@ -42,7 +42,7 @@ import java.util.Optional;
 abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContext,
     EnvironmentContextDelegator,
     LocaleContextDelegator,
-    CanConvertDelegator,
+    ConverterLikeDelegator,
     SpreadsheetProviderDelegator {
 
     SpreadsheetEngineContextShared() {

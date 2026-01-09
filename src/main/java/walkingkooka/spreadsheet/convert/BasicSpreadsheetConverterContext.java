@@ -131,7 +131,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private final Optional<SpreadsheetExpressionReference> validationReference;
 
-    // CanConvert.......................................................................................................
+    // ConverterLike....................................................................................................
 
     @Override
     public boolean canConvert(final Object value,

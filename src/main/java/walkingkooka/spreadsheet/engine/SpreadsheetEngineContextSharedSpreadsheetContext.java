@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -90,7 +90,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
      * Private ctor use factory.
      */
     private SpreadsheetEngineContextSharedSpreadsheetContext(final SpreadsheetMetadataMode mode,
-                                                             final CanConvert canConvert,
+                                                             final ConverterLike converterLike,
                                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                              final SpreadsheetContext spreadsheetContext,
                                                              final TerminalContext terminalContext) {
@@ -103,19 +103,19 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         spreadsheetContext.setLocale(metadata.locale());
 
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
-        this.canConvert = canConvert;
+        this.converterLike = converterLike;
         this.spreadsheetContext = spreadsheetContext;
         this.terminalContext = terminalContext;
     }
 
-    // CanConvertDelegator..............................................................................................
+    // ConverterLikeDelegator...........................................................................................
 
     @Override
-    public CanConvert canConvert() {
-        if (null == this.canConvert) {
+    public ConverterLike converterLike() {
+        if (null == this.converterLike) {
             final SpreadsheetContext spreadsheetContext = this.spreadsheetContext;
 
-            this.canConvert = this.spreadsheetMetadata()
+            this.converterLike = this.spreadsheetMetadata()
                 .spreadsheetConverterContext(
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
@@ -127,10 +127,10 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                 );
         }
 
-        return this.canConvert;
+        return this.converterLike;
     }
 
-    private transient CanConvert canConvert;
+    private transient ConverterLike converterLike;
 
     // resolveLabel.....................................................................................................
 
@@ -325,7 +325,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             this :
             new SpreadsheetEngineContextSharedSpreadsheetContext(
                 this.mode,
-                this.canConvert,
+                this.converterLike,
                 this.spreadsheetLabelNameResolver,
                 after,
                 this.terminalContext
@@ -357,8 +357,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         if (this.spreadsheetId().equals(saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
             this.spreadsheetMetadata = saved;
 
-            // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, CanConvert
-            this.canConvert = null;
+            // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, ConverterLike
+            this.converterLike = null;
         }
         return saved;
     }
@@ -368,7 +368,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         this.spreadsheetContext.deleteMetadata(id);
         if (this.spreadsheetId().equals(id)) {
             this.spreadsheetMetadata = null;
-            this.canConvert = null;
+            this.converterLike = null;
         }
     }
 
@@ -391,7 +391,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             this :
             new SpreadsheetEngineContextSharedSpreadsheetContext(
                 Objects.requireNonNull(mode, "mode"),
-                null, // force CanConvert to be recreated
+                null, // force ConverterLike to be recreated
                 this.spreadsheetLabelNameResolver,
                 this.spreadsheetContext,
                 this.terminalContext

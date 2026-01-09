@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.collect.set.SortedSets;
-import walkingkooka.convert.CanConvert;
-import walkingkooka.convert.CanConvertDelegator;
+import walkingkooka.convert.ConverterLike;
+import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
@@ -58,7 +58,7 @@ import java.util.function.Function;
  * dependencies.
  */
 final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandlerContext,
-    CanConvertDelegator,
+    ConverterLikeDelegator,
     EnvironmentContextDelegator {
 
     static BasicSpreadsheetFormHandlerContext with(final Form<SpreadsheetExpressionReference> form,
@@ -116,7 +116,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
                     SpreadsheetValidatorContext.VALUE,
                     Optional.ofNullable(validatingValue)
                 ), //BiFunction<Object, T, ExpressionEvaluationContext > referenceToExpressionEvaluationContext,
-                context, // CanConvert,
+                context, // ConverterLike,
                 context // EnvironmentContext
             )
         );
@@ -238,10 +238,10 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
 
     private final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver;
 
-    // CanConvertDelegator..............................................................................................
+    // ConverterLikeDelegator...........................................................................................
 
     @Override
-    public CanConvert canConvert() {
+    public ConverterLike converterLike() {
         return this.context;
     }
 

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -50,7 +50,7 @@ import java.util.Optional;
  * mentioned.
  */
 public interface SpreadsheetEngineContext extends Context,
-    CanConvert,
+    ConverterLike,
     ExpressionPurityContext,
     SpreadsheetContext,
     SpreadsheetLabelNameResolver,

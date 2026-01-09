@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.convert.CanConvert;
-import walkingkooka.convert.CanConvertDelegator;
+import walkingkooka.convert.ConverterLike;
+import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -46,7 +46,7 @@ import java.util.Optional;
  * Note {@link #resolveLabel(SpreadsheetLabelName)} is not implemented
  */
 public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineContext,
-    CanConvertDelegator,
+    ConverterLikeDelegator,
     SpreadsheetContextDelegator {
 
     @Override
@@ -122,7 +122,7 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default CanConvert canConvert() {
+    default ConverterLike converterLike() {
         return this.spreadsheetEngineContext();
     }
 

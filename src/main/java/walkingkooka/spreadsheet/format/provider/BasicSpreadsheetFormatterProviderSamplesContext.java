@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.Either;
-import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextDelegator;
@@ -77,11 +77,6 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
     }
 
     @Override
-    public CanConvert canConvert() {
-        return this.converterContext();
-    }
-
-    @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.spreadsheetFormatterContext.canConvert(
@@ -97,6 +92,11 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
             value,
             type
         );
+    }
+
+    @Override
+    public ConverterLike converterLike() {
+        return this.converterContext();
     }
 
     @Override
