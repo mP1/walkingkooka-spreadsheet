@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextMissingValues;
@@ -255,7 +255,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public CanConvert canConvert() {
+    public ConverterLike converterLike() {
         return this.spreadsheetConverterContext(); // inherit unrelated publics
     }
 

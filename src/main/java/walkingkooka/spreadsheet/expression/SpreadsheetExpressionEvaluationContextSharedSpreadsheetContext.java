@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
-import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -247,7 +247,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     private final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
     @Override
-    public CanConvert canConvert() {
+    public ConverterLike converterLike() {
         return this.spreadsheetConverterContext(); // inherit unrelated defaults
     }
 

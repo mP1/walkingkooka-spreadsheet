@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.convert.CanConvert;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
@@ -283,8 +283,8 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     // ConverterContextDelegator........................................................................................
 
     @Override
-    public CanConvert canConvert() {
-        return ConverterContextDelegator.super.canConvert();
+    public ConverterLike converterLike() {
+        return ConverterContextDelegator.super.converterLike();
     }
 
     @Override

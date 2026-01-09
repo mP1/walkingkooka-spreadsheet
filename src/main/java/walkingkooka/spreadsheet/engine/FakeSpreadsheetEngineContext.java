@@ -168,7 +168,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
-    // CanConvert.......................................................................................................
+    // ConverterLike....................................................................................................
 
     @Override
     public boolean canConvert(final Object value,

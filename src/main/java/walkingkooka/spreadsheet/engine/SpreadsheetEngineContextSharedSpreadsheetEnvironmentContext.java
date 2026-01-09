@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.convert.CanConvert;
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -99,10 +99,10 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     private final TerminalContext terminalContext;
 
-    // CanConvertDelegator..............................................................................................
+    // ConverterLikeDelegator...........................................................................................
 
     @Override
-    public CanConvert canConvert() {
+    public ConverterLike converterLike() {
         return this.spreadsheetEnvironmentContextFactory.spreadsheetConverterContext();
     }
 

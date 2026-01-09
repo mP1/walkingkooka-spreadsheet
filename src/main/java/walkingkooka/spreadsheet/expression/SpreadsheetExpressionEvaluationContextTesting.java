@@ -524,7 +524,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     // SpreadsheetExpressionEvaluationContext...........................................................................
 
     @Override
-    default C createCanConvert() {
+    default C createConverterLike() {
         return this.createContext();
     }
 }
