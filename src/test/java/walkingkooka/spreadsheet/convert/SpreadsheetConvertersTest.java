@@ -83,6 +83,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.HasText;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -3553,6 +3554,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         DateTimeContexts.basic(
@@ -3781,6 +3783,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers

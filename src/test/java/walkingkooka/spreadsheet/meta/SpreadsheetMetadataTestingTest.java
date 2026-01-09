@@ -239,6 +239,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (label) -> {
                 throw new UnsupportedOperationException();
             },
+            LINE_ENDING,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

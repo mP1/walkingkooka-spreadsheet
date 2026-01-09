@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -275,6 +276,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public long dateOffset() {
             return 0;
+        }
+
+        @Override
+        public LineEnding lineEnding() {
+            return LINE_ENDING;
         }
 
         @Override

@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -2934,6 +2935,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             ConverterContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
+                LineEnding.NL,
                 ',', // valueSeparator
                 Converters.fake(),
                 this.dateTimeContext(),

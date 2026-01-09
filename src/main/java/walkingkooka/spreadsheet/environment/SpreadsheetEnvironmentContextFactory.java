@@ -314,6 +314,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
+                            this.spreadsheetEnvironmentContext.lineEnding(),
                             valueSeparator, // valueSeparator
                             Converters.fake(),
                             dateTimeContext,

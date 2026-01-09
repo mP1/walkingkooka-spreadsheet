@@ -75,6 +75,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -106,6 +107,8 @@ public final class Sample {
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     public static void main(final String[] args) {
         final Sample sample = new Sample();
@@ -361,6 +364,7 @@ public final class Sample {
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                             LABEL_NAME_RESOLVER,
+                            Sample.LINE_ENDING,
                             converterProvider,
                             this.localeContext,
                             providerContext
@@ -414,6 +418,7 @@ public final class Sample {
                             throw new UnsupportedOperationException();
                         },
                         LABEL_NAME_RESOLVER,
+                        Sample.LINE_ENDING,
                         this.localeContext,
                         SpreadsheetProviders.basic(
                             converterProvider,

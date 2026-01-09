@@ -1413,6 +1413,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(
@@ -2031,6 +2032,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 LABEL_NAME_RESOLVER,
+                LINE_ENDING,
                 LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2075,6 +2077,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 LABEL_NAME_RESOLVER,
+                LINE_ENDING,
                 LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2407,6 +2410,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 LABEL_NAME_RESOLVER,
+                LINE_ENDING,
                 ConverterProviders.converters(),
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT

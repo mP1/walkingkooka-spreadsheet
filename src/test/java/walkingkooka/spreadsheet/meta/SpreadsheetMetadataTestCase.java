@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -91,6 +92,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    final static LineEnding LINE_ENDING = LineEnding.NL;
 
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
         Locale.forLanguageTag("EN-AU")
@@ -757,6 +760,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     CONVERTER_PROVIDER,
                     LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -774,6 +778,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     CONVERTER_PROVIDER,
                     LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -791,6 +796,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     null,
                     LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     CONVERTER_PROVIDER,
                     LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -807,6 +813,25 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    null,
+                    LINE_ENDING,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithLineEndingFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    LABEL_NAME_RESOLVER,
                     null,
                     CONVERTER_PROVIDER,
                     LOCALE_CONTEXT,
@@ -825,6 +850,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     null,
                     LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -842,6 +868,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     CONVERTER_PROVIDER,
                     null,
                     PROVIDER_CONTEXT
@@ -859,6 +886,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     CONVERTER_PROVIDER,
                     LOCALE_CONTEXT,
                     null

@@ -839,6 +839,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
                 context, // ConverterProvider
+                context.lineEnding(),
                 context, // SpreadsheetLabelNameResolver
                 context, // LocaleContext
                 providerContext// ProviderContext
@@ -1884,6 +1885,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     Optional.ofNullable(value)
                                 ),
                                 context, // SpreadsheetLabelNameResolver
+                                context.lineEnding(),
                                 context, // ConverterProvider
                                 context, // LocaleContext
                                 providerContext // ProviderContext
