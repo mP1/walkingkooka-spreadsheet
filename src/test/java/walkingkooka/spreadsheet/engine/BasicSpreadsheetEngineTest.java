@@ -46,7 +46,6 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.MathTesting;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpHandler;
@@ -448,7 +447,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private final static Map<SpreadsheetColumnReference, Double> COLUMN_A_WIDTH = columnWidths("A");
-    private static final AbsoluteUrl SERVER_URL = Url.parseAbsolute("http://server123");
 
     private static final TextStyle STYLE = TextStyle.EMPTY.set(
         TextStylePropertyName.FONT_WEIGHT,
