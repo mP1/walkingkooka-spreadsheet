@@ -551,6 +551,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@see StorageConverters#storageValueInfoListToText}
+     */
+    public static <C extends ConverterContext> Converter<C> storageValueInfoListToText() {
+        return StorageConverters.storageValueInfoListToText();
+    }
+
+    /**
      * A converter that involves {@link TextStyle} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> style() {
