@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -94,6 +95,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {
+        final LineEnding lineEnding = LineEnding.NL;
         final Locale locale = Locale.ENGLISH;
 
         return SpreadsheetFormatterContexts.basic(
@@ -138,6 +140,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            lineEnding,
                             ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(

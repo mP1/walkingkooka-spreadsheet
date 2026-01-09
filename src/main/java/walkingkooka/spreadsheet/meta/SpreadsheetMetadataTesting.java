@@ -515,6 +515,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
         SPREADSHEET_LABEL_NAME_RESOLVER,
+        LINE_ENDING,
         CONVERTER_PROVIDER,
         LOCALE_CONTEXT,
         PROVIDER_CONTEXT
@@ -548,6 +549,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
+        LINE_ENDING,
         LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
@@ -557,6 +559,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
+        LINE_ENDING,
         LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT

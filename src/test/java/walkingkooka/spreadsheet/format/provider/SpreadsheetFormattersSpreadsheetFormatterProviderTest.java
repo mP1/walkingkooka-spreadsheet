@@ -142,6 +142,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 TERMINAL_CONTEXT
             ),
             SPREADSHEET_LABEL_NAME_RESOLVER,
+            LINE_ENDING,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
@@ -4741,6 +4742,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
+            LINE_ENDING,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

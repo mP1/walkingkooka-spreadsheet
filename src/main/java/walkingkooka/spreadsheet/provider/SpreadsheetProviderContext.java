@@ -114,6 +114,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private void setConverterContext(final Locale locale) {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
 
+        final EnvironmentContext environmentContext = this.environmentContext;
         final LocaleContext localeContext = this.localeContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
@@ -127,6 +128,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
+                        environmentContext.lineEnding(),
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
                         DateTimeContexts.basic(

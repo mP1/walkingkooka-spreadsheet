@@ -121,6 +121,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this.spreadsheetLabelNameResolver,
+                    this.lineEnding(),
                     spreadsheetContext, // SpreadsheetProvider
                     spreadsheetContext, // LocaleContext
                     spreadsheetContext.providerContext()
@@ -298,6 +299,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     v
                 ),
                 this, // SpreadsheetLabelNameResolver,
+                this.lineEnding(),
                 context, // LocaleContext
                 context, // spreadsheetProvider,
                 context.providerContext() // ProviderContext

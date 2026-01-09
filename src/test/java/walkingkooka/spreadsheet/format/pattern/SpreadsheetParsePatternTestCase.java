@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.formula.parser.YearSpreadsheetFormulaParserToken
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -870,6 +871,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
                         this.dateTimeContext(),

@@ -253,6 +253,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                     throw new UnsupportedOperationException();
                 },
                 LABEL_NAME_RESOLVER,
+                LINE_ENDING,
                 CONVERTER_PROVIDER,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT

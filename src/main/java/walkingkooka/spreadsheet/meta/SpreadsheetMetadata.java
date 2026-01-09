@@ -92,6 +92,7 @@ import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -975,6 +976,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
      */
     public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final SpreadsheetLabelNameResolver resolveIfLabel,
+                                                                               final LineEnding lineEnding,
                                                                                final SpreadsheetProvider spreadsheetProvider,
                                                                                final LocaleContext localeContext,
                                                                                final ProviderContext providerContext) {
@@ -982,6 +984,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             this.sortSpreadsheetConverterContext(
                 resolveIfLabel,
                 spreadsheetProvider, // ConverterProvider
+                lineEnding,
                 localeContext,
                 providerContext // ProviderContext
             )
@@ -993,6 +996,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     private SpreadsheetConverterContext sortSpreadsheetConverterContext(final SpreadsheetLabelNameResolver labelNameResolver,
                                                                         final ConverterProvider converterProvider,
+                                                                        final LineEnding lineEnding,
                                                                         final LocaleContext localeContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
@@ -1000,6 +1004,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
             labelNameResolver,
+            lineEnding,
             converterProvider,
             localeContext,
             providerContext
@@ -1026,6 +1031,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final Optional<SpreadsheetExpressionReference> validationReference,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                         final LineEnding lineEnding,
                                                                          final ConverterProvider converterProvider,
                                                                          final LocaleContext localeContext,
                                                                          final ProviderContext providerContext) {
@@ -1033,6 +1039,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1107,6 +1114,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
+                        lineEnding,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
                         dateTimeContext,
@@ -1177,12 +1185,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                         final LineEnding lineEnding,
                                                                          final LocaleContext localeContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
@@ -1207,6 +1217,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
                 labelNameResolver,
+                lineEnding,
                 spreadsheetProvider,
                 localeContext,
                 providerContext
@@ -1241,6 +1252,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
                                                                                                        final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                                                       final LineEnding lineEnding,
                                                                                                        final LocaleContext localeContext,
                                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                                        final ProviderContext providerContext) {
@@ -1249,6 +1261,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 cell,
                 spreadsheetExpressionEvaluationContext,
                 labelNameResolver,
+                lineEnding,
                 localeContext,
                 spreadsheetProvider,
                 providerContext
@@ -1350,11 +1363,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
+                                                                         final LineEnding lineEnding,
                                                                          final ConverterProvider converterProvider,
                                                                          final LocaleContext localeContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
+        Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
         Objects.requireNonNull(converterProvider, "converterProvider");
@@ -1369,6 +1384,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 Optional.of(cellOrLabel), // validationReference
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
                 labelNameResolver,
+                lineEnding,
                 converterProvider,
                 localeContext,
                 providerContext
