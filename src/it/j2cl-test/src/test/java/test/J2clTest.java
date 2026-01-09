@@ -78,6 +78,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -293,6 +294,7 @@ public class J2clTest {
             )
         );
 
+        final LineEnding lineEnding = LineEnding.NL;
         final ProviderContext providerContext = ProviderContexts.fake();
 
         return new FakeSpreadsheetEngineContext() {
@@ -364,6 +366,7 @@ public class J2clTest {
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                             LABEL_NAME_RESOLVER,
+                            lineEnding,
                             converterProvider,
                             this.localeContext,
                             providerContext
@@ -417,6 +420,7 @@ public class J2clTest {
                             throw new UnsupportedOperationException();
                         },
                         LABEL_NAME_RESOLVER,
+                        lineEnding,
                         this.localeContext,
                         SpreadsheetProviders.basic(
                             converterProvider,
