@@ -224,7 +224,7 @@ final class MissingConverterVerifier {
         final boolean sort = SpreadsheetMetadataPropertyName.SORT_CONVERTER.equals(propertyName);
         final boolean validation = SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER.equals(propertyName);
 
-        final MissingConverterVerifier finder = new MissingConverterVerifier(
+        final MissingConverterVerifier verifier = new MissingConverterVerifier(
             converter,
             context
         );
@@ -270,7 +270,7 @@ final class MissingConverterVerifier {
         final RelativeUrl relativeUrl = Url.parseRelative("/path1/path2?k1=v1#fragment111");
 
         // basic........................................................................................................
-        finder.addIfConversionFail(
+        verifier.addIfConversionFail(
             Lists.of(
                 null,
                 spreadsheetCell
@@ -280,7 +280,7 @@ final class MissingConverterVerifier {
         );
 
         // boolean......................................................................................................
-        finder.addIfConversionFail(
+        verifier.addIfConversionFail(
             Lists.of(
                 0,
                 1,
@@ -293,7 +293,7 @@ final class MissingConverterVerifier {
             SpreadsheetConvertersConverterProvider.BOOLEAN
         );
 
-        finder.addIfConversionFail(
+        verifier.addIfConversionFail(
             Lists.of(
                 SpreadsheetStrings.BOOLEAN_TRUE,
                 SpreadsheetStrings.BOOLEAN_FALSE
@@ -305,7 +305,7 @@ final class MissingConverterVerifier {
         // collection-to-list...........................................................................................
         {
             // The List is the value not a List of values.
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         true,
@@ -315,7 +315,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         "Apple 1",
@@ -325,7 +325,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         DATE,
@@ -340,7 +340,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         DATE_TIME,
@@ -358,7 +358,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         TIME,
@@ -373,7 +373,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         kind.create(1),
@@ -385,7 +385,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO_LIST // COLLECTION_TO_LIST
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         "Apple",
@@ -399,7 +399,7 @@ final class MissingConverterVerifier {
 
         // collection-to................................................................................................
         {
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Arrays.asList(
                         (Object) null
@@ -408,7 +408,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         false
@@ -417,7 +417,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         true
@@ -426,7 +426,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         123
@@ -435,28 +435,28 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(DATE),
                 LocalDate.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(DATE_TIME),
                 LocalDateTime.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(DATE_TIME),
                 LocalDateTimeList.class,
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(
                         "Hello"
@@ -465,7 +465,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.COLLECTION_TO // COLLECTION_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 (Object)
                     Lists.of(TIME),
                 LocalTime.class,
@@ -477,7 +477,7 @@ final class MissingConverterVerifier {
         {
             // color-to-color...........................................................................................
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Color.BLACK,
                     Lists.of(
                         HslColor.class,
@@ -490,7 +490,7 @@ final class MissingConverterVerifier {
 
             // color-to-number..........................................................................................
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Color.BLACK,
                     NUMBER_TYPES_WITHOUT_BYTE_SHORT,
                     SpreadsheetConvertersConverterProvider.COLOR // COLOR_TO_NUMBER
@@ -498,7 +498,7 @@ final class MissingConverterVerifier {
 
                 final RgbColor rgb = Color.parseRgb("#12345678");
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         rgb.alpha(),
                         rgb.red(),
@@ -512,7 +512,7 @@ final class MissingConverterVerifier {
 
             // text-to-color............................................................................................
             if (formula || formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "#123456",
                     Color.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_COLOR
@@ -521,7 +521,7 @@ final class MissingConverterVerifier {
 
             // text-to-spreadsheet-color-name...........................................................................
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     SpreadsheetColorName.BLACK.value(),
                     SpreadsheetColorName.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
@@ -532,49 +532,49 @@ final class MissingConverterVerifier {
         // date-time....................................................................................................
         {
             // date -> dateTime & number & text & time
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 DATE, // date
                 DATE_TO_TYPES,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
             );
 
             // datetime ->
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 DATE_TIME, // date
                 DATE_TIME_TO_TYPES,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
             );
 
             // time ->
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 TIME,
                 TIME_TO_TYPES,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
             );
 
             // text -> number
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 "123",
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
             );
 
             // text -> date
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 "1999/12/31",
                 LocalDate.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
             );
 
             // text -> dateTime
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 "1999/12/31 12:58",
                 LocalDateTime.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
             );
 
             // text -> time
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 "12:58:59",
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
@@ -584,7 +584,7 @@ final class MissingConverterVerifier {
         // environment..................................................................................................
         {
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     error,
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.ENVIRONMENT // TEXT_TO_ENVIRONMENT_VALUE_NAME
@@ -594,7 +594,7 @@ final class MissingConverterVerifier {
 
         // error-throwing...............................................................................................
         if (formula) {
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 error,
                 ExpressionNumber.class,
                 SpreadsheetConvertersConverterProvider.ERROR_THROWING,
@@ -605,7 +605,7 @@ final class MissingConverterVerifier {
         // expression...................................................................................................
         {
             if (find || formatting || formula || scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "1+sum(2)",
                     Expression.class,
                     SpreadsheetConvertersConverterProvider.EXPRESSION
@@ -617,7 +617,7 @@ final class MissingConverterVerifier {
         {
             // to-json..................................................................................................
             if (formula || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "Hello",
                     Lists.of(
                         JsonNode.class,
@@ -632,7 +632,7 @@ final class MissingConverterVerifier {
             }
 
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     context.marshall(spreadsheetCell)
                         .toString(),
                     Lists.of(
@@ -646,7 +646,7 @@ final class MissingConverterVerifier {
         // locale.......................................................................................................
         {
             if (formula || find || formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         locale.toLanguageTag(),
                         locale
@@ -657,7 +657,7 @@ final class MissingConverterVerifier {
             }
 
             if (formula || find || formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         locale.toLanguageTag(),
                         locale
@@ -669,7 +669,7 @@ final class MissingConverterVerifier {
 
             // text-to-locale...............................................................................................
             if (formula || find || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     locale.toLanguageTag(),
                     Locale.class,
                     SpreadsheetConvertersConverterProvider.LOCALE // TEXT_TO_LOCALE
@@ -677,7 +677,7 @@ final class MissingConverterVerifier {
             }
 
             if (formula || find || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         locale,
                         spreadsheetCell
@@ -691,7 +691,7 @@ final class MissingConverterVerifier {
         // net..........................................................................................................
         {
             if (find | formula | scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         absoluteUrl.text(),
                         mailToUrl.text(),
@@ -701,13 +701,13 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     emailAddress.text(),
                     EmailAddress.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         absoluteUrl.text(),
                         emailAddress.text(),
@@ -725,7 +725,7 @@ final class MissingConverterVerifier {
         {
             // null-to-number...........................................................................................
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     (Object) null, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.NUMBER
@@ -733,7 +733,7 @@ final class MissingConverterVerifier {
             }
 
             // number-to-number.........................................................................................
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 1,
                 NUMBER_TYPES,
                 SpreadsheetConvertersConverterProvider.NUMBER
@@ -742,25 +742,25 @@ final class MissingConverterVerifier {
 
         // optional-to..................................................................................................
         {
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.empty(),
                 Boolean.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(false),
                 Boolean.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(true),
                 Boolean.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(
                     123
                 ),
@@ -768,25 +768,25 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(DATE),
                 LocalDate.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(DATE_TIME),
                 LocalDateTime.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(DATE_TIME),
                 LocalDateTimeList.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(
                     "Hello"
                 ),
@@ -794,7 +794,7 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
             );
 
-            finder.addIfConversionFail(
+            verifier.addIfConversionFail(
                 Optional.of(TIME),
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.OPTIONAL_TO // OPTIONAL_TO
@@ -804,7 +804,7 @@ final class MissingConverterVerifier {
         // plugins......................................................................................................
         {
             if (scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     formatterSelector.text(),
                     SpreadsheetFormatterSelector.class,
                     SpreadsheetConvertersConverterProvider.PLUGINS // SPREADSHEET_VALUE
@@ -813,7 +813,7 @@ final class MissingConverterVerifier {
 
             // text-to-validation-selector..............................................................................
             if (scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     validatorSelector.text(),
                     ValidatorSelector.class,
                     SpreadsheetConvertersConverterProvider.PLUGINS // TEXT_TO_VALIDATOR_SELECTOR
@@ -828,7 +828,7 @@ final class MissingConverterVerifier {
 
             // will be enabled by terminal
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetId.toString(),
                     SpreadsheetId.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_ID
@@ -842,7 +842,7 @@ final class MissingConverterVerifier {
             );
 
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     context.marshall(metadata)
                         .toString(),
                     SpreadsheetMetadata.class,
@@ -854,7 +854,7 @@ final class MissingConverterVerifier {
             final SpreadsheetMetadataPropertyName<SpreadsheetName> spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
 
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetMetadataPropertyName.value(),
                     SpreadsheetMetadataPropertyName.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
@@ -866,7 +866,7 @@ final class MissingConverterVerifier {
             final SpreadsheetName spreadsheetName = SpreadsheetName.with("SpreadsheetName123");
 
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetName.text(),
                     SpreadsheetName.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_NAME
@@ -878,7 +878,7 @@ final class MissingConverterVerifier {
         {
             // error-to-error...........................................................................................
             if (formula) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     error,
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_ERROR
@@ -887,7 +887,7 @@ final class MissingConverterVerifier {
 
             // error-to-number..........................................................................................
             if (formula) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     error,
                     ExpressionNumber.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // ERROR_TO_NUMBER
@@ -895,7 +895,7 @@ final class MissingConverterVerifier {
             }
 
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     (Object) null, // dont want List overload
                     NUMBER_TYPES,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // NULL_TO_NUMBER
@@ -904,7 +904,7 @@ final class MissingConverterVerifier {
 
             // has-spreadsheet-formatter-selector.......................................................................
             if (scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetCell,
                     SpreadsheetFormatterSelector.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
@@ -913,7 +913,7 @@ final class MissingConverterVerifier {
 
             // has-spreadsheet-parser-selector.......................................................................
             if (scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetCell,
                     SpreadsheetParserSelector.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
@@ -922,7 +922,7 @@ final class MissingConverterVerifier {
 
             // has-validation-selector..................................................................................
             if (scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetCell,
                     ValidatorSelector.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
@@ -931,7 +931,7 @@ final class MissingConverterVerifier {
 
             // spreadsheet-selection-to-spreadsheet-selection...............................................................
             if (formula) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         cell,
                         cellRange
@@ -940,7 +940,7 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         cell,
                         cellRange,
@@ -953,13 +953,13 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     column,
                     SpreadsheetColumnReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         column,
                         columnRange
@@ -968,13 +968,13 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     row,
                     SpreadsheetRowReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         row,
                         rowRange
@@ -987,7 +987,7 @@ final class MissingConverterVerifier {
             // spreadsheet-selection-to-text............................................................................
 
             if (formula || scripting || validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         cell,
                         cellRange,
@@ -1004,7 +1004,7 @@ final class MissingConverterVerifier {
 
             // text-to-error............................................................................................
             if (validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     error.text(),
                     SpreadsheetError.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_ERROR
@@ -1020,14 +1020,14 @@ final class MissingConverterVerifier {
                     columnRange,
                     label
                 )) {
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         selection.toString(),
                         selection.getClass(),
                         SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                     );
                 }
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     cell.toString(),
                     Lists.of(
                         SpreadsheetCellReference.class,
@@ -1036,19 +1036,19 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     cellRange.toString(),
                     SpreadsheetCellRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     label.toString(),
                     SpreadsheetLabelName.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     column.toString(),
                     Lists.of(
                         SpreadsheetColumnReference.class,
@@ -1057,19 +1057,19 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     column.toString(),
                     SpreadsheetColumnReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     columnRange.toString(),
                     SpreadsheetColumnRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     row.toString(),
                     Lists.of(
                         SpreadsheetRowReference.class,
@@ -1078,13 +1078,13 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     row.toString(),
                     SpreadsheetRowReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     rowRange.toString(),
                     SpreadsheetRowRangeReference.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_SPREADSHEET_SELECTION
@@ -1093,7 +1093,7 @@ final class MissingConverterVerifier {
 
             // text-to-value-type.......................................................................................
             if (validation) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     SpreadsheetValueType.TEXT.value(),
                     ValueType.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_VALUE_TYPE
@@ -1104,7 +1104,7 @@ final class MissingConverterVerifier {
         // storage......................................................................................................
         {
             if (scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     StorageValueInfoList.EMPTY.concat(
                         StorageValueInfo.with(
                             StoragePath.parse("/path1/file2.txt"),
@@ -1124,7 +1124,7 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "/path1/file2.txt",
                     StoragePath.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH
@@ -1136,7 +1136,7 @@ final class MissingConverterVerifier {
         {
             // has-style-...............................................................................................
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         style,
                         SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
@@ -1151,21 +1151,21 @@ final class MissingConverterVerifier {
             final SpreadsheetText spreadsheetText = SpreadsheetText.with("Text123");
 
             if (formatting || scripting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     spreadsheetText.text(),
                     SpreadsheetText.class,
                     SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_SPREADSHEET_TEXT
                 );
 
                 // text-to-textStyle....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     style.text(),
                     TextStyle.class,
                     SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_TEXT_STYLE
                 );
 
                 // text-to-text-style-property-name.....................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     TextStylePropertyName.BACKGROUND_COLOR.text(),
                     TextStylePropertyName.class,
                     SpreadsheetConvertersConverterProvider.STYLE // TEXT_TO_TEXT_STYLE_PROPERTY_NAME
@@ -1177,7 +1177,7 @@ final class MissingConverterVerifier {
         {
             // text-to-template-value-name..............................................................................
             if (formatting) {
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     TemplateValueName.with("TemplateValue123"),
                     TemplateValueName.class,
                     SpreadsheetConvertersConverterProvider.TEMPLATE // TEXT_TO_TEMPLATE_VALUE_NAME
@@ -1186,7 +1186,7 @@ final class MissingConverterVerifier {
         }
 
         // text.........................................................................................................
-        finder.addIfConversionFail(
+        verifier.addIfConversionFail(
             Lists.of(
                 'A',
                 "Text",
@@ -1202,7 +1202,7 @@ final class MissingConverterVerifier {
             // text-to-line-ending......................................................................................
             if (scripting) {
                 if (formatting) {
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         Lists.of(
                         "",
                             "\n",
@@ -1219,14 +1219,14 @@ final class MissingConverterVerifier {
                 }
 
                 // url-to-hyperlink.....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     absoluteUrl.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     absoluteUrl.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
@@ -1236,7 +1236,7 @@ final class MissingConverterVerifier {
             // text-to-url..............................................................................................
             if (formatting || scripting) {
                 if (formatting) {
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         absoluteUrl.text(),
                         String.class,
                         SpreadsheetConvertersConverterProvider.TEXT_NODE // TEXT_TO_URL
@@ -1244,14 +1244,14 @@ final class MissingConverterVerifier {
                 }
 
                 // url-to-hyperlink.....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     absoluteUrl.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     absoluteUrl.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
@@ -1260,7 +1260,7 @@ final class MissingConverterVerifier {
 
             if (formatting || scripting) {
                 // has-text-node........................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         TextNode.text("Text123").setTextStyle(
                             TextStyle.EMPTY.set(
@@ -1277,7 +1277,7 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // TO_STYLEABLE
                 );
 
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         'A',
                         "Text123",
@@ -1288,7 +1288,7 @@ final class MissingConverterVerifier {
                 );
 
                 // text-to-textNode.....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     Lists.of(
                         'A',
                         "Text"
@@ -1298,14 +1298,14 @@ final class MissingConverterVerifier {
                 );
 
                 // url-to-hyperlink.....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     absoluteUrl.text(),
                     Hyperlink.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_HYPERLINK
                 );
 
                 // url-to-image.........................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     absoluteUrl.text(),
                     Image.class,
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
@@ -1315,49 +1315,49 @@ final class MissingConverterVerifier {
             // text-to-XXX-list.........................................................................................
             {
                 // text-to-boolean-list.................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "TRUE, FALSE, true",
                     BooleanList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST
                 );
 
                 // text-to-csv-string-list..............................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "apple, banana, \"333 444\"",
                     CsvStringList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
                 );
 
                 // text-to-date-list....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "1999/12/31",
                     LocalDateList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST
                 );
 
                 // text-to-date-time-list...............................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "1999/12/31 12:58",
                     LocalDateTimeList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST
                 );
 
                 // text-to-number-list..................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "1, 22, 333.5",
                     NumberList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST
                 );
 
                 // text-to-string-list..................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "apple, banana, 333",
                     StringList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST
                 );
 
                 // text-to-time-list....................................................................................
-                finder.addIfConversionFail(
+                verifier.addIfConversionFail(
                     "12:58:59",
                     LocalTimeList.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
@@ -1368,14 +1368,14 @@ final class MissingConverterVerifier {
             {
                 if (scripting || validation) {
                     if (validation) {
-                        finder.addIfConversionFail(
+                        verifier.addIfConversionFail(
                             "Form123",
                             FormName.class,
                             SpreadsheetConvertersConverterProvider.FORM_AND_VALIDATION // TEXT_TO_FORM_NAME
                         );
 
                         // text-to-validation-error.....................................................................
-                        finder.addIfConversionFail(
+                        verifier.addIfConversionFail(
                             SpreadsheetForms.error(cell)
                                 .setMessage("Error message 123")
                                 .text(),
@@ -1387,7 +1387,7 @@ final class MissingConverterVerifier {
 
                 if (validation) {
                     // to-validation-checkbox.............................................................................
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         Lists.of(
                             Lists.empty(),
                             Lists.of("true"),
@@ -1405,7 +1405,7 @@ final class MissingConverterVerifier {
                     );
 
                     // to-validation-choice.............................................................................
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         Lists.of(
                             111,
                             "Choice1"
@@ -1415,7 +1415,7 @@ final class MissingConverterVerifier {
                     );
 
                     // to-validation-choice-list........................................................................
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         Lists.of(
                             Lists.of(
                                 ValidationChoice.with(
@@ -1455,7 +1455,7 @@ final class MissingConverterVerifier {
                     );
 
                     // to-validation-error-list.........................................................................
-                    finder.addIfConversionFail(
+                    verifier.addIfConversionFail(
                         Lists.of(
                             "Validation error message 1",
                             SpreadsheetForms.error(SpreadsheetSelection.A1)
@@ -1470,7 +1470,7 @@ final class MissingConverterVerifier {
 
         return MissingConverterSet.with(
             new TreeSet<>(
-                finder.missing.values()
+                verifier.missing.values()
             )
         );
     }
