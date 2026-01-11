@@ -11,7 +11,6 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
@@ -21,7 +20,6 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -44,6 +42,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -59,6 +58,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -462,7 +462,8 @@ public class TestGwtTest extends GWTTestCase {
             }
 
             private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.treeMap(
-                SpreadsheetMetadataStores.fake()
+                SpreadsheetMetadataStores.fake(),
+                Storages.fake()
             );
 
             @Override
