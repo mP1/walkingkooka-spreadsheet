@@ -151,6 +151,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                     DEFAULT_YEAR.equals(name) ||
                     EXPRESSION_NUMBER_KIND.equals(name) ||
                     FUNCTIONS.equals(name) ||
+                    LINE_ENDING.equals(name) ||
                     LOCALE.equals(name) ||
                     NUMBER_PARSER.equals(name) ||
                     PRECISION.equals(name) ||
