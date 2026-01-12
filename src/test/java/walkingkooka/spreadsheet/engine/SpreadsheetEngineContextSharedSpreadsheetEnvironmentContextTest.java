@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -444,7 +445,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             )
         );
 
-        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            metadataStore,
+            Storages.fake()
+        );
 
         this.evaluateAndCheck(
             this.createContext(

@@ -45,7 +45,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.Storages;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 /**
@@ -111,7 +110,8 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetStoreRepository}
      */
-    public static SpreadsheetStoreRepository treeMap(final SpreadsheetMetadataStore metadatas) {
+    public static SpreadsheetStoreRepository treeMap(final SpreadsheetMetadataStore metadatas,
+                                                     final Storage<StorageExpressionEvaluationContext> storage) {
         return basic(
             SpreadsheetCellStores.treeMap(),
             SpreadsheetCellReferencesStores.treeMap(),
@@ -123,7 +123,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
             metadatas,
             SpreadsheetCellRangeStores.treeMap(),
             SpreadsheetRowStores.treeMap(),
-            Storages.tree(),
+            storage,
             SpreadsheetUserStores.treeMap()
         );
     }

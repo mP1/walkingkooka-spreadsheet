@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storages;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -231,7 +232,10 @@ public final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreR
 
         return SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.with(
             ID,
-            SpreadsheetStoreRepositories.treeMap(metadatas),
+            SpreadsheetStoreRepositories.treeMap(
+                metadatas,
+                Storages.fake()
+            ),
             SPREADSHEET_PARSER_PROVIDER,
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT

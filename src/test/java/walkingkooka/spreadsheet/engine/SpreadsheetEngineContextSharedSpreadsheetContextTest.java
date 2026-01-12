@@ -677,7 +677,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             new TestSpreadsheetContext(
                 metadata,
                 SpreadsheetStoreRepositories.treeMap(
-                    SpreadsheetMetadataStores.fake()
+                    SpreadsheetMetadataStores.fake(),
+                    Storages.fake()
                 ),
                 environmentContext,
                 LOCALE_CONTEXT,

@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserAliasSet;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
@@ -420,7 +421,10 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         final Map<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToSpreadsheetStoreRepository = Maps.sorted();
         spreadsheetIdToSpreadsheetStoreRepository.put(
             SPREADSHEET_ID,
-            SpreadsheetStoreRepositories.treeMap(store)
+            SpreadsheetStoreRepositories.treeMap(
+                store,
+                Storages.fake()
+            )
         );
 
         final SpreadsheetMetadata otherMetadata = metadata.set(
@@ -440,7 +444,10 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
         spreadsheetIdToSpreadsheetStoreRepository.put(
             OTHER_SPREADSHEET_ID,
-            SpreadsheetStoreRepositories.treeMap(store)
+            SpreadsheetStoreRepositories.treeMap(
+                store,
+                Storages.fake()
+            )
         );
 
         this.checkNotEquals(
