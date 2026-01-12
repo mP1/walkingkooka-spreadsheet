@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.test.Fake;
 
 public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepository, Fake {
@@ -89,7 +90,7 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     @Override
-    public Storage storage() {
+    public Storage<StorageExpressionEvaluationContext> storage() {
         throw new UnsupportedOperationException();
     }
 

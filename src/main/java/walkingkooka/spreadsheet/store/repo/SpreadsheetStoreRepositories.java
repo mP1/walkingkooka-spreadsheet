@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
@@ -72,7 +73,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetMetadataStore metadatas,
                                                    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                    final SpreadsheetRowStore rows,
-                                                   final Storage storage,
+                                                   final Storage<StorageExpressionEvaluationContext> storage,
                                                    final SpreadsheetUserStore users) {
         return BasicSpreadsheetStoreRepository.with(
             cells,

@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -70,7 +71,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private final static SpreadsheetRowStore ROWS = SpreadsheetRowStores.fake();
 
-    private final static Storage STORAGES = Storages.fake();
+    private final static Storage<StorageExpressionEvaluationContext> STORAGES = Storages.fake();
 
     private final static SpreadsheetUserStore USERS = SpreadsheetUserStores.fake();
 
@@ -605,7 +606,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = RANGE_TO_CELLS;
         final SpreadsheetMetadataStore metadatas = METADATAS;
         final SpreadsheetRowStore rows = ROWS;
-        final Storage storage = STORAGES;
+        final Storage<StorageExpressionEvaluationContext> storage = STORAGES;
         final SpreadsheetUserStore users = USERS;
 
         this.toStringAndCheck(
