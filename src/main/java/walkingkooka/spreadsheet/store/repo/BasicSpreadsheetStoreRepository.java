@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -50,7 +49,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetRowStore rows,
-                                                final Storage<StorageExpressionEvaluationContext> storage,
+                                                final Storage storage,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
@@ -91,7 +90,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetRowStore rows,
-                                            final Storage<StorageExpressionEvaluationContext> storage,
+                                            final Storage storage,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
@@ -178,11 +177,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetRowStore rows;
 
     @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
+    public Storage storage() {
         return this.storage;
     }
 
-    private final Storage<StorageExpressionEvaluationContext> storage;
+    private final Storage storage;
 
     @Override
     public SpreadsheetUserStore users() {
