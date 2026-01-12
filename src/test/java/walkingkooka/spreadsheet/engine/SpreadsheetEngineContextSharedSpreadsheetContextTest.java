@@ -75,6 +75,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
@@ -734,7 +735,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 }
 
                 @Override
-                public Storage storage() {
+                public Storage<StorageExpressionEvaluationContext> storage() {
                     return Storages.fake();
                 }
             },

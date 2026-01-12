@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.LineEnding;
@@ -296,7 +297,7 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override
-    public Storage storage() {
+    public Storage<StorageExpressionEvaluationContext> storage() {
         return this.context.storage();
     }
 
