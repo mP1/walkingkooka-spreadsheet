@@ -35,8 +35,11 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTestingTest.TestSpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.store.Store;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -217,6 +220,41 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
         public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
             Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
 
+            throw new UnsupportedOperationException();
+        }
+
+        // labels.......................................................................................................
+
+        @Override
+        public Set<SpreadsheetLabelMapping> loadLabels(final SpreadsheetLabelName labelName) {
+            Objects.requireNonNull(labelName, "labelName");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<SpreadsheetLabelMapping> saveLabels(final Set<SpreadsheetLabelMapping> labels) {
+            Objects.requireNonNull(labels, "labels");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void deleteLabels(final SpreadsheetLabelName labelName) {
+            Objects.requireNonNull(labelName, "labelName");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<SpreadsheetLabelName> findLabelsByName(final String labelName,
+                                                          final int offset,
+                                                          final int count) {
+            Objects.requireNonNull(labelName, "labelName");
+            Store.checkOffsetAndCount(
+                offset,
+                count
+            );
             throw new UnsupportedOperationException();
         }
 
