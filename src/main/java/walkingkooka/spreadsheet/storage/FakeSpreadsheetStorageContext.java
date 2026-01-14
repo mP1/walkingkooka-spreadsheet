@@ -62,7 +62,7 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> saveLabels(final Set<SpreadsheetLabelMapping> labels) {
+    public SpreadsheetLabelMapping saveLabel(final SpreadsheetLabelMapping label) {
         throw new UnsupportedOperationException();
     }
 
