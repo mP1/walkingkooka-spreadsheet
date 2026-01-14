@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
@@ -29,7 +30,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 public interface SpreadsheetStorageContext extends StorageContext,
-    SpreadsheetEnvironmentContext {
+    SpreadsheetEnvironmentContext,
+    ConverterLike {
 
     @Override
     SpreadsheetStorageContext cloneEnvironment();

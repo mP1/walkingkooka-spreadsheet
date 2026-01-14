@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
@@ -164,6 +165,18 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
                 Url.parseAbsolute("https://example.com")
             )
         );
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> type) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            throw new UnsupportedOperationException();
+        }
 
         @Override
         public String toString() {
