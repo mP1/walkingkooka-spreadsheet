@@ -48,7 +48,7 @@ public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetStorageContext setLineEnding(final LineEnding lineEnding);
 
     @Override
-    SpreadsheetStorageContext setLocale(Locale locale);
+    SpreadsheetStorageContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
