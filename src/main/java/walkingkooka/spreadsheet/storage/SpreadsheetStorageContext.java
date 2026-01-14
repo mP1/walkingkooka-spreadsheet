@@ -50,7 +50,7 @@ public interface SpreadsheetStorageContext extends StorageContext,
 
     Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName);
 
-    Set<SpreadsheetLabelMapping> saveLabels(final Set<SpreadsheetLabelMapping> labels);
+    SpreadsheetLabelMapping saveLabel(final SpreadsheetLabelMapping label);
 
     void deleteLabel(final SpreadsheetLabelName labelName);
 

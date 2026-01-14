@@ -140,24 +140,24 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    // saveLabels.......................................................................................................
+    // saveLabel........................................................................................................
 
     @Test
-    default void testSaveLabelsWithNullLabelsFails() {
+    default void testSaveLabelWithNullLabelMappingFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .saveLabels(null)
+                .saveLabel(null)
         );
     }
 
     default void saveLabelsAndCheck(final C context,
-                                    final Set<SpreadsheetLabelMapping> labels,
-                                    final SpreadsheetCell... expected) {
+                                    final SpreadsheetLabelMapping label,
+                                    final SpreadsheetLabelMapping expected) {
         this.checkEquals(
             expected,
-            context.saveLabels(labels),
-            () -> "saveLabels " + labels
+            context.saveLabel(label),
+            () -> "saveLabel " + label
         );
     }
 

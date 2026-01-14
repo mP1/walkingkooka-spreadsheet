@@ -233,8 +233,8 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
         }
 
         @Override
-        public Set<SpreadsheetLabelMapping> saveLabels(final Set<SpreadsheetLabelMapping> labels) {
-            Objects.requireNonNull(labels, "labels");
+        public SpreadsheetLabelMapping saveLabel(final SpreadsheetLabelMapping label) {
+            Objects.requireNonNull(label, "label");
 
             throw new UnsupportedOperationException();
         }
