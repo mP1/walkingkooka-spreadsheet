@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTestingTest.TestSpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.TestSpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.store.Store;
 import walkingkooka.text.LineEnding;
@@ -48,7 +48,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public final class SpreadsheetStorageContextTestingTest implements SpreadsheetStorageContextTesting<TestSpreadsheetStorageContext> {
+public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetStorageContextTesting2<TestSpreadsheetStorageContext> {
 
     @Override
     public void testSetEnvironmentContextWithEqualEnvironmentContext() {

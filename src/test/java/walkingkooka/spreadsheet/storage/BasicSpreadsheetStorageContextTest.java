@@ -78,7 +78,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting<BasicSpreadsheetStorageContext> {
+public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<BasicSpreadsheetStorageContext> {
 
     private final static Locale LOCALE = Locale.ENGLISH;
 
