@@ -67,12 +67,14 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
 
     // Name.............................................................................................................
 
+    public final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+
     /**
-     * Spreadsheet names are case sensitive.
+     * Spreadsheet names are case-sensitive.
      */
     @Override
     public CaseSensitivity caseSensitivity() {
-        return CaseSensitivity.SENSITIVE;
+        return CASE_SENSITIVITY;
     }
 
     // HateosResource ....................................................................................................
