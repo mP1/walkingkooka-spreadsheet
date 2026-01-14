@@ -227,7 +227,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
                                           final String text,
                                           final int offset,
                                           final int count,
-                                          final SpreadsheetLabelMapping... expected) {
+                                          final SpreadsheetLabelName... expected) {
         this.findLabelsByNameAndCheck(
             context,
             text,
@@ -241,7 +241,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
                                           final String text,
                                           final int offset,
                                           final int count,
-                                          final Set<SpreadsheetLabelMapping> expected) {
+                                          final Set<SpreadsheetLabelName> expected) {
         this.checkEquals(
             expected,
             context.findLabelsByName(
