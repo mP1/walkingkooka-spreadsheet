@@ -151,9 +151,9 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    default void saveLabelsAndCheck(final C context,
-                                    final SpreadsheetLabelMapping label,
-                                    final SpreadsheetLabelMapping expected) {
+    default void saveLabelAndCheck(final C context,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetLabelMapping expected) {
         this.checkEquals(
             expected,
             context.saveLabel(label),
