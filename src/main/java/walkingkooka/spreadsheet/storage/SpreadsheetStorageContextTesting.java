@@ -17,11 +17,20 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.storage.StorageContextTesting;
 
 public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageContext> extends StorageContextTesting<C>,
-    SpreadsheetEnvironmentContextTesting2<C> {
+    SpreadsheetEnvironmentContextTesting2<C>,
+    ConverterLikeTesting<C> {
+
+    @Override
+    default C createConverterLike() {
+        return this.createContext();
+    }
+
+    // class............................................................................................................
 
     @Override
     default void testTypeNaming() {
