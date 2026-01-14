@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -34,6 +35,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageContext> extends StorageContextTesting<C>,
+    SpreadsheetMetadataContextTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     ConverterLikeTesting<C> {
 

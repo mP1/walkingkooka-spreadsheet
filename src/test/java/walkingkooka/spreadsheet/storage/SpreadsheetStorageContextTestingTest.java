@@ -196,7 +196,7 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
         public SpreadsheetMetadataContext spreadsheetMetadataContext() {
             return SpreadsheetMetadataContexts.basic(
                 (e, l) -> SpreadsheetMetadata.EMPTY,
-                SpreadsheetMetadataStores.fake()
+                SpreadsheetMetadataStores.treeMap()
             );
         }
 
