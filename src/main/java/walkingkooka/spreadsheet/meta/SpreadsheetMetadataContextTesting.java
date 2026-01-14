@@ -124,7 +124,7 @@ public interface SpreadsheetMetadataContextTesting<C extends SpreadsheetMetadata
 
     default void saveMetadataAndCheck(final C context,
                                       final SpreadsheetMetadata metadata,
-                                      final Optional<SpreadsheetMetadata> expected) {
+                                      final SpreadsheetMetadata expected) {
         this.checkEquals(
             expected,
             context.saveMetadata(metadata),
