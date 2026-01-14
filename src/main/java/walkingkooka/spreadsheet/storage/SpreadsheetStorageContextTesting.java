@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContextTesting;
 import walkingkooka.text.CharSequences;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -99,33 +100,42 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    // loadLabels.......................................................................................................
+    // loadLabel........................................................................................................
 
     @Test
-    default void testLoadLabelsWithNullLabelsFails() {
+    default void testLoadLabelWithNullLabelsFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .loadLabels(null)
+                .loadLabel(null)
         );
     }
 
-    default void loadLabelsAndCheck(final C context,
-                                    final SpreadsheetLabelName labels,
-                                    final SpreadsheetCell... expected) {
-        this.loadLabelsAndCheck(
+    default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labels) {
+        this.loadLabelAndCheck(
             context,
             labels,
-            Sets.of(expected)
+            Optional.empty()
         );
     }
 
-    default void loadLabelsAndCheck(final C context,
-                                    final SpreadsheetLabelName labels,
-                                    final Set<SpreadsheetCell> expected) {
+    default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labels,
+                                   final SpreadsheetLabelMapping expected) {
+        this.loadLabelAndCheck(
+            context,
+            labels,
+            Optional.of(expected)
+        );
+    }
+
+    default void loadLabelAndCheck(final C context,
+                                   final SpreadsheetLabelName labels,
+                                   final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
             expected,
-            context.loadLabels(labels),
+            context.loadLabel(labels),
             () -> "loadLabels " + labels
         );
     }
