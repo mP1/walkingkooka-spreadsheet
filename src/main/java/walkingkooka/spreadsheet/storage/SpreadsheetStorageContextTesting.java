@@ -17,50 +17,22 @@
 
 package walkingkooka.spreadsheet.storage;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.convert.ConverterLikeTesting;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.StorageContextTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageContext> extends StorageContextTesting<C>,
-    SpreadsheetMetadataContextTesting<C>,
-    SpreadsheetEnvironmentContextTesting2<C>,
-    ConverterLikeTesting<C> {
-
-    @Override
-    default void testCreateMetadataWithNullLocaleFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    default void testCreateMetadataWithNullUserFails() {
-        throw new UnsupportedOperationException();
-    }
-
+public interface SpreadsheetStorageContextTesting extends TreePrintableTesting {
+    
     // loadCells........................................................................................................
-
-    @Test
-    default void testLoadCellsWithNullCellOrLabelsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .loadCells(null)
-        );
-    }
-
-    default void loadCellsAndCheck(final C context,
+    
+    default void loadCellsAndCheck(final SpreadsheetStorageContext context,
                                    final SpreadsheetExpressionReference cellsOrLabel,
                                    final SpreadsheetCell... expected) {
         this.loadCellsAndCheck(
@@ -70,7 +42,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    default void loadCellsAndCheck(final C context,
+    default void loadCellsAndCheck(final SpreadsheetStorageContext context,
                                    final SpreadsheetExpressionReference cellsOrLabel,
                                    final Set<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -82,16 +54,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
 
     // saveCells........................................................................................................
 
-    @Test
-    default void testSaveCellsWithNullCellOrLabelsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .saveCells(null)
-        );
-    }
-
-    default void saveCellsAndCheck(final C context,
+    default void saveCellsAndCheck(final SpreadsheetStorageContext context,
                                    final Set<SpreadsheetCell> cells,
                                    final SpreadsheetCell... expected) {
         this.saveCellsAndCheck(
@@ -101,7 +64,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    default void saveCellsAndCheck(final C context,
+    default void saveCellsAndCheck(final SpreadsheetStorageContext context,
                                    final Set<SpreadsheetCell> cells,
                                    final Set<SpreadsheetCell> expected) {
         this.checkEquals(
@@ -111,29 +74,9 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    // deleteCells......................................................................................................
-
-    @Test
-    default void testDeleteCellsWithNullCellOrLabelsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .deleteCells(null)
-        );
-    }
-
     // loadLabel........................................................................................................
 
-    @Test
-    default void testLoadLabelWithNullLabelsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .loadLabel(null)
-        );
-    }
-
-    default void loadLabelAndCheck(final C context,
+    default void loadLabelAndCheck(final SpreadsheetStorageContext context,
                                    final SpreadsheetLabelName labels) {
         this.loadLabelAndCheck(
             context,
@@ -142,7 +85,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    default void loadLabelAndCheck(final C context,
+    default void loadLabelAndCheck(final SpreadsheetStorageContext context,
                                    final SpreadsheetLabelName labels,
                                    final SpreadsheetLabelMapping expected) {
         this.loadLabelAndCheck(
@@ -152,7 +95,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    default void loadLabelAndCheck(final C context,
+    default void loadLabelAndCheck(final SpreadsheetStorageContext context,
                                    final SpreadsheetLabelName labels,
                                    final Optional<SpreadsheetLabelMapping> expected) {
         this.checkEquals(
@@ -164,16 +107,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
 
     // saveLabel........................................................................................................
 
-    @Test
-    default void testSaveLabelWithNullLabelMappingFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .saveLabel(null)
-        );
-    }
-
-    default void saveLabelAndCheck(final C context,
+    default void saveLabelAndCheck(final SpreadsheetStorageContext context,
                                    final SpreadsheetLabelMapping label,
                                    final SpreadsheetLabelMapping expected) {
         this.checkEquals(
@@ -183,59 +117,9 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    // deleteLabel......................................................................................................
-
-    @Test
-    default void testDeleteLabelWithLabelsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .deleteLabel(null)
-        );
-    }
-
     // findLabelsByName.................................................................................................
 
-    @Test
-    default void testFindLabelsByNameWithNullTextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .findLabelsByName(
-                    null,
-                    0, // offset
-                    0 // count,
-                )
-        );
-    }
-
-    @Test
-    default void testFindLabelsByNameWithNegativeOffsetFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .findLabelsByName(
-                    "",
-                    -1, // offset
-                    0 // count,
-                )
-        );
-    }
-
-    @Test
-    default void testFindLabelsByNameWithNegativeCountFails() {
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> this.createContext()
-                .findLabelsByName(
-                    "",
-                    0, // offset
-                    -1 // count,
-                )
-        );
-    }
-
-    default void findLabelsByNameAndCheck(final C context,
+    default void findLabelsByNameAndCheck(final SpreadsheetStorageContext context,
                                           final String text,
                                           final int offset,
                                           final int count,
@@ -249,7 +133,7 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    default void findLabelsByNameAndCheck(final C context,
+    default void findLabelsByNameAndCheck(final SpreadsheetStorageContext context,
                                           final String text,
                                           final int offset,
                                           final int count,
@@ -263,24 +147,5 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
             ),
             () -> "findLabelsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
         );
-    }
-
-    // ConverterLike....................................................................................................
-
-    @Override
-    default C createConverterLike() {
-        return this.createContext();
-    }
-
-    // class............................................................................................................
-
-    @Override
-    default void testTypeNaming() {
-        StorageContextTesting.super.testTypeNaming();
-    }
-
-    @Override
-    default String typeNameSuffix() {
-        return SpreadsheetStorageContext.class.getSimpleName();
     }
 }
