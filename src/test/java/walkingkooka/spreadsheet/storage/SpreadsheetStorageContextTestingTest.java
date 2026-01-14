@@ -240,7 +240,7 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
         }
 
         @Override
-        public void deleteLabels(final SpreadsheetLabelName labelName) {
+        public void deleteLabel(final SpreadsheetLabelName labelName) {
             Objects.requireNonNull(labelName, "labelName");
 
             throw new UnsupportedOperationException();

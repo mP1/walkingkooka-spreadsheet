@@ -151,14 +151,14 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
         );
     }
 
-    // deleteLabels.....................................................................................................
+    // deleteLabel......................................................................................................
 
     @Test
-    default void testDeleteLabelsWithLabelsFails() {
+    default void testDeleteLabelWithLabelsFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext()
-                .deleteLabels(null)
+                .deleteLabel(null)
         );
     }
 

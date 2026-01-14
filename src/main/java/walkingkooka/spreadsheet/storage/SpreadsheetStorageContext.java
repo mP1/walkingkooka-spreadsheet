@@ -52,7 +52,7 @@ public interface SpreadsheetStorageContext extends StorageContext,
 
     Set<SpreadsheetLabelMapping> saveLabels(final Set<SpreadsheetLabelMapping> labels);
 
-    void deleteLabels(final SpreadsheetLabelName labelName);
+    void deleteLabel(final SpreadsheetLabelName labelName);
 
     Set<SpreadsheetLabelName> findLabelsByName(final String labelName,
                                                final int offset,
