@@ -57,7 +57,7 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public Set<SpreadsheetLabelMapping> loadLabels(final SpreadsheetLabelName labelName) {
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         throw new UnsupportedOperationException();
     }
 
