@@ -24,16 +24,25 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetEnvironmentContext,
     SpreadsheetMetadataContext,
     ConverterLike {
+
+    Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel);
+
+    Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells);
+
+    void deleteCells(final SpreadsheetExpressionReference cellsOrLabel);
 
     @Override
     SpreadsheetStorageContext cloneEnvironment();

@@ -34,13 +34,16 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTestingTest.TestSpreadsheetStorageContext;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public final class SpreadsheetStorageContextTestingTest implements SpreadsheetStorageContextTesting<TestSpreadsheetStorageContext> {
 
@@ -192,6 +195,29 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
                 (e, l) -> SpreadsheetMetadata.EMPTY,
                 SpreadsheetMetadataStores.fake()
             );
+        }
+
+        // cells........................................................................................................
+
+        @Override
+        public Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
+            Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells) {
+            Objects.requireNonNull(cells, "cells");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
+            Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
+
+            throw new UnsupportedOperationException();
         }
 
         // Object.......................................................................................................
