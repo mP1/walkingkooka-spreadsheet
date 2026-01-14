@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.text.LineEnding;
 
@@ -31,6 +32,7 @@ import java.util.Optional;
 
 public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetEnvironmentContext,
+    SpreadsheetMetadataContext,
     ConverterLike {
 
     @Override

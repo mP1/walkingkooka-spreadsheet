@@ -29,6 +29,11 @@ import walkingkooka.spreadsheet.environment.FakeSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTestingTest.TestSpreadsheetStorageContext;
 import walkingkooka.text.LineEnding;
 
@@ -54,7 +59,8 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
         return TestSpreadsheetStorageContext.class;
     }
 
-    final static class TestSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentContext implements SpreadsheetStorageContext {
+    final static class TestSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentContext implements SpreadsheetStorageContext,
+        SpreadsheetMetadataContextDelegator {
 
         @Override
         public TestSpreadsheetStorageContext cloneEnvironment() {
@@ -177,6 +183,18 @@ public final class SpreadsheetStorageContextTestingTest implements SpreadsheetSt
                                   final Class<?> type) {
             throw new UnsupportedOperationException();
         }
+
+        // SpreadsheetMetadataContextDelegator..........................................................................
+
+        @Override
+        public SpreadsheetMetadataContext spreadsheetMetadataContext() {
+            return SpreadsheetMetadataContexts.basic(
+                (e, l) -> SpreadsheetMetadata.EMPTY,
+                SpreadsheetMetadataStores.fake()
+            );
+        }
+
+        // Object.......................................................................................................
 
         @Override
         public String toString() {
