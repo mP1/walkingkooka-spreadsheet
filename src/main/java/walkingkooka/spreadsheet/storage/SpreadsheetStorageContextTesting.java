@@ -82,6 +82,16 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
     default void saveCellsAndCheck(final C context,
                                    final Set<SpreadsheetCell> cells,
                                    final SpreadsheetCell... expected) {
+        this.saveCellsAndCheck(
+            context,
+            cells,
+            Sets.of(expected)
+        );
+    }
+
+    default void saveCellsAndCheck(final C context,
+                                   final Set<SpreadsheetCell> cells,
+                                   final Set<SpreadsheetCell> expected) {
         this.checkEquals(
             expected,
             context.saveCells(cells),
