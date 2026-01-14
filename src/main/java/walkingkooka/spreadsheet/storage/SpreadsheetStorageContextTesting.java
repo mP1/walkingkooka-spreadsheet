@@ -22,8 +22,11 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterLikeTesting;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContextTesting;
+import walkingkooka.text.CharSequences;
 
 import java.util.Set;
 
@@ -95,7 +98,141 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
                 .deleteCells(null)
         );
     }
-    
+
+    // loadLabels.......................................................................................................
+
+    @Test
+    default void testLoadLabelsWithNullLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .loadLabels(null)
+        );
+    }
+
+    default void loadLabelsAndCheck(final C context,
+                                    final SpreadsheetLabelName labels,
+                                    final SpreadsheetCell... expected) {
+        this.loadLabelsAndCheck(
+            context,
+            labels,
+            Sets.of(expected)
+        );
+    }
+
+    default void loadLabelsAndCheck(final C context,
+                                    final SpreadsheetLabelName labels,
+                                    final Set<SpreadsheetCell> expected) {
+        this.checkEquals(
+            expected,
+            context.loadLabels(labels),
+            () -> "loadLabels " + labels
+        );
+    }
+
+    // saveLabels.......................................................................................................
+
+    @Test
+    default void testSaveLabelsWithNullLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .saveLabels(null)
+        );
+    }
+
+    default void saveLabelsAndCheck(final C context,
+                                    final Set<SpreadsheetLabelMapping> labels,
+                                    final SpreadsheetCell... expected) {
+        this.checkEquals(
+            expected,
+            context.saveLabels(labels),
+            () -> "saveLabels " + labels
+        );
+    }
+
+    // deleteLabels.....................................................................................................
+
+    @Test
+    default void testDeleteLabelsWithLabelsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .deleteLabels(null)
+        );
+    }
+
+    // findLabelsByName.................................................................................................
+
+    @Test
+    default void testFindLabelsByNameWithNullTextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .findLabelsByName(
+                    null,
+                    0, // offset
+                    0 // count,
+                )
+        );
+    }
+
+    @Test
+    default void testFindLabelsByNameWithNegativeOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .findLabelsByName(
+                    "",
+                    -1, // offset
+                    0 // count,
+                )
+        );
+    }
+
+    @Test
+    default void testFindLabelsByNameWithNegativeCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createContext()
+                .findLabelsByName(
+                    "",
+                    0, // offset
+                    -1 // count,
+                )
+        );
+    }
+
+    default void findLabelsByNameAndCheck(final C context,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final SpreadsheetLabelMapping... expected) {
+        this.findLabelsByNameAndCheck(
+            context,
+            text,
+            offset,
+            count,
+            Sets.of(expected)
+        );
+    }
+
+    default void findLabelsByNameAndCheck(final C context,
+                                          final String text,
+                                          final int offset,
+                                          final int count,
+                                          final Set<SpreadsheetLabelMapping> expected) {
+        this.checkEquals(
+            expected,
+            context.findLabelsByName(
+                text,
+                offset,
+                count
+            ),
+            () -> "findLabelsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
+        );
+    }
+
     // ConverterLike....................................................................................................
 
     @Override

@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.text.LineEnding;
@@ -43,6 +45,20 @@ public interface SpreadsheetStorageContext extends StorageContext,
     Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells);
 
     void deleteCells(final SpreadsheetExpressionReference cellsOrLabel);
+
+    // labels...........................................................................................................
+
+    Set<SpreadsheetLabelMapping> loadLabels(final SpreadsheetLabelName labelName);
+
+    Set<SpreadsheetLabelMapping> saveLabels(final Set<SpreadsheetLabelMapping> labels);
+
+    void deleteLabels(final SpreadsheetLabelName labelName);
+
+    Set<SpreadsheetLabelName> findLabelsByName(final String labelName,
+                                               final int offset,
+                                               final int count);
+
+    // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
     SpreadsheetStorageContext cloneEnvironment();
