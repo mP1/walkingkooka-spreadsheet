@@ -36,6 +36,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -45,6 +46,7 @@ import walkingkooka.math.HasMathContext;
 import walkingkooka.naming.HasOptionalName;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
+import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetStartup;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -131,6 +133,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1701,16 +1704,78 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     @Override
     public final void printTree(final IndentingPrinter printer) {
-        for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value().entrySet()) {
-            printer.print(nameAndValue.getKey().value());
-            printer.print(": ");
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            final SpreadsheetId spreadsheetId = this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                .orElse(null);
+            if(null != spreadsheetId) {
+                printTreeValue(
+                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                    spreadsheetId,
+                    printer
+                );
 
-            TreePrintable.printTreeOrToString(
-                nameAndValue.getValue(),
-                printer
-            );
+                final SpreadsheetName spreadsheetName = this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_NAME)
+                    .orElse(null);
+                if(null != spreadsheetName) {
+                    printTreeValue(
+                        SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                        spreadsheetName,
+                        printer
+                    );
+                }
 
-            printer.lineStart();
+                printer.indent();
+            }
+
+            for (final Map.Entry<SpreadsheetMetadataPropertyName<?>, Object> nameAndValue : this.value().entrySet()) {
+                final SpreadsheetMetadataPropertyName<?> name = nameAndValue.getKey();
+
+                // skip SpreadsheetId printed "first"
+                if(SpreadsheetMetadataPropertyName.SPREADSHEET_ID.equals(name) || SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.equals(name)) {
+                    continue;
+                }
+                this.printTreeValue(
+                    name,
+                    nameAndValue.getValue(),
+                    printer
+                );
+            }
+
+            if(null != spreadsheetId) {
+                printer.outdent();
+            }
+        }
+        printer.outdent();
+    }
+
+    private void printTreeValue(final SpreadsheetMetadataPropertyName<?> name,
+                                final Object value,
+                                final IndentingPrinter printer) {
+        printer.print(name.value());
+        printer.print(": ");
+
+        final boolean autoIndent = value instanceof Collection ||
+            value instanceof AuditInfo ||
+            value instanceof DateTimeSymbols ||
+            value instanceof DecimalNumberSymbols ||
+            value instanceof PluginSelectorLike ||
+            value instanceof TextStyle;
+        if (autoIndent) {
+            printer.indent();
+            printer.println();
+        }
+
+        TreePrintable.printTreeOrToString(
+            value,
+            printer
+        );
+
+        printer.lineStart();
+
+        if (autoIndent) {
+            printer.outdent();
         }
     }
 
