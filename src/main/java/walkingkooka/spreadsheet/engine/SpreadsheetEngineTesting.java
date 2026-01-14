@@ -2388,7 +2388,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     // findLabelsByName................................................................................................
 
     @Test
-    default void testFindLabelsByNameWithNullReferenceFails() {
+    default void testFindLabelsByNameWithNullTextFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSpreadsheetEngine()
