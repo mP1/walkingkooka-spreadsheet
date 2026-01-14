@@ -297,7 +297,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testTreePrint() {
         this.treePrintAndCheck(
             SpreadsheetMetadata.EMPTY,
-            ""
+            "SpreadsheetMetadataEmpty\n"
         );
     }
 
