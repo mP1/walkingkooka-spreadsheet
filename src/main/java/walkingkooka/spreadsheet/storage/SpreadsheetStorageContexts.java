@@ -18,8 +18,21 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 
 public final class SpreadsheetStorageContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetStorageContext}
+     */
+    public static SpreadsheetStorageContext basic(final SpreadsheetEngine spreadsheetEngine,
+                                                  final SpreadsheetContext spreadsheetContext) {
+        return BasicSpreadsheetStorageContext.with(
+            spreadsheetEngine,
+            spreadsheetContext
+        );
+    }
 
     /**
      * {@see FakeSpreadsheetStorageContext}

@@ -39,6 +39,16 @@ public interface SpreadsheetStorageContextTesting<C extends SpreadsheetStorageCo
     SpreadsheetEnvironmentContextTesting2<C>,
     ConverterLikeTesting<C> {
 
+    @Override
+    default void testCreateMetadataWithNullLocaleFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testCreateMetadataWithNullUserFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // loadCells........................................................................................................
 
     @Test
