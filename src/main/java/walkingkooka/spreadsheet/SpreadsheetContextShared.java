@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.store.MissingStoreException;
-import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -169,8 +168,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
                                                           final ProviderContext providerContext);
 
     @Override
-    public final <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                            final T value) {
+    public final <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                              final T value) {
         if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)) {
             throw new IllegalArgumentException("Unable to set " + name + " with value " + value);
         }
@@ -179,34 +178,21 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
             name,
             value
         );
-        return this;
     }
 
     @Override
-    public final SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+    public final void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)) {
             throw new UnsupportedOperationException("Unable to remove " + name);
         }
 
         this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
-        return this;
     }
 
     /**
      * Returns true if the {@link SpreadsheetId} can be changed.
      */
     abstract boolean canChangeSpreadsheetId();
-
-    @Override
-    public final LineEnding lineEnding() {
-        return this.spreadsheetEnvironmentContext.lineEnding();
-    }
-
-    @Override
-    public final SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
-        this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
-        return this;
-    }
 
     @Override
     public final Locale locale() {
@@ -234,15 +220,10 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     public final SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
-        return this.setEnvironmentValue(
+        this.setEnvironmentValue(
             SPREADSHEET_ID,
             id
         );
-    }
-
-    @Override
-    public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetEnvironmentContext.setUser(user);
         return this;
     }
 

@@ -21,12 +21,9 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.text.LineEnding;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A {@link SpreadsheetEnvironmentContext} that wraps a {@link EnvironmentContext}, with guards to stop attempts to
@@ -89,8 +86,8 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     }
 
     @Override
-    public <T> SpreadsheetEnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                 final T value) {
+    public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                        final T value) {
         if(SERVER_URL.equals(name)) {
             throw new IllegalArgumentException("Cannot set Read only value: " + name);
         }
@@ -99,29 +96,15 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
             name,
             value
         );
-        return this;
     }
 
     @Override
-    public SpreadsheetEnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+    public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         if(SERVER_URL.equals(name)) {
             throw new IllegalArgumentException("Cannot remove Read only value: " + name);
         }
 
         this.context.removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding) {
-        this.context.setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext setUser(final Optional<EmailAddress> user) {
-        this.context.setUser(user);
-        return this;
     }
 
     @Override

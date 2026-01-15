@@ -473,6 +473,23 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                 )
         );
 
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                LOCALE,
+                () -> LocalDateTime.MIN,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            spreadsheetId
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            Url.parseAbsolute("https://example.com")
+        );
+
         return BasicSpreadsheetStorageContext.with(
             SpreadsheetEngines.basic(),
             SpreadsheetContexts.fixedSpreadsheetId(
@@ -488,22 +505,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
                 (c) -> {
                     throw new UnsupportedOperationException();
                 }, // HttpRouter
-                SpreadsheetEnvironmentContexts.basic(
-                    EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            LineEnding.NL,
-                            LOCALE,
-                            () -> LocalDateTime.MIN,
-                            EnvironmentContext.ANONYMOUS
-                        )
-                    ).setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                        spreadsheetId
-                    ).setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SERVER_URL,
-                        Url.parseAbsolute("https://example.com")
-                    )
-                ),
+                SpreadsheetEnvironmentContexts.basic(environmentContext),
                 localeContext,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(

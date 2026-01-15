@@ -19,9 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.convert.ConverterLikeDelegator;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
@@ -32,13 +30,11 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -127,37 +123,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                             final T value) {
-        this.environmentContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-        return this;
-    }
-
-    @Override
-    default SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetEngineContext()
-            .removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    default SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
-        this.spreadsheetEngineContext()
-            .setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    default void setLocale(final Locale locale) {
-        this.spreadsheetEngineContext()
-            .setLocale(locale);
-    }
-
-    @Override
     default SpreadsheetId spreadsheetId() {
         return this.spreadsheetEngineContext()
             .spreadsheetId();
@@ -167,13 +132,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     default SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
         this.spreadsheetEngineContext()
             .setSpreadsheetId(id);
-        return this;
-    }
-
-    @Override
-    default SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetEngineContext()
-            .setUser(user);
         return this;
     }
 

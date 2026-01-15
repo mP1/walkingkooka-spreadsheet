@@ -79,7 +79,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                 continue;
             }
 
-            context = context.setEnvironmentValue(
+            context.setEnvironmentValue(
                 name,
                 Cast.to(
                     METADATA_EN_AU.getOrFail(
@@ -89,20 +89,22 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             );
         }
 
-        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
-            context.setEnvironmentValue(
-                SpreadsheetEnvironmentContextFactory.CONVERTER,
-                METADATA_EN_AU.getOrFail(
-                    SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
-                )
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
-                DECIMAL_NUMBER_DIGIT_COUNT
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContextFactory.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.CONVERTER,
+            METADATA_EN_AU.getOrFail(
+                SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
         );
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
+            DECIMAL_NUMBER_DIGIT_COUNT
+        );
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz")
+        );
+
+        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(context);
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
@@ -407,13 +409,13 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     @Test
     public void testEvaluateMissingSpreadsheetId() {
-        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
 
         this.evaluateAndCheck(
             this.createContext(
                 SpreadsheetContextSuppliers.fake(), // SpreadsheetContext should never be fetched
-                environmentContext
+                spreadsheetEnvironmentContext
             ),
             Expression.add(
                 this.expression(1),
@@ -531,20 +533,22 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             )
         );
     }
-    
+
     @Test
     public void testEqualsDifferentSpreadsheetEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            EnvironmentValueName.with(
+                "different",
+                Integer.class
+            ),
+            1
+        );
+
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setEnvironmentValue(
-                        EnvironmentValueName.with(
-                            "different",
-                            Integer.class
-                        ),
-                        1
-                    ),
+                spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,

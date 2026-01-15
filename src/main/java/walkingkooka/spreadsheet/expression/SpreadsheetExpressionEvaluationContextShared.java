@@ -213,21 +213,19 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     // EnvironmentContextDelegator......................................................................................
 
     @Override
-    public final <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
+    public final <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                                 final T value) {
         this.environmentContext()
             .setEnvironmentValue(
                 name,
                 value
             );
-        return this;
     }
 
     @Override
-    public final SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+    public final void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.environmentContext()
             .removeEnvironmentValue(name);
-        return this;
     }
 
     @Override
@@ -237,10 +235,9 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public final SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+    public final void setLineEnding(final LineEnding lineEnding) {
         this.environmentContext()
             .setLineEnding(lineEnding);
-        return this;
     }
 
     @Override
@@ -287,10 +284,9 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public final SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+    public final void setUser(final Optional<EmailAddress> user) {
         this.environmentContext()
             .setUser(user);
-        return this;
     }
 
     @Override

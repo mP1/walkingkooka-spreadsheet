@@ -18,14 +18,9 @@
 package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.FakeValidatorContext;
-
-import java.util.Locale;
-import java.util.Optional;
 
 public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<SpreadsheetExpressionReference> implements SpreadsheetValidatorContext {
 
@@ -40,27 +35,6 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
 
     @Override
     public SpreadsheetValidatorContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetValidatorContext setUser(final Optional<EmailAddress> user) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> SpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                               final T value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetValidatorContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         throw new UnsupportedOperationException();
     }
 

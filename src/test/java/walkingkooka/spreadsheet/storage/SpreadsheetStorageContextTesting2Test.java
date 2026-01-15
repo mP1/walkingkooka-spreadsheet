@@ -85,16 +85,14 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public TestSpreadsheetStorageContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
             this.environmentContext.removeEnvironmentValue(name);
-            return this;
         }
 
         @Override
-        public <T> TestSpreadsheetStorageContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                     final T value) {
+        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                            final T value) {
             this.environmentContext.setEnvironmentValue(name, value);
-            return this;
         }
 
         @Override
@@ -103,9 +101,8 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public TestSpreadsheetStorageContext setLineEnding(final LineEnding lineEnding) {
+        public void setLineEnding(final LineEnding lineEnding) {
             this.environmentContext.setLineEnding(lineEnding);
-            return this;
         }
 
         @Override
@@ -145,9 +142,8 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public TestSpreadsheetStorageContext setUser(final Optional<EmailAddress> user) {
+        public void setUser(final Optional<EmailAddress> user) {
             this.environmentContext.setUser(user);
-            return this;
         }
 
         @Override
@@ -160,22 +156,28 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             return this.environmentContext.addEventValueWatcherOnce(watcher);
         }
 
-        private final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
+        {
+            final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LineEnding.NL,
                     Locale.ENGLISH,
                     () -> LocalDateTime.MIN,
                     EnvironmentContext.ANONYMOUS
                 )
-            ).setEnvironmentValue(
+            );
+            environmentContext.setEnvironmentValue(
                 SPREADSHEET_ID,
                 SpreadsheetId.with(1)
-            ).setEnvironmentValue(
+            );
+            environmentContext.setEnvironmentValue(
                 SERVER_URL,
                 Url.parseAbsolute("https://example.com")
-            )
-        );
+            );
+
+            this.environmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+        }
+
+        private final SpreadsheetEnvironmentContext environmentContext;
 
         @Override
         public <T> Either<T, String> convert(final Object value,

@@ -61,13 +61,13 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
         }
 
         @Override
-        public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+        public void setLineEnding(final LineEnding lineEnding) {
             Objects.requireNonNull(lineEnding, "lineEnding");
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+        public void setUser(final Optional<EmailAddress> user) {
             Objects.requireNonNull(user, "user");
             throw new UnsupportedOperationException();
         }

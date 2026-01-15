@@ -621,8 +621,8 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetEnvironmentContextWithDifferent() {
         final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
-            .setLineEnding(LineEnding.CRNL);
+        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment();
+        differentEnvironmentContext.setLineEnding(LineEnding.CRNL);
 
         this.checkNotEquals(
             environmentContext,

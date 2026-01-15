@@ -80,22 +80,30 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
+    private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                Optional.empty() // no user
+            )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
+        return environmentContext;
+    }
+
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    Optional.empty() // no user
-                )
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SERVER_URL,
-                SERVER_URL
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                SPREADSHEET_ID
-            )
+            spreadsheetEnvironmentContextEnvironmentContext()
         )
     );
 
@@ -220,52 +228,52 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     @Test
     public final void testSetEnvironmentContextWithSame() {
-        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    Locale.ENGLISH,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                SPREADSHEET_ID
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                Locale.ENGLISH,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
             )
         );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
 
-        final C context = this.createContext(environmentContext);
+        final C context = this.createContext(spreadsheetEnvironmentContext);
         assertSame(
             context,
-            context.setEnvironmentContext(environmentContext)
+            context.setEnvironmentContext(spreadsheetEnvironmentContext)
         );
     }
 
     @Test
     public final void testSetEnvironmentContext() {
-        final SpreadsheetEnvironmentContext environmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    Locale.ENGLISH,
-                    HAS_NOW,
-                    EnvironmentContext.ANONYMOUS
-                )
-            ).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                SPREADSHEET_ID
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                Locale.ENGLISH,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
             )
         );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
 
-        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment();
+        final EnvironmentContext differentEnvironmentContext = spreadsheetEnvironmentContext.cloneEnvironment();
         differentEnvironmentContext.setLocale(Locale.FRANCE);
 
         this.checkNotEquals(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             differentEnvironmentContext
         );
 
-        final C basicSpreadsheetContext = this.createContext(environmentContext);
+        final C basicSpreadsheetContext = this.createContext(spreadsheetEnvironmentContext);
         final SpreadsheetContext afterSet = basicSpreadsheetContext.setEnvironmentContext(differentEnvironmentContext);
 
         assertNotSame(
@@ -286,11 +294,14 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         final C context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
+
+        context.setEnvironmentValue(
+            EnvironmentValueName.LOCALE,
+            locale
+        );
+
         this.localeAndCheck(
-            context.setEnvironmentValue(
-                EnvironmentValueName.LOCALE,
-                locale
-            ),
+            context,
             locale
         );
 

@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -45,7 +43,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
@@ -258,19 +255,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext);
-
-    @Override
-    <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                   final T value);
-
-    @Override
-    SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name);
-
-    @Override
-    SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user);
 
     // validation.......................................................................................................
 

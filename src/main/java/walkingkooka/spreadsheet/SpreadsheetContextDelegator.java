@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
@@ -60,24 +59,6 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     // EnvironmentContextDelegator......................................................................................
 
     @Override
-    default <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                       final T value) {
-        this.spreadsheetEnvironmentContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-        return this;
-    }
-
-    @Override
-    default SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetEnvironmentContext()
-            .removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
     default SpreadsheetId spreadsheetId() {
         return this.spreadsheetContext()
             .spreadsheetId();
@@ -87,13 +68,6 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
         return this.spreadsheetContext()
             .setSpreadsheetId(id);
-    }
-
-    @Override
-    default SpreadsheetContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetEnvironmentContext()
-            .setUser(user);
-        return this;
     }
 
     @Override
@@ -115,13 +89,6 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default LineEnding lineEnding() {
         return this.environmentContext()
             .lineEnding();
-    }
-
-    @Override
-    default SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext()
-            .setLineEnding(lineEnding);
-        return this;
     }
     
     // LocaleContext....................................................................................................

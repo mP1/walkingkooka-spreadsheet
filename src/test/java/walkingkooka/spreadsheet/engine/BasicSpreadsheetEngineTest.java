@@ -697,7 +697,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // HasLineEnding................................................................................................
 
         @Override
-        public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
+        public void setLineEnding(final LineEnding lineEnding) {
             Objects.requireNonNull(lineEnding, "lineEnding");
             throw new UnsupportedOperationException();
         }
@@ -705,7 +705,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // EnvironmentContextDelegator..................................................................................
 
         @Override
-        public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+        public void setUser(final Optional<EmailAddress> user) {
             Objects.requireNonNull(user, "user");
             throw new UnsupportedOperationException();
         }
@@ -728,13 +728,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                          final T value) {
+        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                            final T value) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
             throw new UnsupportedOperationException();
         }
 
@@ -1246,10 +1246,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             metadata.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
-        ).setEnvironmentValue(
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
             DECIMAL_NUMBER_DIGIT_COUNT
-        ).setEnvironmentValue(
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet("")
         );

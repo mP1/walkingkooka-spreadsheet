@@ -109,9 +109,8 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding) {
+    public void setLineEnding(final LineEnding lineEnding) {
         this.context.setLineEnding(lineEnding);
-        return this;
     }
 
     @Override
@@ -138,10 +137,11 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         Objects.requireNonNull(spreadsheetId, "spreadsheetId");
 
-        return this.setEnvironmentValue(
+        this.setEnvironmentValue(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             spreadsheetId
         );
+        return this;
     }
 
     @Override
@@ -150,9 +150,8 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setUser(final Optional<EmailAddress> user) {
+    public void setUser(final Optional<EmailAddress> user) {
         this.context.setUser(user);
-        return this;
     }
 
     /**
@@ -177,7 +176,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     @Override
-    public <T> SpreadsheetEnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
+    public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                                                  final T value) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(value, "value");
@@ -186,15 +185,13 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
             name,
             value
         );
-        return this;
     }
 
     @Override
-    public SpreadsheetEnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+    public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         Objects.requireNonNull(name, "name");
 
         this.context.removeEnvironmentValue(name);
-        return this;
     }
 
     @Override

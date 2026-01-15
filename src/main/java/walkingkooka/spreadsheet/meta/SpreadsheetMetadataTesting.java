@@ -25,6 +25,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.HasUser;
@@ -389,24 +390,30 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
+    private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                Optional.of(USER)
+            )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+
+        return SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.readOnly(environmentContext)
+        );
+    }
+
     /**
      * A {@link SpreadsheetEnvironmentContext} that contains {@link SpreadsheetEnvironmentContext#SERVER_URL} but not
      * {@link SpreadsheetEnvironmentContext#SPREADSHEET_ID}.
      */
-    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
-        EnvironmentContexts.readOnly(
-            EnvironmentContexts.map(
-                EnvironmentContexts.empty(
-                    LINE_ENDING,
-                    LOCALE,
-                    HAS_NOW,
-                    Optional.of(USER)
-                )).setEnvironmentValue(
-                SpreadsheetEnvironmentContext.SERVER_URL,
-                SERVER_URL
-            )
-        )
-    );
+    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = spreadsheetEnvironmentContext();
 
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
 
@@ -416,6 +423,15 @@ public interface SpreadsheetMetadataTesting extends Testing {
         JSON_NODE_MARSHALL_CONTEXT,
         JSON_NODE_UNMARSHALL_CONTEXT
     );
+
+    private static EnvironmentContext providerContextEnvironmentContext() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT);
+        environmentContext.setEnvironmentValue(
+            DUMMY_ENVIRONMENTAL_VALUE_NAME,
+            DUMMY_ENVIRONMENTAL_VALUE
+        );
+        return environmentContext;
+    }
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.spreadsheet(
@@ -455,17 +471,22 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
             ).spreadsheetEnvironmentContext(
                 EnvironmentContexts.readOnly(
-                    EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT)
-                        .setEnvironmentValue(
-                            DUMMY_ENVIRONMENTAL_VALUE_NAME,
-                            DUMMY_ENVIRONMENTAL_VALUE
-                        )
+                    providerContextEnvironmentContext()
                 )
             ),
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
             LOCALE_CONTEXT
         )
     );
+
+    private static EnvironmentContext terminalContextEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            TerminalContext.TERMINAL_ID,
+            TerminalId.with(1)
+        );
+        return spreadsheetEnvironmentContext;
+    }
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
@@ -480,11 +501,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             throw new UnsupportedOperationException();
         },
         EnvironmentContexts.readOnly(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                .setEnvironmentValue(
-                    TerminalContext.TERMINAL_ID,
-                    TerminalId.with(1)
-                )
+            terminalContextEnvironmentContext()
         )
     );
 

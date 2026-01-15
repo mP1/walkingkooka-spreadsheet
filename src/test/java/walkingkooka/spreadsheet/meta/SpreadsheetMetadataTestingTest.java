@@ -176,8 +176,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         );
 
         final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
-        this.lineEndingAndCheck(
-            context.setLineEnding(lineEnding),
+        this.setLineEndingAndCheck(
+            context,
             lineEnding
         );
     }
@@ -204,10 +204,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         final EmailAddress user = EmailAddress.parse("different@example.com");
 
         final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
-        this.userAndCheck(
-            context.setUser(
-                Optional.of(user)
-            ),
+        this.setUserAndCheck(
+            context,
             user
         );
     }
@@ -221,11 +219,8 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
         final String value = "World123";
 
         final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
-        this.environmentValueAndCheck(
-            context.setEnvironmentValue(
-                name,
-                value
-            ),
+        this.setEnvironmentValueAndCheck(
+            context,
             name,
             value
         );

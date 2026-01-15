@@ -98,7 +98,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 continue;
             }
 
-            context = context.setEnvironmentValue(
+            context.setEnvironmentValue(
                 name,
                 Cast.to(
                     METADATA_EN_AU.getOrFail(
@@ -108,15 +108,18 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             );
         }
 
-        SPREADSHEET_ENVIRONMENT_CONTEXT = context.setEnvironmentValue(
+        context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
             METADATA_EN_AU.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
-        ).setEnvironmentValue(
+        );
+        context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
             DECIMAL_NUMBER_DIGIT_COUNT
         );
+
+        SPREADSHEET_ENVIRONMENT_CONTEXT = context;
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
@@ -963,11 +966,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     @Test
     public void testFireEnvironmentValueNameChangeWithRoundingMode() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setEnvironmentValue(
-                SpreadsheetEnvironmentContextFactory.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
-            );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
+        );
 
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
 
@@ -1011,12 +1014,14 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     }
 
     private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext(final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
+        );
+
         return createContext(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                .setEnvironmentValue(
-                    SpreadsheetEnvironmentContextFactory.FUNCTIONS,
-                    SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
-                ),
+            spreadsheetEnvironmentContext,
             expressionFunctionProvider,
             ProviderContexts.fake()
         );

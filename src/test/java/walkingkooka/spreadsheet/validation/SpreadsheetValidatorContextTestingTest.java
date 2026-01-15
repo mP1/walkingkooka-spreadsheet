@@ -110,7 +110,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public SpreadsheetValidatorContext setLineEnding(final LineEnding lineEnding) {
+        public void setLineEnding(final LineEnding lineEnding) {
             Objects.requireNonNull(lineEnding, "lineEnding");
             throw new UnsupportedOperationException();
         }
@@ -128,7 +128,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public SpreadsheetValidatorContext setUser(final Optional<EmailAddress> user) {
+        public void setUser(final Optional<EmailAddress> user) {
             Objects.requireNonNull(user, "user");
             throw new UnsupportedOperationException();
         }
@@ -146,15 +146,15 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public <T> TestSpreadsheetValidatorContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                       final T value) {
+        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                            final T value) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(value, "value");
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public TestSpreadsheetValidatorContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
             Objects.requireNonNull(name, "name");
             throw new UnsupportedOperationException();
         }

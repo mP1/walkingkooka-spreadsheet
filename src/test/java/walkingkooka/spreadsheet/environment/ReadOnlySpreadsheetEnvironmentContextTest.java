@@ -95,11 +95,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
         final String value = "World123";
 
-        this.environmentValueAndCheck(
-            cloned.setEnvironmentValue(
-                name,
-                value
-            ),
+        this.setEnvironmentValueAndCheck(
+            cloned,
             name,
             value
         );
