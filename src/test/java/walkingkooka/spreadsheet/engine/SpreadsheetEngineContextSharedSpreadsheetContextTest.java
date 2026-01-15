@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
@@ -770,6 +771,22 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         );
     }
 
+    private static EnvironmentContext environmentContext() {
+        final EnvironmentContext context = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                Locale.forLanguageTag("en-AU"),
+                LocalDateTime::now,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SpreadsheetEngineContextSharedSpreadsheetContextTest.SERVER_URL
+        );
+        return context;
+    }
+
     private final static class TestSpreadsheetContext implements SpreadsheetContext,
         EnvironmentContextDelegator,
         LocaleContextDelegator,
@@ -786,17 +803,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         TestSpreadsheetContext() {
             this(
-                EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LineEnding.NL,
-                        Locale.forLanguageTag("en-AU"),
-                        LocalDateTime::now,
-                        EnvironmentContext.ANONYMOUS
-                    )
-                ).setEnvironmentValue(
-                    SERVER_URL,
-                    SpreadsheetEngineContextSharedSpreadsheetContextTest.SERVER_URL
-                )
+                SpreadsheetEngineContextSharedSpreadsheetContextTest.environmentContext()
             );
         }
 
@@ -942,19 +949,17 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                          final T value) {
+        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                            final T value) {
             this.environmentContext.setEnvironmentValue(
                 name,
                 value
             );
-            return this;
         }
 
         @Override
-        public SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
             this.environmentContext.removeEnvironmentValue(name);
-            return this;
         }
 
         @Override
@@ -963,9 +968,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public SpreadsheetContext setLineEnding(final LineEnding lineEnding) {
+        public void setLineEnding(final LineEnding lineEnding) {
             this.environmentContext.setLineEnding(lineEnding);
-            return this;
         }
 
         @Override
@@ -979,9 +983,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public SpreadsheetContext setUser(final Optional<EmailAddress> user) {
+        public void setUser(final Optional<EmailAddress> user) {
             this.environmentContext.setUser(user);
-            return this;
         }
 
         @Override

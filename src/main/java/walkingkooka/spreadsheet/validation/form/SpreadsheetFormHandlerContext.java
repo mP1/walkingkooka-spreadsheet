@@ -18,17 +18,13 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.Cast;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.FormHandlerContext;
 
 import java.util.Comparator;
-import java.util.Optional;
 
 /**
  * A type-safe {@link FormHandlerContext} using {@link SpreadsheetExpressionReference} as the {@link walkingkooka.validation.ValidationReference}.
@@ -37,20 +33,7 @@ import java.util.Optional;
 public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
 
     @Override
-    SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user);
-
-    @Override
     SpreadsheetFormHandlerContext cloneEnvironment();
-
-    @Override
-    <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                          final T value);
-
-    @Override
-    SpreadsheetFormHandlerContext removeEnvironmentValue(final EnvironmentValueName<?> name);
 
     /**
      * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}

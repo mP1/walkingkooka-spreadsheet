@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpHandler;
@@ -35,7 +34,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.LineEnding;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -89,18 +87,5 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext);
 
     @Override
-    <T> SpreadsheetContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                               final T value);
-
-    @Override
-    SpreadsheetContext removeEnvironmentValue(final EnvironmentValueName<?> name);
-
-    @Override
-    SpreadsheetContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
     SpreadsheetContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
-
-    @Override
-    SpreadsheetContext setUser(final Optional<EmailAddress> user);
 }

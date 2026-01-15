@@ -1240,6 +1240,17 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             );
         }
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+        spreadsheetEnvironmentContext.setUser(
+            Optional.of(
+                EmailAddress.parse("user@example.com")
+            )
+        );
+
         return SpreadsheetContexts.mutableSpreadsheetId(
             (final SpreadsheetId id) -> {
                 final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
@@ -1259,17 +1270,7 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                 c,
                 TerminalContexts.fake()
             ),
-            SpreadsheetEnvironmentContexts.basic(
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                        SPREADSHEET_ID1
-                    ).setUser(
-                        Optional.of(
-                            EmailAddress.parse("user@example.com")
-                        )
-                    )
-            ),
+            SpreadsheetEnvironmentContexts.basic(spreadsheetEnvironmentContext),
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

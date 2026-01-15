@@ -18,14 +18,9 @@
 package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.FakeEnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.text.LineEnding;
-
-import java.util.Optional;
 
 public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext implements SpreadsheetEnvironmentContext {
 
@@ -57,27 +52,6 @@ public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext im
 
     @Override
     public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> SpreadsheetEnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                 final T value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext setUser(final Optional<EmailAddress> user) {
         throw new UnsupportedOperationException();
     }
 }

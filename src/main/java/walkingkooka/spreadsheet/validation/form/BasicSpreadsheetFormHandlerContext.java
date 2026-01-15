@@ -22,8 +22,6 @@ import walkingkooka.convert.ConverterLike;
 import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -37,7 +35,6 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.Form;
@@ -276,36 +273,6 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
                 Objects.requireNonNull(after, "environmentContext")
             );
     }
-
-    @Override
-    public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
-        this.context.setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user) {
-        this.context.setUser(user);
-        return this;
-    }
-
-    @Override
-    public <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                 final T value) {
-        this.context.setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
-
-    @Override
-    public SpreadsheetFormHandlerContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.context.removeEnvironmentValue(name);
-        return this;
-    }
-
-    // EnvironmentContextDelegator......................................................................................
 
     @Override
     public EnvironmentContext environmentContext() {

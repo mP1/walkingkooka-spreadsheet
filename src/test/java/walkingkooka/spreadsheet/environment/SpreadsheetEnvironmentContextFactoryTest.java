@@ -75,7 +75,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
                 continue;
             }
 
-            context = context.setEnvironmentValue(
+            context.setEnvironmentValue(
                 name,
                 Cast.to(
                     METADATA_EN_AU.getOrFail(
@@ -85,15 +85,19 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             );
         }
 
-        SPREADSHEET_ENVIRONMENT_CONTEXT = context.setEnvironmentValue(
+        context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.CONVERTER,
             METADATA_EN_AU.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
-        ).setEnvironmentValue(
+        );
+
+        context.setEnvironmentValue(
             SpreadsheetEnvironmentContextFactory.DECIMAL_NUMBER_DIGIT_COUNT,
             DECIMAL_NUMBER_DIGIT_COUNT
         );
+
+        SPREADSHEET_ENVIRONMENT_CONTEXT = context;
     }
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
@@ -493,11 +497,11 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
     @Test
     public void testFireEnvironmentValueNameChangeWithRoundingMode() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setEnvironmentValue(
-                SpreadsheetEnvironmentContextFactory.FUNCTIONS,
-                SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
-            );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("HelloFunction")
+        );
 
         final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
 
@@ -637,16 +641,18 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
     @Test
     public void testEqualsDifferentSpreadsheetEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            EnvironmentValueName.with(
+                "Different",
+                Integer.class
+            ),
+            1
+        );
+
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setEnvironmentValue(
-                        EnvironmentValueName.with(
-                            "Different",
-                            Integer.class
-                        ),
-                        1
-                    ),
+                spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT

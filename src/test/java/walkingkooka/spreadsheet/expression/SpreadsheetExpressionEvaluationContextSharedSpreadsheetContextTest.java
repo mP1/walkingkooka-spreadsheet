@@ -603,10 +603,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     public void testUser() {
         final EmailAddress user = EmailAddress.parse("user123@example.com");
 
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setUser(
-                Optional.of(user)
-            );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setUser(
+            Optional.of(user)
+        );
 
         this.userAndCheck(
             this.createContext(spreadsheetEnvironmentContext),

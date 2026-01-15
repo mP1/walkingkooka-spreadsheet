@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.convert.provider.ConverterAliasSet;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
@@ -338,23 +339,24 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
 
     @Override
     public SpreadsheetContextSharedMutableSpreadsheetId createContext() {
-        return this.createContext(
-            SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LINE_ENDING,
-                        LOCALE,
-                        HAS_NOW,
-                        Optional.empty() // no user
-                    )
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SERVER_URL,
-                    SERVER_URL
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                    SPREADSHEET_ID
-                )
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                Optional.empty() // no user
             )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+        return this.createContext(
+            SpreadsheetEnvironmentContexts.basic(environmentContext)
         );
     }
 

@@ -19,10 +19,8 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -45,7 +43,6 @@ import walkingkooka.storage.expression.function.StorageExpressionEvaluationConte
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -117,43 +114,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
-    default <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
-        return this.spreadsheetExpressionEvaluationContext()
-            .environmentValue(name);
-    }
-
-    @Override
-    default <T> SpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                           final T value) {
-        this.spreadsheetExpressionEvaluationContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-        return this;
-    }
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetExpressionEvaluationContext()
-            .removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.storageExpressionEvaluationContext()
-            .setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
-    default void setLocale(final Locale locale) {
-        this.spreadsheetExpressionEvaluationContext()
-            .setLocale(locale);
-    }
-
-    @Override
     default AbsoluteUrl serverUrl() {
         return this.spreadsheetExpressionEvaluationContext()
             .serverUrl();
@@ -169,19 +129,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     default SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId id) {
         this.spreadsheetExpressionEvaluationContext()
             .setSpreadsheetId(id);
-        return this;
-    }
-
-    @Override
-    default Optional<EmailAddress> user() {
-        return this.spreadsheetExpressionEvaluationContext()
-            .user();
-    }
-
-    @Override
-    default SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetExpressionEvaluationContext()
-            .setUser(user);
         return this;
     }
 

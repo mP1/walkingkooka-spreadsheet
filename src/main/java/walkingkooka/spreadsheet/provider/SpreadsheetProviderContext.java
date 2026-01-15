@@ -26,11 +26,9 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -48,7 +46,6 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A {@link ProviderContext} that may be used as the system {@link ProviderContext}.
@@ -196,12 +193,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     @Override
-    public ProviderContext setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext.setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
     public Locale locale() {
         return this.environmentContext.locale();
     }
@@ -219,35 +210,11 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     @Override
-    public ProviderContext setUser(final Optional<EmailAddress> user) {
-        this.environmentContext.setUser(user);
-        return this;
-    }
-
-    @Override
-    public <T> ProviderContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                   final T value) {
-        this.environmentContext.setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
-
-    @Override
-    public ProviderContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.environmentContext.removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
     public EnvironmentContext environmentContext() {
         return this.environmentContext;
     }
 
     private final EnvironmentContext environmentContext;
-
-    // toString.........................................................................................................
 
     // Object...........................................................................................................
 

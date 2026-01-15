@@ -17,15 +17,10 @@
 
 package walkingkooka.spreadsheet.validation.form;
 
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
-import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.FakeFormHandlerContext;
-
-import java.util.Optional;
 
 public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta>
     implements SpreadsheetFormHandlerContext {
@@ -35,28 +30,7 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
     }
 
     @Override
-    public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetFormHandlerContext cloneEnvironment() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> SpreadsheetFormHandlerContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                 final T value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetFormHandlerContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
         throw new UnsupportedOperationException();
     }
 

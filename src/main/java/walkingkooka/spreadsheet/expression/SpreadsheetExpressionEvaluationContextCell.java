@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -117,12 +116,6 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
         return this.context.lineEnding();
     }
 
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        this.context.setLineEnding(lineEnding);
-        return this;
-    }
-
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................
 
     @Override
@@ -180,12 +173,6 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
     @Override
     public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.context.setSpreadsheetId(spreadsheetId);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        this.context.setUser(user);
         return this;
     }
 

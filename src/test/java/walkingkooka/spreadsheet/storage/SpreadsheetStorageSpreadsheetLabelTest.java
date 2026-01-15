@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.storage;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -412,6 +413,25 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
                 )
         );
 
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                LOCALE,
+                HAS_NOW,
+                Optional.of(
+                    EmailAddress.parse("user@example.com")
+                )
+            )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            spreadsheetId
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            Url.parseAbsolute("https://example.com")
+        );
+
         return SpreadsheetContexts.fixedSpreadsheetId(
             SpreadsheetStoreRepositories.treeMap(
                 metadataStore,
@@ -425,24 +445,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
-            SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LineEnding.NL,
-                        LOCALE,
-                        HAS_NOW,
-                        Optional.of(
-                            EmailAddress.parse("user@example.com")
-                        )
-                    )
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                    spreadsheetId
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SERVER_URL,
-                    Url.parseAbsolute("https://example.com")
-                )
-            ),
+            SpreadsheetEnvironmentContexts.basic(environmentContext),
             localeContext,
             SpreadsheetProviders.basic(
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(

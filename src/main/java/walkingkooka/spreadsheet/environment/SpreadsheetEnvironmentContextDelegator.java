@@ -19,40 +19,11 @@ package walkingkooka.spreadsheet.environment;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.text.LineEnding;
-
-import java.util.Objects;
-import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator {
-
-    @Override
-    default <T> SpreadsheetEnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                  final T value) {
-        this.environmentContext().setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
-
-    @Override
-    default SpreadsheetEnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        Objects.requireNonNull(name, "name");
-        this.environmentContext().removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    default SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext().setLineEnding(lineEnding);
-        return this;
-    }
 
     @Override
     default AbsoluteUrl serverUrl() {
@@ -70,12 +41,6 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
     default SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.spreadsheetEnvironmentContext().
             setSpreadsheetId(spreadsheetId);
-        return this;
-    }
-
-    @Override
-    default SpreadsheetEnvironmentContext setUser(Optional<EmailAddress> user) {
-        this.environmentContext().setUser(user);
         return this;
     }
     

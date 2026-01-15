@@ -21,7 +21,6 @@ import walkingkooka.Either;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
@@ -36,7 +35,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.LineEnding;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -220,36 +218,8 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
     }
 
     @Override
-    public SpreadsheetStorageContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.spreadsheetContext.removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    public <T> SpreadsheetStorageContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                             final T value) {
-        this.spreadsheetContext.setEnvironmentValue(
-            name,
-            value
-        );
-        return this;
-    }
-
-    @Override
-    public SpreadsheetStorageContext setLineEnding(final LineEnding lineEnding) {
-        this.spreadsheetContext.setLineEnding(lineEnding);
-        return this;
-    }
-
-    @Override
     public SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.spreadsheetContext.setSpreadsheetId(spreadsheetId);
-        return this;
-    }
-
-    @Override
-    public SpreadsheetStorageContext setUser(final Optional<EmailAddress> user) {
-        this.spreadsheetContext.setUser(user);
         return this;
     }
 

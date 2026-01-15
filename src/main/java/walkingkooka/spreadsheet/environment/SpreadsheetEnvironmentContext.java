@@ -20,12 +20,8 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
-import walkingkooka.text.LineEnding;
-
-import java.util.Optional;
 
 /**
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
@@ -58,20 +54,6 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
     @Override
     SpreadsheetEnvironmentContext cloneEnvironment();
 
-
-    @Override
-    SpreadsheetEnvironmentContext removeEnvironmentValue(final EnvironmentValueName<?> environmentValueName);
-
-    @Override
-    <T> SpreadsheetEnvironmentContext setEnvironmentValue(final EnvironmentValueName<T> environmentValueName,
-                                                          final T reference);
-
     @Override
     SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext);
-
-    @Override
-    SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetEnvironmentContext setUser(final Optional<EmailAddress> user);
 }

@@ -172,11 +172,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
         final EmailAddress user = EmailAddress.parse("different@example.com");
 
-        this.userAndCheck(
-            context.cloneEnvironment()
-                .setUser(
-                    Optional.of(user)
-                ),
+        this.setUserAndCheck(
+            context.cloneEnvironment(),
             user
         );
     }
@@ -191,12 +188,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         );
         final String value = "World456";
 
-        this.environmentValueAndCheck(
-            context.cloneEnvironment()
-                .setEnvironmentValue(
-                    name,
-                    value
-                ),
+        this.setEnvironmentValueAndCheck(
+            context.cloneEnvironment(),
             name,
             value
         );
@@ -215,8 +208,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Test
     public void testSetEnvironmentContextWithDifferent() {
-        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setLineEnding(LineEnding.CRNL);
+        final EnvironmentContext differentEnvironmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        differentEnvironmentContext.setLineEnding(LineEnding.CRNL);
 
         this.checkNotEquals(
             ENVIRONMENT_CONTEXT,
@@ -262,14 +255,14 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Override
     public SpreadsheetProviderContext createContext() {
-        return this.createContext(
-            EnvironmentContexts.map(
-                ENVIRONMENT_CONTEXT
-            ).setEnvironmentValue(
-                ENVIRONMENT_VALUE_NAME,
-                ENVIRONMENT_VALUE
-            )
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            ENVIRONMENT_CONTEXT
         );
+        environmentContext.setEnvironmentValue(
+            ENVIRONMENT_VALUE_NAME,
+            ENVIRONMENT_VALUE
+        );
+        return this.createContext(environmentContext);
     }
 
     private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
@@ -319,11 +312,13 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Test
     public void testEqualsDifferentEnvironmentContext() {
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+        environmentContext.setLineEnding(LineEnding.CRNL);
+
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
-                ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setLineEnding(LineEnding.CRNL),
+                environmentContext,
                 JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
                 LOCALE_CONTEXT
             )

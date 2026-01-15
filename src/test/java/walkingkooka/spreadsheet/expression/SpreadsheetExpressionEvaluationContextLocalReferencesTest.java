@@ -438,21 +438,23 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     @Override
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
-        return this.createContext(
-            SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LineEnding.NL,
-                        LOCALE_CONTEXT.locale(),
-                        HAS_NOW,
-                        Optional.of(
-                            EmailAddress.parse("user@example.com")
-                        )
-                    )
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SERVER_URL,
-                    Url.parseAbsolute("https://example.com")
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LineEnding.NL,
+                LOCALE_CONTEXT.locale(),
+                HAS_NOW,
+                Optional.of(
+                    EmailAddress.parse("user@example.com")
                 )
+            )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            Url.parseAbsolute("https://example.com")
+        );
+
+        return this.createContext(
+            SpreadsheetEnvironmentContexts.basic(environmentContext
             ).setSpreadsheetId(
                 SpreadsheetId.with(1)
             )
@@ -599,9 +601,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
+        public void setLineEnding(final LineEnding lineEnding) {
             this.spreadsheetEnvironmentContext.setLineEnding(lineEnding);
-            return this;
         }
 
         @Override
@@ -646,9 +647,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
+        public void setUser(final Optional<EmailAddress> user) {
             this.spreadsheetEnvironmentContext.setUser(user);
-            return this;
         }
 
         @Override
@@ -675,15 +675,15 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public <T> FakeSpreadsheetExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                                  final T value) {
+        public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                            final T value) {
             Objects.requireNonNull(name, "name");
             Objects.requireNonNull(value, "value");
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public FakeSpreadsheetExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+        public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
             Objects.requireNonNull(name, "name");
             throw new UnsupportedOperationException();
         }

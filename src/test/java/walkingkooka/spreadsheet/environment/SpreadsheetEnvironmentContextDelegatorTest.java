@@ -70,10 +70,11 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
 
         @Override
         public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-            return this.setEnvironmentValue(
+            this.setEnvironmentValue(
                 SPREADSHEET_ID,
                 spreadsheetId
             );
+            return this;
         }
 
         @Override
@@ -92,21 +93,22 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
 
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
-            return SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LineEnding.NL,
-                        Locale.ENGLISH,
-                        () -> LocalDateTime.MIN,
-                        EnvironmentContext.ANONYMOUS
-                    )
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SERVER_URL,
-                    Url.parseAbsolute("https://example.com")
+            final EnvironmentContext environmentContext = EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    Locale.ENGLISH,
+                    () -> LocalDateTime.MIN,
+                    EnvironmentContext.ANONYMOUS
                 )
-            ).setSpreadsheetId(
-                SpreadsheetId.with(1)
             );
+            environmentContext.setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SERVER_URL,
+                Url.parseAbsolute("https://example.com")
+            );
+            return SpreadsheetEnvironmentContexts.basic(environmentContext)
+                .setSpreadsheetId(
+                    SpreadsheetId.with(1)
+                );
         }
 
         @Override

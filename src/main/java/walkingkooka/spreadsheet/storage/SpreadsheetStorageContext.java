@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -29,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
-import walkingkooka.text.LineEnding;
 
 import java.util.Optional;
 import java.util.Set;
@@ -66,18 +63,5 @@ public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetStorageContext setEnvironmentContext(final EnvironmentContext environmentContext);
 
     @Override
-    <T> SpreadsheetStorageContext setEnvironmentValue(final EnvironmentValueName<T> environmentValueName,
-                                                      final T reference);
-
-    @Override
-    SpreadsheetStorageContext removeEnvironmentValue(final EnvironmentValueName<?> environmentValueName);
-
-    @Override
-    SpreadsheetStorageContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
     SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
-
-    @Override
-    SpreadsheetStorageContext setUser(final Optional<EmailAddress> optional);
 }

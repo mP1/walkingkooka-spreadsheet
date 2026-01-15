@@ -21,7 +21,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterLikeDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -91,40 +90,15 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     }
 
     @Override
-    public final <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                  final T value) {
-        this.environmentContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-        return this;
-    }
-
-    @Override
-    public final SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.environmentContext()
-            .removeEnvironmentValue(name);
-        return this;
-    }
-
-    @Override
-    public final AbsoluteUrl serverUrl() {
-        return this.environmentContext()
-            .environmentValueOrFail(SERVER_URL);
-    }
-
-    @Override
     public final LineEnding lineEnding() {
         return this.environmentContext()
             .lineEnding();
     }
 
     @Override
-    public final SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+    public final void setLineEnding(final LineEnding lineEnding) {
         this.environmentContext()
             .setLineEnding(lineEnding);
-        return this;
     }
 
     @Override
@@ -140,10 +114,15 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     }
 
     @Override
-    public final SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+    public final AbsoluteUrl serverUrl() {
+        return this.environmentContext()
+            .environmentValueOrFail(SERVER_URL);
+    }
+
+    @Override
+    public final void setUser(final Optional<EmailAddress> user) {
         this.environmentContext()
             .setUser(user);
-        return this;
     }
 
     @Override

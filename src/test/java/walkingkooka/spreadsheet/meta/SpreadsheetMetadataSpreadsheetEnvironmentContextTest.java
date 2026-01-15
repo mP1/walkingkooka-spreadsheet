@@ -53,19 +53,23 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
-    private final static EnvironmentContext CONTEXT = EnvironmentContexts.readOnly(
-        EnvironmentContexts.map(
+    static {
+        final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
                 LineEnding.NL,
                 Locale.FRENCH,
                 () -> NOW,
                 Optional.of(USER)
             )
-        ).setEnvironmentValue(
+        );
+        context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
-        )
-    );
+        );
+        CONTEXT = EnvironmentContexts.readOnly(context);
+    }
+
+    private final static EnvironmentContext CONTEXT;
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -417,8 +421,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             metadataSpreadsheetId
         );
 
-        final EnvironmentContext environmentContext = CONTEXT.cloneEnvironment()
-            .setEnvironmentValue(
+        final EnvironmentContext environmentContext = CONTEXT.cloneEnvironment();
+        environmentContext.setEnvironmentValue(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
                 SPREADSHEET_ID
             );
@@ -435,11 +439,11 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         final SpreadsheetId metadataSpreadsheetId = SpreadsheetId.with(2);
         final SpreadsheetId environmentSpreadsheetId = SpreadsheetId.with(3);
 
-        final EnvironmentContext context = CONTEXT.cloneEnvironment()
-            .setEnvironmentValue(
-                SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
-                environmentSpreadsheetId
-            );
+        final EnvironmentContext context = CONTEXT.cloneEnvironment();
+        context.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
+            environmentSpreadsheetId
+        );
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA.set(

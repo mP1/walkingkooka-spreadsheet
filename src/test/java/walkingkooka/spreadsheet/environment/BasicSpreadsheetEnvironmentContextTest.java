@@ -95,20 +95,21 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testServerUrl() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+
         this.serverUrlAndCheck(
-            BasicSpreadsheetEnvironmentContext.with(
-                EnvironmentContexts.map(
-                    EnvironmentContexts.empty(
-                        LINE_ENDING,
-                        LOCALE,
-                        HAS_NOW,
-                        EnvironmentContext.ANONYMOUS
-                    )
-                ).setEnvironmentValue(
-                    SpreadsheetEnvironmentContext.SERVER_URL,
-                    SERVER_URL
-                )
-            ),
+            BasicSpreadsheetEnvironmentContext.with(environmentContext),
             SERVER_URL
         );
     }
@@ -260,17 +261,18 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Override
     public BasicSpreadsheetEnvironmentContext createContext() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT);
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID
+        );
+
         return (BasicSpreadsheetEnvironmentContext)
-            BasicSpreadsheetEnvironmentContext.with(
-                EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT)
-                    .setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SERVER_URL,
-                        SERVER_URL
-                    ).setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-                        SPREADSHEET_ID
-                    )
-            );
+            BasicSpreadsheetEnvironmentContext.with(environmentContext);
     }
 
     // toString.........................................................................................................

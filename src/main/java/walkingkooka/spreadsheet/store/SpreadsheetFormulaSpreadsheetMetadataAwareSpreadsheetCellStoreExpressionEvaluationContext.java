@@ -22,20 +22,16 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.terminal.expression.TerminalExpressionEvaluationContext;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
@@ -209,44 +205,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
-    public <T> ExpressionEvaluationContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                               final T value) {
-        Objects.requireNonNull(name, "name");
-        Objects.requireNonNull(value, "value");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionEvaluationContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        Objects.requireNonNull(name, "name");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ExpressionEvaluationContext setLineEnding(final LineEnding lineEnding) {
-        Objects.requireNonNull(lineEnding, "lineEnding");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public TerminalExpressionEvaluationContext setUser(final Optional<EmailAddress> user) {
-        Objects.requireNonNull(user);
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public ExpressionEvaluationContext expressionEvaluationContext() {
         throw new UnsupportedOperationException();
     }
-
-    // LocaleContextDelegator...........................................................................................
-
-    @Override
-    public LocaleContext localeContext() {
-        return this.localeContext;
-    }
-
-    private final LocaleContext localeContext;
 
     @Override
     public Locale locale() {
@@ -258,6 +219,15 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         Objects.requireNonNull(locale, "locale");
         throw new UnsupportedOperationException();
     }
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.localeContext;
+    }
+
+    private final LocaleContext localeContext;
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {

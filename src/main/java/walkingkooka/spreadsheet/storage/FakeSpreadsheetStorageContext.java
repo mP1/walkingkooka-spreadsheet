@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.FakeSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -28,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.LineEnding;
 
 import java.util.List;
 import java.util.Locale;
@@ -129,28 +127,7 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public SpreadsheetStorageContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public <T> SpreadsheetStorageContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                             final T value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetStorageContext setLineEnding(final LineEnding lineEnding) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetStorageContext setUser(final Optional<EmailAddress> user) {
         throw new UnsupportedOperationException();
     }
 }

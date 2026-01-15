@@ -20,18 +20,14 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Context;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -120,20 +116,4 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext);
-
-    @Override
-    <T> SpreadsheetEngineContext setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                     final T value);
-
-    @Override
-    SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name);
-
-    @Override
-    SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
-
-    @Override
-    SpreadsheetEngineContext setUser(final Optional<EmailAddress> user);
 }

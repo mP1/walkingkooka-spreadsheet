@@ -530,9 +530,8 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
-                public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
+                public void setLineEnding(final LineEnding lineEnding) {
                     this.environmentContext.setLineEnding(lineEnding);
-                    return this;
                 }
 
                 @Override
@@ -556,9 +555,8 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
-                public SpreadsheetEngineContext setUser(final Optional<EmailAddress> user) {
+                public void setUser(final Optional<EmailAddress> user) {
                     this.environmentContext.setUser(user);
-                    return this;
                 }
 
                 @Override
@@ -567,9 +565,8 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
-                public SpreadsheetEngineContext removeEnvironmentValue(final EnvironmentValueName<?> name) {
+                public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
                     this.environmentContext.removeEnvironmentValue(name);
-                    return this;
                 }
 
                 @Override
