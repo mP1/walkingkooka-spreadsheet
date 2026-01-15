@@ -54,13 +54,13 @@ import java.util.function.BiFunction;
  * some with and some without a spreadsheet-id within the path. Those without the {@link SpreadsheetEnvironmentContextFactory#SPREADSHEET_ID},
  * will use the {@link EnvironmentValueName} when forming the final full path.
  */
-final class SpreadsheetTerminalStorageRouter extends SpreadsheetTerminalStorage {
+final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
-    static SpreadsheetTerminalStorageRouter with(final Storage<SpreadsheetStorageContext> cells,
-                                                 final Storage<SpreadsheetStorageContext> labels,
-                                                 final Storage<SpreadsheetStorageContext> metadatas,
-                                                 final Storage<SpreadsheetStorageContext> other) {
-        return new SpreadsheetTerminalStorageRouter(
+    static SpreadsheetStorageRouter with(final Storage<SpreadsheetStorageContext> cells,
+                                         final Storage<SpreadsheetStorageContext> labels,
+                                         final Storage<SpreadsheetStorageContext> metadatas,
+                                         final Storage<SpreadsheetStorageContext> other) {
+        return new SpreadsheetStorageRouter(
             Objects.requireNonNull(cells, "cells"),
             Objects.requireNonNull(labels, "labels"),
             Objects.requireNonNull(metadatas, "metadatas"),
@@ -68,10 +68,10 @@ final class SpreadsheetTerminalStorageRouter extends SpreadsheetTerminalStorage 
         );
     }
 
-    private SpreadsheetTerminalStorageRouter(final Storage<SpreadsheetStorageContext> cells,
-                                             final Storage<SpreadsheetStorageContext> labels,
-                                             final Storage<SpreadsheetStorageContext> metadatas,
-                                             final Storage<SpreadsheetStorageContext> other) {
+    private SpreadsheetStorageRouter(final Storage<SpreadsheetStorageContext> cells,
+                                     final Storage<SpreadsheetStorageContext> labels,
+                                     final Storage<SpreadsheetStorageContext> metadatas,
+                                     final Storage<SpreadsheetStorageContext> other) {
         super();
 
         this.cells = cells.setPrefix(CELL);
@@ -81,7 +81,7 @@ final class SpreadsheetTerminalStorageRouter extends SpreadsheetTerminalStorage 
         this.other = other;
     }
 
-    // SpreadsheetTerminalStorage.......................................................................................
+    // SpreadsheetStorage.......................................................................................
 
     @Override
     Optional<StorageValue> loadNonNull(final StoragePath path,

@@ -18,15 +18,12 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.collect.list.ImmutableList;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
-import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageName;
 import walkingkooka.storage.StoragePath;
@@ -35,25 +32,24 @@ import walkingkooka.storage.StorageValueInfo;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
- * A {@link Storage} that maps cells to a {@link Storage}, for the current spreadsheet.
+ * A {@link Storage} that maps {@link SpreadsheetLabelMapping} to a {@link Storage}, for the current spreadsheet.
  * <pre>
- * /cell/SpreadsheetExpressionReference
+ * /label/SpreadsheetLabelName
  * </pre>
  * for the {@link StorageValue}.
  */
-final class SpreadsheetTerminalStorageSpreadsheetCell extends SpreadsheetTerminalStorage {
+final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
 
     /**
      * Singleton
      */
-    final static SpreadsheetTerminalStorageSpreadsheetCell INSTANCE = new SpreadsheetTerminalStorageSpreadsheetCell();
+    final static SpreadsheetStorageSpreadsheetLabel INSTANCE = new SpreadsheetStorageSpreadsheetLabel();
 
-    private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_CELL;
+    private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_LABEL;
 
-    private SpreadsheetTerminalStorageSpreadsheetCell() {
+    private SpreadsheetStorageSpreadsheetLabel() {
         super();
     }
 
@@ -64,27 +60,28 @@ final class SpreadsheetTerminalStorageSpreadsheetCell extends SpreadsheetTermina
 
         final List<StorageName> names = path.namesList();
 
-        final SpreadsheetExpressionReference cellOrLabels;
+        SpreadsheetLabelName labelName = null;
 
-        // SLASH A1 compute-if-necessary
         switch (names.size()) {
             case 2:
-            case 3:
-                cellOrLabels = parseExpressionReference(
+                labelName = parseLabel(
                     names.get(1)
                 );
                 break;
             default:
-                cellOrLabels = null;
-                break;
+                throw new IllegalArgumentException("Invalid path after label name");
         }
 
-        if (null != cellOrLabels) {
-            final Set<SpreadsheetCell> cells = context.loadCells(cellOrLabels);
-            if (false == cells.isEmpty()) {
+        if (null != labelName) {
+            final SpreadsheetLabelMapping mapping = context.loadLabel(labelName)
+                .orElse(null);
+
+            if (null != mapping) {
                 value = StorageValue.with(
                     path,
-                    Optional.of(cells)
+                    Optional.of(
+                        mapping
+                    )
                 ).setContentType(MEDIA_TYPE);
             }
         }
@@ -92,41 +89,32 @@ final class SpreadsheetTerminalStorageSpreadsheetCell extends SpreadsheetTermina
         return Optional.ofNullable(value);
     }
 
-    /**
-     * Select only cells to appear in the response.
-     */
-    private final static Set<SpreadsheetDeltaProperties> CELLS_ONLY = Sets.of(SpreadsheetDeltaProperties.CELLS);
-
     @Override
     StorageValue saveNonNull(final StorageValue value,
                              final SpreadsheetStorageContext context) {
-        switch (value.path()
-            .namesList()
-            .size()) {
+        final List<StorageName> names = value.path()
+            .namesList();
+        switch (names.size()) {
             case 0:
             case 1:
-                break;
+                throw new IllegalArgumentException("Missing label");
+            case 2:
+                SpreadsheetLabelMapping labelMapping = context.convertOrFail(
+                    value.value()
+                        .orElseThrow(() -> new IllegalArgumentException("Missing " + SpreadsheetLabelMapping.class.getSimpleName())),
+                    SpreadsheetLabelMapping.class
+                );
+
+                final SpreadsheetLabelMapping saved = context.saveLabel(labelMapping);
+
+                return value.setValue(
+                    Optional.of(saved)
+                ).setContentType(MEDIA_TYPE);
             default:
-                throw new IllegalArgumentException("Invalid path, must not contain selection");
+                throw new IllegalArgumentException("Invalid path after label");
         }
-
-        final SpreadsheetCellSet cells = context.convertOrFail(
-            value.value()
-                .orElse(SpreadsheetCellSet.EMPTY),
-            SpreadsheetCellSet.class
-        );
-
-        return value.setValue(
-            Optional.of(
-                context.saveCells(cells)
-            )
-        ).setContentType(MEDIA_TYPE);
     }
 
-    /**
-     * Deletes the given cells. Note if the path contains additional components a {@link IllegalArgumentException}
-     * will be thrown.
-     */
     @Override
     void deleteNonNull(final StoragePath path,
                        final SpreadsheetStorageContext context) {
@@ -134,16 +122,16 @@ final class SpreadsheetTerminalStorageSpreadsheetCell extends SpreadsheetTermina
         switch (names.size()) {
             case 0:
             case 1:
-                throw new IllegalArgumentException("Missing selection");
+                throw new IllegalArgumentException("Missing label");
             case 2:
-                context.deleteCells(
-                    parseExpressionReference(
+                context.deleteLabel(
+                    parseLabel(
                         names.get(1)
                     )
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path");
+                throw new IllegalArgumentException("Invalid path after label");
         }
     }
 
@@ -154,36 +142,40 @@ final class SpreadsheetTerminalStorageSpreadsheetCell extends SpreadsheetTermina
                                        final SpreadsheetStorageContext context) {
         final List<StorageName> names = path.namesList();
 
-        final SpreadsheetExpressionReference cellOrLabels;
+        final String labelName;
 
         switch (names.size()) {
             case 0:
             case 1:
-                cellOrLabels = SpreadsheetSelection.ALL_CELLS;
+                labelName = "";
                 break;
             case 2:
-                cellOrLabels = parseExpressionReference(
-                    names.get(1)
-                );
+                labelName = names.get(1)
+                    .value();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after selection");
+                throw new IllegalArgumentException("Invalid path after label");
         }
 
-        return context.loadCells(cellOrLabels)
-            .stream()
+        return context.findLabelsByName(
+                labelName,
+                offset,
+                count
+            ).stream()
             .map(
-                (SpreadsheetCell c) -> StorageValueInfo.with(
+                (SpreadsheetLabelName l) -> StorageValueInfo.with(
                     StoragePath.ROOT.append(
-                        StorageName.with(c.reference().text())
+                        StorageName.with(
+                            l.text()
+                        )
                     ),
                     context.createdAuditInfo()
                 )
             ).collect(ImmutableList.collector());
     }
 
-    private static SpreadsheetExpressionReference parseExpressionReference(final StorageName name) {
-        return SpreadsheetSelection.parseExpressionReference(
+    private static SpreadsheetLabelName parseLabel(final StorageName name) {
+        return SpreadsheetSelection.labelName(
             name.value()
         );
     }

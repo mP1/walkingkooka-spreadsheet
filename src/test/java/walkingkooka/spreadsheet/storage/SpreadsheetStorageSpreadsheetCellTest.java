@@ -83,7 +83,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetTerminalStorageSpreadsheetCellTest implements StorageTesting<SpreadsheetTerminalStorageSpreadsheetCell, SpreadsheetStorageContext>,
+public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesting<SpreadsheetStorageSpreadsheetCell, SpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
 
     @Test
@@ -326,7 +326,7 @@ public final class SpreadsheetTerminalStorageSpreadsheetCellTest implements Stor
         final StoragePath path = StoragePath.parse("/A1");
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
-        final SpreadsheetTerminalStorageSpreadsheetCell storage = this.createStorage();
+        final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
         storage.delete(
             path,
             storageContext
@@ -450,8 +450,8 @@ public final class SpreadsheetTerminalStorageSpreadsheetCellTest implements Stor
     }
 
     @Override
-    public SpreadsheetTerminalStorageSpreadsheetCell createStorage() {
-        return SpreadsheetTerminalStorageSpreadsheetCell.INSTANCE;
+    public SpreadsheetStorageSpreadsheetCell createStorage() {
+        return SpreadsheetStorageSpreadsheetCell.INSTANCE;
     }
 
     @Override
@@ -595,8 +595,8 @@ public final class SpreadsheetTerminalStorageSpreadsheetCellTest implements Stor
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetTerminalStorageSpreadsheetCell> type() {
-        return SpreadsheetTerminalStorageSpreadsheetCell.class;
+    public Class<SpreadsheetStorageSpreadsheetCell> type() {
+        return SpreadsheetStorageSpreadsheetCell.class;
     }
 
     @Override

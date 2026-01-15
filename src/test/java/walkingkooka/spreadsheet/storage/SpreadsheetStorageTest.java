@@ -17,25 +17,18 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.PublicStaticHelperTesting;
 
-import java.lang.reflect.Method;
-
-public final class SpreadsheetTerminalStoragesTest implements PublicStaticHelperTesting<SpreadsheetTerminalStorages> {
+public final class SpreadsheetStorageTest implements ClassTesting<SpreadsheetStorage> {
 
     @Override
-    public Class<SpreadsheetTerminalStorages> type() {
-        return SpreadsheetTerminalStorages.class;
+    public Class<SpreadsheetStorage> type() {
+        return SpreadsheetStorage.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
-    @Override
-    public boolean canHavePublicTypes(final Method method) {
-        return false;
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

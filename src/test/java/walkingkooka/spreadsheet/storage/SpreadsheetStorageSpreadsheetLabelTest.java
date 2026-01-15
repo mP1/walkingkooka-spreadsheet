@@ -70,7 +70,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetTerminalStorageSpreadsheetLabelTest implements StorageTesting<SpreadsheetTerminalStorageSpreadsheetLabel, SpreadsheetStorageContext>,
+public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTesting<SpreadsheetStorageSpreadsheetLabel, SpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("Label111");
@@ -261,7 +261,7 @@ public final class SpreadsheetTerminalStorageSpreadsheetLabelTest implements Sto
 
         final StoragePath path = StoragePath.parse("/" + LABEL1);
 
-        final SpreadsheetTerminalStorageSpreadsheetLabel storage = this.createStorage();
+        final SpreadsheetStorageSpreadsheetLabel storage = this.createStorage();
         storage.delete(
             path,
             context
@@ -371,8 +371,8 @@ public final class SpreadsheetTerminalStorageSpreadsheetLabelTest implements Sto
     }
 
     @Override
-    public SpreadsheetTerminalStorageSpreadsheetLabel createStorage() {
-        return SpreadsheetTerminalStorageSpreadsheetLabel.INSTANCE;
+    public SpreadsheetStorageSpreadsheetLabel createStorage() {
+        return SpreadsheetStorageSpreadsheetLabel.INSTANCE;
     }
 
     @Override
@@ -466,8 +466,8 @@ public final class SpreadsheetTerminalStorageSpreadsheetLabelTest implements Sto
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetTerminalStorageSpreadsheetLabel> type() {
-        return SpreadsheetTerminalStorageSpreadsheetLabel.class;
+    public Class<SpreadsheetStorageSpreadsheetLabel> type() {
+        return SpreadsheetStorageSpreadsheetLabel.class;
     }
 
     @Override
