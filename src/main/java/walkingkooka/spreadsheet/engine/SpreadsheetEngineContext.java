@@ -38,7 +38,6 @@ import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.text.TextNode;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -131,9 +130,6 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetEngineContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId);

@@ -172,7 +172,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         }
 
         @Override
-        public SpreadsheetContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }

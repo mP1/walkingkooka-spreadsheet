@@ -148,10 +148,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+    default void setLocale(final Locale locale) {
         this.spreadsheetExpressionEvaluationContext()
             .setLocale(locale);
-        return this;
     }
 
     @Override

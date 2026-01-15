@@ -217,7 +217,7 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     }
 
     @Override
-    public SpreadsheetConverterContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 }

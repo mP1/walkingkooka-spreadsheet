@@ -157,9 +157,11 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
         final Locale locale = Locale.FRENCH;
 
+        final SpreadsheetProviderContext clone = context.cloneEnvironment();
+        clone.setLocale(locale);
+
         this.localeAndCheck(
-            context.cloneEnvironment()
-                .setLocale(locale),
+            clone,
             locale
         );
     }

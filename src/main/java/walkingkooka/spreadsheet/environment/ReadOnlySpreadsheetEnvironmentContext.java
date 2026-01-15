@@ -116,7 +116,7 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         Objects.requireNonNull(locale, "locale");
 
         throw new UnsupportedOperationException();

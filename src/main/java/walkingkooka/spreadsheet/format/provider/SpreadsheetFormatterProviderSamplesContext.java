@@ -22,13 +22,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
-import java.util.Locale;
-
 public interface SpreadsheetFormatterProviderSamplesContext extends SpreadsheetFormatterContext,
     HasProviderContext {
-
-    @Override
-    SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetFormatterProviderSamplesContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor);

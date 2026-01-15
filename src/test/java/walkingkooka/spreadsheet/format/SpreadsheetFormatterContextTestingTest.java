@@ -169,7 +169,7 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public SpreadsheetFormatterContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             throw new UnsupportedOperationException();
         }
 

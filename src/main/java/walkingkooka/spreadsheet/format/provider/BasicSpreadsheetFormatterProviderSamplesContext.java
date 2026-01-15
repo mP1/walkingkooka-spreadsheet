@@ -26,7 +26,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Objects;
 
 final class BasicSpreadsheetFormatterProviderSamplesContext implements SpreadsheetFormatterProviderSamplesContext,
@@ -105,12 +104,6 @@ final class BasicSpreadsheetFormatterProviderSamplesContext implements Spreadshe
     }
 
     // SpreadsheetFormatterContextDelegator.............................................................................
-
-    @Override
-    public SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale) {
-        this.spreadsheetFormatterContext.setLocale(locale);
-        return this;
-    }
 
     @Override
     public SpreadsheetFormatterContext spreadsheetFormatterContext() {

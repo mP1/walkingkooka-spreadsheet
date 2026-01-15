@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.LineEnding;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -64,12 +63,6 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
         @Override
         public SpreadsheetEngineContext setLineEnding(final LineEnding lineEnding) {
             Objects.requireNonNull(lineEnding, "lineEnding");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public SpreadsheetEngineContext setLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }
 

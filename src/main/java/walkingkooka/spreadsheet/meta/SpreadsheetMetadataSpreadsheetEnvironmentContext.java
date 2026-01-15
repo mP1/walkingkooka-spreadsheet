@@ -120,9 +120,8 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         this.context.setLocale(locale);
-        return this;
     }
 
     @Override

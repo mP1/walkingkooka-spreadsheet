@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.FakeFormHandlerContext;
 
-import java.util.Locale;
 import java.util.Optional;
 
 public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta>
@@ -37,11 +36,6 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
 
     @Override
     public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

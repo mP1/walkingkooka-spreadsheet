@@ -99,9 +99,6 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     SpreadsheetContext setLineEnding(final LineEnding lineEnding);
 
     @Override
-    SpreadsheetContext setLocale(final Locale locale);
-
-    @Override
     SpreadsheetContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 
     @Override

@@ -152,7 +152,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     // LocaleContext....................................................................................................
 
     @Override
-    public SpreadsheetContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

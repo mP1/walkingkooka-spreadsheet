@@ -207,7 +207,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     @Override
-    public ProviderContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         final EnvironmentContext environmentContext = this.environmentContext;
         final Locale previous = environmentContext.locale();
         this.environmentContext.setLocale(locale);
@@ -216,8 +216,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
         if (false == previous.equals(locale)) {
             this.setConverterContext(locale);
         }
-
-        return this;
     }
 
     @Override

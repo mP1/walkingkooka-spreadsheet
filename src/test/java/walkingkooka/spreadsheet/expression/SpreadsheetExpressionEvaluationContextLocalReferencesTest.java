@@ -610,9 +610,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             this.spreadsheetEnvironmentContext.setLocale(locale);
-            return this;
         }
 
         @Override

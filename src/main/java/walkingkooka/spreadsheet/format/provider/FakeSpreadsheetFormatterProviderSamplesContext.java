@@ -22,8 +22,6 @@ import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
-import java.util.Locale;
-
 public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsheetFormatterContext implements SpreadsheetFormatterProviderSamplesContext {
 
     @Override
@@ -33,11 +31,6 @@ public class FakeSpreadsheetFormatterProviderSamplesContext extends FakeSpreadsh
 
     @Override
     public SpreadsheetFormatterProviderSamplesContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetFormatterProviderSamplesContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

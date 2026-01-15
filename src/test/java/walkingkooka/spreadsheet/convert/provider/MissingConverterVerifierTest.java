@@ -304,7 +304,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
-        public SpreadsheetConverterContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             throw new UnsupportedOperationException();
         }
 

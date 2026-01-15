@@ -165,9 +165,8 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
-    public SpreadsheetConverterContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         this.spreadsheetConverterContext.setLocale(locale);
-        return this;
     }
 
     @Override

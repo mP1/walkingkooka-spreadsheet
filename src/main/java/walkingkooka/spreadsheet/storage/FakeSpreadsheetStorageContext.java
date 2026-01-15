@@ -145,11 +145,6 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public SpreadsheetStorageContext setLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         throw new UnsupportedOperationException();
     }

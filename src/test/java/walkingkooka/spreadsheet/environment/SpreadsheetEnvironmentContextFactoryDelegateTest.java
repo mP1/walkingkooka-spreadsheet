@@ -68,27 +68,34 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             return this.factory;
         }
 
-        private final SpreadsheetEnvironmentContextFactory factory = SpreadsheetEnvironmentContextFactory.with(
-            SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            LineEnding.NL,
-                            SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,
-                            () -> LocalDateTime.MIN,
-                            EnvironmentContext.ANONYMOUS
-                        )
-                    ).setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE)
-                    .setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SERVER_URL,
-                        Url.parseAbsolute("https://example.com")
-                    )
-            ).setSpreadsheetId(
-                SpreadsheetId.with(1)
-            ),
-            LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE),
-            SpreadsheetProviders.fake(),
-            ProviderContexts.fake()
-        );
+        {
+            final EnvironmentContext context = EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    LineEnding.NL,
+                    SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,
+                    () -> LocalDateTime.MIN,
+                    EnvironmentContext.ANONYMOUS
+                )
+            );
+
+            context.setLocale(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE);
+            context.setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SERVER_URL,
+                Url.parseAbsolute("https://example.com")
+            );
+            ;
+            this.factory = SpreadsheetEnvironmentContextFactory.with(
+                SpreadsheetEnvironmentContexts.basic(context)
+                    .setSpreadsheetId(
+                        SpreadsheetId.with(1)
+                    ),
+                LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE),
+                SpreadsheetProviders.fake(),
+                ProviderContexts.fake()
+            );
+        }
+
+        private final SpreadsheetEnvironmentContextFactory factory;
 
         @Override
         public String toString() {
