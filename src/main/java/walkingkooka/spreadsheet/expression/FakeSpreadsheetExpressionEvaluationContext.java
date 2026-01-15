@@ -39,12 +39,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.expression.function.FakeStorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.printer.Printer;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -60,7 +60,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEvaluationContext
+public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpressionEvaluationContext
     implements SpreadsheetExpressionEvaluationContext {
 
     public FakeSpreadsheetExpressionEvaluationContext() {
