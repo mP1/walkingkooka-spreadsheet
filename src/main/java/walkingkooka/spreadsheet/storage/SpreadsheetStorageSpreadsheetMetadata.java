@@ -40,16 +40,16 @@ import java.util.Optional;
  *  /spreadsheet/123
  * </pre>
  */
-final class SpreadsheetTerminalStorageSpreadsheetMetadata extends SpreadsheetTerminalStorage {
+final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
 
     /**
      * Singleton
      */
-    final static SpreadsheetTerminalStorageSpreadsheetMetadata INSTANCE = new SpreadsheetTerminalStorageSpreadsheetMetadata();
+    final static SpreadsheetStorageSpreadsheetMetadata INSTANCE = new SpreadsheetStorageSpreadsheetMetadata();
 
     private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA;
 
-    private SpreadsheetTerminalStorageSpreadsheetMetadata() {
+    private SpreadsheetStorageSpreadsheetMetadata() {
         super();
     }
 

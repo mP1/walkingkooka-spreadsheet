@@ -30,9 +30,9 @@ import java.util.Optional;
 /**
  * Base class for all {@link Storage} implementations, using an abstract template class that handles null parameter checking.
  */
-abstract class SpreadsheetTerminalStorage implements Storage<SpreadsheetStorageContext> {
+abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> {
 
-    SpreadsheetTerminalStorage() {
+    SpreadsheetStorage() {
         super();
     }
 

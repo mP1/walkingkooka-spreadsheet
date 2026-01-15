@@ -23,37 +23,37 @@ import walkingkooka.storage.Storage;
 /**
  * A collection of {@link Storage} for a spreadsheet terminal.
  */
-public final class SpreadsheetTerminalStorages implements PublicStaticHelper {
+public final class SpreadsheetStorages implements PublicStaticHelper {
 
     /**
-     * {@see SpreadsheetTerminalStorageSpreadsheetCell}
+     * {@see SpreadsheetStorageSpreadsheetCell}
      */
     public static Storage<SpreadsheetStorageContext> cell() {
-        return SpreadsheetTerminalStorageSpreadsheetCell.INSTANCE;
+        return SpreadsheetStorageSpreadsheetCell.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetTerminalStorageSpreadsheetLabel}
+     * {@see SpreadsheetStorageSpreadsheetLabel}
      */
     public static Storage<SpreadsheetStorageContext> label() {
-        return SpreadsheetTerminalStorageSpreadsheetLabel.INSTANCE;
+        return SpreadsheetStorageSpreadsheetLabel.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetTerminalStorageSpreadsheetMetadata}
+     * {@see SpreadsheetStorageSpreadsheetMetadata}
      */
     public static Storage<SpreadsheetStorageContext> metadata() {
-        return SpreadsheetTerminalStorageSpreadsheetMetadata.INSTANCE;
+        return SpreadsheetStorageSpreadsheetMetadata.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetTerminalStorageRouter}
+     * {@see SpreadsheetStorageRouter}
      */
     public static Storage<SpreadsheetStorageContext> router(final Storage<SpreadsheetStorageContext> cells,
                                                             final Storage<SpreadsheetStorageContext> labels,
                                                             final Storage<SpreadsheetStorageContext> metadatas,
                                                             final Storage<SpreadsheetStorageContext> other) {
-        return SpreadsheetTerminalStorageRouter.with(
+        return SpreadsheetStorageRouter.with(
             cells,
             labels,
             metadatas,
@@ -64,7 +64,7 @@ public final class SpreadsheetTerminalStorages implements PublicStaticHelper {
     /**
      * Stop creation
      */
-    private SpreadsheetTerminalStorages() {
+    private SpreadsheetStorages() {
         throw new UnsupportedOperationException();
     }
 }
