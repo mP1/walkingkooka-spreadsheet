@@ -867,10 +867,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * while parse pattern will include all patterns with all styles.
      */
     public final SpreadsheetMetadata loadFromLocale(final LocaleContext context) {
-        return loadFromLocale0(
-            Objects.requireNonNull(context, "context")
-                .setLocale(this.locale())
-        );
+        Objects.requireNonNull(context, "context");
+        context.setLocale(this.locale());
+
+        return loadFromLocale0(context);
     }
 
     private SpreadsheetMetadata loadFromLocale0(final LocaleContext context) {

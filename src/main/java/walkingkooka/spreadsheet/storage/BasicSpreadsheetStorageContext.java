@@ -242,12 +242,6 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
     }
 
     @Override
-    public SpreadsheetStorageContext setLocale(final Locale locale) {
-        this.spreadsheetContext.setLocale(locale);
-        return this;
-    }
-
-    @Override
     public SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.spreadsheetContext.setSpreadsheetId(spreadsheetId);
         return this;

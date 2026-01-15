@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.text.LineEnding;
 
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -75,9 +74,6 @@ public interface SpreadsheetStorageContext extends StorageContext,
 
     @Override
     SpreadsheetStorageContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetStorageContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId);

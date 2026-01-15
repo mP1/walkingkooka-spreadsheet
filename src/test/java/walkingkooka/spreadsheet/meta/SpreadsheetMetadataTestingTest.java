@@ -190,9 +190,11 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             locale
         );
 
-        final ProviderContext context = PROVIDER_CONTEXT.cloneEnvironment();
+        final ProviderContext clone = PROVIDER_CONTEXT.cloneEnvironment();
+        clone.setLocale(locale);
+
         this.localeAndCheck(
-            context.setLocale(locale),
+            clone,
             locale
         );
     }

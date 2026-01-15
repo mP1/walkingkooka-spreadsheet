@@ -134,10 +134,9 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     }
 
     @Override
-    public final SpreadsheetEngineContext setLocale(final Locale locale) {
+    public final void setLocale(final Locale locale) {
         this.environmentContext()
             .setLocale(locale);
-        return this;
     }
 
     @Override

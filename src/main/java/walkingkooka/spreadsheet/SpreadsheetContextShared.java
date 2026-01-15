@@ -214,10 +214,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     }
 
     @Override
-    public final SpreadsheetContext setLocale(final Locale locale) {
+    public final void setLocale(final Locale locale) {
         this.spreadsheetEnvironmentContext.setLocale(locale);
-
-        return this;
     }
 
     @Override

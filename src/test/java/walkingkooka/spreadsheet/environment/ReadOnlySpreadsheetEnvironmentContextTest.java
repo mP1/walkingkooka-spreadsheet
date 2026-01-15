@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.datetime.HasNow;
+import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
@@ -312,21 +313,22 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     @Override
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
+        final EnvironmentContext context = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                LINE_ENDING,
+                Locale.FRANCE,
+                () -> NOW,
+                Optional.of(USER)
+            )
+        );
+        context.setLocale(LOCALE);
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SERVER_URL,
+            SERVER_URL
+        );
         return ReadOnlySpreadsheetEnvironmentContext.with(
-            SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            LINE_ENDING,
-                            Locale.FRANCE,
-                            () -> NOW,
-                            Optional.of(USER)
-                        )
-                    ).setLocale(LOCALE)
-                    .setEnvironmentValue(
-                        SpreadsheetEnvironmentContext.SERVER_URL,
-                        SERVER_URL
-                    )
-            ).setSpreadsheetId(SPREADSHEET_ID)
+            SpreadsheetEnvironmentContexts.basic(context)
+                .setSpreadsheetId(SPREADSHEET_ID)
         );
     }
 

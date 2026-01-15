@@ -60,7 +60,6 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContext;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContext;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -269,9 +268,6 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     SpreadsheetExpressionEvaluationContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetExpressionEvaluationContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetExpressionEvaluationContext setUser(final Optional<EmailAddress> user);

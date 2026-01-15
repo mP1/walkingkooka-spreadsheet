@@ -69,9 +69,8 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     }
 
     @Override
-    public SpreadsheetValidatorContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         this.context.setLocale(locale);
-        return this;
     }
 
     @Override

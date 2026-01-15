@@ -58,7 +58,6 @@ import walkingkooka.validation.form.FormField;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -223,11 +222,6 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
 
     @Override
     public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

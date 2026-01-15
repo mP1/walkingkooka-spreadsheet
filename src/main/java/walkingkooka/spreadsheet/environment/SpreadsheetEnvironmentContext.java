@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.text.LineEnding;
 
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -72,9 +71,6 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
 
     @Override
     SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetEnvironmentContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetEnvironmentContext setUser(final Optional<EmailAddress> user);

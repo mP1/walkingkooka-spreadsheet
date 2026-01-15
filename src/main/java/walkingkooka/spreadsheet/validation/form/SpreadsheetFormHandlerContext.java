@@ -28,7 +28,6 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.FormHandlerContext;
 
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -39,9 +38,6 @@ public interface SpreadsheetFormHandlerContext extends FormHandlerContext<Spread
 
     @Override
     SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding);
-
-    @Override
-    SpreadsheetFormHandlerContext setLocale(final Locale locale);
 
     @Override
     SpreadsheetFormHandlerContext setUser(final Optional<EmailAddress> user);

@@ -25,7 +25,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.text.LineEnding;
 
-import java.util.Locale;
 import java.util.Optional;
 
 public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext implements SpreadsheetEnvironmentContext {
@@ -74,11 +73,6 @@ public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext im
 
     @Override
     public SpreadsheetEnvironmentContext setLineEnding(final LineEnding lineEnding) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetEnvironmentContext setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

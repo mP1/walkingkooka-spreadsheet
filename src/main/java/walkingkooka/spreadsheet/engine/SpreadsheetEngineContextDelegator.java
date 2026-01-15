@@ -152,10 +152,9 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     }
 
     @Override
-    default SpreadsheetEngineContext setLocale(final Locale locale) {
+    default void setLocale(final Locale locale) {
         this.spreadsheetEngineContext()
             .setLocale(locale);
-        return this;
     }
 
     @Override

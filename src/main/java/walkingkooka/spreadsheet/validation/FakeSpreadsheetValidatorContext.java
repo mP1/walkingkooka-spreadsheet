@@ -44,7 +44,7 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
     }
 
     @Override
-    public SpreadsheetValidatorContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

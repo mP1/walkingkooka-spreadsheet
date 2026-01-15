@@ -159,9 +159,8 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public SpreadsheetFormatterContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         this.context.setLocale(locale);
-        return this;
     }
 
     // HasSpreadsheetMetadata............................................................................................

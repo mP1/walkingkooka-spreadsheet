@@ -46,7 +46,6 @@ import walkingkooka.validation.form.FormFieldList;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -281,12 +280,6 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     @Override
     public SpreadsheetFormHandlerContext setLineEnding(final LineEnding lineEnding) {
         this.context.setLineEnding(lineEnding);
-        return this;
-    }
-    
-    @Override
-    public SpreadsheetFormHandlerContext setLocale(final Locale locale) {
-        this.context.setLocale(locale);
         return this;
     }
 

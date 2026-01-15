@@ -257,8 +257,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             )
         );
 
-        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment()
-            .setLocale(Locale.FRANCE);
+        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment();
+        differentEnvironmentContext.setLocale(Locale.FRANCE);
 
         this.checkNotEquals(
             environmentContext,
@@ -308,8 +308,10 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         final C context = this.createContext();
 
         final Locale locale = Locale.forLanguageTag("FR");
+        context.setLocale(locale);
+
         this.localeAndCheck(
-            context.setLocale(locale),
+            context,
             locale
         );
     }

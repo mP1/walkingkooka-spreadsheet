@@ -250,10 +250,9 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public final SpreadsheetExpressionEvaluationContext setLocale(final Locale locale) {
+    public final void setLocale(final Locale locale) {
         this.environmentContext()
             .setLocale(locale);
-        return this;
     }
 
     @Override

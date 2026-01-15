@@ -114,9 +114,8 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public TestSpreadsheetStorageContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             this.environmentContext.setLocale(locale);
-            return this;
         }
 
         @Override

@@ -82,7 +82,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
         this.cell = cell;
         this.metadata = metadata;
         this.now = now;
-        this.localeContext = localeContext.setLocale(metadata.locale());
+        this.localeContext = localeContext;
+
+        localeContext.setLocale(metadata.locale());
     }
 
     @Override
@@ -252,7 +254,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpres
     }
 
     @Override
-    public ExpressionEvaluationContext setLocale(final Locale locale) {
+    public void setLocale(final Locale locale) {
         Objects.requireNonNull(locale, "locale");
         throw new UnsupportedOperationException();
     }

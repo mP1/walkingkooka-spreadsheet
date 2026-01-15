@@ -179,8 +179,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             environmentContext
         );
 
-        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(CONTEXT)
-            .setLocale(Locale.FRENCH);
+        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(CONTEXT);
+        differentEnvironmentContext.setLocale(Locale.FRENCH);
 
         this.checkNotEquals(
             environmentContext,

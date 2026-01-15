@@ -681,9 +681,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
-        public SpreadsheetContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             this.localeContext.setLocale(locale);
-            return this;
         }
 
         private final LocaleContext localeContext = LocaleContexts.jre(SpreadsheetMetadataTesting.LOCALE);

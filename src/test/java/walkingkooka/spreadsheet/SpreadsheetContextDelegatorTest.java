@@ -150,7 +150,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         }
 
         @Override
-        public SpreadsheetContext setLocale(final Locale locale) {
+        public void setLocale(final Locale locale) {
             Objects.requireNonNull(locale, "locale");
             throw new UnsupportedOperationException();
         }
@@ -226,7 +226,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
-            public SpreadsheetContext setLocale(final Locale locale) {
+            public void setLocale(final Locale locale) {
                 Objects.requireNonNull(locale, "locale");
                 throw new UnsupportedOperationException();
             }
