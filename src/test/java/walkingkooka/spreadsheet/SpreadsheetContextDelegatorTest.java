@@ -22,6 +22,8 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -179,7 +181,9 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
                 return Optional.ofNullable(
                     SPREADSHEET_ID.equals(name) ?
                         (T) TestSpreadsheetContextDelegator.SPREADSHEET_ID :
-                        null
+                        SERVER_URL.equals(name) ?
+                            (T) this.serverUrl() :
+                            null
                 );
             }
 
@@ -268,6 +272,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
                 Store.checkOffsetAndCount(offset, count);
 
                 throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public AbsoluteUrl serverUrl() {
+                return Url.parseAbsolute("https://example.com");
             }
 
             @Override

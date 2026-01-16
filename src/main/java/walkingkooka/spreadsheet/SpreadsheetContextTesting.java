@@ -18,63 +18,19 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.plugin.HasProviderContextTesting;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends EnvironmentContextTesting2<C>,
+public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends SpreadsheetEnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
     LocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
-
-    // spreadsheetId....................................................................................................
-
-    @Test
-    default void testEnvironmentValueNameWithSpreadsheetId() {
-        final C context = this.createContext();
-
-        this.environmentValueAndCheck(
-            context,
-            SpreadsheetContext.SPREADSHEET_ID,
-            context.spreadsheetId()
-        );
-    }
-
-    default void spreadsheetIdAndCheck(final C context,
-                                       final SpreadsheetId expected) {
-        this.checkEquals(
-            expected,
-            context.spreadsheetId()
-        );
-    }
-
-    // setSpreadsheetId.................................................................................................
-
-    @Test
-    default void testSetSpreadsheetIdWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .setSpreadsheetId(null)
-        );
-    }
-
-    @Test
-    default void testSetSpreadsheetIdWithSame() {
-        final C context = this.createContext();
-
-        context.setSpreadsheetId(
-                context.spreadsheetId()
-        );
-    }
 
     // setLocale........................................................................................................
 
