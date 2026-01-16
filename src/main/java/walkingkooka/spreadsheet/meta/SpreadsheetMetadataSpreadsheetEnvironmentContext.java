@@ -180,7 +180,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
 
     @Override
     public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                 final T value) {
+                                        final T value) {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(value, "value");
 
