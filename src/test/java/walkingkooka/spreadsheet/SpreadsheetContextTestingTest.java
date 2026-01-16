@@ -22,6 +22,8 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextTestingTest.TestSpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -120,7 +122,9 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
             return Optional.ofNullable(
                 SpreadsheetContext.SPREADSHEET_ID.equals(name) ?
                     (T) TestSpreadsheetContext.SPREADSHEET_ID :
-                    null
+                    SERVER_URL.equals(name) ?
+                        (T) this.serverUrl() :
+                        null
             );
         }
 
@@ -219,6 +223,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public LineEnding lineEnding() {
             return LineEnding.NL;
+        }
+
+        @Override
+        public AbsoluteUrl serverUrl() {
+            return Url.parseAbsolute("https://example.com");
         }
 
         @Override
