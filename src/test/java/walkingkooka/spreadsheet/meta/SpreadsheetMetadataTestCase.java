@@ -28,7 +28,6 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -39,6 +38,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
@@ -78,7 +78,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     ThrowableTesting,
     ToStringTesting<SpreadsheetMetadata>,
     TreePrintableTesting,
-    EnvironmentContextTesting {
+    SpreadsheetEnvironmentContextTesting {
 
     private final static Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
         throw new UnsupportedOperationException();
