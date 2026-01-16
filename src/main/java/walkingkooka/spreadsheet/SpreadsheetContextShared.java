@@ -227,7 +227,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     }
 
     @Override
-    public EnvironmentContext environmentContext() {
+    public final EnvironmentContext environmentContext() {
         return this.spreadsheetEnvironmentContext;
     }
 
