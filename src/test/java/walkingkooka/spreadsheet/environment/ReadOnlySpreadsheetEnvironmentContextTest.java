@@ -354,6 +354,31 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createContext(),
+            "ReadOnlySpreadsheetEnvironmentContext\n" +
+                "  BasicSpreadsheetEnvironmentContext\n" +
+                "    MapEnvironmentContext\n" +
+                "      lineEnding\n" +
+                "        \"\\n\"\n" +
+                "      locale\n" +
+                "        de (java.util.Locale)\n" +
+                "      now\n" +
+                "        -999999999-01-01T00:00 (java.time.LocalDateTime)\n" +
+                "      serverUrl\n" +
+                "        https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "      spreadsheetId\n" +
+                "        7b\n" +
+                "      user\n" +
+                "        user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "    \n"
+        );
+    }
+
     // type naming......................................................................................................
 
     @Override
