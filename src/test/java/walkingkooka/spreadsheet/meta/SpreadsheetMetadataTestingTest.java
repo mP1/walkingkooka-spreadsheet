@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.text.LineEnding;
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadataTesting,
     LocaleContextTesting,
-    EnvironmentContextTesting,
+    SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
 
     @Test
