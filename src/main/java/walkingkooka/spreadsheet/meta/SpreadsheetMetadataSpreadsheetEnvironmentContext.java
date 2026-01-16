@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -44,7 +46,8 @@ import java.util.SortedSet;
  * When getting a value if its absent from the {@link EnvironmentContext} and then tries {@link SpreadsheetMetadata#get(SpreadsheetMetadataPropertyName)}.
  * Note the wrapped {@link SpreadsheetMetadata} is never updated, {@link #setLocale(Locale)} always updates the {@link EnvironmentContext}.
  */
-final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext {
+final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
+    TreePrintable {
 
     static SpreadsheetMetadataSpreadsheetEnvironmentContext with(final SpreadsheetMetadata metadata,
                                                                  final SpreadsheetEnvironmentContext context) {
@@ -289,5 +292,31 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         }
 
         return nameToValue.toString();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            for (final EnvironmentValueName<?> name : this.environmentValueNames()) {
+                final Object value = this.environmentValue(name)
+                    .orElse(null);
+                if (null != value) {
+                    printer.println(name.value());
+                    printer.indent();
+                    {
+                        TreePrintable.printTreeOrToString(
+                            value,
+                            printer
+                        );
+                    }
+                    printer.outdent();
+                }
+            }
+        }
+        printer.outdent();
     }
 }
