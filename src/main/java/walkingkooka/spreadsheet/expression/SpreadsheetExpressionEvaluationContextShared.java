@@ -21,16 +21,13 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -57,7 +54,7 @@ import java.util.Optional;
 import java.util.Set;
 
 abstract class SpreadsheetExpressionEvaluationContextShared implements SpreadsheetExpressionEvaluationContext,
-    EnvironmentContextDelegator,
+    SpreadsheetEnvironmentContextDelegator,
     SpreadsheetConverterContextDelegator,
     TerminalContextDelegator {
 
@@ -210,84 +207,37 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
 
     final TerminalContext terminalContext;
 
-    // EnvironmentContextDelegator......................................................................................
-
-    @Override
-    public final <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
-                                                                                final T value) {
-        this.environmentContext()
-            .setEnvironmentValue(
-                name,
-                value
-            );
-    }
-
-    @Override
-    public final void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        this.environmentContext()
-            .removeEnvironmentValue(name);
-    }
+    // SpreadsheetEnvironmentContextDelegator...........................................................................
 
     @Override
     public final LineEnding lineEnding() {
-        return this.environmentContext()
+        return this.spreadsheetEnvironmentContext()
             .lineEnding();
     }
 
     @Override
-    public final void setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext()
-            .setLineEnding(lineEnding);
-    }
-
-    @Override
     public final Locale locale() {
-        return this.environmentContext()
+        return this.spreadsheetEnvironmentContext()
             .locale();
     }
 
     @Override
     public final void setLocale(final Locale locale) {
-        this.environmentContext()
+        this.spreadsheetEnvironmentContext()
             .setLocale(locale);
     }
 
     @Override
     public final LocalDateTime now() {
-        return this.environmentContext()
+        return this.spreadsheetEnvironmentContext()
             .now(); // inherit unrelated defaults
     }
 
     @Override
-    public final AbsoluteUrl serverUrl() {
-        return this.environmentContext()
-            .serverUrl();
+    public final SpreadsheetEnvironmentContext environmentContext() {
+        return this.spreadsheetEnvironmentContext();
     }
 
     @Override
-    public final SpreadsheetId spreadsheetId() {
-        return this.environmentContext()
-            .spreadsheetId();
-    }
-
-    @Override
-    public final void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.environmentContext()
-            .setSpreadsheetId(spreadsheetId);
-    }
-
-    @Override
-    public final Optional<EmailAddress> user() {
-        return this.environmentContext()
-            .user();
-    }
-
-    @Override
-    public final void setUser(final Optional<EmailAddress> user) {
-        this.environmentContext()
-            .setUser(user);
-    }
-
-    @Override
-    public abstract SpreadsheetEnvironmentContext environmentContext();
+    public abstract SpreadsheetEnvironmentContext spreadsheetEnvironmentContext();
 }

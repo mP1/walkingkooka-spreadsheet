@@ -503,7 +503,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     @Override
-    public SpreadsheetEnvironmentContext environmentContext() {
+    public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetContext;
     }
 
