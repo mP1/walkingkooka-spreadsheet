@@ -463,7 +463,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
     }
 
     private SpreadsheetStorageContext createContext(final SpreadsheetContext spreadsheetContext) {
-        return SpreadsheetStorageContexts.basic(
+        return SpreadsheetStorageContexts.spreadsheetContext(
             SpreadsheetEngines.basic(),
             spreadsheetContext
         );

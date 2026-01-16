@@ -24,21 +24,21 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 public final class SpreadsheetStorageContexts implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetStorageContext}
-     */
-    public static SpreadsheetStorageContext basic(final SpreadsheetEngine spreadsheetEngine,
-                                                  final SpreadsheetContext spreadsheetContext) {
-        return BasicSpreadsheetStorageContext.with(
-            spreadsheetEngine,
-            spreadsheetContext
-        );
-    }
-
-    /**
      * {@see FakeSpreadsheetStorageContext}
      */
     public static FakeSpreadsheetStorageContext fake() {
         return new FakeSpreadsheetStorageContext();
+    }
+
+    /**
+     * {@see SpreadsheetContextSpreadsheetStorageContext}
+     */
+    public static SpreadsheetStorageContext spreadsheetContext(final SpreadsheetEngine spreadsheetEngine,
+                                                               final SpreadsheetContext spreadsheetContext) {
+        return SpreadsheetContextSpreadsheetStorageContext.with(
+            spreadsheetEngine,
+            spreadsheetContext
+        );
     }
 
     /**

@@ -384,7 +384,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
     }
 
     private SpreadsheetStorageContext createContext(final SpreadsheetContext spreadsheetContext) {
-        return SpreadsheetStorageContexts.basic(
+        return SpreadsheetStorageContexts.spreadsheetContext(
             SpreadsheetEngines.basic(),
             spreadsheetContext
         );
