@@ -1142,7 +1142,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Getter that returns a {@link EnvironmentContext} view o this {@link SpreadsheetMetadata} using the given {@link EnvironmentContext}
      * for the time and user.
      */
-    public final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext(final EnvironmentContext context) {
+    public final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext(final SpreadsheetEnvironmentContext context) {
         return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             this,
             context

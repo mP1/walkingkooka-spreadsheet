@@ -27,6 +27,7 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
@@ -66,10 +67,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        CONTEXT = EnvironmentContexts.readOnly(context);
+        CONTEXT = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.readOnly(context)
+        );
     }
 
-    private final static EnvironmentContext CONTEXT;
+    private final static SpreadsheetEnvironmentContext CONTEXT;
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -90,7 +93,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     }
 
     @Test
-    public void testWithNullEnvironmentContextFails() {
+    public void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
@@ -106,11 +109,11 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetMetadataPropertyName.LOCALE,
             Locale.FRENCH
         );
-        final EnvironmentContext environmentContext = EnvironmentContexts.fake();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext wrap = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             spreadsheetMetadata,
-            environmentContext
+            spreadsheetEnvironmentContext
         );
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
@@ -130,11 +133,11 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetMetadataPropertyName.LOCALE,
             Locale.FRENCH
         );
-        final EnvironmentContext environmentContext = EnvironmentContexts.fake();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.fake();
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext wrap = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             spreadsheetMetadata,
-            environmentContext
+            spreadsheetEnvironmentContext
         );
 
         final SpreadsheetMetadata spreadsheetMetadata2 = SpreadsheetMetadata.EMPTY.set(
@@ -145,7 +148,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         this.checkEquals(
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 spreadsheetMetadata2,
-                environmentContext
+                spreadsheetEnvironmentContext
             ),
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 spreadsheetMetadata2,
@@ -158,15 +161,17 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(CONTEXT);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            EnvironmentContexts.map(CONTEXT)
+        );
         final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             metadata,
-            environmentContext
+            spreadsheetEnvironmentContext
         );
 
-        final EnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(environmentContext);
+        final SpreadsheetEnvironmentContext afterSet = spreadsheetMetadataSpreadsheetEnvironmentContext.setEnvironmentContext(spreadsheetEnvironmentContext);
         assertSame(
             spreadsheetMetadataSpreadsheetEnvironmentContext,
             afterSet
@@ -180,11 +185,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             metadata,
-            environmentContext
+            SpreadsheetEnvironmentContexts.basic(environmentContext)
         );
 
-        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(CONTEXT.cloneEnvironment());
-        differentEnvironmentContext.setLocale(Locale.FRENCH);
+        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(
+            CONTEXT.cloneEnvironment()
+        );
+        differentEnvironmentContext.setLocale(Locale.GERMAN);
 
         this.checkNotEquals(
             environmentContext,
@@ -200,7 +207,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         this.checkEquals(
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 metadata,
-                differentEnvironmentContext
+                SpreadsheetEnvironmentContexts.basic(differentEnvironmentContext)
             ),
             afterSet
         );
@@ -213,11 +220,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         this.environmentValueNamesAndCheck(
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 SpreadsheetMetadata.EMPTY,
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    Locale.FRENCH,
-                    () -> NOW,
-                    Optional.of(USER)
+                SpreadsheetEnvironmentContexts.basic(
+                    EnvironmentContexts.empty(
+                        LineEnding.NL,
+                        Locale.FRENCH,
+                        () -> NOW,
+                        Optional.of(USER)
+                    )
                 )
             ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
@@ -235,11 +244,13 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SpreadsheetId.with(1)
                 ),
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    Locale.FRENCH,
-                    () -> NOW,
-                    Optional.of(USER)
+                SpreadsheetEnvironmentContexts.basic(
+                    EnvironmentContexts.empty(
+                        LineEnding.NL,
+                        Locale.FRENCH,
+                        () -> NOW,
+                        Optional.of(USER)
+                    )
                 )
             ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
@@ -275,7 +286,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                             RoundingMode.FLOOR
                         )
                 ).spreadsheetEnvironmentContext(
-                    EnvironmentContexts.map(CONTEXT)
+                    SpreadsheetEnvironmentContexts.basic(
+                        EnvironmentContexts.map(CONTEXT)
+                    )
                 ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.NOW,
@@ -392,9 +405,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             metadataSpreadsheetId
         );
 
-        final EnvironmentContext environmentContext = CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT.cloneEnvironment();
         this.environmentValueAndCheck(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName()
         );
 
@@ -403,7 +416,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 metadataSpreadsheetId
             ),
-            environmentContext
+            spreadsheetEnvironmentContext
         );
 
         this.spreadsheetIdAndCheck(
@@ -421,14 +434,14 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             metadataSpreadsheetId
         );
 
-        final EnvironmentContext environmentContext = CONTEXT.cloneEnvironment();
-        environmentContext.setEnvironmentValue(
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
                 SPREADSHEET_ID
             );
 
         this.environmentValueAndCheck(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             SPREADSHEET_ID
         );
@@ -439,8 +452,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         final SpreadsheetId metadataSpreadsheetId = SpreadsheetId.with(2);
         final SpreadsheetId environmentSpreadsheetId = SpreadsheetId.with(3);
 
-        final EnvironmentContext context = CONTEXT.cloneEnvironment();
-        context.setEnvironmentValue(
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             environmentSpreadsheetId
         );
@@ -450,7 +463,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 metadataSpreadsheetId
             ),
-            context
+            spreadsheetEnvironmentContext
         );
 
         this.checkNotEquals(
@@ -474,7 +487,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
 
         this.environmentValueAndCheck(
-            context,
+            spreadsheetEnvironmentContext,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             differentSpreadsheetId
         );
@@ -497,8 +510,10 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public SpreadsheetMetadataSpreadsheetEnvironmentContext createContext() {
         return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA,
-            EnvironmentContexts.map(
-                CONTEXT.cloneEnvironment()
+            SpreadsheetEnvironmentContexts.basic(
+                EnvironmentContexts.map(
+                    CONTEXT.cloneEnvironment()
+                )
             )
         );
     }
@@ -513,7 +528,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SpreadsheetId.with(1)
                 ),
-                EnvironmentContexts.map(CONTEXT)
+                SpreadsheetEnvironmentContexts.basic(
+                    EnvironmentContexts.map(CONTEXT)
+                )
             ),
             "{lineEnding=\\n, locale=fr, now=1999-12-31T12:58, spreadsheetId=1, user=user@example.com}"
         );

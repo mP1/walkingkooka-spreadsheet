@@ -27,6 +27,7 @@ import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 
@@ -46,7 +47,7 @@ import java.util.SortedSet;
 final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext {
 
     static SpreadsheetMetadataSpreadsheetEnvironmentContext with(final SpreadsheetMetadata metadata,
-                                                                 final EnvironmentContext context) {
+                                                                 final SpreadsheetEnvironmentContext context) {
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(context, "context");
 
@@ -96,7 +97,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         } else {
             spreadsheetEnvironmentContext = with(
                 this.metadata,
-                environmentContext
+                SpreadsheetEnvironmentContexts.basic(environmentContext)
             );
         }
 
