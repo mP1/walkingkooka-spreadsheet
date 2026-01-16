@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.storage;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -61,7 +60,4 @@ public interface SpreadsheetStorageContext extends StorageContext,
 
     @Override
     SpreadsheetStorageContext setEnvironmentContext(final EnvironmentContext environmentContext);
-
-    @Override
-    void setSpreadsheetId(final SpreadsheetId spreadsheetId);
 }
