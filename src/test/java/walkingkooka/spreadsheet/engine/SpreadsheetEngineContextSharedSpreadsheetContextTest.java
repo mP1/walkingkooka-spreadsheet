@@ -749,10 +749,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
-        return this.createContext(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                .setSpreadsheetId(SPREADSHEET_ID)
-        );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+
+        return this.createContext(spreadsheetEnvironmentContext);
     }
 
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
@@ -924,13 +924,12 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+        public void setSpreadsheetId(final SpreadsheetId id) {
             Objects.requireNonNull(id, "id");
 
-            if (this.spreadsheetId().equals(id)) {
-                return this;
+            if (false == this.spreadsheetId().equals(id)) {
+                throw new UnsupportedOperationException();
             }
-            throw new UnsupportedOperationException();
         }
 
         @Override

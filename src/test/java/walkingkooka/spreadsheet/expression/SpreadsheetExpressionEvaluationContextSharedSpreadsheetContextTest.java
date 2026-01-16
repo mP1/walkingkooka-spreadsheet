@@ -114,8 +114,13 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY;
 
-    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setSpreadsheetId(SPREADSHEET_ID);
+    static {
+        final SpreadsheetEnvironmentContext c = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        c.setSpreadsheetId(SPREADSHEET_ID);
+        SPREADSHEET_ENVIRONMENT_CONTEXT = c;
+    }
+
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     private final static SpreadsheetContext SPREADSHEET_CONTEXT = spreadsheetContext(
         SPREADSHEET_ENVIRONMENT_CONTEXT,

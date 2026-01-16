@@ -283,16 +283,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     @Test
     public void testSpreadsheetMetadata() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setSpreadsheetId(SPREADSHEET_ID);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
 
         this.environmentValueAndCheck(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             SpreadsheetEngineContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
 
-        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(environmentContext);
+        final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext context = this.createContext(spreadsheetEnvironmentContext);
 
         final SpreadsheetMetadata metadata = METADATA.set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
@@ -374,8 +374,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     @Test
     public void testStoreRepository() {
-        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setSpreadsheetId(SPREADSHEET_ID);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
 
         final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.fake();
 
@@ -396,7 +396,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                     );
                 }
             },
-            environmentContext
+            spreadsheetEnvironmentContext
         );
 
         this.checkEquals(
@@ -429,8 +429,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     @Test
     public void testEvaluateWhenSpreadsheetId() {
-        final SpreadsheetEnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-            .setSpreadsheetId(SPREADSHEET_ID);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
 
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
 
@@ -496,7 +496,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                         );
                     }
                 },
-                environmentContext
+                spreadsheetEnvironmentContext
             ),
             Expression.add(
                 this.expression(1),

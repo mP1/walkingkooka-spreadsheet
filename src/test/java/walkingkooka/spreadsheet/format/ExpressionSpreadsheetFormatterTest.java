@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -231,6 +232,9 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
 
             @Override
             public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
+                final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+                spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+
                 return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetExpressionEvaluationContext.NO_CELL,
@@ -258,8 +262,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                         (c) -> {
                             throw new UnsupportedOperationException();
                         }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                        SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                            .setSpreadsheetId(SPREADSHEET_ID),
+                        spreadsheetEnvironmentContext,
                         LOCALE_CONTEXT,
                         SpreadsheetProviders.basic(
                             SpreadsheetConvertersConverterProviders.spreadsheetConverters(

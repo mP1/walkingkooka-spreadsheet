@@ -85,7 +85,4 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
 
     @Override
     SpreadsheetContext setEnvironmentContext(final EnvironmentContext environmentContext);
-
-    @Override
-    SpreadsheetContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 }

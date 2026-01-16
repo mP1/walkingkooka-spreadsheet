@@ -170,7 +170,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeExpressionEv
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         throw new UnsupportedOperationException();
     }
 

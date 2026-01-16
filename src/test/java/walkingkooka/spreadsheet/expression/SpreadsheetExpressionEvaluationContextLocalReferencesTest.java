@@ -453,12 +453,12 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             Url.parseAbsolute("https://example.com")
         );
 
-        return this.createContext(
-            SpreadsheetEnvironmentContexts.basic(environmentContext
-            ).setSpreadsheetId(
-                SpreadsheetId.with(1)
-            )
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            SpreadsheetId.with(1)
         );
+
+        return this.createContext(spreadsheetEnvironmentContext);
     }
 
     private SpreadsheetExpressionEvaluationContextLocalReferences createContext(final SpreadsheetEnvironmentContext environmentContext) {
@@ -636,9 +636,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
             this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
-            return this;
         }
 
         @Override

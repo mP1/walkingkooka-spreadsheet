@@ -271,10 +271,9 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
-    public final SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public final void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.environmentContext()
             .setSpreadsheetId(spreadsheetId);
-        return this;
     }
 
     @Override

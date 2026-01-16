@@ -134,14 +134,13 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         Objects.requireNonNull(spreadsheetId, "spreadsheetId");
 
         this.setEnvironmentValue(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             spreadsheetId
         );
-        return this;
     }
 
     @Override

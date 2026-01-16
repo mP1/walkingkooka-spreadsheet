@@ -23,6 +23,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
@@ -395,23 +396,31 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest implements StorageT
             );
         }
 
-        private final SpreadsheetContext spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(
-            SpreadsheetStoreRepositories.treeMap(
-                SpreadsheetMetadataStores.treeMap(),
-                Storages.fake()
-            ),
-            (c) -> {
-                throw new UnsupportedOperationException();
-            }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
-            (c) -> {
-                throw new UnsupportedOperationException();
-            }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                .setSpreadsheetId(SpreadsheetId.with(1)),
-            LOCALE_CONTEXT,
-            SPREADSHEET_PROVIDER,
-            PROVIDER_CONTEXT
-        );
+        {
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+            spreadsheetEnvironmentContext.setSpreadsheetId(
+                SpreadsheetId.with(1)
+            );
+
+            spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(
+                SpreadsheetStoreRepositories.treeMap(
+                    SpreadsheetMetadataStores.treeMap(),
+                    Storages.fake()
+                ),
+                (c) -> {
+                    throw new UnsupportedOperationException();
+                }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
+                (c) -> {
+                    throw new UnsupportedOperationException();
+                }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                spreadsheetEnvironmentContext,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            );
+        }
+
+        private final SpreadsheetContext spreadsheetContext;
 
         @Override
         public LocalDateTime now() {

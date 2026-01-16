@@ -218,9 +218,8 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
     }
 
     @Override
-    public SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.spreadsheetContext.setSpreadsheetId(spreadsheetId);
-        return this;
     }
 
     @Override

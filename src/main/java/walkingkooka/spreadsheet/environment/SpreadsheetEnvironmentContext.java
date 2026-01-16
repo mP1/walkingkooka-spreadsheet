@@ -47,7 +47,7 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
     /**
      * Returns a {@link SpreadsheetEnvironmentContext} with the given {@link SpreadsheetId}
      */
-    SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
+    void setSpreadsheetId(final SpreadsheetId spreadsheetId);
 
     // EnvironmentContext...............................................................................................
 

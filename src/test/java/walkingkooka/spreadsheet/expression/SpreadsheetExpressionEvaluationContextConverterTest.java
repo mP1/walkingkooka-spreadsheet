@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
@@ -535,6 +536,9 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
             )
         );
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+
         return SpreadsheetExpressionEvaluationContextConverter.with(
             converter,
             SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
@@ -564,8 +568,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                     (c) -> {
                         throw new UnsupportedOperationException();
                     }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        .setSpreadsheetId(SPREADSHEET_ID),
+                    spreadsheetEnvironmentContext,
                     LOCALE_CONTEXT,
                     SpreadsheetProviders.basic(
                         converterProvider,

@@ -126,10 +126,9 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetExpressionEvaluationContext setSpreadsheetId(final SpreadsheetId id) {
+    default void setSpreadsheetId(final SpreadsheetId id) {
         this.spreadsheetExpressionEvaluationContext()
             .setSpreadsheetId(id);
-        return this;
     }
 
     @Override

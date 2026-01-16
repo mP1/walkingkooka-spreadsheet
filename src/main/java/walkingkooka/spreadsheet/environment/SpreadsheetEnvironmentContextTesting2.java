@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends SpreadsheetEnvironmentContextTesting,
@@ -68,21 +67,15 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     default void testSetSpreadsheetIdWithSame() {
         final C context = this.createContext();
 
-        assertSame(
+        this.setSpreadsheetIdAndCheck(
             context,
-            context.setSpreadsheetId(
-                context.spreadsheetId()
-            )
+            context.spreadsheetId()
         );
     }
 
     default void setSpreadsheetIdAndCheck(final C context,
                                           final SpreadsheetId spreadsheetId) {
-        final SpreadsheetEnvironmentContext after = context.setSpreadsheetId(spreadsheetId);
-        assertSame(
-            after,
-            context
-        );
+        context.setSpreadsheetId(spreadsheetId);
 
         this.spreadsheetIdAndCheck(
             context,

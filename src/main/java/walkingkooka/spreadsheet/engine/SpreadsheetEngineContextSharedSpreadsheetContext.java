@@ -319,19 +319,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     @Override
-    public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
-        final SpreadsheetContext before = this.spreadsheetContext;
-        final SpreadsheetContext after = before.setSpreadsheetId(id);
-
-        return before.equals(after) ?
-            this :
-            new SpreadsheetEngineContextSharedSpreadsheetContext(
-                this.mode,
-                this.converterLike,
-                this.spreadsheetLabelNameResolver,
-                after,
-                this.terminalContext
-            );
+    public void setSpreadsheetId(final SpreadsheetId id) {
+        this.spreadsheetContext.setSpreadsheetId(id);
     }
 
     @Override
