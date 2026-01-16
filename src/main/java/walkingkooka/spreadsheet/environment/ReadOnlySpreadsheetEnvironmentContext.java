@@ -24,6 +24,8 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -35,7 +37,8 @@ import java.util.Set;
  * Wraps another {@link SpreadsheetEnvironmentContext} presenting a read only view, with all setXXX and removeXXX
  * throwing {@link UnsupportedOperationException}.
  */
-final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext {
+final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
+    TreePrintable {
 
     static ReadOnlySpreadsheetEnvironmentContext with(final SpreadsheetEnvironmentContext context) {
         ReadOnlySpreadsheetEnvironmentContext readOnlySpreadsheetEnvironmentContext;
@@ -189,5 +192,20 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     @Override
     public String toString() {
         return this.context.toString();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.context,
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
