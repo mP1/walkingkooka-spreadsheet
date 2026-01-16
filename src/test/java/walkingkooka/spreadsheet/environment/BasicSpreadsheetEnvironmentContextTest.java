@@ -261,7 +261,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Override
     public BasicSpreadsheetEnvironmentContext createContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT);
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment());
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
