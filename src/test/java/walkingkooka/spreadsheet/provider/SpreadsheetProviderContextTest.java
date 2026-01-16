@@ -199,10 +199,12 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final SpreadsheetProviderContext context = this.createContext(ENVIRONMENT_CONTEXT);
+        final EnvironmentContext environmentContext = ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        final SpreadsheetProviderContext context = this.createContext(environmentContext);
         assertSame(
             context,
-            context.setEnvironmentContext(ENVIRONMENT_CONTEXT)
+            context.setEnvironmentContext(environmentContext)
         );
     }
 
@@ -256,7 +258,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     @Override
     public SpreadsheetProviderContext createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
-            ENVIRONMENT_CONTEXT
+            ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
         environmentContext.setEnvironmentValue(
             ENVIRONMENT_VALUE_NAME,

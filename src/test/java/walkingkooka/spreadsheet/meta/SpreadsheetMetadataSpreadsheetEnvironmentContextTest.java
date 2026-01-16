@@ -183,7 +183,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             environmentContext
         );
 
-        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(CONTEXT);
+        final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(CONTEXT.cloneEnvironment());
         differentEnvironmentContext.setLocale(Locale.FRENCH);
 
         this.checkNotEquals(
@@ -497,7 +497,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public SpreadsheetMetadataSpreadsheetEnvironmentContext createContext() {
         return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA,
-            EnvironmentContexts.map(CONTEXT)
+            EnvironmentContexts.map(
+                CONTEXT.cloneEnvironment()
+            )
         );
     }
 
