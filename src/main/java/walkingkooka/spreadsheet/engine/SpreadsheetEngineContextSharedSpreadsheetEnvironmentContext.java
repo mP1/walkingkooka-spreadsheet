@@ -325,9 +325,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     @Override
-    public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.spreadsheetEnvironmentContextFactory.setSpreadsheetId(spreadsheetId);
-        return this;
     }
 
     @Override

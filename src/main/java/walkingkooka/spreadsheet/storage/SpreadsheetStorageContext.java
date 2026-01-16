@@ -63,5 +63,5 @@ public interface SpreadsheetStorageContext extends StorageContext,
     SpreadsheetStorageContext setEnvironmentContext(final EnvironmentContext environmentContext);
 
     @Override
-    SpreadsheetStorageContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
+    void setSpreadsheetId(final SpreadsheetId spreadsheetId);
 }

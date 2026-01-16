@@ -22,6 +22,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -191,6 +192,9 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
         public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext() {
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+            spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
             return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
                 SpreadsheetExpressionEvaluationContext.NO_CELL,
@@ -221,8 +225,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                     (c) -> {
                         throw new UnsupportedOperationException();
                     }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        .setSpreadsheetId(spreadsheetId),
+                    spreadsheetEnvironmentContext,
                     LOCALE_CONTEXT,
                     SPREADSHEET_PROVIDER,
                     PROVIDER_CONTEXT

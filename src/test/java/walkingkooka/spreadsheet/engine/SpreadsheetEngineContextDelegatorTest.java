@@ -34,7 +34,7 @@ public final class SpreadsheetEngineContextDelegatorTest implements ClassTesting
     final static class TestSpreadsheetEngineContextDelegator implements SpreadsheetEngineContextDelegator {
 
         @Override
-        public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+        public void setSpreadsheetId(final SpreadsheetId id) {
             throw new UnsupportedOperationException();
         }
 

@@ -61,12 +61,11 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         this.context.setEnvironmentValue(
             SPREADSHEET_ID,
             Objects.requireNonNull(spreadsheetId, "spreadsheetId")
         );
-        return this;
     }
 
     // EnvironmentContextDelegator......................................................................................

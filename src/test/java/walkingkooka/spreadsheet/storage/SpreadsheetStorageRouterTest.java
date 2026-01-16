@@ -547,10 +547,10 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
         this.checkEquals(
             Optional.of(DIFFERENT_MAPPING),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1)
-                .storeRepository()
+            spreadsheetContext.storeRepository()
                 .labels()
                 .load(DIFFERENT_MAPPING.label())
         );
@@ -576,10 +576,11 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
+
         this.checkEquals(
             Optional.of(DIFFERENT_FORMATTED_CELL),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1)
-                .storeRepository()
+            spreadsheetContext.storeRepository()
                 .cells()
                 .load(DIFFERENT_CELL_REFERENCE)
         );
@@ -605,18 +606,18 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2);
         this.checkEquals(
             Optional.of(DIFFERENT_FORMATTED_CELL),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2)
-                .storeRepository()
+            spreadsheetContext.storeRepository()
                 .cells()
                 .load(DIFFERENT_CELL_REFERENCE)
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
         this.checkEquals(
             Optional.empty(),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1)
-                .storeRepository()
+            spreadsheetContext.storeRepository()
                 .cells()
                 .load(DIFFERENT_CELL_REFERENCE)
         );
@@ -642,19 +643,19 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
         this.checkEquals(
             Optional.of(DIFFERENT_MAPPING),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1)
-                .spreadsheetEngineContext()
+            spreadsheetContext.spreadsheetEngineContext()
                 .storeRepository()
                 .labels()
                 .load(DIFFERENT_MAPPING.label())
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2);
         this.checkEquals(
             Optional.empty(),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2)
-                .spreadsheetEngineContext()
+            spreadsheetContext.spreadsheetEngineContext()
                 .storeRepository()
                 .labels()
                 .load(DIFFERENT_MAPPING.label())
@@ -681,19 +682,19 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2);
         this.checkEquals(
             Optional.of(DIFFERENT_MAPPING),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2)
-                .spreadsheetEngineContext()
+            spreadsheetContext.spreadsheetEngineContext()
                 .storeRepository()
                 .labels()
                 .load(DIFFERENT_MAPPING.label())
         );
 
+        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
         this.checkEquals(
             Optional.empty(),
-            spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1)
-                .spreadsheetEngineContext()
+            spreadsheetContext.spreadsheetEngineContext()
                 .storeRepository()
                 .labels()
                 .load(DIFFERENT_MAPPING.label())

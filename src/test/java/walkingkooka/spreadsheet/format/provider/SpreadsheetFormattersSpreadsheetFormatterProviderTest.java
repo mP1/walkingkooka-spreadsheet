@@ -27,6 +27,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
@@ -100,55 +101,61 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
-    private final static SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
-        METADATA_EN_AU.spreadsheetFormatterContext(
-            SpreadsheetMetadata.NO_CELL,
-            (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
-                SpreadsheetMetadataMode.FORMULA,
+    static {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+
+        SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
+            METADATA_EN_AU.spreadsheetFormatterContext(
                 SpreadsheetMetadata.NO_CELL,
-                SpreadsheetExpressionReferenceLoaders.fake(),
-                SPREADSHEET_LABEL_NAME_RESOLVER,
-                SpreadsheetContexts.fixedSpreadsheetId(
-                    new FakeSpreadsheetStoreRepository() {
-                        @Override
-                        public SpreadsheetMetadataStore metadatas() {
-                            return new FakeSpreadsheetMetadataStore() {
-                                @Override
-                                public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
-                                    return Optional.ofNullable(
-                                        id.equals(SPREADSHEET_ID) ?
-                                            METADATA_EN_AU.set(
-                                                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                                                SPREADSHEET_ID
-                                            ) :
-                                            null
-                                    );
-                                }
-                            };
-                        }
-                    },
-                    (c) -> {
-                        throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
-                    (c) -> {
-                        throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        .setSpreadsheetId(SPREADSHEET_ID),
-                    LOCALE_CONTEXT,
-                    SPREADSHEET_PROVIDER,
-                    PROVIDER_CONTEXT
+                (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
+                    SpreadsheetMetadataMode.FORMULA,
+                    SpreadsheetMetadata.NO_CELL,
+                    SpreadsheetExpressionReferenceLoaders.fake(),
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
+                    SpreadsheetContexts.fixedSpreadsheetId(
+                        new FakeSpreadsheetStoreRepository() {
+                            @Override
+                            public SpreadsheetMetadataStore metadatas() {
+                                return new FakeSpreadsheetMetadataStore() {
+                                    @Override
+                                    public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
+                                        return Optional.ofNullable(
+                                            id.equals(SPREADSHEET_ID) ?
+                                                METADATA_EN_AU.set(
+                                                    SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                                                    SPREADSHEET_ID
+                                                ) :
+                                                null
+                                        );
+                                    }
+                                };
+                            }
+                        },
+                        (c) -> {
+                            throw new UnsupportedOperationException();
+                        }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
+                        (c) -> {
+                            throw new UnsupportedOperationException();
+                        }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                        spreadsheetEnvironmentContext,
+                        LOCALE_CONTEXT,
+                        SPREADSHEET_PROVIDER,
+                        PROVIDER_CONTEXT
+                    ),
+                    TERMINAL_CONTEXT
                 ),
-                TERMINAL_CONTEXT
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                LINE_ENDING,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
             ),
-            SPREADSHEET_LABEL_NAME_RESOLVER,
-            LINE_ENDING,
-            LOCALE_CONTEXT,
-            SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
-        ),
-        PROVIDER_CONTEXT
-    );
+        );
+    }
+
+    private final static SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT;
 
     // SpreadsheetFormatterName.........................................................................................
 

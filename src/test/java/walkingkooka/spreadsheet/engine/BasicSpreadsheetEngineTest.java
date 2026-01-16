@@ -503,11 +503,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
-    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
-        SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
-            .cloneEnvironment()
-            .setSpreadsheetId(SPREADSHEET_ID)
-    );
+    static {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
+            .cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+        SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext);
+    }
+
+    private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
 
     static {
         final String suffix = " \"" + FORMATTED_PATTERN_SUFFIX + "\"";
@@ -690,7 +693,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // SpreadsheetContext...........................................................................................
 
         @Override
-        public SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
+        public void setSpreadsheetId(final SpreadsheetId id) {
             throw new UnsupportedOperationException();
         }
 

@@ -39,7 +39,7 @@ public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext im
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         throw new UnsupportedOperationException();
     }
 

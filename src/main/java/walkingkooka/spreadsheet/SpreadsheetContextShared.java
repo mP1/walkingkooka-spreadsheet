@@ -217,14 +217,13 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     }
 
     @Override
-    public final SpreadsheetContext setSpreadsheetId(final SpreadsheetId id) {
+    public final void setSpreadsheetId(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
         this.setEnvironmentValue(
             SPREADSHEET_ID,
             id
         );
-        return this;
     }
 
     @Override

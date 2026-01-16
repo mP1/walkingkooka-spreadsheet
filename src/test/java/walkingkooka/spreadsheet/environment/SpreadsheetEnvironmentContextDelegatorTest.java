@@ -69,12 +69,11 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
     final static class TestSpreadsheetEnvironmentContextDelegator implements SpreadsheetEnvironmentContextDelegator {
 
         @Override
-        public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
             this.setEnvironmentValue(
                 SPREADSHEET_ID,
                 spreadsheetId
             );
-            return this;
         }
 
         @Override
@@ -105,10 +104,12 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 Url.parseAbsolute("https://example.com")
             );
-            return SpreadsheetEnvironmentContexts.basic(environmentContext)
-                .setSpreadsheetId(
-                    SpreadsheetId.with(1)
-                );
+            environmentContext.setEnvironmentValue(
+                SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+                SpreadsheetId.with(1)
+            );
+
+            return SpreadsheetEnvironmentContexts.basic(environmentContext);
         }
 
         @Override

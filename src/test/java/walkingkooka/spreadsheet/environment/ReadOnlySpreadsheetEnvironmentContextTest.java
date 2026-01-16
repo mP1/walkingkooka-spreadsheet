@@ -323,10 +323,11 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        return ReadOnlySpreadsheetEnvironmentContext.with(
-            SpreadsheetEnvironmentContexts.basic(context)
-                .setSpreadsheetId(SPREADSHEET_ID)
-        );
+
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(context);
+        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+
+        return ReadOnlySpreadsheetEnvironmentContext.with(spreadsheetEnvironmentContext);
     }
 
     // environmentValueNames............................................................................................

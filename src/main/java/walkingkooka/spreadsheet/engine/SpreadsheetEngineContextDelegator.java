@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.SpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -120,19 +119,6 @@ public interface SpreadsheetEngineContextDelegator extends SpreadsheetEngineCont
     @Override
     default ConverterLike converterLike() {
         return this.spreadsheetEngineContext();
-    }
-
-    @Override
-    default SpreadsheetId spreadsheetId() {
-        return this.spreadsheetEngineContext()
-            .spreadsheetId();
-    }
-
-    @Override
-    default SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId id) {
-        this.spreadsheetEngineContext()
-            .setSpreadsheetId(id);
-        return this;
     }
 
     @Override

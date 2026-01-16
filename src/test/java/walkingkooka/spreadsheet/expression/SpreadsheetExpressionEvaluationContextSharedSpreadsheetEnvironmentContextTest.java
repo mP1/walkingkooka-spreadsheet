@@ -639,6 +639,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
         this.loadCellAndCheck(
             this.createContext(
                 new FakeSpreadsheetContextSupplier() {
@@ -663,8 +666,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setSpreadsheetId(spreadsheetId)
+                spreadsheetEnvironmentContext
             ),
             cellReference,
             spreadsheetCell
@@ -704,6 +706,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
         this.loadCellRangeAndCheck(
             this.createContext(
                 new FakeSpreadsheetContextSupplier() {
@@ -728,8 +733,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setSpreadsheetId(spreadsheetId)
+                spreadsheetEnvironmentContext
             ),
             SpreadsheetSelection.ALL_CELLS,
             spreadsheetCell
@@ -767,6 +771,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             label.setLabelMappingReference(SpreadsheetSelection.A1)
         );
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
         this.loadLabelAndCheck(
             this.createContext(
                 new FakeSpreadsheetContextSupplier() {
@@ -791,8 +798,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setSpreadsheetId(spreadsheetId)
+                spreadsheetEnvironmentContext
             ),
             label,
             mapping
@@ -826,6 +832,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             spreadsheetId
         );
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
         this.checkEquals(
             metadata,
             this.createContext(
@@ -845,8 +854,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setSpreadsheetId(spreadsheetId)
+                spreadsheetEnvironmentContext
             ).spreadsheetMetadata()
         );
     }
@@ -894,6 +902,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(999);
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
         this.resolveIfLabelAndCheck(
             this.createContext(
                 new FakeSpreadsheetContextSupplier() {
@@ -922,8 +933,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                    .setSpreadsheetId(spreadsheetId)
+                spreadsheetEnvironmentContext
             ),
             label,
             cell

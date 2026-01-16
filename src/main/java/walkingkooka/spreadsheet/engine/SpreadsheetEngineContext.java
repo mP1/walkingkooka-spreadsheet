@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
@@ -117,7 +116,4 @@ public interface SpreadsheetEngineContext extends Context,
 
     @Override
     SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext);
-
-    @Override
-    SpreadsheetEngineContext setSpreadsheetId(final SpreadsheetId spreadsheetId);
 }

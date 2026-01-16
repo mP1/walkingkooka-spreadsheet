@@ -83,12 +83,14 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
                 SpreadsheetEnvironmentContext.SERVER_URL,
                 Url.parseAbsolute("https://example.com")
             );
-            ;
+
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(context);
+            spreadsheetEnvironmentContext.setSpreadsheetId(
+                SpreadsheetId.with(1)
+            );
+
             this.factory = SpreadsheetEnvironmentContextFactory.with(
-                SpreadsheetEnvironmentContexts.basic(context)
-                    .setSpreadsheetId(
-                        SpreadsheetId.with(1)
-                    ),
+                spreadsheetEnvironmentContext,
                 LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE),
                 SpreadsheetProviders.fake(),
                 ProviderContexts.fake()

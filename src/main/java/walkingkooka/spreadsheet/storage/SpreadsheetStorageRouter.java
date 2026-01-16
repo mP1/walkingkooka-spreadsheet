@@ -202,12 +202,12 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                                 );
 
                                 // clone saves "restoring" original SpreadsheetId
-                                executeContext = context.cloneEnvironment()
-                                    .setSpreadsheetId(
-                                        SpreadsheetId.parse(
-                                            spreadsheetIdStorageName.value()
-                                        )
-                                    );
+                                executeContext = context.cloneEnvironment();
+                                executeContext.setSpreadsheetId(
+                                    SpreadsheetId.parse(
+                                        spreadsheetIdStorageName.value()
+                                    )
+                                );
 
                                 break;
                         }

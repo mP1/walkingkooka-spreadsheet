@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -234,6 +235,9 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
     public SpreadsheetTemplateContext createContext() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+
         return SpreadsheetTemplateContext.with(
             SPREADSHEET_PARSER_CONTEXT,
             SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
@@ -272,8 +276,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     (c) -> {
                         throw new UnsupportedOperationException();
                     }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
-                        .setSpreadsheetId(spreadsheetId),
+                    spreadsheetEnvironmentContext,
                     LOCALE_CONTEXT,
                     SpreadsheetProviders.basic(
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(

@@ -138,7 +138,7 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     }
 
     @Override
-    public SpreadsheetEnvironmentContext setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
         Objects.requireNonNull(spreadsheetId, "spreadsheetId");
         throw new UnsupportedOperationException();
     }
