@@ -28,6 +28,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.text.LineEnding;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -37,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<BasicSpreadsheetEnvironmentContext>,
     SpreadsheetMetadataTesting,
+    TreePrintableTesting,
     ToStringTesting<BasicSpreadsheetEnvironmentContext> {
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
@@ -282,6 +284,30 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         this.toStringAndCheck(
             this.createContext(),
             "{lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
+        );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+            this.createContext(),
+            "BasicSpreadsheetEnvironmentContext\n" +
+                "  MapEnvironmentContext\n" +
+                "    lineEnding\n" +
+                "      \"\\n\"\n" +
+                "    locale\n" +
+                "      en_AU (java.util.Locale)\n" +
+                "    now\n" +
+                "      1999-12-31T12:58 (java.time.LocalDateTime)\n" +
+                "    serverUrl\n" +
+                "      https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "    spreadsheetId\n" +
+                "      1\n" +
+                "    user\n" +
+                "      user@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "  \n"
         );
     }
 
