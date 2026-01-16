@@ -22,6 +22,8 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 
@@ -32,7 +34,8 @@ import java.util.Objects;
  * Note if the given {@link EnvironmentContext} is a {@link SpreadsheetEnvironmentContext} it is not wrapped and returned.
  */
 final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
-    EnvironmentContextDelegator {
+    EnvironmentContextDelegator,
+    TreePrintable {
 
     static SpreadsheetEnvironmentContext with(final EnvironmentContext context) {
 
@@ -134,5 +137,20 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     @Override
     public String toString() {
         return this.context.toString();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.context,
+                printer
+            );
+        }
+        printer.println();
     }
 }
