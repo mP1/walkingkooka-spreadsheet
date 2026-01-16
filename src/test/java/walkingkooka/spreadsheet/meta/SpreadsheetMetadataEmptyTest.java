@@ -24,6 +24,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -153,11 +154,13 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testSpreadsheetEnvironmentContext() {
         this.environmentValueAndCheck(
             SpreadsheetMetadata.EMPTY.spreadsheetEnvironmentContext(
-                EnvironmentContexts.empty(
-                    LineEnding.NL,
-                    LOCALE_CONTEXT.locale(),
-                    LocalDateTime::now,
-                    EnvironmentContext.ANONYMOUS
+                SpreadsheetEnvironmentContexts.basic(
+                    EnvironmentContexts.empty(
+                        LineEnding.NL,
+                        LOCALE_CONTEXT.locale(),
+                        LocalDateTime::now,
+                        EnvironmentContext.ANONYMOUS
+                    )
                 )
             ),
             EnvironmentValueName.with(

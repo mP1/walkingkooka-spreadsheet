@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector;
@@ -1883,12 +1884,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(propertyName, precision)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .spreadsheetEnvironmentContext(
-                    EnvironmentContexts.map(
-                        EnvironmentContexts.empty(
-                            LineEnding.NL,
-                            LOCALE_CONTEXT.locale(),
-                            NOW,
-                            EnvironmentContext.ANONYMOUS
+                    SpreadsheetEnvironmentContexts.basic(
+                        EnvironmentContexts.map(
+                            EnvironmentContexts.empty(
+                                LineEnding.NL,
+                                LOCALE_CONTEXT.locale(),
+                                NOW,
+                                EnvironmentContext.ANONYMOUS
+                            )
                         )
                     )
                 ),

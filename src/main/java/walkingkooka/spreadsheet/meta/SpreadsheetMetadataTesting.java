@@ -470,8 +470,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 SpreadsheetMetadataPropertyName.TIME_PARSER,
                 METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.TIME_PARSER)
             ).spreadsheetEnvironmentContext(
-                EnvironmentContexts.readOnly(
-                    providerContextEnvironmentContext()
+                SpreadsheetEnvironmentContexts.basic(
+                    EnvironmentContexts.readOnly(
+                        providerContextEnvironmentContext()
+                    )
                 )
             ),
             JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
