@@ -78,7 +78,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<BasicSpreadsheetStorageContext> {
+public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext> {
 
     private final static Locale LOCALE = Locale.ENGLISH;
 
@@ -88,7 +88,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     public void testWithNullEngineContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStorageContext.with(
+            () -> SpreadsheetContextSpreadsheetStorageContext.with(
                 null,
                 SpreadsheetContexts.fake()
             )
@@ -99,7 +99,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     public void testWithNullSpreadsheetContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetStorageContext.with(
+            () -> SpreadsheetContextSpreadsheetStorageContext.with(
                 SpreadsheetEngines.fake(),
                 null
             )
@@ -137,7 +137,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testSaveCellsAndLoad() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValue(
@@ -162,7 +162,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testDeleteCell() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setValue(
@@ -196,7 +196,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testSaveLabel() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
@@ -218,7 +218,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testDeleteLabel() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetLabelMapping mapping = label.setLabelMappingReference(
@@ -236,7 +236,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testFindLabelByName() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");
         final SpreadsheetLabelMapping mapping1 = label1.setLabelMappingReference(
@@ -285,7 +285,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testLoadSpreadsheetMetadata() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         this.checkNotEquals(
             null,
@@ -295,7 +295,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testSaveSpreadsheetMetadata() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetMetadata metadata = context.loadMetadataOrFail(
             SpreadsheetId.with(1)
@@ -318,7 +318,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testDeleteSpreadsheetMetadata() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
@@ -340,7 +340,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
 
     @Test
     public void testFindMetadataBySpreadsheetName() {
-        final BasicSpreadsheetStorageContext context = this.createContext();
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
@@ -400,7 +400,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     }
 
     @Override
-    public BasicSpreadsheetStorageContext createContext() {
+    public SpreadsheetContextSpreadsheetStorageContext createContext() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
         final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
@@ -490,7 +490,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
             Url.parseAbsolute("https://example.com")
         );
 
-        return BasicSpreadsheetStorageContext.with(
+        return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetEngines.basic(),
             SpreadsheetContexts.fixedSpreadsheetId(
                 SpreadsheetStoreRepositories.treeMap(
@@ -530,7 +530,7 @@ public final class BasicSpreadsheetStorageContextTest implements SpreadsheetStor
     // class............................................................................................................
 
     @Override
-    public Class<BasicSpreadsheetStorageContext> type() {
-        return BasicSpreadsheetStorageContext.class;
+    public Class<SpreadsheetContextSpreadsheetStorageContext> type() {
+        return SpreadsheetContextSpreadsheetStorageContext.class;
     }
 }

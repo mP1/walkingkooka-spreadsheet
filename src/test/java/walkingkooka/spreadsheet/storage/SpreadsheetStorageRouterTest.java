@@ -1194,7 +1194,7 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     }
 
     private SpreadsheetStorageContext createContext(final SpreadsheetContext context) {
-        return SpreadsheetStorageContexts.basic(
+        return SpreadsheetStorageContexts.spreadsheetContext(
             SpreadsheetEngines.basic(),
             context
         );

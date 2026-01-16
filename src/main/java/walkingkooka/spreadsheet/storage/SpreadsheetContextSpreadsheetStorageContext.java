@@ -44,19 +44,19 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
+final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetStorageContext,
     SpreadsheetEnvironmentContextDelegator {
 
-    static BasicSpreadsheetStorageContext with(final SpreadsheetEngine spreadsheetEngine,
-                                               final SpreadsheetContext spreadsheetContext) {
-        return new BasicSpreadsheetStorageContext(
+    static SpreadsheetContextSpreadsheetStorageContext with(final SpreadsheetEngine spreadsheetEngine,
+                                                            final SpreadsheetContext spreadsheetContext) {
+        return new SpreadsheetContextSpreadsheetStorageContext(
             Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine"),
             Objects.requireNonNull(spreadsheetContext, "spreadsheetContext")
         );
     }
 
-    private BasicSpreadsheetStorageContext(final SpreadsheetEngine spreadsheetEngine,
-                                           final SpreadsheetContext spreadsheetContext) {
+    private SpreadsheetContextSpreadsheetStorageContext(final SpreadsheetEngine spreadsheetEngine,
+                                                        final SpreadsheetContext spreadsheetContext) {
         super();
         this.spreadsheetEngine = spreadsheetEngine;
         this.spreadsheetContext = spreadsheetContext;
@@ -198,7 +198,7 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
 
     @Override
     public SpreadsheetStorageContext cloneEnvironment() {
-        return new BasicSpreadsheetStorageContext(
+        return new SpreadsheetContextSpreadsheetStorageContext(
             this.spreadsheetEngine,
             this.spreadsheetContext.cloneEnvironment()
         );
@@ -211,7 +211,7 @@ final class BasicSpreadsheetStorageContext implements SpreadsheetStorageContext,
 
         return before == after ?
             this :
-            new BasicSpreadsheetStorageContext(
+            new SpreadsheetContextSpreadsheetStorageContext(
                 this.spreadsheetEngine,
                 after
             );
