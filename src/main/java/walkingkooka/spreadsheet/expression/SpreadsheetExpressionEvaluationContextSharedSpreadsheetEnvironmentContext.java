@@ -428,8 +428,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public SpreadsheetEnvironmentContext environmentContext() {
-        return this.spreadsheetEnvironmentContext();
+    public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.spreadsheetEnvironmentContextFactory;
     }
 
     @Override
