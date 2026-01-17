@@ -37,11 +37,19 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.StorageContexts;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -266,6 +274,44 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
             return new TestSpreadsheetExpressionEvaluationContextDelegator();
         }
+
+        @Override
+        public Optional<StorageValue> loadStorage(final StoragePath path) {
+            return this.storage.load(
+                path,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public StorageValue saveStorage(final StorageValue value) {
+            return this.storage.save(
+                value,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public void deleteStorage(final StoragePath path) {
+            this.storage.delete(
+                path,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                                  final int offset,
+                                                  final int count) {
+            return this.storage.list(
+                parent,
+                offset,
+                count,
+                StorageContexts.fake()
+            );
+        }
+
+        private final Storage<StorageContext> storage = Storages.tree();
 
         @Override
         public String toString() {

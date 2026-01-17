@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -44,7 +45,6 @@ import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -71,7 +71,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private final static SpreadsheetRowStore ROWS = SpreadsheetRowStores.fake();
 
-    private final static Storage<StorageExpressionEvaluationContext> STORAGES = Storages.fake();
+    private final static Storage<SpreadsheetStorageContext> STORAGES = Storages.fake();
 
     private final static SpreadsheetUserStore USERS = SpreadsheetUserStores.fake();
 
@@ -606,7 +606,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = RANGE_TO_CELLS;
         final SpreadsheetMetadataStore metadatas = METADATAS;
         final SpreadsheetRowStore rows = ROWS;
-        final Storage<StorageExpressionEvaluationContext> storage = STORAGES;
+        final Storage<SpreadsheetStorageContext> storage = STORAGES;
         final SpreadsheetUserStore users = USERS;
 
         this.toStringAndCheck(

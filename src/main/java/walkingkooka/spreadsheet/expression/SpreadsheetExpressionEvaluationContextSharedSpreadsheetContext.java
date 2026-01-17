@@ -25,6 +25,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -43,10 +44,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -430,14 +432,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         );
     }
 
-    // StorageExpressionEvaluationContext...............................................................................
-
-    @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
-        return this.spreadsheetContext.storeRepository()
-            .storage();
-    }
-
     private final SpreadsheetContext spreadsheetContext;
 
     // ValidationExpressionEvaluationContext............................................................................
@@ -505,6 +499,22 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     @Override
     public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetContext;
+    }
+
+    // StorageExpressionEvaluationContext...............................................................................
+
+    @Override
+    Storage<SpreadsheetStorageContext> storage() {
+        return this.spreadsheetContext.storeRepository()
+            .storage();
+    }
+
+    @Override
+    SpreadsheetStorageContext spreadsheetStorageContext() {
+        return SpreadsheetStorageContexts.basic(
+            SpreadsheetEngines.basic(),
+            this.spreadsheetContext
+        );
     }
 
     // Object...........................................................................................................

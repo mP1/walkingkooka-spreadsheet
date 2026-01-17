@@ -33,8 +33,13 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.LineEnding;
@@ -48,6 +53,7 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -240,4 +246,50 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
 
     @Override
     public abstract SpreadsheetEnvironmentContext spreadsheetEnvironmentContext();
+
+    // StorageExpressionEvaluationContext...............................................................................
+
+    @Override
+    public final Optional<StorageValue> loadStorage(final StoragePath path) {
+        return this.storage()
+            .load(
+                path,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
+    public final StorageValue saveStorage(final StorageValue value) {
+        return this.storage()
+            .save(
+                value,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
+    public final void deleteStorage(final StoragePath path) {
+        this.storage()
+            .delete(
+                path,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    @Override
+    public final List<StorageValueInfo> listStorage(final StoragePath parent,
+                                                    final int offset,
+                                                    final int count) {
+        return this.storage()
+            .list(
+                parent,
+                offset,
+                count,
+                this.spreadsheetStorageContext()
+            );
+    }
+
+    abstract Storage<SpreadsheetStorageContext> storage();
+
+    abstract SpreadsheetStorageContext spreadsheetStorageContext();
 }

@@ -49,6 +49,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.StorageContexts;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.Storages;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -698,6 +705,44 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             Objects.requireNonNull(watcher, "watcher");
             throw new UnsupportedOperationException();
         }
+
+        @Override
+        public Optional<StorageValue> loadStorage(final StoragePath path) {
+            return this.storage.load(
+                path,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public StorageValue saveStorage(final StorageValue value) {
+            return this.storage.save(
+                value,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public void deleteStorage(final StoragePath path) {
+            this.storage.delete(
+                path,
+                StorageContexts.fake()
+            );
+        }
+
+        @Override
+        public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                                  final int offset,
+                                                  final int count) {
+            return this.storage.list(
+                parent,
+                offset,
+                count,
+                StorageContexts.fake()
+            );
+        }
+
+        private final Storage<StorageContext> storage = Storages.tree();
     }
 
     @Override
