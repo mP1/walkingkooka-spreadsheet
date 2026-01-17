@@ -201,7 +201,7 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
             ),
             "{\n" +
                 "  \"value\": {\n" +
-                "    \"type\": \"url\",\n" +
+                "    \"type\": \"absolute-url\",\n" +
                 "    \"value\": \"https://example.com/123\"\n" +
                 "  },\n" +
                 "  \"type\": \"java.lang.Void\"\n" +
