@@ -103,18 +103,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     );
 
     static {
-        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-        store.save(METADATA);
-
-        SPREADSHEET_STORE_REPOSITORY = SpreadsheetStoreRepositories.treeMap(
-            store,
-            Storages.fake()
-        );
-    }
-
-    private final static SpreadsheetStoreRepository SPREADSHEET_STORE_REPOSITORY;
-
-    static {
         final SpreadsheetEnvironmentContext c = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         c.setSpreadsheetId(SPREADSHEET_ID);
         SPREADSHEET_ENVIRONMENT_CONTEXT = c;
@@ -847,8 +835,14 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
     private static SpreadsheetContext spreadsheetContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                          final ProviderContext providerContext) {
+        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+        store.save(METADATA);
+
         return spreadsheetContext(
-            SPREADSHEET_STORE_REPOSITORY,
+            SpreadsheetStoreRepositories.treeMap(
+                store,
+                Storages.tree()
+            ),
             spreadsheetEnvironmentContext,
             expressionFunctionProvider,
             providerContext

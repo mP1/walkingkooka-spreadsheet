@@ -46,8 +46,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.LineEnding;
@@ -297,8 +298,29 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
-        return this.context.storage();
+    public Optional<StorageValue> loadStorage(final StoragePath path) {
+        return this.context.loadStorage(path);
+    }
+
+    @Override
+    public StorageValue saveStorage(final StorageValue value) {
+        return this.context.saveStorage(value);
+    }
+
+    @Override
+    public void deleteStorage(final StoragePath path) {
+        this.context.deleteStorage(path);
+    }
+
+    @Override
+    public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                              final int offset,
+                                              final int count) {
+        return this.context.listStorage(
+            parent,
+            offset,
+            count
+        );
     }
 
     // TerminalContextDelegator.........................................................................................

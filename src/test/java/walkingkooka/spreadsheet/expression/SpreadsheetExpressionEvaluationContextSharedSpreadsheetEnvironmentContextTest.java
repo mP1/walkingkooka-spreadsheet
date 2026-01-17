@@ -41,15 +41,21 @@ import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
+import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -58,6 +64,11 @@ import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
@@ -85,6 +96,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextTest extends SpreadsheetExpressionEvaluationContextSharedTestCase<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext> {
+
+    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = SpreadsheetContextSuppliers.fake();
 
@@ -124,18 +137,39 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     private final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT;
 
+    private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = SpreadsheetMetadataContexts.fake();
+
     private final static TerminalContext TERMINAL_CONTEXT = TerminalContexts.fake();
 
     // with.............................................................................................................
+
+    @Test
+    public void testWithNullStorageFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                null,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
 
     @Test
     public void testWithNullSpreadsheetContextSupplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
                 null,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -148,9 +182,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -163,8 +199,27 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
+                null,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullSpreadsheetMetadataContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -178,9 +233,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -193,9 +250,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
@@ -208,9 +267,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 null
@@ -1014,6 +1075,94 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
+    // StorageContext...................................................................................................
+
+    @Test
+    public void testSaveStorageAndLoadStorage() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        final StoragePath path = StoragePath.parse("/path1/file2");
+
+        final StorageValue value = StorageValue.with(
+            path,
+            Optional.of(111)
+        );
+
+        this.saveStorageAndCheck(
+            context,
+            value,
+            value
+        );
+
+        this.loadStorageAndCheck(
+            context,
+            path,
+            value
+        );
+    }
+
+    @Test
+    public void testSaveStorageDeleteStorageAndLoadStorage() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        final StoragePath path = StoragePath.parse("/path1/file2");
+
+        final StorageValue value = StorageValue.with(
+            path,
+            Optional.of(111)
+        );
+
+        this.saveStorageAndCheck(
+            context,
+            value,
+            value
+        );
+
+        context.deleteStorage(path);
+
+        this.loadStorageAndCheck(
+            context,
+            path
+        );
+    }
+
+    @Test
+    public void testSaveStorageAndListStorage() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.createContext();
+
+        context.saveStorage(
+            StorageValue.with(
+                StoragePath.parse("/file1"),
+                Optional.of(111)
+            )
+        );
+
+        context.saveStorage(
+            StorageValue.with(
+                StoragePath.parse("/file2"),
+                Optional.of(222)
+            )
+        );
+
+        context.saveStorage(
+            StorageValue.with(
+                StoragePath.parse("/file3"),
+                Optional.of(333)
+            )
+        );
+
+        this.listStorageAndCheck(
+            context,
+            StoragePath.ROOT,
+            1, // skip first
+            1,
+            StorageValueInfo.with(
+                StoragePath.parse("/file2"),
+                context.createdAuditInfo()
+            )
+        );
+    }
+
     // ExpressionEvaluationContextTesting................................................................................
 
     @Override
@@ -1071,9 +1220,39 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                                                     final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            Storages.tree(),
             spreadsheetContextSupplier,
             LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
+            new FakeSpreadsheetMetadataContext() {
+                @Override
+                public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
+                    return this.store.load(id);
+                }
+
+                @Override
+                public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
+                    return this.store.save(metadata);
+                }
+
+                @Override
+                public void deleteMetadata(final SpreadsheetId id) {
+                    this.store.delete(id);
+                }
+
+                @Override
+                public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
+                                                                               final int offset,
+                                                                               final int count) {
+                    return this.store.findByName(
+                        name,
+                        offset,
+                        count
+                    );
+                }
+
+                private final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
+            },
             TERMINAL_CONTEXT,
             SpreadsheetProviders.basic(
                 CONVERTER_PROVIDER,

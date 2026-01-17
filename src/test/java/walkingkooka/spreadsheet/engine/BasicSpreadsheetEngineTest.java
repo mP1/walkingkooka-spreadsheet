@@ -1275,6 +1275,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
 
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            Storages.fake(),
             new SpreadsheetContextSupplier() {
                 @Override
                 public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {

@@ -64,6 +64,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
@@ -76,7 +77,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
@@ -737,7 +737,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 }
 
                 @Override
-                public Storage<StorageExpressionEvaluationContext> storage() {
+                public Storage<SpreadsheetStorageContext> storage() {
                     return Storages.fake();
                 }
             },

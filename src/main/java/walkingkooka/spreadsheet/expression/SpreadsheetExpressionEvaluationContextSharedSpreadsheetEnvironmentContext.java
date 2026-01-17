@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -51,10 +52,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -83,20 +84,25 @@ import java.util.Set;
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final Storage<SpreadsheetStorageContext> storage,
+                                                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                           final LocaleContext localeContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+                                                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                                           final TerminalContext terminalContext,
                                                                                           final SpreadsheetProvider spreadsheetProvider,
                                                                                           final ProviderContext providerContext) {
+        Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
+        Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+            storage,
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
                 spreadsheetEnvironmentContext,
@@ -104,23 +110,31 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                 spreadsheetProvider,
                 providerContext
             ),
+            spreadsheetMetadataContext,
             terminalContext,
             null // ExpressionFunctionProvider
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final Storage<SpreadsheetStorageContext> storage,
+                                                                                      final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                       final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
+                                                                                      final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                                       final TerminalContext terminalContext,
                                                                                       final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider) {
         super(
             terminalContext
         );
 
+        this.storage = storage;
+
         this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
         this.spreadsheetEnvironmentContextFactory = spreadsheetEnvironmentContextFactory;
         this.expressionFunctionProvider = expressionFunctionProvider; // may be null
+
+        this.spreadsheetMetadataContext = spreadsheetMetadataContext;
+        this.spreadsheetStorageContext = SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext.with(this);
     }
 
     /**
@@ -246,7 +260,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             );
     }
 
-    private Optional<SpreadsheetContext> spreadsheetContext() {
+    Optional<SpreadsheetContext> spreadsheetContext() {
         final SpreadsheetId spreadsheetIdOrNull = this.environmentValue(SPREADSHEET_ID)
             .orElse(null);
         return null == spreadsheetIdOrNull ?
@@ -313,18 +327,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     private SpreadsheetExpressionEvaluationContext setSpreadsheetEnvironmentContextFactory(final SpreadsheetEnvironmentContextFactory factory) {
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+            this.storage,
             this.spreadsheetContextSupplier,
             factory,
+            this.spreadsheetMetadataContext,
             this.terminalContext,
             this.expressionFunctionProvider
         );
-    }
-
-    // StorageExpressionEvaluationContext...............................................................................
-
-    @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
-        throw new UnsupportedOperationException();
     }
 
     // ValidationExpressionEvaluationContext............................................................................
@@ -358,15 +367,17 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
+    public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
         final SpreadsheetEnvironmentContextFactory before = this.spreadsheetEnvironmentContextFactory;
         final SpreadsheetEnvironmentContextFactory after = before.setEnvironmentContext(environmentContext);
 
         return before == after ?
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+                this.storage,
                 this.spreadsheetContextSupplier,
                 after,
+                this.spreadsheetMetadataContext,
                 this.terminalContext,
                 this.expressionFunctionProvider
             );
@@ -440,6 +451,25 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
 
     private final SpreadsheetContextSupplier spreadsheetContextSupplier;
+
+    // StorageExpressionEvaluationContext...............................................................................
+
+    @Override
+    Storage<SpreadsheetStorageContext> storage() {
+        return this.storage;
+    }
+
+    private final Storage<SpreadsheetStorageContext> storage;
+
+    @Override
+    SpreadsheetStorageContext spreadsheetStorageContext() {
+        return this.spreadsheetStorageContext;
+    }
+
+    private final SpreadsheetStorageContext spreadsheetStorageContext;
+
+    // SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext
+    final SpreadsheetMetadataContext spreadsheetMetadataContext;
 
     // Object...........................................................................................................
 

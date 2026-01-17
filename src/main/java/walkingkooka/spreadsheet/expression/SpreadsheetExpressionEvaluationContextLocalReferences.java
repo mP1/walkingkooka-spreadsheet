@@ -45,8 +45,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
+import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
@@ -66,6 +67,7 @@ import walkingkooka.validation.form.FormHandlerContextDelegator;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -169,8 +171,29 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     // StorageExpressionEvaluationContext...............................................................................
 
     @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
-        return this.context.storage();
+    public Optional<StorageValue> loadStorage(final StoragePath path) {
+        return this.context.loadStorage(path);
+    }
+
+    @Override
+    public StorageValue saveStorage(final StorageValue value) {
+        return this.context.saveStorage(value);
+    }
+
+    @Override
+    public void deleteStorage(final StoragePath path) {
+        this.context.deleteStorage(path);
+    }
+
+    @Override
+    public List<StorageValueInfo> listStorage(final StoragePath parent,
+                                              final int offset,
+                                              final int count) {
+        return this.context.listStorage(
+            parent,
+            offset,
+            count
+        );
     }
 
     // TerminalContextDelegator.........................................................................................

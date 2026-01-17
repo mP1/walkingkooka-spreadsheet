@@ -38,9 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
 import walkingkooka.storage.expression.function.FakeStorageExpressionEvaluationContext;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.printer.Printer;
@@ -191,11 +189,6 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
 
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Storage<StorageExpressionEvaluationContext> storage() {
         throw new UnsupportedOperationException();
     }
 
