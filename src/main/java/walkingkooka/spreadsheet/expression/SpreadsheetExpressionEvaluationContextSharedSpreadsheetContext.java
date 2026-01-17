@@ -511,7 +511,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
 
     @Override
     SpreadsheetStorageContext spreadsheetStorageContext() {
-        return SpreadsheetStorageContexts.basic(
+        return SpreadsheetStorageContexts.spreadsheetContext(
             SpreadsheetEngines.basic(),
             this.spreadsheetContext
         );
