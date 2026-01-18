@@ -662,16 +662,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     @Override
-    SpreadsheetEngineContextSharedSpreadsheetContext createContext(final EnvironmentContext environmentContext) {
+    SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
             METADATA,
-            environmentContext,
+            spreadsheetEnvironmentContext,
             PROVIDER_CONTEXT
         );
     }
 
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata,
-                                                                           final EnvironmentContext environmentContext,
+                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                            final ProviderContext providerContext) {
         return SpreadsheetEngineContextSharedSpreadsheetContext.with(
             SpreadsheetMetadataMode.FORMULA,
@@ -679,9 +679,9 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 metadata,
                 SpreadsheetStoreRepositories.treeMap(
                     SpreadsheetMetadataStores.fake(),
-                    Storages.fake()
+                    STORAGE
                 ),
-                environmentContext,
+                spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
                 providerContext
             ),

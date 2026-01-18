@@ -34,6 +34,8 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -50,7 +52,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -104,6 +109,8 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
+
+    final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -561,7 +568,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testCloneEnvironment() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
             "Hello",
@@ -569,15 +576,15 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
-        final C context = this.createContext(environmentContext);
+        final C context = this.createContext(spreadsheetEnvironmentContext);
 
         this.environmentValueAndCheck(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             name,
             value
         );
@@ -608,28 +615,28 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testSetEnvironmentContextWithSame() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final C context = this.createContext(environmentContext);
+        final C context = this.createContext(spreadsheetEnvironmentContext);
         assertSame(
             context,
-            context.setEnvironmentContext(environmentContext)
+            context.setEnvironmentContext(spreadsheetEnvironmentContext)
         );
     }
 
     @Test
     public final void testSetEnvironmentContextWithDifferent() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
-        final EnvironmentContext differentEnvironmentContext = environmentContext.cloneEnvironment();
+        final EnvironmentContext differentEnvironmentContext = spreadsheetEnvironmentContext.cloneEnvironment();
         differentEnvironmentContext.setLineEnding(LineEnding.CRNL);
 
         this.checkNotEquals(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             differentEnvironmentContext
         );
 
-        final C before = this.createContext(environmentContext);
+        final C before = this.createContext(spreadsheetEnvironmentContext);
         final SpreadsheetEngineContext after = before.setEnvironmentContext(differentEnvironmentContext);
 
         assertNotSame(
@@ -642,7 +649,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testEnvironmentValue() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
             "Hello",
@@ -650,13 +657,13 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
         this.environmentValueAndCheck(
-            this.createContext(environmentContext),
+            this.createContext(spreadsheetEnvironmentContext),
             name,
             value
         );
@@ -712,7 +719,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testRemoveEnvironmentValue() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
             "Hello",
@@ -720,12 +727,12 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
-        final C context = this.createContext(environmentContext);
+        final C context = this.createContext(spreadsheetEnvironmentContext);
         context.removeEnvironmentValue(name);
 
         this.environmentValueAndCheck(
@@ -736,7 +743,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     @Test
     public final void testExpressionEvaluationContextAndEnvironmentValue() {
-        final EnvironmentContext environmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
             "Hello",
@@ -744,13 +751,13 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
         final String value = "Hello World123";
 
-        environmentContext.setEnvironmentValue(
+        spreadsheetEnvironmentContext.setEnvironmentValue(
             name,
             value
         );
 
         this.environmentValueAndCheck(
-            this.createContext(environmentContext)
+            this.createContext(spreadsheetEnvironmentContext)
                 .spreadsheetExpressionEvaluationContext(
                     SpreadsheetEngineContext.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake()
@@ -794,7 +801,13 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
 
     // createContext....................................................................................................
 
-    abstract C createContext(final EnvironmentContext environmentContext);
+    final C createContext(final EnvironmentContext environmentContext) {
+        return this.createContext(
+            SpreadsheetEnvironmentContexts.basic(environmentContext)
+        );
+    }
+
+    abstract C createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext);
 
     @Override
     public final DateTimeContext dateTimeContext() {
