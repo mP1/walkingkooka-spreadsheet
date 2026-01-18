@@ -72,7 +72,9 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.storage.FakeStorageContext;
+import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
@@ -389,6 +391,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
     LineEnding LINE_ENDING = LineEnding.NL;
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
+
+    Storage STORAGE = Storages.empty();
 
     private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
