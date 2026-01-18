@@ -424,13 +424,13 @@ public interface SpreadsheetMetadataTesting extends Testing {
         JSON_NODE_UNMARSHALL_CONTEXT
     );
 
-    private static EnvironmentContext providerContextEnvironmentContext() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT);
-        environmentContext.setEnvironmentValue(
+    private static SpreadsheetEnvironmentContext providerContextSpreadsheetEnvironmentContext() {
+        final SpreadsheetEnvironmentContext spreadsheeEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+        spreadsheeEnvironmentContext.setEnvironmentValue(
             DUMMY_ENVIRONMENTAL_VALUE_NAME,
             DUMMY_ENVIRONMENTAL_VALUE
         );
-        return environmentContext;
+        return spreadsheeEnvironmentContext;
     }
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
@@ -472,7 +472,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             ).spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.basic(
                     EnvironmentContexts.readOnly(
-                        providerContextEnvironmentContext()
+                        providerContextSpreadsheetEnvironmentContext()
                     )
                 )
             ),
