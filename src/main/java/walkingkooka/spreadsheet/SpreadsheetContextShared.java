@@ -171,6 +171,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     public final <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                               final T value) {
         if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)) {
+            Objects.requireNonNull(value, "value");
+
             throw new IllegalArgumentException("Unable to set " + name + " with value " + value);
         }
 
