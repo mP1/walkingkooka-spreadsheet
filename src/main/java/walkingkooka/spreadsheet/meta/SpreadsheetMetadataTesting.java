@@ -481,7 +481,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         )
     );
 
-    private static EnvironmentContext terminalContextEnvironmentContext() {
+    private static SpreadsheetEnvironmentContext terminalContextSpreadsheetEnvironmentContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
         spreadsheetEnvironmentContext.setEnvironmentValue(
             TerminalContext.TERMINAL_ID,
@@ -503,7 +503,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             throw new UnsupportedOperationException();
         },
         EnvironmentContexts.readOnly(
-            terminalContextEnvironmentContext()
+            terminalContextSpreadsheetEnvironmentContext()
         )
     );
 
