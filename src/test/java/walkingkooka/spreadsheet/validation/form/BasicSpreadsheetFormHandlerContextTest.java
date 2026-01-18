@@ -565,6 +565,15 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
+                public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
+                                                    final T value) {
+                    this.environmentContext.setEnvironmentValue(
+                        name,
+                        value
+                    );
+                }
+
+                @Override
                 public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
                     this.environmentContext.removeEnvironmentValue(name);
                 }
