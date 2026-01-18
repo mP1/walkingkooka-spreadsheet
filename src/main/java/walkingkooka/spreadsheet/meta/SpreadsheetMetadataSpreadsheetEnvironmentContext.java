@@ -23,17 +23,14 @@ import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.EnvironmentValueWatcher;
-import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -46,7 +43,7 @@ import java.util.SortedSet;
  * When getting a value if its absent from the {@link EnvironmentContext} and then tries {@link SpreadsheetMetadata#get(SpreadsheetMetadataPropertyName)}.
  * Note the wrapped {@link SpreadsheetMetadata} is never updated, {@link #setLocale(Locale)} always updates the {@link EnvironmentContext}.
  */
-final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContext,
+final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContextDelegator,
     TreePrintable {
 
     static SpreadsheetMetadataSpreadsheetEnvironmentContext with(final SpreadsheetMetadata metadata,
@@ -56,7 +53,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
 
         SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = null;
 
-        EnvironmentContext wrap = context;
+        SpreadsheetEnvironmentContext wrap = context;
         if (context instanceof SpreadsheetMetadataSpreadsheetEnvironmentContext) {
             spreadsheetMetadataSpreadsheetEnvironmentContext = (SpreadsheetMetadataSpreadsheetEnvironmentContext) context;
             wrap = spreadsheetMetadataSpreadsheetEnvironmentContext.context;
@@ -77,7 +74,7 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
     }
 
     private SpreadsheetMetadataSpreadsheetEnvironmentContext(final SpreadsheetMetadata metadata,
-                                                             final EnvironmentContext context) {
+                                                             final SpreadsheetEnvironmentContext context) {
         this.metadata = metadata;
         this.context = context;
     }
@@ -107,58 +104,9 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         return spreadsheetEnvironmentContext;
     }
 
-    @Override
-    public LineEnding lineEnding() {
-        return this.environmentValueOrFail(LINE_ENDING);
-    }
-
-    @Override
-    public void setLineEnding(final LineEnding lineEnding) {
-        this.context.setLineEnding(lineEnding);
-    }
-
-    @Override
-    public Locale locale() {
-        return this.environmentValueOrFail(LOCALE);
-    }
-
-    @Override
-    public void setLocale(final Locale locale) {
-        this.context.setLocale(locale);
-    }
-
-    @Override
-    public AbsoluteUrl serverUrl() {
-        return this.context.environmentValueOrFail(SERVER_URL);
-    }
-
-    @Override
-    public SpreadsheetId spreadsheetId() {
-        return this.environmentValueOrFail(SPREADSHEET_ID);
-    }
-
-    @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        Objects.requireNonNull(spreadsheetId, "spreadsheetId");
-
-        this.setEnvironmentValue(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
-            spreadsheetId
-        );
-    }
-
-    @Override
-    public Optional<EmailAddress> user() {
-        return this.context.user();
-    }
-
-    @Override
-    public void setUser(final Optional<EmailAddress> user) {
-        this.context.setUser(user);
-    }
-
     /**
-     * Try wrapped {@link EnvironmentContext} and if the value is absent tries the given {@link SpreadsheetMetadata}.
+     * First tries the wrapped {@link SpreadsheetEnvironmentContext} and if the value is absent tries the given
+     * {@link SpreadsheetMetadata}.
      */
     @Override
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
@@ -176,25 +124,6 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         }
 
         return value;
-    }
-
-    @Override
-    public <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
-                                        final T value) {
-        Objects.requireNonNull(name, "name");
-        Objects.requireNonNull(value, "value");
-
-        this.context.setEnvironmentValue(
-            name,
-            value
-        );
-    }
-
-    @Override
-    public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        Objects.requireNonNull(name, "name");
-
-        this.context.removeEnvironmentValue(name);
     }
 
     @Override
@@ -229,22 +158,14 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
 
     private final SpreadsheetMetadata metadata;
 
-    @Override
-    public LocalDateTime now() {
-        return this.context.now();
-    }
+    // SpreadsheetEnvironmentContextDelegator...........................................................................
 
     @Override
-    public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
-        return this.context.addEventValueWatcher(watcher);
+    public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+        return this.context;
     }
 
-    @Override
-    public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-        return this.context.addEventValueWatcher(watcher);
-    }
-
-    private final EnvironmentContext context;
+    private final SpreadsheetEnvironmentContext context;
 
     // Object...........................................................................................................
 
