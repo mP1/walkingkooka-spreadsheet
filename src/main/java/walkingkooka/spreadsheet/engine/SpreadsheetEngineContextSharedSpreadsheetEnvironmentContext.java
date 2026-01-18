@@ -319,7 +319,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         );
     }
 
-    // EnvironmentContextDelegator......................................................................................
+    // SpreadsheetEnvironmentContextDelegator...........................................................................
 
     @Override
     public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
@@ -353,7 +353,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     @Override
-    public EnvironmentContext environmentContext() {
+    public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetEnvironmentContextFactory();
     }
 

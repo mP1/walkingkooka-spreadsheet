@@ -19,14 +19,14 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterLikeDelegator;
-import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
@@ -39,7 +39,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContext,
-    EnvironmentContextDelegator,
+    SpreadsheetEnvironmentContextDelegator,
     LocaleContextDelegator,
     ConverterLikeDelegator,
     SpreadsheetProviderDelegator {
@@ -84,47 +84,47 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     @Override
     public final SpreadsheetEngineContext cloneEnvironment() {
         return this.setEnvironmentContext(
-            this.environmentContext()
+            this.spreadsheetEnvironmentContext()
                 .cloneEnvironment()
         );
     }
 
     @Override
     public final LineEnding lineEnding() {
-        return this.environmentContext()
+        return this.spreadsheetEnvironmentContext()
             .lineEnding();
     }
 
     @Override
     public final void setLineEnding(final LineEnding lineEnding) {
-        this.environmentContext()
+        this.spreadsheetEnvironmentContext()
             .setLineEnding(lineEnding);
     }
 
     @Override
     public final Locale locale() {
-        return this.environmentContext()
+        return this.spreadsheetEnvironmentContext()
             .locale();
     }
 
     @Override
     public final void setLocale(final Locale locale) {
-        this.environmentContext()
+        this.spreadsheetEnvironmentContext()
             .setLocale(locale);
     }
 
     @Override
     public final AbsoluteUrl serverUrl() {
-        return this.environmentContext()
+        return this.spreadsheetEnvironmentContext()
             .environmentValueOrFail(SERVER_URL);
     }
 
     @Override
     public final void setUser(final Optional<EmailAddress> user) {
-        this.environmentContext()
+        this.spreadsheetEnvironmentContext()
             .setUser(user);
     }
 
     @Override
-    abstract public EnvironmentContext environmentContext();
+    abstract public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext();
 }

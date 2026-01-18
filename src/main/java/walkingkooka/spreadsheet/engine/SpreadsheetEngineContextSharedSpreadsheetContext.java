@@ -23,6 +23,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -416,7 +417,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
 
     private final TerminalContext terminalContext;
 
-    // EnvironmentContextDelegator......................................................................................
+    // SpreadsheetEnvironmentContextDelegator...........................................................................
 
     @Override
     public SpreadsheetEngineContext setEnvironmentContext(final EnvironmentContext environmentContext) {
@@ -435,7 +436,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     @Override
-    public EnvironmentContext environmentContext() {
+    public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetContext;
     }
 
