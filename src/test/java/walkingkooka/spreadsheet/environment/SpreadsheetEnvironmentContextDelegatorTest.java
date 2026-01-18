@@ -22,6 +22,7 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -109,7 +110,10 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
                 SpreadsheetId.with(1)
             );
 
-            return SpreadsheetEnvironmentContexts.basic(environmentContext);
+            return SpreadsheetEnvironmentContexts.basic(
+                Storages.fake(),
+                environmentContext
+            );
         }
 
         @Override

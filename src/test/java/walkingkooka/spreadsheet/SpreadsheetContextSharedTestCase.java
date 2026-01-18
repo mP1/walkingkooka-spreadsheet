@@ -44,6 +44,9 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -101,8 +104,11 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         return environmentContext;
     }
 
+    final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
+
     final static SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
         SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             spreadsheetEnvironmentContextEnvironmentContext()
         )
     );
@@ -240,7 +246,10 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            environmentContext
+        );
 
         final C context = this.createContext(spreadsheetEnvironmentContext);
         assertSame(
@@ -263,7 +272,10 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SPREADSHEET_ID
         );
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            environmentContext
+        );
 
         final EnvironmentContext differentEnvironmentContext = spreadsheetEnvironmentContext.cloneEnvironment();
         differentEnvironmentContext.setLocale(Locale.FRANCE);
@@ -344,6 +356,16 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         this.spreadsheetIdAndCheck(
             this.createContext(),
             SPREADSHEET_ID
+        );
+    }
+
+    // storage..........................................................................................................
+
+    @Test
+    public final void testStorage() {
+        this.storageAndCheck(
+            this.createContext(),
+            STORAGE
         );
     }
 

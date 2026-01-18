@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegat
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -123,6 +125,12 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     public final void setUser(final Optional<EmailAddress> user) {
         this.spreadsheetEnvironmentContext()
             .setUser(user);
+    }
+
+    @Override
+    public final Storage<SpreadsheetStorageContext> storage() {
+        return this.spreadsheetEnvironmentContext()
+            .storage();
     }
 
     @Override

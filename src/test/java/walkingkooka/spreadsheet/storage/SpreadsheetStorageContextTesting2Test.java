@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.TestSpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.text.LineEnding;
 
@@ -173,7 +174,10 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
                 Url.parseAbsolute("https://example.com")
             );
 
-            this.environmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+            this.environmentContext = SpreadsheetEnvironmentContexts.basic(
+                Storages.fake(),
+                environmentContext
+            );
         }
 
         private final SpreadsheetEnvironmentContext environmentContext;

@@ -22,6 +22,8 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
 
 public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
@@ -58,6 +60,16 @@ public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContext
             context,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             expected
+        );
+    }
+
+    // storage..........................................................................................................
+
+    default void storageAndCheck(final SpreadsheetEnvironmentContext context,
+                                 final Storage<SpreadsheetStorageContext> expected) {
+        this.checkEquals(
+            expected,
+            context.storage()
         );
     }
 }

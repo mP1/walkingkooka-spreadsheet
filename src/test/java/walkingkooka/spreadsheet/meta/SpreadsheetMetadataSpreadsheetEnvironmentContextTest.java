@@ -28,6 +28,9 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
@@ -54,6 +57,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     private final static EmailAddress USER = EmailAddress.parse("user@example.com");
 
+    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
+
     static {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
@@ -67,8 +72,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
-            SpreadsheetEnvironmentContexts.basic(context)
+        CONTEXT = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            EnvironmentContexts.readOnly(context)
         );
     }
 
@@ -161,7 +167,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(CONTEXT);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT;
         final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
@@ -178,12 +184,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetEnvironmentContextWithDifferent() {
-        final EnvironmentContext environmentContext = EnvironmentContexts.map(CONTEXT);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = CONTEXT;
         final SpreadsheetMetadata metadata = METADATA;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             metadata,
-            SpreadsheetEnvironmentContexts.basic(environmentContext)
+            spreadsheetEnvironmentContext
         );
 
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.map(
@@ -192,7 +198,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         differentEnvironmentContext.setLocale(Locale.GERMAN);
 
         this.checkNotEquals(
-            environmentContext,
+            spreadsheetEnvironmentContext,
             differentEnvironmentContext
         );
 
@@ -205,7 +211,10 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         this.checkEquals(
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 metadata,
-                SpreadsheetEnvironmentContexts.basic(differentEnvironmentContext)
+                SpreadsheetEnvironmentContexts.basic(
+                    STORAGE,
+                    differentEnvironmentContext
+                )
             ),
             afterSet
         );
@@ -219,6 +228,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetEnvironmentContexts.basic(
+                    STORAGE,
                     EnvironmentContexts.empty(
                         LineEnding.NL,
                         Locale.FRENCH,
@@ -243,6 +253,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     SpreadsheetId.with(1)
                 ),
                 SpreadsheetEnvironmentContexts.basic(
+                    STORAGE,
                     EnvironmentContexts.empty(
                         LineEnding.NL,
                         Locale.FRENCH,
@@ -283,7 +294,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
                             RoundingMode.FLOOR
                         )
-                ).spreadsheetEnvironmentContext(CONTEXT),
+                ).spreadsheetEnvironmentContext(
+                    CONTEXT.cloneEnvironment()
+                ),
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
@@ -505,11 +518,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     public SpreadsheetMetadataSpreadsheetEnvironmentContext createContext() {
         return SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
             METADATA,
-            SpreadsheetEnvironmentContexts.basic(
-                EnvironmentContexts.map(
-                    CONTEXT.cloneEnvironment()
-                )
-            )
+            CONTEXT.cloneEnvironment()
         );
     }
 
@@ -847,6 +856,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    collection\n" +
                 "      \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\"\n" +
                 "  scriptingFunctions\n" +
+                "  serverUrl\n" +
+                "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
                 "  showFormulaEditor\n" +
                 "    true\n" +
                 "  showFormulas\n" +

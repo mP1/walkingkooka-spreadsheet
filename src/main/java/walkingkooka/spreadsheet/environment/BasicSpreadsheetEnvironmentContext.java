@@ -22,6 +22,8 @@ import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
@@ -37,17 +39,37 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     EnvironmentContextDelegator,
     TreePrintable {
 
-    static SpreadsheetEnvironmentContext with(final EnvironmentContext context) {
+    static SpreadsheetEnvironmentContext with(final Storage<SpreadsheetStorageContext> storage,
+                                              final EnvironmentContext environmentContext) {
+        Objects.requireNonNull(storage, "storage");
+        Objects.requireNonNull(environmentContext, "environmentContext");
 
-        return context instanceof SpreadsheetEnvironmentContext ?
-            (SpreadsheetEnvironmentContext) context :
-            new BasicSpreadsheetEnvironmentContext(
-                Objects.requireNonNull(context, "context")
+        SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = null;
+
+        if (environmentContext instanceof SpreadsheetEnvironmentContext) {
+            spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) environmentContext;
+            if (spreadsheetEnvironmentContext.storage().equals(storage)) {
+                spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) environmentContext;
+            } else {
+                spreadsheetEnvironmentContext = null;
+            }
+        }
+
+        if (null == spreadsheetEnvironmentContext) {
+            spreadsheetEnvironmentContext = new BasicSpreadsheetEnvironmentContext(
+                storage,
+                environmentContext
             );
+        }
+
+        return spreadsheetEnvironmentContext;
     }
 
-    private BasicSpreadsheetEnvironmentContext(final EnvironmentContext context) {
+    private BasicSpreadsheetEnvironmentContext(final Storage<SpreadsheetStorageContext> storage,
+                                               final EnvironmentContext context) {
         super();
+
+        this.storage = storage;
         this.context = context;
     }
 
@@ -71,20 +93,30 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
         );
     }
 
+    @Override
+    public Storage<SpreadsheetStorageContext> storage() {
+        return this.storage;
+    }
+
+    private final Storage<SpreadsheetStorageContext> storage;
+
     // EnvironmentContextDelegator......................................................................................
 
     @Override
     public SpreadsheetEnvironmentContext cloneEnvironment() {
-        final EnvironmentContext before = this.context;
-        final EnvironmentContext after = before.cloneEnvironment();
-        return before == after ?
-            this :
-            new BasicSpreadsheetEnvironmentContext(after);
+        return this.setEnvironmentContext(
+            this.context.cloneEnvironment()
+        );
     }
 
     @Override
     public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return BasicSpreadsheetEnvironmentContext.with(environmentContext);
+        return this.context == environmentContext ?
+            this :
+            BasicSpreadsheetEnvironmentContext.with(
+            this.storage,
+            environmentContext
+        );
     }
 
     @Override
@@ -120,7 +152,10 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
 
     @Override
     public int hashCode() {
-        return this.context.hashCode();
+        return Objects.hash(
+            this.storage,
+            this.context
+        );
     }
 
     @Override
@@ -131,7 +166,8 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     }
 
     private boolean equals0(final BasicSpreadsheetEnvironmentContext other) {
-        return this.context.equals(other.context);
+        return this.storage.equals(other.storage) &&
+            this.context.equals(other.context);
     }
 
     @Override

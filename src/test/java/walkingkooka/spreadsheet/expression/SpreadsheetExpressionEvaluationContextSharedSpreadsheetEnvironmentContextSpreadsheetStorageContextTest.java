@@ -88,10 +88,13 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             SERVER_URL
         );
 
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+        final Storage<SpreadsheetStorageContext> storage = Storages.tree();
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            storage,
+            environmentContext
+        );
 
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
-        final Storage<SpreadsheetStorageContext> storage = Storages.tree();
 
         final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
             metadataStore,
@@ -122,7 +125,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext.with(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                storage,
                 new SpreadsheetContextSupplier() {
                     @Override
                     public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {

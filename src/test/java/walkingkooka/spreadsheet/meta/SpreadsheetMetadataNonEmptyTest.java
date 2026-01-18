@@ -81,6 +81,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -1885,6 +1886,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
                 .spreadsheetEnvironmentContext(
                     SpreadsheetEnvironmentContexts.basic(
+                        Storages.fake(),
                         EnvironmentContexts.map(
                             EnvironmentContexts.empty(
                                 LineEnding.NL,

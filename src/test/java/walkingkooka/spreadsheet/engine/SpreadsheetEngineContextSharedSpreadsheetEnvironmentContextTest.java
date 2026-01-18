@@ -51,10 +51,8 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
@@ -68,8 +66,6 @@ import java.util.function.BiFunction;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest extends SpreadsheetEngineContextSharedTestCase<SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext> {
-
-    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = SpreadsheetContextSuppliers.fake();
     
@@ -118,28 +114,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // with.............................................................................................................
 
     @Test
-    public void testWithNullStorageFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                null,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LOCALE_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullSpreadsheetContextSupplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -156,7 +134,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 LOCALE_CONTEXT,
@@ -173,7 +150,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 null,
@@ -190,7 +166,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -207,7 +182,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -224,7 +198,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -247,7 +220,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                       final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-            STORAGE,
             spreadsheetContextSupplier,
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
@@ -548,26 +520,9 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // hashCode/equals..................................................................................................
 
     @Test
-    public void testEqualsDifferentStorage() {
-        this.checkNotEquals(
-            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                Storages.fake(),
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LOCALE_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testEqualsDifferentSpreadsheetContextSupplier() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SpreadsheetContextSuppliers.fake(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -592,7 +547,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
@@ -608,7 +562,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LocaleContexts.jre(Locale.FRANCE),
@@ -624,7 +577,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetMetadataContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -640,7 +592,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentTerminalContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -656,7 +607,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
@@ -672,7 +622,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,

@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
@@ -432,10 +433,12 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
             Url.parseAbsolute("https://example.com")
         );
 
+        final Storage<SpreadsheetStorageContext> storage = Storages.tree();
+
         return SpreadsheetContexts.fixedSpreadsheetId(
             SpreadsheetStoreRepositories.treeMap(
                 metadataStore,
-                Storages.tree()
+                storage
             ), // SpreadsheetStoreRepository
             (c) -> SpreadsheetEngineContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
@@ -445,7 +448,10 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
-            SpreadsheetEnvironmentContexts.basic(environmentContext),
+            SpreadsheetEnvironmentContexts.basic(
+                storage,
+                environmentContext
+            ),
             localeContext,
             SpreadsheetProviders.basic(
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(

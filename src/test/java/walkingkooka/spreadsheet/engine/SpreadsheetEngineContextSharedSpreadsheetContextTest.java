@@ -994,6 +994,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         private final EnvironmentContext environmentContext;
 
         @Override
+        public Storage<SpreadsheetStorageContext> storage() {
+            return STORAGE;
+        }
+
+        @Override
         public LocaleContext localeContext() {
             return this.localeContext;
         }

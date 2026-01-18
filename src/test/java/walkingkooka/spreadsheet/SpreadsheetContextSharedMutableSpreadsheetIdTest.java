@@ -356,7 +356,10 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             SPREADSHEET_ID
         );
         return this.createContext(
-            SpreadsheetEnvironmentContexts.basic(environmentContext)
+            SpreadsheetEnvironmentContexts.basic(
+                STORAGE,
+                environmentContext
+            )
         );
     }
 

@@ -729,12 +729,13 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     @Override
     public SpreadsheetEnvironmentContextFactory setEnvironmentContext(final EnvironmentContext environmentContext) {
-        return this.spreadsheetEnvironmentContext == environmentContext ?
+        final SpreadsheetEnvironmentContext before = this.spreadsheetEnvironmentContext;
+        final SpreadsheetEnvironmentContext after = before.setEnvironmentContext(environmentContext);
+
+        return before == after ?
             this :
             with(
-                SpreadsheetEnvironmentContexts.basic(
-                    environmentContext
-                ),
+                after,
                 this.localeContext,
                 this.spreadsheetProvider,
                 this.providerContext

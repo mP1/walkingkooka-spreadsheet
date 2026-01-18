@@ -409,6 +409,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         );
 
         return SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.readOnly(environmentContext)
         );
     }

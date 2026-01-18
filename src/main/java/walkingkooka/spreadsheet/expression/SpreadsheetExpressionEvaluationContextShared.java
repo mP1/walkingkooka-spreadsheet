@@ -289,7 +289,11 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
             );
     }
 
-    abstract Storage<SpreadsheetStorageContext> storage();
+    @Override
+    public final Storage<SpreadsheetStorageContext> storage() {
+        return this.environmentContext()
+            .storage();
+    }
 
     abstract SpreadsheetStorageContext spreadsheetStorageContext();
 }

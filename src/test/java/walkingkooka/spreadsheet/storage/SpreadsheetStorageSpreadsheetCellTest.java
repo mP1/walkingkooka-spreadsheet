@@ -575,6 +575,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
                 throw new UnsupportedOperationException();
             }, // HttpRouter
             SpreadsheetEnvironmentContexts.basic(
+                Storages.fake(),
                 environmentContext
             ),
             localeContext,
