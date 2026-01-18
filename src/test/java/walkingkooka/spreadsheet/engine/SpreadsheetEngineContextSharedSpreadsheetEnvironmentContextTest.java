@@ -237,19 +237,19 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     }
 
     @Override
-    public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final EnvironmentContext environmentContext) {
+    SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
             SPREADSHEET_CONTEXT_SUPPLIER,
-            environmentContext
+            spreadsheetEnvironmentContext
         );
     }
 
-    public SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
-                                                                                     final EnvironmentContext environmentContext) {
+    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                      final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
             STORAGE,
             spreadsheetContextSupplier,
-            SpreadsheetEnvironmentContexts.basic(environmentContext),
+            spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SpreadsheetMetadataContexts.basic(
                 CREATE_METADATA,
