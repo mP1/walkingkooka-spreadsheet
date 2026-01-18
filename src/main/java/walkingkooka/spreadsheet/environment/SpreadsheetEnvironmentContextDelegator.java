@@ -27,20 +27,20 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
 
     @Override
     default AbsoluteUrl serverUrl() {
-        return this.spreadsheetEnvironmentContext()
-            .serverUrl();
+        return this.environmentValueOrFail(SERVER_URL);
     }
 
     @Override
     default SpreadsheetId spreadsheetId() {
-        return this.spreadsheetEnvironmentContext()
-            .spreadsheetId();
+        return this.environmentValueOrFail(SPREADSHEET_ID);
     }
 
     @Override
     default void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.spreadsheetEnvironmentContext().
-            setSpreadsheetId(spreadsheetId);
+        this.setEnvironmentValue(
+            SPREADSHEET_ID,
+            spreadsheetId
+        );
     }
     
     // EnvironmentContextDelegator......................................................................................
