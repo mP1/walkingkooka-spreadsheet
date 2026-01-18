@@ -277,6 +277,20 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             BasicSpreadsheetEnvironmentContext.with(environmentContext);
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentContext() {
+        this.checkNotEquals(
+            BasicSpreadsheetEnvironmentContext.with(
+                EnvironmentContexts.fake()
+            ),
+            BasicSpreadsheetEnvironmentContext.with(
+                EnvironmentContexts.fake()
+            )
+        );
+    }
+
     // toString.........................................................................................................
 
     @Test
