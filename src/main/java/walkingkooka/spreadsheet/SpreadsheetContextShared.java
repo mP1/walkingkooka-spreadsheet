@@ -22,7 +22,6 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -204,11 +203,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final void setLocale(final Locale locale) {
         this.spreadsheetEnvironmentContext.setLocale(locale);
-    }
-
-    @Override
-    public final AbsoluteUrl serverUrl() {
-        return this.spreadsheetEnvironmentContext.serverUrl();
     }
 
     // SpreadsheetId....................................................................................................
