@@ -67,8 +67,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
-        CONTEXT = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.readOnly(context)
+        CONTEXT = SpreadsheetEnvironmentContexts.readOnly(
+            SpreadsheetEnvironmentContexts.basic(context)
         );
     }
 
@@ -161,9 +161,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
 
     @Test
     public void testSetEnvironmentContextWithSame() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(CONTEXT)
-        );
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(CONTEXT);
         final SpreadsheetMetadata metadata = SpreadsheetMetadataTesting.METADATA_EN_AU;
 
         final SpreadsheetMetadataSpreadsheetEnvironmentContext spreadsheetMetadataSpreadsheetEnvironmentContext = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
@@ -285,18 +283,15 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
                             RoundingMode.FLOOR
                         )
-                ).spreadsheetEnvironmentContext(
-                    SpreadsheetEnvironmentContexts.basic(
-                        EnvironmentContexts.map(CONTEXT)
-                    )
-                ),
+                ).spreadsheetEnvironmentContext(CONTEXT),
             SpreadsheetEnvironmentContext.LINE_ENDING,
+            SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
-            SpreadsheetEnvironmentContext.USER,
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName(),
+            SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.toEnvironmentValueName(),
-            SpreadsheetMetadataPropertyName.LOCALE.toEnvironmentValueName(),
-            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName()
+            SpreadsheetEnvironmentContext.USER
         );
     }
 
@@ -528,11 +523,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                     SpreadsheetId.with(1)
                 ),
-                SpreadsheetEnvironmentContexts.basic(
-                    EnvironmentContexts.map(CONTEXT)
-                )
+                CONTEXT
             ),
-            "{lineEnding=\\n, locale=fr, now=1999-12-31T12:58, spreadsheetId=1, user=user@example.com}"
+            "{lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
         );
     }
 
