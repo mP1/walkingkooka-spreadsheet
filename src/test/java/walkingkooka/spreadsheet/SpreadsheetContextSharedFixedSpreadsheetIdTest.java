@@ -309,7 +309,10 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         );
 
         return this.createContext(
-            SpreadsheetEnvironmentContexts.basic(environmentContext)
+            SpreadsheetEnvironmentContexts.basic(
+                STORAGE,
+                environmentContext
+            )
         );
     }
 

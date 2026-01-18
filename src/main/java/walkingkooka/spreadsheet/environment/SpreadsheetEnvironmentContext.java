@@ -22,6 +22,8 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
 
 /**
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
@@ -48,6 +50,11 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
      * Returns a {@link SpreadsheetEnvironmentContext} with the given {@link SpreadsheetId}
      */
     void setSpreadsheetId(final SpreadsheetId spreadsheetId);
+
+    /**
+     * Getter that returns the {@link Storage} for the current user.
+     */
+    Storage<SpreadsheetStorageContext> storage();
 
     // EnvironmentContext...............................................................................................
 

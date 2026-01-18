@@ -32,7 +32,9 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.storage.Storage;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -134,6 +136,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Storage<SpreadsheetStorageContext> storage() {
         throw new UnsupportedOperationException();
     }
 

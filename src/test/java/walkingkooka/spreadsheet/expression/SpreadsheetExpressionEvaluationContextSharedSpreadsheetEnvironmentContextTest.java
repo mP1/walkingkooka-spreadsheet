@@ -144,28 +144,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // with.............................................................................................................
 
     @Test
-    public void testWithNullStorageFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                null,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                LOCALE_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullSpreadsheetContextSupplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 null,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -182,7 +164,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -199,7 +180,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 null,
@@ -216,7 +196,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -233,7 +212,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -250,7 +228,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -267,7 +244,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                STORAGE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -311,6 +287,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
@@ -328,6 +305,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testSetLineEnding() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LINE_ENDING,
@@ -358,6 +336,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -375,6 +354,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testSetLocale() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LINE_ENDING,
@@ -399,9 +379,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                SPREADSHEET_ENVIRONMENT_CONTEXT
-            )
+            STORAGE,
+            SPREADSHEET_ENVIRONMENT_CONTEXT
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
@@ -425,6 +404,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testSetEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.map(
                 SPREADSHEET_ENVIRONMENT_CONTEXT
             )
@@ -452,9 +432,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Test
     public void testRemoveEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                SPREADSHEET_ENVIRONMENT_CONTEXT
-            )
+            STORAGE,
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
@@ -482,6 +461,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final EmailAddress user = EmailAddress.parse("user123@example.com");
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
@@ -1168,7 +1148,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     @Override
     public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext() {
         return this.createContext(
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            SpreadsheetEnvironmentContexts.basic(
+                Storages.tree(),
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
+            )
         );
     }
 
@@ -1220,7 +1203,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                                                     final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-            Storages.tree(),
             spreadsheetContextSupplier,
             LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,

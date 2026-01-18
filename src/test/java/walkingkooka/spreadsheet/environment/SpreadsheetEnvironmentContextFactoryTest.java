@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -294,6 +295,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testLineEnding() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,
@@ -311,6 +313,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testSetLineEnding() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LINE_ENDING,
@@ -341,6 +344,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testLocale() {
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -358,6 +362,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testSetLocale() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
                     LINE_ENDING,
@@ -382,9 +387,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                SPREADSHEET_ENVIRONMENT_CONTEXT
-            )
+            Storages.fake(),
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
@@ -408,9 +412,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testSetEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                SPREADSHEET_ENVIRONMENT_CONTEXT
-            )
+            Storages.fake(),
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
@@ -435,9 +438,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     @Test
     public void testRemoveEnvironmentValue() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
-            EnvironmentContexts.map(
-                SPREADSHEET_ENVIRONMENT_CONTEXT
-            )
+            Storages.fake(),
+            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
         );
 
         final EnvironmentValueName<String> name = EnvironmentValueName.with(
@@ -465,6 +467,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final EmailAddress user = EmailAddress.parse("user123@example.com");
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
             EnvironmentContexts.empty(
                 LINE_ENDING,
                 LOCALE,

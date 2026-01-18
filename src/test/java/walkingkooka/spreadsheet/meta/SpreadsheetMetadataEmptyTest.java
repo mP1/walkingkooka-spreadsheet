@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -155,6 +156,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.environmentValueAndCheck(
             SpreadsheetMetadata.EMPTY.spreadsheetEnvironmentContext(
                 SpreadsheetEnvironmentContexts.basic(
+                    Storages.fake(),
                     EnvironmentContexts.empty(
                         LineEnding.NL,
                         LOCALE_CONTEXT.locale(),

@@ -23,6 +23,8 @@ import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -68,11 +70,14 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     }
 
     /**
-     * Always returns the given {@link EnvironmentContext}, which is not read only wrapped.
+     * Always returns the given {@link SpreadsheetEnvironmentContext}, which is not read only wrapped.
      */
     @Override
     public SpreadsheetEnvironmentContext setEnvironmentContext(final EnvironmentContext context) {
-        return SpreadsheetEnvironmentContexts.basic(context);
+        return SpreadsheetEnvironmentContexts.basic(
+            this.context.storage(),
+            context
+        );
     }
 
     @Override
@@ -155,6 +160,11 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     public void setUser(final Optional<EmailAddress> user) {
         Objects.requireNonNull(user, "user");
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Storage<SpreadsheetStorageContext> storage() {
+        return this.context.storage();
     }
 
     @Override

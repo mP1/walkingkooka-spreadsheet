@@ -48,7 +48,6 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -502,12 +501,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     }
 
     // StorageExpressionEvaluationContext...............................................................................
-
-    @Override
-    Storage<SpreadsheetStorageContext> storage() {
-        return this.spreadsheetContext.storeRepository()
-            .storage();
-    }
 
     @Override
     SpreadsheetStorageContext spreadsheetStorageContext() {

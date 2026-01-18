@@ -31,9 +31,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
@@ -124,8 +122,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final Storage<SpreadsheetStorageContext> storage,
-                                                                                       final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                        final LocaleContext localeContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -133,7 +130,6 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                        final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-            storage,
             spreadsheetContextSupplier,
             localeContext,
             spreadsheetEnvironmentContext,

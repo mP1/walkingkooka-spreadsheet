@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
@@ -135,6 +136,8 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
 
     private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
+
+    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     @Test
     public void testWithNullReferenceToValuesFails() {
@@ -437,12 +440,6 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     // testSetEnvironmentContext........................................................................................
 
-    @Test
-    public void testSetEnvironmentContextWithDifferentEnvironmentContext() {
-        final SpreadsheetExpressionEvaluationContextLocalReferences before = this.createContext();
-
-    }
-
     @Override
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
@@ -460,7 +457,10 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             Url.parseAbsolute("https://example.com")
         );
 
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(environmentContext);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            environmentContext
+        );
         spreadsheetEnvironmentContext.setSpreadsheetId(
             SpreadsheetId.with(1)
         );

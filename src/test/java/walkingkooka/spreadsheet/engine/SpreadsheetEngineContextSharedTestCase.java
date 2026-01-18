@@ -52,10 +52,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storage;
-import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
@@ -109,8 +106,6 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
-
-    final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -799,11 +794,24 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
     }
 
+    // storage..........................................................................................................
+
+    @Test
+    public final void testStorage() {
+        this.storageAndCheck(
+            this.createContext(),
+            STORAGE
+        );
+    }
+
     // createContext....................................................................................................
 
     final C createContext(final EnvironmentContext environmentContext) {
         return this.createContext(
-            SpreadsheetEnvironmentContexts.basic(environmentContext)
+            SpreadsheetEnvironmentContexts.basic(
+                STORAGE,
+                environmentContext
+            )
         );
     }
 

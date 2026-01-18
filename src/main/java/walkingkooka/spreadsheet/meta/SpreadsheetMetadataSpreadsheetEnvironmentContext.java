@@ -97,7 +97,10 @@ final class SpreadsheetMetadataSpreadsheetEnvironmentContext implements Spreadsh
         } else {
             spreadsheetEnvironmentContext = with(
                 this.metadata,
-                SpreadsheetEnvironmentContexts.basic(environmentContext)
+                SpreadsheetEnvironmentContexts.basic(
+                    this.storage(),
+                    environmentContext
+                )
             );
         }
 

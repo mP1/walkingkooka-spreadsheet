@@ -21,6 +21,8 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
 
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator {
@@ -41,6 +43,12 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
             SPREADSHEET_ID,
             spreadsheetId
         );
+    }
+
+    @Override
+    default Storage<SpreadsheetStorageContext> storage() {
+        return this.spreadsheetEnvironmentContext()
+            .storage();
     }
     
     // EnvironmentContextDelegator......................................................................................

@@ -27,6 +27,9 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -46,6 +49,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
     private final static EmailAddress USER = EmailAddress.parse("user123@example.com");
+
+    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
 
     @Test
     public void testWithNullContextFails() {
@@ -107,10 +112,11 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testSetSpreadsheetEnvironmentContextWithSame() {
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
             EnvironmentContexts.empty(
                 LineEnding.NL,
                 Locale.FRENCH,
-                LocalDateTime::now,
+                () -> LocalDateTime.MIN,
                 Optional.of(
                     EmailAddress.parse("user123@example.com")
                 )
@@ -128,7 +134,10 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testSetSpreadsheetEnvironmentContext() {
         final HasNow hasNow = () -> NOW;
 
+        final Storage<SpreadsheetStorageContext> storage = Storages.fake();
+
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
+            storage,
             EnvironmentContexts.empty(
                 LineEnding.NL,
                 Locale.FRENCH,
@@ -141,6 +150,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final ReadOnlySpreadsheetEnvironmentContext readOnly = ReadOnlySpreadsheetEnvironmentContext.with(empty);
 
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
+            storage,
             EnvironmentContexts.empty(
                 LineEnding.CRNL,
                 Locale.GERMAN,
@@ -324,7 +334,10 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             SERVER_URL
         );
 
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(context);
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            STORAGE,
+            context
+        );
         spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
 
         return ReadOnlySpreadsheetEnvironmentContext.with(spreadsheetEnvironmentContext);
@@ -341,6 +354,23 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             SpreadsheetEnvironmentContext.USER
+        );
+    }
+
+    // storage..........................................................................................................
+
+    @Test
+    public void testStorage() {
+        this.storageAndCheck(
+            ReadOnlySpreadsheetEnvironmentContext.with(
+                new FakeSpreadsheetEnvironmentContext() {
+                    @Override
+                    public Storage<SpreadsheetStorageContext> storage() {
+                        return STORAGE;
+                    }
+                }
+            ),
+            STORAGE
         );
     }
 

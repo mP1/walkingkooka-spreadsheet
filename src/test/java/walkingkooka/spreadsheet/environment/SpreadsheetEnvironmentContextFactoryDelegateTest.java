@@ -25,6 +25,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegateTest.TestSpreadsheetEnvironmentContextFactoryDelegate;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -84,7 +85,10 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
                 Url.parseAbsolute("https://example.com")
             );
 
-            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(context);
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+                Storages.fake(),
+                context
+            );
             spreadsheetEnvironmentContext.setSpreadsheetId(
                 SpreadsheetId.with(1)
             );

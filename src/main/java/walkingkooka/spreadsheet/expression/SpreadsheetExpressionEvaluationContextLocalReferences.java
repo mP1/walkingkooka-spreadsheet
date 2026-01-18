@@ -43,8 +43,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -465,6 +467,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public void setUser(final Optional<EmailAddress> user) {
         this.context.setUser(user);
+    }
+
+    @Override
+    public Storage<SpreadsheetStorageContext> storage() {
+        return this.context.storage();
     }
 
     @Override

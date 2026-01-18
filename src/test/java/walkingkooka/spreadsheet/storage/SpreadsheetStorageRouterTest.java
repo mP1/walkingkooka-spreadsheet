@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
@@ -1271,7 +1270,7 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                 c,
                 TerminalContexts.fake()
             ),
-            SpreadsheetEnvironmentContexts.basic(spreadsheetEnvironmentContext),
+            spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
