@@ -182,11 +182,25 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
         printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            TreePrintable.printTreeOrToString(
-                this.context,
-                printer
-            );
+            printer.println("environment");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.context,
+                    printer
+                );
+            }
+            printer.outdent();
+
+            printer.println("storage");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.storage,
+                    printer
+                );
+            }
+            printer.outdent();
         }
-        printer.println();
     }
 }

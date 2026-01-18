@@ -28,6 +28,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
@@ -48,7 +49,13 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
-    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
+    private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
+
+        @Override
+        public String toString() {
+            return FakeStorage.class.getSimpleName();
+        }
+    };
 
     // with.............................................................................................................
 
@@ -435,20 +442,22 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         this.treePrintAndCheck(
             this.createContext(),
             "BasicSpreadsheetEnvironmentContext\n" +
-                "  MapEnvironmentContext\n" +
-                "    lineEnding\n" +
-                "      \"\\n\"\n" +
-                "    locale\n" +
-                "      en_AU (java.util.Locale)\n" +
-                "    now\n" +
-                "      1999-12-31T12:58 (java.time.LocalDateTime)\n" +
-                "    serverUrl\n" +
-                "      https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
-                "    spreadsheetId\n" +
-                "      1\n" +
-                "    user\n" +
-                "      user@example.com (walkingkooka.net.email.EmailAddress)\n" +
-                "  \n"
+                "  environment\n" +
+                "    MapEnvironmentContext\n" +
+                "      lineEnding\n" +
+                "        \"\\n\"\n" +
+                "      locale\n" +
+                "        en_AU (java.util.Locale)\n" +
+                "      now\n" +
+                "        1999-12-31T12:58 (java.time.LocalDateTime)\n" +
+                "      serverUrl\n" +
+                "        https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "      spreadsheetId\n" +
+                "        1\n" +
+                "      user\n" +
+                "        user@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "  storage\n" +
+                "    FakeStorage (walkingkooka.spreadsheet.environment.BasicSpreadsheetEnvironmentContextTest$1)\n"
         );
     }
 
