@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
@@ -28,6 +27,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
@@ -45,7 +45,7 @@ import java.util.function.Function;
  */
 abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetMetadataContextDelegator,
-    EnvironmentContextDelegator,
+    SpreadsheetEnvironmentContextDelegator,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
@@ -214,22 +214,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     // SpreadsheetId....................................................................................................
 
     @Override
-    public final SpreadsheetId spreadsheetId() {
-        return this.spreadsheetEnvironmentContext.spreadsheetId();
-    }
-
-    @Override
-    public final void setSpreadsheetId(final SpreadsheetId id) {
-        Objects.requireNonNull(id, "id");
-
-        this.setEnvironmentValue(
-            SPREADSHEET_ID,
-            id
-        );
-    }
-
-    @Override
-    public final EnvironmentContext environmentContext() {
+    public final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         return this.spreadsheetEnvironmentContext;
     }
 
