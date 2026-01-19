@@ -661,15 +661,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     }
 
     // createContext....................................................................................................
-
-    private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata) {
-        return this.createContext(
-            metadata,
-            SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-            PROVIDER_CONTEXT
-        );
-    }
-
+    
     @Override
     SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
