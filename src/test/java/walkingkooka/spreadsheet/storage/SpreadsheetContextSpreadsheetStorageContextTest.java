@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
@@ -492,10 +493,12 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
 
         final Storage<SpreadsheetStorageContext> storage = Storages.tree();
+        final SpreadsheetEngine spreadsheetEngine = SpreadsheetEngines.basic();
 
         return SpreadsheetContextSpreadsheetStorageContext.with(
-            SpreadsheetEngines.basic(),
+            spreadsheetEngine,
             SpreadsheetContexts.fixedSpreadsheetId(
+                spreadsheetEngine,
                 SpreadsheetStoreRepositories.treeMap(metadataStore),
                 (c) -> SpreadsheetEngineContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,

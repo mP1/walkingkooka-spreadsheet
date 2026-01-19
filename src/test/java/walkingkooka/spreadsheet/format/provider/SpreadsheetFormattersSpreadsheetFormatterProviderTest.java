@@ -26,6 +26,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -114,6 +115,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SPREADSHEET_LABEL_NAME_RESOLVER,
                     SpreadsheetContexts.fixedSpreadsheetId(
+                        SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {
                             @Override
                             public SpreadsheetMetadataStore metadatas() {

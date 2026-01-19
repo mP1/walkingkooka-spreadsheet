@@ -1285,6 +1285,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return Optional.ofNullable(
                         spreadsheetId.equals(id) ?
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                SpreadsheetEngines.fake(),
                                 this.repo, // SpreadsheetStoreRepository
                                 (c) -> {
                                     throw new UnsupportedOperationException();

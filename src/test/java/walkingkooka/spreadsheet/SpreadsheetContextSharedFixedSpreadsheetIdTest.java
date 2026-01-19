@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
@@ -70,13 +69,29 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
-    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
+    @Test
+    public void testWithNullSpreadsheetEngineFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                null,
+                REPO,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                HTTP_ROUTER_FACTORY,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
 
     @Test
     public void testWithNullStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                SPREADSHEET_ENGINE,
                 null,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
@@ -93,6 +108,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                SPREADSHEET_ENGINE,
                 REPO,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
@@ -227,16 +243,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             IllegalArgumentException.class,
             () -> context.setSpreadsheetId(SpreadsheetId.with(999))
-        );
-    }
-
-    // spreadsheetEngine................................................................................................
-
-    @Test
-    public void testSpreadsheetEngine() {
-        this.spreadsheetEngineAndCheck(
-            this.createContext(),
-            SPREADSHEET_ENGINE
         );
     }
 
@@ -396,6 +402,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         store.save(metadata);
 
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
+            SPREADSHEET_ENGINE,
             new FakeSpreadsheetStoreRepository() {
 
                 @Override

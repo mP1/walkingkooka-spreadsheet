@@ -27,6 +27,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -850,6 +851,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                          final ProviderContext providerContext) {
         return SpreadsheetContexts.fixedSpreadsheetId(
+            SpreadsheetEngines.fake(),
             storeRepository,
             (c) -> {
                 throw new UnsupportedOperationException();

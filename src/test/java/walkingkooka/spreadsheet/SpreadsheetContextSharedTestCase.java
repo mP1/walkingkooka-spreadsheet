@@ -33,7 +33,9 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -63,6 +65,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetContextShared> implements SpreadsheetContextTesting<C>,
     ToStringTesting<C> {
+
+    final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
 
     final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -204,6 +208,17 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             )
         );
     }
+
+    // spreadsheetEngine................................................................................................
+
+    @Test
+    public final void testSpreadsheetEngine() {
+        this.spreadsheetEngineAndCheck(
+            this.createContext(),
+            SPREADSHEET_ENGINE
+        );
+    }
+
 
     // cloneEnvironmentContext..........................................................................................
 
