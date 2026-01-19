@@ -69,6 +69,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
+    public SpreadsheetEngine spreadsheetEngine() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetEngineContext spreadsheetEngineContext() {
         throw new UnsupportedOperationException();
     }

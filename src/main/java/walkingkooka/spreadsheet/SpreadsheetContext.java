@@ -25,6 +25,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
@@ -67,6 +68,11 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
      * The {@link SpreadsheetStoreRepository} for the selected spreadsheet.
      */
     SpreadsheetStoreRepository storeRepository();
+
+    /**
+     * Getter that returns the system {@link SpreadsheetEngine}.
+     */
+    SpreadsheetEngine spreadsheetEngine();
 
     /**
      * Getter that returns a cached {@link SpreadsheetEngineContext}, belonging to this {@link SpreadsheetId}.

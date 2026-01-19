@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.plugin.HasProviderContextTesting;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
@@ -32,12 +33,23 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     LocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 
+
     // setLocale........................................................................................................
 
     @Test
     @Override
     default void testSetLocaleWithNullFails() {
         LocaleContextTesting2.super.testSetLocaleWithNullFails();
+    }
+
+    // spreadsheetEngine................................................................................................
+
+    default void spreadsheetEngineAndCheck(final C context,
+                                           final SpreadsheetEngine engine) {
+        this.checkEquals(
+            engine,
+            context.spreadsheetEngine()
+        );
     }
 
     // class............................................................................................................

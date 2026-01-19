@@ -616,6 +616,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public SpreadsheetEngine spreadsheetEngine() {
+            throw new UnsupportedOperationException();
+        }
+
         // HasSpreadsheetMetadata.......................................................................................
 
         @Override

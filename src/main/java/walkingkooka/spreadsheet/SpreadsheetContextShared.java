@@ -24,6 +24,7 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
@@ -64,6 +65,12 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         this.localeContext = LocaleContexts.readOnly(localeContext);
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
+    }
+
+    @Override
+    public final SpreadsheetEngine spreadsheetEngine() {
+        return this.spreadsheetEngineContext()
+            .spreadsheetEngine();
     }
 
     // HasSpreadsheetMetadata...........................................................................................

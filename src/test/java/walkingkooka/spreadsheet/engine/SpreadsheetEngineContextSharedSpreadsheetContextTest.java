@@ -96,6 +96,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     private final static SpreadsheetContext SPREADSHEET_CONTEXT = new TestSpreadsheetContext();
 
+    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
+
     // with.............................................................................................................
 
     @Test
@@ -650,6 +652,14 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         );
     }
 
+    @Test
+    public void testSpreadsheetEngine() {
+        this.spreadsheetEngineAndCheck(
+            this.createContext(),
+            SPREADSHEET_ENGINE
+        );
+    }
+
     // createContext....................................................................................................
 
     private SpreadsheetEngineContextSharedSpreadsheetContext createContext(final SpreadsheetMetadata metadata) {
@@ -1008,6 +1018,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         @Override
         public SpreadsheetProvider spreadsheetProvider() {
             return SPREADSHEET_PROVIDER;
+        }
+
+        @Override
+        public SpreadsheetEngine spreadsheetEngine() {
+            return SPREADSHEET_ENGINE;
         }
 
         // Object.......................................................................................................

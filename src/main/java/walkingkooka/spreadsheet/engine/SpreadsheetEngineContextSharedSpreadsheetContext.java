@@ -109,6 +109,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         this.terminalContext = terminalContext;
     }
 
+    @Override
+    public SpreadsheetEngine spreadsheetEngine() {
+        return this.spreadsheetContext.spreadsheetEngine();
+    }
+
     // ConverterLikeDelegator...........................................................................................
 
     @Override
