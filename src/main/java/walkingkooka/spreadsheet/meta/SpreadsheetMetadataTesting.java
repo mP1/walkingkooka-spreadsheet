@@ -74,6 +74,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContexts;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
@@ -397,7 +398,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
-    Storage STORAGE = Storages.empty();
+    Storage<SpreadsheetStorageContext> STORAGE = Storages.empty();
 
     private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
