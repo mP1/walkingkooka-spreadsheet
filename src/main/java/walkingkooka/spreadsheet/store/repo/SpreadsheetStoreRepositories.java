@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -45,7 +44,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
-import walkingkooka.storage.Storage;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
@@ -72,7 +70,6 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetMetadataStore metadatas,
                                                    final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                    final SpreadsheetRowStore rows,
-                                                   final Storage<SpreadsheetStorageContext> storage,
                                                    final SpreadsheetUserStore users) {
         return BasicSpreadsheetStoreRepository.with(
             cells,
@@ -85,7 +82,6 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
             metadatas,
             rangeToCells,
             rows,
-            storage,
             users
         );
     }
@@ -110,8 +106,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetStoreRepository}
      */
-    public static SpreadsheetStoreRepository treeMap(final SpreadsheetMetadataStore metadatas,
-                                                     final Storage<SpreadsheetStorageContext> storage) {
+    public static SpreadsheetStoreRepository treeMap(final SpreadsheetMetadataStore metadatas) {
         return basic(
             SpreadsheetCellStores.treeMap(),
             SpreadsheetCellReferencesStores.treeMap(),
@@ -123,7 +118,6 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
             metadatas,
             SpreadsheetCellRangeStores.treeMap(),
             SpreadsheetRowStores.treeMap(),
-            storage,
             SpreadsheetUserStores.treeMap()
         );
     }

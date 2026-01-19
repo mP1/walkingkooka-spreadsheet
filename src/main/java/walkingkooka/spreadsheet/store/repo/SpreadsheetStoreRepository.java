@@ -21,7 +21,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -31,7 +30,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
-import walkingkooka.storage.Storage;
 import walkingkooka.store.Store;
 
 /**
@@ -88,11 +86,6 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetRowStore} holding rows.
      */
     SpreadsheetRowStore rows();
-
-    /**
-     * Returns a {@link Storage}
-     */
-    Storage<SpreadsheetStorageContext> storage();
 
     /**
      * A {@link SpreadsheetUserStore} holding users.

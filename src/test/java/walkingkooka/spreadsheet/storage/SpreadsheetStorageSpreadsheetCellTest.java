@@ -563,8 +563,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
 
         return SpreadsheetContexts.fixedSpreadsheetId(
             SpreadsheetStoreRepositories.treeMap(
-                metadataStore,
-                Storages.tree()
+                metadataStore
             ), // SpreadsheetStoreRepository
             (c) -> SpreadsheetEngineContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
@@ -575,7 +574,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
                 throw new UnsupportedOperationException();
             }, // HttpRouter
             SpreadsheetEnvironmentContexts.basic(
-                Storages.fake(),
+                Storages.tree(),
                 environmentContext
             ),
             localeContext,

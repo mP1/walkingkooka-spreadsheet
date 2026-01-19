@@ -496,10 +496,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetEngines.basic(),
             SpreadsheetContexts.fixedSpreadsheetId(
-                SpreadsheetStoreRepositories.treeMap(
-                    metadataStore,
-                    storage
-                ), // SpreadsheetStoreRepository
+                SpreadsheetStoreRepositories.treeMap(metadataStore),
                 (c) -> SpreadsheetEngineContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
                     c,

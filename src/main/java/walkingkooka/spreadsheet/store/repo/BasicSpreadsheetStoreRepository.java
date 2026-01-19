@@ -21,7 +21,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -30,7 +29,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
-import walkingkooka.storage.Storage;
 import walkingkooka.store.Store;
 
 import java.util.Objects;
@@ -50,7 +48,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetRowStore rows,
-                                                final Storage<SpreadsheetStorageContext> storage,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
@@ -62,7 +59,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(metadatas, "metadatas");
         Objects.requireNonNull(rangeToCells, "rangeToCells");
         Objects.requireNonNull(rows, "rows");
-        Objects.requireNonNull(storage, "storage");
         Objects.requireNonNull(users, "users");
 
         return new BasicSpreadsheetStoreRepository(
@@ -76,7 +72,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             metadatas,
             rangeToCells,
             rows,
-            storage,
             users
         );
     }
@@ -91,7 +86,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetRowStore rows,
-                                            final Storage<SpreadsheetStorageContext> storage,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
@@ -103,7 +97,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         this.metadatas = metadatas;
         this.rangeToCells = rangeToCells;
         this.rows = rows;
-        this.storage = storage;
         this.users = users;
     }
 
@@ -178,13 +171,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetRowStore rows;
 
     @Override
-    public Storage<SpreadsheetStorageContext> storage() {
-        return this.storage;
-    }
-
-    private final Storage<SpreadsheetStorageContext> storage;
-
-    @Override
     public SpreadsheetUserStore users() {
         return this.users;
     }
@@ -206,7 +192,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.metadatas,
             this.rangeToCells,
             this.rows,
-            this.storage,
             this.users
         );
     }
@@ -229,7 +214,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.metadatas.equals(other.metadatas) &&
             this.rangeToCells.equals(other.rangeToCells) &&
             this.rows.equals(other.rows) &&
-            this.storage.equals(other.storage) &&
             this.users.equals(other.users);
     }
 
@@ -245,7 +229,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.metadatas + " " +
             this.rangeToCells + " " +
             this.rows + " " +
-            this.storage + " " +
             this.users;
     }
 }

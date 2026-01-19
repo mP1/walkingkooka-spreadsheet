@@ -53,7 +53,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
@@ -839,10 +838,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         store.save(METADATA);
 
         return spreadsheetContext(
-            SpreadsheetStoreRepositories.treeMap(
-                store,
-                Storages.tree()
-            ),
+            SpreadsheetStoreRepositories.treeMap(store),
             spreadsheetEnvironmentContext,
             expressionFunctionProvider,
             providerContext

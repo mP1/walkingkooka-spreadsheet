@@ -1207,10 +1207,7 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         final Map<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdSpreadsheetStoreRepository = Maps.sorted();
 
         {
-            final SpreadsheetStoreRepository repo1 = SpreadsheetStoreRepositories.treeMap(
-                metadataStore,
-                Storages.fake()
-            );
+            final SpreadsheetStoreRepository repo1 = SpreadsheetStoreRepositories.treeMap(metadataStore);
 
             repo1.cells()
                 .save(CELL1);
@@ -1224,10 +1221,7 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         }
 
         {
-            final SpreadsheetStoreRepository repo2 = SpreadsheetStoreRepositories.treeMap(
-                metadataStore,
-                Storages.fake()
-            );
+            final SpreadsheetStoreRepository repo2 = SpreadsheetStoreRepositories.treeMap(metadataStore);
 
             repo2.cells()
                 .save(CELL2);
