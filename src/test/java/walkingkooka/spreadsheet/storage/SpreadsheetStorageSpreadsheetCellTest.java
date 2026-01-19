@@ -562,6 +562,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
         );
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(
                 metadataStore
             ), // SpreadsheetStoreRepository

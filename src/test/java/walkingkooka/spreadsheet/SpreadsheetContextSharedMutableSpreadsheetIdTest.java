@@ -62,6 +62,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends SpreadsheetContextSharedTestCase<SpreadsheetContextSharedMutableSpreadsheetId> {
 
+    private final static Function<SpreadsheetId, SpreadsheetStoreRepository> SPREADSHEET_ID_TO_STORE_REPOSITORY = (id) -> {
+        throw new UnsupportedOperationException();
+    };
+
     private final static SpreadsheetMetadataContext SPREADSHEET_METADATA_CONTEXT = SpreadsheetMetadataContexts.fake();
 
     private final static SpreadsheetId OTHER_SPREADSHEET_ID = SpreadsheetId.with(999);
@@ -71,10 +75,28 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     private final static Locale OTHER_SPREADSHEET_LOCALE = Locale.FRANCE;
 
     @Test
+    public void testWithNullSpreadsheetEngineFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                null,
+                SPREADSHEET_ID_TO_STORE_REPOSITORY,
+                SPREADSHEET_METADATA_CONTEXT,
+                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullSpreadsheetIdToStoreRepositoryFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                SPREADSHEET_ENGINE,
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
@@ -91,9 +113,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
-                (id) -> {
-                    throw new UnsupportedOperationException();
-                },
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_ID_TO_STORE_REPOSITORY,
                 null,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -454,6 +475,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         );
 
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            SPREADSHEET_ENGINE,
             (SpreadsheetId id) -> {
                 final SpreadsheetStoreRepository repo = spreadsheetIdToSpreadsheetStoreRepository.get(id);
                 if(null == repo) {

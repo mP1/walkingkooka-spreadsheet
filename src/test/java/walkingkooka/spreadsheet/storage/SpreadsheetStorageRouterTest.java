@@ -1246,6 +1246,7 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         );
 
         return SpreadsheetContexts.mutableSpreadsheetId(
+            SpreadsheetEngines.basic(),
             (final SpreadsheetId id) -> {
                 final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
                 if (null == repo) {

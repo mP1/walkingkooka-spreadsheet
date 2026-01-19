@@ -22,6 +22,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -40,13 +41,15 @@ import java.util.function.Function;
  */
 final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedMutableSpreadsheetId with(final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+    static SpreadsheetContextSharedMutableSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
+                                                             final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                              final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final LocaleContext localeContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
+        Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetIdToStoreRepository, "spreadsheetIdToStoreRepository");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
         Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory");
@@ -56,6 +59,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedMutableSpreadsheetId(
+            spreadsheetEngine,
             spreadsheetIdToStoreRepository,
             spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,
@@ -67,7 +71,8 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         );
     }
 
-    private SpreadsheetContextSharedMutableSpreadsheetId(final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+    private SpreadsheetContextSharedMutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+                                                         final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                          final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                          final SpreadsheetEngineContext spreadsheetEngineContext,
@@ -76,6 +81,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                          final SpreadsheetProvider spreadsheetProvider,
                                                          final ProviderContext providerContext) {
         super(
+            spreadsheetEngine,
             spreadsheetEngineContextFactory,
             spreadsheetEngineContext,
             spreadsheetEnvironmentContext,
@@ -125,6 +131,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedMutableSpreadsheetId(
+            this.spreadsheetEngine,
             this.spreadsheetIdToStoreRepository,
             this.spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,

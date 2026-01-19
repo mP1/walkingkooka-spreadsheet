@@ -23,6 +23,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -402,6 +403,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest implements StorageT
             );
 
             spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(
+                SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(
                     SpreadsheetMetadataStores.treeMap()
                 ),

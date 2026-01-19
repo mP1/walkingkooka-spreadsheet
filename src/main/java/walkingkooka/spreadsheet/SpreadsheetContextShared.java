@@ -49,13 +49,16 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    SpreadsheetContextShared(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
+    SpreadsheetContextShared(final SpreadsheetEngine spreadsheetEngine,
+                             final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final LocaleContext localeContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext) {
         super();
+
+        this.spreadsheetEngine = spreadsheetEngine;
 
         this.spreadsheetEngineContext = spreadsheetEngineContext;
         this.spreadsheetEngineContextFactory = spreadsheetEngineContextFactory;
@@ -67,11 +70,14 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         this.providerContext = providerContext;
     }
 
+    // spreadsheetEngine................................................................................................
+
     @Override
     public final SpreadsheetEngine spreadsheetEngine() {
-        return this.spreadsheetEngineContext()
-            .spreadsheetEngine();
+        return this.spreadsheetEngine;
     }
+
+    final SpreadsheetEngine spreadsheetEngine;
 
     // HasSpreadsheetMetadata...........................................................................................
 

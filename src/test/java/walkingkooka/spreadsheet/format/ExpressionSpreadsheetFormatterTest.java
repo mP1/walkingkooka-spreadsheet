@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -241,6 +242,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SpreadsheetLabelNameResolvers.fake(),
                     SpreadsheetContexts.fixedSpreadsheetId(
+                        SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {
                             @Override
                             public SpreadsheetMetadataStore metadatas() {

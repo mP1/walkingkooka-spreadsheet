@@ -23,6 +23,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -37,7 +38,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedFixedSpreadsheetId}
      */
-    public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetStoreRepository storeRepository,
+    public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+                                                        final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -45,6 +47,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final SpreadsheetProvider spreadsheetProvider,
                                                         final ProviderContext providerContext) {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
+            spreadsheetEngine,
             storeRepository,
             spreadsheetEngineContextFactory,
             httpRouterFactory,
@@ -65,7 +68,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
-    public static SpreadsheetContext mutableSpreadsheetId(final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+    public static SpreadsheetContext mutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+                                                          final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                           final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -73,6 +77,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final SpreadsheetProvider spreadsheetProvider,
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            spreadsheetEngine,
             spreadsheetIdToStoreRepository,
             spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,

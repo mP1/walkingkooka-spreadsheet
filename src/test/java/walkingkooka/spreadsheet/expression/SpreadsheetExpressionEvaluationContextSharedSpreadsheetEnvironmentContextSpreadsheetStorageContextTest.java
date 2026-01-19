@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
@@ -62,6 +64,8 @@ import java.util.Optional;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
+
+    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -127,6 +131,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                     public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                         return Optional.of(
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                SPREADSHEET_ENGINE,
                                 repo,
                                 (c) -> {
                                     throw new UnsupportedOperationException();
