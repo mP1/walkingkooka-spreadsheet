@@ -24,6 +24,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -68,6 +69,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default void setSpreadsheetId(final SpreadsheetId id) {
         this.spreadsheetContext()
             .setSpreadsheetId(id);
+    }
+
+    @Override
+    default SpreadsheetEngine spreadsheetEngine() {
+        return this.spreadsheetContext()
+            .spreadsheetEngine();
     }
 
     @Override

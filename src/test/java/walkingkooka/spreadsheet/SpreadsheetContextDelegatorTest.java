@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
@@ -26,7 +27,9 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
@@ -39,6 +42,16 @@ import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetContextDelegatorTest implements SpreadsheetContextTesting<TestSpreadsheetContextDelegator> {
+
+    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
+
+    @Test
+    public void testSpreadsheetEngine() {
+        this.spreadsheetEngineAndCheck(
+            this.createContext(),
+            SPREADSHEET_ENGINE
+        );
+    }
 
     @Override
     public void testEnvironmentValueLineEndingEqualsLineEnding() {
@@ -116,6 +129,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             if (false == SPREADSHEET_ID.equals(id)) {
                 throw new UnsupportedOperationException();
             }
+        }
+
+        @Override
+        public SpreadsheetEngine spreadsheetEngine() {
+            return SPREADSHEET_ENGINE;
         }
 
         @Override

@@ -212,6 +212,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return spreadsheetExpressionEvaluationContext;
     }
 
+    @Override
+    public SpreadsheetEngine spreadsheetEngine() {
+        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(this.spreadsheetId())
+            .spreadsheetEngine();
+    }
+
     private final SpreadsheetContextSupplier spreadsheetContextSupplier;
 
     // formatValue......................................................................................................

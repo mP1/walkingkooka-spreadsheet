@@ -29,8 +29,10 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
+import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
@@ -67,6 +69,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     };
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
+
+    private final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
 
     @Test
     public void testWithNullStoreRepositoryFails() {
@@ -226,6 +230,16 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         );
     }
 
+    // spreadsheetEngine................................................................................................
+
+    @Test
+    public void testSpreadsheetEngine() {
+        this.spreadsheetEngineAndCheck(
+            this.createContext(),
+            SPREADSHEET_ENGINE
+        );
+    }
+
     // spreadsheetProvider..............................................................................................
 
     @Test
@@ -319,7 +333,12 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     @Override
     SpreadsheetContextSharedFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
-            (c) -> SpreadsheetEngineContexts.fake(),
+            (c) -> new FakeSpreadsheetEngineContext() {
+                @Override
+                public SpreadsheetEngine spreadsheetEngine() {
+                    return SPREADSHEET_ENGINE;
+                }
+            },
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
