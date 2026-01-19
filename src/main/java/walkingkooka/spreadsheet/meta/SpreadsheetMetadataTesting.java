@@ -48,6 +48,8 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProvider;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProvider;
@@ -392,6 +394,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
     LineEnding LINE_ENDING = LineEnding.NL;
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
+
+    SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
     Storage STORAGE = Storages.empty();
 
