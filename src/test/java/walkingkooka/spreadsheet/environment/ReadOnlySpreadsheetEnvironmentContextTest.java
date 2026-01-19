@@ -28,6 +28,7 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
@@ -50,7 +51,12 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
     private final static EmailAddress USER = EmailAddress.parse("user123@example.com");
 
-    private final static Storage<SpreadsheetStorageContext> STORAGE = Storages.fake();
+    private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
+        @Override
+        public String toString() {
+            return FakeStorage.class.getSimpleName();
+        }
+    };
 
     @Test
     public void testWithNullContextFails() {
@@ -392,20 +398,22 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             this.createContext(),
             "ReadOnlySpreadsheetEnvironmentContext\n" +
                 "  BasicSpreadsheetEnvironmentContext\n" +
-                "    MapEnvironmentContext\n" +
-                "      lineEnding\n" +
-                "        \"\\n\"\n" +
-                "      locale\n" +
-                "        de (java.util.Locale)\n" +
-                "      now\n" +
-                "        -999999999-01-01T00:00 (java.time.LocalDateTime)\n" +
-                "      serverUrl\n" +
-                "        https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
-                "      spreadsheetId\n" +
-                "        7b\n" +
-                "      user\n" +
-                "        user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
-                "    \n"
+                "    environment\n" +
+                "      MapEnvironmentContext\n" +
+                "        lineEnding\n" +
+                "          \"\\n\"\n" +
+                "        locale\n" +
+                "          de (java.util.Locale)\n" +
+                "        now\n" +
+                "          -999999999-01-01T00:00 (java.time.LocalDateTime)\n" +
+                "        serverUrl\n" +
+                "          https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
+                "        spreadsheetId\n" +
+                "          7b\n" +
+                "        user\n" +
+                "          user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
+                "    storage\n" +
+                "      FakeStorage (walkingkooka.spreadsheet.environment.ReadOnlySpreadsheetEnvironmentContextTest$1)\n"
         );
     }
 
