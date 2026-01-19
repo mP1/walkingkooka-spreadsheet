@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -43,8 +42,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStores;
-import walkingkooka.storage.Storage;
-import walkingkooka.storage.Storages;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -71,8 +68,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private final static SpreadsheetRowStore ROWS = SpreadsheetRowStores.fake();
 
-    private final static Storage<SpreadsheetStorageContext> STORAGES = Storages.fake();
-
     private final static SpreadsheetUserStore USERS = SpreadsheetUserStores.fake();
 
     @Test
@@ -90,7 +85,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -111,7 +105,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -132,7 +125,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -153,7 +145,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -174,7 +165,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -195,7 +185,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -216,7 +205,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -237,7 +225,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 null,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -258,7 +245,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 null,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -278,28 +264,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                null,
-                STORAGES,
-                USERS
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullStorageFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
-                CELLS,
-                CELL_REFERENCES,
-                COLUMNS,
-                FORMS,
-                GROUPS,
-                LABELS,
-                LABEL_REFERENCES,
-                METADATAS,
-                RANGE_TO_CELLS,
-                ROWS,
                 null,
                 USERS
             )
@@ -321,7 +285,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 null
             )
         );
@@ -340,7 +303,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             METADATAS,
             RANGE_TO_CELLS,
             ROWS,
-            STORAGES,
             USERS
         );
     }
@@ -361,7 +323,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -381,7 +342,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -401,7 +361,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -421,7 +380,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -441,7 +399,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -461,7 +418,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -481,7 +437,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -501,7 +456,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 SpreadsheetMetadataStores.fake(),
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -521,7 +475,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 SpreadsheetCellRangeStores.fake(),
                 ROWS,
-                STORAGES,
                 USERS
             )
         );
@@ -541,27 +494,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 SpreadsheetRowStores.fake(),
-                STORAGES,
-                USERS
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentStorages() {
-        this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
-                CELLS,
-                CELL_REFERENCES,
-                COLUMNS,
-                FORMS,
-                GROUPS,
-                LABELS,
-                LABEL_REFERENCES,
-                METADATAS,
-                RANGE_TO_CELLS,
-                ROWS,
-                Storages.fake(),
                 USERS
             )
         );
@@ -581,7 +513,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 METADATAS,
                 RANGE_TO_CELLS,
                 ROWS,
-                STORAGES,
                 SpreadsheetUserStores.fake()
             )
         );
@@ -606,7 +537,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = RANGE_TO_CELLS;
         final SpreadsheetMetadataStore metadatas = METADATAS;
         final SpreadsheetRowStore rows = ROWS;
-        final Storage<SpreadsheetStorageContext> storage = STORAGES;
         final SpreadsheetUserStore users = USERS;
 
         this.toStringAndCheck(
@@ -621,10 +551,9 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 metadatas,
                 rangeToCells,
                 rows,
-                storage,
                 users
             ),
-            cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + storage + " " + users);
+            cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + users);
     }
 
     // class............................................................................................................

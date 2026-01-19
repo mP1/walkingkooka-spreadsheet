@@ -139,7 +139,6 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationList;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
-import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -1297,10 +1296,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     );
                 }
 
-                private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
-                    metadataStore,
-                    Storages.fake()
-                );
+                private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
             },
             spreadsheetEnvironmentContext,
             localeContext,
@@ -20032,10 +20028,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                         @Override
                         public SpreadsheetStoreRepository storeRepository() {
-                            return SpreadsheetStoreRepositories.treeMap(
-                                SpreadsheetMetadataStores.fake(),
-                                Storages.fake()
-                            );
+                            return SpreadsheetStoreRepositories.treeMap(SpreadsheetMetadataStores.fake());
                         }
 
                         @Override
@@ -27203,7 +27196,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetMetadataStores.fake(),
                 SpreadsheetCellRangeStores.treeMap(),
                 SpreadsheetRowStores.treeMap(),
-                Storages.fake(),
                 SpreadsheetUserStores.fake()
             )
         );
@@ -27587,8 +27579,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      */
     private static SpreadsheetStoreRepository spreadsheetStoreRepository() {
         return SpreadsheetStoreRepositories.treeMap(
-            SpreadsheetMetadataStores.fake(),
-            Storages.fake()
+            SpreadsheetMetadataStores.fake()
         );
     }
 

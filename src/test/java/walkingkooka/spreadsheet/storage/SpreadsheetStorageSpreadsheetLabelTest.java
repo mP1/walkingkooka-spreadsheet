@@ -436,10 +436,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
         final Storage<SpreadsheetStorageContext> storage = Storages.tree();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
-            SpreadsheetStoreRepositories.treeMap(
-                metadataStore,
-                storage
-            ), // SpreadsheetStoreRepository
+            SpreadsheetStoreRepositories.treeMap(metadataStore),
             (c) -> SpreadsheetEngineContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
                 c,

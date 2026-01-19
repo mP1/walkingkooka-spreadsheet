@@ -54,10 +54,7 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
-import walkingkooka.storage.Storage;
-import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -563,11 +560,6 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                                     );
                                 }
                             };
-                        }
-
-                        @Override
-                        public Storage<SpreadsheetStorageContext> storage() {
-                            return Storages.tree();
                         }
                     },
                     (c) -> {

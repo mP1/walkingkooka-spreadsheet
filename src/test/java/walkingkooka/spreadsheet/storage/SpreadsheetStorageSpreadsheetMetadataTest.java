@@ -36,7 +36,6 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
-import walkingkooka.storage.Storages;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -404,8 +403,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest implements StorageT
 
             spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(
                 SpreadsheetStoreRepositories.treeMap(
-                    SpreadsheetMetadataStores.treeMap(),
-                    Storages.fake()
+                    SpreadsheetMetadataStores.treeMap()
                 ),
                 (c) -> {
                     throw new UnsupportedOperationException();

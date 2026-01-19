@@ -96,10 +96,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
 
-        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
-            metadataStore,
-            storage
-        );
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
 
         final LocaleContext localeContext = LocaleContexts.jre(locale);
 

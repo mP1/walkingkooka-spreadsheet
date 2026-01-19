@@ -76,7 +76,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.storage.Storages;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
@@ -476,8 +475,7 @@ public class J2clTest {
             }
 
             private final SpreadsheetStoreRepository storeRepository = SpreadsheetStoreRepositories.treeMap(
-                SpreadsheetMetadataStores.fake(),
-                Storages.fake()
+                SpreadsheetMetadataStores.fake()
             );
 
             @Override

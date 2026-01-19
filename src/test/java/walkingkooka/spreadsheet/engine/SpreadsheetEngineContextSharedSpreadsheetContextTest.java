@@ -76,7 +76,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
-import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
@@ -678,8 +677,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             new TestSpreadsheetContext(
                 metadata,
                 SpreadsheetStoreRepositories.treeMap(
-                    SpreadsheetMetadataStores.fake(),
-                    STORAGE
+                    SpreadsheetMetadataStores.fake()
                 ),
                 spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
@@ -734,11 +732,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 @Override
                 public SpreadsheetLabelStore labels() {
                     return labelStore;
-                }
-
-                @Override
-                public Storage<SpreadsheetStorageContext> storage() {
-                    return Storages.fake();
                 }
             },
             environmentContext
