@@ -25,6 +25,7 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -74,7 +75,10 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
         CONTEXT = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.readOnly(context)
+            EnvironmentContexts.readOnly(
+                Predicates.always(), // all properties are read-only
+                context
+            )
         );
     }
 

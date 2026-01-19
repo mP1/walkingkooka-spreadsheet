@@ -31,6 +31,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -76,6 +77,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
+        Predicates.always(), // all values are read-only
         EnvironmentContexts.empty(
             LINE_ENDING,
             LOCALE,

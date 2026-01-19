@@ -40,6 +40,7 @@ import walkingkooka.plugin.PluginNameSet;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
@@ -410,7 +411,10 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
         return SpreadsheetEnvironmentContexts.basic(
             STORAGE,
-            EnvironmentContexts.readOnly(environmentContext)
+            EnvironmentContexts.readOnly(
+                Predicates.always(), // all values are read-only
+                environmentContext
+            )
         );
     }
 
@@ -506,6 +510,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
             throw new UnsupportedOperationException();
         },
         EnvironmentContexts.readOnly(
+            Predicates.always(), // all values are read-only
             terminalContextSpreadsheetEnvironmentContext()
         )
     );
