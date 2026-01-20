@@ -1002,6 +1002,21 @@ final class MissingConverterVerifier {
                 );
             }
 
+            // spreadsheet-values to text...............................................................................
+
+            if (formula || scripting || validation) {
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        spreadsheetCell,
+                        error,
+                        SpreadsheetId.with(1),
+                        style
+                    ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
+                );
+            }
+
             // text-to-error............................................................................................
             if (validation) {
                 verifier.addIfConversionFail(
