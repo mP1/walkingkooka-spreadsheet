@@ -25,6 +25,7 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.HasTextTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -33,6 +34,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     ComparableTesting2<SpreadsheetId>,
     HasNotFoundTextTesting,
+    HasTextTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallingTesting<SpreadsheetId>,
     ParseStringTesting<SpreadsheetId>,
@@ -71,6 +73,16 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testUrlFragment() {
         this.urlFragmentAndCheck(
+            SpreadsheetId.with(0x123456),
+            "123456"
+        );
+    }
+
+    // HasText..........................................................................................................
+
+    @Test
+    public void testText() {
+        this.textAndCheck(
             SpreadsheetId.with(0x123456),
             "123456"
         );
