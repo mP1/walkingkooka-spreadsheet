@@ -550,10 +550,11 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             this.createContext(),
             "SpreadsheetMetadataSpreadsheetEnvironmentContext\n" +
                 "  auditInfo\n" +
-                "    created\n" +
-                "      user@example.com 1999-12-31T12:58\n" +
-                "    modified\n" +
-                "      user@example.com 1999-12-31T12:58\n" +
+                "    AuditInfo\n" +
+                "      created\n" +
+                "        user@example.com 1999-12-31T12:58\n" +
+                "      modified\n" +
+                "        user@example.com 1999-12-31T12:58\n" +
                 "  autoHideScrollbars\n" +
                 "    false\n" +
                 "  cellCharacterWidth\n" +
