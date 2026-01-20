@@ -2875,10 +2875,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             "SpreadsheetMetadataNonEmpty\n" +
                 "  spreadsheetId: 1\n" +
                 "    auditInfo: \n" +
-                "      created\n" +
-                "        user@example.com -999999999-01-01T00:00\n" +
-                "      modified\n" +
-                "        user@example.com -999999999-01-01T00:00\n" +
+                "      AuditInfo\n" +
+                "        created\n" +
+                "          user@example.com -999999999-01-01T00:00\n" +
+                "        modified\n" +
+                "          user@example.com -999999999-01-01T00:00\n" +
                 "    autoHideScrollbars: false\n" +
                 "    cellCharacterWidth: 1\n" +
                 "    color1: black (walkingkooka.color.OpaqueRgbColor)\n" +
@@ -3100,10 +3101,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  spreadsheetId: 1\n" +
                 "  spreadsheetName: SpreadsheetName111\n" +
                 "    auditInfo: \n" +
-                "      created\n" +
-                "        user@example.com -999999999-01-01T00:00\n" +
-                "      modified\n" +
-                "        user@example.com -999999999-01-01T00:00\n" +
+                "      AuditInfo\n" +
+                "        created\n" +
+                "          user@example.com -999999999-01-01T00:00\n" +
+                "        modified\n" +
+                "          user@example.com -999999999-01-01T00:00\n" +
                 "    autoHideScrollbars: false\n" +
                 "    cellCharacterWidth: 1\n" +
                 "    color1: black (walkingkooka.color.OpaqueRgbColor)\n" +
@@ -3323,10 +3325,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             null, // SpreadsheetName
             "SpreadsheetMetadataNonEmpty\n" +
                 "  auditInfo: \n" +
-                "    created\n" +
-                "      user@example.com -999999999-01-01T00:00\n" +
-                "    modified\n" +
-                "      user@example.com -999999999-01-01T00:00\n" +
+                "    AuditInfo\n" +
+                "      created\n" +
+                "        user@example.com -999999999-01-01T00:00\n" +
+                "      modified\n" +
+                "        user@example.com -999999999-01-01T00:00\n" +
                 "  autoHideScrollbars: false\n" +
                 "  cellCharacterWidth: 1\n" +
                 "  color1: black (walkingkooka.color.OpaqueRgbColor)\n" +
