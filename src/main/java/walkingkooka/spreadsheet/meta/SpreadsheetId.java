@@ -24,6 +24,7 @@ import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.json.JsonNode;
@@ -37,6 +38,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     HasId<Long>,
     Value<Long>,
+    HasText,
     HasUrlFragment,
     HasNotFoundText,
     TreePrintable {
@@ -159,5 +161,12 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     @Override
     public void printTree(final IndentingPrinter printer) {
         printer.println(this.toString());
+    }
+
+    // HasText..........................................................................................................
+
+    @Override
+    public String text() {
+        return this.toString();
     }
 }
