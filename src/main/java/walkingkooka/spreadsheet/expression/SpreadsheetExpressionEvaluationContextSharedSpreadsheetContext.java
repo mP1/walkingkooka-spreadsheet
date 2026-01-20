@@ -25,7 +25,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -505,7 +504,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     @Override
     SpreadsheetStorageContext spreadsheetStorageContext() {
         return SpreadsheetStorageContexts.spreadsheetContext(
-            SpreadsheetEngines.basic(),
             this.spreadsheetContext
         );
     }

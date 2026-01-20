@@ -91,18 +91,6 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSpreadsheetStorageContext.with(
-                null,
-                SpreadsheetContexts.fake()
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullSpreadsheetContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetContextSpreadsheetStorageContext.with(
-                SpreadsheetEngines.fake(),
                 null
             )
         );
@@ -493,12 +481,10 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
 
         final Storage<SpreadsheetStorageContext> storage = Storages.tree();
-        final SpreadsheetEngine spreadsheetEngine = SpreadsheetEngines.basic();
 
         return SpreadsheetContextSpreadsheetStorageContext.with(
-            spreadsheetEngine,
             SpreadsheetContexts.fixedSpreadsheetId(
-                spreadsheetEngine,
+                SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(metadataStore),
                 (c) -> SpreadsheetEngineContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,

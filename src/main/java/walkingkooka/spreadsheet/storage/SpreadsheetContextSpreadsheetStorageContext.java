@@ -47,50 +47,50 @@ import java.util.Set;
 final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetStorageContext,
     SpreadsheetEnvironmentContextDelegator {
 
-    static SpreadsheetContextSpreadsheetStorageContext with(final SpreadsheetEngine spreadsheetEngine,
-                                                            final SpreadsheetContext spreadsheetContext) {
+    static SpreadsheetContextSpreadsheetStorageContext with(final SpreadsheetContext spreadsheetContext) {
         return new SpreadsheetContextSpreadsheetStorageContext(
-            Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine"),
             Objects.requireNonNull(spreadsheetContext, "spreadsheetContext")
         );
     }
 
-    private SpreadsheetContextSpreadsheetStorageContext(final SpreadsheetEngine spreadsheetEngine,
-                                                        final SpreadsheetContext spreadsheetContext) {
+    private SpreadsheetContextSpreadsheetStorageContext(final SpreadsheetContext spreadsheetContext) {
         super();
-        this.spreadsheetEngine = spreadsheetEngine;
         this.spreadsheetContext = spreadsheetContext;
     }
 
     @Override
     public Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
-        return this.spreadsheetEngine.loadCells(
-            cellsOrLabel,
-            SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-            Sets.of(SpreadsheetDeltaProperties.CELLS),
-            this.spreadsheetEngineContext()
-        ).cells();
+        return this.spreadsheetEngine()
+            .loadCells(
+                cellsOrLabel,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                Sets.of(SpreadsheetDeltaProperties.CELLS),
+                this.spreadsheetEngineContext()
+            ).cells();
     }
 
     @Override
     public Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells) {
-        return this.spreadsheetEngine.saveCells(
-            cells,
-            this.spreadsheetEngineContext()
-        ).cells();
+        return this.spreadsheetEngine()
+            .saveCells(
+                cells,
+                this.spreadsheetEngineContext()
+            ).cells();
     }
 
     @Override
     public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
-        this.spreadsheetEngine.deleteCells(
-            cellsOrLabel,
-            this.spreadsheetEngineContext()
-        );
+        this.spreadsheetEngine()
+            .deleteCells(
+                cellsOrLabel,
+                this.spreadsheetEngineContext()
+            );
     }
 
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
-        final Iterator<SpreadsheetLabelMapping> labels = this.spreadsheetEngine.loadLabel(
+        final Iterator<SpreadsheetLabelMapping> labels = this.spreadsheetEngine()
+            .loadLabel(
                 labelName,
                 this.spreadsheetEngineContext()
             ).labels()
@@ -105,27 +105,30 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
 
     @Override
     public SpreadsheetLabelMapping saveLabel(final SpreadsheetLabelMapping label) {
-        return this.spreadsheetEngine.saveLabel(
-            label,
-            this.spreadsheetEngineContext()
-        ).labels()
+        return this.spreadsheetEngine()
+            .saveLabel(
+                label,
+                this.spreadsheetEngineContext()
+            ).labels()
             .iterator()
             .next();
     }
 
     @Override
     public void deleteLabel(final SpreadsheetLabelName labelName) {
-        this.spreadsheetEngine.deleteLabel(
-            labelName,
-            this.spreadsheetEngineContext()
-        );
+        this.spreadsheetEngine()
+            .deleteLabel(
+                labelName,
+                this.spreadsheetEngineContext()
+            );
     }
 
     @Override
     public Set<SpreadsheetLabelName> findLabelsByName(final String labelName,
                                                       final int offset,
                                                       final int count) {
-        return this.spreadsheetEngine.findLabelsByName(
+        return this.spreadsheetEngine()
+            .findLabelsByName(
                 labelName,
                 offset,
                 count,
@@ -136,7 +139,9 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
             .collect(ImmutableSortedSet.collector(Comparator.naturalOrder()));
     }
 
-    private final SpreadsheetEngine spreadsheetEngine;
+    private SpreadsheetEngine spreadsheetEngine() {
+        return this.spreadsheetContext.spreadsheetEngine();
+    }
 
     @Override
     public boolean canConvert(final Object value,
@@ -199,7 +204,6 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
     @Override
     public SpreadsheetStorageContext cloneEnvironment() {
         return new SpreadsheetContextSpreadsheetStorageContext(
-            this.spreadsheetEngine,
             this.spreadsheetContext.cloneEnvironment()
         );
     }
@@ -211,10 +215,7 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
 
         return before == after ?
             this :
-            new SpreadsheetContextSpreadsheetStorageContext(
-                this.spreadsheetEngine,
-                after
-            );
+            new SpreadsheetContextSpreadsheetStorageContext(after);
     }
 
     @Override

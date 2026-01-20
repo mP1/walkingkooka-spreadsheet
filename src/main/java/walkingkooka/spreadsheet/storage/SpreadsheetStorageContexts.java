@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 
 public final class SpreadsheetStorageContexts implements PublicStaticHelper {
 
@@ -33,12 +32,8 @@ public final class SpreadsheetStorageContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSpreadsheetStorageContext}
      */
-    public static SpreadsheetStorageContext spreadsheetContext(final SpreadsheetEngine spreadsheetEngine,
-                                                               final SpreadsheetContext spreadsheetContext) {
-        return SpreadsheetContextSpreadsheetStorageContext.with(
-            spreadsheetEngine,
-            spreadsheetContext
-        );
+    public static SpreadsheetStorageContext spreadsheetContext(final SpreadsheetContext spreadsheetContext) {
+        return SpreadsheetContextSpreadsheetStorageContext.with(spreadsheetContext);
     }
 
     /**
