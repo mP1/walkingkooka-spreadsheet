@@ -866,6 +866,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToJsonText() {
+        this.converterAndCheck(
+            "to-json-text",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.toJsonText()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToNumber() {
         this.converterAndCheck(
             "to-number",
