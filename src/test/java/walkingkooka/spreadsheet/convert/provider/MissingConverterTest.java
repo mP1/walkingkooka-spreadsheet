@@ -32,6 +32,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -182,9 +183,45 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
     public void testTreePrintable() {
         this.treePrintAndCheck(
             this.createComparable(),
-            "boolean-to-number\n" +
-                "  \"Hello\"\n" +
-                "    java.lang.String\n"
+            "MissingConverter\n" +
+                "  boolean-to-number\n" +
+                "    \"Hello\"\n" +
+                "      java.lang.String\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintableManyValues() {
+        this.treePrintAndCheck(
+            MissingConverter.with(
+                NAME,
+                Sets.of(
+                    MissingConverterValue.with(
+                        true,
+                        Boolean.class.getName()
+                    ),
+                    MissingConverterValue.with(
+                        1,
+                        Integer.class.getName()
+                    ),
+                    MissingConverterValue.with(
+                        LocalDate.of(
+                            1999,
+                            12,
+                            31
+                        ),
+                        LocalDate.class.getName()
+                    )
+                )
+            ),
+            "MissingConverter\n" +
+                "  boolean-to-number\n" +
+                "    true\n" +
+                "      java.lang.Boolean\n" +
+                "    1\n" +
+                "      java.lang.Integer\n" +
+                "    1999-12-31 (java.time.LocalDate)\n" +
+                "      java.time.LocalDate\n"
         );
     }
 

@@ -136,17 +136,34 @@ public final class MissingConverter implements Comparable<MissingConverter>,
 
     // TreePrintable....................................................................................................
 
+    /**
+     * <pre>
+     * MissingConverter
+     *   boolean-to-number
+     *     true
+     *       java.lang.Boolean
+     *     1
+     *       java.lang.Integer
+     *     1999-12-31 (java.time.LocalDate)
+     *       java.time.LocalDate
+     * </pre>
+     */
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.println(this.name.value());
+        printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            for (final Object value : this.values) {
-                TreePrintable.printTreeOrToString(
-                    value,
-                    printer
-                );
+            printer.println(this.name.value());
+            printer.indent();
+            {
+                for (final Object value : this.values) {
+                    TreePrintable.printTreeOrToString(
+                        value,
+                        printer
+                    );
+                }
             }
+            printer.outdent();
         }
         printer.outdent();
     }

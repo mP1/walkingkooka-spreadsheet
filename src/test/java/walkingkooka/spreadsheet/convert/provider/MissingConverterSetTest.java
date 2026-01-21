@@ -128,15 +128,18 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
         this.treePrintAndCheck(
             this.createSet(),
             "MissingConverterSet\n" +
-                "  converter1\n" +
-                "    \"Hello1\"\n" +
-                "      java.lang.String\n" +
-                "  converter2\n" +
-                "    \"Hello2\"\n" +
-                "      java.lang.String\n" +
-                "  converter3\n" +
-                "    \"Hello2\"\n" +
-                "      java.lang.String\n"
+                "  MissingConverter\n" +
+                "    converter1\n" +
+                "      \"Hello1\"\n" +
+                "        java.lang.String\n" +
+                "  MissingConverter\n" +
+                "    converter2\n" +
+                "      \"Hello2\"\n" +
+                "        java.lang.String\n" +
+                "  MissingConverter\n" +
+                "    converter3\n" +
+                "      \"Hello2\"\n" +
+                "        java.lang.String\n"
         );
     }
 
