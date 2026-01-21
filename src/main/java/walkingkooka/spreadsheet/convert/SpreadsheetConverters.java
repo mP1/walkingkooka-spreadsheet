@@ -353,7 +353,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToJson(),
         jsonTo(),
         textToObject(),
-        toJson()
+        toJsonNode()
     );
 
     /**
@@ -996,7 +996,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     /**
      * {@see JsonNodeConverters#toJsonNode}
      */
-    public static Converter<SpreadsheetConverterContext> toJson() {
+    public static Converter<SpreadsheetConverterContext> toJsonNode() {
         return JsonNodeConverters.toJsonNode();
     }
 

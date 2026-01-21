@@ -857,11 +857,11 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithToJson() {
+    public void testConverterSelectorWithToJsonNode() {
         this.converterAndCheck(
-            "to-json",
+            "to-json-node",
             PROVIDER_CONTEXT,
-            SpreadsheetConverters.toJson()
+            SpreadsheetConverters.toJsonNode()
         );
     }
 
