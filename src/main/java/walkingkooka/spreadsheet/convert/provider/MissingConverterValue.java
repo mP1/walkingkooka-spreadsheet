@@ -90,15 +90,27 @@ public final class MissingConverterValue implements Value<Object>, TreePrintable
 
     // TreePrintable....................................................................................................
 
+    /**
+     * <pre>
+     * MissingConverterValue
+     *   "Hello"
+     *     java.lang.String
+     * </pre>
+     */
     @Override
     public void printTree(final IndentingPrinter printer) {
-        TreePrintable.printTreeOrToString(
-            this.value,
-            printer
-        );
+        printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            printer.println(this.type);
+            TreePrintable.printTreeOrToString(
+                this.value,
+                printer
+            );
+            printer.indent();
+            {
+                printer.println(this.type);
+            }
+            printer.outdent();
         }
         printer.outdent();
     }
