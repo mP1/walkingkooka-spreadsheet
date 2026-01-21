@@ -146,8 +146,9 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
     public void testTreePrintable() {
         this.treePrintAndCheck(
             this.createObject(),
-            "\"Hello\"\n" +
-                "  java.lang.String\n"
+            "MissingConverterValue\n" +
+                "  \"Hello\"\n" +
+                "    java.lang.String\n"
         );
     }
 
@@ -158,8 +159,9 @@ public final class MissingConverterValueTest implements ClassTesting2<MissingCon
                 null,
                 String.class.getName()
             ),
-            "null\n" +
-                "  java.lang.String\n"
+            "MissingConverterValue\n" +
+                "  null\n" +
+                "    java.lang.String\n"
         );
     }
 

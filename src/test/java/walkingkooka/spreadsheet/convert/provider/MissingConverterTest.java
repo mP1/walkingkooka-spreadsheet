@@ -185,8 +185,9 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
             this.createComparable(),
             "MissingConverter\n" +
                 "  boolean-to-number\n" +
-                "    \"Hello\"\n" +
-                "      java.lang.String\n"
+                "    MissingConverterValue\n" +
+                "      \"Hello\"\n" +
+                "        java.lang.String\n"
         );
     }
 
@@ -216,12 +217,15 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
             ),
             "MissingConverter\n" +
                 "  boolean-to-number\n" +
-                "    true\n" +
-                "      java.lang.Boolean\n" +
-                "    1\n" +
-                "      java.lang.Integer\n" +
-                "    1999-12-31 (java.time.LocalDate)\n" +
-                "      java.time.LocalDate\n"
+                "    MissingConverterValue\n" +
+                "      true\n" +
+                "        java.lang.Boolean\n" +
+                "    MissingConverterValue\n" +
+                "      1\n" +
+                "        java.lang.Integer\n" +
+                "    MissingConverterValue\n" +
+                "      1999-12-31 (java.time.LocalDate)\n" +
+                "        java.time.LocalDate\n"
         );
     }
 
