@@ -398,7 +398,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToHostAddress();
                 break;
-            case TEXT_TO_JSON_STRING:
+            case TEXT_TO_JSON_NODE_STRING:
                 noParameterCheck(copy);
 
                 converter = SpreadsheetConverters.textToJson();
@@ -543,10 +543,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.toBoolean();
                 break;
-            case TO_JSON_STRING:
+            case TO_JSON_NODE_STRING:
                 noParameterCheck(copy);
 
-                converter = SpreadsheetConverters.toJson();
+                converter = SpreadsheetConverters.toJsonNode();
                 break;
             case TO_JSON_TEXT_STRING:
                 noParameterCheck(copy);
@@ -872,9 +872,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_HOST_ADDRESS = ConverterName.with(TEXT_TO_HOST_ADDRESS_STRING);
 
-    private final static String TEXT_TO_JSON_STRING = "text-to-json";
+    private final static String TEXT_TO_JSON_NODE_STRING = "text-to-json";
 
-    final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_STRING);
+    final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_NODE_STRING);
 
     private final static String TEXT_TO_LINE_ENDING_STRING = "text-to-line-ending";
 
@@ -988,9 +988,9 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TO_BOOLEAN = ConverterName.with(TO_BOOLEAN_STRING);
 
-    private final static String TO_JSON_STRING = "to-json";
+    private final static String TO_JSON_NODE_STRING = "to-json-node";
 
-    final static ConverterName TO_JSON = ConverterName.with(TO_JSON_STRING);
+    final static ConverterName TO_JSON_NODE = ConverterName.with(TO_JSON_NODE_STRING);
 
     private final static String TO_JSON_TEXT_STRING = "to-json-text";
 
@@ -1131,7 +1131,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),
             converterInfo(TO_BOOLEAN),
-            converterInfo(TO_JSON),
+            converterInfo(TO_JSON_NODE),
             converterInfo(TO_JSON_TEXT),
             converterInfo(TO_NUMBER),
             converterInfo(TO_STYLEABLE),
