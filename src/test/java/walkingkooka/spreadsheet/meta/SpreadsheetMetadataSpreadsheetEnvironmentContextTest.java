@@ -676,6 +676,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-value-type\n" +
                 "    to-boolean\n" +
                 "    to-json\n" +
+                "    to-json-text\n" +
                 "    to-number\n" +
                 "    to-styleable\n" +
                 "    to-validation-checkbox\n" +

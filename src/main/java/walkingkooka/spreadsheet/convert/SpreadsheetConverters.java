@@ -1001,6 +1001,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see JsonNodeConverters#toJsonNodeText}
+     */
+    public static Converter<SpreadsheetConverterContext> toJsonText() {
+        return JsonNodeConverters.toJsonText();
+    }
+
+    /**
      * A {@link Converter} that handles converting from or to a {@link Number} values
      */
     public static Converter<SpreadsheetConverterContext> toNumber() {
