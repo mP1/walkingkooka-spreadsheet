@@ -70,6 +70,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageValueInfoList;
 import walkingkooka.template.TemplateValueName;
@@ -1005,11 +1006,27 @@ final class MissingConverterVerifier {
             // spreadsheet-values to text...............................................................................
 
             if (formula || scripting || validation) {
+                final StoragePath storagePath = StoragePath.parse("/path1/file2.txt");
+                final AuditInfo auditInfo = AuditInfo.create(
+                    emailAddress,
+                    DATE_TIME
+                );
+
                 verifier.addIfConversionFail(
                     Lists.of(
+                        auditInfo,
                         spreadsheetCell,
                         error,
                         SpreadsheetId.with(1),
+                        storagePath,
+                        StorageValue.with(
+                            storagePath,
+                            Optional.of("StorageValue123")
+                        ),
+                        StorageValueInfo.with(
+                            storagePath,
+                            auditInfo
+                        ),
                         style
                     ),
                     String.class,
