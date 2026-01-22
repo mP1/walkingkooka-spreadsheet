@@ -616,7 +616,7 @@ final class MissingConverterVerifier {
         // json.........................................................................................................
         {
             // to-json..................................................................................................
-            if (formula || scripting) {
+            if (formula || scripting | validation) {
                 verifier.addIfConversionFail(
                     "Hello",
                     Lists.of(
