@@ -898,7 +898,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    user@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  validationConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\"\n" +
+                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\"\n" +
                 "  validationFunctions\n" +
                 "  validationValidators\n" +
                 "    absolute-url\n" +

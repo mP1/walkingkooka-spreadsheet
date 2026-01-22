@@ -1335,7 +1335,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"timeFormatter\": \"time h:mm:ss AM/PM\",\n" +
                 "  \"timeParser\": \"time h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                 "  \"twoDigitYear\": 20,\n" +
-                "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
+                "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
                 "  \"validators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
@@ -1560,7 +1560,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"timeFormatter\": \"time h:mm:ss AM/PM\",\n" +
                 "  \"timeParser\": \"time h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                 "  \"twoDigitYear\": 20,\n" +
-                "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)\",\n" +
+                "  \"validationConverter\": \"collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
                 "  \"validators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +

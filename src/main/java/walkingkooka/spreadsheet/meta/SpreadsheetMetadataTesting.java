@@ -364,7 +364,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
                 .aliasSet()
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-            ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template)")
+            ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)")
         ).set(
             SpreadsheetMetadataPropertyName.VALIDATION_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
