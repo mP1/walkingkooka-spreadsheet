@@ -18,8 +18,10 @@
 package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2Test.TestSpreadsheetEnvironmentContext;
@@ -30,6 +32,7 @@ import walkingkooka.text.LineEnding;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class SpreadsheetEnvironmentContextTesting2Test implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContext> {
 
@@ -43,6 +46,46 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
             new TestSpreadsheetEnvironmentContext(),
             SERVER_URL
         );
+    }
+
+    @Test
+    public void testServerUrlAndEnvironmentValueNameMissingServerUrl() {
+        new SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContext2>() {
+
+            @Override
+            public TestSpreadsheetEnvironmentContext2 createContext() {
+                return new TestSpreadsheetEnvironmentContext2();
+            }
+
+            @Override
+            public Class<TestSpreadsheetEnvironmentContext2> type() {
+                return null;
+            }
+        }.testServerUrlAndEnvironmentValueName();
+    }
+
+    final static class TestSpreadsheetEnvironmentContext2 extends FakeSpreadsheetEnvironmentContext {
+
+        @Override
+        public AbsoluteUrl serverUrl() {
+            return this.environmentValueOrFail(SERVER_URL);
+        }
+
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            return Cast.to(
+                Optional.ofNullable(
+                    SERVER_URL.equals(name) ?
+                        SpreadsheetEnvironmentContextTesting2Test.SERVER_URL :
+                        null
+                )
+            );
+        }
+
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
     }
 
     @Test
