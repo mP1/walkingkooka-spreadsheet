@@ -52,13 +52,20 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     // spreadsheetId....................................................................................................
 
     @Test
-    default void testEnvironmentValueNameWithSpreadsheetId() {
+    default void testSpreadsheetIdAndEnvironmentValueName() {
         final C context = this.createContext();
+
+        SpreadsheetId spreadsheetId;
+        try {
+            spreadsheetId = context.spreadsheetId();
+        } catch (final RuntimeException ignore) {
+            spreadsheetId = null;
+        }
 
         this.environmentValueAndCheck(
             context,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            context.spreadsheetId()
+            Optional.ofNullable(spreadsheetId)
         );
     }
 

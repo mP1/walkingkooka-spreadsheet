@@ -96,7 +96,46 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
         );
     }
 
+    @Test
+    public void testSpreadsheetIdAndEnvironmentValueNameMissingSpreadsheetId() {
+        new SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContext3>() {
 
+            @Override
+            public TestSpreadsheetEnvironmentContext3 createContext() {
+                return new TestSpreadsheetEnvironmentContext3();
+            }
+
+            @Override
+            public Class<TestSpreadsheetEnvironmentContext3> type() {
+                return null;
+            }
+        }.testSpreadsheetIdAndEnvironmentValueName();
+    }
+
+    final static class TestSpreadsheetEnvironmentContext3 extends FakeSpreadsheetEnvironmentContext {
+
+        @Override
+        public SpreadsheetId spreadsheetId() {
+            return this.environmentValueOrFail(SPREADSHEET_ID);
+        }
+
+        @Override
+        public <T> Optional<T> environmentValue(final EnvironmentValueName<T> name) {
+            return Cast.to(
+                Optional.ofNullable(
+                    SPREADSHEET_ID.equals(name) ?
+                        SpreadsheetEnvironmentContextTesting2Test.SPREADSHEET_ID :
+                        null
+                )
+            );
+        }
+
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
+    }
+    
     final static class TestSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContextDelegator {
 
         @Override
