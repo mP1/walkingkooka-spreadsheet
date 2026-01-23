@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
@@ -185,7 +186,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)) {
             Objects.requireNonNull(value, "value");
 
-            throw new IllegalArgumentException("Unable to set " + name + " with value " + value);
+            throw new ReadOnlyEnvironmentValueException(name);
         }
 
         this.spreadsheetEnvironmentContext.setEnvironmentValue(
