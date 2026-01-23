@@ -28,6 +28,7 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -103,6 +104,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    Indentation.SPACES2,
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.objectToString(),

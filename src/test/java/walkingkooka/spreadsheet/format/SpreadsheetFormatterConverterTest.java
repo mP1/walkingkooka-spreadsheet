@@ -142,6 +142,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),

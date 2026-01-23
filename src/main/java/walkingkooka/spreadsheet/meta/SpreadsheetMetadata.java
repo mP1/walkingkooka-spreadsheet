@@ -94,6 +94,7 @@ import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parser;
@@ -1117,6 +1118,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
+                        Indentation.SPACES2,
                         lineEnding,
                         valueSeparator, // valueSeparator
                         Converters.fake(),

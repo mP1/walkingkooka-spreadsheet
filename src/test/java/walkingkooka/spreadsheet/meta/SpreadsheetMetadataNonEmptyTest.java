@@ -83,6 +83,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -1416,6 +1417,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Indentation.SPACES2,
                             LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),

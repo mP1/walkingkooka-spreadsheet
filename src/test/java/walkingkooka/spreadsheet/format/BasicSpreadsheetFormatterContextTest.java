@@ -242,6 +242,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                    INDENTATION,
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.fake(),

@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -93,6 +94,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Indentation.SPACES2,
                             LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),

@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -140,6 +141,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                            Indentation.SPACES2,
                             lineEnding,
                             ',', // valueSeparator
                             Converters.fake(),

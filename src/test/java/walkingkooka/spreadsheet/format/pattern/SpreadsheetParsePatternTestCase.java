@@ -871,6 +871,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
