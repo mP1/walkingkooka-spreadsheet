@@ -314,11 +314,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
     // spreadsheetId....................................................................................................
 
-    @Override
-    public void testEnvironmentValueNameWithSpreadsheetId() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testEnvironmentValueNameWithSpreadsheetIdMissing() {
         this.environmentValueAndCheck(SpreadsheetEngineContext.SPREADSHEET_ID);
