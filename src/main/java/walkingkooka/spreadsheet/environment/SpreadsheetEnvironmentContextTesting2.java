@@ -19,7 +19,10 @@ package walkingkooka.spreadsheet.environment;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
+import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -29,13 +32,20 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     // serverUrl........................................................................................................
 
     @Test
-    default void testEnvironmentValueNameWithServerUrl() {
+    default void testServerUrlAndEnvironmentValueName() {
         final C context = this.createContext();
+
+        AbsoluteUrl serverUrl;
+        try {
+            serverUrl = context.serverUrl();
+        } catch (final RuntimeException ignore) {
+            serverUrl = null;
+        }
 
         this.environmentValueAndCheck(
             context,
             SpreadsheetEnvironmentContext.SERVER_URL,
-            context.serverUrl()
+            Optional.ofNullable(serverUrl)
         );
     }
     
