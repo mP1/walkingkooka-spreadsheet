@@ -398,9 +398,9 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.basic();
 
-    Storage<SpreadsheetStorageContext> STORAGE = Storages.empty();
+    EnvironmentContext ENVIRONMENT_CONTEXT = environmentContext();
 
-    private static SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
+    private static EnvironmentContext environmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
                 LINE_ENDING,
@@ -414,20 +414,22 @@ public interface SpreadsheetMetadataTesting extends Testing {
             SERVER_URL
         );
 
-        return SpreadsheetEnvironmentContexts.basic(
-            STORAGE,
-            EnvironmentContexts.readOnly(
-                Predicates.always(), // all values are read-only
-                environmentContext
-            )
+        return EnvironmentContexts.readOnly(
+            Predicates.always(), // all values are read-only
+            environmentContext
         );
     }
+
+    Storage<SpreadsheetStorageContext> STORAGE = Storages.empty();
 
     /**
      * A {@link SpreadsheetEnvironmentContext} that contains {@link SpreadsheetEnvironmentContext#SERVER_URL} but not
      * {@link SpreadsheetEnvironmentContext#SPREADSHEET_ID}.
      */
-    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = spreadsheetEnvironmentContext();
+    SpreadsheetEnvironmentContext SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.basic(
+        STORAGE,
+        ENVIRONMENT_CONTEXT
+    );
 
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
 
