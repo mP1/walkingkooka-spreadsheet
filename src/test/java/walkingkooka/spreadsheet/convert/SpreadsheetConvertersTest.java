@@ -3554,6 +3554,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
@@ -3783,6 +3784,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),

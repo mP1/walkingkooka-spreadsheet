@@ -198,6 +198,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
                         LINE_ENDING,
                         ',', // valueSeparator
                         Converters.fake(),
