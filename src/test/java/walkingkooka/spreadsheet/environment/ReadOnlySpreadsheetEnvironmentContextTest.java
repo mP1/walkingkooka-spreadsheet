@@ -23,6 +23,7 @@ import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -195,7 +196,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testSetLineEndingFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
                 .setLineEnding(LINE_ENDING)
         );
@@ -232,7 +233,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testSetLocaleFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
                 .setLocale(LOCALE)
         );
@@ -258,7 +259,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testSetSpreadsheetIdFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
                 .setSpreadsheetId(SPREADSHEET_ID)
         );
@@ -279,7 +280,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testSetUserFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
                 .setUser(
                     Optional.of(USER)
