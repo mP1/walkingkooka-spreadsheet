@@ -984,11 +984,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // setSpreadsheetId.................................................................................................
 
     @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testSetSpreadsheetMetadataWithDifferentIdFails() {
         throw new UnsupportedOperationException();
     }
