@@ -183,7 +183,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                               final T value) {
-        if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)) {
+        if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)){
             Objects.requireNonNull(value, "value");
 
             throw new ReadOnlyEnvironmentValueException(name);

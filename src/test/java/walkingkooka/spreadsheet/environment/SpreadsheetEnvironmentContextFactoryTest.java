@@ -482,13 +482,6 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         );
     }
 
-    // setSpreadsheetId.................................................................................................
-
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
     // EnvironmentValueName.............................................................................................
 
     @Test

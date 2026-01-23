@@ -624,11 +624,6 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
     // ToString........................................................................................................
 
     @Test

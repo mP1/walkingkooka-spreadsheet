@@ -587,11 +587,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
         );
     }
 
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testUser() {
         final EmailAddress user = EmailAddress.parse("user123@example.com");

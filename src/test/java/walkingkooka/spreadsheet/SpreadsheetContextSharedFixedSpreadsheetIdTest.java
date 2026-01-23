@@ -231,11 +231,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         );
     }
 
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testSetSpreadsheetIdFails() {
         final SpreadsheetContextSharedFixedSpreadsheetId context = this.createContext();

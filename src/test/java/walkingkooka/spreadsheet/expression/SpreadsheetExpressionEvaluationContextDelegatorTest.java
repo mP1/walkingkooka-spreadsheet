@@ -111,11 +111,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testSpreadsheetFormatterContextWithNullFails() {
         throw new UnsupportedOperationException();
     }

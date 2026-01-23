@@ -343,11 +343,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         );
     }
 
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
     // storeRepository..................................................................................................
 
     @Test

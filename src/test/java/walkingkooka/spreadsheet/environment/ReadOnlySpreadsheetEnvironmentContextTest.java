@@ -251,11 +251,6 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
 
     // setSpreadsheetId.................................................................................................
 
-    @Override
-    public void testSetSpreadsheetIdWithSame() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testSetSpreadsheetIdFails() {
         assertThrows(
