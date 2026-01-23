@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueWatcher;
+import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -96,14 +97,14 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(value, "value");
 
-        throw new UnsupportedOperationException();
+        throw new ReadOnlyEnvironmentValueException(name);
     }
 
     @Override
     public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         Objects.requireNonNull(name, "name");
 
-        throw new UnsupportedOperationException();
+        throw new ReadOnlyEnvironmentValueException(name);
     }
 
     @Override
@@ -113,9 +114,10 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
 
     @Override
     public void setLineEnding(final LineEnding lineEnding) {
-        Objects.requireNonNull(lineEnding, "lineEnding");
-
-        throw new UnsupportedOperationException();
+        this.setEnvironmentValue(
+            EnvironmentValueName.LINE_ENDING,
+            lineEnding
+        );
     }
 
     @Override
@@ -125,9 +127,10 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
 
     @Override
     public void setLocale(final Locale locale) {
-        Objects.requireNonNull(locale, "locale");
-
-        throw new UnsupportedOperationException();
+        this.setEnvironmentValue(
+            LOCALE,
+            locale
+        );
     }
 
     @Override
@@ -147,8 +150,10 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
 
     @Override
     public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        Objects.requireNonNull(spreadsheetId, "spreadsheetId");
-        throw new UnsupportedOperationException();
+        this.setEnvironmentValue(
+            SPREADSHEET_ID,
+            spreadsheetId
+        );
     }
 
     @Override
@@ -159,7 +164,7 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     @Override
     public void setUser(final Optional<EmailAddress> user) {
         Objects.requireNonNull(user, "user");
-        throw new UnsupportedOperationException();
+        throw new ReadOnlyEnvironmentValueException(USER);
     }
 
     @Override
