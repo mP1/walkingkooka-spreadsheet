@@ -1385,11 +1385,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final LocaleContext localeContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
+        Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
+        Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
-        Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
-        Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
         Objects.requireNonNull(converterProvider, "converterProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
