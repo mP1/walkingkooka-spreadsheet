@@ -71,7 +71,6 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionPurityContext;
@@ -839,7 +838,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             comparators,
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
-                Indentation.SPACES2,
+                context.indentation(),
                 context, // ConverterProvider
                 context.lineEnding(),
                 context, // SpreadsheetLabelNameResolver
@@ -1886,7 +1885,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     SpreadsheetValidatorContext.VALUE,
                                     Optional.ofNullable(value)
                                 ),
-                                Indentation.SPACES2,
+                                context.indentation(),
                                 context, // SpreadsheetLabelNameResolver
                                 context.lineEnding(),
                                 context, // ConverterProvider
