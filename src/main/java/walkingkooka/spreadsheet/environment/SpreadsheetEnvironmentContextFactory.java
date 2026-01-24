@@ -46,7 +46,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContext;
@@ -305,6 +304,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             missing.reportIfMissing();
 
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
+
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
@@ -316,8 +317,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
-                            Indentation.SPACES2,
-                            this.spreadsheetEnvironmentContext.lineEnding(),
+                            spreadsheetEnvironmentContext.indentation(),
+                            spreadsheetEnvironmentContext.lineEnding(),
                             valueSeparator, // valueSeparator
                             Converters.fake(),
                             dateTimeContext,
