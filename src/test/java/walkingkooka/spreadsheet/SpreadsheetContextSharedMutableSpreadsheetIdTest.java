@@ -361,6 +361,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     public SpreadsheetContextSharedMutableSpreadsheetId createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,

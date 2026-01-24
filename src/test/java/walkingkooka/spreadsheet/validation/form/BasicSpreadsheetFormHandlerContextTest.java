@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -590,6 +591,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
                 private final EnvironmentContext environmentContext = EnvironmentContexts.map(
                     EnvironmentContexts.empty(
+                        Indentation.SPACES4,
                         LineEnding.NL,
                         Locale.ENGLISH,
                         () -> LocalDateTime.MIN,

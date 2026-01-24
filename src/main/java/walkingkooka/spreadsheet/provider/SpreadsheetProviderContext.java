@@ -190,6 +190,11 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     @Override
+    public Indentation indentation() {
+        return this.environmentContext.indentation();
+    }
+
+    @Override
     public LineEnding lineEnding() {
         return this.environmentContext.lineEnding();
     }

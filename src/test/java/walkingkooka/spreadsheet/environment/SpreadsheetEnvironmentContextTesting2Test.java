@@ -27,6 +27,7 @@ import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2Test.TestSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -168,6 +169,7 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
         {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    Indentation.SPACES4,
                     LineEnding.NL,
                     Locale.ENGLISH,
                     () -> LocalDateTime.MIN,

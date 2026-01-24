@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -99,6 +100,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
         final BasicSpreadsheetValidatorContext context = this.createContext();
 
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            Indentation.SPACES4,
             LineEnding.CRNL,
             Locale.FRANCE,
             LocalDateTime::now,
@@ -132,7 +134,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                         throw new UnsupportedOperationException();
                     },
                     SPREADSHEET_FORMATTER_CONTEXT,
-                    PROVIDER_CONTEXT
+                    ENVIRONMENT_CONTEXT.cloneEnvironment()
                 )
             )
         );

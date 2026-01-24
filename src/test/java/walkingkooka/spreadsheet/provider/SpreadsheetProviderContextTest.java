@@ -79,6 +79,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
         Predicates.always(), // all values are read-only
         EnvironmentContexts.empty(
+            INDENTATION,
             LINE_ENDING,
             LOCALE,
             HAS_NOW,

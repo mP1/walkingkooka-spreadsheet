@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
@@ -75,6 +76,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final Function<SpreadsheetContext, SpreadsheetEngineContext> SPREADSHEET_ENGINE_CONTEXT_FACTORY = (SpreadsheetContext c) -> {
         throw new UnsupportedOperationException();
     };
+    
+    final static Indentation INDENTATION = Indentation.SPACES4;
 
     final static LineEnding LINE_ENDING = LineEnding.NL;
 
@@ -90,6 +93,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
@@ -251,6 +255,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testSetEnvironmentContextWithSame() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 Locale.ENGLISH,
                 HAS_NOW,
@@ -277,6 +282,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testSetEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 Locale.ENGLISH,
                 HAS_NOW,
@@ -354,6 +360,16 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
     }
 
+    // indentation........................................................................................................
+
+    @Test
+    public final void testIndentation() {
+        this.indentationAndCheck(
+            this.createContext(),
+            INDENTATION
+        );
+    }
+    
     // serverUrl........................................................................................................
 
     @Test
@@ -413,7 +429,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1}"
+            "{indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1}"
         );
     }
 

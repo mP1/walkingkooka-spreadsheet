@@ -121,6 +121,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 Locale.FRENCH,
                 () -> LocalDateTime.MIN,
@@ -146,6 +147,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             storage,
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 Locale.FRENCH,
                 hasNow,
@@ -159,6 +161,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
             storage,
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.CRNL,
                 Locale.GERMAN,
                 hasNow,
@@ -181,6 +184,32 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
     }
 
+    // indentation......................................................................................................
+
+    @Test
+    public void testIndentation() {
+        this.indentationAndCheck(
+            this.createContext(),
+            INDENTATION
+        );
+    }
+
+    // setIndentation...................................................................................................
+
+    @Test
+    public void testSetIndentationFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setIndentation(INDENTATION)
+        );
+    }
+
+    @Override
+    public void testSetIndentationWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+    
     // lineEnding.......................................................................................................
 
     @Test
@@ -324,6 +353,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
                 () -> NOW,
@@ -350,6 +380,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testEnvironmentalValueNames() {
         this.environmentValueNamesAndCheck(
+            SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
@@ -382,7 +413,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, user=user123@example.com}"
+            "{indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, user=user123@example.com}"
         );
     }
 
@@ -396,6 +427,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "  BasicSpreadsheetEnvironmentContext\n" +
                 "    environment\n" +
                 "      MapEnvironmentContext\n" +
+                "        indentation\n" +
+                "          \"  \" (walkingkooka.text.Indentation)\n" +
                 "        lineEnding\n" +
                 "          \"\\n\"\n" +
                 "        locale\n" +

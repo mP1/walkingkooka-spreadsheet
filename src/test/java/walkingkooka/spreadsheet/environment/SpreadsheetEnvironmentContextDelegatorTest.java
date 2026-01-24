@@ -23,6 +23,7 @@ import walkingkooka.net.Url;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegatorTest.TestSpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,11 @@ import java.util.Locale;
 import java.util.Objects;
 
 public final class SpreadsheetEnvironmentContextDelegatorTest implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContextDelegator> {
+
+    @Override
+    public void testSetIndentationWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public void testSetLineEndingWithDifferentAndWatcher() {
@@ -95,6 +101,7 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    Indentation.SPACES4,
                     LineEnding.NL,
                     Locale.ENGLISH,
                     () -> LocalDateTime.MIN,

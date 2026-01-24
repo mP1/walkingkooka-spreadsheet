@@ -403,6 +403,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     private static EnvironmentContext environmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,

@@ -26,6 +26,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
@@ -107,6 +108,19 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         throw new ReadOnlyEnvironmentValueException(name);
     }
 
+    @Override
+    public Indentation indentation() {
+        return this.context.indentation();
+    }
+
+    @Override
+    public void setIndentation(final Indentation indentation) {
+        this.setEnvironmentValue(
+            EnvironmentValueName.INDENTATION,
+            indentation
+        );
+    }
+    
     @Override
     public LineEnding lineEnding() {
         return this.context.lineEnding();

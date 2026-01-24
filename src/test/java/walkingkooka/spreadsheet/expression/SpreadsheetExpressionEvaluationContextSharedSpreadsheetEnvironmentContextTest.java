@@ -269,6 +269,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            INDENTATION,
             lineEnding,
             LOCALE,
             HAS_NOW,
@@ -289,6 +290,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
@@ -308,6 +310,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    INDENTATION,
                     LINE_ENDING,
                     LOCALE,
                     HAS_NOW,
@@ -338,6 +341,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
                 HAS_NOW,
@@ -357,6 +361,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    INDENTATION,
                     LINE_ENDING,
                     Locale.FRANCE,
                     HAS_NOW,
@@ -463,6 +468,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,

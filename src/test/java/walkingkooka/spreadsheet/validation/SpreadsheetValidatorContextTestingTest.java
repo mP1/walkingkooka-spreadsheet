@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
@@ -48,6 +49,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
     @Override
     public void testSetEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetIndentationWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -103,6 +109,18 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
         }
 
+        @Override
+        public Indentation indentation() {
+            return this.environmentContext()
+                .indentation();
+        }
+
+        @Override
+        public void setIndentation(final Indentation indentation) {
+            Objects.requireNonNull(indentation, "indentation");
+            throw new UnsupportedOperationException();
+        }
+        
         @Override
         public LineEnding lineEnding() {
             return this.environmentContext()

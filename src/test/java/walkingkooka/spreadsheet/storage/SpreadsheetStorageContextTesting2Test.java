@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.Te
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -96,6 +97,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             this.environmentContext.setEnvironmentValue(name, value);
         }
 
+        @Override
+        public Indentation indentation() {
+            return this.environmentContext.indentation();
+        }
+
+        @Override
+        public void setIndentation(final Indentation indentation) {
+            this.environmentContext.setIndentation(indentation);
+        }
+        
         @Override
         public LineEnding lineEnding() {
             return this.environmentContext.lineEnding();
@@ -159,6 +170,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    Indentation.SPACES4,
                     LineEnding.NL,
                     Locale.ENGLISH,
                     () -> LocalDateTime.MIN,
