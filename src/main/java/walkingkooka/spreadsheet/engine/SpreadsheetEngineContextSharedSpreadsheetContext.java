@@ -49,7 +49,6 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.text.TextNode;
@@ -127,7 +126,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
-                    Indentation.SPACES2,
+                    this.indentation(),
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
                     spreadsheetContext, // SpreadsheetProvider
@@ -306,7 +305,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
-                Indentation.SPACES2,
+                this.indentation(),
                 this, // SpreadsheetLabelNameResolver,
                 this.lineEnding(),
                 context, // LocaleContext
