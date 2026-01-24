@@ -84,11 +84,10 @@ import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
-import walkingkooka.test.Testing;
-import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.Printers;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -120,7 +119,7 @@ import java.util.function.Function;
  * Provides factory methods for creating a {@link SpreadsheetMetadata} for testing.
  */
 @GwtIncompatible
-public interface SpreadsheetMetadataTesting extends Testing {
+public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     int DECIMAL_NUMBER_DIGIT_COUNT = 8;
 
@@ -393,9 +392,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
-    Indentation INDENTATION = Indentation.SPACES2;
-
-    LineEnding LINE_ENDING = LineEnding.NL;
+    LineEnding LINE_ENDING = EOL;
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
