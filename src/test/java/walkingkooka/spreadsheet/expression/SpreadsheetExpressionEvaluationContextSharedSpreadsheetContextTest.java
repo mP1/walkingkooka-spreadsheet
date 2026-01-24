@@ -487,9 +487,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
             lineEnding
         );
 
-        context.setLineEnding(lineEnding);
-
-        this.lineEndingAndCheck(
+        this.setLineEndingAndCheck(
             context,
             lineEnding
         );

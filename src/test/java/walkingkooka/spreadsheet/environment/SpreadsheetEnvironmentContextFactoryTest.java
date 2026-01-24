@@ -392,7 +392,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         context.setLineEnding(lineEnding);
 
-        this.lineEndingAndCheck(
+        this.setLineEndingAndCheck(
             context,
             lineEnding
         );

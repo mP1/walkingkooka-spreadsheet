@@ -550,9 +550,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
             lineEnding
         );
 
-        context.setLineEnding(lineEnding);
-
-        this.lineEndingAndCheck(
+        this.setLineEndingAndCheck(
             context,
             lineEnding
         );
