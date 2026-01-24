@@ -759,6 +759,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     CONVERTER_PROVIDER,
@@ -777,6 +778,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     null,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     CONVERTER_PROVIDER,
@@ -794,6 +796,26 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    null,
+                    INDENTATION,
+                    LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithNullIndentationContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     null,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
@@ -813,6 +835,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     null,
                     LINE_ENDING,
                     CONVERTER_PROVIDER,
@@ -831,6 +854,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     LABEL_NAME_RESOLVER,
                     null,
                     CONVERTER_PROVIDER,
@@ -849,6 +873,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     null,
@@ -867,6 +892,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     CONVERTER_PROVIDER,
@@ -885,6 +911,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
                     CONVERTER_PROVIDER,

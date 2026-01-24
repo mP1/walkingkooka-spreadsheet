@@ -85,6 +85,7 @@ import walkingkooka.terminal.TerminalId;
 import walkingkooka.terminal.server.FakeTerminalServerContext;
 import walkingkooka.terminal.server.TerminalServerContext;
 import walkingkooka.test.Testing;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.Printers;
@@ -392,6 +393,8 @@ public interface SpreadsheetMetadataTesting extends Testing {
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
 
+    Indentation INDENTATION = Indentation.SPACES2;
+
     LineEnding LINE_ENDING = LineEnding.NL;
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
@@ -548,6 +551,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
         SpreadsheetMetadata.NO_CELL,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+        INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         CONVERTER_PROVIDER,
@@ -582,6 +586,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         LOCALE_CONTEXT,
@@ -592,6 +597,7 @@ public interface SpreadsheetMetadataTesting extends Testing {
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+        INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         LOCALE_CONTEXT,

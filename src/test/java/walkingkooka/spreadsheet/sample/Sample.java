@@ -75,6 +75,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -362,6 +363,7 @@ public final class Sample {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                            Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
                             converterProvider,
@@ -416,6 +418,7 @@ public final class Sample {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
+                        Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
                         this.localeContext,

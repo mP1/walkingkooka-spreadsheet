@@ -69,6 +69,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -123,6 +124,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     LocaleContextTesting,
     PatchableTesting<SpreadsheetMetadata>,
     ToStringTesting<SpreadsheetMetadata> {
+
+    private final static Indentation INDENTATION = Indentation.SPACES2;
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
@@ -798,6 +801,25 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
+                SpreadsheetLabelNameResolvers.fake(),
+                LINE_ENDING,
+                ConverterProviders.fake(),
+                LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullIndentationFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                null,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -815,6 +837,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 null,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -832,6 +855,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 null,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -849,6 +873,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 null,
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -866,6 +891,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 null,
                 ConverterProviders.fake(),
@@ -883,6 +909,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 null,
@@ -900,6 +927,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -917,6 +945,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -934,6 +963,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
@@ -1009,6 +1039,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             Optional.of(cell),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+            INDENTATION,
             SpreadsheetLabelNameResolvers.fake(),
             LINE_ENDING,
             ConverterProviders.converters(),

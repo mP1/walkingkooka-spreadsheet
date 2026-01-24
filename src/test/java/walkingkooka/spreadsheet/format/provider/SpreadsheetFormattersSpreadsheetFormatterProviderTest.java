@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -147,6 +148,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     ),
                     TERMINAL_CONTEXT
                 ),
+                Indentation.SPACES2,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 LOCALE_CONTEXT,
@@ -4750,6 +4752,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 )
             ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+            Indentation.SPACES2,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
             LOCALE_CONTEXT,

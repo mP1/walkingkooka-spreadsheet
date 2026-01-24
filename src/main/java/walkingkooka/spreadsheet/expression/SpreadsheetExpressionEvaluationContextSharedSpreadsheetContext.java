@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
+import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -261,6 +262,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.cell,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
+                    Indentation.SPACES2,
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
                     spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
@@ -337,6 +339,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
+                this.indentation(),
                 this.spreadsheetLabelNameResolver,
                 this.lineEnding(),
                 spreadsheetContext, // LocaleContext
