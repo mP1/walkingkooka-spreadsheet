@@ -420,6 +420,7 @@ public class J2clTest {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
+                        Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
                         this.localeContext,

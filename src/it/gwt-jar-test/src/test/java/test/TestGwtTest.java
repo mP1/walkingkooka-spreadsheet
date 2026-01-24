@@ -406,6 +406,7 @@ public class TestGwtTest extends GWTTestCase {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
+                        Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
                         this.localeContext,
