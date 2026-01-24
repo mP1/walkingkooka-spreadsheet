@@ -53,6 +53,7 @@ import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -419,6 +420,16 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
         this.context.removeEnvironmentValue(name);
     }
 
+    @Override
+    public Indentation indentation() {
+        return this.context.indentation();
+    }
+
+    @Override
+    public void setIndentation(final Indentation indentation) {
+        this.context.setIndentation(indentation);
+    }
+    
     @Override
     public LineEnding lineEnding() {
         return this.context.lineEnding();

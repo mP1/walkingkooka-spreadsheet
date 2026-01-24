@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -180,6 +181,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             () -> BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
                 EnvironmentContexts.empty(
+                    INDENTATION,
                     LINE_ENDING,
                     LOCALE,
                     HAS_NOW,
@@ -193,6 +195,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testServerUrl() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
@@ -222,6 +225,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             () -> BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
                 EnvironmentContexts.empty(
+                    INDENTATION,
                     LINE_ENDING,
                     LOCALE,
                     HAS_NOW,
@@ -249,6 +253,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                     STORAGE,
                     EnvironmentContexts.map(
                         EnvironmentContexts.empty(
+                            INDENTATION,
                             LINE_ENDING,
                             LOCALE,
                             HAS_NOW,
@@ -267,6 +272,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 STORAGE,
                 EnvironmentContexts.map(
                     EnvironmentContexts.empty(
+                        INDENTATION,
                         LINE_ENDING,
                         LOCALE,
                         HAS_NOW,
@@ -311,6 +317,29 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         );
     }
 
+    // indentation......................................................................................................
+
+    @Test
+    public void testSetIndentation() {
+        final BasicSpreadsheetEnvironmentContext context = this.createContext();
+
+        final Indentation indentation = Indentation.SPACES4;
+        this.checkNotEquals(
+            INDENTATION,
+            indentation
+        );
+
+        this.indentationAndCheck(
+            context,
+            INDENTATION
+        );
+
+        this.setIndentationAndCheck(
+            context,
+            indentation
+        );
+    }
+    
     // locale...........................................................................................................
 
     @Test
@@ -431,7 +460,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
+            "{indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
         );
     }
 
@@ -444,6 +473,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             "BasicSpreadsheetEnvironmentContext\n" +
                 "  environment\n" +
                 "    MapEnvironmentContext\n" +
+                "      indentation\n" +
+                "        \"  \" (walkingkooka.text.Indentation)\n" +
                 "      lineEnding\n" +
                 "        \"\\n\"\n" +
                 "      locale\n" +

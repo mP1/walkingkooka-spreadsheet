@@ -71,6 +71,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextStyle;
@@ -541,6 +542,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                Indentation.SPACES4,
                 LineEnding.NL,
                 LOCALE,
                 () -> LocalDateTime.MIN,

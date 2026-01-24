@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -277,6 +278,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         );
 
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            INDENTATION,
             lineEnding,
             LOCALE,
             HAS_NOW,
@@ -290,6 +292,59 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         );
     }
 
+    // HasIndentation..................................................................................................
+
+    @Test
+    public void testIndentation() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
+            EnvironmentContexts.empty(
+                INDENTATION,
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.indentationAndCheck(
+            this.createContext(context),
+            context.indentation()
+        );
+    }
+
+    @Test
+    public void testSetIndentation() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    INDENTATION,
+                    LINE_ENDING,
+                    LOCALE,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            )
+        );
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+
+        final Indentation indentation = Indentation.EMPTY;
+
+        this.checkNotEquals(
+            INDENTATION,
+            indentation
+        );
+
+        context.setIndentation(indentation);
+
+        this.indentationAndCheck(
+            context,
+            indentation
+        );
+    }
+    
     // HasLineEndings...................................................................................................
 
     @Test
@@ -297,6 +352,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
@@ -316,6 +372,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    INDENTATION,
                     LINE_ENDING,
                     LOCALE,
                     HAS_NOW,
@@ -346,6 +403,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
                 HAS_NOW,
@@ -365,6 +423,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    INDENTATION,
                     LINE_ENDING,
                     Locale.FRANCE,
                     HAS_NOW,
@@ -469,6 +528,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,

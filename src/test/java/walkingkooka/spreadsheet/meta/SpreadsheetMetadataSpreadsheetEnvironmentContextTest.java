@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
@@ -45,6 +46,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
+
+    private final static Indentation INDENTATION = Indentation.SPACES4;
 
     private final static LocalDateTime NOW = LocalDateTime.of(
         1999,
@@ -63,6 +66,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     static {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 Locale.FRENCH,
                 () -> NOW,
@@ -234,6 +238,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
                     EnvironmentContexts.empty(
+                        INDENTATION,
                         LineEnding.NL,
                         Locale.FRENCH,
                         () -> NOW,
@@ -241,6 +246,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     )
                 )
             ),
+            SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
@@ -259,6 +265,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
                     EnvironmentContexts.empty(
+                        INDENTATION,
                         LineEnding.NL,
                         Locale.FRENCH,
                         () -> NOW,
@@ -266,6 +273,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     )
                 )
             ),
+            SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
@@ -301,6 +309,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ).spreadsheetEnvironmentContext(
                     CONTEXT.cloneEnvironment()
                 ),
+            SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
@@ -344,6 +353,19 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
         );
     }
 
+    @Test
+    public void testIndentation() {
+        final SpreadsheetMetadataSpreadsheetEnvironmentContext context = SpreadsheetMetadataSpreadsheetEnvironmentContext.with(
+            METADATA,
+            CONTEXT.cloneEnvironment()
+        );
+
+        this.indentationAndCheck(
+            context,
+            INDENTATION
+        );
+    }
+    
     @Test
     public void testLocale() {
         final Locale metadataLocale = Locale.ENGLISH;
@@ -538,7 +560,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
+            "{indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
         );
     }
 
@@ -834,6 +856,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    collection\n" +
                 "    empty\n" +
                 "    json\n" +
+                "  indentation\n" +
+                "    \"    \" (walkingkooka.text.Indentation)\n" +
                 "  lineEnding\n" +
                 "    \"\\n\"\n" +
                 "  locale\n" +

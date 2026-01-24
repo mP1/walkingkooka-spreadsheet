@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
@@ -459,12 +460,62 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
     }
 
+    // indentation......................................................................................................
+
+    @Test
+    public final void testIndentation() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                INDENTATION,
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.indentationAndCheck(
+            this.createContext(environmentContext),
+            environmentContext.indentation()
+        );
+    }
+
+    @Test
+    public final void testSetIndentation() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                INDENTATION,
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        final C context = this.createContext(environmentContext);
+
+        final Indentation indentation = Indentation.SPACES4;
+
+        this.checkNotEquals(
+            INDENTATION,
+            indentation
+        );
+
+        context.setIndentation(indentation);
+
+        this.indentationAndCheck(
+            context,
+            indentation
+        );
+    }
+    
     // lineEnding.......................................................................................................
 
     @Test
     public final void testLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
@@ -482,6 +533,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 LOCALE,
                 HAS_NOW,
@@ -518,6 +570,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
                 HAS_NOW,
@@ -535,6 +588,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
                 HAS_NOW,

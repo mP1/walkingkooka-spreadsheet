@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.storage.Storages;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -72,6 +73,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
         {
             final EnvironmentContext context = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    Indentation.SPACES4,
                     LineEnding.NL,
                     SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,
                     () -> LocalDateTime.MIN,

@@ -42,6 +42,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContextDelegator;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -215,6 +216,12 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................
 
+    @Override
+    public final Indentation indentation() {
+        return this.spreadsheetEnvironmentContext()
+            .indentation();
+    }
+    
     @Override
     public final LineEnding lineEnding() {
         return this.spreadsheetEnvironmentContext()

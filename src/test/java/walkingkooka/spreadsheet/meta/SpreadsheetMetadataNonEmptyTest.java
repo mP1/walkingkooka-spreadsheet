@@ -1891,6 +1891,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         Storages.fake(),
                         EnvironmentContexts.map(
                             EnvironmentContexts.empty(
+                                Indentation.SPACES2,
                                 LineEnding.NL,
                                 LOCALE_CONTEXT.locale(),
                                 NOW,

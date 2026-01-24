@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.Storage;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
@@ -150,6 +151,18 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    // HasIndentation...................................................................................................
+
+    @Override
+    public Indentation indentation() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setIndentation(final Indentation indentation) {
+        throw new UnsupportedOperationException();
+    }
+    
     // HasLineEnding....................................................................................................
 
     @Override

@@ -58,6 +58,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -444,6 +445,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 LOCALE_CONTEXT.locale(),
                 HAS_NOW,
@@ -602,6 +604,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
         private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
+        @Override
+        public Indentation indentation() {
+            return this.spreadsheetEnvironmentContext.indentation();
+        }
+
+        @Override
+        public void setIndentation(final Indentation indentation) {
+            this.spreadsheetEnvironmentContext.setIndentation(indentation);
+        }
+        
         @Override
         public LineEnding lineEnding() {
             return this.spreadsheetEnvironmentContext.lineEnding();
@@ -827,6 +839,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     @Override
     public void testFindByLocaleTextWithInvalidCountFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetIndentationWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 

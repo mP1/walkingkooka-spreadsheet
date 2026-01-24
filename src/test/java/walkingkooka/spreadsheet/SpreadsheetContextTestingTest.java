@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetContextTestingTest.TestSpreadsheetCon
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.util.List;
@@ -64,6 +65,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testSetIndentationWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public void testSetLineEndingWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
@@ -102,6 +108,17 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
             }
         }
 
+        @Override
+        public Indentation indentation() {
+            return Indentation.SPACES2;
+        }
+
+        @Override
+        public void setIndentation(final Indentation indentation) {
+            Objects.requireNonNull(indentation, "indentation");
+            throw new UnsupportedOperationException();
+        }
+        
         @Override
         public void setLineEnding(final LineEnding lineEnding) {
             Objects.requireNonNull(lineEnding, "lineEnding");

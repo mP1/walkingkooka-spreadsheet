@@ -95,6 +95,16 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
     }
 
+    // indentation......................................................................................................
+
+    @Test
+    public void testIndentation() {
+        this.indentationAndCheck(
+            this.createContext(),
+            INDENTATION
+        );
+    }
+
     // cells............................................................................................................
 
     @Test
@@ -459,6 +469,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 LOCALE,
                 () -> LocalDateTime.MIN,

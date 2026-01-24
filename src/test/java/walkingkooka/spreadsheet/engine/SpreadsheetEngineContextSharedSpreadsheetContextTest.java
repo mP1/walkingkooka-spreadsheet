@@ -769,6 +769,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     private static EnvironmentContext environmentContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                INDENTATION,
                 LineEnding.NL,
                 Locale.forLanguageTag("en-AU"),
                 LocalDateTime::now,
@@ -1094,6 +1095,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 new TestSpreadsheetContext(
                     EnvironmentContexts.map(
                         EnvironmentContexts.empty(
+                            INDENTATION,
                             LineEnding.CRNL,
                             Locale.FRANCE,
                             LocalDateTime::now,
