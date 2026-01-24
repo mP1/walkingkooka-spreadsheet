@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
@@ -233,6 +234,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
+            Indentation.SPACES2,
             (label) -> {
                 throw new UnsupportedOperationException();
             },

@@ -61,6 +61,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -198,7 +199,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
+                        Indentation.SPACES2,
                         LINE_ENDING,
                         ',', // valueSeparator
                         Converters.fake(),

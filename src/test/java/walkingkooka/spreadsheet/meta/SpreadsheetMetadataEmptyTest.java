@@ -257,6 +257,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                  final SpreadsheetExpressionReference cellOrLabel) -> {
                     throw new UnsupportedOperationException();
                 },
+                INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 CONVERTER_PROVIDER,

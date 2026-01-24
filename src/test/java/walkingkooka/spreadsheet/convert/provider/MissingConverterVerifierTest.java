@@ -281,7 +281,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public Indentation indentation() {
-            return INDENTATION;
+            return Indentation.SPACES2;
         }
 
         @Override
