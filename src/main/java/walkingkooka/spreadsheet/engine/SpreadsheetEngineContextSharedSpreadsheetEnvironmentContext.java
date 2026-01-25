@@ -304,6 +304,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     /**
      * Always returns a {@link SpreadsheetEngineContexts#spreadsheetContext(SpreadsheetMetadataMode, SpreadsheetContext, TerminalContext)},
      * which should allow cells to be parsed, evaluated and formatted.
+     * <br>
+     * This method will throw {@link walkingkooka.environment.MissingEnvironmentValueException} if the {@link SpreadsheetId} is missing.
      */
     @Override
     public SpreadsheetEngineContext setSpreadsheetMetadataMode(final SpreadsheetMetadataMode mode) {
