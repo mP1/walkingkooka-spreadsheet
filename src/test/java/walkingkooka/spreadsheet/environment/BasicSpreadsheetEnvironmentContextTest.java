@@ -472,7 +472,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             this.createContext(),
             "BasicSpreadsheetEnvironmentContext\n" +
                 "  environment\n" +
-                "    MapEnvironmentContext\n" +
+                "    EnvironmentContextSharedMap\n" +
                 "      indentation\n" +
                 "        \"  \" (walkingkooka.text.Indentation)\n" +
                 "      lineEnding\n" +
