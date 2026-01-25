@@ -116,8 +116,8 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
     final static class TestSpreadsheetEnvironmentContext3 extends FakeSpreadsheetEnvironmentContext {
 
         @Override
-        public SpreadsheetId spreadsheetId() {
-            return this.environmentValueOrFail(SPREADSHEET_ID);
+        public Optional<SpreadsheetId> spreadsheetId() {
+            return this.environmentValue(SPREADSHEET_ID);
         }
 
         @Override
@@ -140,8 +140,8 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
     final static class TestSpreadsheetEnvironmentContext implements SpreadsheetEnvironmentContextDelegator {
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-            this.setEnvironmentValue(
+        public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
+            this.setOrRemoveEnvironmentValue(
                 SPREADSHEET_ID,
                 spreadsheetId
             );

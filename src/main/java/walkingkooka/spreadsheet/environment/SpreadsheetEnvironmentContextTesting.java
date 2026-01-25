@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 
+import java.util.Optional;
+
 public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
 
@@ -49,8 +51,23 @@ public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContext
     
     // spreadsheetId....................................................................................................
 
+    default void spreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context) {
+        this.spreadsheetIdAndCheck(
+            context,
+            Optional.empty()
+        );
+    }
+
     default void spreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context,
                                        final SpreadsheetId expected) {
+        this.spreadsheetIdAndCheck(
+            context,
+            Optional.of(expected)
+        );
+    }
+
+    default void spreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context,
+                                       final Optional<SpreadsheetId> expected) {
         this.checkEquals(
             expected,
             context.spreadsheetId()
@@ -60,6 +77,33 @@ public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContext
             context,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             expected
+        );
+    }
+
+    // setSpreadsheetId.................................................................................................
+
+    default void setSpreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context) {
+        this.setSpreadsheetIdAndCheck(
+            context,
+            Optional.empty()
+        );
+    }
+
+    default void setSpreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context,
+                                          final SpreadsheetId expected) {
+        this.setSpreadsheetIdAndCheck(
+            context,
+            Optional.of(expected)
+        );
+    }
+
+    default void setSpreadsheetIdAndCheck(final SpreadsheetEnvironmentContext context,
+                                          final Optional<SpreadsheetId> spreadsheetId) {
+        context.setSpreadsheetId(spreadsheetId);
+
+        this.spreadsheetIdAndCheck(
+            context,
+            spreadsheetId
         );
     }
 

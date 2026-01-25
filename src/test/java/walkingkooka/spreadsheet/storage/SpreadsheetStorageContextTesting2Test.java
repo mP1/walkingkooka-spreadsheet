@@ -138,12 +138,12 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public SpreadsheetId spreadsheetId() {
+        public Optional<SpreadsheetId> spreadsheetId() {
             return this.environmentContext.spreadsheetId();
         }
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
             this.environmentContext.setSpreadsheetId(spreadsheetId);
         }
 

@@ -505,7 +505,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     static {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT
             .cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
         SPREADSHEET_ENVIRONMENT_CONTEXT = SpreadsheetEnvironmentContexts.readOnly(spreadsheetEnvironmentContext);
     }
 
@@ -625,7 +627,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
-            return this.loadMetadataOrFail(this.spreadsheetId());
+            return this.loadMetadataOrFail(
+                this.spreadsheetIdOrFail()
+            );
         }
         
         // SpreadsheetMetadataContext...................................................................................
@@ -697,7 +701,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // SpreadsheetContext...........................................................................................
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId id) {
+        public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
             throw new UnsupportedOperationException();
         }
 
@@ -1271,7 +1275,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetId spreadsheetId = metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
 
         if(environmentIncludesSpreadsheetId) {
-            spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+            spreadsheetEnvironmentContext.setSpreadsheetId(
+                Optional.of(spreadsheetId)
+            );
         } else {
             spreadsheetEnvironmentContext.removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
         }

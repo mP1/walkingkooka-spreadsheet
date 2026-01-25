@@ -322,12 +322,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         return this.spreadsheetContext.spreadsheetId();
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId id) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
         this.spreadsheetContext.setSpreadsheetId(id);
     }
 
@@ -353,7 +353,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
         final SpreadsheetMetadata saved = this.spreadsheetContext.saveMetadata(metadata);
-        if (this.spreadsheetId().equals(saved.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
+        if (this.spreadsheetId().equals(saved.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID))) {
             this.spreadsheetMetadata = saved;
 
             // necessary because new SpreadsheetMetadata may have changed requiring a new ExpressionFunctionProvider, ConverterLike

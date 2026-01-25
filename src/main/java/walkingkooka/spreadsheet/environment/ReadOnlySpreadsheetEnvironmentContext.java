@@ -158,13 +158,13 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         return this.context.spreadsheetId();
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.setEnvironmentValue(
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
+        this.setOrRemoveEnvironmentValue(
             SPREADSHEET_ID,
             spreadsheetId
         );

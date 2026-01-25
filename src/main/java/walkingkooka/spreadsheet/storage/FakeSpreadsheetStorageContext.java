@@ -127,7 +127,7 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
         throw new UnsupportedOperationException();
     }
 }

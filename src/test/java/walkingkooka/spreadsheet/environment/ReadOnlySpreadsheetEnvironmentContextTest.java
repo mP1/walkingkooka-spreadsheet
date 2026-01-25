@@ -285,7 +285,9 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         assertThrows(
             ReadOnlyEnvironmentValueException.class,
             () -> this.createContext()
-                .setSpreadsheetId(SPREADSHEET_ID)
+                .setSpreadsheetId(
+                    Optional.of(SPREADSHEET_ID)
+                )
         );
     }
 
@@ -370,7 +372,9 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             STORAGE,
             context
         );
-        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
 
         return ReadOnlySpreadsheetEnvironmentContext.with(spreadsheetEnvironmentContext);
     }

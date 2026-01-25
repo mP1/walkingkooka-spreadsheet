@@ -237,7 +237,11 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
         assertThrows(
             IllegalArgumentException.class,
-            () -> context.setSpreadsheetId(SpreadsheetId.with(999))
+            () -> context.setSpreadsheetId(
+                Optional.of(
+                    SpreadsheetId.with(999)
+                )
+            )
         );
     }
 

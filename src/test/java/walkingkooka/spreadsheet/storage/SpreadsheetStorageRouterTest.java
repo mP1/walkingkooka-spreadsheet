@@ -583,7 +583,9 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     @Test
     public void testSaveWithSpreadsheetId() {
         final SpreadsheetStorageContext context = this.createContext();
-        context.setSpreadsheetId(SPREADSHEET_ID1);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x333);
 
@@ -696,7 +698,9 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
         this.checkEquals(
             Optional.of(DIFFERENT_MAPPING),
             spreadsheetContext.storeRepository()
@@ -725,7 +729,9 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
 
         this.checkEquals(
             Optional.of(DIFFERENT_FORMATTED_CELL),
@@ -755,7 +761,10 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID2)
+        );
+
         this.checkEquals(
             Optional.of(DIFFERENT_FORMATTED_CELL),
             spreadsheetContext.storeRepository()
@@ -763,7 +772,10 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                 .load(DIFFERENT_CELL_REFERENCE)
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+
         this.checkEquals(
             Optional.empty(),
             spreadsheetContext.storeRepository()
@@ -792,7 +804,9 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
         this.checkEquals(
             Optional.of(DIFFERENT_MAPPING),
             spreadsheetContext.spreadsheetEngineContext()
@@ -801,7 +815,9 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                 .load(DIFFERENT_MAPPING.label())
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID2)
+        );
         this.checkEquals(
             Optional.empty(),
             spreadsheetContext.spreadsheetEngineContext()
@@ -831,7 +847,10 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID2);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID2)
+        );
+
         this.checkEquals(
             Optional.of(DIFFERENT_MAPPING),
             spreadsheetContext.spreadsheetEngineContext()
@@ -840,7 +859,10 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                 .load(DIFFERENT_MAPPING.label())
         );
 
-        spreadsheetContext.setSpreadsheetId(SPREADSHEET_ID1);
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+
         this.checkEquals(
             Optional.empty(),
             spreadsheetContext.spreadsheetEngineContext()
@@ -1055,7 +1077,9 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
-        context.setSpreadsheetId(SPREADSHEET_ID1);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
 
         storage.delete(
             StoragePath.parse("/spreadsheet/111/cell/A1"),

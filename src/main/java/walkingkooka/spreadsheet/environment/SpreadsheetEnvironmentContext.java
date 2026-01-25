@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 
+import java.util.Optional;
+
 /**
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
  */
@@ -42,14 +44,22 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
     );
 
     /**
-     * The {@link SpreadsheetId} that identifies this spreadsheet.
+     * The {@link SpreadsheetId} that identifies a spreadsheet.
      */
-    SpreadsheetId spreadsheetId();
+    Optional<SpreadsheetId> spreadsheetId();
 
     /**
-     * Returns a {@link SpreadsheetEnvironmentContext} with the given {@link SpreadsheetId}
+     * Fails if the {@link SpreadsheetId} is missing.
      */
-    void setSpreadsheetId(final SpreadsheetId spreadsheetId);
+    default SpreadsheetId spreadsheetIdOrFail() {
+        return this.spreadsheetId()
+            .orElseThrow(SPREADSHEET_ID::missingEnvironmentValueException);
+    }
+
+    /**
+     * Sets or replaces the environment value {@link SpreadsheetId}
+     */
+    void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId);
 
     /**
      * Getter that returns the {@link Storage} for the current user.

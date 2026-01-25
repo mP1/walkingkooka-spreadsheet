@@ -124,15 +124,15 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
         @Override
-        public SpreadsheetId spreadsheetId() {
-            return SPREADSHEET_ID;
+        public Optional<SpreadsheetId> spreadsheetId() {
+            return Optional.of(SPREADSHEET_ID);
         }
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId id) {
+        public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
             Objects.requireNonNull(id, "id");
 
-            if (false == SPREADSHEET_ID.equals(id)) {
+            if (false == SPREADSHEET_ID.equals(id.orElse(null))) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -205,7 +205,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
         private final SpreadsheetContext context = new FakeSpreadsheetContext() {
 
             @Override
-            public void setSpreadsheetId(final SpreadsheetId id) {
+            public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
                 throw new UnsupportedOperationException();
             }
 

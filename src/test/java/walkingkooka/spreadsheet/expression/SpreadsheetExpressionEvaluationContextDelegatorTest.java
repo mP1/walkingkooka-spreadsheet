@@ -202,7 +202,9 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-            spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+            spreadsheetEnvironmentContext.setSpreadsheetId(
+                Optional.of(spreadsheetId)
+            );
 
             return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                 SpreadsheetMetadataMode.FORMULA,
