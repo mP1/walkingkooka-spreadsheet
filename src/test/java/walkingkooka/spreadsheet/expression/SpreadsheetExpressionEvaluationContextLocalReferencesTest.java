@@ -464,7 +464,9 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             environmentContext
         );
         spreadsheetEnvironmentContext.setSpreadsheetId(
-            SpreadsheetId.with(1)
+            Optional.of(
+                SpreadsheetId.with(1)
+            )
         );
 
         return this.createContext(spreadsheetEnvironmentContext);
@@ -650,12 +652,12 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public SpreadsheetId spreadsheetId() {
+        public Optional<SpreadsheetId> spreadsheetId() {
             return this.spreadsheetEnvironmentContext.spreadsheetId();
         }
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
             this.spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
         }
 

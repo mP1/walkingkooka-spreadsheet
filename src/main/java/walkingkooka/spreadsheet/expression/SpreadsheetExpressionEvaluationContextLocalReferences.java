@@ -461,12 +461,12 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         return this.context.spreadsheetId();
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
         this.context.setSpreadsheetId(spreadsheetId);
     }
 

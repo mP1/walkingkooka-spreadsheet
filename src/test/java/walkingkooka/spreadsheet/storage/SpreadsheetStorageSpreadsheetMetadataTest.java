@@ -399,7 +399,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest implements StorageT
         {
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
             spreadsheetEnvironmentContext.setSpreadsheetId(
-                SpreadsheetId.with(1)
+                Optional.of(
+                    SpreadsheetId.with(1)
+                )
             );
 
             spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(

@@ -144,7 +144,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     // SpreadsheetContext...............................................................................................
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         throw new UnsupportedOperationException();
     }
 
@@ -232,7 +232,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     // SpreadsheetEngineContext.........................................................................................
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId id) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
         throw new UnsupportedOperationException();
     }
 

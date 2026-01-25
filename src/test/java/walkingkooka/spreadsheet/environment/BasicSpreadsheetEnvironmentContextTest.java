@@ -220,9 +220,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
 
     @Test
     public void testSpreadsheetIdMissing() {
-        assertThrows(
-            MissingEnvironmentValueException.class,
-            () -> BasicSpreadsheetEnvironmentContext.with(
+        this.spreadsheetIdAndCheck(
+            BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
                 EnvironmentContexts.empty(
                     INDENTATION,
@@ -231,7 +230,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                     HAS_NOW,
                     EnvironmentContext.ANONYMOUS
                 )
-            ).spreadsheetId()
+            )
         );
     }
 

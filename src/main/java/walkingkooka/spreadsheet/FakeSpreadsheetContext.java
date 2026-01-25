@@ -58,12 +58,12 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId id) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
         throw new UnsupportedOperationException();
     }
 

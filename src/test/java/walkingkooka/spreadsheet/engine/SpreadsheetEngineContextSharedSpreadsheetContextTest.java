@@ -615,7 +615,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 SpreadsheetName.with(this.getClass().getName())
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-                context.spreadsheetId()
+                context.spreadsheetIdOrFail()
             )
         );
 
@@ -745,7 +745,9 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
 
         return this.createContext(spreadsheetEnvironmentContext);
     }
@@ -848,7 +850,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
         @Override
         public SpreadsheetMetadata spreadsheetMetadata() {
-            return this.loadMetadataOrFail(this.spreadsheetId());
+            return this.loadMetadataOrFail(this.spreadsheetIdOrFail());
         }
 
         @Override
@@ -915,12 +917,14 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
-        public SpreadsheetId spreadsheetId() {
-            return SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID;
+        public Optional<SpreadsheetId> spreadsheetId() {
+            return Optional.of(
+                SpreadsheetEngineContextSharedSpreadsheetContextTest.SPREADSHEET_ID
+            );
         }
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId id) {
+        public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
             Objects.requireNonNull(id, "id");
 
             if (false == this.spreadsheetId().equals(id)) {

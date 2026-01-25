@@ -105,7 +105,9 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
 
     static {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
 
         SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
             METADATA_EN_AU.spreadsheetFormatterContext(

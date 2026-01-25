@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 
 import java.util.Optional;
 
@@ -57,17 +55,10 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     default void testSpreadsheetIdAndEnvironmentValueName() {
         final C context = this.createContext();
 
-        SpreadsheetId spreadsheetId;
-        try {
-            spreadsheetId = context.spreadsheetId();
-        } catch (final RuntimeException ignore) {
-            spreadsheetId = null;
-        }
-
         this.environmentValueAndCheck(
             context,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            Optional.ofNullable(spreadsheetId)
+            context.spreadsheetId()
         );
     }
 
@@ -83,33 +74,17 @@ public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvi
     }
 
     @Test
-    default void testSetSpreadsheetIdWithSameIfPresent() {
+    default void testSetSpreadsheetIdWithSame() {
         final C context = this.createContext();
 
-        final SpreadsheetId spreadsheetId = context.environmentValue(
-            SpreadsheetEngineContext.SPREADSHEET_ID
-        ).orElse(null);
-
-        if (null != spreadsheetId) {
-            try {
-                this.setSpreadsheetIdAndCheck(
-                    context,
-                    context.spreadsheetId()
-                );
-            } catch (final ReadOnlyEnvironmentValueException ignore) {
-                // nop
-            }
+        try {
+            this.setSpreadsheetIdAndCheck(
+                context,
+                context.spreadsheetId()
+            );
+        } catch (final ReadOnlyEnvironmentValueException ignore) {
+            // nop
         }
-    }
-
-    default void setSpreadsheetIdAndCheck(final C context,
-                                          final SpreadsheetId spreadsheetId) {
-        context.setSpreadsheetId(spreadsheetId);
-
-        this.spreadsheetIdAndCheck(
-            context,
-            spreadsheetId
-        );
     }
 
     // type.............................................................................................................

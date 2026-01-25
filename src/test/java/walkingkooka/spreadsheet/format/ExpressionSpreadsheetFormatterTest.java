@@ -236,7 +236,9 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
             @Override
             public SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext(final Optional<Object> value) {
                 final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-                spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+                spreadsheetEnvironmentContext.setSpreadsheetId(
+                    Optional.of(SPREADSHEET_ID)
+                );
 
                 return SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,

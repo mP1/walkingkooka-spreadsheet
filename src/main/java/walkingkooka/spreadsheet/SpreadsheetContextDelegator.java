@@ -60,13 +60,13 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     // EnvironmentContextDelegator......................................................................................
 
     @Override
-    default SpreadsheetId spreadsheetId() {
+    default Optional<SpreadsheetId> spreadsheetId() {
         return this.spreadsheetContext()
             .spreadsheetId();
     }
 
     @Override
-    default void setSpreadsheetId(final SpreadsheetId id) {
+    default void setSpreadsheetId(final Optional<SpreadsheetId> id) {
         this.spreadsheetContext()
             .setSpreadsheetId(id);
     }

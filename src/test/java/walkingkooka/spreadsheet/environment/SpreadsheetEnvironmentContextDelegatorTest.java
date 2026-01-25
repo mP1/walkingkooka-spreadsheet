@@ -29,6 +29,7 @@ import walkingkooka.text.LineEnding;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class SpreadsheetEnvironmentContextDelegatorTest implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContextDelegator> {
 
@@ -76,8 +77,8 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
     final static class TestSpreadsheetEnvironmentContextDelegator implements SpreadsheetEnvironmentContextDelegator {
 
         @Override
-        public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-            this.setEnvironmentValue(
+        public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
+            this.setOrRemoveEnvironmentValue(
                 SPREADSHEET_ID,
                 spreadsheetId
             );

@@ -32,6 +32,7 @@ import walkingkooka.text.LineEnding;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements SpreadsheetEnvironmentContextTesting2<TestSpreadsheetEnvironmentContextFactoryDelegate> {
 
@@ -92,7 +93,9 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
                 context
             );
             spreadsheetEnvironmentContext.setSpreadsheetId(
-                SpreadsheetId.with(1)
+                Optional.of(
+                    SpreadsheetId.with(1)
+                )
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(

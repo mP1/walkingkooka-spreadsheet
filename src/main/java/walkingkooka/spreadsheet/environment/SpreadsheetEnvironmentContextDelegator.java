@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 
+import java.util.Optional;
+
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator {
 
@@ -33,13 +35,13 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
     }
 
     @Override
-    default SpreadsheetId spreadsheetId() {
-        return this.environmentValueOrFail(SPREADSHEET_ID);
+    default Optional<SpreadsheetId> spreadsheetId() {
+        return this.environmentValue(SPREADSHEET_ID);
     }
 
     @Override
-    default void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.setEnvironmentValue(
+    default void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
+        this.setOrRemoveEnvironmentValue(
             SPREADSHEET_ID,
             spreadsheetId
         );

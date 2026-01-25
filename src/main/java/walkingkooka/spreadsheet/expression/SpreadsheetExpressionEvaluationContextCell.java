@@ -166,12 +166,12 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         return this.context.spreadsheetId();
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
         this.context.setSpreadsheetId(spreadsheetId);
     }
 

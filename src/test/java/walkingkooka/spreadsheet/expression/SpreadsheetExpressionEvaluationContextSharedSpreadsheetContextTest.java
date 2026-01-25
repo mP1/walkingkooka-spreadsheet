@@ -104,7 +104,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     static {
         final SpreadsheetEnvironmentContext c = SpreadsheetMetadataTesting.SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        c.setSpreadsheetId(SPREADSHEET_ID);
+        c.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
         SPREADSHEET_ENVIRONMENT_CONTEXT = c;
     }
 

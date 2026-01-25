@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext implements SpreadsheetEnvironmentContext {
 
     public FakeSpreadsheetEnvironmentContext() {
@@ -36,12 +38,12 @@ public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext im
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
+    public Optional<SpreadsheetId> spreadsheetId() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
         throw new UnsupportedOperationException();
     }
 

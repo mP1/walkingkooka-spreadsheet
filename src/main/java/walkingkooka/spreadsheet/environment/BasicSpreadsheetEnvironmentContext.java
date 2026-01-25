@@ -28,6 +28,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetEnvironmentContext} that wraps a {@link EnvironmentContext}, with guards to stop attempts to
@@ -81,15 +82,15 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     }
 
     @Override
-    public SpreadsheetId spreadsheetId() {
-        return this.environmentValueOrFail(SPREADSHEET_ID);
+    public Optional<SpreadsheetId> spreadsheetId() {
+        return this.environmentValue(SPREADSHEET_ID);
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        this.context.setEnvironmentValue(
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
+        this.context.setOrRemoveEnvironmentValue(
             SPREADSHEET_ID,
-            Objects.requireNonNull(spreadsheetId, "spreadsheetId")
+            spreadsheetId
         );
     }
 

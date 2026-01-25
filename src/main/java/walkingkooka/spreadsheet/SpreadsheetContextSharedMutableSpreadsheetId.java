@@ -99,7 +99,9 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
-        return this.spreadsheetIdToStoreRepository.apply(this.spreadsheetId());
+        return this.spreadsheetIdToStoreRepository.apply(
+            this.spreadsheetIdOrFail()
+        );
     }
 
     private final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository;

@@ -24,7 +24,6 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.plugin.ProviderContext;
@@ -288,9 +287,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             SpreadsheetEnvironmentContext.SPREADSHEET_ID
         );
 
-        assertThrows(
-            MissingEnvironmentValueException.class,
-            () -> context.spreadsheetId()
+        this.spreadsheetIdAndCheck(
+            context
         );
     }
 

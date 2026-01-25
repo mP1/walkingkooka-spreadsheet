@@ -538,7 +538,9 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(SPREADSHEET_ID);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
 
         return SpreadsheetExpressionEvaluationContextConverter.with(
             converter,

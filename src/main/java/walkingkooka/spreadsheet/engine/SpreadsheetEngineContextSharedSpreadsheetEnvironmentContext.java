@@ -214,8 +214,9 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     @Override
     public SpreadsheetEngine spreadsheetEngine() {
-        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(this.spreadsheetId())
-            .spreadsheetEngine();
+        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(
+            this.spreadsheetIdOrFail()
+        ).spreadsheetEngine();
     }
 
     private final SpreadsheetContextSupplier spreadsheetContextSupplier;
@@ -258,14 +259,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
-        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(this.spreadsheetId())
-            .storeRepository();
+        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(
+            this.spreadsheetIdOrFail()
+        ).storeRepository();
     }
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
         return this.loadMetadataOrFail(
-            this.spreadsheetId()
+            this.spreadsheetIdOrFail()
         );
     }
 
@@ -308,7 +310,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return SpreadsheetEngineContexts.spreadsheetContext(
             Objects.requireNonNull(mode, "mode"),
             this.spreadsheetContextSupplier.spreadsheetContextOrFail(
-                this.spreadsheetId()
+                this.spreadsheetIdOrFail()
             ),
             this.terminalContext
         );
@@ -332,7 +334,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     @Override
-    public void setSpreadsheetId(final SpreadsheetId spreadsheetId) {
+    public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
         this.spreadsheetEnvironmentContextFactory.setSpreadsheetId(spreadsheetId);
     }
 

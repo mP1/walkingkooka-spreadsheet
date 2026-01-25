@@ -84,7 +84,9 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
     @Override
     public final SpreadsheetMetadata spreadsheetMetadata() {
-        return this.loadMetadataOrFail(this.spreadsheetId());
+        return this.loadMetadataOrFail(
+            this.spreadsheetIdOrFail()
+        );
     }
 
     // SpreadsheetMetadataContextDelegator..............................................................................
@@ -98,7 +100,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         // sync Locale
         final SpreadsheetId id = saved.id()
             .orElse(null);
-        if (this.spreadsheetId().equals(id)) {
+        if (this.spreadsheetIdOrFail().equals(id)) {
             this.setSpreadsheetMetadata(
                 id,
                 saved
@@ -110,7 +112,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
     private void setSpreadsheetMetadata(final SpreadsheetId id,
                                         final SpreadsheetMetadata metadata) {
-        if (this.spreadsheetId().equals(id)) {
+        if (id.equals(this.spreadsheetId().orElse(null))) {
             if (null != metadata) {
                 this.setLocale(metadata.locale());
 
@@ -251,7 +253,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final SpreadsheetProvider spreadsheetProvider() {
         if (null == this.metadataSpreadsheetProvider) {
-            final SpreadsheetId spreadsheetId = this.spreadsheetId();
+            final SpreadsheetId spreadsheetId = this.spreadsheetIdOrFail();
 
             try {
                 this.metadataSpreadsheetProvider = this.loadMetadataOrFail(spreadsheetId)

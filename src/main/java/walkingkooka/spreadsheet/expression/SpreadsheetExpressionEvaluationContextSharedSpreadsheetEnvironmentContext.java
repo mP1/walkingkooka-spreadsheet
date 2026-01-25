@@ -177,7 +177,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     public SpreadsheetMetadata spreadsheetMetadata() {
-        final SpreadsheetId spreadsheetId = this.spreadsheetEnvironmentContextFactory.spreadsheetId();
+        final SpreadsheetId spreadsheetId = this.spreadsheetEnvironmentContextFactory.spreadsheetIdOrFail();
 
         return this.spreadsheetContextSupplier.spreadsheetContext(spreadsheetId)
             .orElseThrow(() -> new IllegalStateException("Missing SpreadsheetContext " + spreadsheetId))

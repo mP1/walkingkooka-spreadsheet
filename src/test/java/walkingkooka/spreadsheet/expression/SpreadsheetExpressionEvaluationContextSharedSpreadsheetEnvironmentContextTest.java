@@ -685,7 +685,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(spreadsheetId)
+        );
 
         this.loadCellAndCheck(
             this.createContext(
@@ -752,7 +754,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(spreadsheetId)
+        );
 
         this.loadCellRangeAndCheck(
             this.createContext(
@@ -817,7 +821,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(spreadsheetId)
+        );
 
         this.loadLabelAndCheck(
             this.createContext(
@@ -878,7 +884,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(spreadsheetId)
+        );
 
         this.checkEquals(
             metadata,
@@ -948,7 +956,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(999);
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setSpreadsheetId(spreadsheetId);
+        spreadsheetEnvironmentContext.setSpreadsheetId(
+            Optional.of(spreadsheetId)
+        );
 
         this.resolveIfLabelAndCheck(
             this.createContext(
