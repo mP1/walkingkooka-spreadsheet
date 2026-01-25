@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.environment;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.EnvironmentValueWatcher;
-import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -98,14 +97,14 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(value, "value");
 
-        throw new ReadOnlyEnvironmentValueException(name);
+        throw name.readOnlyEnvironmentValueException();
     }
 
     @Override
     public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         Objects.requireNonNull(name, "name");
 
-        throw new ReadOnlyEnvironmentValueException(name);
+        throw name.readOnlyEnvironmentValueException();
     }
 
     @Override
@@ -178,7 +177,7 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     @Override
     public void setUser(final Optional<EmailAddress> user) {
         Objects.requireNonNull(user, "user");
-        throw new ReadOnlyEnvironmentValueException(USER);
+        throw USER.readOnlyEnvironmentValueException();
     }
 
     @Override
