@@ -21,12 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
@@ -292,13 +294,41 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     }
 
     @Test
+    public void testLoadWithCellAndMissingEnvironmentValueSpreadsheetIdFails() {
+        final StoragePath path = StoragePath.parse("/cell/A1");
+
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createStorage()
+                .load(
+                    path,
+                    context
+                )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
+        );
+    }
+
+    @Test
     public void testLoadWithCell() {
         final StoragePath path = StoragePath.parse("/cell/A1");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
 
         this.loadAndCheck(
             this.createStorage(),
             path,
-            this.createContext(),
+            context,
             StorageValue.with(
                 path,
                 Optional.of(
@@ -318,10 +348,16 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     public void testLoadWithCell2() {
         final StoragePath path = StoragePath.parse("/cell/a1");
 
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         this.loadAndCheck(
             this.createStorage(),
             path,
-            this.createContext(),
+            context,
             StorageValue.with(
                 path,
                 Optional.of(
@@ -339,10 +375,16 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
 
     @Test
     public void testLoadWithUnknownCell() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         this.loadAndCheck(
             this.createStorage(),
             StoragePath.parse("/cell/Z999"),
-            this.createContext()
+            context
         );
     }
 
@@ -350,10 +392,16 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     public void testLoadWithLabel() {
         final StoragePath path = StoragePath.parse("/label/Label111");
 
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         this.loadAndCheck(
             this.createStorage(),
             path,
-            this.createContext(),
+            context,
             StorageValue.with(
                 path,
                 Optional.of(MAPPING1)
@@ -367,19 +415,51 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     public void testLoadWithLabel2WrongSpreadsheet() {
         final StoragePath path = StoragePath.parse("/label/Label222");
 
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         this.loadAndCheck(
             this.createStorage(),
             path,
-            this.createContext()
+            context
+        );
+    }
+
+    @Test
+    public void testLoadWithUnknownLabelAndMissingSpreadsheetIdFails() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createStorage()
+                .load(
+                    StoragePath.parse("/label/UnknownLabel404"),
+                    context
+                )
+        );
+
+        this.checkEquals(
+            SpreadsheetEngineContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
         );
     }
 
     @Test
     public void testLoadWithUnknownLabel() {
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         this.loadAndCheck(
             this.createStorage(),
             StoragePath.parse("/label/UnknownLabel404"),
-            this.createContext()
+            context
         );
     }
 
@@ -465,9 +545,45 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
 
     // Storage.save.....................................................................................................
 
+    // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/8566
+    // SpreadsheetContextSharedMutableSpreadsheetId is broken when missing SpreadsheetId
+    @Test
+    public void testSaveWithSpreadsheetIdAndMissingSpreadsheetEnvironmentContextSpreadsheetIdFails() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x333);
+
+        final SpreadsheetMetadata metadata = METADATA1.set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+            spreadsheetId
+        ).set(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+            SpreadsheetName.with("Spreadsheet333")
+        );
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createStorage()
+                .save(
+                    StorageValue.with(
+                        StoragePath.parse("/spreadsheet"),
+                        Optional.of(metadata)
+                    ),
+                    context
+                )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
+        );
+    }
+
     @Test
     public void testSaveWithSpreadsheetId() {
         final SpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(SPREADSHEET_ID1);
 
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x333);
 
@@ -501,8 +617,37 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     }
 
     @Test
+    public void testSaveWithCellAndMissingEnvironmentValueSpreadsheetId() {
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final StoragePath path = StoragePath.parse("/cell");
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createStorage()
+                .save(
+                    StorageValue.with(
+                        path,
+                        Optional.of(DIFFERENT_UNFORMATTED_CELL)
+                    ),
+                    context
+                )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
+        );
+    }
+
+    @Test
     public void testSaveWithCell() {
         final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
 
         final StoragePath path = StoragePath.parse("/cell");
 
@@ -530,6 +675,11 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     public void testSaveWithLabel() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
+
+        storageContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
 
         final StoragePath path = StoragePath.parse("/label/DifferentLabel");
 
@@ -832,6 +982,11 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         final StoragePath path = StoragePath.parse("/cell/A1");
 
         storage.delete(
@@ -851,6 +1006,11 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         final StoragePath path = StoragePath.parse("/label/Label111");
 
         storage.delete(
@@ -866,9 +1026,36 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     }
 
     @Test
-    public void testDeleteWithSpreadsheetIdAndCell() {
+    public void testDeleteWithSpreadsheetIdAndCellAndMissingSpreadsheetEnvironmentValueSpreadsheetId() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
+
+        storage.delete(
+            StoragePath.parse("/spreadsheet/111/cell/A1"),
+            context
+        );
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> storage.load(
+                StoragePath.parse("/cell/A1"),
+                context
+            )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
+        );
+    }
+
+    @Test
+    public void testDeleteWithSpreadsheetIdAndCellAndPresentSpreadsheetEnvironmentValueSpreadsheetId() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setSpreadsheetId(SPREADSHEET_ID1);
 
         storage.delete(
             StoragePath.parse("/spreadsheet/111/cell/A1"),
@@ -1006,6 +1193,11 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
         this.listAndCheck(
             storage,
             StoragePath.parse("/cell"),
@@ -1023,6 +1215,11 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     public void testListWithLabel() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
 
         this.listAndCheck(
             storage,
@@ -1232,9 +1429,8 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         }
 
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
-        spreadsheetEnvironmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            SPREADSHEET_ID1
+        spreadsheetEnvironmentContext.removeEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID
         );
         spreadsheetEnvironmentContext.setUser(
             Optional.of(
