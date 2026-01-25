@@ -426,7 +426,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             "ReadOnlySpreadsheetEnvironmentContext\n" +
                 "  BasicSpreadsheetEnvironmentContext\n" +
                 "    environment\n" +
-                "      MapEnvironmentContext\n" +
+                "      EnvironmentContextSharedMap\n" +
                 "        indentation\n" +
                 "          \"  \" (walkingkooka.text.Indentation)\n" +
                 "        lineEnding\n" +
