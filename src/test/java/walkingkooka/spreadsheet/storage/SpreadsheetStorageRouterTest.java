@@ -20,20 +20,21 @@ package walkingkooka.spreadsheet.storage;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.convert.Converters;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.MissingEnvironmentValueException;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
-import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
+import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
@@ -41,6 +42,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
@@ -62,11 +64,12 @@ import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
-import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
+import java.math.MathContext;
 import java.util.Map;
 import java.util.Optional;
 
@@ -308,6 +311,8 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                     context
                 )
         );
+
+        thrown.printStackTrace();
 
         this.checkEquals(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
@@ -1457,40 +1462,138 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
         spreadsheetEnvironmentContext.removeEnvironmentValue(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID
         );
+
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.CONVERTER,
+            SpreadsheetMetadataTesting.METADATA_EN_AU.getOrFail(SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER)
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET.toEnvironmentValueName(),
+            Converters.EXCEL_1900_DATE_SYSTEM_OFFSET
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_DIGIT_COUNT.toEnvironmentValueName(),
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.DEFAULT_YEAR.toEnvironmentValueName(),
+            1900
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND.toEnvironmentValueName(),
+            ExpressionNumberKind.DEFAULT
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.PRECISION.toEnvironmentValueName(),
+            MathContext.DECIMAL32.getPrecision()
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE.toEnvironmentValueName(),
+            MathContext.DECIMAL32.getRoundingMode()
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR.toEnvironmentValueName(),
+            20
+        );
+        spreadsheetEnvironmentContext.setEnvironmentValue(
+            SpreadsheetMetadataPropertyName.VALUE_SEPARATOR.toEnvironmentValueName(),
+            ','
+        );
+
+
         spreadsheetEnvironmentContext.setUser(
             Optional.of(
                 EmailAddress.parse("user@example.com")
             )
         );
 
+        final SpreadsheetMetadataContext spreadsheetMetadataContext = SpreadsheetMetadataContexts.basic(
+            (u, dl) -> {
+                throw new UnsupportedOperationException();
+            },
+            metadataStore
+        );
+
+        final SpreadsheetContextSupplier spreadsheetContextSupplier = (final SpreadsheetId id) -> {
+            final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
+            if (null == repo) {
+                throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
+            }
+
+            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext2 = spreadsheetEnvironmentContext.cloneEnvironment();
+            spreadsheetEnvironmentContext2.setSpreadsheetId(
+                Optional.of(id)
+            );
+
+            return Optional.of(
+                SpreadsheetContexts.fixedSpreadsheetId(
+                    SpreadsheetEngines.basic(),
+                    repo,
+                    (c) -> {
+                        throw new UnsupportedOperationException();
+                    },// httpRouterFactory
+                    spreadsheetEnvironmentContext2,
+                    LOCALE_CONTEXT,
+                    SPREADSHEET_PROVIDER,
+                    PROVIDER_CONTEXT
+                )
+            );
+        };
+
+
+//        return SpreadsheetContexts.mutableSpreadsheetId(
+//            SpreadsheetEngines.basic(),
+//            (final SpreadsheetId id) -> {
+//                final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
+//                if (null == repo) {
+//                    throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
+//                }
+//                return Optional.of(
+//                    new FakeSpreadsheetContext() {
+//
+//                        @Override
+//                        public SpreadsheetStoreRepository storeRepository() {
+//                            return repo;
+//                        }
+//                    }
+//                );
+//            }, // spreadsheetIdToStoreRepository
+//            spreadsheetMetadataContext,
+//            spreadsheetEnvironmentContext,
+//            LOCALE_CONTEXT,
+//            SPREADSHEET_PROVIDER,
+//            PROVIDER_CONTEXT
+//        );
+
+        return this.createSpreadsheetContext(
+            spreadsheetContextSupplier,
+            spreadsheetMetadataContext,
+            spreadsheetEnvironmentContext
+        );
+    }
+
+    private SpreadsheetContext createSpreadsheetContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
+                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetContexts.mutableSpreadsheetId(
             SpreadsheetEngines.basic(),
-            (final SpreadsheetId id) -> {
-                final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
-                if (null == repo) {
-                    throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
-                }
-                return Optional.of(
-                    new FakeSpreadsheetContext() {
-
-                        @Override
-                        public SpreadsheetStoreRepository storeRepository() {
-                            return repo;
-                        }
-                    }
-                );
-            }, // spreadsheetIdToStoreRepository
-            SpreadsheetMetadataContexts.basic(
-                (u, dl) -> {
-                    throw new UnsupportedOperationException();
-                },
-                metadataStore
-            ),
-            (SpreadsheetContext c) -> SpreadsheetEngineContexts.spreadsheetContext(
-                SpreadsheetMetadataMode.FORMULA,
-                c,
-                TerminalContexts.fake()
-            ),
+//            (final SpreadsheetId id) -> {
+//                final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
+//                if (null == repo) {
+//                    throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
+//                }
+//                return Optional.of(
+//                    new FakeSpreadsheetContext() {
+//
+//                        @Override
+//                        public SpreadsheetStoreRepository storeRepository() {
+//                            return repo;
+//                        }
+//                    }
+//                );
+//            }, // spreadsheetIdToStoreRepository
+            spreadsheetContextSupplier,
+            spreadsheetMetadataContext,
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,

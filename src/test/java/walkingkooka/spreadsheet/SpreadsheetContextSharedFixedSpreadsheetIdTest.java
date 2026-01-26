@@ -29,8 +29,6 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
-import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -76,7 +74,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 null,
                 REPO,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -93,7 +90,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 SPREADSHEET_ENGINE,
                 null,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 HTTP_ROUTER_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -110,7 +106,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
                 SPREADSHEET_ENGINE,
                 REPO,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -339,12 +334,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     @Override
     SpreadsheetContextSharedFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
-            (c) -> new FakeSpreadsheetEngineContext() {
-                @Override
-                public SpreadsheetEngine spreadsheetEngine() {
-                    return SPREADSHEET_ENGINE;
-                }
-            },
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
@@ -353,8 +342,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     }
 
     @Override
-    SpreadsheetContextSharedFixedSpreadsheetId createContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
-                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+    SpreadsheetContextSharedFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final LocaleContext localeContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
@@ -410,7 +398,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                     return store;
                 }
             },
-            spreadsheetEngineContextFactory,
             (c) -> new Router<>() {
                 @Override
                 public Optional<HttpHandler> route(final Map<HttpRequestAttribute<?>, Object> attributes) {

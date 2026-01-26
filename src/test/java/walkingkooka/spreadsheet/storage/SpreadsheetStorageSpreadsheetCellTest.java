@@ -36,9 +36,7 @@ import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
-import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -70,7 +68,6 @@ import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
-import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -565,11 +562,6 @@ public final class SpreadsheetStorageSpreadsheetCellTest implements StorageTesti
             SpreadsheetStoreRepositories.treeMap(
                 metadataStore
             ), // SpreadsheetStoreRepository
-            (c) -> SpreadsheetEngineContexts.spreadsheetContext(
-                SpreadsheetMetadataMode.FORMULA,
-                c,
-                TerminalContexts.fake()
-            ), // SpreadsheetEngineContext factory
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter

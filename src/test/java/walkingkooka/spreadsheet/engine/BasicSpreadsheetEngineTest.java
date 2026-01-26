@@ -1295,9 +1295,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 this.repo, // SpreadsheetStoreRepository
                                 (c) -> {
                                     throw new UnsupportedOperationException();
-                                }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
-                                (c) -> {
-                                    throw new UnsupportedOperationException();
                                 }, // httpRouterFactory
                                 spreadsheetEnvironmentContext,
                                 localeContext,

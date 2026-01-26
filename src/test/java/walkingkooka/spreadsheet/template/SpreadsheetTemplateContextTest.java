@@ -276,9 +276,6 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     },
                     (c) -> {
                         throw new UnsupportedOperationException();
-                    }, // Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory
-                    (c) -> {
-                        throw new UnsupportedOperationException();
                     }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
                     spreadsheetEnvironmentContext,
                     LOCALE_CONTEXT,
