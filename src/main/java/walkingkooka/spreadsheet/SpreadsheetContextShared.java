@@ -179,7 +179,9 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final <T> void setEnvironmentValue(final EnvironmentValueName<T> name,
                                               final T value) {
-        if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)){
+        final boolean changingSpreadsheetName = SPREADSHEET_ID.equals(name);
+
+        if (false == this.canChangeSpreadsheetId() && changingSpreadsheetName){
             Objects.requireNonNull(value, "value");
 
             throw name.readOnlyEnvironmentValueException();
@@ -189,12 +191,21 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
             name,
             value
         );
+        if(changingSpreadsheetName) {
+            this.spreadsheetEngineContext = null;
+        }
     }
 
     @Override
     public final void removeEnvironmentValue(final EnvironmentValueName<?> name) {
-        if (false == this.canChangeSpreadsheetId() && SPREADSHEET_ID.equals(name)) {
+        final boolean changingSpreadsheetName = SPREADSHEET_ID.equals(name);
+
+        if (false == this.canChangeSpreadsheetId() && changingSpreadsheetName) {
             throw new UnsupportedOperationException("Unable to remove " + name);
+        }
+
+        if(changingSpreadsheetName) {
+            this.spreadsheetEngineContext = null;
         }
 
         this.spreadsheetEnvironmentContext.removeEnvironmentValue(name);
