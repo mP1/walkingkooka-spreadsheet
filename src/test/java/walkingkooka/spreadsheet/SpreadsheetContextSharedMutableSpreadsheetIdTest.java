@@ -61,7 +61,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends SpreadsheetContextSharedTestCase<SpreadsheetContextSharedMutableSpreadsheetId> {
 
-    private final static Function<SpreadsheetId, SpreadsheetStoreRepository> SPREADSHEET_ID_TO_STORE_REPOSITORY = (id) -> {
+    private final static SpreadsheetContextSupplier SPREADSHEET_CONTEXT_SUPPLIER = (id) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -79,7 +79,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 null,
-                SPREADSHEET_ID_TO_STORE_REPOSITORY,
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_METADATA_CONTEXT,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -91,7 +91,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     }
 
     @Test
-    public void testWithNullSpreadsheetIdToStoreRepositoryFails() {
+    public void testWithNullSpreadsheetContextSupplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
@@ -113,7 +113,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 SPREADSHEET_ENGINE,
-                SPREADSHEET_ID_TO_STORE_REPOSITORY,
+                SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -477,10 +477,17 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             SPREADSHEET_ENGINE,
             (SpreadsheetId id) -> {
                 final SpreadsheetStoreRepository repo = spreadsheetIdToSpreadsheetStoreRepository.get(id);
-                if(null == repo) {
+                if (null == repo) {
                     throw new IllegalArgumentException("SpreadsheetId " + id + " not found");
                 }
-                return repo;
+                return Optional.of(
+                    new FakeSpreadsheetContext() {
+                        @Override
+                        public SpreadsheetStoreRepository storeRepository() {
+                            return repo;
+                        }
+                    }
+                );
             },
             SpreadsheetMetadataContexts.basic(
                 (u, dl) -> {

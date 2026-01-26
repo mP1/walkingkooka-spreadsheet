@@ -24,6 +24,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
@@ -1469,7 +1470,15 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
                 if (null == repo) {
                     throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
                 }
-                return repo;
+                return Optional.of(
+                    new FakeSpreadsheetContext() {
+
+                        @Override
+                        public SpreadsheetStoreRepository storeRepository() {
+                            return repo;
+                        }
+                    }
+                );
             }, // spreadsheetIdToStoreRepository
             SpreadsheetMetadataContexts.basic(
                 (u, dl) -> {
