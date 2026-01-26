@@ -26,7 +26,6 @@ import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
-import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -69,7 +68,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
     public static SpreadsheetContext mutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
-                                                          final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                           final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -78,7 +77,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
             spreadsheetEngine,
-            spreadsheetIdToStoreRepository,
+            spreadsheetContextSupplier,
             spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,
             spreadsheetEnvironmentContext,

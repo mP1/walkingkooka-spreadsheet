@@ -42,7 +42,7 @@ import java.util.function.Function;
 final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetContextShared {
 
     static SpreadsheetContextSharedMutableSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
-                                                             final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+                                                             final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                              final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -50,7 +50,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
-        Objects.requireNonNull(spreadsheetIdToStoreRepository, "spreadsheetIdToStoreRepository");
+        Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
         Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
@@ -60,7 +60,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
 
         return new SpreadsheetContextSharedMutableSpreadsheetId(
             spreadsheetEngine,
-            spreadsheetIdToStoreRepository,
+            spreadsheetContextSupplier,
             spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,
             null, // SpreadsheetEngineContext will be created in ctor
@@ -72,7 +72,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     }
 
     private SpreadsheetContextSharedMutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
-                                                         final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository,
+                                                         final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                          final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                          final SpreadsheetEngineContext spreadsheetEngineContext,
@@ -90,7 +90,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
             providerContext
         );
 
-        this.spreadsheetIdToStoreRepository = spreadsheetIdToStoreRepository;
+        this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
         this.spreadsheetMetadataContext = spreadsheetMetadataContext;
     }
@@ -99,12 +99,12 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
 
     @Override
     public SpreadsheetStoreRepository storeRepository() {
-        return this.spreadsheetIdToStoreRepository.apply(
+        return this.spreadsheetContextSupplier.spreadsheetContextOrFail(
             this.spreadsheetIdOrFail()
-        );
+        ).storeRepository();
     }
 
-    private final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToStoreRepository;
+    private final SpreadsheetContextSupplier spreadsheetContextSupplier;
 
 
     // SpreadsheetMetadataContextDelegator..............................................................................
@@ -134,7 +134,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedMutableSpreadsheetId(
             this.spreadsheetEngine,
-            this.spreadsheetIdToStoreRepository,
+            this.spreadsheetContextSupplier,
             this.spreadsheetMetadataContext,
             spreadsheetEngineContextFactory,
             null, // recreate SpreadsheetEngineContext
