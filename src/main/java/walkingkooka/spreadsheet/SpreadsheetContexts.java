@@ -39,7 +39,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      */
     public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
-                                                        final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                         final LocaleContext localeContext,
@@ -48,7 +47,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
             spreadsheetEngine,
             storeRepository,
-            spreadsheetEngineContextFactory,
             httpRouterFactory,
             spreadsheetEnvironmentContext,
             localeContext,
@@ -70,7 +68,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext mutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                                                          final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                           final LocaleContext localeContext,
                                                           final SpreadsheetProvider spreadsheetProvider,
@@ -79,7 +76,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
             spreadsheetEngine,
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
-            spreadsheetEngineContextFactory,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,

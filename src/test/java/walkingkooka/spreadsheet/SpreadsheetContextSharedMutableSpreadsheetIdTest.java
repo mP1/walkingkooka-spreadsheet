@@ -28,8 +28,6 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
@@ -55,7 +53,6 @@ import java.math.RoundingMode;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -81,7 +78,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_METADATA_CONTEXT,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -98,7 +94,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SPREADSHEET_ENGINE,
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -115,7 +110,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -385,7 +379,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     @Override
     SpreadsheetContextSharedMutableSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
-            (c) -> SpreadsheetEngineContexts.fake(),
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
@@ -394,8 +387,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     }
 
     @Override
-    SpreadsheetContextSharedMutableSpreadsheetId createContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
-                                                               final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+    SpreadsheetContextSharedMutableSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                final LocaleContext localeContext,
                                                                final SpreadsheetProvider spreadsheetProvider,
                                                                final ProviderContext providerContext) {
@@ -495,7 +487,6 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 },
                 store
             ),
-            spreadsheetEngineContextFactory,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,

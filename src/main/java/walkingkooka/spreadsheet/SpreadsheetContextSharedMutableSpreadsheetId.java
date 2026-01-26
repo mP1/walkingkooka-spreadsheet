@@ -24,14 +24,15 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.terminal.TerminalContexts;
 
 import java.util.Objects;
-import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetContext} that allows the {@link SpreadsheetId} to be set via the environment which will change
@@ -44,7 +45,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     static SpreadsheetContextSharedMutableSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
                                                              final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                                                             final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final LocaleContext localeContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
@@ -52,7 +52,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
-        Objects.requireNonNull(spreadsheetEngineContextFactory, "spreadsheetEngineContextFactory");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
@@ -62,7 +61,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
             spreadsheetEngine,
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
-            spreadsheetEngineContextFactory,
             null, // SpreadsheetEngineContext will be created in ctor
             spreadsheetEnvironmentContext,
             localeContext,
@@ -74,7 +72,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     private SpreadsheetContextSharedMutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                                                         final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                                                          final SpreadsheetEngineContext spreadsheetEngineContext,
                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                          final LocaleContext localeContext,
@@ -82,7 +79,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                          final ProviderContext providerContext) {
         super(
             spreadsheetEngine,
-            spreadsheetEngineContextFactory,
             spreadsheetEngineContext,
             spreadsheetEnvironmentContext,
             localeContext,
@@ -116,6 +112,21 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
 
     private final SpreadsheetMetadataContext spreadsheetMetadataContext;
 
+    // SpreadsheetMetadataContextDelegator..............................................................................
+
+    @Override
+    SpreadsheetEngineContext createSpreadsheetEngineContext() {
+        return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            this.spreadsheetContextSupplier,
+            this.spreadsheetEnvironmentContext(),
+            this.localeContext(),
+            this.spreadsheetMetadataContext,
+            TerminalContexts.fake(),
+            this.spreadsheetProvider(),
+            this.providerContext()
+        );
+    }
+
     // httpRouter.......................................................................................................
 
     @Override
@@ -126,8 +137,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     // EnvironmentContext...............................................................................................
 
     @Override
-    SpreadsheetContext replaceEnvironmentContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
-                                                 final SpreadsheetEngineContext spreadsheetEngineContext,
+    SpreadsheetContext replaceEnvironmentContext(final SpreadsheetEngineContext spreadsheetEngineContext,
                                                  final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                  final LocaleContext localeContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
@@ -136,7 +146,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
             this.spreadsheetEngine,
             this.spreadsheetContextSupplier,
             this.spreadsheetMetadataContext,
-            spreadsheetEngineContextFactory,
             null, // recreate SpreadsheetEngineContext
             spreadsheetEnvironmentContext,
             localeContext,

@@ -34,7 +34,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -58,7 +57,6 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -73,10 +71,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
-    final Function<SpreadsheetContext, SpreadsheetEngineContext> SPREADSHEET_ENGINE_CONTEXT_FACTORY = (SpreadsheetContext c) -> {
-        throw new UnsupportedOperationException();
-    };
-    
     final static Indentation INDENTATION = Indentation.SPACES4;
 
     final static LineEnding LINE_ENDING = LineEnding.NL;
@@ -144,25 +138,10 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     // with.............................................................................................................
 
     @Test
-    public final void testWithNullSpreadsheetEngineContextFactoryFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext(
-                null,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public final void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 null,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -176,7 +155,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER,
@@ -190,7 +168,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 null,
@@ -204,7 +181,6 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
-                SPREADSHEET_ENGINE_CONTEXT_FACTORY,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -417,8 +393,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     abstract C createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext);
 
-    abstract C createContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
-                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
+    abstract C createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final LocaleContext localeContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext);

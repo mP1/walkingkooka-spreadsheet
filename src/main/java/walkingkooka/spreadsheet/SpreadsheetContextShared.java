@@ -38,7 +38,6 @@ import walkingkooka.store.MissingStoreException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * Base class for a {@link SpreadsheetContext}.
@@ -50,7 +49,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetProviderDelegator {
 
     SpreadsheetContextShared(final SpreadsheetEngine spreadsheetEngine,
-                             final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final LocaleContext localeContext,
@@ -61,7 +59,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         this.spreadsheetEngine = spreadsheetEngine;
 
         this.spreadsheetEngineContext = spreadsheetEngineContext;
-        this.spreadsheetEngineContextFactory = spreadsheetEngineContextFactory;
 
         this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
 
@@ -133,14 +130,14 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     @Override
     public final SpreadsheetEngineContext spreadsheetEngineContext() {
         if (null == this.spreadsheetEngineContext) {
-            this.spreadsheetEngineContext = this.spreadsheetEngineContextFactory.apply(this);
+            this.spreadsheetEngineContext = this.createSpreadsheetEngineContext();
         }
         return this.spreadsheetEngineContext;
     }
 
     private SpreadsheetEngineContext spreadsheetEngineContext;
 
-    private final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory;
+    abstract SpreadsheetEngineContext createSpreadsheetEngineContext();
 
     // EnvironmentContextDelegator......................................................................................
 
@@ -162,7 +159,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
                 .setEnvironmentContext(environmentContext);
 
             spreadsheetContext = this.replaceEnvironmentContext(
-                this.spreadsheetEngineContextFactory,
                 this.spreadsheetEngineContext,
                 spreadsheetEnvironmentContext,
                 this.localeContext,
@@ -174,8 +170,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         return spreadsheetContext;
     }
 
-    abstract SpreadsheetContext replaceEnvironmentContext(final Function<SpreadsheetContext, SpreadsheetEngineContext> spreadsheetEngineContextFactory,
-                                                          final SpreadsheetEngineContext spreadsheetEngineContext,
+    abstract SpreadsheetContext replaceEnvironmentContext(final SpreadsheetEngineContext spreadsheetEngineContext,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                           final LocaleContext localeContext,
                                                           final SpreadsheetProvider spreadsheetProvider,
