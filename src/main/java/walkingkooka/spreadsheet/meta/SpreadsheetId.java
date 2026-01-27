@@ -69,7 +69,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         this.value = value;
     }
 
-    public MissingSpreadsheetException missingSpreadsheet() {
+    public MissingSpreadsheetException missingSpreadsheetException() {
         return new MissingSpreadsheetException(this);
     }
 
