@@ -3662,11 +3662,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    private final static AbsoluteUrl URL = Url.parseAbsolute("http://www.example.com/123");
+    private final static AbsoluteUrl URL = Url.parseAbsolute("https://www.example.com/123");
 
     @Test
     public void testConvertUrlToString() {
-        final String url = "http://www.example.com";
+        final String url = "https://www.example.com";
         final SpreadsheetConverterContext context = this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL);
 
         this.convertAndCheck(
