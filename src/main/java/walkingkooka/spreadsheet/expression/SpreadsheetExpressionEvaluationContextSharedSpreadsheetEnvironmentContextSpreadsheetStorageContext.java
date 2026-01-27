@@ -18,21 +18,28 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
+import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext implements SpreadsheetStorageContext,
     SpreadsheetMetadataContextDelegator,
@@ -51,6 +58,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     @Override
     public Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
         Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
+
         throw new UnsupportedOperationException();
     }
 
@@ -69,19 +77,57 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
-        throw new UnsupportedOperationException();
+
+        return this.executeWithSpreadsheetEngineContextOrElse(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+            {
+                final SpreadsheetDelta response = engine.loadLabel(
+                    labelName,
+                    context
+                );
+                final Set<SpreadsheetLabelMapping> mappings = response.labels();
+                return Optional.ofNullable(
+                    mappings.isEmpty() ?
+                        null :
+                        mappings.iterator()
+                            .next()
+                );
+            },
+            Optional.empty()
+        );
     }
 
     @Override
     public SpreadsheetLabelMapping saveLabel(final SpreadsheetLabelMapping label) {
         Objects.requireNonNull(label, "label");
-        throw new UnsupportedOperationException();
+
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+            {
+                final SpreadsheetDelta response = engine.saveLabel(
+                    label,
+                    context
+                );
+                return response.labels()
+                    .iterator()
+                    .next();
+            }
+        );
     }
 
     @Override
     public void deleteLabel(final SpreadsheetLabelName labelName) {
         Objects.requireNonNull(labelName, "labelName");
-        throw new UnsupportedOperationException();
+
+        this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) -> {
+                engine.deleteLabel(
+                    labelName,
+                    context
+                );
+                return null;
+            }
+        );
     }
 
     @Override
@@ -93,8 +139,50 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             offset,
             count
         );
-        throw new UnsupportedOperationException();
+
+        return this.executeWithSpreadsheetEngineContextOrElse(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) -> engine.findLabelsByName(
+                    labelName,
+                    offset,
+                    count,
+                    context
+                ).labels()
+                .stream()
+                .map(SpreadsheetLabelMapping::label)
+                .collect(SpreadsheetLabelNameSet.collector()),
+            Sets.empty()
+        );
     }
+
+    private <T> T executeWithSpreadsheetEngineContextOrElse(final BiFunction<SpreadsheetEngine, SpreadsheetEngineContext, T> function,
+                                                            final T whenMissingSpreadsheetId) {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.context;
+
+        return context.spreadsheetId()
+            .flatMap(context.spreadsheetContextSupplier::spreadsheetContext)
+            .map(SpreadsheetContext::spreadsheetEngineContext)
+            .map(
+                c ->
+                    function.apply(
+                        c.spreadsheetEngine(),
+                        c
+                    )
+            ).orElse(whenMissingSpreadsheetId);
+    }
+
+    private <T> T executeWithSpreadsheetEngineContextOrFail(final BiFunction<SpreadsheetEngine, SpreadsheetEngineContext, T> function) {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.context;
+
+        final SpreadsheetId spreadsheetId = context.spreadsheetIdOrFail();
+        final SpreadsheetEngineContext spreadsheetEngineContext = context.spreadsheetContextSupplier.spreadsheetContextOrFail(spreadsheetId)
+            .spreadsheetEngineContext();
+        return function.apply(
+            spreadsheetEngineContext.spreadsheetEngine(),
+            spreadsheetEngineContext
+        );
+    }
+
+    // EnvironmentContext...............................................................................................
 
     @Override
     public SpreadsheetStorageContext cloneEnvironment() {
