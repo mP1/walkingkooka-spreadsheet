@@ -22,8 +22,10 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
+import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
@@ -59,19 +61,44 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     public Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
         Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
 
-        throw new UnsupportedOperationException();
+        return this.executeWithSpreadsheetEngineContextOrElse(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                engine.loadCells(
+                    cellsOrLabel,
+                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                    Sets.of(
+                        SpreadsheetDeltaProperties.CELLS
+                    ),
+                    context
+                ).cells(),
+            Sets.empty()
+        );
     }
 
     @Override
     public Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
-        throw new UnsupportedOperationException();
+
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                engine.saveCells(
+                    cells,
+                    context
+                ).cells()
+        );
     }
 
     @Override
     public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
         Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
-        throw new UnsupportedOperationException();
+
+        this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                engine.deleteCells(
+                    cellsOrLabel,
+                    context
+                ).cells()
+        );
     }
 
     @Override
