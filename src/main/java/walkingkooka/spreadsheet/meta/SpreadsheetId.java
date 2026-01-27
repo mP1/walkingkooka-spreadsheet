@@ -69,6 +69,10 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         this.value = value;
     }
 
+    public MissingSpreadsheetException missingSpreadsheet() {
+        return new MissingSpreadsheetException(this);
+    }
+
     // HateosResource ....................................................................................................
 
     @Override
