@@ -191,7 +191,7 @@ public final class SpreadsheetEnvironmentContextTesting2Test implements Spreadsh
             );
         }
 
-        private SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
+        private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
         @Override
         public String toString() {
