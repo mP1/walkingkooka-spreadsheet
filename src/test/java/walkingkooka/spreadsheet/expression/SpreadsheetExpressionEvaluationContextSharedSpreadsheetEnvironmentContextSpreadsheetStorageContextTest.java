@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -38,6 +39,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
@@ -55,10 +57,13 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
+import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
@@ -77,6 +82,192 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     private final static SpreadsheetLabelName LABEL_NAME = SpreadsheetSelection.labelName("Label123");
 
+    // loadCells........................................................................................................
+
+    @Test
+    public void testLoadCellsAndEnvironmentMissingSpreadsheetId() {
+        this.loadCellsAndCheck(
+            this.createContext(),
+            SpreadsheetSelection.A1
+        );
+    }
+
+    @Test
+    public void testLoadCellsWithUnknownCell() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.loadCellsAndCheck(
+            context,
+            SpreadsheetSelection.A1
+        );
+    }
+
+    // Cell A1
+    //  Formula
+    //    value:
+    //      "Hello World"
+    //    error:
+    //      #FORMATTING
+    //        "Unknown formatter date"
+    //  formattedValue:
+    //    Text "#ERROR"
+    @Test
+    public void testLoadCells() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello World")
+            )
+        );
+
+        repo.cells()
+            .save(cell);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.loadCellsAndCheck(
+            context,
+            cell.reference(),
+            cell.setFormula(
+                cell.formula()
+                    .setError(
+                        Optional.of(
+                            SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
+                        )
+                    )
+            ).setFormattedValue(
+                Optional.of(
+                    TextNode.text("#ERROR")
+                )
+            )
+        );
+    }
+
+    // saveCells........................................................................................................
+
+    @Test
+    public void testSaveCellsAndEnvironmentMissingSpreadsheetIdFails() {
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createContext()
+                .saveCells(
+                    Sets.of(
+                        SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
+                    )
+                )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
+        );
+    }
+
+    @Test
+    public void testSaveCells() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello World")
+            )
+        );
+
+        repo.cells()
+            .save(cell);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.saveCellsAndCheck(
+            context,
+            Sets.of(cell),
+            Sets.of(
+                cell.setFormula(
+                    cell.formula()
+                        .setError(
+                            Optional.of(
+                                SpreadsheetErrorKind.FORMATTING.setMessage("Unknown formatter date")
+                            )
+                        )
+                ).setFormattedValue(
+                    Optional.of(
+                        TextNode.text("#ERROR")
+                    )
+                )
+            )
+        );
+    }
+
+    // deleteCells......................................................................................................
+
+    @Test
+    public void testDeleteCellsAndEnvironmentMissingSpreadsheetId() {
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> this.createContext()
+                .deleteCells(SpreadsheetSelection.A1)
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName(),
+            "MissingEnvironmentValueException.environmentValueName"
+        );
+    }
+
+    @Test
+    public void testDeleteCellsWithUnknownCell() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        context.deleteCells(SpreadsheetSelection.A1);
+    }
+
+    @Test
+    public void testDeleteCells() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello World")
+            )
+        );
+
+        repo.cells()
+            .save(cell);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        context.deleteCells(SpreadsheetSelection.A1);
+
+        this.loadCellsAndCheck(
+            context,
+            cell.reference()
+        );
+    }
+    
     // loadLabel........................................................................................................
 
     @Test
