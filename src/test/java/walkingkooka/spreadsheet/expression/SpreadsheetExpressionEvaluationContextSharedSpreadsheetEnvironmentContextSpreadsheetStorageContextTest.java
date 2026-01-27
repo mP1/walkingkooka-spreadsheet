@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
+import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
@@ -37,15 +39,18 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
-import walkingkooka.spreadsheet.meta.FakeSpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContexts;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
@@ -58,9 +63,10 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
@@ -69,8 +75,198 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
+    private final static SpreadsheetLabelName LABEL_NAME = SpreadsheetSelection.labelName("Label123");
+
+    // loadLabel........................................................................................................
+
+    @Test
+    public void testLoadLabelAndEnvironmentMissingSpreadsheetId() {
+        this.loadLabelAndCheck(
+            this.createContext(),
+            LABEL_NAME
+        );
+    }
+
+    @Test
+    public void testLoadLabelMissingLabel() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.loadLabelAndCheck(
+            context,
+            LABEL_NAME
+        );
+    }
+
+    @Test
+    public void testLoadLabel() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
+
+        repo.labels()
+            .save(mapping);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.loadLabelAndCheck(
+            context,
+            LABEL_NAME,
+            mapping
+        );
+    }
+
+    // saveLabel........................................................................................................
+
+    @Test
+    public void testSaveLabelAndEnvironmentMissingSpreadsheetIdFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> context.saveLabel(
+                LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1)
+            )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName()
+        );
+    }
+
+    @Test
+    public void testSaveLabel() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        repo.labels()
+            .save(
+                LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.labelName("ReplacedBySave"))
+            );
+
+        final SpreadsheetLabelMapping mapping = LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.saveLabelAndCheck(
+            context,
+            mapping,
+            mapping
+        );
+    }
+
+    // deleteLabel......................................................................................................
+
+    @Test
+    public void testDeleteLabelAndEnvironmentMissingSpreadsheetIdFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> context.deleteLabel(LABEL_NAME)
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName()
+        );
+    }
+
+    @Test
+    public void testDeleteLabel() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        repo.labels()
+            .save(LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1));
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        context.deleteLabel(LABEL_NAME);
+
+        this.loadLabelAndCheck(
+            context,
+            LABEL_NAME
+        );
+    }
+
+    // findLabelsByNameLabel............................................................................................
+
+    @Test
+    public void testFindLabelsByNameLabelAndEnvironmentMissingSpreadsheetId() {
+        this.findLabelsByNameAndCheck(
+            this.createContext(),
+            "",
+            0,
+            3
+        );
+    }
+
+    @Test
+    public void testFindLabelsByNameLabel() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        repo.labels()
+            .save(LABEL_NAME.setLabelMappingReference(SpreadsheetSelection.A1));
+
+        final SpreadsheetLabelName labelName2 = SpreadsheetSelection.labelName("Label222");
+
+        repo.labels()
+            .save(
+                labelName2.setLabelMappingReference(SpreadsheetSelection.A1));
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.findLabelsByNameAndCheck(
+            context,
+            "",
+            0,
+            3,
+            LABEL_NAME,
+            labelName2
+        );
+    }
+
     @Override
     public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext createContext() {
+        return this.createContext(
+            SpreadsheetStoreRepositories.treeMap(
+                SpreadsheetMetadataStores.treeMap()
+            )
+        );
+    }
+
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext createContext(final SpreadsheetStoreRepository repo) {
+        final SpreadsheetMetadataStore metadataStore = repo.metadatas();
+
+        metadataStore.save(
+            METADATA_EN_AU.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SPREADSHEET_ID
+            )
+        );
+
         final Locale locale = Locale.forLanguageTag("en-AU");
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
@@ -85,10 +281,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             )
         );
         environmentContext.setEnvironmentValue(
-            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
-            SPREADSHEET_ID
-        );
-        environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
         );
@@ -98,10 +290,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             storage,
             environmentContext
         );
-
-        final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
-
-        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
 
         final LocaleContext localeContext = LocaleContexts.jre(locale);
 
@@ -132,7 +320,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                     public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                         return Optional.of(
                             SpreadsheetContexts.fixedSpreadsheetId(
-                                SPREADSHEET_ENGINE,
+                                SpreadsheetEngines.basic(),
                                 repo,
                                 (c) -> {
                                     throw new UnsupportedOperationException();
@@ -147,33 +335,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 },
                 localeContext,
                 spreadsheetEnvironmentContext,
-                new FakeSpreadsheetMetadataContext() {
-                    @Override
-                    public Optional<SpreadsheetMetadata> loadMetadata(final SpreadsheetId id) {
-                        return metadataStore.load(id);
-                    }
-
-                    @Override
-                    public SpreadsheetMetadata saveMetadata(final SpreadsheetMetadata metadata) {
-                        return metadataStore.save(metadata);
-                    }
-
-                    @Override
-                    public void deleteMetadata(final SpreadsheetId id) {
-                        metadataStore.delete(id);
-                    }
-
-                    @Override
-                    public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
-                                                                                   final int offset,
-                                                                                   final int count) {
-                        return metadataStore.findByName(
-                            name,
-                            offset,
-                            count
-                        );
-                    }
-                },
+                SpreadsheetMetadataContexts.basic(
+                    (e, l) -> {
+                        throw new UnsupportedOperationException();
+                    },
+                    metadataStore
+                ),
                 TERMINAL_CONTEXT,
                 spreadsheetProvider,
                 providerContext

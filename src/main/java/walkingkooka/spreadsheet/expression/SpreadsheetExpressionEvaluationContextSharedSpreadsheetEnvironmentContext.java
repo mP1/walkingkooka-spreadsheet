@@ -441,7 +441,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
 
-    private final SpreadsheetContextSupplier spreadsheetContextSupplier;
+    // SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext
+    final SpreadsheetContextSupplier spreadsheetContextSupplier;
 
     // StorageExpressionEvaluationContext...............................................................................
 
