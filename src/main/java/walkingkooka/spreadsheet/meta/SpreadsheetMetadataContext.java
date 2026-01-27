@@ -43,11 +43,11 @@ public interface SpreadsheetMetadataContext extends Context {
 
     /**
      * Attempts to load the {@link SpreadsheetMetadata} with the given {@link SpreadsheetId}, throwing
-     * {@link MissingStoreException} if not found.
+     * {@link MissingSpreadsheetException} which is a sub-class of {@link MissingStoreException} if not found.
      */
     default SpreadsheetMetadata loadMetadataOrFail(final SpreadsheetId id) {
         return this.loadMetadata(id)
-            .orElseThrow(() -> new MissingStoreException("SpreadsheetMetadata: Missing " + id));
+            .orElseThrow(id::missingSpreadsheetException);
     }
 
     /**
