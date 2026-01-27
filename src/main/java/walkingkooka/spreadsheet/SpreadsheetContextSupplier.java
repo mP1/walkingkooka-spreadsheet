@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
-import walkingkooka.store.MissingStoreException;
 
 import java.util.Optional;
 
@@ -34,6 +33,6 @@ public interface SpreadsheetContextSupplier {
 
     default SpreadsheetContext spreadsheetContextOrFail(final SpreadsheetId id) {
         return this.spreadsheetContext(id)
-            .orElseThrow(() -> new MissingStoreException("Missing Spreadsheet " + id));
+            .orElseThrow(id::missingSpreadsheetException);
     }
 }
