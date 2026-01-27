@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.LabelSpreadsheetFormulaParserToken;
@@ -31,11 +32,25 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * An immutable {@link Set} containing unique {@link SpreadsheetLabelName labels}.
  */
 public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<SpreadsheetLabelName, SpreadsheetLabelNameSet> {
+
+    // Collector........................................................................................................
+
+    /**
+     * A collector that returns an {@link ImmutableSet}.
+     */
+    public static Collector<SpreadsheetLabelName, ?, SpreadsheetLabelNameSet> collector() {
+        return Collectors.collectingAndThen(
+            Collectors.toSet(),
+            SpreadsheetLabelNameSet::with
+        );
+    }
 
     /**
      * An empty {@link SpreadsheetLabelNameSet}.

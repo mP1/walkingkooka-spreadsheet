@@ -208,6 +208,19 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
         return this.createSet();
     }
 
+    // collector........................................................................................................
+
+    @Test
+    public void testCollector() {
+        final SpreadsheetLabelNameSet set = SpreadsheetLabelNameSet.parse("Label1,Label2,Label3");
+
+        this.checkEquals(
+            set,
+            set.stream()
+                .collect(SpreadsheetLabelNameSet.collector())
+        );
+    }
+
     // class............................................................................................................
 
     @Override
