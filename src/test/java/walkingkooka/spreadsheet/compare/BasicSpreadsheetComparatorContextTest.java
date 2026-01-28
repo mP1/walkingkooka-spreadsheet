@@ -91,6 +91,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
     );
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+        SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.objectToString(),

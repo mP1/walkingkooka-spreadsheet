@@ -113,6 +113,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             },
             SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 new FakeConverter<>() {

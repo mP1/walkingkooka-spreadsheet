@@ -171,6 +171,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             "2000/12/31",
             LocalDate.class,
             SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.system(),

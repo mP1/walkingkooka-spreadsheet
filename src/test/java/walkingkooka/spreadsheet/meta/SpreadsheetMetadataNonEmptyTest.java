@@ -1407,6 +1407,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             expected,
             converter,
             SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
                 Optional.of(metadata),
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 converter,

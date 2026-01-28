@@ -168,6 +168,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
+            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.system(),

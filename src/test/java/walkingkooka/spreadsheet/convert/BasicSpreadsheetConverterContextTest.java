@@ -30,6 +30,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
@@ -51,6 +52,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<BasicSpreadsheetConverterContext>,
     DecimalNumberContextDelegator {
 
+    private final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
+        StoragePath.parse("/current1/working2/directory3")
+    );
+
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
 
     private final static Optional<SpreadsheetExpressionReference> VALIDATION_REFERENCE = Optional.empty();
@@ -68,10 +73,27 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     // with.............................................................................................................
 
     @Test
+    public void testWithNullCurrentWorkingDirectoryFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                null,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
+                LABEL_RESOLVER,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullSpreadsheetMetadataFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetConverterContext.with(
+                CURRENT_WORKING_DIRECTORY,
                 null,
                 VALIDATION_REFERENCE,
                 CONVERTER,
@@ -87,6 +109,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetConverterContext.with(
+                CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 null,
@@ -102,6 +125,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetConverterContext.with(
+                CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
@@ -117,6 +141,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetConverterContext.with(
+                CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
@@ -132,6 +157,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetConverterContext.with(
+                CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
@@ -139,6 +165,16 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 JSON_NODE_CONVERTER_CONTEXT,
                 null
             )
+        );
+    }
+
+    // currentWorkingDirectory..........................................................................................
+
+    @Test
+    public void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
         );
     }
 
@@ -166,6 +202,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     @Override
     public BasicSpreadsheetConverterContext createContext() {
         return BasicSpreadsheetConverterContext.with(
+            CURRENT_WORKING_DIRECTORY,
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,
             CONVERTER,

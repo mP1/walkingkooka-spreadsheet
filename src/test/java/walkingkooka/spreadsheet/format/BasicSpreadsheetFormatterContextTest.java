@@ -224,6 +224,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     };
 
     private final static SpreadsheetConverterContext CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+        SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.collection(

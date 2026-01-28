@@ -165,6 +165,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
         );
 
         final SpreadsheetConverterContext converterContext = SpreadsheetConverterContexts.basic(
+            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.collection(
