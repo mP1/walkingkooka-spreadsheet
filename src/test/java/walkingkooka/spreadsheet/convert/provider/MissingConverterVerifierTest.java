@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -311,6 +312,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public void setLocale(final Locale locale) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
             throw new UnsupportedOperationException();
         }
 

@@ -23,6 +23,8 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
@@ -71,6 +73,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -134,7 +137,19 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         );
     };
 
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
+    private final static Locale LOCALE = Locale.ENGLISH;
+
+    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
+        DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(LOCALE)
+        ),
+        LOCALE,
+        1900,
+        20,
+        LocalDateTime::now
+    );
+
+    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
 
     private final static HasNow HAS_NOW = () -> LocalDateTime.MIN;
 
@@ -509,6 +524,78 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             Objects.requireNonNull(labelName, "labelName");
 
             throw new UnsupportedOperationException();
+        }
+
+
+        @Override
+        public List<String> ampms() {
+            return DATE_TIME_CONTEXT.ampms();
+        }
+
+        @Override
+        public String ampm(int hourOfDay) {
+            return DATE_TIME_CONTEXT.ampm(hourOfDay);
+        }
+
+        @Override
+        public List<String> monthNames() {
+            return DATE_TIME_CONTEXT.monthNames();
+        }
+
+        @Override
+        public String monthName(int month) {
+            return DATE_TIME_CONTEXT.monthName(month);
+        }
+
+        @Override
+        public List<String> monthNameAbbreviations() {
+            return DATE_TIME_CONTEXT.monthNameAbbreviations();
+        }
+
+        @Override
+        public String monthNameAbbreviation(int month) {
+            return DATE_TIME_CONTEXT.monthNameAbbreviation(month);
+        }
+
+        @Override
+        public List<String> weekDayNames() {
+            return DATE_TIME_CONTEXT.weekDayNames();
+        }
+
+        @Override
+        public String weekDayName(int day) {
+            return DATE_TIME_CONTEXT.weekDayName(day);
+        }
+
+        @Override
+        public List<String> weekDayNameAbbreviations() {
+            return DATE_TIME_CONTEXT.weekDayNameAbbreviations();
+        }
+
+        @Override
+        public String weekDayNameAbbreviation(int day) {
+            return DATE_TIME_CONTEXT.weekDayNameAbbreviation(day);
+        }
+
+        @Override
+        public int defaultYear() {
+            return DATE_TIME_CONTEXT.defaultYear();
+        }
+
+        @Override
+        public int twoDigitYear() {
+            return DATE_TIME_CONTEXT.twoDigitYear();
+        }
+
+        @Override
+        public int twoToFourDigitYear(int year) {
+            return DATE_TIME_CONTEXT.twoToFourDigitYear(year);
+        }
+
+        @Override
+        public DateTimeSymbols dateTimeSymbols() {
+            return DATE_TIME_CONTEXT
+                .dateTimeSymbols();
         }
 
         @Override

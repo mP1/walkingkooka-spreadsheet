@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -31,6 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.convert.StorageConverterContext;
+import walkingkooka.storage.convert.StorageConverterContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
@@ -43,7 +43,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
-    ConverterContextDelegator,
+    StorageConverterContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator {
 
@@ -107,10 +107,10 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
         throw new UnsupportedOperationException();
     }
 
-    // ConverterContextDelegator........................................................................................
+    // StorageConverterContextDelegator.................................................................................
 
     @Override
-    public ConverterContext converterContext() {
+    public StorageConverterContext storageConverterContext() {
         return this.context;
     }
 

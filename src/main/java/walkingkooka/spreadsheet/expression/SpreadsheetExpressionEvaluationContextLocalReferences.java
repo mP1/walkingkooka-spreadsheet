@@ -109,6 +109,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        return this.context.currentWorkingDirectory();
+    }
+
+    @Override
     public CaseSensitivity stringEqualsCaseSensitivity() {
         return this.context.stringEqualsCaseSensitivity();
     }

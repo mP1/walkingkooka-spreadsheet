@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
+import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
@@ -37,6 +38,7 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     HasConverter<SpreadsheetConverterContext>,
     HasSpreadsheetMetadata,
     SpreadsheetLabelNameResolver,
+    StorageConverterContext,
     HasMissingCellNumberValue,
     LocaleConverterContext {
 

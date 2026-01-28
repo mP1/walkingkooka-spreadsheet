@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -42,6 +43,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import java.math.MathContext;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implements SpreadsheetConverterContext,
     DateTimeContextDelegator,
@@ -103,6 +105,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
 
     @Override
     public LineEnding lineEnding() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
         throw new UnsupportedOperationException();
     }
 

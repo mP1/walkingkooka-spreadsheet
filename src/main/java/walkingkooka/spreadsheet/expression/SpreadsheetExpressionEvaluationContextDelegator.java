@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextDelegator;
 import walkingkooka.terminal.TerminalContext;
@@ -151,6 +152,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
 
     // StorageExpressionEvaluationContextDelegator......................................................................
+
+    @Override
+    default Optional<StoragePath> currentWorkingDirectory() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .currentWorkingDirectory();
+    }
 
     @Override
     default StorageExpressionEvaluationContext storageExpressionEvaluationContext() {
