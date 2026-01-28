@@ -178,7 +178,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public static final SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
-     * Suggested prefix that should be used by wrapped {@link EnvironmentContext} for {@link #spreadsheetEnvironmentContext(EnvironmentContext)}.
+     * Suggested prefix that should be used by wrapped {@link EnvironmentContext} for {@link #spreadsheetEnvironmentContext(SpreadsheetEnvironmentContext)}.
      */
     public static final String ENVIRONMENT_VALUE_NAME_PREFIX = "spreadsheet.";
 
