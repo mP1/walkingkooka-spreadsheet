@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.TestSpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
@@ -97,6 +98,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             this.environmentContext.setEnvironmentValue(name, value);
         }
 
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
+            return this.environmentContext.currentWorkingDirectory();
+        }
+
+        @Override
+        public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+            this.environmentContext.setCurrentWorkingDirectory(currentWorkingDirectory);
+        }
+        
         @Override
         public Indentation indentation() {
             return this.environmentContext.indentation();

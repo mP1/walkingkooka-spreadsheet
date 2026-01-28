@@ -76,6 +76,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
@@ -745,9 +746,14 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     @Override
     public SpreadsheetEngineContextSharedSpreadsheetContext createContext() {
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment();
+
+        spreadsheetEnvironmentContext.setCurrentWorkingDirectory(
+            Optional.of(CURRENT_WORKING_DIRECTORY)
+        );
         spreadsheetEnvironmentContext.setSpreadsheetId(
             Optional.of(SPREADSHEET_ID)
         );
+
 
         return this.createContext(spreadsheetEnvironmentContext);
     }
@@ -777,6 +783,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 LocalDateTime::now,
                 EnvironmentContext.ANONYMOUS
             )
+        );
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            SpreadsheetEngineContextSharedSpreadsheetContextTest.CURRENT_WORKING_DIRECTORY
         );
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
@@ -908,6 +918,19 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 this.environmentContext.cloneEnvironment(),
                 this.localeContext,
                 this.providerContext
+            );
+        }
+
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
+            return this.environmentValue(CURRENT_WORKING_DIRECTORY);
+        }
+
+        @Override
+        public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+            this.setOrRemoveEnvironmentValue(
+                CURRENT_WORKING_DIRECTORY,
+                currentWorkingDirectory
             );
         }
 

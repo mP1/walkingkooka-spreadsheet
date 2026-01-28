@@ -132,6 +132,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             DECIMAL_NUMBER_DIGIT_COUNT
         );
 
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            CURRENT_WORKING_DIRECTORY
+        );
+
         SPREADSHEET_ENVIRONMENT_CONTEXT = context;
     }
 

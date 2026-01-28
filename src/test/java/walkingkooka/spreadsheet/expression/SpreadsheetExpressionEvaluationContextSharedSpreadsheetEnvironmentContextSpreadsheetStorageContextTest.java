@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -74,6 +75,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext>,
     SpreadsheetMetadataTesting {
+
+    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
@@ -436,6 +439,16 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
     }
 
+    // currentWorkingDirectory..........................................................................................
+
+    @Test
+    public void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
+        );
+    }
+
     @Override
     public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext createContext() {
         return this.createContext(
@@ -468,6 +481,12 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                 )
             )
         );
+
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            CURRENT_WORKING_DIRECTORY
+        );
+
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL

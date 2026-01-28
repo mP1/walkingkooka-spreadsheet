@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
@@ -51,6 +52,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
     private final static EmailAddress USER = EmailAddress.parse("user123@example.com");
+
+    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static Storage<SpreadsheetStorageContext> STORAGE = new FakeStorage<>() {
         @Override
@@ -181,6 +184,29 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         assertSame(
             different,
             set
+        );
+    }
+
+    // currentWorkingDirectory..........................................................................................
+
+    @Test
+    public void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
+        );
+    }
+
+    // setCurrentWorkingDirectory.......................................................................................
+
+    @Test
+    public void testSetCurrentWorkingDirectoryFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setCurrentWorkingDirectory(
+                    Optional.of(CURRENT_WORKING_DIRECTORY)
+                )
         );
     }
 
@@ -362,6 +388,11 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 Optional.of(USER)
             )
         );
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            CURRENT_WORKING_DIRECTORY
+        );
         context.setLocale(LOCALE);
         context.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
@@ -384,6 +415,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testEnvironmentalValueNames() {
         this.environmentValueNamesAndCheck(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -417,7 +449,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, user=user123@example.com}"
+            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, user=user123@example.com}"
         );
     }
 
@@ -431,6 +463,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "  BasicSpreadsheetEnvironmentContext\n" +
                 "    environment\n" +
                 "      EnvironmentContextSharedMap\n" +
+                "        currentWorkingDirectory\n" +
+                "          /current1/working2/directory3\n" +
                 "        indentation\n" +
                 "          \"  \" (walkingkooka.text.Indentation)\n" +
                 "        lineEnding\n" +

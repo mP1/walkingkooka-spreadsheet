@@ -23,7 +23,10 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.storage.HasCurrentWorkingDirectory;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContext;
 
 import java.util.Optional;
 
@@ -31,7 +34,10 @@ import java.util.Optional;
  * A {@link EnvironmentContext} with a few extra spreadsheet standard {@link walkingkooka.environment.EnvironmentValueName}.
  */
 public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
+    HasCurrentWorkingDirectory,
     HasSpreadsheetServerUrl {
+
+    EnvironmentValueName<StoragePath> CURRENT_WORKING_DIRECTORY = StorageExpressionEvaluationContext.CURRENT_WORKING_DIRECTORY;
 
     EnvironmentValueName<AbsoluteUrl> SERVER_URL = EnvironmentValueName.registerConstant(
         "serverUrl",
@@ -42,6 +48,11 @@ public interface SpreadsheetEnvironmentContext extends EnvironmentContext,
         "spreadsheetId",
         SpreadsheetId.class
     );
+
+    /**
+     * Sets or replaces the current working directory.
+     */
+    void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory);
 
     /**
      * The {@link SpreadsheetId} that identifies a spreadsheet.

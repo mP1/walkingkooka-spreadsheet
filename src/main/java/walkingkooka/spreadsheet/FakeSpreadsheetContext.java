@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.provider.FakeSpreadsheetProvider;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
@@ -50,6 +51,16 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     public FakeSpreadsheetContext() {
         super();
+    }
+
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

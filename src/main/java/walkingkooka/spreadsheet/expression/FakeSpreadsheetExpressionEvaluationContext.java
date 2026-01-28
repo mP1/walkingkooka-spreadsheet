@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.expression.function.FakeStorageExpressionEvaluationContext;
 import walkingkooka.terminal.TerminalId;
 import walkingkooka.text.cursor.TextCursor;
@@ -156,6 +157,11 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
 
     @Override
     public <T> Optional<T> environmentValue(final EnvironmentValueName<T> environmentValueName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
         throw new UnsupportedOperationException();
     }
     

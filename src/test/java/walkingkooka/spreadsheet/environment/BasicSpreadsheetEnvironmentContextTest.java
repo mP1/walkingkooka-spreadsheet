@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorage;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -45,6 +46,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     SpreadsheetMetadataTesting,
     TreePrintableTesting,
     ToStringTesting<BasicSpreadsheetEnvironmentContext> {
+    
+    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
@@ -169,6 +172,52 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
         assertSame(
             different,
             context.setEnvironmentContext(different)
+        );
+    }
+
+    // currentWorkingDirectory..........................................................................................
+
+    @Test
+    public void testCurrentWorkingDirectoryMissing() {
+        final EnvironmentContext environmentContext = EnvironmentContexts.map(
+            EnvironmentContexts.empty(
+                INDENTATION,
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.currentWorkingDirectoryAndCheck(
+            BasicSpreadsheetEnvironmentContext.with(
+                STORAGE,
+                environmentContext
+            )
+        );
+    }
+
+    @Test
+    public void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
+        );
+    }
+
+    // setCurrentWorkingDirectory.......................................................................................
+
+    @Test
+    public void testSetCurrentWorkingDirectory() {
+        final StoragePath different = StoragePath.parse("/different");
+        this.checkNotEquals(
+            CURRENT_WORKING_DIRECTORY,
+            different
+        );
+
+        this.setCurrentWorkingDirectoryAndCheck(
+            this.createContext(),
+            different
         );
     }
 
@@ -405,6 +454,12 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     @Override
     public BasicSpreadsheetEnvironmentContext createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment());
+        
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            CURRENT_WORKING_DIRECTORY
+        );
+        
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
             SERVER_URL
@@ -459,7 +514,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
+            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
         );
     }
 
@@ -472,6 +527,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             "BasicSpreadsheetEnvironmentContext\n" +
                 "  environment\n" +
                 "    EnvironmentContextSharedMap\n" +
+                "      currentWorkingDirectory\n" +
+                "        /current1/working2/directory3\n" +
                 "      indentation\n" +
                 "        \"  \" (walkingkooka.text.Indentation)\n" +
                 "      lineEnding\n" +
