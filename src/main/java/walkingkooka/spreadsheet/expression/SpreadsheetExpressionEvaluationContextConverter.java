@@ -194,6 +194,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        return this.context.currentWorkingDirectory();
+    }
+
+    @Override
     public long dateOffset() {
         return this.context.dateOffset();
     }

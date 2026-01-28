@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 
@@ -54,6 +55,12 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     default Converter<SpreadsheetConverterContext> converter() {
         return this.spreadsheetConverterContext()
             .converter();
+    }
+
+    @Override
+    default Optional<StoragePath> currentWorkingDirectory() {
+        return this.spreadsheetConverterContext()
+            .currentWorkingDirectory();
     }
 
     @Override
