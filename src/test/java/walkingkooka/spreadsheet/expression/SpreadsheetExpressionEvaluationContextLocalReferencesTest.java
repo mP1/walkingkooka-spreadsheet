@@ -455,7 +455,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     }
 
     // testSetEnvironmentContext........................................................................................
-
+    
     @Override
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
@@ -693,6 +693,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
         private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
+            return this.spreadsheetEnvironmentContext.currentWorkingDirectory();
+        }
+
+        @Override
+        public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+            this.spreadsheetEnvironmentContext.setCurrentWorkingDirectory(currentWorkingDirectory);
+        }
+        
         @Override
         public Indentation indentation() {
             return this.spreadsheetEnvironmentContext.indentation();

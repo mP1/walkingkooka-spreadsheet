@@ -23,6 +23,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
@@ -32,6 +33,16 @@ public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext im
         super();
     }
 
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public AbsoluteUrl serverUrl() {
         throw new UnsupportedOperationException();

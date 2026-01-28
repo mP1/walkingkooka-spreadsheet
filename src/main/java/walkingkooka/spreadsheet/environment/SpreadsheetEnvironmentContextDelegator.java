@@ -23,11 +23,25 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvironmentContext,
     EnvironmentContextDelegator {
+
+    @Override
+    default Optional<StoragePath> currentWorkingDirectory() {
+        return this.environmentValue(CURRENT_WORKING_DIRECTORY);
+    }
+
+    @Override
+    default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        this.setOrRemoveEnvironmentValue(
+            CURRENT_WORKING_DIRECTORY,
+            currentWorkingDirectory
+        );
+    }
 
     @Override
     default AbsoluteUrl serverUrl() {

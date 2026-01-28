@@ -24,6 +24,7 @@ import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
@@ -75,6 +76,19 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
     }
 
     // SpreadsheetEnvironmentContext....................................................................................
+
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        return this.environmentValue(CURRENT_WORKING_DIRECTORY);
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        this.setOrRemoveEnvironmentValue(
+            CURRENT_WORKING_DIRECTORY,
+            currentWorkingDirectory
+        );
+    }
 
     @Override
     public AbsoluteUrl serverUrl() {

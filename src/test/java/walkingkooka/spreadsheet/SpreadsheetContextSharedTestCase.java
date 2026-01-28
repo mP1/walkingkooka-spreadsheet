@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -71,6 +72,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
 
+    final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
+
     final static Indentation INDENTATION = Indentation.SPACES4;
 
     final static LineEnding LINE_ENDING = LineEnding.NL;
@@ -93,6 +96,10 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
                 HAS_NOW,
                 Optional.empty() // no user
             )
+        );
+        environmentContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
+            CURRENT_WORKING_DIRECTORY
         );
         environmentContext.setEnvironmentValue(
             SpreadsheetEnvironmentContext.SERVER_URL,
@@ -336,6 +343,32 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         );
     }
 
+    // currentWorkingDirectory..........................................................................................
+
+    @Test
+    public final void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
+        );
+    }
+
+    // setCurrentWorkingDirectory.......................................................................................
+
+    @Test
+    public final void testSetCurrentWorkingDirectory() {
+        final StoragePath different = StoragePath.parse("/different");
+        this.checkNotEquals(
+            CURRENT_WORKING_DIRECTORY,
+            different
+        );
+
+        this.setCurrentWorkingDirectoryAndCheck(
+            this.createContext(),
+            different
+        );
+    }
+
     // indentation........................................................................................................
 
     @Test
@@ -404,7 +437,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1}"
+            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1}"
         );
     }
 

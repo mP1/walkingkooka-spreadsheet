@@ -66,6 +66,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
     }
 
     @Override
+    public void testSetCurrentWorkingDirectoryWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetIndentationWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

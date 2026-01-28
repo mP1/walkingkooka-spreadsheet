@@ -42,6 +42,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.test.Fake;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -58,6 +59,16 @@ import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public AbsoluteUrl serverUrl() {

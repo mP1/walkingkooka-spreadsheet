@@ -25,6 +25,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -105,6 +106,19 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         Objects.requireNonNull(name, "name");
 
         throw name.readOnlyEnvironmentValueException();
+    }
+
+    @Override
+    public Optional<StoragePath> currentWorkingDirectory() {
+        return this.context.currentWorkingDirectory();
+    }
+
+    @Override
+    public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        this.setOrRemoveEnvironmentValue(
+            CURRENT_WORKING_DIRECTORY,
+            currentWorkingDirectory
+        );
     }
 
     @Override

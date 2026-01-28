@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -107,6 +108,8 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final static String TEST_CONTEXT_SPREADSHEET_METADATA = "test-context-spreadsheet-metadata";
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(123);
+
+    final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
@@ -460,6 +463,26 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
         );
     }
 
+    // currentWorkingDirectory......................................................................................................
+
+    @Test
+    public final void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
+        );
+    }
+
+    @Test
+    public final void testSetCurrentWorkingDirectory() {
+        final StoragePath different = StoragePath.parse("/different");
+
+        this.setCurrentWorkingDirectoryAndCheck(
+            this.createContext(),
+            different
+        );
+    }
+    
     // indentation......................................................................................................
 
     @Test

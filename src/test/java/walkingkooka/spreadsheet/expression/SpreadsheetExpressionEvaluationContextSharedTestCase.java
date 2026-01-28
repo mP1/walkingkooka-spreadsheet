@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.storage.StoragePath;
 
 import java.math.MathContext;
 import java.time.LocalDate;
@@ -35,8 +36,30 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     SpreadsheetMetadataTesting,
     DecimalNumberContextDelegator {
 
+    final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
+
     SpreadsheetExpressionEvaluationContextSharedTestCase() {
         super();
+    }
+
+    // currentWorkingDirectory......................................................................................................
+
+    @Test
+    public final void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
+        );
+    }
+
+    @Test
+    public final void testSetCurrentWorkingDirectory() {
+        final StoragePath different = StoragePath.parse("/different");
+
+        this.setCurrentWorkingDirectoryAndCheck(
+            this.createContext(),
+            different
+        );
     }
 
     // parseExpression..................................................................................................

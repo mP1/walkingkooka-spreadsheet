@@ -217,6 +217,18 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     // SpreadsheetEnvironmentContextDelegator...........................................................................
 
     @Override
+    public final Optional<StoragePath> currentWorkingDirectory() {
+        return this.spreadsheetEnvironmentContext()
+            .currentWorkingDirectory();
+    }
+
+    @Override
+    public final void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        this.spreadsheetEnvironmentContext()
+            .setCurrentWorkingDirectory(currentWorkingDirectory);
+    }
+
+    @Override
     public final Indentation indentation() {
         return this.spreadsheetEnvironmentContext()
             .indentation();
