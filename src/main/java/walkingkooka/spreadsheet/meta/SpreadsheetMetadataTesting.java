@@ -78,6 +78,7 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.terminal.TerminalContext;
 import walkingkooka.terminal.TerminalContexts;
@@ -393,6 +394,10 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     );
 
     String DUMMY_ENVIRONMENTAL_VALUE = "Hello123";
+
+    Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
+        StoragePath.parse("/current1/working2/directory3")
+    );
 
     LineEnding LINE_ENDING = EOL;
 
