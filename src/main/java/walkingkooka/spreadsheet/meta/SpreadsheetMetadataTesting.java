@@ -192,7 +192,9 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
 
-    LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+    LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
+        LocaleContexts.jre(LOCALE)
+    );
 
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
