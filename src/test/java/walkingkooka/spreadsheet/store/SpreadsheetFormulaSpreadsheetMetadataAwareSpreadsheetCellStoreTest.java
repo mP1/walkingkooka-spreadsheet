@@ -398,7 +398,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 Locale.forLanguageTag("ES")
             ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
             SPREADSHEET_PARSER_PROVIDER,
-            LOCALE_CONTEXT,
+            LocaleContexts.jre(LOCALE),
             PROVIDER_CONTEXT
         );
 
@@ -474,7 +474,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 Locale.forLanguageTag("ES")
             ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
             SPREADSHEET_PARSER_PROVIDER,
-            LOCALE_CONTEXT,
+            LocaleContexts.jre(LOCALE),
             PROVIDER_CONTEXT
         );
 
@@ -543,7 +543,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 Locale.forLanguageTag("ES")
             ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
             SPREADSHEET_PARSER_PROVIDER,
-            LOCALE_CONTEXT,
+            LocaleContexts.jre(LOCALE),
             PROVIDER_CONTEXT
         );
 
@@ -610,7 +610,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 Locale.forLanguageTag("ES")
             ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
             SPREADSHEET_PARSER_PROVIDER,
-            LOCALE_CONTEXT,
+            LocaleContexts.jre(LOCALE),
             PROVIDER_CONTEXT
         );
 
@@ -806,7 +806,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
                 Locale.forLanguageTag("ES")
             ).remove(SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS),
             SPREADSHEET_PARSER_PROVIDER,
-            LOCALE_CONTEXT,
+            LocaleContexts.jre(LOCALE),
             PROVIDER_CONTEXT
         );
 
@@ -937,7 +937,7 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
             this.cellStore(),
             METADATA,
             SPREADSHEET_PARSER_PROVIDER,
-            LOCALE_CONTEXT,
+            LocaleContexts.jre(LOCALE),
             PROVIDER_CONTEXT
         );
     }
