@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
-import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting;
+import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting2;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
@@ -54,7 +54,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
     HasSpreadsheetCellTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
-    StorageExpressionEvaluationContextTesting<C>,
+    StorageExpressionEvaluationContextTesting2<C>,
     ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C>,
     SpreadsheetProviderContextTesting<C> {
 
