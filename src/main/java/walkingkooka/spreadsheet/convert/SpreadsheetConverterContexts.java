@@ -24,6 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 
 import java.util.Optional;
@@ -37,13 +38,15 @@ public final class SpreadsheetConverterContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetConverterContext}
      */
-    public static SpreadsheetConverterContext basic(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    public static SpreadsheetConverterContext basic(final Optional<StoragePath> currentWorkingDirectory,
+                                                    final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                     final Optional<SpreadsheetExpressionReference> validationReference,
                                                     final Converter<SpreadsheetConverterContext> converter,
                                                     final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                     final JsonNodeConverterContext jsonNodeConverterContext,
                                                     final LocaleContext localeContext) {
         return BasicSpreadsheetConverterContext.with(
+            currentWorkingDirectory,
             spreadsheetMetadata,
             validationReference,
             converter,

@@ -3544,6 +3544,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         final Locale locale = Locale.forLanguageTag("EN-AU");
 
         return SpreadsheetConverterContexts.basic(
+            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
@@ -3774,6 +3775,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
+            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used

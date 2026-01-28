@@ -307,6 +307,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
+                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,

@@ -43,12 +43,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     LocaleContextDelegator,
     UsesToStringBuilder {
 
-    static BasicSpreadsheetConverterContext with(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    static BasicSpreadsheetConverterContext with(final Optional<StoragePath> currentWorkingDirectory,
+                                                 final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetExpressionReference> validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
                                                  final LocaleContext localeContext) {
+        Objects.requireNonNull(currentWorkingDirectory, "currentWorkingDirectory");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
@@ -57,6 +59,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(localeContext, "localeContext");
 
         return new BasicSpreadsheetConverterContext(
+            currentWorkingDirectory,
             spreadsheetMetadata,
             validationReference,
             converter,
@@ -66,12 +69,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         );
     }
 
-    private BasicSpreadsheetConverterContext(final Optional<SpreadsheetMetadata> spreadsheetMetadata,
+    private BasicSpreadsheetConverterContext(final Optional<StoragePath> currentWorkingDirectory,
+                                             final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetExpressionReference> validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final JsonNodeConverterContext jsonNodeConverterContext,
                                              final LocaleContext localeContext) {
+        this.currentWorkingDirectory = currentWorkingDirectory;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
@@ -87,6 +92,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new BasicSpreadsheetConverterContext(
+                this.currentWorkingDirectory,
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
@@ -103,6 +109,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new BasicSpreadsheetConverterContext(
+                this.currentWorkingDirectory,
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
@@ -202,8 +209,10 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     @Override
     public Optional<StoragePath> currentWorkingDirectory() {
-        throw new UnsupportedOperationException();
+        return this.currentWorkingDirectory;
     }
+
+    private final Optional<StoragePath> currentWorkingDirectory;
 
     // toString.........................................................................................................
 
