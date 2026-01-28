@@ -2041,6 +2041,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
+                CURRENT_WORKING_DIRECTORY,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
@@ -2087,6 +2088,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> v) -> {
                     throw new UnsupportedOperationException();
                 },
+                CURRENT_WORKING_DIRECTORY,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
@@ -2421,6 +2423,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                  final SpreadsheetExpressionReference c) -> {
                     throw new UnsupportedOperationException();
                 },
+                CURRENT_WORKING_DIRECTORY,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,

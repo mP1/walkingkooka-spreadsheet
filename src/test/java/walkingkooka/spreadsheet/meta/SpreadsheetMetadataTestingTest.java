@@ -234,6 +234,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
+            CURRENT_WORKING_DIRECTORY,
             Indentation.SPACES2,
             (label) -> {
                 throw new UnsupportedOperationException();
