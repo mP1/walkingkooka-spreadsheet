@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -66,6 +67,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     SpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetEnvironmentContextFactory>,
     ClassTesting2<SpreadsheetEnvironmentContextFactory> {
+
+    private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static int DECIMAL_NUMBER_DIGIT_COUNT = 6;
 
@@ -92,6 +95,11 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             METADATA_EN_AU.getOrFail(
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER
             )
+        );
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContextFactory.CURRENT_WORKING_DIRECTORY,
+            CURRENT_WORKING_DIRECTORY
         );
 
         context.setEnvironmentValue(
@@ -289,6 +297,16 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             context,
             afterSet
+        );
+    }
+
+    // currentWorkingDirectory..........................................................................................
+
+    @Test
+    public void testCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext(),
+            CURRENT_WORKING_DIRECTORY
         );
     }
 
@@ -581,6 +599,17 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             decimalNumberContext2.mathContext()
                 .getRoundingMode(),
             "DecimalNumberContext.roundingMode"
+        );
+    }
+
+    // SpreadsheetConverterContext......................................................................................
+
+    @Test
+    public void testSpreadsheetConverterContextCurrentWorkingDirectory() {
+        this.currentWorkingDirectoryAndCheck(
+            this.createContext()
+                .spreadsheetConverterContext(),
+            CURRENT_WORKING_DIRECTORY
         );
     }
 
