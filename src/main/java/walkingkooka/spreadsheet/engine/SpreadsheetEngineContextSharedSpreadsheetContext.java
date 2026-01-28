@@ -126,6 +126,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
+                    this.currentWorkingDirectory(),
                     this.indentation(),
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
@@ -305,6 +306,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
+                this.currentWorkingDirectory(),
                 this.indentation(),
                 this, // SpreadsheetLabelNameResolver,
                 this.lineEnding(),

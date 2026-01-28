@@ -262,6 +262,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.cell,
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
+                    this.currentWorkingDirectory(),
                     Indentation.SPACES2,
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
@@ -339,6 +340,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     SpreadsheetExpressionEvaluationContext.FORMAT_VALUE,
                     v
                 ),
+                this.currentWorkingDirectory(),
                 this.indentation(),
                 this.spreadsheetLabelNameResolver,
                 this.lineEnding(),

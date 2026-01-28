@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -90,6 +91,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     };
 
     final static ConverterProvider CONVERTER_PROVIDER = ConverterProviders.fake();
+
+    final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
+        StoragePath.parse("/current1/working2/directory3")
+    );
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -759,6 +764,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
@@ -778,6 +784,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     null,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
@@ -796,6 +803,27 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    null,
+                    CURRENT_WORKING_DIRECTORY,
+                    INDENTATION,
+                    LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
+                    CONVERTER_PROVIDER,
+                    LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithNullCurrentWorkingDirectoryFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     null,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -816,6 +844,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     null,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
@@ -835,6 +864,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     null,
                     LINE_ENDING,
@@ -854,6 +884,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     null,
@@ -873,6 +904,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
@@ -892,6 +924,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
@@ -911,6 +944,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    CURRENT_WORKING_DIRECTORY,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,

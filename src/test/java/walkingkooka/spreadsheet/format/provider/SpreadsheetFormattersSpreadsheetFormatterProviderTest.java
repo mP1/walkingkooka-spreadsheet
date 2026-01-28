@@ -147,6 +147,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     ),
                     TERMINAL_CONTEXT
                 ),
+                CURRENT_WORKING_DIRECTORY,
                 Indentation.SPACES2,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 LINE_ENDING,
@@ -4751,6 +4752,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 )
             ),
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
+            CURRENT_WORKING_DIRECTORY,
             Indentation.SPACES2,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,

@@ -23,6 +23,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -351,6 +352,7 @@ public class TestGwtTest extends GWTTestCase {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
+                            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
@@ -406,6 +408,7 @@ public class TestGwtTest extends GWTTestCase {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
+                        Optional.empty(), // currentWorkingDirectory
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
