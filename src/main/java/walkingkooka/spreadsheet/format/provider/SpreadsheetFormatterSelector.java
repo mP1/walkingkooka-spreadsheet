@@ -22,7 +22,6 @@ import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -36,7 +35,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Contains the {@link SpreadsheetFormatterName} and some text which may contain the pattern text for {@link SpreadsheetPatternSpreadsheetFormatter}.
+ * Contains the {@link SpreadsheetFormatterName} and some text which may contain the pattern text for {@link SpreadsheetFormatter}.
  */
 public final class SpreadsheetFormatterSelector implements PluginSelectorLike<SpreadsheetFormatterName> {
 
@@ -51,7 +50,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     /**
      * Parses the given text into a {@link SpreadsheetFormatterSelector}.
      * <br>
-     * Note the format is formatter-name SPACE optional-text, for {@link SpreadsheetPatternSpreadsheetFormatter} the text will hold the raw pattern, without
+     * Note the format is formatter-name SPACE optional-text, for {@link SpreadsheetFormatter} the text will hold the raw pattern, without
      * any need for encoding of any kind.
      * <pre>
      * text @
@@ -111,7 +110,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     // value............................................................................................................
 
     /**
-     * If the {@link SpreadsheetFormatterName} identifies a {@link SpreadsheetPatternSpreadsheetFormatter}, this will
+     * If the {@link SpreadsheetFormatterName} identifies a {@link SpreadsheetFormatter}, this will
      * hold the pattern text itself.
      */
     @Override
@@ -155,7 +154,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     // spreadsheetFormatPattern.........................................................................................
 
     /**
-     * Returns a {@link SpreadsheetFormatPattern} if this selector is for a {@link SpreadsheetPatternSpreadsheetFormatter},
+     * Returns a {@link SpreadsheetFormatPattern} if this selector is for a {@link SpreadsheetFormatter},
      * providing the text is not empty and a valid pattern.
      */
     public Optional<SpreadsheetFormatPattern> spreadsheetFormatPattern() {
