@@ -21,12 +21,11 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.format.parser.ColorNameSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorNumberSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
  * Finds the color name or color number in the {@link ColorSpreadsheetFormatParserToken}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 
     static SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor colorNameOrNumberOrFail(final ColorSpreadsheetFormatParserToken token) {
         final SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterColorSpreadsheetFormatParserTokenVisitor();

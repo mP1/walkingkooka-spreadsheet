@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.format.parser.GreaterThanSpreadsheetFormatParser
 import walkingkooka.spreadsheet.format.parser.LessThanEqualsSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.LessThanSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.NotEqualsSpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 import java.math.BigDecimal;
 import java.util.function.Predicate;
@@ -35,7 +34,7 @@ import java.util.function.Predicate;
 /**
  * Finds the condition and number parameter in the {@link ConditionSpreadsheetFormatParserToken}.
  */
-final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 
     static Predicate<BigDecimal> predicateOrFail(final ConditionSpreadsheetFormatParserToken token) {
         final SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetPatternSpreadsheetFormatterConditionSpreadsheetFormatParserTokenVisitor();
