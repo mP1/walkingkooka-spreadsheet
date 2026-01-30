@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.format.parser.NumberSpreadsheetFormatParserToken
 import walkingkooka.spreadsheet.format.parser.TextSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternSpreadsheetFormatters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 
@@ -78,19 +80,19 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetPatternSpreadsheetFormatterColor}
+     * {@see SpreadsheetPatternSpreadsheetFormatters#color}
      */
     public static SpreadsheetPatternSpreadsheetFormatter color(final ColorSpreadsheetFormatParserToken token,
                                                                final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        return SpreadsheetPatternSpreadsheetFormatterColor.with(token, formatter);
+        return SpreadsheetPatternSpreadsheetFormatters.color(token, formatter);
     }
 
     /**
-     * {@link SpreadsheetPatternSpreadsheetFormatterCondition}
+     * {@link SpreadsheetPatternSpreadsheetFormatters#conditional}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter conditional(final ConditionSpreadsheetFormatParserToken token,
-                                                                     final SpreadsheetPatternSpreadsheetFormatter formatter) {
-        return SpreadsheetPatternSpreadsheetFormatterCondition.with(token, formatter);
+    public static SpreadsheetFormatter conditional(final ConditionSpreadsheetFormatParserToken token,
+                                                   final SpreadsheetPatternSpreadsheetFormatter formatter) {
+        return SpreadsheetPatternSpreadsheetFormatters.conditional(token, formatter);
     }
 
     /**
@@ -110,19 +112,19 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter dateTime(final DateTimeSpreadsheetFormatParserToken token,
-                                                                  final Class<? extends Temporal> valueType) {
-        return SpreadsheetPatternSpreadsheetFormatterDateTime.with(
+    public static SpreadsheetFormatter dateTime(final DateTimeSpreadsheetFormatParserToken token,
+                                                final Class<? extends Temporal> valueType) {
+        return SpreadsheetPatternSpreadsheetFormatters.dateTime(
             token,
             valueType
         );
     }
 
     /**
-     * A {@link SpreadsheetPatternSpreadsheetFormatter} that prints the text with no colour.
+     * A {@link SpreadsheetFormatter} that prints the text with no colour.
      * This is equivalent to the pattern <pre>@</pre>
      */
-    public static SpreadsheetPatternSpreadsheetFormatter defaultText() {
+    public static SpreadsheetFormatter defaultText() {
         return SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.formatter();
     }
 
@@ -150,41 +152,34 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatter}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter fakeSpreadsheetPattern() {
-        return new FakeSpreadsheetPatternSpreadsheetFormatter();
+    public static SpreadsheetFormatter fakeSpreadsheetPattern() {
+        return SpreadsheetPatternSpreadsheetFormatters.fake();
     }
 
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterFraction}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter fraction(final FractionSpreadsheetFormatParserToken token,
-                                                                  final Function<BigDecimal, Fraction> fractioner) {
-        return SpreadsheetPatternSpreadsheetFormatterFraction.with(token, fractioner);
+    public static SpreadsheetFormatter fraction(final FractionSpreadsheetFormatParserToken token,
+                                                final Function<BigDecimal, Fraction> fractioner) {
+        return SpreadsheetPatternSpreadsheetFormatters.fraction(token, fractioner);
     }
 
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterGeneral}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter general() {
-        return SpreadsheetPatternSpreadsheetFormatterGeneral.INSTANCE;
+    public static SpreadsheetFormatter general() {
+        return SpreadsheetPatternSpreadsheetFormatters.general();
     }
 
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterNumber}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token,
+    public static SpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token,
                                                                 final boolean suppressMinusSignsWithinParens) {
-        return SpreadsheetPatternSpreadsheetFormatterNumber.with(
+        return SpreadsheetPatternSpreadsheetFormatters.number(
             token,
             suppressMinusSignsWithinParens
         );
-    }
-
-    /**
-     * {@see SpreadsheetPatternSpreadsheetFormatterCollection}
-     */
-    public static SpreadsheetPatternSpreadsheetFormatter spreadsheetPatternCollection(final List<SpreadsheetPatternSpreadsheetFormatter> formatters) {
-        return SpreadsheetPatternSpreadsheetFormatterCollection.with(formatters);
     }
 
     /**
@@ -198,8 +193,8 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterText}
      */
-    public static SpreadsheetPatternSpreadsheetFormatter text(final TextSpreadsheetFormatParserToken token) {
-        return SpreadsheetPatternSpreadsheetFormatterText.with(token);
+    public static SpreadsheetFormatter text(final TextSpreadsheetFormatParserToken token) {
+        return SpreadsheetPatternSpreadsheetFormatters.text(token);
     }
 
     /**

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.DateSpreadsheetFormatParserToken;
@@ -78,7 +77,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
             i++;
         }
 
-        return SpreadsheetFormatters.spreadsheetPatternCollection(formatters);
+        return SpreadsheetPatternSpreadsheetFormatters.collection(formatters);
     }
 
     SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitor(final ParserToken token) {
@@ -90,7 +89,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final DateSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.dateTime(
+            SpreadsheetPatternSpreadsheetFormatters.dateTime(
                 SpreadsheetFormatParserToken.dateTime(
                     token.value(),
                     token.text()
@@ -103,7 +102,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final DateTimeSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.dateTime(
+            SpreadsheetPatternSpreadsheetFormatters.dateTime(
                 token,
                 LocalDateTime.class
             )
@@ -118,7 +117,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final FractionSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.fraction(
+            SpreadsheetPatternSpreadsheetFormatters.fraction(
                 token,
                 (bigDecimal -> {
                     throw new UnsupportedOperationException();
@@ -129,7 +128,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
 
     @Override
     protected void endVisit(final GeneralSpreadsheetFormatParserToken token) {
-        final SpreadsheetPatternSpreadsheetFormatter generalFormatter = SpreadsheetFormatters.general();
+        final SpreadsheetPatternSpreadsheetFormatter generalFormatter = SpreadsheetPatternSpreadsheetFormatters.general();
 
         final Optional<ColorSpreadsheetFormatParserToken> color = SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenVisitorGeneralColorSpreadsheetFormatParserTokenVisitor.extractColor(token);
 
@@ -175,7 +174,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final NumberSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.number(
+            SpreadsheetPatternSpreadsheetFormatters.number(
                 token,
                 1 == this.patternCounter
             )
@@ -187,14 +186,14 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
     @Override
     protected void endVisit(final TextSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.text(token)
+            SpreadsheetPatternSpreadsheetFormatters.text(token)
         );
     }
 
     @Override
     protected void endVisit(final TimeSpreadsheetFormatParserToken token) {
         this.saveFormatter(
-            SpreadsheetFormatters.dateTime(
+            SpreadsheetPatternSpreadsheetFormatters.dateTime(
                 SpreadsheetFormatParserToken.dateTime(
                     token.value(),
                     token.text()

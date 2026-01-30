@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.text.CharSequences;
 
@@ -55,7 +53,7 @@ final class SpreadsheetFormatPatternCreateFormatterSpreadsheetFormatParserTokenV
         final ConditionSpreadsheetFormatParserToken condition = this.condition;
         if (null != condition) {
             formatters.accept(
-                SpreadsheetFormatters.conditional(
+                SpreadsheetPatternSpreadsheetFormatters.conditional(
                     condition,
                     formatter
                 )

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;

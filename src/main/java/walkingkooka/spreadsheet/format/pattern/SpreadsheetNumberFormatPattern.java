@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.spreadsheet.format.SpreadsheetPatternSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -94,7 +92,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         switch (index) {
             case 0:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         POSITIVE_OR_ZERO,
                         formatter
                     )
@@ -102,7 +100,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                 break;
             case 1:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         NEGATIVE,
                         formatter
                     )
@@ -120,7 +118,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         switch (index) {
             case 0:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         POSITIVE,
                         formatter
                     )
@@ -128,7 +126,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                 break;
             case 1:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         NEGATIVE,
                         formatter
                     )
@@ -136,7 +134,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                 break;
             case 2:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         ZERO,
                         formatter
                     )
@@ -154,7 +152,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         switch (index) {
             case 0:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         POSITIVE,
                         formatter
                     )
@@ -162,7 +160,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                 break;
             case 1:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         NEGATIVE,
                         formatter
                     )
@@ -170,7 +168,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
                 break;
             case 2:
                 formatters.accept(
-                    SpreadsheetFormatters.conditional(
+                    SpreadsheetPatternSpreadsheetFormatters.conditional(
                         ZERO,
                         formatter
                     )
@@ -220,7 +218,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         "<0"
     );
 
-    private final static SpreadsheetPatternSpreadsheetFormatter TEXT = SpreadsheetFormatters.defaultText();
+    private final static SpreadsheetPatternSpreadsheetFormatter TEXT = SpreadsheetPatternSpreadsheetFormatters.defaultText();
 
     // patterns.........................................................................................................
 
