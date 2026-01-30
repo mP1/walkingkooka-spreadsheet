@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
  * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter} using the individual
  * {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken tokens}.
  */
-abstract class SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+abstract class SpreadsheetPatternSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 
     /**
      * Package private to limit subclassing.
