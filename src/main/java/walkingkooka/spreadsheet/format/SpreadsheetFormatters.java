@@ -198,6 +198,17 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see ToStringSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter toString(final SpreadsheetFormatter formatter,
+                                                final String toString) {
+        return ToStringSpreadsheetFormatter.with(
+            formatter,
+            toString
+        );
+    }
+    
+    /**
      * Stops creation
      */
     private SpreadsheetFormatters() {
