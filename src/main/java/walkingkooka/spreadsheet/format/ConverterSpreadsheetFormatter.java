@@ -29,7 +29,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that simply delegates all methods to a {@link Converter}.
+ * A {@link SpreadsheetFormatter} that formats values by attempt to convert any given value to {@link String text},
+ * using the provided {@link Converter}.
  */
 final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
 
