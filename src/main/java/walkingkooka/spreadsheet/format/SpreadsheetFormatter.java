@@ -81,4 +81,14 @@ public interface SpreadsheetFormatter extends HasConverter<SpreadsheetConverterC
      * or {@link java.time.LocalDateTime now}  displaying day names in the label for an {@link SpreadsheetFormatterSelectorTokenAlternative}.
      */
     List<SpreadsheetFormatterSelectorToken> tokens(final SpreadsheetFormatterContext context);
+
+    /**
+     * Sets the {@link Object#toString()} returned by this {@link SpreadsheetFormatter} to a different or preferred.
+     */
+    default SpreadsheetFormatter setToString(final String toString) {
+        return SpreadsheetFormatters.toString(
+            this,
+            toString
+        );
+    }
 }
