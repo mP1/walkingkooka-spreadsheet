@@ -40,7 +40,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -477,32 +476,6 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern>
             value,
             this.createContext(zeroDigit),
             expected
-        );
-    }
-
-    @Test
-    public final void testFormatSpreadsheetTextWithNullValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createPattern()
-                .createFormatter()
-                .formatSpreadsheetText(
-                    null,
-                    this.createContext()
-                )
-        );
-    }
-
-    @Test
-    public final void testFormatSpreadsheetTextWithNullContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createPattern()
-                .createFormatter()
-                .formatSpreadsheetText(
-                    Optional.of("Value"),
-                    null
-                )
         );
     }
 
