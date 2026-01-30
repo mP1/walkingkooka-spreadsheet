@@ -23,7 +23,8 @@ import java.util.Optional;
 
 /**
  * A {@link SpreadsheetFormatter} for a {@link walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern} that produces
- * {@link SpreadsheetText} which is more limiting than a {@link TextNode}.
+ * {@link SpreadsheetText} which contains only a {@link walkingkooka.color.Color} and {@link String} rather than a
+ * {@link TextNode}, which can rich text.
  */
 public interface SpreadsheetPatternSpreadsheetFormatter extends SpreadsheetFormatter {
 
