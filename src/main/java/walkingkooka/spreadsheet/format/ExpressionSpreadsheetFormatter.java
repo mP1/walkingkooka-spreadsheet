@@ -28,7 +28,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that unconditionally always returns {@link Optional#empty()}.
+ * A {@link SpreadsheetFormatter} that executes the given {@link Expression} and returning a {@link TextNode}
+ * from the result.
  */
 final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter,
     TreePrintable {
