@@ -129,10 +129,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see EmptySpreadsheetFormatter}
+     * {@see SpreadsheetFormatterSharedEmpty}
      */
     public static SpreadsheetFormatter empty() {
-        return EmptySpreadsheetFormatter.INSTANCE;
+        return SpreadsheetFormatterSharedEmpty.INSTANCE;
     }
 
     /**

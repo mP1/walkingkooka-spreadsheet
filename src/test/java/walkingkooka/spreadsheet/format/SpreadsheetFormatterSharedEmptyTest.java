@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 
 import java.util.Optional;
 
-public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<EmptySpreadsheetFormatter> {
+public final class SpreadsheetFormatterSharedEmptyTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedEmpty> {
 
     @Test
     public void testFormatNull() {
@@ -48,8 +48,8 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
     }
 
     @Override
-    public EmptySpreadsheetFormatter createFormatter() {
-        return EmptySpreadsheetFormatter.INSTANCE;
+    public SpreadsheetFormatterSharedEmpty createFormatter() {
+        return SpreadsheetFormatterSharedEmpty.INSTANCE;
     }
 
     @Override
@@ -63,7 +63,7 @@ public final class EmptySpreadsheetFormatterTest implements SpreadsheetFormatter
     }
 
     @Override
-    public Class<EmptySpreadsheetFormatter> type() {
-        return EmptySpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterSharedEmpty> type() {
+        return SpreadsheetFormatterSharedEmpty.class;
     }
 }

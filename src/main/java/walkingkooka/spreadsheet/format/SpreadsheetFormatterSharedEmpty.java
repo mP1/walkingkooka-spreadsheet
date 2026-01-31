@@ -27,14 +27,14 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that unconditionally always returns {@link Optional#empty()}.
  */
-final class EmptySpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetFormatterSharedEmpty extends SpreadsheetFormatterShared {
 
     /**
      * Singleton
      */
-    final static EmptySpreadsheetFormatter INSTANCE = new EmptySpreadsheetFormatter();
+    final static SpreadsheetFormatterSharedEmpty INSTANCE = new SpreadsheetFormatterSharedEmpty();
 
-    private EmptySpreadsheetFormatter() {
+    private SpreadsheetFormatterSharedEmpty() {
         super();
     }
 
