@@ -86,8 +86,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ExpressionSpreadsheetFormatter>,
-    HashCodeEqualsDefinedTesting2<ExpressionSpreadsheetFormatter>,
+public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedExpression>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSharedExpression>,
     SpreadsheetMetadataTesting {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
@@ -129,10 +129,10 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
     private final static ExpressionFunctionName HELLO = SpreadsheetExpressionFunctions.name("hello");
 
     @Override
-    public ExpressionSpreadsheetFormatter createFormatter() {
+    public SpreadsheetFormatterSharedExpression createFormatter() {
 
         // 1 + hello($FORMAT_VALUE)
-        return ExpressionSpreadsheetFormatter.with(
+        return SpreadsheetFormatterSharedExpression.with(
             Expression.add(
                 Expression.value(EXPRESSION_NUMBER_KIND.one()),
                 Expression.call(
@@ -367,15 +367,15 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
     @Test
     public void testEqualsDifferentExpression() {
         this.checkNotEquals(
-            ExpressionSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedExpression.with(
                 Expression.value("Different2")
             )
         );
     }
 
     @Override
-    public ExpressionSpreadsheetFormatter createObject() {
-        return ExpressionSpreadsheetFormatter.with(
+    public SpreadsheetFormatterSharedExpression createObject() {
+        return SpreadsheetFormatterSharedExpression.with(
             Expression.value("Hello1")
         );
     }
@@ -385,13 +385,13 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
     @Test
     public void testTreePrintable() {
         this.treePrintAndCheck(
-            ExpressionSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedExpression.with(
                 Expression.add(
                     Expression.value(1),
                     Expression.value(23)
                 )
             ),
-            "ExpressionSpreadsheetFormatter\n" +
+            "SpreadsheetFormatterSharedExpression\n" +
                 "  AddExpression\n" +
                 "    ValueExpression 1 (java.lang.Integer)\n" +
                 "    ValueExpression 23 (java.lang.Integer)\n"
@@ -401,7 +401,7 @@ public final class ExpressionSpreadsheetFormatterTest implements SpreadsheetForm
     // class............................................................................................................
 
     @Override
-    public Class<ExpressionSpreadsheetFormatter> type() {
-        return ExpressionSpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterSharedExpression> type() {
+        return SpreadsheetFormatterSharedExpression.class;
     }
 }
