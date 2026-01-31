@@ -88,6 +88,11 @@ final public class SpreadsheetFormatterNameTest implements PluginNameTesting<Spr
     }
 
     @Test
+    public void testWithHyperlinking() {
+        this.verifyConstant("hyperlinking");
+    }
+
+    @Test
     public void testWithLongDate() {
         this.verifyConstant("long-date");
     }

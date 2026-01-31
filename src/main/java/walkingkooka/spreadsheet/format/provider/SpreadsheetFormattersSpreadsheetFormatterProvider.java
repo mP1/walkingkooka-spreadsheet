@@ -88,6 +88,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.FULL_DATE_TIME_STRING:
             case SpreadsheetFormatterName.FULL_TIME_STRING:
             case SpreadsheetFormatterName.GENERAL_STRING:
+            case SpreadsheetFormatterName.HYPERLINKING_STRING:
             case SpreadsheetFormatterName.LONG_DATE_STRING:
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
             case SpreadsheetFormatterName.LONG_TIME_STRING:
@@ -259,6 +260,13 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 parameterCountCheck(count);
 
                 formatter = SpreadsheetFormatters.general();
+                break;
+            case SpreadsheetFormatterName.HYPERLINKING_STRING:
+                parameterCountCheck(1, count);
+
+                formatter = SpreadsheetFormatters.hyperlinking(
+                    (SpreadsheetFormatter) copy.get(0)
+                );
                 break;
             case SpreadsheetFormatterName.LONG_DATE_STRING:
                 parameterCountCheck(count);
@@ -646,6 +654,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 next = null;
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
+                next = null;
+                break;
+            case SpreadsheetFormatterName.HYPERLINKING_STRING:
                 next = null;
                 break;
             case SpreadsheetFormatterName.LONG_DATE_STRING:
@@ -1080,6 +1091,9 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                         );
                     }
                 }
+                break;
+            }
+            case SpreadsheetFormatterName.HYPERLINKING_STRING: {
                 break;
             }
             case SpreadsheetFormatterName.LONG_DATE_STRING:
@@ -2118,6 +2132,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             spreadsheetFormatterInfo(SpreadsheetFormatterName.FULL_DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.FULL_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.GENERAL),
+            spreadsheetFormatterInfo(SpreadsheetFormatterName.HYPERLINKING),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_DATE_TIME),
             spreadsheetFormatterInfo(SpreadsheetFormatterName.LONG_TIME),

@@ -23,6 +23,7 @@ import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -184,6 +185,16 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
      */
     public final static SpreadsheetFormatterName GENERAL = new SpreadsheetFormatterName(
         GENERAL_STRING,
+        null
+    );
+
+    final static String HYPERLINKING_STRING = "hyperlinking";
+
+    /**
+     * The name of the {@link SpreadsheetFormatters#hyperlinking(SpreadsheetFormatter)}.
+     */
+    public final static SpreadsheetFormatterName HYPERLINKING = new SpreadsheetFormatterName(
+        HYPERLINKING_STRING,
         null
     );
 
@@ -374,6 +385,9 @@ final public class SpreadsheetFormatterName implements PluginNameLike<Spreadshee
                 break;
             case GENERAL_STRING:
                 spreadsheetFormatterName = GENERAL;
+                break;
+            case HYPERLINKING_STRING:
+                spreadsheetFormatterName = HYPERLINKING;
                 break;
             case LONG_DATE_STRING:
                 spreadsheetFormatterName = LONG_DATE;
