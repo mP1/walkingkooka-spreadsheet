@@ -29,15 +29,15 @@ import java.util.function.Supplier;
 /**
  * This {@link SpreadsheetFormatter} selects one of its given {@link SpreadsheetFormatter} using the type of the value.
  */
-final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetFormatterSharedAutomatic extends SpreadsheetFormatterShared {
 
-    static AutomaticSpreadsheetFormatter with(final SpreadsheetFormatter date,
-                                              final SpreadsheetFormatter dateTime,
-                                              final SpreadsheetFormatter error,
-                                              final SpreadsheetFormatter number,
-                                              final SpreadsheetFormatter text,
-                                              final SpreadsheetFormatter time) {
-        return new AutomaticSpreadsheetFormatter(
+    static SpreadsheetFormatterSharedAutomatic with(final SpreadsheetFormatter date,
+                                                    final SpreadsheetFormatter dateTime,
+                                                    final SpreadsheetFormatter error,
+                                                    final SpreadsheetFormatter number,
+                                                    final SpreadsheetFormatter text,
+                                                    final SpreadsheetFormatter time) {
+        return new SpreadsheetFormatterSharedAutomatic(
             Objects.requireNonNull(date, "date"),
             Objects.requireNonNull(dateTime, "dateTime"),
             Objects.requireNonNull(error, "error"),
@@ -47,12 +47,12 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
         );
     }
 
-    private AutomaticSpreadsheetFormatter(final SpreadsheetFormatter date,
-                                          final SpreadsheetFormatter dateTime,
-                                          final SpreadsheetFormatter error,
-                                          final SpreadsheetFormatter number,
-                                          final SpreadsheetFormatter text,
-                                          final SpreadsheetFormatter time) {
+    private SpreadsheetFormatterSharedAutomatic(final SpreadsheetFormatter date,
+                                                final SpreadsheetFormatter dateTime,
+                                                final SpreadsheetFormatter error,
+                                                final SpreadsheetFormatter number,
+                                                final SpreadsheetFormatter text,
+                                                final SpreadsheetFormatter time) {
         this.date = date;
         this.dateTime = dateTime;
         this.error = error;
@@ -120,11 +120,11 @@ final class AutomaticSpreadsheetFormatter implements SpreadsheetFormatter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof AutomaticSpreadsheetFormatter &&
+            other instanceof SpreadsheetFormatterSharedAutomatic &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final AutomaticSpreadsheetFormatter other) {
+    private boolean equals0(final SpreadsheetFormatterSharedAutomatic other) {
         return this.date.equals(other.date) &&
             this.dateTime.equals(other.dateTime) &&
             this.error.equals(other.error) &&
