@@ -828,6 +828,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    full-date-time\n" +
                 "    full-time\n" +
                 "    general\n" +
+                "    hyperlinking\n" +
                 "    long-date\n" +
                 "    long-date-time\n" +
                 "    long-time\n" +
