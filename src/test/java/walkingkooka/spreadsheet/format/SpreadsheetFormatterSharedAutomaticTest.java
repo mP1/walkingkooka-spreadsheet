@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
@@ -34,8 +33,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<AutomaticSpreadsheetFormatter>,
-    ToStringTesting<AutomaticSpreadsheetFormatter> {
+public final class SpreadsheetFormatterSharedAutomaticTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedAutomatic> {
 
     private final static LocalDate DATE = LocalDate.of(1999, 12, 31);
 
@@ -136,8 +134,8 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     };
 
     @Override
-    public AutomaticSpreadsheetFormatter createFormatter() {
-        return AutomaticSpreadsheetFormatter.with(
+    public SpreadsheetFormatterSharedAutomatic createFormatter() {
+        return SpreadsheetFormatterSharedAutomatic.with(
             DATE_FORMATTER,
             DATE_TIME_FORMATTER,
             ERROR_FORMATTER,
@@ -151,7 +149,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     public void testWithNullDateFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> AutomaticSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedAutomatic.with(
                 null,
                 DATE_TIME_FORMATTER,
                 ERROR_FORMATTER,
@@ -171,7 +169,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     public void testWithNullDateTimeFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> AutomaticSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedAutomatic.with(
                 DATE_FORMATTER,
                 null,
                 ERROR_FORMATTER,
@@ -186,7 +184,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     public void testWithNullErrorFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> AutomaticSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedAutomatic.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
                 null,
@@ -201,7 +199,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     public void testWithNullNumberFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> AutomaticSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedAutomatic.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
                 ERROR_FORMATTER,
@@ -216,7 +214,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     public void testWithNullTextFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> AutomaticSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedAutomatic.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
                 ERROR_FORMATTER,
@@ -231,7 +229,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     public void testWithNullTimeFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> AutomaticSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedAutomatic.with(
                 DATE_FORMATTER,
                 DATE_TIME_FORMATTER,
                 ERROR_FORMATTER,
@@ -438,7 +436,7 @@ public final class AutomaticSpreadsheetFormatterTest implements SpreadsheetForma
     // class............................................................................................................
 
     @Override
-    public Class<AutomaticSpreadsheetFormatter> type() {
-        return AutomaticSpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterSharedAutomatic> type() {
+        return SpreadsheetFormatterSharedAutomatic.class;
     }
 }

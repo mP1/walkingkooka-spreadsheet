@@ -35,18 +35,18 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
- * A {@link SpreadsheetValueVisitor} that selects one of the {@link SpreadsheetFormatter} on {@link AutomaticSpreadsheetFormatter}.
+ * A {@link SpreadsheetValueVisitor} that selects one of the {@link SpreadsheetFormatter} on {@link SpreadsheetFormatterSharedAutomatic}.
  */
 final class SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
-    static SpreadsheetFormatter select(final AutomaticSpreadsheetFormatter spreadsheetMetadataFormattersSpreadsheetFormatter,
+    static SpreadsheetFormatter select(final SpreadsheetFormatterSharedAutomatic spreadsheetMetadataFormattersSpreadsheetFormatter,
                                        final Object value) {
         final SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor visitor = new SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor(spreadsheetMetadataFormattersSpreadsheetFormatter);
         visitor.accept(value);
         return visitor.formatter;
     }
 
-    private SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor(final AutomaticSpreadsheetFormatter spreadsheetMetadataFormattersSpreadsheetFormatter) {
+    private SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVisitor(final SpreadsheetFormatterSharedAutomatic spreadsheetMetadataFormattersSpreadsheetFormatter) {
         this.automaticSpreadsheetFormatter = spreadsheetMetadataFormattersSpreadsheetFormatter;
     }
 
@@ -183,7 +183,7 @@ final class SpreadsheetMetadataFormattersSpreadsheetFormatterSpreadsheetValueVis
         this.formatter = this.automaticSpreadsheetFormatter.text;
     }
 
-    final AutomaticSpreadsheetFormatter automaticSpreadsheetFormatter;
+    final SpreadsheetFormatterSharedAutomatic automaticSpreadsheetFormatter;
 
     private SpreadsheetFormatter formatter;
 }
