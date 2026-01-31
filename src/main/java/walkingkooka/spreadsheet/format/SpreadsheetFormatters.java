@@ -73,10 +73,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetFormatterCollection}
+     * {@see SpreadsheetFormatterSharedCollection}
      */
     public static SpreadsheetFormatter collection(final List<SpreadsheetFormatter> formatters) {
-        return SpreadsheetFormatterCollection.with(formatters);
+        return SpreadsheetFormatterSharedCollection.with(formatters);
     }
 
     /**
