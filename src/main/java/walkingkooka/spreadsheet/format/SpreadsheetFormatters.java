@@ -172,6 +172,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetFormatterSharedHyperlinking}
+     */
+    public static SpreadsheetFormatter hyperlinking(final SpreadsheetFormatter formatter) {
+        return SpreadsheetFormatterSharedHyperlinking.with(formatter);
+    }
+
+    /**
      * {@see SpreadsheetPatternSpreadsheetFormatterNumber}
      */
     public static SpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token,
