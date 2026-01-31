@@ -29,8 +29,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatterCollectionTest implements SpreadsheetFormatterTesting2<SpreadsheetFormatterCollection>,
-    HashCodeEqualsDefinedTesting2<SpreadsheetFormatterCollection> {
+public final class SpreadsheetFormatterSharedCollectionTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedCollection>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSharedCollection> {
 
     private final static Integer VALUE1 = 11;
     private final static Double VALUE2 = 222.5;
@@ -43,7 +43,7 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     public void testWithNullFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetFormatterCollection.with(null)
+            () -> SpreadsheetFormatterSharedCollection.with(null)
         );
     }
 
@@ -51,14 +51,14 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     public void testWithEmptyFails() {
         assertThrows(
             IllegalArgumentException.class,
-            () -> SpreadsheetFormatterCollection.with(Lists.empty())
+            () -> SpreadsheetFormatterSharedCollection.with(Lists.empty())
         );
     }
 
     @Test
     public void testWithOneUnwraps() {
         final SpreadsheetFormatter formatter = SpreadsheetFormatters.fake();
-        assertSame(formatter, SpreadsheetFormatterCollection.with(Lists.of(formatter)));
+        assertSame(formatter, SpreadsheetFormatterSharedCollection.with(Lists.of(formatter)));
     }
 
     // format...........................................................................................................
@@ -82,9 +82,9 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     }
 
     @Override
-    public SpreadsheetFormatterCollection createFormatter() {
+    public SpreadsheetFormatterSharedCollection createFormatter() {
         return Cast.to(
-            SpreadsheetFormatterCollection.with(
+            SpreadsheetFormatterSharedCollection.with(
                 Lists.of(
                     this.formatter1(),
                     this.formatter2()
@@ -149,13 +149,13 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     @Test
     public void testEqualsDifferentFormatters() {
         this.checkNotEquals(
-            SpreadsheetFormatterCollection.with(
+            SpreadsheetFormatterSharedCollection.with(
                 Lists.of(
                     this.formatter1(),
                     this.formatter2()
                 )
             ),
-            SpreadsheetFormatterCollection.with(
+            SpreadsheetFormatterSharedCollection.with(
                 Lists.of(
                     this.formatter1()
                 )
@@ -164,9 +164,9 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     }
 
     @Override
-    public SpreadsheetFormatterCollection createObject() {
-        return (SpreadsheetFormatterCollection)
-            SpreadsheetFormatterCollection.with(
+    public SpreadsheetFormatterSharedCollection createObject() {
+        return (SpreadsheetFormatterSharedCollection)
+            SpreadsheetFormatterSharedCollection.with(
                 Lists.of(
                     SpreadsheetFormatters.defaultText(),
                     SpreadsheetFormatters.defaultText()
@@ -187,8 +187,8 @@ public final class SpreadsheetFormatterCollectionTest implements SpreadsheetForm
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetFormatterCollection> type() {
-        return SpreadsheetFormatterCollection.class;
+    public Class<SpreadsheetFormatterSharedCollection> type() {
+        return SpreadsheetFormatterSharedCollection.class;
     }
 
     @Override

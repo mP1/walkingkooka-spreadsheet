@@ -31,10 +31,10 @@ import java.util.stream.Stream;
 /**
  * A {@link SpreadsheetFormatter} that forms a collection trying each {@link SpreadsheetFormatter formatter} until success.
  */
-final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
+final class SpreadsheetFormatterSharedCollection extends SpreadsheetFormatterShared {
 
     /**
-     * Creates a new {@link SpreadsheetFormatterCollection} as necessary.
+     * Creates a new {@link SpreadsheetFormatterSharedCollection} as necessary.
      */
     static SpreadsheetFormatter with(final List<SpreadsheetFormatter> formatters) {
         Objects.requireNonNull(formatters, "formatters");
@@ -49,7 +49,7 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
                 result = copy.iterator().next();
                 break;
             default:
-                result = new SpreadsheetFormatterCollection(copy);
+                result = new SpreadsheetFormatterSharedCollection(copy);
                 break;
         }
 
@@ -59,7 +59,7 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     /**
      * Private ctor.
      */
-    private SpreadsheetFormatterCollection(final List<SpreadsheetFormatter> formatters) {
+    private SpreadsheetFormatterSharedCollection(final List<SpreadsheetFormatter> formatters) {
         super();
         this.formatters = formatters;
     }
@@ -104,11 +104,11 @@ final class SpreadsheetFormatterCollection implements SpreadsheetFormatter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetFormatterCollection &&
+            other instanceof SpreadsheetFormatterSharedCollection &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetFormatterCollection other) {
+    private boolean equals0(final SpreadsheetFormatterSharedCollection other) {
         return this.formatters.equals(other.formatters);
     }
 
