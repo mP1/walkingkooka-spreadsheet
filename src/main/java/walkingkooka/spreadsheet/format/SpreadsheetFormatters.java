@@ -136,10 +136,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ExpressionSpreadsheetFormatter}
+     * {@see SpreadsheetFormatterSharedExpression}
      */
     public static SpreadsheetFormatter expression(final Expression expression) {
-        return ExpressionSpreadsheetFormatter.with(expression);
+        return SpreadsheetFormatterSharedExpression.with(expression);
     }
 
     /**

@@ -31,16 +31,16 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that executes the given {@link Expression} and returning a {@link TextNode}
  * from the result.
  */
-final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter,
-    TreePrintable {
+final class SpreadsheetFormatterSharedExpression extends SpreadsheetFormatterShared
+    implements TreePrintable {
 
-    static ExpressionSpreadsheetFormatter with(final Expression expression) {
-        return new ExpressionSpreadsheetFormatter(
+    static SpreadsheetFormatterSharedExpression with(final Expression expression) {
+        return new SpreadsheetFormatterSharedExpression(
             Objects.requireNonNull(expression, "expression")
         );
     }
 
-    private ExpressionSpreadsheetFormatter(final Expression expression) {
+    private SpreadsheetFormatterSharedExpression(final Expression expression) {
         super();
         this.expression = expression;
     }
@@ -76,10 +76,10 @@ final class ExpressionSpreadsheetFormatter implements SpreadsheetFormatter,
 
     @Override
     public boolean equals(final Object other) {
-        return this == other || other instanceof ExpressionSpreadsheetFormatter && this.equals0((ExpressionSpreadsheetFormatter) other);
+        return this == other || other instanceof SpreadsheetFormatterSharedExpression && this.equals0((SpreadsheetFormatterSharedExpression) other);
     }
 
-    private boolean equals0(final ExpressionSpreadsheetFormatter other) {
+    private boolean equals0(final SpreadsheetFormatterSharedExpression other) {
         return this.expression.equals(other.expression);
     }
 
