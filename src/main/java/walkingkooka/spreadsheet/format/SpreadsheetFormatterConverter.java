@@ -57,7 +57,7 @@ final class SpreadsheetFormatterConverter implements Converter<SpreadsheetConver
                                          final SpreadsheetConverterContext context) {
         return this.formatter.format(
                 Optional.ofNullable(value),
-                SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
+                SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(context))
             .map(
                 t -> this.successfulConversion(
                     t.text(),

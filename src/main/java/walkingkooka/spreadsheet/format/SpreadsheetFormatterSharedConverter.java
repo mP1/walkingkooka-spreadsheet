@@ -32,14 +32,14 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that formats values by attempt to convert any given value to {@link String text},
  * using the provided {@link Converter}.
  */
-final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetFormatterSharedConverter extends SpreadsheetFormatterShared {
 
-    static ConverterSpreadsheetFormatter with(final Converter<ExpressionNumberConverterContext> converter) {
+    static SpreadsheetFormatterSharedConverter with(final Converter<ExpressionNumberConverterContext> converter) {
         Objects.requireNonNull(converter, "converter");
-        return new ConverterSpreadsheetFormatter(converter);
+        return new SpreadsheetFormatterSharedConverter(converter);
     }
 
-    private ConverterSpreadsheetFormatter(final Converter<ExpressionNumberConverterContext> converter) {
+    private SpreadsheetFormatterSharedConverter(final Converter<ExpressionNumberConverterContext> converter) {
         super();
         this.converter = converter;
     }

@@ -103,10 +103,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see ConverterSpreadsheetFormatter}
+     * {@see SpreadsheetFormatterSharedConverter}
      */
     public static SpreadsheetFormatter converter(final Converter<ExpressionNumberConverterContext> converter) {
-        return ConverterSpreadsheetFormatter.with(converter);
+        return SpreadsheetFormatterSharedConverter.with(converter);
     }
 
     /**
