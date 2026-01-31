@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 
 public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFormatterShared> implements SpreadsheetFormatterTesting2<F>,
     ToStringTesting<F>,
@@ -34,7 +33,7 @@ public abstract class SpreadsheetFormatterSharedTestCase<F extends SpreadsheetFo
 
     @Override
     public final String typeNamePrefix() {
-        return SpreadsheetFormatterSelector.class.getSimpleName();
+        return SpreadsheetFormatterShared.class.getSimpleName();
     }
 
     @Override
