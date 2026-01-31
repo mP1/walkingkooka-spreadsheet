@@ -31,13 +31,13 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BadgeErrorSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<BadgeErrorSpreadsheetFormatter> {
+public final class SpreadsheetFormatterSharedBadgeErrorTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedBadgeError> {
 
     @Test
     public void testWithNullFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BadgeErrorSpreadsheetFormatter.with(null)
+            () -> SpreadsheetFormatterSharedBadgeError.with(null)
         );
     }
 
@@ -93,8 +93,8 @@ public final class BadgeErrorSpreadsheetFormatterTest implements SpreadsheetForm
     }
 
     @Override
-    public BadgeErrorSpreadsheetFormatter createFormatter() {
-        return BadgeErrorSpreadsheetFormatter.with(
+    public SpreadsheetFormatterSharedBadgeError createFormatter() {
+        return SpreadsheetFormatterSharedBadgeError.with(
             SpreadsheetPattern.parseTextFormatPattern("@@")
                     .formatter()
         );
@@ -141,7 +141,7 @@ public final class BadgeErrorSpreadsheetFormatterTest implements SpreadsheetForm
     // class............................................................................................................
 
     @Override
-    public Class<BadgeErrorSpreadsheetFormatter> type() {
-        return BadgeErrorSpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterSharedBadgeError> type() {
+        return SpreadsheetFormatterSharedBadgeError.class;
     }
 }

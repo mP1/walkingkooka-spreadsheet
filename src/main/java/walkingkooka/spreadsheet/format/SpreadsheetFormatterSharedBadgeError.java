@@ -33,18 +33,18 @@ import java.util.Optional;
  * A {@link SpreadsheetFormatter} that outputs a {@link Badge} with the error text, and uses the
  * given {@link SpreadsheetFormatter} to format the {@link SpreadsheetError}.
  */
-final class BadgeErrorSpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetFormatterSharedBadgeError extends SpreadsheetFormatterShared {
 
     /**
-     * Creates a new {@link BadgeErrorSpreadsheetFormatter}.
+     * Creates a new {@link SpreadsheetFormatterSharedBadgeError}.
      */
-    static BadgeErrorSpreadsheetFormatter with(final SpreadsheetFormatter formatter) {
-        return new BadgeErrorSpreadsheetFormatter(
+    static SpreadsheetFormatterSharedBadgeError with(final SpreadsheetFormatter formatter) {
+        return new SpreadsheetFormatterSharedBadgeError(
             Objects.requireNonNull(formatter, "formatter")
         );
     }
 
-    private BadgeErrorSpreadsheetFormatter(final SpreadsheetFormatter formatter) {
+    private SpreadsheetFormatterSharedBadgeError(final SpreadsheetFormatter formatter) {
         super();
         this.formatter = formatter;
     }
@@ -112,11 +112,11 @@ final class BadgeErrorSpreadsheetFormatter implements SpreadsheetFormatter {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof BadgeErrorSpreadsheetFormatter &&
+            other instanceof SpreadsheetFormatterSharedBadgeError &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final BadgeErrorSpreadsheetFormatter other) {
+    private boolean equals0(final SpreadsheetFormatterSharedBadgeError other) {
         return this.formatter.equals(other.formatter);
     }
 

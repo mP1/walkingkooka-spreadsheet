@@ -66,10 +66,10 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
-     * {@see BadgeErrorSpreadsheetFormatter}
+     * {@see SpreadsheetFormatterSharedBadgeError}
      */
     public static SpreadsheetFormatter badgeError(final SpreadsheetFormatter formatter) {
-        return BadgeErrorSpreadsheetFormatter.with(formatter);
+        return SpreadsheetFormatterSharedBadgeError.with(formatter);
     }
 
     /**
