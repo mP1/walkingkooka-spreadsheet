@@ -30,8 +30,8 @@ import java.util.Optional;
 /**
  * Wrapos another {@link SpreadsheetFormatter} and uses the provided {@link #toString()}.
  */
-final class ToStringSpreadsheetFormatter implements SpreadsheetFormatter,
-    TreePrintable {
+final class SpreadsheetFormatterSharedToString extends SpreadsheetFormatterShared
+    implements TreePrintable {
 
     static SpreadsheetFormatter with(final SpreadsheetFormatter formatter,
                                   final String toString) {
@@ -45,13 +45,13 @@ final class ToStringSpreadsheetFormatter implements SpreadsheetFormatter,
         if (temp.toString().equals(toString)) {
             formatterWithToString = formatter; // no need to wrap
         } else {
-            if (temp instanceof ToStringSpreadsheetFormatter) {
-                temp = ((ToStringSpreadsheetFormatter) temp).formatter;
+            if (temp instanceof SpreadsheetFormatterSharedToString) {
+                temp = ((SpreadsheetFormatterSharedToString) temp).formatter;
             }
             if (temp.toString().equals(toString)) {
                 formatterWithToString = formatter; // no need to wrap
             } else {
-                formatterWithToString = new ToStringSpreadsheetFormatter(
+                formatterWithToString = new SpreadsheetFormatterSharedToString(
                     formatter,
                     toString
                 );
@@ -61,8 +61,8 @@ final class ToStringSpreadsheetFormatter implements SpreadsheetFormatter,
         return formatterWithToString;
     }
 
-    private ToStringSpreadsheetFormatter(final SpreadsheetFormatter formatter,
-                                         final String toString) {
+    private SpreadsheetFormatterSharedToString(final SpreadsheetFormatter formatter,
+                                               final String toString) {
         super();
 
         this.formatter = formatter;
@@ -98,11 +98,11 @@ final class ToStringSpreadsheetFormatter implements SpreadsheetFormatter,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof ToStringSpreadsheetFormatter &&
+            other instanceof SpreadsheetFormatterSharedToString &&
                 this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final ToStringSpreadsheetFormatter other) {
+    private boolean equals0(final SpreadsheetFormatterSharedToString other) {
         return this.formatter.equals(other.formatter) &&
             this.toString.equals(other.toString);
     }

@@ -19,10 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelectorToken;
 import walkingkooka.tree.text.TextNode;
 
@@ -33,10 +30,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ToStringSpreadsheetFormatter>,
-    HashCodeEqualsDefinedTesting2<ToStringSpreadsheetFormatter>,
-    ToStringTesting<ToStringSpreadsheetFormatter>,
-    ClassTesting2<ToStringSpreadsheetFormatter> {
+public final class SpreadsheetFormatterSharedToStringTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedToString>
+    implements HashCodeEqualsDefinedTesting2<SpreadsheetFormatterSharedToString> {
 
     private final static List<SpreadsheetFormatterSelectorToken> TOKENS = Lists.of(
         SpreadsheetFormatterSelectorToken.with(
@@ -83,7 +78,7 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     public void testWithNullFormatterFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ToStringSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedToString.with(
                 null,
                 TO_STRING
             )
@@ -94,7 +89,7 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     public void testWithNullToStringFails() {
         assertThrows(
             NullPointerException.class,
-            () -> ToStringSpreadsheetFormatter.with(
+            () -> SpreadsheetFormatterSharedToString.with(
                 FORMATTER,
                 null
             )
@@ -105,7 +100,7 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     public void testWithToStringSameToString() {
         assertSame(
             FORMATTER,
-            ToStringSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedToString.with(
                 FORMATTER,
                 FORMATTER.toString()
             )
@@ -114,10 +109,10 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
 
     @Test
     public void testWithToStringSameToString2() {
-        final ToStringSpreadsheetFormatter formatter = this.createFormatter();
+        final SpreadsheetFormatterSharedToString formatter = this.createFormatter();
         assertSame(
             formatter,
-            ToStringSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedToString.with(
                 formatter,
                 formatter.toString()
             )
@@ -126,11 +121,11 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
 
     @Test
     public void testWithToStringSpreadsheetFormatterUnwraps() {
-        final ToStringSpreadsheetFormatter formatter = this.createFormatter();
+        final SpreadsheetFormatterSharedToString formatter = this.createFormatter();
 
         assertSame(
             formatter,
-            ToStringSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedToString.with(
                 formatter,
                 FORMATTER.toString()
             )
@@ -155,9 +150,9 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     }
 
     @Override
-    public ToStringSpreadsheetFormatter createFormatter() {
-        return (ToStringSpreadsheetFormatter)
-            ToStringSpreadsheetFormatter.with(
+    public SpreadsheetFormatterSharedToString createFormatter() {
+        return (SpreadsheetFormatterSharedToString)
+            SpreadsheetFormatterSharedToString.with(
                 FORMATTER,
                 TO_STRING
             );
@@ -178,7 +173,7 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     @Test
     public void testEqualsDifferentFormatter() {
         this.checkNotEquals(
-            ToStringSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedToString.with(
                 SpreadsheetFormatters.fake(),
                 TO_STRING
             )
@@ -188,7 +183,7 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-            ToStringSpreadsheetFormatter.with(
+            SpreadsheetFormatterSharedToString.with(
                 FORMATTER,
                 "DifferentToString"
             )
@@ -196,7 +191,7 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     }
 
     @Override
-    public ToStringSpreadsheetFormatter createObject() {
+    public SpreadsheetFormatterSharedToString createObject() {
         return this.createFormatter();
     }
 
@@ -216,20 +211,15 @@ public final class ToStringSpreadsheetFormatterTest implements SpreadsheetFormat
     public void testTreePrintable() {
         this.treePrintAndCheck(
             this.createFormatter(),
-            "ToStringSpreadsheetFormatter\n" +
-                "  TestSpreadsheetFormatter (walkingkooka.spreadsheet.format.ToStringSpreadsheetFormatterTest$1)\n"
+            "SpreadsheetFormatterSharedToString\n" +
+                "  TestSpreadsheetFormatter (walkingkooka.spreadsheet.format.SpreadsheetFormatterSharedToStringTest$1)\n"
         );
     }
 
     // Class............................................................................................................
 
     @Override
-    public Class<ToStringSpreadsheetFormatter> type() {
-        return ToStringSpreadsheetFormatter.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    public Class<SpreadsheetFormatterSharedToString> type() {
+        return SpreadsheetFormatterSharedToString.class;
     }
 }
