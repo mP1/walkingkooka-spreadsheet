@@ -27,17 +27,17 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that delegates formatting to {@link SpreadsheetFormatterContext#formatValue(Optional)}.
  */
-final class ContextFormatValueTextSpreadsheetFormatter implements SpreadsheetFormatter {
+final class SpreadsheetFormatterSharedContextFormat extends SpreadsheetFormatterShared {
 
     /**
-     * The {@link ContextFormatValueTextSpreadsheetFormatter} singleton instance.
+     * The {@link SpreadsheetFormatterSharedContextFormat} singleton instance.
      */
-    static final ContextFormatValueTextSpreadsheetFormatter INSTANCE = new ContextFormatValueTextSpreadsheetFormatter();
+    static final SpreadsheetFormatterSharedContextFormat INSTANCE = new SpreadsheetFormatterSharedContextFormat();
 
     /**
      * Private ctor use factory
      */
-    private ContextFormatValueTextSpreadsheetFormatter() {
+    private SpreadsheetFormatterSharedContextFormat() {
         super();
     }
 
