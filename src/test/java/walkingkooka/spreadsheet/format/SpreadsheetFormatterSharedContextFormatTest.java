@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public final class ContextFormatTextSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ContextFormatValueTextSpreadsheetFormatter> {
+public final class SpreadsheetFormatterSharedContextFormatTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedContextFormat> {
 
     private final static BigDecimal BIG_DECIMAL = BigDecimal.valueOf(123);
     private final static String BIGDECIMAL_STRING = "123D00Text";
@@ -73,8 +73,8 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     }
 
     @Override
-    public ContextFormatValueTextSpreadsheetFormatter createFormatter() {
-        return ContextFormatValueTextSpreadsheetFormatter.INSTANCE;
+    public SpreadsheetFormatterSharedContextFormat createFormatter() {
+        return SpreadsheetFormatterSharedContextFormat.INSTANCE;
     }
 
     @Override
@@ -190,7 +190,7 @@ public final class ContextFormatTextSpreadsheetFormatterTest implements Spreadsh
     // class............................................................................................................
 
     @Override
-    public Class<ContextFormatValueTextSpreadsheetFormatter> type() {
-        return ContextFormatValueTextSpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterSharedContextFormat> type() {
+        return SpreadsheetFormatterSharedContextFormat.class;
     }
 }

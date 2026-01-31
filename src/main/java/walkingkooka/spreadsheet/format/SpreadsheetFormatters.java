@@ -99,7 +99,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * {@see ContextFormatTextSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter contextFormatValue() {
-        return ContextFormatValueTextSpreadsheetFormatter.INSTANCE;
+        return SpreadsheetFormatterSharedContextFormat.INSTANCE;
     }
 
     /**
