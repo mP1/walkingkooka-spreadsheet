@@ -46,7 +46,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
-public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterConverterSpreadsheetFormatterContext>,
+public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
     DecimalNumberContextDelegator {
 
     private final static Locale LOCALE = Locale.FRANCE;
@@ -105,7 +105,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     public void testToString() {
         final SpreadsheetConverterContext converterContext = this.converterContext();
         this.toStringAndCheck(
-            SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(converterContext),
+            SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(converterContext),
             converterContext.toString()
         );
     }
@@ -116,8 +116,8 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     @Override
-    public SpreadsheetFormatterConverterSpreadsheetFormatterContext createContext() {
-        return SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(this.converterContext());
+    public SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext createContext() {
+        return SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(this.converterContext());
     }
 
     @Override
@@ -226,7 +226,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetFormatterConverterSpreadsheetFormatterContext> type() {
-        return SpreadsheetFormatterConverterSpreadsheetFormatterContext.class;
+    public Class<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext> type() {
+        return SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.class;
     }
 }

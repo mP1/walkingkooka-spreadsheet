@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class ConverterSpreadsheetFormatterTest implements SpreadsheetFormatterTesting2<ConverterSpreadsheetFormatter> {
+public final class SpreadsheetFormatterSharedConverterTest extends SpreadsheetFormatterSharedTestCase<SpreadsheetFormatterSharedConverter> {
 
     @Test
     public void testFormatNullValue() {
@@ -49,8 +49,8 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
     }
 
     @Override
-    public ConverterSpreadsheetFormatter createFormatter() {
-        return ConverterSpreadsheetFormatter.with(
+    public SpreadsheetFormatterSharedConverter createFormatter() {
+        return SpreadsheetFormatterSharedConverter.with(
             Converters.localDateToString(
                 c -> DateTimeFormatter.ISO_DATE
             )
@@ -78,7 +78,7 @@ public final class ConverterSpreadsheetFormatterTest implements SpreadsheetForma
     }
 
     @Override
-    public Class<ConverterSpreadsheetFormatter> type() {
-        return ConverterSpreadsheetFormatter.class;
+    public Class<SpreadsheetFormatterSharedConverter> type() {
+        return SpreadsheetFormatterSharedConverter.class;
     }
 }

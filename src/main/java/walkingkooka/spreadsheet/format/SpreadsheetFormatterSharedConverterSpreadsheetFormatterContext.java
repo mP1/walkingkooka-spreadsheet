@@ -42,16 +42,16 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
-final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
+final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
     StorageConverterContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator {
 
-    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
-        return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
+    static SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
+        return new SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext(context);
     }
 
-    private SpreadsheetFormatterConverterSpreadsheetFormatterContext(final SpreadsheetConverterContext context) {
+    private SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext(final SpreadsheetConverterContext context) {
         super();
 
         this.context = context;
@@ -138,7 +138,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
         return before.equals(after) ?
             this :
-            new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
+            new SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext(after);
     }
 
     @Override
@@ -148,7 +148,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
         return before.equals(after) ?
             this :
-            new SpreadsheetFormatterConverterSpreadsheetFormatterContext(after);
+            new SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext(after);
     }
 
     // LocaleContextDelegator...........................................................................................
