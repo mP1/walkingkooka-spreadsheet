@@ -836,7 +836,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testSpreadsheetValidatorContextWithNullIndentationContextFails() {
+    public final void testSpreadsheetValidatorContextWithNullIndentationFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createObject()
