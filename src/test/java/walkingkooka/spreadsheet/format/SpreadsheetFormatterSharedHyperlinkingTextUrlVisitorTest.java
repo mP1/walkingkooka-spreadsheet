@@ -66,6 +66,25 @@ public final class SpreadsheetFormatterSharedHyperlinkingTextUrlVisitorTest impl
         );
     }
 
+    @Test
+    public void testToTextWithHyperlinkAndText2() {
+        final String url = "https://example.com";
+        final String text1 = " text1";
+        final String text2 = " text2";
+
+        this.toTextNodeAndCheck(
+            url + text1 + text2,
+            TextNode.style(
+                Lists.of(
+                    TextNode.hyperlink(
+                        Url.parse(url)
+                    ),
+                    TextNode.text(text1 + text2)
+                )
+            )
+        );
+    }
+
     private void toTextNodeAndCheck(final String text,
                                     final TextNode expected) {
         this.checkEquals(
