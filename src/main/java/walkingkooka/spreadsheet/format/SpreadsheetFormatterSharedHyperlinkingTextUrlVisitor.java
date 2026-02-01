@@ -35,7 +35,7 @@ final class SpreadsheetFormatterSharedHyperlinkingTextUrlVisitor extends TextUrl
         visitor.accept(text);
         return TextNode.style(
             visitor.nodes
-        );
+        ).normalize();
     }
 
     // @VisibleForTesting
