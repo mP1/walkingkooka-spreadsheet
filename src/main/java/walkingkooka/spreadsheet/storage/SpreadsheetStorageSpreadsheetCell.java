@@ -18,9 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.collect.list.ImmutableList;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.header.MediaType;
-import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -91,11 +89,6 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
 
         return Optional.ofNullable(value);
     }
-
-    /**
-     * Select only cells to appear in the response.
-     */
-    private final static Set<SpreadsheetDeltaProperties> CELLS_ONLY = Sets.of(SpreadsheetDeltaProperties.CELLS);
 
     @Override
     StorageValue saveNonNull(final StorageValue value,
