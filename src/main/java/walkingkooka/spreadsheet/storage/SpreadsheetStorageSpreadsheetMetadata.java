@@ -192,7 +192,7 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
 
     private static SpreadsheetId parseSpreadsheetId(final StorageName name) {
         return SpreadsheetId.parse(
-            name.value()
+            name.withoutFileExtension()
         );
     }
 
