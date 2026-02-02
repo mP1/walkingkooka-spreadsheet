@@ -18,14 +18,12 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.convert.Converters;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
@@ -60,7 +58,6 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
@@ -75,10 +72,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetStorageRouterTest implements StorageTesting<SpreadsheetStorageRouter, SpreadsheetStorageContext>,
-    SpreadsheetStorageContextTesting,
-    ToStringTesting<SpreadsheetStorageRouter>,
-    SpreadsheetMetadataTesting {
+public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCase<SpreadsheetStorageRouter>
+    implements SpreadsheetStorageContextTesting {
 
     private final static SpreadsheetId SPREADSHEET_ID1 = SpreadsheetId.with(0x111);
 
@@ -1621,10 +1616,5 @@ public final class SpreadsheetStorageRouterTest implements StorageTesting<Spread
     @Override
     public Class<SpreadsheetStorageRouter> type() {
         return SpreadsheetStorageRouter.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

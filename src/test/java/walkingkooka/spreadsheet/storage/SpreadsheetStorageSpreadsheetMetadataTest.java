@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.storage;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
@@ -34,7 +33,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 
@@ -44,8 +42,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetStorageSpreadsheetMetadataTest implements StorageTesting<SpreadsheetStorageSpreadsheetMetadata, SpreadsheetStorageContext>,
-    SpreadsheetMetadataTesting {
+public final class SpreadsheetStorageSpreadsheetMetadataTest extends SpreadsheetStorageTestCase<SpreadsheetStorageSpreadsheetMetadata> {
 
     @Test
     public void testLoadMissingSpreadsheetMetadata() {
@@ -437,10 +434,5 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest implements StorageT
     @Override
     public Class<SpreadsheetStorageSpreadsheetMetadata> type() {
         return SpreadsheetStorageSpreadsheetMetadata.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
