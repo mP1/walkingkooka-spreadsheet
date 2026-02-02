@@ -17,14 +17,18 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.storage.StorageTesting;
 
-public abstract class SpreadsheetStorageSharedTestCase<T extends SpreadsheetStorageShared> implements StorageTesting<T, SpreadsheetStorageContext>,
-    TypeNameTesting<T> {
+public abstract class SpreadsheetStorageTestCase<T extends SpreadsheetStorage> implements StorageTesting<T, SpreadsheetStorageContext>,
+    TypeNameTesting<T>,
+    ToStringTesting<T>,
+    SpreadsheetMetadataTesting {
 
-    SpreadsheetStorageSharedTestCase() {
+    SpreadsheetStorageTestCase() {
         super();
     }
 
@@ -37,7 +41,7 @@ public abstract class SpreadsheetStorageSharedTestCase<T extends SpreadsheetStor
 
     @Override
     public final String typeNamePrefix() {
-        return SpreadsheetStorageShared.class.getSimpleName();
+        return SpreadsheetStorage.class.getSimpleName();
     }
 
     @Override

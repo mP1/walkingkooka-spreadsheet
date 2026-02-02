@@ -28,7 +28,6 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -43,7 +42,6 @@ import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
@@ -55,7 +53,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.storage.StorageTesting;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
@@ -70,8 +67,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTesting<SpreadsheetStorageSpreadsheetLabel, SpreadsheetStorageContext>,
-    SpreadsheetMetadataTesting {
+public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetStorageTestCase<SpreadsheetStorageSpreadsheetLabel> {
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("Label111");
 
@@ -466,10 +462,5 @@ public final class SpreadsheetStorageSpreadsheetLabelTest implements StorageTest
     @Override
     public Class<SpreadsheetStorageSpreadsheetLabel> type() {
         return SpreadsheetStorageSpreadsheetLabel.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
