@@ -90,6 +90,27 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
     }
 
     @Test
+    public void testLoadWithFileExtension() {
+        final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
+
+        final SpreadsheetMetadata metadata = context.saveMetadata(METADATA_EN_AU);
+
+        final StoragePath path = StoragePath.parse(
+            "/" + metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID) + ".json"
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(metadata)
+            ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+        );
+    }
+
+    @Test
     public void testSaveWithStoragePathIncludingSpreadsheetIdFails() {
         final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
 
