@@ -156,6 +156,31 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
     }
 
     @Test
+    public void testLoadWIthFileExtension() {
+        final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
+
+        SpreadsheetEngines.basic()
+            .saveLabel(
+                MAPPING1,
+                spreadsheetContext.spreadsheetEngineContext()
+            );
+        final SpreadsheetStorageContext context = this.createContext(spreadsheetContext);
+
+
+        final StoragePath path = StoragePath.parse("/" + LABEL1 + ".json");
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(MAPPING1)
+            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+        );
+    }
+
+    @Test
     public void testSaveWithExtraPathFails() {
         final IllegalArgumentException thrown = assertThrows(
             IllegalArgumentException.class,
