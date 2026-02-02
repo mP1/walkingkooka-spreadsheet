@@ -177,7 +177,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
 
     private static SpreadsheetExpressionReference parseExpressionReference(final StorageName name) {
         return SpreadsheetSelection.parseExpressionReference(
-            name.value()
+            name.withoutFileExtension()
         );
     }
 

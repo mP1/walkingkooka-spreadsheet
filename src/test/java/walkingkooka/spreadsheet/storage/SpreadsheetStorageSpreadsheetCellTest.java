@@ -164,6 +164,41 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     }
 
     @Test
+    public void testLoadCellWithFileExtension() {
+        final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
+
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1")
+        );
+
+        SpreadsheetEngines.basic()
+            .saveCell(
+                cell,
+                spreadsheetContext.spreadsheetEngineContext()
+            );
+
+        final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
+
+        final StoragePath path = StoragePath.parse("/A1.json");
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            storageContext,
+            StorageValue.with(
+                path,
+                Optional.of(
+                    SpreadsheetCellSet.EMPTY.concat(
+                        spreadsheetContext.storeRepository()
+                            .cells()
+                            .loadOrFail(cell.reference())
+                    )
+                )
+            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+        );
+    }
+
+    @Test
     public void testLoadCellRange() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
 
