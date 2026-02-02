@@ -277,7 +277,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
     @Test
     public void testLoadWithSpreadsheetId2() {
-        final StoragePath path = StoragePath.parse("/spreadsheet/222");
+        final StoragePath path = StoragePath.parse("/spreadsheet/222.JSON");
 
         this.loadAndCheck(
             this.createStorage(),
@@ -375,6 +375,35 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testLoadWithCellAndFileExtension() {
+        final StoragePath path = StoragePath.parse("/cell/a1.json");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(
+                    CELL1.setFormattedValue(
+                        Optional.of(
+                            TextNode.text("111.")
+                        )
+                    )
+                )
+            ).setContentType(
+                SpreadsheetMediaTypes.MEMORY_CELL
+            )
+        );
+    }
+
+    @Test
     public void testLoadWithUnknownCell() {
         final SpreadsheetStorageContext context = this.createContext();
         context.setEnvironmentValue(
@@ -392,6 +421,29 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     @Test
     public void testLoadWithLabel() {
         final StoragePath path = StoragePath.parse("/label/Label111");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(MAPPING1)
+            ).setContentType(
+                SpreadsheetMediaTypes.MEMORY_LABEL
+            )
+        );
+    }
+
+    @Test
+    public void testLoadWithLabelAndFileExtension() {
+        final StoragePath path = StoragePath.parse("/label/Label111.json");
 
         final SpreadsheetStorageContext context = this.createContext();
         context.setEnvironmentValue(
@@ -511,6 +563,29 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testLoadWithSpreadsheetAndCellAndFileExtension() {
+        final StoragePath path = StoragePath.parse("/spreadsheet/222/cell/B2.json");
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            this.createContext(),
+            StorageValue.with(
+                path,
+                Optional.of(
+                    CELL2.setFormattedValue(
+                        Optional.of(
+                            TextNode.text("222.")
+                        )
+                    )
+                )
+            ).setContentType(
+                SpreadsheetMediaTypes.MEMORY_CELL
+            )
+        );
+    }
+
+    @Test
     public void testLoadWithSpreadsheetAndLabel() {
         final StoragePath path = StoragePath.parse("/spreadsheet/111/label/Label111");
 
@@ -530,6 +605,23 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     @Test
     public void testLoadWithSpreadsheetAndLabel2() {
         final StoragePath path = StoragePath.parse("/spreadsheet/222/label/Label222");
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            this.createContext(),
+            StorageValue.with(
+                path,
+                Optional.of(MAPPING2)
+            ).setContentType(
+                SpreadsheetMediaTypes.MEMORY_LABEL
+            )
+        );
+    }
+
+    @Test
+    public void testLoadWithSpreadsheetAndLabelAndFileExtension() {
+        final StoragePath path = StoragePath.parse("/spreadsheet/222/label/Label222.json");
 
         this.loadAndCheck(
             this.createStorage(),
