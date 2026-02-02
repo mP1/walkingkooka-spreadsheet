@@ -176,7 +176,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
 
     private static SpreadsheetLabelName parseLabel(final StorageName name) {
         return SpreadsheetSelection.labelName(
-            name.value()
+            name.withoutFileExtension()
         );
     }
 
