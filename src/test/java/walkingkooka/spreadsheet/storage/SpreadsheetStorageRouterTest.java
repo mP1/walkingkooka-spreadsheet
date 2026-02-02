@@ -638,8 +638,6 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
     // Storage.save.....................................................................................................
 
-    // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/8566
-    // SpreadsheetContextSharedMutableSpreadsheetId is broken when missing SpreadsheetId
     @Test
     public void testSaveWithSpreadsheetIdAndMissingSpreadsheetEnvironmentContextSpreadsheetIdFails() {
         final SpreadsheetStorageContext context = this.createContext();
