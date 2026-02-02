@@ -1034,6 +1034,20 @@ final class MissingConverterVerifier {
                 );
             }
 
+            if (scripting) {
+                final StoragePath storagePathWithout = StoragePath.parse("/path1/file2");
+                final StoragePath storagePathJson = StoragePath.parse("/path1/file2.json");
+
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        storagePathWithout,
+                        storagePathJson
+                    ),
+                    Class.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_PATH_JSON_TO_CLASS
+                );
+            }
+
             // text-to-error............................................................................................
             if (validation) {
                 verifier.addIfConversionFail(
