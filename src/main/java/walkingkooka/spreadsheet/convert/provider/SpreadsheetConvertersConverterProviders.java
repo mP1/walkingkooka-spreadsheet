@@ -51,6 +51,7 @@ public final class SpreadsheetConvertersConverterProviders implements PublicStat
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.NUMBER_TO_COLOR)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
+        .deleteAliasOrName(SpreadsheetConvertersConverterProvider.STORAGE_VALUE_INFO_LIST_TO_TEXT)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_STORAGE_PATH)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TEXT_TO_FORM_NAME)
         .deleteAliasOrName(SpreadsheetConvertersConverterProvider.TO_STYLEABLE)
