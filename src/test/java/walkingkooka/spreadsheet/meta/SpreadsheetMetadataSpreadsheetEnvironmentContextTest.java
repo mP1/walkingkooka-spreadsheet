@@ -650,7 +650,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    spreadsheet-selection-to-text\n" +
                 "    spreadsheet-value\n" +
                 "    storage\n" +
-                "    storage-path-to-json-node-class\n" +
+                "    storage-path-json-to-class\n" +
                 "    storage-value-info-list-to-text\n" +
                 "    style\n" +
                 "    system\n" +

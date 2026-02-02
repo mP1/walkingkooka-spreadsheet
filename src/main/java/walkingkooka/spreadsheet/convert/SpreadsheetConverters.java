@@ -553,10 +553,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {@see StorageConverters#storagePathToJsonNodeClass}
+     * {@see StorageConverters#storagePathJsonToClass}
      */
-    public static Converter<SpreadsheetConverterContext> storagePathToJsonNodeClass() {
-        return StorageConverters.storagePathToJsonNodeClass();
+    public static Converter<SpreadsheetConverterContext> storagePathJsonToClass() {
+        return StorageConverters.storagePathJsonToClass();
     }
 
     /**
