@@ -519,6 +519,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStoragePathToJsonNodeClass() {
+        this.converterAndCheck(
+            "storage-path-to-json-node-class",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storagePathToJsonNodeClass()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStorageValueInfoListToText() {
         this.converterAndCheck(
             "storage-value-info-list-to-text",
