@@ -61,8 +61,6 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
     public void testLoadMissingSpreadsheetId() {
         final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
 
-        final SpreadsheetMetadata metadata = context.saveMetadata(METADATA_EN_AU);
-
         final StoragePath path = StoragePath.ROOT;
 
         this.loadAndCheck(
