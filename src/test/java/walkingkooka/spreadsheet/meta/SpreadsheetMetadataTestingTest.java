@@ -144,7 +144,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testProviderContextSetEnvironmentValueFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> PROVIDER_CONTEXT.setEnvironmentValue(
                 EnvironmentValueName.with(
                     "Hello",
@@ -158,7 +158,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     @Test
     public void testProviderContextRemoveEnvironmentValueFails() {
         assertThrows(
-            UnsupportedOperationException.class,
+            ReadOnlyEnvironmentValueException.class,
             () -> PROVIDER_CONTEXT.removeEnvironmentValue(
                 EnvironmentValueName.with(
                     "Hello",
