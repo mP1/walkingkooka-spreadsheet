@@ -704,6 +704,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    to-json-node\n" +
                 "    to-json-text\n" +
                 "    to-number\n" +
+                "    to-string\n" +
                 "    to-styleable\n" +
                 "    to-validation-checkbox\n" +
                 "    to-validation-choice\n" +
