@@ -147,7 +147,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     @Test
     public void testBasicConvertListNullToNumber() {
         this.basicConvertAndCheck(
-            Arrays.asList((Object)null),
+            Arrays.asList((Object) null),
             Integer.class,
             0
         );
@@ -239,7 +239,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             expected
         );
     }
-    
+
     // boolean..........................................................................................................
 
     @Test
@@ -340,7 +340,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             expected
         );
     }
-    
+
     // color.............................................................................................................
 
     @Test
@@ -463,8 +463,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private <T> void colorConvertAndCheck(final Object value,
-                                         final Class<T> type,
-                                         final T expected) {
+                                          final Class<T> type,
+                                          final T expected) {
         this.convertAndCheck(
             SpreadsheetConverters.color(),
             value,
@@ -865,7 +865,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
         private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
     };
-    
+
     // formAndValidation................................................................................................
 
     @Test
@@ -1061,7 +1061,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             return ',';
         }
     };
-    
+
     // json.............................................................................................................
 
     @Test
@@ -1130,7 +1130,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             cell
         );
     }
-    
+
     private void jsonConvertAndCheck(final Object value,
                                      final Object expected) {
         this.jsonConvertAndCheck(
@@ -1141,8 +1141,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private <T> void jsonConvertAndCheck(final Object value,
-                                          final Class<T> type,
-                                          final T expected) {
+                                         final Class<T> type,
+                                         final T expected) {
         this.convertAndCheck(
             SpreadsheetConverters.json(),
             value,
@@ -1605,7 +1605,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testNumberConvertStringToByte() {
         this.numberConvertAndCheck(
             "123",
-            (byte)123
+            (byte) 123
         );
     }
 
@@ -1613,7 +1613,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     public void testNumberConvertStringToShort() {
         this.numberConvertAndCheck(
             "123",
-            (short)123
+            (short) 123
         );
     }
 
@@ -1849,7 +1849,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             );
         }
     };
-    
+
     // spreadsheetMetadata..............................................................................................
 
     @Test
@@ -2511,7 +2511,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private void spreadsheetValueConvertAndCheck(final Object value,
-                                                    final Object expected) {
+                                                 final Object expected) {
         this.spreadsheetValueConvertAndCheck(
             value,
             expected.getClass(),
@@ -2520,8 +2520,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     private <T> void spreadsheetValueConvertAndCheck(final Object value,
-                                                        final Class<T> type,
-                                                        final T expected) {
+                                                     final Class<T> type,
+                                                     final T expected) {
         this.convertAndCheck(
             SpreadsheetConverters.spreadsheetValue(),
             value,
@@ -2751,7 +2751,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             }
         );
     };
-    
+
     // style............................................................................................................
 
     private final TextStyle STYLE = TextStyle.parse("background-color: red");
@@ -3330,7 +3330,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // textNode.........................................................................................................
 
     private final static String TEXT = "Hello World 123!";
-    
+
     @Test
     public void testTextNodeConvertStringToColorFails() {
         this.convertFails(
@@ -3452,7 +3452,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
-    
+
     // date.............................................................................................................
 
     @Test
@@ -3772,7 +3772,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
-    
+
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
             SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
@@ -3863,7 +3863,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
-    
+
     // text.............................................................................................................
 
     @Test
