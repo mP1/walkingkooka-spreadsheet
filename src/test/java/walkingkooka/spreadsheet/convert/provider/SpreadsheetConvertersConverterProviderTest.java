@@ -896,6 +896,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithToString() {
+        this.converterAndCheck(
+            "to-string",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.objectToString()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToStyleable() {
         this.converterAndCheck(
             "to-styleable",

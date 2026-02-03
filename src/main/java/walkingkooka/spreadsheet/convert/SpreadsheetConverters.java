@@ -437,6 +437,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#objectToString()}
+     */
+    public static Converter<SpreadsheetConverterContext> objectToString() {
+        return Converters.objectToString();
+    }
+
+    /**
      * {@see ConverterOptionalTo}
      */
     public static Converter<SpreadsheetConverterContext> optionalTo() {
