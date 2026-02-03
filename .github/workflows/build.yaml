@@ -32,6 +32,11 @@ jobs:
           tail -n 500 maven-install-output.txt
           tail -n 500 target/it-tests/gwt-jar-test/build.log
 
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
