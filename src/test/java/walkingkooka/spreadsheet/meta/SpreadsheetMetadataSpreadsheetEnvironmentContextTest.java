@@ -816,7 +816,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    BIG_DECIMAL\n" +
                 "  findConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\"\n" +
                 "  findFunctions\n" +
                 "  formatters\n" +
                 "    accounting\n" +
@@ -849,12 +849,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    time\n" +
                 "  formattingConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, net)\"\n" +
                 "  formattingFunctions\n" +
                 "  formHandlers\n" +
                 "  formulaConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, locale, template, net, json)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, template, net, json)\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
                 "  importers\n" +
@@ -889,7 +889,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    HALF_UP\n" +
                 "  scriptingConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, storage-path-json-to-class, style, text-node, text-to-line-ending, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, storage-path-json-to-class, style, text-node, text-to-line-ending, template, net)\"\n" +
                 "  scriptingFunctions\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
@@ -905,7 +905,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    [date, datetime, day-of-month, day-of-year, hour-of-ampm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year]\n" +
                 "  sortConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, locale)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, locale)\"\n" +
                 "  spreadsheetId\n" +
                 "    1\n" +
                 "  style\n" +
@@ -929,7 +929,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    user@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "  validationConverter\n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\"\n" +
                 "  validationFunctions\n" +
                 "  validationValidators\n" +
                 "    absolute-url\n" +
