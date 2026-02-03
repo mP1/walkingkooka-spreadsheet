@@ -18,12 +18,17 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
+import walkingkooka.collect.set.SortedSets;
+import walkingkooka.convert.Converter;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.locale.LocaleContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -35,6 +40,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -69,6 +75,47 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             () -> SPREADSHEET_ENVIRONMENT_CONTEXT.removeEnvironmentValue(
                 SpreadsheetEnvironmentContext.LINE_ENDING
             )
+        );
+    }
+
+    @Test
+    public void testEnvironmentContextConvertAllValuesToString() {
+        final Converter<SpreadsheetConverterContext> converter = METADATA_EN_AU.converter(
+            SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            CONVERTER_PROVIDER,
+            PROVIDER_CONTEXT
+        );
+
+        final SpreadsheetConverterContext converterContext = METADATA_EN_AU.spreadsheetConverterContext(
+            SpreadsheetMetadata.NO_CELL,
+            SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+            SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
+            Optional.empty(), // no current working directory
+            INDENTATION,
+            SPREADSHEET_LABEL_NAME_RESOLVER,
+            LINE_ENDING,
+            CONVERTER_PROVIDER,
+            LOCALE_CONTEXT,
+            PROVIDER_CONTEXT
+        );
+
+        final Set<EnvironmentValueName<?>> names = SortedSets.tree();
+
+        for (final EnvironmentValueName<?> name : SPREADSHEET_ENVIRONMENT_CONTEXT.environmentValueNames()) {
+            final Either<?, String> result = converter.convert(
+                SPREADSHEET_ENVIRONMENT_CONTEXT.environmentValueOrFail(name),
+                String.class,
+                converterContext
+            );
+            if (result.isRight()) {
+                names.add(name);
+            }
+        }
+
+        this.checkEquals(
+            Sets.empty(),
+            names,
+            SPREADSHEET_ENVIRONMENT_CONTEXT::toString
         );
     }
 
