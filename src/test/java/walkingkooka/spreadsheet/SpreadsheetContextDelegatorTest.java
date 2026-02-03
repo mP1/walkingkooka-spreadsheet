@@ -100,6 +100,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
     }
 
     @Override
+    public void testSetTimeOffsetWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetUserWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

@@ -32,6 +32,7 @@ import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -87,6 +88,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
 
     @Override
     public void testSetLocaleWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetTimeOffsetWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -250,6 +256,12 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public AbsoluteUrl serverUrl() {
             return Url.parseAbsolute("https://example.com");
+        }
+
+        @Override
+        public void setTimeOffset(final ZoneOffset timeOffset) {
+            Objects.requireNonNull(timeOffset, "timeOffset");
+            throw new UnsupportedOperationException();
         }
 
         @Override

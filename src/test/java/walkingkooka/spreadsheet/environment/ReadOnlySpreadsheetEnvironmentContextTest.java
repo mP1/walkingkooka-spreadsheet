@@ -36,6 +36,7 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -317,6 +318,34 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
     }
 
+    // timeOffset.......................................................................................................
+
+    @Test
+    public void testTimeOffset() {
+        this.timeOffsetAndCheck(
+            this.createContext(),
+            ZoneOffset.UTC
+        );
+    }
+
+    // setTimeOffset....................................................................................................
+
+    @Test
+    public void testSetTimeOffsetFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setTimeOffset(
+                    ZoneOffset.UTC
+                )
+        );
+    }
+
+    @Override
+    public void testSetTimeOffsetWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+    
     // user.............................................................................................................
 
     @Test
@@ -422,6 +451,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
     }
@@ -449,7 +479,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, user=user123@example.com}"
+            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -477,6 +507,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "          https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
                 "        spreadsheetId\n" +
                 "          7b\n" +
+                "        timeOffset\n" +
+                "          Z (java.time.ZoneOffset)\n" +
                 "        user\n" +
                 "          user123@example.com (walkingkooka.net.email.EmailAddress)\n" +
                 "    storage\n" +

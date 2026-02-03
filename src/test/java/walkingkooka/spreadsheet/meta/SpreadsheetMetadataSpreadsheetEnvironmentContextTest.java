@@ -250,6 +250,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
+            SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
     }
@@ -278,6 +279,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.LOCALE,
             SpreadsheetEnvironmentContext.NOW,
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
     }
@@ -317,6 +319,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
             SpreadsheetEnvironmentContext.SERVER_URL,
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID.toEnvironmentValueName(),
             SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.toEnvironmentValueName(),
+            SpreadsheetEnvironmentContext.TIME_OFFSET,
             SpreadsheetEnvironmentContext.USER
         );
     }
@@ -560,7 +563,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, user=user@example.com}"
+            "{indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
         );
     }
 
@@ -915,6 +918,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  timeFormatter\n" +
                 "    time\n" +
                 "      \"hh:mm:ss\"\n" +
+                "  timeOffset\n" +
+                "    Z (java.time.ZoneOffset)\n" +
                 "  timeParser\n" +
                 "    time\n" +
                 "      \"hh:mm:ss\"\n" +
