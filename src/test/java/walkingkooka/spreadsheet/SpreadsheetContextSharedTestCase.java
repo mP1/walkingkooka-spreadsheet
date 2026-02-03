@@ -437,7 +437,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1}"
+            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z}"
         );
     }
 

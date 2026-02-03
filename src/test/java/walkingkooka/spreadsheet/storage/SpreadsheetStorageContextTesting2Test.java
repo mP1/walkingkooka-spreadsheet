@@ -46,6 +46,7 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -156,6 +157,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         @Override
         public void setSpreadsheetId(final Optional<SpreadsheetId> spreadsheetId) {
             this.environmentContext.setSpreadsheetId(spreadsheetId);
+        }
+
+        @Override
+        public ZoneOffset timeOffset() {
+            return this.environmentContext.timeOffset();
+        }
+
+        @Override
+        public void setTimeOffset(final ZoneOffset timeOffset) {
+            this.environmentContext.setTimeOffset(timeOffset);
         }
 
         @Override

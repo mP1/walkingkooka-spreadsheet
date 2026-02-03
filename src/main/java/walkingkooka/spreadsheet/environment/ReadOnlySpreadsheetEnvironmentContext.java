@@ -32,6 +32,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -180,6 +181,19 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         this.setOrRemoveEnvironmentValue(
             SPREADSHEET_ID,
             spreadsheetId
+        );
+    }
+
+    @Override
+    public ZoneOffset timeOffset() {
+        return this.context.timeOffset();
+    }
+
+    @Override
+    public void setTimeOffset(final ZoneOffset timeOffset) {
+        this.setEnvironmentValue(
+            TIME_OFFSET,
+            timeOffset
         );
     }
 

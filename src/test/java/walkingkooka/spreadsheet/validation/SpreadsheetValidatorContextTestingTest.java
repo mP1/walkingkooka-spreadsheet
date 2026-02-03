@@ -73,6 +73,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
     }
 
     @Override
+    public void testSetTimeOffsetWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetUserWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

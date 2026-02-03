@@ -54,6 +54,11 @@ public final class SpreadsheetEnvironmentContextDelegatorTest implements Spreads
     }
 
     @Override
+    public void testSetTimeOffsetWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetUserWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
