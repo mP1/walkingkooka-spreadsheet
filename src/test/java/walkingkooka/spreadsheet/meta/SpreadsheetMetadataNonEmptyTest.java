@@ -3034,7 +3034,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      time\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
-                "        \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "        \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
                 "    formulaFunctions: \n" +
                 "      function1\n" +
                 "      function2\n" +
@@ -3261,7 +3261,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "      time\n" +
                 "    formulaConverter: \n" +
                 "      collection\n" +
-                "        \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "        \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
                 "    formulaFunctions: \n" +
                 "      function1\n" +
                 "      function2\n" +
@@ -3486,7 +3486,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    time\n" +
                 "  formulaConverter: \n" +
                 "    collection\n" +
-                "      \"(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\"\n" +
                 "  formulaFunctions: \n" +
                 "    function1\n" +
                 "    function2\n" +
@@ -3627,7 +3627,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     FormHandlerAliasSet.parse("handler1, handler2, handler3")
                 ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                    ConverterSelector.parse("collection(text, number, date-time, basic, spreadsheet-value, boolean, error-throwing, color, expression, environment, json, locale, template, net)")
+                    ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)")
                 ).set(
                     SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                     SpreadsheetExpressionFunctions.parseAliasSet("function1, function2, function3")
