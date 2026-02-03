@@ -543,7 +543,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToDateTimeList(),
         textToNumberList(),
         textToTimeList(),
-        textToStringList()
+        textToStringList(),
+        Converters.objectToString()
     );
 
     /**
