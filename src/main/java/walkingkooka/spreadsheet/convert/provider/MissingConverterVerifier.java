@@ -105,6 +105,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -1027,7 +1028,8 @@ final class MissingConverterVerifier {
                             storagePath,
                             auditInfo
                         ),
-                        style
+                        style,
+                        ZoneOffset.UTC
                     ),
                     String.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE
