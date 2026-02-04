@@ -700,6 +700,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-validation-error\n" +
                 "    text-to-validator-selector\n" +
                 "    text-to-value-type\n" +
+                "    text-to-zone-offset\n" +
                 "    to-boolean\n" +
                 "    to-json-node\n" +
                 "    to-json-text\n" +

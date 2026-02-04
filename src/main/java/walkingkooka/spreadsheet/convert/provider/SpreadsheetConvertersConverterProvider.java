@@ -543,6 +543,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToValueType();
                 break;
+            case TEXT_TO_ZONE_OFFSET_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToZoneOffset();
+                break;
             case TO_BOOLEAN_STRING:
                 noParameterCheck(copy);
 
@@ -998,6 +1003,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_VALUE_TYPE = ConverterName.with(TEXT_TO_VALUE_TYPE_STRING);
 
+    private final static String TEXT_TO_ZONE_OFFSET_STRING = "text-to-zone-offset";
+
+    final static ConverterName TEXT_TO_ZONE_OFFSET = ConverterName.with(TEXT_TO_ZONE_OFFSET_STRING);
+
     private final static String TO_BOOLEAN_STRING = "to-boolean";
 
     final static ConverterName TO_BOOLEAN = ConverterName.with(TO_BOOLEAN_STRING);
@@ -1149,6 +1158,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_VALIDATION_ERROR),
             converterInfo(TEXT_TO_VALIDATOR_SELECTOR),
             converterInfo(TEXT_TO_VALUE_TYPE),
+            converterInfo(TEXT_TO_ZONE_OFFSET),
             converterInfo(TO_BOOLEAN),
             converterInfo(TO_JSON_NODE),
             converterInfo(TO_JSON_TEXT),

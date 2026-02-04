@@ -1003,6 +1003,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterTextToZoneOffset}
+     */
+    public static Converter<SpreadsheetConverterContext> textToZoneOffset() {
+        return Converters.textToZoneOffset();
+    }
+    
+    /**
      * A {@link Converter} that handles converting to a {@link Boolean} value.
      */
     public static Converter<SpreadsheetConverterContext> toBoolean() {
