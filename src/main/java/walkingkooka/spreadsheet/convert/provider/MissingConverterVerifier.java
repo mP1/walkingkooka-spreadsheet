@@ -1147,6 +1147,16 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_VALUE_TYPE
                 );
             }
+
+            // text-to-zone-offset......................................................................................
+            if (scripting) {
+                verifier.addIfConversionFail(
+                    ZoneOffset.ofHoursMinutes(12, 59)
+                        .toString(),
+                    ZoneOffset.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_ZONE_OFFSET
+                );
+            }
         }
 
         // storage......................................................................................................

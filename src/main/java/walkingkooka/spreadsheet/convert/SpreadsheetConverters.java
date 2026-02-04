@@ -531,6 +531,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         errorToError(), // must be before #textToSpreadsheetError
         textToSpreadsheetError(),
         textToValueType(),
+        textToZoneOffset(),
         hasSpreadsheetFormatterSelector(),
         hasSpreadsheetParserSelector(),
         hasSpreadsheetSelection(),
