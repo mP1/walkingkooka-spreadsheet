@@ -860,6 +860,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToZoneOffset() {
+        this.converterAndCheck(
+            "text-to-zone-offset",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToZoneOffset()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithToBoolean() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TO_BOOLEAN + "",
