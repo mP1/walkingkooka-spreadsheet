@@ -1059,6 +1059,13 @@ final class MissingConverterVerifier {
                 );
             }
 
+            // text-to-lineEnding.......................................................................................
+            verifier.addIfConversionFail(
+                LineEnding.NL.text(),
+                LineEnding.class,
+                SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_LINE_ENDING
+            );
+
             // text-to-spreadsheet-selection............................................................................
             if (formula || scripting || validation) {
                 for (final SpreadsheetSelection selection : Lists.of(
