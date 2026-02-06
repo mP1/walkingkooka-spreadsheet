@@ -271,6 +271,7 @@ to allow user customisation of that value type along with a single color.
 - full-date-time
 - full-time
 - [General](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterGeneral.java)
+- [hyperlinking](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterSharedHyperlinking.java)
 - long-date
 - long-date-time
 - long-time
