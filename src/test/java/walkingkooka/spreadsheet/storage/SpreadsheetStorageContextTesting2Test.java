@@ -73,6 +73,12 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         SpreadsheetMetadataContextDelegator {
 
         @Override
+        public StoragePath parseStoragePath(final String text) {
+            Objects.requireNonNull(text, "text");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public TestSpreadsheetStorageContext cloneEnvironment() {
             throw new UnsupportedOperationException();
         }

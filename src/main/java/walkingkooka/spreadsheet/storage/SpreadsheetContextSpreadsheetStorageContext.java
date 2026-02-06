@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StoragePath;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -197,6 +198,13 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
             offset,
             count
         );
+    }
+
+    // Storage....Context...............................................................................................
+
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        return StoragePath.parse(text);
     }
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................

@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StoragePath;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -207,6 +208,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
             spreadsheetEngineContext.spreadsheetEngine(),
             spreadsheetEngineContext
         );
+    }
+
+    // StorageContext...................................................................................................
+
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        return StoragePath.parse(text);
     }
 
     // EnvironmentContext...............................................................................................

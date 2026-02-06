@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.StoragePath;
 
 import java.util.List;
 import java.util.Locale;
@@ -113,6 +114,11 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     public List<SpreadsheetMetadata> findMetadataBySpreadsheetName(final String name,
                                                                    final int offset,
                                                                    final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public StoragePath parseStoragePath(final String text) {
         throw new UnsupportedOperationException();
     }
 
