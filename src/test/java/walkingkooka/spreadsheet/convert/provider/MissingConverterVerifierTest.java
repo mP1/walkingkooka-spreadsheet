@@ -202,6 +202,14 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
+        public StoragePath parseStoragePath(final String value) {
+            return StoragePath.parseMaybeRelative(
+                value,
+                this.currentWorkingDirectory()
+            );
+        }
+
+        @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
             return converter.canConvert(
@@ -317,7 +325,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
 
         @Override
         public Optional<StoragePath> currentWorkingDirectory() {
-            throw new UnsupportedOperationException();
+            return NO_CURRENT_WORKING_DIRECTORY;
         }
 
         @Override

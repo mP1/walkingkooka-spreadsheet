@@ -70,6 +70,12 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
+    default StoragePath parseStoragePath(final String text) {
+        return this.spreadsheetConverterContext()
+            .parseStoragePath(text);
+    }
+
+    @Override
     default Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
         return this.spreadsheetConverterContext()
             .resolveLabel(labelName);

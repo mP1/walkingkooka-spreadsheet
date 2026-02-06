@@ -214,6 +214,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private final Optional<StoragePath> currentWorkingDirectory;
 
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        return StoragePath.parseMaybeRelative(
+            text,
+            this.currentWorkingDirectory
+        );
+    }
+
     // toString.........................................................................................................
 
     @Override

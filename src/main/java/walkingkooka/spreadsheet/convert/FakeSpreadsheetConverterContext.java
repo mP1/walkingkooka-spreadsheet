@@ -55,6 +55,10 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
     public SpreadsheetMetadata spreadsheetMetadata() {
         throw new UnsupportedOperationException();
     }
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {

@@ -172,6 +172,11 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
     }
 
     @Override
+    public void testParseStoragePathWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetConverterNumberToTextSpreadsheetConverterContext createContext() {
         final Locale locale = Locale.ENGLISH;
         final LocaleContext localeContext = LocaleContexts.jre(locale);

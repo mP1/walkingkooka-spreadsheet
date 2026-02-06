@@ -681,6 +681,14 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
+        public StoragePath parseStoragePath(final String text) {
+            return StoragePath.parseMaybeRelative(
+                text,
+                this.currentWorkingDirectory()
+            );
+        }
+
+        @Override
         public SpreadsheetExpressionEvaluationContext setEnvironmentContext(final EnvironmentContext environmentContext) {
             Objects.requireNonNull(environmentContext, "environmentContext");
 

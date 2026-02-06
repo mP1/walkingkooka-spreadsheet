@@ -224,6 +224,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
+    public StoragePath parseStoragePath(final String text) {
+        return this.context.parseStoragePath(text);
+    }
+
+    @Override
     public char valueSeparator() {
         return this.context.valueSeparator();
     }
