@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -217,6 +218,19 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
                     text
                 )
             )
+        );
+    }
+
+    @Test
+    public void testParseDollarZeroDotZeroZeroFails() {
+        final String text = "$0.00";
+
+        this.parseStringFails(
+            text,
+            new InvalidCharacterException(
+                text,
+                1
+            ).appendToMessage("expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}")
         );
     }
 
