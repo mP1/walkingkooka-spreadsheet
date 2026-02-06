@@ -204,7 +204,10 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
 
     @Override
     public StoragePath parseStoragePath(final String text) {
-        return StoragePath.parse(text);
+        return StoragePath.parseMaybeRelative(
+            text,
+            this.currentWorkingDirectory()
+        );
     }
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................
