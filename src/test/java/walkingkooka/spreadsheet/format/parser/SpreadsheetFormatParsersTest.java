@@ -9198,7 +9198,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTextFormatGeneraFails() {
+    public void testTextFormatGeneralFails() {
         this.textFormatParseThrows(
             generalSymbol(),
             "Invalid character 'G' at 0 expected ({COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\" | \".\" | \"0\" | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}, STAR, {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\" | \".\" | \"0\" | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}) | {COLOR | {\" \" | \"<\" | \">\" | \"=\" | \"!\" | \"$\" | \"-\" | \"+\" | \"(\" | \")\" | \"%\" | \"&\" | \"/\" | \",\" | \":\" | \".\" | \"0\" | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\"} | ESCAPE | QUOTED | \"@\" | UNDERSCORE}"
