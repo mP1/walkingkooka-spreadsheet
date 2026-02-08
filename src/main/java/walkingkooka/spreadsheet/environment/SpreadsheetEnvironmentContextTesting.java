@@ -22,34 +22,13 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
-import walkingkooka.storage.HasCurrentWorkingDirectory;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContextTesting;
-import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
 public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
-
-    // currentWorkingDirectory..........................................................................................
-
-    @Override
-    default void currentWorkingDirectoryAndCheck(final HasCurrentWorkingDirectory has,
-                                                 final Optional<StoragePath> expected) {
-        StorageEnvironmentContextTesting.super.currentWorkingDirectoryAndCheck(
-            has,
-            expected
-        );
-
-        if (has instanceof SpreadsheetEnvironmentContext) {
-            this.environmentValueAndCheck(
-                (SpreadsheetEnvironmentContext) has,
-                SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
-                expected
-            );
-        }
-    }
     
     // serverUrl........................................................................................................
 
