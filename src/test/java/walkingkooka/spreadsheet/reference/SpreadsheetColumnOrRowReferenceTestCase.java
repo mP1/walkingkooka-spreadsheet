@@ -553,9 +553,9 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         );
     }
 
-    final void checkToString(final int value,
-                             final SpreadsheetReferenceKind kind,
-                             final String toString) {
+    final void toStringAndCheck2(final int value,
+                                 final SpreadsheetReferenceKind kind,
+                                 final String toString) {
         this.checkEquals(
             toString,
             this.createReference(

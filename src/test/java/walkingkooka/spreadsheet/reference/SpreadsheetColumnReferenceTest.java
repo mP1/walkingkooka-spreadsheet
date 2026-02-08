@@ -1727,7 +1727,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testToStringRelative() {
-        this.checkToString(
+        this.toStringAndCheck2(
             MIN_VALUE,
             SpreadsheetReferenceKind.RELATIVE,
             "A"
@@ -1736,7 +1736,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testToStringRelative2() {
-        this.checkToString(
+        this.toStringAndCheck2(
             26,
             SpreadsheetReferenceKind.RELATIVE,
             "Z"
@@ -1746,7 +1746,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative3() {
-        this.checkToString(
+        this.toStringAndCheck2(
             (1 * 26) + 1,
             SpreadsheetReferenceKind.RELATIVE,
             "AA"
@@ -1756,7 +1756,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative4() {
-        this.checkToString(
+        this.toStringAndCheck2(
             (1 * 26) + 4,
             SpreadsheetReferenceKind.RELATIVE,
             "AD"
@@ -1766,7 +1766,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative5() {
-        this.checkToString(
+        this.toStringAndCheck2(
             (1 * 26 * 26) + (25 * 26) + 12,
             SpreadsheetReferenceKind.RELATIVE,
             "AYL"
@@ -1775,7 +1775,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testToStringAbsolute() {
-        this.checkToString(
+        this.toStringAndCheck2(
             MIN_VALUE,
             SpreadsheetReferenceKind.ABSOLUTE,
             "$A"
@@ -1784,7 +1784,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testToStringAbsolute2() {
-        this.checkToString(
+        this.toStringAndCheck2(
             2,
             SpreadsheetReferenceKind.ABSOLUTE,
             "$B"
@@ -1793,7 +1793,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testToStringMaxValue() {
-        this.checkToString(SpreadsheetColumnReference.MAX_VALUE, SpreadsheetReferenceKind.RELATIVE, "XFD");
+        this.toStringAndCheck2(SpreadsheetColumnReference.MAX_VALUE, SpreadsheetReferenceKind.RELATIVE, "XFD");
     }
 
     @Override
