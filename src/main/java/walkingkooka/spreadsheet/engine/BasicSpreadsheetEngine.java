@@ -2515,22 +2515,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
         }
 
-        // if selection is partially
-        {
-            final AnchoredSpreadsheetSelection anchored = navigating.anchoredSelection()
-                .orElse(null);
-            if (null != anchored) {
-                final SpreadsheetSelection selection = anchored.anchor()
-                    .opposite()
-                    .selection(anchored.selection());
-
-                // verify column is not partially within view.
-                if(selection.isColumn() || selection.isCell()) {
-
-                }
-            }
-        }
-
         return Optional.of(
             navigating.setRectangle(rectangle)
                 .setNavigations(SpreadsheetViewport.NO_NAVIGATION)
