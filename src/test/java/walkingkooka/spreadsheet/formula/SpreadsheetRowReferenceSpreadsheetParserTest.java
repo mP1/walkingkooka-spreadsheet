@@ -57,42 +57,78 @@ public final class SpreadsheetRowReferenceSpreadsheetParserTest extends Spreadsh
 
     @Test
     public void testParseRelativeReference() {
-        this.parseAndCheck2(ROW_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW_VALUE);
+        this.parseAndCheck2(
+            ROW_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            ROW_VALUE
+        );
     }
 
     @Test
     public void testParseRelativeReference1() {
-        this.parseAndCheck2(ROW_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW_VALUE, "...");
+        this.parseAndCheck2(
+            ROW_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            ROW_VALUE,
+            "..."
+        );
     }
 
     @Test
     public void testParseRelativeReference2() {
-        this.parseAndCheck2(ROW2_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW2_VALUE);
+        this.parseAndCheck2(
+            ROW2_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            ROW2_VALUE
+        );
     }
 
     @Test
     public void testParseRelativeReference3() {
-        this.parseAndCheck2(ROW2_TEXT, SpreadsheetReferenceKind.RELATIVE, ROW2_VALUE, "...");
+        this.parseAndCheck2(
+            ROW2_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            ROW2_VALUE,
+            "..."
+        );
     }
 
     @Test
     public void testParseAbsoluteReference() {
-        this.parseAndCheck2("$1", SpreadsheetReferenceKind.ABSOLUTE, ROW_VALUE);
+        this.parseAndCheck2(
+            "$1",
+            SpreadsheetReferenceKind.ABSOLUTE,
+            ROW_VALUE
+        );
     }
 
     @Test
     public void testParseAbsoluteReference1() {
-        this.parseAndCheck2("$1", SpreadsheetReferenceKind.ABSOLUTE, ROW_VALUE, "...");
+        this.parseAndCheck2(
+            "$1",
+            SpreadsheetReferenceKind.ABSOLUTE,
+            ROW_VALUE,
+            "..."
+        );
     }
 
     @Test
     public void testParseAbsoluteReference2() {
-        this.parseAndCheck2("$" + ROW2_TEXT, SpreadsheetReferenceKind.ABSOLUTE, ROW2_VALUE);
+        this.parseAndCheck2(
+            "$" + ROW2_TEXT,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            ROW2_VALUE
+        );
     }
 
     @Test
     public void testParseAbsoluteReference3() {
-        this.parseAndCheck2("$" + ROW2_TEXT, SpreadsheetReferenceKind.ABSOLUTE, ROW2_VALUE, "...");
+        this.parseAndCheck2(
+            "$" + ROW2_TEXT,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            ROW2_VALUE,
+            "..."
+        );
     }
 
     @Test
