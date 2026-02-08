@@ -25,10 +25,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 
 public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends SpreadsheetColumnOrRowReferenceSpreadsheetParserTestCase<SpreadsheetColumnReferenceSpreadsheetParser> {
 
-    private final static int A_VALUE = 0;
+    private final static int A_VALUE = 1;
     private final static String A_TEXT = "A";
 
-    private final static int AD_VALUE = 26 + 3;
+    private final static int AD_VALUE = 26 + 4;
     private final static String AD_TEXT = "AD";
 
     private final static String TEXT_AFTER = "...";
@@ -126,7 +126,7 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     public void testParseRelativeReferenceInvalid() {
         this.parseThrows(
             "" + INVALID,
-            "Invalid column \"XFE\" not between \"A\" and \"XFE\""
+            "Invalid column \"XFE\" not between \"A\" and \"XFD\""
         );
     }
 
@@ -134,7 +134,7 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
     public void testParseAbsoluteReferenceInvalid() {
         this.parseThrows(
             "$" + INVALID,
-            "Invalid column \"$XFE\" not between \"A\" and \"XFE\""
+            "Invalid column \"$XFE\" not between \"A\" and \"XFD\""
         );
     }
 

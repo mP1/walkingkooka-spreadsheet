@@ -161,7 +161,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
             this.createObject(),
             "{\n" +
                 "  \"label\": \"label123\",\n" +
-                "  \"reference\": \"$B3\"\n" +
+                "  \"reference\": \"$A2\"\n" +
                 "}"
         );
     }
@@ -203,7 +203,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     public void testTreePrint() {
         this.treePrintAndCheck(
             this.createComparable(),
-            "label123: $B3" + EOL
+            "label123: $A2" + EOL
         );
     }
 

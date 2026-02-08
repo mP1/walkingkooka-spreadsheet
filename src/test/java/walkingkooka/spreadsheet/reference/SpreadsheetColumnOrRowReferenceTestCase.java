@@ -28,6 +28,9 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     extends SpreadsheetSelectionTestCase<R>
     implements ComparableTesting2<R> {
 
+    // SpreadsheetColumnReference.MIN_VALUE & SpreadsheetRowReference.MIN_VALUE
+    final static int MIN_VALUE = 1;
+
     final static int VALUE = 123;
     final static SpreadsheetReferenceKind REFERENCE_KIND = SpreadsheetReferenceKind.ABSOLUTE;
     final static SpreadsheetReferenceKind DIFFERENT_REFERENCE_KIND = SpreadsheetReferenceKind.RELATIVE;
@@ -38,6 +41,28 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testWithNegativeValueFails() {
+        assertThrows(
+            this.invalidValueExceptionType(),
+            () -> this.createReference(
+                -1,
+                SpreadsheetReferenceKind.RELATIVE
+            )
+        );
+    }
+
+    @Test
+    public final void testWithZeroValueFails() {
+        this.checkEquals(
+            1,
+            SpreadsheetColumnReference.MIN_VALUE,
+            "SpreadsheetColumnReference.MIN_VALUE"
+        );
+        this.checkEquals(
+            1,
+            SpreadsheetRowReference.MIN_VALUE,
+            "SpreadsheetRowReference.MIN_VALUE"
+        );
+
         assertThrows(
             this.invalidValueExceptionType(),
             () -> this.createReference(
@@ -62,14 +87,17 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     public final void testWithNullKindFails() {
         assertThrows(
             NullPointerException.class,
-            () -> this.createReference(0, null)
+            () -> this.createReference(
+                MIN_VALUE,
+                null
+            )
         );
     }
 
     @Test
     public final void testWithAbsolute() {
         this.withAndCacheCheck(
-            0,
+            MIN_VALUE,
             SpreadsheetReferenceKind.RELATIVE
         );
     }
@@ -85,7 +113,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testWithRelative() {
         this.withAndCacheCheck(
-            0,
+            MIN_VALUE,
             SpreadsheetReferenceKind.RELATIVE
         );
     }
@@ -149,7 +177,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testIsFirst() {
         this.isFirstAndCheck(
-            this.createReference(0),
+            this.createReference(MIN_VALUE),
             true
         );
     }
@@ -157,7 +185,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testIsFirstWhenSecond() {
         this.isFirstAndCheck(
-            this.createReference(1),
+            this.createReference(MIN_VALUE + 1),
             false
         );
     }
@@ -175,7 +203,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Test
     public final void testIsLast() {
         this.isLastAndCheck(
-            this.createReference(0),
+            this.createReference(MIN_VALUE),
             false
         );
     }
@@ -409,7 +437,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddSaturatedUnderflow1() {
-        final R reference = this.createReference(0);
+        final R reference = this.createReference(1);
         this.checkEquals(
             reference,
             reference.addSaturated(-1)
@@ -418,18 +446,18 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testAddSaturatedUnderflow2() {
-        final R reference = this.createReference(1);
+        final R reference = this.createReference(2);
         this.checkEquals(
-            this.createReference(0),
+            this.createReference(1),
             reference.addSaturated(-1)
         );
     }
 
     @Test
     public final void testAddSaturatedUnderflow3() {
-        final R reference = this.createReference(2);
+        final R reference = this.createReference(3);
         this.checkEquals(
-            this.createReference(0),
+            this.createReference(1),
             reference.addSaturated(-3)
         );
     }

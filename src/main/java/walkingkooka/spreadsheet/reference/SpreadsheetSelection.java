@@ -116,7 +116,11 @@ public abstract class SpreadsheetSelection implements HasText,
 
     // constants........................................................................................................
 
+    public final static int MIN_COLUMN = SpreadsheetColumnReference.MIN_VALUE;
+
     public final static int MAX_COLUMN = SpreadsheetColumnReference.MAX_VALUE;
+
+    public final static int MIN_ROW = SpreadsheetRowReference.MIN_VALUE;
 
     public final static int MAX_ROW = SpreadsheetRowReference.MAX_VALUE;
 
@@ -206,7 +210,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 final int digit = SpreadsheetFormulaParsers.columnLetterValue(c);
                 if (-1 != digit) {
                     column = column * SpreadsheetColumnReference.RADIX + digit;
-                    if (column > 1 + SpreadsheetColumnReference.MAX_VALUE) {
+                    if (column > SpreadsheetColumnReference.MAX_VALUE) {
                         mode = MODE_FAIL;
                         break; // column is too big cant be a cell reference.
                     }
@@ -233,7 +237,7 @@ public abstract class SpreadsheetSelection implements HasText,
                 final int digit = Character.digit(c, SpreadsheetRowReference.RADIX);
                 if (-1 != digit) {
                     row = SpreadsheetRowReference.RADIX * row + digit;
-                    if (row > 1 + SpreadsheetRowReference.MAX_VALUE) {
+                    if (row > SpreadsheetRowReference.MAX_VALUE) {
                         mode = MODE_FAIL;
                         break; // row is too big cant be a cell reference.
                     }
@@ -737,7 +741,7 @@ public abstract class SpreadsheetSelection implements HasText,
     final static int CACHE_SIZE = 100;
 
     /**
-     * Fills an array with what will become a cache of {@link SpreadsheetSelection}.
+     * Fills an array with what will become a cache of {@link SpreadsheetColumnReference} or {@link SpreadsheetRowReference}.
      */
     static <R extends SpreadsheetSelection> R[] fillCache(final IntFunction<R> reference,
                                                           final R[] array) {

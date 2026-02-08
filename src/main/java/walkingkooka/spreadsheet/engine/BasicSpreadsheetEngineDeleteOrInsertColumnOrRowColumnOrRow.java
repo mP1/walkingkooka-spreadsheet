@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -138,7 +139,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final void fixAllExpressionReferences() {
         final int rows = this.maxRow();
-        for (int i = 0; i <= rows; i++) {
+        for (int i = SpreadsheetSelection.MIN_ROW; i <= rows; i++) {
             this.fixRowReferences(SpreadsheetReferenceKind.ABSOLUTE.row(i));
         }
     }
@@ -420,8 +421,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final int maxRow() {
         return this.cellStore()
-            .rowCount()
-            - 1;
+            .rowCount();
     }
 
     /**

@@ -42,20 +42,20 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Comparable<SpreadsheetColumnReference>,
     SpreadsheetColumnOrRowReference {
 
-    final static int MIN_VALUE = 0;
+    final static int MIN_VALUE = 1;
 
     /**
-     * The maximum value, columns -1.
+     * The maximum value, columns.
      */
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    final static int MAX_VALUE = 16384 - 1; // inclusive
+    final static int MAX_VALUE = 16384; // inclusive
     final static int RADIX = 26;
 
     /**
      * The highest legal column.
      */
     public final static String MAX_VALUE_STRING = toString0(
-        MAX_VALUE + 1,
+        MAX_VALUE,
         SpreadsheetReferenceKind.RELATIVE
     );
 
@@ -81,7 +81,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
         if (null == RELATIVE_CACHE) {
             RELATIVE_CACHE = fillCache(
                 i -> new SpreadsheetColumnReference(
-                    i,
+                    i + MIN_VALUE,
                     SpreadsheetReferenceKind.RELATIVE
                 ),
                 new SpreadsheetColumnReference[CACHE_SIZE]
@@ -242,9 +242,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     public String hateosLinkId() {
-        final StringBuilder b = new StringBuilder();
-        toString1(this.value, b);
-        return b.toString();
+        return this.toString();
     }
 
     // max..............................................................................................................
@@ -625,11 +623,11 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     private static String toString0(final int value, final SpreadsheetReferenceKind referenceKind) {
-        // 0=A, 1=B, AA = 26 * 1
+        // 1=A, 2=B, 26=Z, AA = 1 + 26 * 1
         final StringBuilder b = new StringBuilder();
         b.append(referenceKind.prefix());
 
-        toString1(value, b);
+        toString1(value -1, b);
 
         return b.toString();
     }
@@ -637,7 +635,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     private static void toString1(final int value, final StringBuilder b) {
         final int v = (value / RADIX);
         if (v > 0) {
-            toString1(v - 1, b);
+            toString1(v -1, b);
         }
         final int c = (value % RADIX) + 'A';
         b.append((char) c);

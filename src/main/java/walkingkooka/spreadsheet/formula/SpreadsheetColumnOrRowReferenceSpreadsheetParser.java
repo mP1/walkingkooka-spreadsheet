@@ -100,7 +100,7 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                 result = token(
                     digitCounter,
                     absoluteOrRelative,
-                    value - 1,
+                    value,
                     save
                 );
                 break;
@@ -111,7 +111,7 @@ abstract class SpreadsheetColumnOrRowReferenceSpreadsheetParser implements Sprea
                 result = token(
                     digitCounter,
                     absoluteOrRelative,
-                    value - 1,
+                    value,
                     save
                 );
                 break;

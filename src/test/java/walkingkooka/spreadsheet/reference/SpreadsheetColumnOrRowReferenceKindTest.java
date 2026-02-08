@@ -142,7 +142,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.valueAndCheck(
             SpreadsheetColumnOrRowReferenceKind.COLUMN,
             SpreadsheetSelection.parseColumn("B"),
-            1
+            2
         );
     }
 
@@ -151,7 +151,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.valueAndCheck(
             SpreadsheetColumnOrRowReferenceKind.ROW,
             SpreadsheetSelection.parseRow("3"),
-            2
+            3
         );
     }
 
@@ -160,7 +160,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.valueAndCheck(
             SpreadsheetColumnOrRowReferenceKind.ROW,
             SpreadsheetSelection.parseRow("$4"),
-            3
+            4
         );
     }
 
@@ -182,7 +182,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
             SpreadsheetColumnOrRowReferenceKind.COLUMN,
             SpreadsheetReferenceKind.RELATIVE,
             2,
-            SpreadsheetSelection.parseColumn("C")
+            SpreadsheetSelection.parseColumn("B")
         );
     }
 
@@ -192,7 +192,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
             SpreadsheetColumnOrRowReferenceKind.ROW,
             SpreadsheetReferenceKind.RELATIVE,
             2,
-            SpreadsheetSelection.parseRow("3")
+            SpreadsheetSelection.parseRow("2")
         );
     }
 
@@ -202,7 +202,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
             SpreadsheetColumnOrRowReferenceKind.ROW,
             SpreadsheetReferenceKind.ABSOLUTE,
             3,
-            SpreadsheetSelection.parseRow("$4")
+            SpreadsheetSelection.parseRow("$3")
         );
     }
 
@@ -312,7 +312,7 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
         this.parseFails(
             SpreadsheetColumnOrRowReferenceKind.COLUMN,
             "Label123",
-            "Invalid column \"Label\" not between \"A\" and \"XFE\""
+            "Invalid column \"Label\" not between \"A\" and \"XFD\""
         );
     }
 

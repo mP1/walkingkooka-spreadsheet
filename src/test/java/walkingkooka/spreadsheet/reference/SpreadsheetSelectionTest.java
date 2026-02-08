@@ -729,7 +729,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseColumn() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.column(1),
+            SpreadsheetReferenceKind.RELATIVE.column(2),
             SpreadsheetSelection.parseColumn("B")
         );
     }
@@ -783,7 +783,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnOrRowWithAbsoluteColumn() {
         this.parseColumnOrRowAndCheck(
             "$C",
-            SpreadsheetReferenceKind.ABSOLUTE.column(2)
+            SpreadsheetReferenceKind.ABSOLUTE.column(3)
         );
     }
 
@@ -791,7 +791,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnOrRowWithRelativeColumn() {
         this.parseColumnOrRowAndCheck(
             "D",
-            SpreadsheetReferenceKind.RELATIVE.column(3)
+            SpreadsheetReferenceKind.RELATIVE.column(4)
         );
     }
 
@@ -799,7 +799,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnOrRowWithAbsoluteRow() {
         this.parseColumnOrRowAndCheck(
             "$3",
-            SpreadsheetReferenceKind.ABSOLUTE.row(2)
+            SpreadsheetReferenceKind.ABSOLUTE.row(3)
         );
     }
 
@@ -807,7 +807,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     public void testParseColumnOrRowWithRelativeRow() {
         this.parseColumnOrRowAndCheck(
             "4",
-            SpreadsheetReferenceKind.RELATIVE.row(3)
+            SpreadsheetReferenceKind.RELATIVE.row(4)
         );
     }
 
@@ -895,7 +895,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseColumnRangeWithColumn() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.column(1)
+            SpreadsheetReferenceKind.RELATIVE.column(2)
                 .toColumnRange(),
             SpreadsheetSelection.parseColumnRange("B")
         );
@@ -904,9 +904,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseColumnRangeWithRange() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.column(1)
+            SpreadsheetReferenceKind.RELATIVE.column(2)
                 .columnRange(
-                    SpreadsheetReferenceKind.RELATIVE.column(3)
+                    SpreadsheetReferenceKind.RELATIVE.column(4)
                 ),
             SpreadsheetSelection.parseColumnRange("B:D")
         );
@@ -915,7 +915,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseColumnRangeWithSingleton() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.column(1)
+            SpreadsheetReferenceKind.RELATIVE.column(2)
                 .toColumnRange(),
             SpreadsheetSelection.parseColumnRange("B:B")
         );
@@ -970,28 +970,36 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "A2";
         this.parseStringAndCheck(
             reference,
-            SpreadsheetReferenceKind.RELATIVE.column(0)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(1))
+            SpreadsheetReferenceKind.RELATIVE.column(1)
+                .setRow(
+                    SpreadsheetReferenceKind.RELATIVE.row(2)
+                )
         );
     }
 
     @Test
     public void testParseExpressionReferenceCellReferenceUpperCaseRelativeAbsolute() {
         final String reference = "C$4";
+
         this.parseStringAndCheck(
             reference,
-            SpreadsheetReferenceKind.RELATIVE.column(2)
-                .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(3))
+            SpreadsheetReferenceKind.RELATIVE.column(3)
+                .setRow(
+                    SpreadsheetReferenceKind.ABSOLUTE.row(4)
+                )
         );
     }
 
     @Test
     public void testParseExpressionReferenceCellReferenceUpperCaseAbsoluteRelative() {
         final String reference = "$E6";
+
         this.parseStringAndCheck(
             reference,
-            SpreadsheetReferenceKind.ABSOLUTE.column(4)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(5))
+            SpreadsheetReferenceKind.ABSOLUTE.column(5)
+                .setRow(
+                    SpreadsheetReferenceKind.RELATIVE.row(6)
+                )
         );
     }
 
@@ -1000,28 +1008,34 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         final String reference = "$G$8";
         this.parseStringAndCheck(
             reference,
-            SpreadsheetReferenceKind.ABSOLUTE.column(6)
-                .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(7))
+            SpreadsheetReferenceKind.ABSOLUTE.column(7)
+                .setRow(
+                    SpreadsheetReferenceKind.ABSOLUTE.row(8)
+                )
         );
     }
 
     @Test
     public void testParseExpressionReferenceCellReferenceLowercaseRelativeRelative() {
         final String reference = "i10";
+
         this.parseStringAndCheck(
             reference,
-            SpreadsheetReferenceKind.RELATIVE.column(8)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(9))
+            SpreadsheetReferenceKind.RELATIVE.column(9)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.row(10))
         );
     }
 
     @Test
     public void testParseExpressionReferenceCellReferenceLowercaseAbsolute() {
         final String reference = "$k12";
+
         this.parseStringAndCheck(
             reference,
-            SpreadsheetReferenceKind.ABSOLUTE.column(10)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(11))
+            SpreadsheetReferenceKind.ABSOLUTE.column(11)
+                .setRow(
+                    SpreadsheetReferenceKind.RELATIVE.row(12)
+                )
         );
     }
 
@@ -1271,7 +1285,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseRow() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.row(2 - 1),
+            SpreadsheetReferenceKind.RELATIVE.row(2),
             SpreadsheetSelection.parseRow("2")
         );
     }
@@ -1279,7 +1293,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseRow2() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.row(23 - 1),
+            SpreadsheetReferenceKind.RELATIVE.row(23),
             SpreadsheetSelection.parseRow("23")
         );
     }
@@ -1355,7 +1369,8 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseRowRangeWithRow() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.row(1).toRowRange(),
+            SpreadsheetReferenceKind.RELATIVE.row(2)
+                .toRowRange(),
             SpreadsheetSelection.parseRowRange("2")
         );
     }
@@ -1363,9 +1378,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseRowRangeWithRange() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.row(1)
+            SpreadsheetReferenceKind.RELATIVE.row(2)
                 .rowRange(
-                    SpreadsheetReferenceKind.RELATIVE.row(3)
+                    SpreadsheetReferenceKind.RELATIVE.row(4)
                 ),
             SpreadsheetSelection.parseRowRange("2:4")
         );
@@ -1374,7 +1389,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseRowRangeWithSingleton() {
         this.checkEquals(
-            SpreadsheetReferenceKind.RELATIVE.row(1)
+            SpreadsheetReferenceKind.RELATIVE.row(2)
                 .toRowRange(),
             SpreadsheetSelection.parseRowRange("2:2")
         );
@@ -1539,7 +1554,7 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
 
         this.checkEquals(
-            "Invalid column \"hello\" not between \"A\" and \"XFE\"",
+            "Invalid column \"hello\" not between \"A\" and \"XFD\"",
             thrown.getMessage(),
             "message"
         );
