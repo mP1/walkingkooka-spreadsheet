@@ -161,7 +161,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         final int length = text.length();
 
         final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
-        int mode = 0;
+        int mode = MODE_COLUMN_OR_ROW_START;
         int tokenStart = 0;
         SpreadsheetColumnOrRowReferenceOrRange columnOrRow = null;
         SpreadsheetComparatorName comparatorName = null;
