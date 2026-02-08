@@ -311,12 +311,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     private int max(final ToIntFunction<SpreadsheetCell> value) {
-        return 1 +
-            this.all()
+        return this.all()
                 .stream()
                 .mapToInt(value)
                 .max()
-                .orElse(-1);
+                .orElse(0);
     }
 
     @Override

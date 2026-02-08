@@ -55,8 +55,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     @Override
     int max() {
         return this.cellStore()
-            .columnCount()
-            - 1;
+            .columnCount();
     }
 
     @Override

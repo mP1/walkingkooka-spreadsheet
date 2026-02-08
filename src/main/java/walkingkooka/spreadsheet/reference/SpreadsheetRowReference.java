@@ -42,10 +42,11 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     Comparable<SpreadsheetRowReference>,
     SpreadsheetColumnOrRowReference{
 
-    final static int MIN_VALUE = 0;
+    // the first row value is 1 not 0
+    final static int MIN_VALUE = 1;
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
+    final static int MAX_VALUE = 1_048_576; // max value inclusive
 
     final static int RADIX = 10;
 
@@ -53,7 +54,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
         if (null == ABSOLUTE_CACHE) {
             ABSOLUTE_CACHE = fillCache(
                 i -> new SpreadsheetRowReference(
-                    i,
+                    i + MIN_VALUE,
                     SpreadsheetReferenceKind.ABSOLUTE
                 ),
                 new SpreadsheetRowReference[CACHE_SIZE]
@@ -71,7 +72,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
         if (null == RELATIVE_CACHE) {
             RELATIVE_CACHE = fillCache(
                 i -> new SpreadsheetRowReference(
-                    i,
+                    i + MIN_VALUE,
                     SpreadsheetReferenceKind.RELATIVE
                 ),
                 new SpreadsheetRowReference[CACHE_SIZE]
@@ -125,7 +126,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     private static int checkValue(final int value) {
         if (value < SpreadsheetRowReference.MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalRowArgumentException(
-                "Invalid row=" + value + " not between " + MIN_VALUE + " and " + (MAX_VALUE + 1)
+                "Invalid row=" + value + " not between " + MIN_VALUE + " and " + MAX_VALUE
             );
         }
         return value;
@@ -239,7 +240,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     }
 
     public String hateosLinkId() {
-        return String.valueOf(this.value + 1);
+        return this.toString();
     }
 
     // max..............................................................................................................
@@ -610,8 +611,9 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
 
     @Override
     public String toString() {
-        // in text form columns start at 1 but internally are zero based.
-        return this.referenceKind().prefix() + (this.value + 1);
+        return this.referenceKind()
+            .prefix() +
+            this.value;
     }
 
     // Comparable......................................................................................................

@@ -49,7 +49,7 @@ final class SpreadsheetSelectionReplaceReferencesMapperFunction implements Funct
                 final SpreadsheetColumnReference column = cell.column();
                 if (SpreadsheetReferenceKind.RELATIVE == column.referenceKind()) {
                     final int value = column.value() + deltaX;
-                    if (value < 0 || value > SpreadsheetColumnReference.MAX_VALUE) {
+                    if (value < SpreadsheetColumnReference.MIN_VALUE|| value > SpreadsheetColumnReference.MAX_VALUE) {
                         mapped = null;
                     } else {
                         mapped = mapped.setColumn(
@@ -67,7 +67,7 @@ final class SpreadsheetSelectionReplaceReferencesMapperFunction implements Funct
                     final SpreadsheetRowReference row = cell.row();
                     if (SpreadsheetReferenceKind.RELATIVE == row.referenceKind()) {
                         final int value = row.value() + deltaY;
-                        if (value < 0 || value > SpreadsheetRowReference.MAX_VALUE) {
+                        if (value < SpreadsheetRowReference.MIN_VALUE || value > SpreadsheetRowReference.MAX_VALUE) {
                             mapped = null;
                         } else {
                             mapped = mapped.setRow(

@@ -39,7 +39,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     @Test
     public void testMAX_VALUE_STRING() {
         this.checkEquals(
-            "XFE",
+            "XFD",
             SpreadsheetColumnReference.MAX_VALUE_STRING
         );
     }
@@ -512,7 +512,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseColumnMoreThanMaxFails() {
         this.parseStringFails(
             "ABCDEFGHIJKL",
-            new IllegalColumnArgumentException("Invalid column \"ABCDEFGHIJKL\" not between \"A\" and \"XFE\"")
+            new IllegalColumnArgumentException("Invalid column \"ABCDEFGHIJKL\" not between \"A\" and \"XFD\"")
         );
     }
 
@@ -521,7 +521,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "A",
             SpreadsheetColumnReference.with(
-                0,
+                1,
                 SpreadsheetReferenceKind.RELATIVE)
         );
     }
@@ -531,7 +531,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "B",
             SpreadsheetColumnReference.with(
-                1,
+                2,
                 SpreadsheetReferenceKind.RELATIVE
             )
         );
@@ -542,7 +542,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "$C",
             SpreadsheetColumnReference.with(
-                2,
+                3,
                 SpreadsheetReferenceKind.ABSOLUTE
             )
         );
@@ -553,7 +553,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "d",
             SpreadsheetColumnReference.with(
-                3,
+                4,
                 SpreadsheetReferenceKind.RELATIVE)
         );
     }
@@ -563,7 +563,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "$e",
             SpreadsheetColumnReference.with(
-                4,
+                5,
                 SpreadsheetReferenceKind.ABSOLUTE
             )
         );
@@ -574,7 +574,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "AA",
             SpreadsheetColumnReference.with(
-                26,
+                27,
                 SpreadsheetReferenceKind.RELATIVE)
         );
     }
@@ -584,7 +584,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.parseStringAndCheck(
             "AAB",
             SpreadsheetColumnReference.with(
-                703,
+                704,
                 SpreadsheetReferenceKind.RELATIVE)
         );
     }
@@ -593,7 +593,8 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseColumnXFD() {
         this.parseStringAndCheck(
             "XFD",
-            SpreadsheetColumnReference.with(16383,
+            SpreadsheetColumnReference.with(
+                16384,
                 SpreadsheetReferenceKind.RELATIVE
             )
         );
@@ -651,7 +652,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseAbsolute() {
         this.parseStringAndCheck(
             "$A",
-            SpreadsheetReferenceKind.ABSOLUTE.column(0)
+            SpreadsheetReferenceKind.ABSOLUTE.column(1)
         );
     }
 
@@ -659,7 +660,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseAbsolute2() {
         this.parseStringAndCheck(
             "$B",
-            SpreadsheetReferenceKind.ABSOLUTE.column(1)
+            SpreadsheetReferenceKind.ABSOLUTE.column(2)
         );
     }
 
@@ -667,7 +668,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseRelative() {
         this.parseStringAndCheck(
             "A",
-            SpreadsheetReferenceKind.RELATIVE.column(0)
+            SpreadsheetReferenceKind.RELATIVE.column(1)
         );
     }
 
@@ -675,7 +676,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testParseRelative2() {
         this.parseStringAndCheck(
             "B",
-            SpreadsheetReferenceKind.RELATIVE.column(1)
+            SpreadsheetReferenceKind.RELATIVE.column(2)
         );
     }
 
@@ -915,7 +916,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testUnmarshallStringAbsolute() {
         this.unmarshallAndCheck(
             JsonNode.string("$A"),
-            SpreadsheetReferenceKind.ABSOLUTE.column(0)
+            SpreadsheetReferenceKind.ABSOLUTE.column(1)
         );
     }
 
@@ -923,7 +924,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testUnmarshallStringAbsolute2() {
         this.unmarshallAndCheck(
             JsonNode.string("$B"),
-            SpreadsheetReferenceKind.ABSOLUTE.column(1)
+            SpreadsheetReferenceKind.ABSOLUTE.column(2)
         );
     }
 
@@ -931,7 +932,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testUnmarshallStringRelative() {
         this.unmarshallAndCheck(
             JsonNode.string("A"),
-            SpreadsheetReferenceKind.RELATIVE.column(0)
+            SpreadsheetReferenceKind.RELATIVE.column(1)
         );
     }
 
@@ -939,7 +940,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testUnmarshallStringRelative2() {
         this.unmarshallAndCheck(
             JsonNode.string("B"),
-            SpreadsheetReferenceKind.RELATIVE.column(1)
+            SpreadsheetReferenceKind.RELATIVE.column(2)
         );
     }
 
@@ -1726,40 +1727,68 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testToStringRelative() {
-        this.checkToString(0, SpreadsheetReferenceKind.RELATIVE, "A");
+        this.checkToString(
+            MIN_VALUE,
+            SpreadsheetReferenceKind.RELATIVE,
+            "A"
+        );
     }
 
     @Test
     public void testToStringRelative2() {
-        this.checkToString(25, SpreadsheetReferenceKind.RELATIVE, "Z");
+        this.checkToString(
+            26,
+            SpreadsheetReferenceKind.RELATIVE,
+            "Z"
+        );
     }
 
     @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative3() {
-        this.checkToString((1 * 26) + 0, SpreadsheetReferenceKind.RELATIVE, "AA");
+        this.checkToString(
+            (1 * 26) + 1,
+            SpreadsheetReferenceKind.RELATIVE,
+            "AA"
+        );
     }
 
     @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative4() {
-        this.checkToString((1 * 26) + 3, SpreadsheetReferenceKind.RELATIVE, "AD");
+        this.checkToString(
+            (1 * 26) + 4,
+            SpreadsheetReferenceKind.RELATIVE,
+            "AD"
+        );
     }
 
     @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative5() {
-        this.checkToString((1 * 26 * 26) + (25 * 26) + 12, SpreadsheetReferenceKind.RELATIVE, "AYM");
+        this.checkToString(
+            (1 * 26 * 26) + (25 * 26) + 12,
+            SpreadsheetReferenceKind.RELATIVE,
+            "AYL"
+        );
     }
 
     @Test
     public void testToStringAbsolute() {
-        this.checkToString(0, SpreadsheetReferenceKind.ABSOLUTE, "$A");
+        this.checkToString(
+            MIN_VALUE,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            "$A"
+        );
     }
 
     @Test
     public void testToStringAbsolute2() {
-        this.checkToString(2, SpreadsheetReferenceKind.ABSOLUTE, "$C");
+        this.checkToString(
+            2,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            "$B"
+        );
     }
 
     @Test

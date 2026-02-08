@@ -367,7 +367,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testParseValueMoreThanMaxFails() {
         this.parseStringFails(
             "12345678",
-            new IllegalRowArgumentException("Invalid row=12345677 not between 0 and 1048576")
+            new IllegalRowArgumentException("Invalid row=12345678 not between 1 and 1048576")
         );
     }
 
@@ -375,7 +375,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testParseAbsolute() {
         this.parseStringAndCheck(
             "$1",
-            SpreadsheetReferenceKind.ABSOLUTE.row(0)
+            SpreadsheetReferenceKind.ABSOLUTE.row(1)
         );
     }
 
@@ -383,7 +383,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testParseAbsolute2() {
         this.parseStringAndCheck(
             "$2",
-            SpreadsheetReferenceKind.ABSOLUTE.row(1)
+            SpreadsheetReferenceKind.ABSOLUTE.row(2)
         );
     }
 
@@ -391,7 +391,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testParseRelative() {
         this.parseStringAndCheck(
             "1",
-            SpreadsheetReferenceKind.RELATIVE.row(0)
+            SpreadsheetReferenceKind.RELATIVE.row(1)
         );
     }
 
@@ -399,7 +399,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testParseRelative2() {
         this.parseStringAndCheck(
             "2",
-            SpreadsheetReferenceKind.RELATIVE.row(1)
+            SpreadsheetReferenceKind.RELATIVE.row(2)
         );
     }
 
@@ -1072,7 +1072,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testUnmarshallStringAbsolute() {
         this.unmarshallAndCheck(
             JsonNode.string("$1"),
-            SpreadsheetReferenceKind.ABSOLUTE.row(0)
+            SpreadsheetReferenceKind.ABSOLUTE.row(1)
         );
     }
 
@@ -1080,7 +1080,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testUnmarshallStringAbsolute2() {
         this.unmarshallAndCheck(
             JsonNode.string("$2"),
-            SpreadsheetReferenceKind.ABSOLUTE.row(1)
+            SpreadsheetReferenceKind.ABSOLUTE.row(2)
         );
     }
 
@@ -1088,7 +1088,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testUnmarshallStringRelative() {
         this.unmarshallAndCheck(
             JsonNode.string("1"),
-            SpreadsheetReferenceKind.RELATIVE.row(0)
+            SpreadsheetReferenceKind.RELATIVE.row(1)
         );
     }
 
@@ -1096,7 +1096,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testUnmarshallStringRelative2() {
         this.unmarshallAndCheck(
             JsonNode.string("2"),
-            SpreadsheetReferenceKind.RELATIVE.row(1)
+            SpreadsheetReferenceKind.RELATIVE.row(2)
         );
     }
 
@@ -1613,7 +1613,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testToStringRelative() {
         this.checkToString(
-            0,
+            MIN_VALUE,
             SpreadsheetReferenceKind.RELATIVE,
             "1"
         );
@@ -1624,14 +1624,14 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.checkToString(
             123,
             SpreadsheetReferenceKind.RELATIVE,
-            "124"
+            "123"
         );
     }
 
     @Test
     public void testToStringAbsolute() {
         this.checkToString(
-            0,
+            MIN_VALUE,
             SpreadsheetReferenceKind.ABSOLUTE,
             "$1"
         );

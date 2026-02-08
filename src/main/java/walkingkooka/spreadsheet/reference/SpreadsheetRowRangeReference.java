@@ -308,7 +308,7 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
      * A frozen row range must begin with row 1
      */
     public void frozenRowsCheck() {
-        if (this.begin().value() != 0) {
+        if (this.begin().isNotFirst()) {
             throw new IllegalArgumentException("Range must begin at '1' but was " + CharSequences.quoteAndEscape(this.toString()));
         }
     }

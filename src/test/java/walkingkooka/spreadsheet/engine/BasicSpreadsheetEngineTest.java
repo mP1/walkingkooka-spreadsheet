@@ -9817,7 +9817,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 5;
         this.deleteColumnsAndCheck(
             engine,
-            SpreadsheetReferenceKind.ABSOLUTE.column(7),
+            SpreadsheetReferenceKind.ABSOLUTE.column(8),
             count,
             context,
             SpreadsheetDelta.EMPTY
@@ -24347,14 +24347,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             frozenColumns > 0 ?
                 SpreadsheetReferenceKind.RELATIVE.firstColumn()
                     .columnRange(
-                        SpreadsheetReferenceKind.RELATIVE.column(frozenColumns - 1)
+                        SpreadsheetReferenceKind.RELATIVE.column(frozenColumns)
                     ) :
                 null
         ).setOrRemove(
             SpreadsheetMetadataPropertyName.FROZEN_ROWS,
             frozenRows > 0 ?
                 SpreadsheetReferenceKind.RELATIVE.firstRow()
-                    .rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows - 1)
+                    .rowRange(SpreadsheetReferenceKind.RELATIVE.row(frozenRows)
                     ) :
                 null
         );

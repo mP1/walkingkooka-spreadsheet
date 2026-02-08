@@ -35,7 +35,7 @@ public final class SpreadsheetRowTest extends SpreadsheetColumnOrRowTestCase<Spr
     implements HasSpreadsheetReferenceTesting,
     PatchableTesting<SpreadsheetRow> {
 
-    private final static int ROW = 20;
+    private final static int ROW = 21;
     private final static SpreadsheetRowReference REFERENCE = reference(ROW);
 
     @Test

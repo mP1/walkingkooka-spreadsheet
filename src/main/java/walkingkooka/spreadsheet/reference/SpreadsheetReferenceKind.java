@@ -25,12 +25,14 @@ public enum SpreadsheetReferenceKind {
     ABSOLUTE {
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
-            return SpreadsheetColumnReference.absoluteCache()[column];
+            return SpreadsheetColumnReference.absoluteCache()
+                [column];
         }
 
         @Override
-        SpreadsheetRowReference rowFromCache(final int column) {
-            return SpreadsheetRowReference.absoluteCache()[column];
+        SpreadsheetRowReference rowFromCache(final int row) {
+            return SpreadsheetRowReference.absoluteCache()
+                [row - SpreadsheetColumnReference.MIN_VALUE];
         }
 
         @Override
@@ -46,12 +48,14 @@ public enum SpreadsheetReferenceKind {
     RELATIVE {
         @Override
         SpreadsheetColumnReference columnFromCache(final int column) {
-            return SpreadsheetColumnReference.relativeCache()[column];
+            return SpreadsheetColumnReference.relativeCache()
+                [column - SpreadsheetColumnReference.MIN_VALUE];
         }
 
         @Override
-        SpreadsheetRowReference rowFromCache(final int column) {
-            return SpreadsheetRowReference.relativeCache()[column];
+        SpreadsheetRowReference rowFromCache(final int row) {
+            return SpreadsheetRowReference.relativeCache()
+                [row - SpreadsheetRowReference.MIN_VALUE];
         }
 
         @Override

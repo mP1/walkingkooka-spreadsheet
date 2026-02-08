@@ -155,7 +155,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test//(expected = IllegalArgumentException.class)
     public void testCellReferenceFails3() {
-        SpreadsheetLabelName.with(SpreadsheetColumnReference.MAX_VALUE_STRING + "1");
+        SpreadsheetLabelName.with(SpreadsheetColumnReference.MAX_VALUE_STRING);
     }
 
     @Test
@@ -245,7 +245,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testWithInvalidRow() {
-        this.createNameAndCheck2("A" + (SpreadsheetRowReference.MAX_VALUE + 1 + 1));
+        this.createNameAndCheck2(
+            "A" + (SpreadsheetRowReference.MAX_VALUE + 1)
+        );
     }
 
     private void createNameAndCheck2(final String value) {

@@ -149,11 +149,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testColumnCountWithOnlyCellA24() {
+    public final void testColumnCountWithOnlyCellA23() {
         final S store = this.createStore();
 
-        store.save(this.cell(0, 2));
-        store.save(this.cell(0, 23));
+        store.save(this.cell(1, 2));
+        store.save(this.cell(1, 23));
 
         this.columnCountAndCheck(
             store,
@@ -171,19 +171,19 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         this.columnCountAndCheck(
             store,
-            100
+            99
         );
     }
 
     @Test
-    public final void testRowCountWithA24() {
+    public final void testRowCountWithB24() {
         final S store = this.createStore();
 
         store.save(
-            this.cell(0, 2)
+            this.cell(1, 2)
         );
         store.save(
-            this.cell(0, 23)
+            this.cell(1, 24)
         );
 
         this.rowCountAndCheck(
@@ -202,7 +202,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         this.rowCountAndCheck(
             store,
-            100
+            99
         );
     }
 

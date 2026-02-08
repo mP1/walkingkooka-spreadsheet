@@ -650,7 +650,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testAddRowSaturationOverflows() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
-        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.row(SpreadsheetRowReference.MAX_VALUE - 2)
+        final SpreadsheetCellReference cell = SpreadsheetReferenceKind.RELATIVE.row(SpreadsheetRowReference.MAX_VALUE - 1)
             .setColumn(column);
         this.checkEquals(
             column.setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()),
@@ -1340,8 +1340,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     @Test
     public void testParseInvalidColumnFails() {
         this.parseStringFails(
-            "XFEA",
-            new IllegalColumnArgumentException("Invalid column \"XFEA\" not between \"A\" and \"XFE\"")
+            "XFDA",
+            new IllegalColumnArgumentException("Invalid column \"XFDA\" not between \"A\" and \"XFD\"")
         );
     }
 
@@ -1349,7 +1349,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidColumnFails2() {
         this.parseStringFails(
             "ABCDEFG",
-            new IllegalColumnArgumentException("Invalid column \"ABCDEFG\" not between \"A\" and \"XFE\"")
+            new IllegalColumnArgumentException("Invalid column \"ABCDEFG\" not between \"A\" and \"XFD\"")
         );
     }
 
@@ -1357,15 +1357,15 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testParseInvalidRowFails() {
         this.parseStringFails(
             "B1048577",
-            new IllegalRowArgumentException("Invalid row=1048576 not between 0 and 1048576")
+            new IllegalRowArgumentException("Invalid row=1048577 not between 1 and 1048576")
         );
     }
 
     @Test
     public void testParseInvalidRowFails2() {
         this.parseStringFails(
-            "B12345678",
-            new IllegalRowArgumentException("Invalid row=12345677 not between 0 and 1048576")
+            "B12345677",
+            new IllegalRowArgumentException("Invalid row=12345677 not between 1 and 1048576")
         );
     }
 
@@ -1392,31 +1392,54 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testParseCellReferenceRelative() {
-        this.parseStringAndCheck("A98",
-            SpreadsheetSelection.column(0, SpreadsheetReferenceKind.RELATIVE)
-                .setRow(SpreadsheetSelection.row(97, SpreadsheetReferenceKind.RELATIVE)));
+        this.parseStringAndCheck(
+            "A98",
+            SpreadsheetSelection.column(
+                SpreadsheetColumnReference.MIN_VALUE,
+                SpreadsheetReferenceKind.RELATIVE
+            ).setRow(
+                SpreadsheetSelection.row(
+                    98,
+                    SpreadsheetReferenceKind.RELATIVE
+                )
+            )
+        );
     }
 
     @Test
     public void testParseCellReferenceAbsolute() {
-        this.parseStringAndCheck("$A$98",
-            SpreadsheetSelection.column(0, SpreadsheetReferenceKind.ABSOLUTE)
-                .setRow(SpreadsheetSelection.row(97, SpreadsheetReferenceKind.ABSOLUTE)));
+        this.parseStringAndCheck(
+            "$A$98",
+            SpreadsheetSelection.column(
+                SpreadsheetColumnReference.MIN_VALUE,
+                SpreadsheetReferenceKind.ABSOLUTE
+            ).setRow(
+                SpreadsheetSelection.row(
+                    98,
+                    SpreadsheetReferenceKind.ABSOLUTE
+                )
+            )
+        );
     }
 
     @Test
     public void testParseCellReferenceLastColumn() {
-        this.parseStringAndCheck("XFD2",
+        this.parseStringAndCheck(
+            "XFD2",
             SpreadsheetReferenceKind.RELATIVE.lastColumn()
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(1))
+                .setRow(
+                    SpreadsheetReferenceKind.RELATIVE.row(2)
+                )
         );
     }
 
     @Test
     public void testParseCellReferenceLastRow() {
-        this.parseStringAndCheck("B1048576",
-            SpreadsheetReferenceKind.RELATIVE.column(1)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow())
+        this.parseStringAndCheck(
+            "B1048576",
+            SpreadsheetReferenceKind.RELATIVE.column(2)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.lastRow()
+                )
         );
     }
 
@@ -2165,7 +2188,10 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createSelection(), "$DT$457");
+        this.toStringAndCheck(
+            this.createSelection(),
+            "$DS$456"
+        );
     }
 
     // toStringMaybeStar................................................................................................

@@ -531,7 +531,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringFails(
             text,
-            new IllegalArgumentException("Invalid column \"ABCDEFGHIJKLM\" not between \"A\" and \"XFE\"")
+            new IllegalArgumentException("Invalid column \"ABCDEFGHIJKLM\" not between \"A\" and \"XFD\"")
         );
     }
 
@@ -551,7 +551,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.parseStringFails(
             text,
-            new IllegalArgumentException("Invalid row=1912276170 not between 0 and 1048576")
+            new IllegalArgumentException("Invalid row=1912276171 not between 1 and 1048576")
         );
     }
 

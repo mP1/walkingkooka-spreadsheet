@@ -300,7 +300,7 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
      * A frozen column range must begin with column A
      */
     public void frozenColumnsCheck() {
-        if (this.begin().value() != 0) {
+        if (this.begin().isNotFirst()) {
             throw new IllegalArgumentException("Range must begin at 'A' but was " + CharSequences.quoteAndEscape(this.toString()));
         }
     }
