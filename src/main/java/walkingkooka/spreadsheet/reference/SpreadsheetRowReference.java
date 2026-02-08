@@ -112,18 +112,21 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
      * instance if it is different.
      */
     public SpreadsheetRowReference setValue(final int value) {
-        checkValue(value);
         return this.value == value ?
             this :
-            new SpreadsheetRowReference(value, this.referenceKind());
+            new SpreadsheetRowReference(
+                checkValue(value),
+                this.referenceKind()
+            );
     }
 
-    private static void checkValue(final int value) {
+    private static int checkValue(final int value) {
         if (value < 0 || value > MAX_VALUE) {
             throw new IllegalRowArgumentException(
                 "Invalid row=" + value + " not between 0 and " + (MAX_VALUE + 1)
             );
         }
+        return value;
     }
 
     public SpreadsheetReferenceKind referenceKind() {
