@@ -1612,7 +1612,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testToStringRelative() {
-        this.checkToString(
+        this.toStringAndCheck2(
             MIN_VALUE,
             SpreadsheetReferenceKind.RELATIVE,
             "1"
@@ -1621,7 +1621,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testToStringRelative2() {
-        this.checkToString(
+        this.toStringAndCheck2(
             123,
             SpreadsheetReferenceKind.RELATIVE,
             "123"
@@ -1630,7 +1630,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testToStringAbsolute() {
-        this.checkToString(
+        this.toStringAndCheck2(
             MIN_VALUE,
             SpreadsheetReferenceKind.ABSOLUTE,
             "$1"
