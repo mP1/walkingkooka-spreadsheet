@@ -187,7 +187,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                     this.value + value,
                     MIN_VALUE
                 ),
-                this.max()
+                MAX_VALUE
             )
         );
     }
@@ -232,12 +232,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
                 ) :
                 null
         );
-    }
-
-    // max.............................................................................................................
-
-    int max() {
-        return MAX_VALUE;
     }
 
     /**
@@ -363,7 +357,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
      */
     @Override
     public boolean isLast() {
-        return this.value == this.max();
+        return MAX_VALUE == this.value;
     }
 
     // toXXX............................................................................................................
