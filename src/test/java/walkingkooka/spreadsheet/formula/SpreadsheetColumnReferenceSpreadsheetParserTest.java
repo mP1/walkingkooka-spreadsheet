@@ -60,64 +60,118 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
 
     @Test
     public void testParseRelativeReference() {
-        this.parseAndCheck2(A_TEXT, SpreadsheetReferenceKind.RELATIVE, A_VALUE);
+        this.parseAndCheck2(
+            A_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            A_VALUE
+        );
     }
 
     @Test
     public void testParseRelativeReference1() {
-        this.parseAndCheck2(A_TEXT, SpreadsheetReferenceKind.RELATIVE, A_VALUE, TEXT_AFTER);
+        this.parseAndCheck2(
+            A_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            A_VALUE,
+            TEXT_AFTER
+        );
     }
 
     @Test
     public void testParseRelativeReference2() {
-        this.parseAndCheck2(AD_TEXT, SpreadsheetReferenceKind.RELATIVE, AD_VALUE);
+        this.parseAndCheck2(
+            AD_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            AD_VALUE
+        );
     }
 
     @Test
     public void testParseRelativeReference3() {
-        this.parseAndCheck2(AD_TEXT, SpreadsheetReferenceKind.RELATIVE, AD_VALUE, TEXT_AFTER);
+        this.parseAndCheck2(
+            AD_TEXT,
+            SpreadsheetReferenceKind.RELATIVE,
+            AD_VALUE,
+            TEXT_AFTER
+        );
     }
 
     @Test
     public void testParseRelativeReferenceLowerCase() {
-        this.parseAndCheck2(AD_TEXT.toLowerCase(), SpreadsheetReferenceKind.RELATIVE, AD_VALUE, TEXT_AFTER);
+        this.parseAndCheck2(
+            AD_TEXT.toLowerCase(),
+            SpreadsheetReferenceKind.RELATIVE,
+            AD_VALUE,
+            TEXT_AFTER
+        );
     }
 
     @Test
     public void testParseAbsoluteReference() {
-        this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE);
+        this.parseAndCheck2(
+            "$" + AD_TEXT,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            AD_VALUE
+        );
     }
 
     @Test
     public void testParseAbsoluteReference1() {
-        this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE, TEXT_AFTER);
+        this.parseAndCheck2(
+            "$" + AD_TEXT,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            AD_VALUE,
+            TEXT_AFTER
+        );
     }
 
     @Test
     public void testParseAbsoluteReference2() {
-        this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE);
+        this.parseAndCheck2(
+            "$" + AD_TEXT,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            AD_VALUE
+        );
     }
 
     @Test
     public void testParseAbsoluteReference3() {
-        this.parseAndCheck2("$" + AD_TEXT, SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE, TEXT_AFTER);
+        this.parseAndCheck2(
+            "$" + AD_TEXT,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            AD_VALUE,
+            TEXT_AFTER
+        );
     }
 
     @Test
     public void testParseAbsoluteReferenceLowerCase() {
-        this.parseAndCheck2("$" + AD_TEXT.toLowerCase(), SpreadsheetReferenceKind.ABSOLUTE, AD_VALUE, TEXT_AFTER);
+        this.parseAndCheck2(
+            "$" + AD_TEXT.toLowerCase(),
+            SpreadsheetReferenceKind.ABSOLUTE,
+            AD_VALUE,
+            TEXT_AFTER
+        );
     }
 
     @Test
     public void testParseRange() {
-        this.parseAndCheck2("A", SpreadsheetReferenceKind.RELATIVE, A_VALUE, ":B");
+        this.parseAndCheck2(
+            "A",
+            SpreadsheetReferenceKind.RELATIVE,
+            A_VALUE,
+            ":B"
+        );
     }
 
     @Test
     public void testParseMax() {
         this.parseAndCheck(
             "XFD",
-            ColumnSpreadsheetFormulaParserToken.column(SpreadsheetReferenceKind.RELATIVE.lastColumn(), "XFD"),
+            ColumnSpreadsheetFormulaParserToken.column(
+                SpreadsheetReferenceKind.RELATIVE.lastColumn(),
+                "XFD"
+            ),
             "XFD"
         );
     }
@@ -138,16 +192,40 @@ public final class SpreadsheetColumnReferenceSpreadsheetParserTest extends Sprea
         );
     }
 
-    private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int column) {
-        this.parseAndCheck2(text, referenceKind, column, "");
+    private void parseAndCheck2(final String text,
+                                final SpreadsheetReferenceKind referenceKind,
+                                final int column) {
+        this.parseAndCheck2(
+            text,
+            referenceKind,
+            column,
+            ""
+        );
     }
 
-    private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int column, final String textAfter) {
-        this.parseAndCheck(text + textAfter, this.token(referenceKind, column, text), text, textAfter);
+    private void parseAndCheck2(final String text,
+                                final SpreadsheetReferenceKind referenceKind,
+                                final int column,
+                                final String textAfter) {
+        this.parseAndCheck(
+            text + textAfter,
+            this.token(
+                referenceKind,
+                column,
+                text
+            ),
+            text,
+            textAfter
+        );
     }
 
-    private ColumnSpreadsheetFormulaParserToken token(final SpreadsheetReferenceKind referenceKind, final int column, final String text) {
-        return SpreadsheetFormulaParserToken.column(referenceKind.column(column), text);
+    private ColumnSpreadsheetFormulaParserToken token(final SpreadsheetReferenceKind referenceKind,
+                                                      final int column,
+                                                      final String text) {
+        return SpreadsheetFormulaParserToken.column(
+            referenceKind.column(column),
+            text
+        );
     }
 
     @Override
