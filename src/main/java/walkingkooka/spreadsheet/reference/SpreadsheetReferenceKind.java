@@ -101,7 +101,7 @@ public enum SpreadsheetReferenceKind {
     public final SpreadsheetRowReference firstRow() {
         if (null == this.firstRow) {
             this.firstRow = SpreadsheetRowReference.with(
-                0,
+                SpreadsheetRowReference.MIN_VALUE,
                 this
             );
         }
