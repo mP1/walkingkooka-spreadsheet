@@ -54,10 +54,22 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         .column(1)
         .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
 
-    final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector())
-        .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("d/m/y h:mm").spreadsheetParserSelector())
-        .set(SpreadsheetMetadataPropertyName.NUMBER_PARSER, SpreadsheetPattern.parseNumberParsePattern("#;#.#").spreadsheetParserSelector())
-        .set(SpreadsheetMetadataPropertyName.TIME_PARSER, SpreadsheetPattern.parseTimeParsePattern("hh:mm").spreadsheetParserSelector());
+    final static SpreadsheetMetadata METADATA = SpreadsheetMetadataTesting.METADATA_EN_AU.set(
+        SpreadsheetMetadataPropertyName.DATE_PARSER,
+        SpreadsheetPattern.parseDateParsePattern("d/m/y").spreadsheetParserSelector()
+    ).set(
+        SpreadsheetMetadataPropertyName.DATE_TIME_PARSER,
+        SpreadsheetPattern.parseDateTimeParsePattern("d/m/y h:mm")
+            .spreadsheetParserSelector()
+    ).set(
+        SpreadsheetMetadataPropertyName.NUMBER_PARSER,
+        SpreadsheetPattern.parseNumberParsePattern("#;#.#")
+            .spreadsheetParserSelector()
+    ).set(
+        SpreadsheetMetadataPropertyName.TIME_PARSER,
+        SpreadsheetPattern.parseTimeParsePattern("hh:mm")
+            .spreadsheetParserSelector()
+    );
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = METADATA.expressionNumberKind();
 
@@ -379,8 +391,14 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         this.checkEquals(expectedSets, actual, message);
     }
 
-    private SpreadsheetCell cell(final int column, final int row) {
-        return this.cell(this.cellReference(column, row));
+    private SpreadsheetCell cell(final int column,
+                                 final int row) {
+        return this.cell(
+            this.cellReference(
+                column,
+                row
+            )
+        );
     }
 
     private SpreadsheetCell cell(final String reference) {
@@ -396,7 +414,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
             .setFormattedValue(this.formattedValue());
     }
 
-    final SpreadsheetCellReference cellReference(final int column, final int row) {
+    final SpreadsheetCellReference cellReference(final int column,
+                                                 final int row) {
         return SpreadsheetSelection.cell(SpreadsheetReferenceKind.RELATIVE.column(column),
             SpreadsheetReferenceKind.RELATIVE.row(row));
     }
