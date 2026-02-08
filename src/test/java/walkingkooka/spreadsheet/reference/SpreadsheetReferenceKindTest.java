@@ -29,7 +29,7 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
 
     @Test
     public void testColumnAbsolute() {
-        this.ColumnAndCheck(
+        this.columnCheck(
             SpreadsheetColumnReference.MIN_VALUE + 1,
             SpreadsheetReferenceKind.ABSOLUTE
         );
@@ -37,14 +37,21 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
 
     @Test
     public void testColumnRelative() {
-        this.ColumnAndCheck(
+        this.columnCheck(
             SpreadsheetColumnReference.MIN_VALUE + 1,
             SpreadsheetReferenceKind.RELATIVE
         );
     }
 
-    private void ColumnAndCheck(final int value, final SpreadsheetReferenceKind kind) {
-        this.columnCheck(kind.column(value), value, kind, false, false);
+    private void columnCheck(final int value,
+                             final SpreadsheetReferenceKind kind) {
+        this.columnCheck(
+            kind.column(value),
+            value,
+            kind,
+            false, // isFirst
+            false // isLast
+        );
     }
 
     @Test
@@ -78,7 +85,13 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
     }
 
     private void lastColumnAndCheck(final SpreadsheetReferenceKind kind) {
-        this.columnCheck(kind.lastColumn(), SpreadsheetColumnReference.MAX_VALUE, kind, false, true);
+        this.columnCheck(
+            kind.lastColumn(),
+            SpreadsheetColumnReference.MAX_VALUE,
+            kind,
+            false, // first
+            true // last
+        );
     }
 
     private void columnCheck(final SpreadsheetColumnReference column,
@@ -94,7 +107,7 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
 
     @Test
     public void testRowAbsolute() {
-        this.RowAndCheck(
+        this.rowCheck(
             SpreadsheetRowReference.MIN_VALUE + 1,
             SpreadsheetReferenceKind.ABSOLUTE
         );
@@ -102,14 +115,21 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
 
     @Test
     public void testRowRelative() {
-        this.RowAndCheck(
+        this.rowCheck(
             SpreadsheetRowReference.MIN_VALUE + 1,
             SpreadsheetReferenceKind.RELATIVE
         );
     }
 
-    private void RowAndCheck(final int value, final SpreadsheetReferenceKind kind) {
-        this.rowCheck(kind.row(value), value, kind, false, false);
+    private void rowCheck(final int value,
+                          final SpreadsheetReferenceKind kind) {
+        this.rowCheck(
+            kind.row(value),
+            value,
+            kind,
+            false,
+            false
+        );
     }
 
     @Test
@@ -165,18 +185,30 @@ public final class SpreadsheetReferenceKindTest implements ClassTesting2<Spreads
 
     @Test
     public void testAbsoluteFlip() {
-        this.flipAndCheck(SpreadsheetReferenceKind.ABSOLUTE, SpreadsheetReferenceKind.RELATIVE);
+        this.flipAndCheck(
+            SpreadsheetReferenceKind.ABSOLUTE,
+            SpreadsheetReferenceKind.RELATIVE
+        );
     }
 
     @Test
     public void testRelativeFlip() {
-        this.flipAndCheck(SpreadsheetReferenceKind.RELATIVE, SpreadsheetReferenceKind.ABSOLUTE);
+        this.flipAndCheck(
+            SpreadsheetReferenceKind.RELATIVE,
+            SpreadsheetReferenceKind.ABSOLUTE
+        );
     }
 
     private void flipAndCheck(final SpreadsheetReferenceKind before,
                               final SpreadsheetReferenceKind after) {
-        assertSame(after, before.flip(), () -> before + ".flip");
+        assertSame(
+            after,
+            before.flip(),
+            () -> before + ".flip"
+        );
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetReferenceKind> type() {
