@@ -222,12 +222,6 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
         );
     }
 
-    // max..............................................................................................................
-
-    int max() {
-        return MAX_VALUE;
-    }
-
     /**
      * Creates a {@link SpreadsheetCellReference} parse this row and the given column.
      */
