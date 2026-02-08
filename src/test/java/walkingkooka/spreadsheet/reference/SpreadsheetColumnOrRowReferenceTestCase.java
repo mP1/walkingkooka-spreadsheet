@@ -475,7 +475,8 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     // helper............................................................................................................
 
-    @Override final R createSelection() {
+    @Override //
+    final R createSelection() {
         return this.createReference(
             VALUE,
             REFERENCE_KIND
