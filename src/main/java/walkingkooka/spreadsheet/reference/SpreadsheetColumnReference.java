@@ -125,18 +125,21 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
      * instance if it is different.
      */
     public SpreadsheetColumnReference setValue(final int value) {
-        checkValue(value);
         return this.value == value ?
             this :
-            new SpreadsheetColumnReference(value, this.referenceKind());
+            new SpreadsheetColumnReference(
+                checkValue(value),
+                this.referenceKind()
+            );
     }
 
-    private static void checkValue(final int value) {
+    private static int checkValue(final int value) {
         if (value < 0 || value > MAX_VALUE) {
             throw new IllegalColumnArgumentException(
                 "Invalid column=" + value + " not between 0 and " + (1 + MAX_VALUE)
             );
         }
+        return value;
     }
 
     public SpreadsheetReferenceKind referenceKind() {
