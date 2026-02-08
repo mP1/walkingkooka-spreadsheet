@@ -68,7 +68,7 @@ public final class SpreadsheetComparatorNameList extends AbstractList<Spreadshee
     public static SpreadsheetComparatorNameList with(final Collection<SpreadsheetComparatorName> names) {
         Objects.requireNonNull(names, "names");
 
-        SpreadsheetComparatorNameList spreadsheetComparatorNameList;
+        final SpreadsheetComparatorNameList spreadsheetComparatorNameList;
 
         if (names instanceof SpreadsheetComparatorNameList) {
             spreadsheetComparatorNameList = (SpreadsheetComparatorNameList) names;
