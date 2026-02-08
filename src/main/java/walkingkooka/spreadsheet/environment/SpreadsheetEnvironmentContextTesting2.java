@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.storage.StorageEnvironmentContextTesting2;
 import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
@@ -28,7 +29,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends SpreadsheetEnvironmentContextTesting,
-    EnvironmentContextTesting2<C> {
+    EnvironmentContextTesting2<C>,
+    StorageEnvironmentContextTesting2<C> {
 
     // currentWorkingDirectory..........................................................................................
 

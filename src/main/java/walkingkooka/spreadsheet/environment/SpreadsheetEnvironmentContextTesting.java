@@ -17,21 +17,19 @@
 
 package walkingkooka.spreadsheet.environment;
 
-import walkingkooka.environment.EnvironmentContextTesting;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.HasCurrentWorkingDirectory;
-import walkingkooka.storage.HasCurrentWorkingDirectoryTesting;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.StorageEnvironmentContextTesting;
 import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
-public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContextTesting,
-    HasCurrentWorkingDirectoryTesting,
+public interface SpreadsheetEnvironmentContextTesting extends StorageEnvironmentContextTesting,
     HasSpreadsheetServerUrlTesting {
 
     // currentWorkingDirectory..........................................................................................
@@ -39,7 +37,7 @@ public interface SpreadsheetEnvironmentContextTesting extends EnvironmentContext
     @Override
     default void currentWorkingDirectoryAndCheck(final HasCurrentWorkingDirectory has,
                                                  final Optional<StoragePath> expected) {
-        HasCurrentWorkingDirectoryTesting.super.currentWorkingDirectoryAndCheck(
+        StorageEnvironmentContextTesting.super.currentWorkingDirectoryAndCheck(
             has,
             expected
         );
