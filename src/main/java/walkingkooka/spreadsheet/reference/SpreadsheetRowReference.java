@@ -42,6 +42,8 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     Comparable<SpreadsheetRowReference>,
     SpreadsheetColumnOrRowReference{
 
+    final static int MIN_VALUE = 0;
+
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
     final static int MAX_VALUE = 1_048_576 - 1; // max value inclusive
 
@@ -121,7 +123,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     }
 
     private static int checkValue(final int value) {
-        if (value < 0 || value > MAX_VALUE) {
+        if (value < SpreadsheetRowReference.MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalRowArgumentException(
                 "Invalid row=" + value + " not between 0 and " + (MAX_VALUE + 1)
             );
@@ -168,7 +170,10 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     public SpreadsheetRowReference addSaturated(final int value) {
         return this.setValue(
             Math.min(
-                Math.max(this.value + value, 0),
+                Math.max(
+                    this.value + value,
+                    MIN_VALUE
+                ),
                 this.max()
             )
         );
@@ -323,7 +328,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
      */
     @Override
     public boolean isFirst() {
-        return this.value == 0;
+        return MIN_VALUE == this.value;
     }
 
     /**
