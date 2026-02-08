@@ -36,7 +36,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testSetColumnNullFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetReferenceKind.ABSOLUTE.row(23).setColumn(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetReferenceKind.ABSOLUTE.row(23)
+                .setColumn(null)
+        );
     }
 
     @Test
@@ -81,12 +85,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testCountA() {
-        this.countAndCheck("2", 1);
+        this.countAndCheck(
+            "2",
+            1
+        );
     }
 
     @Test
     public void testCountZ() {
-        this.countAndCheck("$99", 1);
+        this.countAndCheck(
+            "$99",
+            1
+        );
     }
 
     // containsAll......................................................................................................
@@ -278,33 +288,41 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     @Test
     public void testToRelativeAbsolute() {
         final int value = 123;
-        this.toRelativeAndCheck(SpreadsheetReferenceKind.ABSOLUTE.row(value), SpreadsheetReferenceKind.RELATIVE.row(value));
+        this.toRelativeAndCheck(
+            SpreadsheetReferenceKind.ABSOLUTE.row(value),
+            SpreadsheetReferenceKind.RELATIVE.row(value)
+        );
     }
 
     @Test
     public void testToRelativeRelative() {
-        this.toRelativeAndCheck(SpreadsheetReferenceKind.RELATIVE.row(123));
+        this.toRelativeAndCheck(
+            SpreadsheetReferenceKind.RELATIVE.row(123)
+        );
     }
 
     @Test
     public void testEqualReferenceKindIgnored() {
         this.compareToAndCheckEquals(
             SpreadsheetReferenceKind.ABSOLUTE.row(VALUE),
-            SpreadsheetReferenceKind.RELATIVE.row(VALUE));
+            SpreadsheetReferenceKind.RELATIVE.row(VALUE)
+        );
     }
 
     @Test
     public void testLess() {
         this.compareToAndCheckLess(
             SpreadsheetReferenceKind.ABSOLUTE.row(VALUE),
-            SpreadsheetReferenceKind.ABSOLUTE.row(VALUE + 999));
+            SpreadsheetReferenceKind.ABSOLUTE.row(VALUE + 999)
+        );
     }
 
     @Test
     public void testLess2() {
         this.compareToAndCheckLess(
             SpreadsheetReferenceKind.ABSOLUTE.row(VALUE),
-            SpreadsheetReferenceKind.RELATIVE.row(VALUE + 999));
+            SpreadsheetReferenceKind.RELATIVE.row(VALUE + 999)
+        );
     }
 
     @Test
@@ -314,7 +332,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         final SpreadsheetRowReference row3 = SpreadsheetSelection.parseRow("3");
         final SpreadsheetRowReference row4 = SpreadsheetSelection.parseRow("$4");
 
-        this.compareToArraySortAndCheck(row3, row1, row4, row2,
+        this.compareToArraySortAndCheck(
+            row3, row1, row4, row2,
             row1, row2, row3, row4);
     }
 
@@ -322,12 +341,18 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testParseEmptyFails() {
-        this.parseStringFails("", IllegalArgumentException.class);
+        this.parseStringFails(
+            "",
+            IllegalArgumentException.class
+        );
     }
 
     @Test
     public void testParseInvalidFails() {
-        this.parseStringFails("!9", IllegalArgumentException.class);
+        this.parseStringFails(
+            "!9",
+            IllegalArgumentException.class
+        );
     }
 
     @Test
@@ -348,22 +373,34 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testParseAbsolute() {
-        this.parseStringAndCheck("$1", SpreadsheetReferenceKind.ABSOLUTE.row(0));
+        this.parseStringAndCheck(
+            "$1",
+            SpreadsheetReferenceKind.ABSOLUTE.row(0)
+        );
     }
 
     @Test
     public void testParseAbsolute2() {
-        this.parseStringAndCheck("$2", SpreadsheetReferenceKind.ABSOLUTE.row(1));
+        this.parseStringAndCheck(
+            "$2",
+            SpreadsheetReferenceKind.ABSOLUTE.row(1)
+        );
     }
 
     @Test
     public void testParseRelative() {
-        this.parseStringAndCheck("1", SpreadsheetReferenceKind.RELATIVE.row(0));
+        this.parseStringAndCheck(
+            "1",
+            SpreadsheetReferenceKind.RELATIVE.row(0)
+        );
     }
 
     @Test
     public void testParseRelative2() {
-        this.parseStringAndCheck("2", SpreadsheetReferenceKind.RELATIVE.row(1));
+        this.parseStringAndCheck(
+            "2",
+            SpreadsheetReferenceKind.RELATIVE.row(1)
+        );
     }
 
     // parseRowRange....................................................................................................
@@ -375,7 +412,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 Range.greaterThanEquals(SpreadsheetSelection.parseRow("2"))
                     .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("4")))
             ),
-            SpreadsheetSelection.parseRowRange("2:4"));
+            SpreadsheetSelection.parseRowRange("2:4")
+        );
     }
 
     @Test
@@ -385,7 +423,8 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 Range.greaterThanEquals(SpreadsheetSelection.parseRow("$2"))
                     .and(Range.lessThanEquals(SpreadsheetSelection.parseRow("$5")))
             ),
-            SpreadsheetSelection.parseRowRange("$2:$5"));
+            SpreadsheetSelection.parseRowRange("$2:$5")
+        );
     }
 
     // add..............................................................................................................
@@ -545,156 +584,265 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testMaxNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().max(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSelection()
+                .max(null)
+        );
     }
 
     @Test
     public void testMaxLess() {
-        this.maxAndCheck("5", "6", RIGHT);
+        this.maxAndCheck(
+            "5",
+            "6",
+            RIGHT
+        );
     }
 
     @Test
     public void testMaxLess2() {
-        this.maxAndCheck("$5", "6", RIGHT);
+        this.maxAndCheck(
+            "$5",
+            "6",
+            RIGHT
+        );
     }
 
     @Test
     public void testMaxLess3() {
-        this.maxAndCheck("5", "$6", RIGHT);
+        this.maxAndCheck(
+            "5",
+            "$6",
+            RIGHT
+        );
     }
 
     @Test
     public void testMaxLess4() {
-        this.maxAndCheck("$5", "$6", RIGHT);
+        this.maxAndCheck(
+            "$5",
+            "$6",
+            RIGHT
+        );
     }
 
     @Test
     public void testMaxEqual() {
-        this.maxAndCheck("5", "5", LEFT);
+        this.maxAndCheck(
+            "5",
+            "5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxEqual2() {
-        this.maxAndCheck("$5", "5", LEFT);
+        this.maxAndCheck(
+            "$5",
+            "5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxEqual3() {
-        this.maxAndCheck("5", "$5", LEFT);
+        this.maxAndCheck(
+            "5",
+            "$5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxEqual4() {
-        this.maxAndCheck("$5", "$5", LEFT);
+        this.maxAndCheck(
+            "$5",
+            "$5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxMore() {
-        this.maxAndCheck("6", "5", LEFT);
+        this.maxAndCheck(
+            "6",
+            "5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxMore2() {
-        this.maxAndCheck("$6", "5", LEFT);
+        this.maxAndCheck(
+            "$6",
+            "5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxMore3() {
-        this.maxAndCheck("6", "$5", LEFT);
+        this.maxAndCheck(
+            "6",
+            "$5",
+            LEFT
+        );
     }
 
     @Test
     public void testMaxMore4() {
-        this.maxAndCheck("$6", "$5", LEFT);
+        this.maxAndCheck(
+            "$6",
+            "$5",
+            LEFT
+        );
     }
 
     private void maxAndCheck(final String reference,
                              final String other,
                              final boolean RIGHT) {
-        this.maxAndCheck(SpreadsheetSelection.parseRow(reference),
+        this.maxAndCheck(
+            SpreadsheetSelection.parseRow(reference),
             SpreadsheetSelection.parseRow(other),
-            RIGHT);
+            RIGHT
+        );
     }
 
     private void maxAndCheck(final SpreadsheetRowReference reference,
                              final SpreadsheetRowReference other,
                              final boolean left) {
-        this.checkEquals(left ? reference : other,
+        this.checkEquals(
+            left ? reference : other,
             reference.max(other),
-            () -> "max of " + reference + " and " + other);
+            () -> "max of " + reference + " and " + other
+        );
     }
 
     // min.............................................................................................................
 
     @Test
     public void testMinNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection().min(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSelection()
+                .min(null)
+        );
     }
 
     @Test
     public void testMinLess() {
-        this.minAndCheck("5", "6", LEFT);
+        this.minAndCheck(
+            "5",
+            "6",
+            LEFT
+        );
     }
 
     @Test
     public void testMinLess2() {
-        this.minAndCheck("$5", "6", LEFT);
+        this.minAndCheck(
+            "$5",
+            "6",
+            LEFT
+        );
     }
 
     @Test
     public void testMinLess3() {
-        this.minAndCheck("5", "$6", LEFT);
+        this.minAndCheck(
+            "5",
+            "$6",
+            LEFT
+        );
     }
 
     @Test
     public void testMinLess4() {
-        this.minAndCheck("$5", "$6", LEFT);
+        this.minAndCheck(
+            "$5",
+            "$6",
+            LEFT
+        );
     }
 
     @Test
     public void testMinEqual() {
-        this.minAndCheck("5", "5", LEFT);
+        this.minAndCheck(
+            "5",
+            "5",
+            LEFT
+        );
     }
 
     @Test
     public void testMinEqual2() {
-        this.minAndCheck("$5", "5", LEFT);
+        this.minAndCheck(
+            "$5",
+            "5",
+            LEFT
+        );
     }
 
     @Test
     public void testMinEqual3() {
-        this.minAndCheck("5", "$5", LEFT);
+        this.minAndCheck(
+            "5",
+            "$5",
+            LEFT
+        );
     }
 
     @Test
     public void testMinEqual4() {
-        this.minAndCheck("$5", "$5", LEFT);
+        this.minAndCheck(
+            "$5",
+            "$5",
+            LEFT
+        );
     }
 
     @Test
     public void testMinRight() {
-        this.minAndCheck("6", "5", RIGHT);
+        this.minAndCheck(
+            "6",
+            "5",
+            RIGHT
+        );
     }
 
     @Test
     public void testMinRight2() {
-        this.minAndCheck("$6", "5", RIGHT);
+        this.minAndCheck(
+            "$6",
+            "5",
+            RIGHT
+        );
     }
 
     @Test
     public void testMinRight3() {
-        this.minAndCheck("6", "$5", RIGHT);
+        this.minAndCheck(
+            "6",
+            "$5",
+            RIGHT
+        );
     }
 
     @Test
     public void testMinRight4() {
-        this.minAndCheck("$6", "$5", RIGHT);
+        this.minAndCheck(
+            "$6",
+            "$5",
+            RIGHT
+        );
     }
 
     private void minAndCheck(final String reference,
                              final String other,
                              final boolean left) {
-        this.minAndCheck(SpreadsheetSelection.parseRow(reference),
+        this.minAndCheck(
+            SpreadsheetSelection.parseRow(reference),
             SpreadsheetSelection.parseRow(other),
             left);
     }
@@ -702,9 +850,11 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     private void minAndCheck(final SpreadsheetRowReference reference,
                              final SpreadsheetRowReference other,
                              final boolean left) {
-        this.checkEquals(left ? reference : other,
+        this.checkEquals(
+            left ? reference : other,
             reference.min(other),
-            () -> "min of " + reference + " and " + other);
+            () -> "min of " + reference + " and " + other
+        );
     }
 
     // toCell...........................................................................................................
@@ -913,27 +1063,41 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testUnmarshallStringInvalidFails() {
-        this.unmarshallFails(JsonNode.string("!9"));
+        this.unmarshallFails(
+            JsonNode.string("!9")
+        );
     }
 
     @Test
     public void testUnmarshallStringAbsolute() {
-        this.unmarshallAndCheck(JsonNode.string("$1"), SpreadsheetReferenceKind.ABSOLUTE.row(0));
+        this.unmarshallAndCheck(
+            JsonNode.string("$1"),
+            SpreadsheetReferenceKind.ABSOLUTE.row(0)
+        );
     }
 
     @Test
     public void testUnmarshallStringAbsolute2() {
-        this.unmarshallAndCheck(JsonNode.string("$2"), SpreadsheetReferenceKind.ABSOLUTE.row(1));
+        this.unmarshallAndCheck(
+            JsonNode.string("$2"),
+            SpreadsheetReferenceKind.ABSOLUTE.row(1)
+        );
     }
 
     @Test
     public void testUnmarshallStringRelative() {
-        this.unmarshallAndCheck(JsonNode.string("1"), SpreadsheetReferenceKind.RELATIVE.row(0));
+        this.unmarshallAndCheck(
+            JsonNode.string("1"),
+            SpreadsheetReferenceKind.RELATIVE.row(0)
+        );
     }
 
     @Test
     public void testUnmarshallStringRelative2() {
-        this.unmarshallAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
+        this.unmarshallAndCheck(
+            JsonNode.string("2"),
+            SpreadsheetReferenceKind.RELATIVE.row(1)
+        );
     }
 
     // isHidden.........................................................................................................
@@ -943,7 +1107,9 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         this.isHiddenAndCheck(
             "1",
             Predicates.fake(),
-            Predicates.is(SpreadsheetSelection.parseRow("1")),
+            Predicates.is(
+                SpreadsheetSelection.parseRow("1")
+            ),
             true
         );
     }
@@ -1446,17 +1612,29 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testToStringRelative() {
-        this.checkToString(0, SpreadsheetReferenceKind.RELATIVE, "1");
+        this.checkToString(
+            0,
+            SpreadsheetReferenceKind.RELATIVE,
+            "1"
+        );
     }
 
     @Test
     public void testToStringRelative2() {
-        this.checkToString(123, SpreadsheetReferenceKind.RELATIVE, "124");
+        this.checkToString(
+            123,
+            SpreadsheetReferenceKind.RELATIVE,
+            "124"
+        );
     }
 
     @Test
     public void testToStringAbsolute() {
-        this.checkToString(0, SpreadsheetReferenceKind.ABSOLUTE, "$1");
+        this.checkToString(
+            0,
+            SpreadsheetReferenceKind.ABSOLUTE,
+            "$1"
+        );
     }
 
     @Override
