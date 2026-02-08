@@ -68,7 +68,7 @@ public enum SpreadsheetReferenceKind {
     public final SpreadsheetColumnReference firstColumn() {
         if (null == this.firstColumn) {
             this.firstColumn = SpreadsheetColumnReference.with(
-                0,
+                SpreadsheetColumnReference.MIN_VALUE,
                 this
             );
         }
