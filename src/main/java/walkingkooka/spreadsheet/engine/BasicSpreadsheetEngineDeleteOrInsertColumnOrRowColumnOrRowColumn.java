@@ -143,7 +143,8 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRowColumn ext
     }
 
     @Override
-    SpreadsheetCellReference addColumnOrRowValue(final SpreadsheetCellReference cell, final int value) {
-        return cell.setColumn(cell.column().add(value));
+    SpreadsheetCellReference addColumnOrRowValue(final SpreadsheetCellReference cell,
+                                                 final int value) {
+        return cell.addColumn(value);
     }
 }
