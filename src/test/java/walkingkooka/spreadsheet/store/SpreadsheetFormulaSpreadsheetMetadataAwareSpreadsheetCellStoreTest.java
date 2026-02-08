@@ -46,7 +46,6 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreTest e
     implements HashCodeEqualsDefinedTesting2<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore> {
 
     private final static char DECIMAL_SEPARATOR = ',';
-    private final static char PERCENT = '^';
 
     // with.............................................................................................................
 
