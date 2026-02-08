@@ -213,7 +213,7 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
         );
     }
 
-    // Object..................................................................................................
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
