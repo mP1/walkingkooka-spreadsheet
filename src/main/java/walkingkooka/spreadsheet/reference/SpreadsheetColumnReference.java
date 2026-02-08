@@ -42,6 +42,8 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     Comparable<SpreadsheetColumnReference>,
     SpreadsheetColumnOrRowReference {
 
+    final static int MIN_VALUE = 0;
+
     /**
      * The maximum value, columns -1.
      */
@@ -134,9 +136,9 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     }
 
     private static int checkValue(final int value) {
-        if (value < 0 || value > MAX_VALUE) {
+        if (value < MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalColumnArgumentException(
-                "Invalid column=" + value + " not between 0 and " + (1 + MAX_VALUE)
+                "Invalid column=" + value + " not between " + MIN_VALUE + " and " + (1 + MAX_VALUE)
             );
         }
         return value;
@@ -181,7 +183,10 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
     public SpreadsheetColumnReference addSaturated(final int value) {
         return this.setValue(
             Math.min(
-                Math.max(this.value + value, 0),
+                Math.max(
+                    this.value + value,
+                    MIN_VALUE
+                ),
                 this.max()
             )
         );
@@ -350,7 +355,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnReference
      */
     @Override
     public boolean isFirst() {
-        return this.value == 0;
+        return MIN_VALUE == this.value;
     }
 
     /**
