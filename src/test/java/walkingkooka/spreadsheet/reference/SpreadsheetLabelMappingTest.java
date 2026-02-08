@@ -40,13 +40,17 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetSelection.labelName("label123");
-    private final static SpreadsheetExpressionReference REFERENCE = cell(1);
+    private final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1)
+        .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
 
     @Test
     public void testWithNullLabelFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetLabelMapping.with(null, REFERENCE)
+            () -> SpreadsheetLabelMapping.with(
+                null,
+                REFERENCE
+            )
         );
     }
 
@@ -54,7 +58,10 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     public void testWithNullReferenceFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetLabelMapping.with(LABEL, null)
+            () -> SpreadsheetLabelMapping.with(
+                LABEL,
+                null
+            )
         );
     }
 
@@ -116,7 +123,11 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testSetReferenceWithNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().setReference(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .setReference(null)
+        );
     }
 
     @Test
@@ -124,7 +135,10 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         final SpreadsheetLabelMapping mapping = this.createObject();
         assertSame(LABEL, mapping.label());
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> mapping.setReference(LABEL));
+        final IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> mapping.setReference(LABEL)
+        );
         this.checkEquals(
             "Reference \"label123\" must be different to label \"label123\"",
             thrown.getMessage()
@@ -140,7 +154,9 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Test
     public void testSetReferenceDifferent() {
         final SpreadsheetLabelMapping mapping = this.createObject();
-        final SpreadsheetExpressionReference differentTarget = cell(999);
+        final SpreadsheetExpressionReference differentTarget = REFERENCE.setColumn(
+            SpreadsheetReferenceKind.RELATIVE.lastColumn()
+        );
         final SpreadsheetLabelMapping different = mapping.setReference(differentTarget);
 
         assertNotSame(mapping, different);
@@ -173,12 +189,16 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testJsonRoundtripLabelName() {
-        this.marshallRoundTrip2(SpreadsheetLabelName.labelName("LABEL456"));
+        this.marshallRoundTrip2(
+            SpreadsheetLabelName.labelName("LABEL456")
+        );
     }
 
     @Test
     public void testJsonRoundtripRange() {
-        this.marshallRoundTrip2(SpreadsheetSelection.parseCellRange("A1:B2"));
+        this.marshallRoundTrip2(
+            SpreadsheetSelection.parseCellRange("A1:B2")
+        );
     }
 
     private void marshallRoundTrip2(final SpreadsheetExpressionReference reference) {
@@ -188,13 +208,32 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         );
     }
 
-    // HateosResource....................................................................................................
+    @Override
+    public SpreadsheetLabelMapping unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
+        return SpreadsheetLabelMapping.unmarshall(
+            node,
+            context
+        );
+    }
+
+    @Override
+    public SpreadsheetLabelMapping createJsonNodeMarshallingValue() {
+        return this.createObject();
+    }
+
+    // HateosResource...................................................................................................
 
     @Test
     public void testHateosLinkId() {
         final String text = "ABC12345678";
         this.hateosLinkIdAndCheck(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(text), SpreadsheetSelection.A1),
             text);
+    }
+
+    @Override
+    public SpreadsheetLabelMapping createHateosResource() {
+        return this.createObject();
     }
 
     // TreePrintableTesting.............................................................................................
@@ -224,7 +263,9 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkNotEquals(
             SpreadsheetLabelMapping.with(
                 LABEL,
-                cell(99)
+                REFERENCE.setColumn(
+                        SpreadsheetReferenceKind.ABSOLUTE.lastColumn()
+                )
             )
         );
     }
@@ -341,30 +382,40 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Override
     public SpreadsheetLabelMapping createComparable() {
-        return SpreadsheetLabelMapping.with(LABEL, REFERENCE);
+        return SpreadsheetLabelMapping.with(
+            LABEL,
+            REFERENCE
+        );
     }
 
     // toString...............................................................................................
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createObject(), LABEL + "=" + REFERENCE);
+        this.toStringAndCheck(
+            this.createObject(),
+            LABEL + "=" + REFERENCE
+        );
     }
 
     // helpers...............................................................................................
 
-    private void checkLabel(final SpreadsheetLabelMapping mapping, final SpreadsheetLabelName label) {
-        this.checkEquals(label, mapping.label(), "label");
+    private void checkLabel(final SpreadsheetLabelMapping mapping,
+                            final SpreadsheetLabelName label) {
+        this.checkEquals(
+            label,
+            mapping.label(),
+            "label"
+        );
     }
 
     private void checkReference(final SpreadsheetLabelMapping mapping,
                                 final SpreadsheetExpressionReference reference) {
-        this.checkEquals(reference, mapping.reference(), "reference");
-    }
-
-    private static SpreadsheetCellReference cell(final int column) {
-        return SpreadsheetReferenceKind.ABSOLUTE.column(column)
-            .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
+        this.checkEquals(
+            reference,
+            mapping.reference(),
+            "reference"
+        );
     }
 
     // ClassTesting...............................................................................................
@@ -377,25 +428,5 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // JsonNodeMarshallingTesting...........................................................................................
-
-    @Override
-    public SpreadsheetLabelMapping unmarshall(final JsonNode node,
-                                              final JsonNodeUnmarshallContext context) {
-        return SpreadsheetLabelMapping.unmarshall(node, context);
-    }
-
-    @Override
-    public SpreadsheetLabelMapping createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    // HateosResourceTesting............................................................................................
-
-    @Override
-    public SpreadsheetLabelMapping createHateosResource() {
-        return this.createObject();
     }
 }
