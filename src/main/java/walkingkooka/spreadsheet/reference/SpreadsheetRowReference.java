@@ -125,7 +125,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     private static int checkValue(final int value) {
         if (value < SpreadsheetRowReference.MIN_VALUE || value > MAX_VALUE) {
             throw new IllegalRowArgumentException(
-                "Invalid row=" + value + " not between 0 and " + (MAX_VALUE + 1)
+                "Invalid row=" + value + " not between " + MIN_VALUE + " and " + (MAX_VALUE + 1)
             );
         }
         return value;
