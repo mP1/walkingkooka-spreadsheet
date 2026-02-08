@@ -174,7 +174,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
                     this.value + value,
                     MIN_VALUE
                 ),
-                this.max()
+                MAX_VALUE
             )
         );
     }
@@ -336,7 +336,7 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
      */
     @Override
     public boolean isLast() {
-        return this.value == this.max();
+        return MAX_VALUE == this.value;
     }
 
     // toXXX............................................................................................................
