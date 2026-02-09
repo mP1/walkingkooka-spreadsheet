@@ -630,6 +630,32 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
+    public void testParseInvalidSeparatorComparatorNameInvalidDirectoryFails() {
+        final String text = "A=text UD";
+
+        this.parseStringFails(
+            text,
+            new InvalidCharacterException(
+                text,
+                text.indexOf('D')
+            )
+        );
+    }
+
+    @Test
+    public void testParseInvalidSeparatorComparatorNameInvalidDirectoryFails2() {
+        final String text = "A=text UPQ";
+
+        this.parseStringFails(
+            text,
+            new InvalidCharacterException(
+                text,
+                text.indexOf('Q')
+            )
+        );
+    }
+
+    @Test
     public void testParseColumnSpreadsheetComparatorNameUp() {
         this.parseStringAndCheck(
             "A=text UP",
