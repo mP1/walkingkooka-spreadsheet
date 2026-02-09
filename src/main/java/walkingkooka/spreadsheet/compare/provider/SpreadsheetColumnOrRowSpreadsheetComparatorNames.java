@@ -474,7 +474,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                                                         final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
-            Objects.requireNonNull(columnOrRow, "columnOrRows"),
+            Objects.requireNonNull(columnOrRow, "columnOrRow"),
             checkComparatorNameAndDirections(comparatorNameAndDirections)
         );
     }
