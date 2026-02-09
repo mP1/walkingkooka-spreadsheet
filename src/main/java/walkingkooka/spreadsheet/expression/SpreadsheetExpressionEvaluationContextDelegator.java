@@ -115,6 +115,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
+    default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
+        this.spreadsheetExpressionEvaluationContext()
+            .setCurrentWorkingDirectory(currentWorkingDirectory);
+    }
+
+    @Override
     default AbsoluteUrl serverUrl() {
         return this.spreadsheetExpressionEvaluationContext()
             .serverUrl();

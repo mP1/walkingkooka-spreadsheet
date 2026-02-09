@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageEnvironmentContext;
-import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
@@ -44,11 +43,6 @@ public interface SpreadsheetEnvironmentContext extends StorageEnvironmentContext
         "spreadsheetId",
         SpreadsheetId.class
     );
-
-    /**
-     * Sets or replaces the current working directory.
-     */
-    void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory);
 
     /**
      * The {@link SpreadsheetId} that identifies a spreadsheet.

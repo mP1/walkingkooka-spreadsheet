@@ -22,7 +22,6 @@ import walkingkooka.environment.EnvironmentContextTesting2;
 import walkingkooka.environment.ReadOnlyEnvironmentValueException;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.storage.StorageEnvironmentContextTesting2;
-import walkingkooka.storage.StoragePath;
 
 import java.util.Optional;
 
@@ -31,44 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetEnvironmentContextTesting2<C extends SpreadsheetEnvironmentContext> extends SpreadsheetEnvironmentContextTesting,
     EnvironmentContextTesting2<C>,
     StorageEnvironmentContextTesting2<C> {
-
-    // currentWorkingDirectory..........................................................................................
-
-    @Test
-    default void testSetCurrentWorkingDirectoryWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createContext()
-                .setCurrentWorkingDirectory(null)
-        );
-    }
-
-    // setCurrentWorkingDirectory.......................................................................................
-
-    default void setCurrentWorkingDirectoryAndCheck(final C context) {
-        this.setCurrentWorkingDirectoryAndCheck(
-            context,
-            Optional.empty()
-        );
-    }
-
-    default void setCurrentWorkingDirectoryAndCheck(final C context,
-                                                    final StoragePath currentWorkingDirectory) {
-        this.setCurrentWorkingDirectoryAndCheck(
-            context,
-            Optional.of(currentWorkingDirectory)
-        );
-    }
-
-    default void setCurrentWorkingDirectoryAndCheck(final C context,
-                                                    final Optional<StoragePath> currentWorkingDirectory) {
-        context.setCurrentWorkingDirectory(currentWorkingDirectory);
-
-        this.currentWorkingDirectoryAndCheck(
-            context,
-            currentWorkingDirectory
-        );
-    }
 
     // serverUrl........................................................................................................
 
