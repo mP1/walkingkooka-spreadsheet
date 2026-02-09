@@ -265,7 +265,6 @@
               <includes>
                   <include>**/*Test.java</include>
               </includes>
-              <argLine>-Xmx2G -Duser.language=EN -Duser.region=AU</argLine>
             <trimStackTrace>false</trimStackTrace>
           </configuration>
         <dependencies>
