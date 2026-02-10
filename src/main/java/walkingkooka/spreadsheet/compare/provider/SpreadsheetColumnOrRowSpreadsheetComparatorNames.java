@@ -21,7 +21,6 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -36,7 +35,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -160,7 +158,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
         final int length = text.length();
 
-        final Set<SpreadsheetSelection> duplicates = SortedSets.tree();
         int mode = MODE_COLUMN_OR_ROW_START;
         int tokenStart = 0;
         SpreadsheetColumnOrRowReferenceOrRange columnOrRow = null;
@@ -197,21 +194,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             throw invalid.setTextAndPosition(
                                 text,
                                 tokenStart + invalid.position()
-                            );
-                        }
-
-                        if (false == duplicates.isEmpty()) {
-                            duplicates.iterator()
-                                .next()
-                                .ifDifferentColumnOrRowTypeFail(columnOrRow);
-                        }
-
-                        if (false == duplicates.add(columnOrRow)) {
-                            throw new IllegalArgumentException(
-                                "Duplicate " +
-                                    columnOrRow.cellColumnOrRowText() +
-                                    " " +
-                                    columnOrRow
                             );
                         }
 
