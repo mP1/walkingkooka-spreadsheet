@@ -207,13 +207,21 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
     public final static String REVERSED = "-reversed";
 
     /**
+     * Tests if this {@link SpreadsheetComparatorName} identifies a reversed comparator.
+     */
+    public boolean isReversed() {
+        return this.name.value()
+            .endsWith(REVERSED);
+    }
+
+    /**
      * Appends the {@link #REVERSED} suffix or removes it.
      */
     public SpreadsheetComparatorName reversed() {
         final String name = this.name.value();
         final String reversed;
 
-        if (name.endsWith(REVERSED)) {
+        if (this.isReversed()) {
             reversed = CharSequences.subSequence(
                 name,
                 0,
@@ -232,11 +240,10 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
     public SpreadsheetComparatorName unreversed() {
         final SpreadsheetComparatorName unreversed;
 
-        final String name = this.name.value();
-        if (name.endsWith(REVERSED)) {
+        if (this.isReversed()) {
             unreversed = with(
                 CharSequences.subSequence(
-                    name,
+                    this.name.value(),
                     0,
                     -REVERSED.length()
                 ).toString()

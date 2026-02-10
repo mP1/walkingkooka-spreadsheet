@@ -61,39 +61,82 @@ final public class SpreadsheetComparatorNameTest implements PluginNameTesting<Sp
         return SpreadsheetComparatorName.with(name);
     }
 
+    // isReversed.......................................................................................................
+
+    @Test
+    public void testIsReversedWhenNot() {
+        this.isReversedAndCheck(
+            "text",
+            false
+        );
+    }
+
+    @Test
+    public void testIsReversedWhenReversed() {
+        this.isReversedAndCheck(
+            "text-reversed",
+            true
+        );
+    }
+
+    private void isReversedAndCheck(final String name,
+                                    final boolean expected) {
+        this.isReversedAndCheck(
+            SpreadsheetComparatorName.with(name),
+            expected
+        );
+    }
+
+    private void isReversedAndCheck(final SpreadsheetComparatorName name,
+                                    final boolean expected) {
+        this.checkEquals(
+            expected,
+            name.isReversed(),
+            name::toString
+        );
+    }
+
     // reversed.........................................................................................................
 
     @Test
     public void testReversed() {
-        this.reverseAndCheck(
-            "text",
-            "text-reversed"
+        this.isReversedAndCheck(
+            this.reverseAndCheck(
+                "text",
+                "text-reversed"
+            ),
+            true
         );
     }
 
     @Test
     public void testReversedWhenReversed() {
-        this.reverseAndCheck(
-            "text-reversed",
-            "text"
+        this.isReversedAndCheck(
+            this.reverseAndCheck(
+                "text-reversed",
+                "text"
+            ),
+            false
         );
     }
 
-    private void reverseAndCheck(final String name,
-                                 final String expected) {
-        this.reverseAndCheck(
+    private SpreadsheetComparatorName reverseAndCheck(final String name,
+                                                      final String expected) {
+        return this.reverseAndCheck(
             SpreadsheetComparatorName.with(name),
             SpreadsheetComparatorName.with(expected)
         );
     }
 
-    private void reverseAndCheck(final SpreadsheetComparatorName name,
-                                 final SpreadsheetComparatorName expected) {
+    private SpreadsheetComparatorName reverseAndCheck(final SpreadsheetComparatorName name,
+                                                      final SpreadsheetComparatorName expected) {
+        final SpreadsheetComparatorName reversed = name.reversed();
         this.checkEquals(
             expected,
-            name.reversed(),
+            reversed,
             name::toString
         );
+        return reversed;
     }
 
     @Test
