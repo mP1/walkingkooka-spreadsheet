@@ -24,6 +24,7 @@ import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -202,6 +203,28 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
     }
 
     private final PluginName name;
+
+    public final static String REVERSED = "-reversed";
+
+    /**
+     * Appends the {@link #REVERSED} suffix or removes it.
+     */
+    public SpreadsheetComparatorName reversed() {
+        final String name = this.name.value();
+        final String reversed;
+
+        if (name.endsWith(REVERSED)) {
+            reversed = CharSequences.subSequence(
+                name,
+                0,
+                -REVERSED.length()
+            ).toString();
+        } else {
+            reversed = name.concat(REVERSED);
+        }
+
+        return with(reversed);
+    }
 
     /**
      * Create a {@link SpreadsheetComparatorNameAndDirection} using this name and the given {@link SpreadsheetComparatorDirection direction}

@@ -28,6 +28,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 final public class SpreadsheetComparatorNameTest implements PluginNameTesting<SpreadsheetComparatorName> {
 
     @Test
@@ -52,10 +54,59 @@ final public class SpreadsheetComparatorNameTest implements PluginNameTesting<Sp
         );
     }
 
+    // name.............................................................................................................
+
     @Override
     public SpreadsheetComparatorName createName(final String name) {
         return SpreadsheetComparatorName.with(name);
     }
+
+    // reversed.........................................................................................................
+
+    @Test
+    public void testReversed() {
+        this.reverseAndCheck(
+            "text",
+            "text-reversed"
+        );
+    }
+
+    @Test
+    public void testReversedWhenReversed() {
+        this.reverseAndCheck(
+            "text-reversed",
+            "text"
+        );
+    }
+
+    private void reverseAndCheck(final String name,
+                                 final String expected) {
+        this.reverseAndCheck(
+            SpreadsheetComparatorName.with(name),
+            SpreadsheetComparatorName.with(expected)
+        );
+    }
+
+    private void reverseAndCheck(final SpreadsheetComparatorName name,
+                                 final SpreadsheetComparatorName expected) {
+        this.checkEquals(
+            expected,
+            name.reversed(),
+            name::toString
+        );
+    }
+
+    @Test
+    public void testReversedTwice() {
+        final SpreadsheetComparatorName spreadsheetComparatorName = SpreadsheetComparatorName.YEAR;
+        assertSame(
+            spreadsheetComparatorName,
+            spreadsheetComparatorName.reversed()
+                .reversed()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetComparatorName> type() {
