@@ -31,7 +31,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.compare.FakeSpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
@@ -177,12 +176,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 column,
                 Lists.of(
-                    SpreadsheetComparatorName.with("day-of-month")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-                    SpreadsheetComparatorName.with("month-of-year")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                    SpreadsheetComparatorName.with("day-of-month"),
+                    SpreadsheetComparatorName.with("month-of-year"),
                     SpreadsheetComparatorName.with("year")
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
                 )
             )
         );
@@ -206,12 +202,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 row,
                 Lists.of(
-                    SpreadsheetComparatorName.with("day-of-month")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-                    SpreadsheetComparatorName.with("month-of-year")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                    SpreadsheetComparatorName.with("day-of-month"),
+                    SpreadsheetComparatorName.with("month-of-year"),
                     SpreadsheetComparatorName.with("year")
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
                 )
             )
         );
@@ -314,59 +307,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
 
     @Test
     public void testParseSpreadsheetNameSpaceFails() {
-        this.parseStringFails(
+        this.parseStringInvalidCharacterFails(
             "A=day-of-month ",
-            new IllegalArgumentException("Missing UP/DOWN")
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetNameSpaceEmptyUpOrDownFails() {
-        final String text = "A=day-of-month ,";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf(',')
-            )
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownCharacterFails() {
-        final String text = "A=day-of-month !,";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('!')
-            )
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownCharacterFails2() {
-        this.parseStringFails(
-            "A=day-of-month U!,",
-            IllegalArgumentException.class
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownFails() {
-        this.parseStringFails(
-            "A=day-of-month INVALID",
-            IllegalArgumentException.class
-        );
-    }
-
-    @Test
-    public void testParseSpreadsheetNameSpaceInvalidUpOrDownFails2() {
-        this.parseStringFails(
-            "A=day-of-month INVALID,",
-            IllegalArgumentException.class
+            ' '
         );
     }
 
@@ -381,22 +324,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameUp() {
+    public void testParseColumnSpreadsheetNameReversed() {
         this.parseStringAndCheck(
-            "A=day-of-month UP",
-            SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                SpreadsheetSelection.parseColumn("A"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseColumnSpreadsheetNameDown() {
-        this.parseStringAndCheck(
-            "A=day-of-month DOWN",
+            "A=day-of-month-reversed",
             SpreadsheetColumnOrRowSpreadsheetComparators.with(
                 SpreadsheetSelection.parseColumn("A"),
                 Lists.of(
@@ -409,22 +339,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUp() {
+    public void testParseRowSpreadsheetNameReversed() {
         this.parseStringAndCheck(
-            "2=day-of-month UP",
-            SpreadsheetColumnOrRowSpreadsheetComparators.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseRowSpreadsheetNameDown() {
-        this.parseStringAndCheck(
-            "2=day-of-month DOWN",
+            "2=day-of-month-reversed",
             SpreadsheetColumnOrRowSpreadsheetComparators.with(
                 SpreadsheetSelection.parseRow("2"),
                 Lists.of(
@@ -433,22 +350,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                     )
                 )
             )
-        );
-    }
-
-    @Test
-    public void testParseRowSpreadsheetNameUpCommaFails() {
-        this.parseStringFails(
-            "2=day-of-month UP,",
-            new IllegalArgumentException("Missing comparator name")
-        );
-    }
-
-    @Test
-    public void testParseRowSpreadsheetNameDownCommaFails() {
-        this.parseStringFails(
-            "2=day-of-month DOWN,",
-            new IllegalArgumentException("Missing comparator name")
         );
     }
 
@@ -481,9 +382,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUpSpreadsheetNameDown() {
+    public void testParseRowSpreadsheetNameSpreadsheetNameReversed() {
         this.parseStringAndCheck(
-            "2=day-of-month UP,month-of-year DOWN",
+            "2=day-of-month,month-of-year-reversed",
             SpreadsheetColumnOrRowSpreadsheetComparators.with(
                 SpreadsheetSelection.parseRow("2"),
                 Lists.of(
@@ -568,9 +469,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     @Test
-    public void testParseColumnSpreadsheetNameUpColumnSpreadsheetNameDown() {
+    public void testParseColumnSpreadsheetNameColumnSpreadsheetNameReversed() {
         this.parseStringAndCheck(
-            "A=day-of-month UP;B=month-of-year DOWN",
+            "A=day-of-month;B=month-of-year-reversed",
             SpreadsheetColumnOrRowSpreadsheetComparators.with(
                 SpreadsheetSelection.parseColumn("A"),
                 Lists.of(
@@ -589,9 +490,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
     }
 
     @Test
-    public void testParseRowSpreadsheetNameUpRowSpreadsheetNameDownSpreadsheetNameUp() {
+    public void testParseRowSpreadsheetNameRowSpreadsheetNameReversedSpreadsheetName() {
         this.parseStringAndCheck(
-            "1=day-of-month UP;2=month-of-year DOWN,year",
+            "1=day-of-month;2=month-of-year-reversed,year",
             SpreadsheetColumnOrRowSpreadsheetComparators.with(
                 SpreadsheetSelection.parseRow("1"),
                 Lists.of(
@@ -859,7 +760,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         final SpreadsheetCell date3 = this.cell("A3", "2000-01-01");
 
         this.comparatorArraySortAndCheck(
-            "A=day-of-month DOWN,month-of-year DOWN,year DOWN",
+            "A=day-of-month-reversed,month-of-year-reversed,year-reversed",
             date3,
             date2,
             date1,
@@ -876,7 +777,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         final SpreadsheetCell date3 = this.cell("A3", "2022-01-31");
 
         this.comparatorArraySortAndCheck(
-            "A=day-of-month UP,month-of-year UP,year UP",
+            "A=day-of-month,month-of-year,year",
             date3,
             date2,
             date1,
@@ -886,7 +787,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         );
 
         this.comparatorArraySortAndCheck(
-            "A=day-of-month UP,month-of-year UP,year UP",
+            "A=day-of-month,month-of-year,year",
             date3,
             date1,
             date2,
@@ -904,7 +805,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         final SpreadsheetCell text4 = this.cell("A4", "fourth");
 
         this.comparatorArraySortAndCheck(
-            "A=day-of-month UP,month-of-year UP,year UP",
+            "A=day-of-month,month-of-year,year",
             date3,
             date2,
             text4,
@@ -925,7 +826,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
         final SpreadsheetCell text5 = this.cell("A5", "fifth");
 
         this.comparatorArraySortAndCheck(
-            "A=day-of-month UP,month-of-year UP,year UP",
+            "A=day-of-month,month-of-year,year",
             date3,
             date2,
             text4,
@@ -1073,7 +974,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         .reversed()
                 )
             ),
-            "A=month-of-year DOWN"
+            "A=month-of-year-reversed"
         );
     }
 
@@ -1087,7 +988,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         .reversed()
                 )
             ),
-            "1=year DOWN"
+            "1=year-reversed"
         );
     }
 
@@ -1103,7 +1004,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsTest implements C
                         .reversed()
                 )
             ),
-            "3=day-of-month,month-of-year,year DOWN"
+            "3=day-of-month,month-of-year,year-reversed"
         );
     }
 

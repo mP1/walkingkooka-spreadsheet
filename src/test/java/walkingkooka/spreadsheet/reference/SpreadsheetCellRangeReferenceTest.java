@@ -782,7 +782,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
             "A1:C3",
-            "A=text UP;B=text DOWN"
+            "A=text;B=text-reversed"
         );
     }
 
@@ -790,7 +790,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     public void testComparatorNamesBoundsCheckWithRows() {
         this.comparatorNamesBoundsCheckAndCheck(
             "A1:C3",
-            "2=text UP;3=text DOWN"
+            "2=text;3=text-reversed"
         );
     }
 

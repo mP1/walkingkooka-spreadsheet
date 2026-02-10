@@ -616,7 +616,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
             "1:3",
-            "A=text UP;B=text DOWN;C=text UP;D=text DOWN"
+            "A=text1;B=text2;C=text3;D=text4"
         );
     }
 
@@ -624,7 +624,7 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
     public void testComparatorNamesBoundsCheckWithRows() {
         this.comparatorNamesBoundsCheckAndCheck(
             "1:3",
-            "1=text;2=text;3=text"
+            "1=text1;2=text2;3=text3"
         );
     }
 

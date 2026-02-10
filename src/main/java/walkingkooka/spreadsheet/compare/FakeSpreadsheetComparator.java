@@ -37,11 +37,6 @@ class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
     }
 
     @Override
-    public SpreadsheetComparatorDirection direction() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetComparatorName name() {
         throw new UnsupportedOperationException();
     }

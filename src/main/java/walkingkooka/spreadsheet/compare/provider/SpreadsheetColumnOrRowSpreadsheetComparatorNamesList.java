@@ -130,8 +130,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesList extends 
     public Set<SpreadsheetComparatorName> names() {
         return Sets.immutable(
             this.stream()
-                .flatMap(n -> n.comparatorNameAndDirections().stream())
-                .map(SpreadsheetComparatorNameAndDirection::name)
+                .flatMap(n ->
+                    n.comparatorNames()
+                        .stream())
                 .collect(Collectors.toCollection(Sets::ordered))
         );
     }

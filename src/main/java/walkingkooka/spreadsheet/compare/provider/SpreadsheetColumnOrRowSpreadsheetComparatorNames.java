@@ -21,7 +21,6 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.NeverError;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CharSequences;
@@ -45,10 +44,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     final static char COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR = '=';
 
     public final static CharacterConstant COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR = CharacterConstant.with(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR);
-
-    final static char COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR = SpreadsheetComparatorNameAndDirection.SEPARATOR_CHAR;
-
-    public final static CharacterConstant COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR = SpreadsheetComparatorNameAndDirection.SEPARATOR;
 
     final static char COMPARATOR_NAME_SEPARATOR_CHAR = ',';
 
@@ -84,32 +79,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     }
 
     /**
-     * Tries to parse the {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} text returning just its
-     * {@link SpreadsheetComparatorNameAndDirection name and directions}.
-     * <br>
-     * This is mostly a helper for building the SORT UI, where it would be better to have all {@link SpreadsheetComparatorNameAndDirection}
-     * with remove links even if there are duplicate columns/rows.
-     */
-    public static List<SpreadsheetComparatorNameAndDirection> tryParseSpreadsheetComparatorNameAndDirections(final String text) {
-        List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections;
-
-        try {
-            comparatorNameAndDirections = parse(text)
-                .comparatorNameAndDirections();
-        } catch (final NullPointerException rethrow) {
-            throw rethrow;
-        } catch (final RuntimeException ignore) {
-            comparatorNameAndDirections = Lists.empty();
-        }
-
-        return comparatorNameAndDirections;
-    }
-
-
-    /**
      * Parses the text into a single {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * <pre>
-     * A=day-of-month UP,month-of-year DOWN
+     * A=day-of-month,month-of-year
      * </pre>
      */
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNames parse(final String text) {
@@ -125,7 +97,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     /**
      * Parses the text into a {@link List} of {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * <pre>
-     * A=day-of-month UP,month-of-year DOWN;B=number
+     * A=day-of-month,month-of-year;B=number
      * </pre>
      * </pre>
      */
@@ -153,16 +125,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
         final int MODE_NAME_START = MODE_COLUMN_OR_ROW + 1;
         final int MODE_NAME = MODE_NAME_START + 1;
 
-        final int MODE_UP_OR_DOWN_START = MODE_NAME + 1;
-        final int MODE_UP_OR_DOWN = MODE_UP_OR_DOWN_START + 1;
-
         final int length = text.length();
 
         int mode = MODE_COLUMN_OR_ROW_START;
         int tokenStart = 0;
         SpreadsheetColumnOrRowReferenceOrRange columnOrRow = null;
-        SpreadsheetComparatorName comparatorName = null;
-        List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections = null;
+        List<SpreadsheetComparatorName> comparatorNames = null;
 
         for (int i = 0; i < length; i++) {
             final char c = text.charAt(i);
@@ -177,7 +145,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                     }
                     tokenStart = i;
                     columnOrRow = null;
-                    comparatorNameAndDirections = null;
+                    comparatorNames = null;
                     mode = MODE_COLUMN_OR_ROW;
                     break;
                 case MODE_COLUMN_OR_ROW:
@@ -197,7 +165,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             );
                         }
 
-                        comparatorNameAndDirections = Lists.array();
+                        comparatorNames = Lists.array();
                         mode = MODE_NAME_START;
                         break;
                     }
@@ -210,28 +178,18 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                         );
                     }
                     tokenStart = i;
-                    comparatorName = null;
                     mode = MODE_NAME;
                     break;
                 case MODE_NAME:
                     switch (c) {
-                        case COMPARATOR_NAME_AND_UP_DOWN_SEPARATOR_CHAR:
-                            comparatorName = SpreadsheetComparatorName.with(
-                                text.substring(
-                                    tokenStart,
-                                    i
-                                )
-                            );
-                            mode = MODE_UP_OR_DOWN_START;
-                            break;
                         case COMPARATOR_NAME_SEPARATOR_CHAR:
-                            comparatorNameAndDirections.add(
+                            comparatorNames.add(
                                 SpreadsheetComparatorName.with(
                                     text.substring(
                                         tokenStart,
                                         i
                                     )
-                                ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                                )
                             );
                             mode = MODE_NAME_START;
                             break;
@@ -242,22 +200,21 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                                     i
                                 );
                             }
-                            comparatorNameAndDirections.add(
+                            comparatorNames.add(
                                 SpreadsheetComparatorName.with(
                                     text.substring(
                                         tokenStart,
                                         i
                                     )
-                                ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
+                                )
                             );
                             columnOrRowNameAndDirection.accept(
                                 SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                                     columnOrRow,
-                                    comparatorNameAndDirections
+                                    comparatorNames
                                 )
                             );
                             columnOrRow = null;
-                            comparatorName = null;
                             mode = MODE_COLUMN_OR_ROW_START;
                             break;
                         case '-':
@@ -274,63 +231,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                             break;
                     }
                     break;
-                case MODE_UP_OR_DOWN_START:
-                    if (c > 'Z' || false == Character.isLetter(c)) {
-                        throw new InvalidCharacterException(
-                            text,
-                            i
-                        );
-                    }
-                    tokenStart = i;
-                    mode = MODE_UP_OR_DOWN;
-                    break;
-                case MODE_UP_OR_DOWN:
-                    switch (c) {
-                        case COMPARATOR_NAME_SEPARATOR_CHAR:
-                            comparatorNameAndDirections.add(
-                                upOrDown(
-                                    tokenStart,
-                                    i,
-                                    text,
-                                    comparatorName
-                                )
-                            );
-                            mode = MODE_NAME_START;
-                            break;
-                        case COLUMN_ROW_COMPARATOR_NAMES_SEPARATOR_CHAR:
-                            if (false == supportColumnRowSeparator) {
-                                throw new InvalidCharacterException(
-                                    text,
-                                    i
-                                );
-                            }
-                            comparatorNameAndDirections.add(
-                                upOrDown(
-                                    tokenStart,
-                                    i,
-                                    text,
-                                    comparatorName
-                                )
-                            );
-                            columnOrRowNameAndDirection.accept(
-                                SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                                    columnOrRow,
-                                    comparatorNameAndDirections
-                                )
-                            );
-                            mode = MODE_COLUMN_OR_ROW_START;
-                            break;
-                        default:
-                            if (false == isUpOrDown(i - tokenStart, c)) {
-                                throw new InvalidCharacterException(
-                                    text,
-                                    i
-                                );
-                            }
-                            // continue gathering UP or DOWN text
-                            break;
-                    }
-                    break;
                 default:
                     throw new NeverError("Unknown mode=" + mode);
             }
@@ -338,34 +238,18 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
         switch (mode) {
             case MODE_NAME:
-                comparatorNameAndDirections.add(
+                comparatorNames.add(
                     SpreadsheetComparatorName.with(
                         text.substring(
                             tokenStart,
                             length
                         )
-                    ).setDirection(SpreadsheetComparatorDirection.DEFAULT)
-                );
-                columnOrRowNameAndDirection.accept(
-                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                        columnOrRow,
-                        comparatorNameAndDirections
-                    )
-                );
-                break;
-            case MODE_UP_OR_DOWN:
-                comparatorNameAndDirections.add(
-                    upOrDown(
-                        tokenStart,
-                        length,
-                        text,
-                        comparatorName
                     )
                 );
                 columnOrRowNameAndDirection.accept(
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         columnOrRow,
-                        comparatorNameAndDirections
+                        comparatorNames
                     )
                 );
                 break;
@@ -391,82 +275,29 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
                 throw new IllegalArgumentException("Missing " + CharSequences.quoteIfChars(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR_CHAR));
             case MODE_NAME_START:
                 throw new IllegalArgumentException("Missing comparator name");
-            case MODE_UP_OR_DOWN_START:
-                throw new IllegalArgumentException("Missing " + SpreadsheetComparatorDirection.UP + "/" + SpreadsheetComparatorDirection.DOWN);
             default:
                 break;
         }
-    }
-
-    private static boolean isUpOrDown(final int i,
-                                      final char c) {
-        final String valid;
-
-        switch(i) {
-            case 0:
-               valid = "UD";
-               break;
-            case 1:
-                valid = "PO";
-                break;
-            case 2:
-                valid = "W";
-                break;
-            case 3:
-                valid = "N";
-                break;
-            default:
-                valid = "";
-                break;
-        }
-
-        return -1 != valid.indexOf(c);
-    }
-
-    private static SpreadsheetComparatorNameAndDirection upOrDown(final int start,
-                                                                  final int end,
-                                                                  final String text,
-                                                                  final SpreadsheetComparatorName name) {
-        final String upOrDown = text.substring(
-            start,
-            end
-        );
-
-        final SpreadsheetComparatorDirection direction;
-        try {
-            direction = SpreadsheetComparatorDirection.valueOf(upOrDown);
-        } catch (final IllegalArgumentException invalid) {
-            throw new IllegalArgumentException(
-                "Missing " +
-                    SpreadsheetComparatorDirection.UP +
-                    "/" +
-                    SpreadsheetComparatorDirection.DOWN +
-                    " at " +
-                    start
-            );
-        }
-
-        return name.setDirection(direction);
     }
 
     /**
      * Factory that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      */
     public static SpreadsheetColumnOrRowSpreadsheetComparatorNames with(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
-                                                                        final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
+                                                                        final List<SpreadsheetComparatorName> comparatorNames) {
 
         return new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
             Objects.requireNonNull(columnOrRow, "columnOrRow"),
-            checkComparatorNameAndDirections(comparatorNameAndDirections)
+            checkComparatorNameAndDirections(comparatorNames)
         );
     }
 
     private SpreadsheetColumnOrRowSpreadsheetComparatorNames(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow,
-                                                             final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
+                                                             final List<SpreadsheetComparatorName> comparatorNames) {
 
 
         this.columnOrRow = columnOrRow;
-        this.comparatorNameAndDirections = comparatorNameAndDirections;
+        this.comparatorNames = comparatorNames;
     }
 
     public SpreadsheetColumnOrRowReferenceOrRange columnOrRow() {
@@ -483,25 +314,25 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
             this :
             new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
                 columnOrRow,
-                this.comparatorNameAndDirections
+                this.comparatorNames
             );
     }
 
     private final SpreadsheetColumnOrRowReferenceOrRange columnOrRow;
 
-    // comparatorNameAndDirections......................................................................................
+    // comparatorNames......................................................................................
 
-    public List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections() {
-        return this.comparatorNameAndDirections;
+    public List<SpreadsheetComparatorName> comparatorNames() {
+        return this.comparatorNames;
     }
 
     /**
-     * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetComparatorNameAndDirection} creating a new instance if necessary.
+     * Would be setter that returns a {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} with the given {@link SpreadsheetComparatorName} creating a new instance if necessary.
      */
-    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setComparatorNameAndDirections(final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
-        final List<SpreadsheetComparatorNameAndDirection> copy = checkComparatorNameAndDirections(comparatorNameAndDirections);
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setComparatorNameAndDirections(final List<SpreadsheetComparatorName> comparatorNames) {
+        final List<SpreadsheetComparatorName> copy = checkComparatorNameAndDirections(comparatorNames);
 
-        return this.comparatorNameAndDirections.equals(copy) ?
+        return this.comparatorNames.equals(copy) ?
             this :
             new SpreadsheetColumnOrRowSpreadsheetComparatorNames(
                 this.columnOrRow,
@@ -509,13 +340,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
             );
     }
 
-    private final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections;
+    private final List<SpreadsheetComparatorName> comparatorNames;
 
-    private static List<SpreadsheetComparatorNameAndDirection> checkComparatorNameAndDirections(final List<SpreadsheetComparatorNameAndDirection> comparatorNameAndDirections) {
-        List<SpreadsheetComparatorNameAndDirection> copy = Lists.immutable(
-            Objects.requireNonNull(comparatorNameAndDirections, "comparatorNameAndDirections")
+    private static List<SpreadsheetComparatorName> checkComparatorNameAndDirections(final List<SpreadsheetComparatorName> comparatorNames) {
+        List<SpreadsheetComparatorName> copy = Lists.immutable(
+            Objects.requireNonNull(comparatorNames, "comparatorNames")
         );
-        if (comparatorNameAndDirections.isEmpty()) {
+        if (comparatorNames.isEmpty()) {
             throw new IllegalArgumentException("Empty comparators");
         }
         return copy;
@@ -540,7 +371,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     public int hashCode() {
         return Objects.hash(
             this.columnOrRow,
-            this.comparatorNameAndDirections
+            this.comparatorNames
         );
     }
 
@@ -552,7 +383,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
 
     private boolean equals0(final SpreadsheetColumnOrRowSpreadsheetComparatorNames other) {
         return this.columnOrRow.equals(other.columnOrRow) &&
-            this.comparatorNameAndDirections.equals(other.comparatorNameAndDirections);
+            this.comparatorNames.equals(other.comparatorNames);
     }
 
     @Override
@@ -561,7 +392,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
             .labelSeparator(String.valueOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR))
             .valueSeparator(String.valueOf(COMPARATOR_NAME_SEPARATOR))
             .label(this.columnOrRow.text())
-            .value(this.comparatorNameAndDirections)
+            .value(this.comparatorNames)
             .build();
     }
 

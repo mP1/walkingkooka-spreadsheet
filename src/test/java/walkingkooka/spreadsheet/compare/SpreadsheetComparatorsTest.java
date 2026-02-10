@@ -149,7 +149,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
             SpreadsheetComparators.nullAfter(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                SpreadsheetComparatorDirection.UP,
                 SpreadsheetComparatorName.with("text-case-insensitive-null-after")
             ),
             "abc",
@@ -163,7 +162,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
             SpreadsheetComparators.nullBefore(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                SpreadsheetComparatorDirection.UP,
                 SpreadsheetComparatorName.with("text-case-insensitive-null-before")
             ),
             "abc",
@@ -328,60 +326,10 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
     }
 
     @Test
-    public void testParseInvalidUpOrDownFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetComparators.parse(
-                "text XYZ",
-                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                CONTEXT
-            )
-        );
-        this.checkEquals(
-            "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"text XYZ\"",
-            thrown.getMessage()
-        );
-    }
-
-    @Test
-    public void testParseInvalidUpOrDownFails2() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
-            () -> SpreadsheetComparators.parse(
-                "day-of-month,month-of-year XYZ,year",
-                SpreadsheetComparatorProviders.spreadsheetComparators(),
-                CONTEXT
-            )
-        );
-        this.checkEquals(
-            "Expected \"UP\" or \"DOWN\" and got \"XYZ\" in \"month-of-year XYZ\"",
-            thrown.getMessage()
-        );
-    }
-
-    @Test
     public void testParseString() {
         this.parseAndCheck(
             "text",
             SpreadsheetComparators.text()
-        );
-    }
-
-    @Test
-    public void testParseStringUp() {
-        this.parseAndCheck(
-            "text UP",
-            SpreadsheetComparators.text()
-        );
-    }
-
-    @Test
-    public void testParseStringDown() {
-        this.parseAndCheck(
-            "text DOWN",
-            SpreadsheetComparators.reverse(
-                SpreadsheetComparators.text()
-            )
         );
     }
 
@@ -391,18 +339,6 @@ public final class SpreadsheetComparatorsTest implements PublicStaticHelperTesti
             "day-of-month,month-of-year,year",
             SpreadsheetComparators.dayOfMonth(),
             SpreadsheetComparators.monthOfYear(),
-            SpreadsheetComparators.year()
-        );
-    }
-
-    @Test
-    public void testParseDayOfMonth_Up_MonthOfYear_Down_Year_Up() {
-        this.parseAndCheck(
-            "day-of-month UP,month-of-year DOWN,year UP",
-            SpreadsheetComparators.dayOfMonth(),
-            SpreadsheetComparators.reverse(
-                SpreadsheetComparators.monthOfYear()
-            ),
             SpreadsheetComparators.year()
         );
     }

@@ -35,12 +35,6 @@ public interface SpreadsheetComparator<T> extends Comparator<T>,
      */
     Class<T> type();
 
-
-    /**
-     * Getter that returns the {@link SpreadsheetComparatorDirection} for this {@link SpreadsheetComparator}.
-     */
-    SpreadsheetComparatorDirection direction();
-
     /**
      * Returns a reversed {@link SpreadsheetComparator}
      */

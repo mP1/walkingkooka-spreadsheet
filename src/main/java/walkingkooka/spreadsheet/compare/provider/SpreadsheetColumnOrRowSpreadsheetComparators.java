@@ -57,17 +57,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
                 .stream()
                 .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                     n.columnOrRow(),
-                    n.comparatorNameAndDirections()
+                    n.comparatorNames()
                         .stream()
-                        .map(nad -> nad.direction()
-                            .apply(
-                                Cast.to(
-                                    provider.spreadsheetComparator(
-                                        nad.name(),
-                                        Lists.empty(),
-                                        context
-                                    )
-                                )
+                        .map(nn -> provider.spreadsheetComparator(
+                                nn,
+                                Lists.empty(),
+                                context
                             )
                         ).collect(Collectors.toList())
                 )).collect(Collectors.toList())
@@ -173,7 +168,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
             this.columnOrRow,
             this.comparators.stream()
-                .map(c -> c.name().setDirection(c.direction()))
+                .map(c -> c.name())
                 .collect(Collectors.toList())
         );
     }

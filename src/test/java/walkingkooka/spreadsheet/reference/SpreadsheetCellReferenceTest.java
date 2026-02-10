@@ -234,7 +234,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
             "A1",
-            "A=text UP"
+            "A=text"
         );
     }
 
@@ -242,7 +242,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testComparatorNamesBoundsCheckWithRows() {
         this.comparatorNamesBoundsCheckAndCheck(
             "A1",
-            "1=text UP"
+            "1=text"
         );
     }
 

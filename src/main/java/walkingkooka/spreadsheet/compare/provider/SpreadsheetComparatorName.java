@@ -23,7 +23,6 @@ import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -253,16 +252,6 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
         }
 
         return unreversed;
-    }
-
-    /**
-     * Create a {@link SpreadsheetComparatorNameAndDirection} using this name and the given {@link SpreadsheetComparatorDirection direction}
-     */
-    public SpreadsheetComparatorNameAndDirection setDirection(final SpreadsheetComparatorDirection direction) {
-        return SpreadsheetComparatorNameAndDirection.with(
-            this,
-            direction
-        );
     }
 
     // Object...........................................................................................................
