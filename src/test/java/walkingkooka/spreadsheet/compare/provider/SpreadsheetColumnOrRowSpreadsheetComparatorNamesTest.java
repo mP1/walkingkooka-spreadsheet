@@ -260,6 +260,24 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
+    private void columnOrRowAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
+                                     final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
+        this.checkEquals(
+            columnOrRow,
+            columnOrRowComparators.columnOrRow(),
+            "columnOrRow"
+        );
+    }
+
+    private void comparatorNameAndDirectionAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
+                                                    final List<SpreadsheetComparatorNameAndDirection> namesAndDirections) {
+        this.checkEquals(
+            namesAndDirections,
+            columnOrRowComparators.comparatorNameAndDirections(),
+            "namesAndDirections"
+        );
+    }
+
     // hashcode/equals..................................................................................................
 
     @Test
@@ -1431,24 +1449,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
-    private void columnOrRowAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
-                                     final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
-        this.checkEquals(
-            columnOrRow,
-            columnOrRowComparators.columnOrRow(),
-            "columnOrRow"
-        );
-    }
-
-    private void comparatorNameAndDirectionAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
-                                                    final List<SpreadsheetComparatorNameAndDirection> namesAndDirections) {
-        this.checkEquals(
-            namesAndDirections,
-            columnOrRowComparators.comparatorNameAndDirections(),
-            "namesAndDirections"
-        );
-    }
-
     // HasText..........................................................................................................
 
     @Test
@@ -1483,7 +1483,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
-    // Json...........................................................................................................
+    // Json.............................................................................................................
 
     @Test
     public void testMarshall() {
