@@ -28,7 +28,6 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -77,13 +76,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("12"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     )
                 )
@@ -105,19 +104,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("AB"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("CD"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                            SpreadsheetComparatorName.with("text-case-sensitive")
                         )
                     )
                 )
@@ -139,19 +138,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                            SpreadsheetComparatorName.with("text-case-sensitive")
                         )
                     )
                 )
@@ -173,19 +172,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("$A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                            SpreadsheetComparatorName.with("text-case-sensitive")
                         )
                     )
                 )
@@ -207,19 +206,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("$1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                            SpreadsheetComparatorName.with("text-case-sensitive")
                         )
                     )
                 )
@@ -241,19 +240,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("$1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text UP")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("$1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-sensitive UP")
+                            SpreadsheetComparatorName.with("text-case-sensitive")
                         )
                     )
                 )
@@ -285,7 +284,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 Lists.of(
                     SpreadsheetComparators.text()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ) // expected
         );
@@ -301,7 +299,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 Lists.of(
                     SpreadsheetComparators.text()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ) // expected
         );
@@ -337,7 +334,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                         SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                             SpreadsheetSelection.parseRow("1"),
                             Lists.of(
-                                SpreadsheetComparatorNameAndDirection.parse("text UP")
+                                SpreadsheetComparatorName.with("text")
                             )
                         ),
                         null
@@ -416,13 +413,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+                            SpreadsheetComparatorName.with("text-case-insensitive")
                         )
                     )
                 )
@@ -439,13 +436,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+                            SpreadsheetComparatorName.with("text-case-insensitive")
                         )
                     )
                 )
@@ -462,13 +459,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text")
+                            SpreadsheetComparatorName.with("text")
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("23"),
                         Lists.of(
-                            SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+                            SpreadsheetComparatorName.with("text-case-insensitive")
                         )
                     )
                 )
@@ -495,7 +492,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
     @Test
     public void testTextOne() {
-        final String string = "A=day-of-month UP,month-of-year DOWN";
+        final String string = "A=day-of-month,month-of-year";
 
         this.textAndCheck(
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
@@ -505,7 +502,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
     @Test
     public void testTextMany() {
-        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN";
+        final String string = "A=day-of-month,month-of-year;B=year;C=text";
 
         this.textAndCheck(
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
@@ -517,7 +514,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
     @Test
     public void testUrlFragmentOne() {
-        final String string = "A=day-of-month UP,month-of-year DOWN,year";
+        final String string = "A=day-of-month,month-of-year,year";
 
         this.urlFragmentAndCheck(
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
@@ -527,7 +524,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
     @Test
     public void testUrlFragmentMany() {
-        final String string = "A=day-of-month UP,month-of-year UP;B=year UP;C=text DOWN;D=year";
+        final String string = "A=day-of-month,month-of-year;B=year;C=text;D=year";
 
         this.urlFragmentAndCheck(
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(string),
@@ -594,8 +591,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     @Test
     public void testMarshall() {
         this.marshallAndCheck(
-            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("AB=text123 DOWN"),
-            "\"AB=text123 DOWN\""
+            SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("AB=text123"),
+            "\"AB=text123\""
         );
     }
 
@@ -610,17 +607,17 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-            "\"AB=text123 DOWN,abc456 UP\"",
+            "\"AB=text123,abc456\"",
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
                 Lists.of(
-                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123 DOWN,abc456 UP")
+                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123,abc456")
                 )
             )
         );
     }
 
     @Test
-    public void testUnmarshallDefault() {
+    public void testUnmarshall2() {
         this.unmarshallAndCheck(
             "\"AB=text123\"",
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
@@ -633,13 +630,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
 
 
     @Test
-    public void testUnmarshall2() {
+    public void testUnmarshall3() {
         this.unmarshallAndCheck(
-            "\"AB=text123 DOWN,abc456 UP;C=hello456 DOWN\"",
+            "\"AB=text123,abc456;C=hello456\"",
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.with(
                 Lists.of(
-                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123 DOWN,abc456 UP"),
-                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("C=hello456 DOWN")
+                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("AB=text123,abc456"),
+                    SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("C=hello456")
                 )
             )
         );

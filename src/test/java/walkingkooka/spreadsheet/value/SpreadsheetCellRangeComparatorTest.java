@@ -365,13 +365,13 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
         this.toStringAndCheck(
             SpreadsheetCellRangeComparator.with(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                    "B=day-of-month DOWN",
+                    "B=day-of-month-reversed",
                     SpreadsheetComparatorProviders.spreadsheetComparators(),
                     PROVIDER_CONTEXT
                 ),
                 context
             ),
-            "B=day-of-month DOWN " + context
+            "B=day-of-month-reversed " + context
         );
     }
 
@@ -393,19 +393,19 @@ public final class SpreadsheetCellRangeComparatorTest implements ComparatorTesti
     }
 
     @Test
-    public void testToStringSeveralComparatorsSomeDown() {
+    public void testToStringSeveralComparatorsSomeReversed() {
         final SpreadsheetComparatorContext context = SpreadsheetComparatorContexts.fake();
 
         this.toStringAndCheck(
             SpreadsheetCellRangeComparator.with(
                 SpreadsheetColumnOrRowSpreadsheetComparators.parse(
-                    "B=day-of-month,month-of-year DOWN,year DOWN",
+                    "B=day-of-month,month-of-year-reversed,year-reversed",
                     SpreadsheetComparatorProviders.spreadsheetComparators(),
                     PROVIDER_CONTEXT
                 ),
                 context
             ),
-            "B=day-of-month,month-of-year DOWN,year DOWN " + context
+            "B=day-of-month,month-of-year-reversed,year-reversed " + context
         );
     }
 

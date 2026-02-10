@@ -26,7 +26,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparatorDirection;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -60,11 +59,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("text-123");
 
-    private final static SpreadsheetComparatorDirection DIRECTION = SpreadsheetComparatorDirection.DOWN;
-
-    private final static List<SpreadsheetComparatorNameAndDirection> NAME_AND_DIRECTIONS = Lists.of(
-        NAME.setDirection(DIRECTION)
-    );
+    private final static List<SpreadsheetComparatorName> NAMES = Lists.of(NAME);
 
     @Test
     public void testWithNullColumnOrRowFails() {
@@ -72,9 +67,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
             NullPointerException.class,
             () -> SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 null,
-                Lists.of(
-                    NAME.setDirection(DIRECTION)
-                )
+                Lists.of(NAME)
             )
         );
     }
@@ -104,21 +97,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     @Test
     public void testWith() {
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("D");
-        final List<SpreadsheetComparatorNameAndDirection> namesAndDirections = Lists.of(
-            NAME.setDirection(DIRECTION)
-        );
+        final List<SpreadsheetComparatorName> names = Lists.of(NAME);
 
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
             column,
-            namesAndDirections
+            names
         );
         this.columnOrRowAndCheck(
             columnOrRowComparators,
             column
         );
-        this.comparatorNameAndDirectionAndCheck(
+        this.comparatorNamesAndCheck(
             columnOrRowComparators,
-            namesAndDirections
+            names
         );
     }
 
@@ -158,10 +149,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
             column
         );
 
-        this.comparatorNameAndDirectionAndCheck(
+        this.comparatorNamesAndCheck(
             different,
             Lists.of(
-                SpreadsheetComparatorNameAndDirection.parse("text")
+                SpreadsheetComparatorName.with("text")
             )
         );
     }
@@ -183,10 +174,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
             column
         );
 
-        this.comparatorNameAndDirectionAndCheck(
+        this.comparatorNamesAndCheck(
             different,
             Lists.of(
-                SpreadsheetComparatorNameAndDirection.parse("text")
+                SpreadsheetComparatorName.with("text")
             )
         );
     }
@@ -208,10 +199,10 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
             row
         );
 
-        this.comparatorNameAndDirectionAndCheck(
+        this.comparatorNamesAndCheck(
             different,
             Lists.of(
-                SpreadsheetComparatorNameAndDirection.parse("text")
+                SpreadsheetComparatorName.with("text")
             )
         );
     }
@@ -219,7 +210,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     // setComparatorNameAndDirections...................................................................................
 
     @Test
-    public void testSetComparatorNameAndDirectionsWithNullFails() {
+    public void testSetComparatorNameWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createObject().setComparatorNameAndDirections(null)
@@ -227,36 +218,36 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
-    public void testSetComparatorNameAndDirectionsWithSame() {
+    public void testSetComparatorNameWithSame() {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = this.createObject();
         assertSame(
             names,
-            names.setComparatorNameAndDirections(names.comparatorNameAndDirections())
+            names.setComparatorNameAndDirections(names.comparatorNames())
         );
     }
 
     @Test
-    public void testSetComparatorNameAndDirectionsWithDifferent() {
-        final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
+    public void testSetComparatorNameWithDifferent() {
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnAndNames = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
 
-        final List<SpreadsheetComparatorNameAndDirection> nameAndDirections = Lists.of(
-            SpreadsheetComparatorNameAndDirection.parse("text-case-insensitive")
+        final List<SpreadsheetComparatorName> names = Lists.of(
+            SpreadsheetComparatorName.with("text-case-insensitive")
         );
-        final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = names.setComparatorNameAndDirections(nameAndDirections);
+        final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = columnAndNames.setComparatorNameAndDirections(names);
 
         assertNotSame(
-            names,
+            columnAndNames,
             different
         );
 
         this.columnOrRowAndCheck(
             different,
-            names.columnOrRow()
+            columnAndNames.columnOrRow()
         );
 
-        this.comparatorNameAndDirectionAndCheck(
+        this.comparatorNamesAndCheck(
             different,
-            nameAndDirections
+            names
         );
     }
 
@@ -269,12 +260,12 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
-    private void comparatorNameAndDirectionAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
-                                                    final List<SpreadsheetComparatorNameAndDirection> namesAndDirections) {
+    private void comparatorNamesAndCheck(final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnOrRowComparators,
+                                         final List<SpreadsheetComparatorName> names) {
         this.checkEquals(
-            namesAndDirections,
-            columnOrRowComparators.comparatorNameAndDirections(),
-            "namesAndDirections"
+            names,
+            columnOrRowComparators.comparatorNames(),
+            "names"
         );
     }
 
@@ -285,7 +276,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         this.checkNotEquals(
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseColumnOrRow("C"),
-                NAME_AND_DIRECTIONS
+                NAMES
             )
         );
     }
@@ -295,18 +286,18 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         this.checkNotEquals(
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseColumnOrRow("$B"),
-                NAME_AND_DIRECTIONS
+                NAMES
             )
         );
     }
 
     @Test
-    public void testEqualsDifferentNameAndDirection() {
+    public void testEqualsDifferentName() {
         this.checkNotEquals(
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 COLUMN_OR_ROW,
                 Lists.of(
-                    NAME.setDirection(DIRECTION.flip())
+                    SpreadsheetComparatorName.with("different")
                 )
             )
         );
@@ -316,7 +307,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     public SpreadsheetColumnOrRowSpreadsheetComparatorNames createObject() {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
             COLUMN_OR_ROW,
-            NAME_AND_DIRECTIONS
+            NAMES
         );
     }
 
@@ -421,103 +412,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         this.checkEquals(
             expected,
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseColumnOrRow(text)
-        );
-    }
-
-    // tryParseSpreadsheetComparatorNameAndDirections...................................................................
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseSpreadsheetComparatorNameAndDirections(null)
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithEmpty() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            ""
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithColumnMissingEqualsSign() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            "A"
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithInvalidComparatorName() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            "A=!invalid"
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithInvalidComparatorName2() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            "A=text,!invalid"
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithComparatorName() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            "A=day-of-month",
-            SpreadsheetComparators.dayOfMonth()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.DEFAULT)
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithComparatorNames2() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            "A=day-of-month,month-of-year,year",
-            SpreadsheetComparators.dayOfMonth()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-            SpreadsheetComparators.monthOfYear()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-            SpreadsheetComparators.year()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.DEFAULT)
-        );
-    }
-
-    @Test
-    public void testTryParseSpreadsheetComparatorNameAndDirectionsWithComparatorNames3() {
-        tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            "A=day-of-month,month-of-year UP,year DOWN",
-            SpreadsheetComparators.dayOfMonth()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-            SpreadsheetComparators.monthOfYear()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.UP),
-            SpreadsheetComparators.year()
-                .name()
-                .setDirection(SpreadsheetComparatorDirection.DOWN)
-        );
-    }
-
-    private void tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(final String text,
-                                                                        final SpreadsheetComparatorNameAndDirection... nameAndDirections) {
-        this.tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(
-            text,
-            Lists.of(nameAndDirections)
-        );
-    }
-
-    private void tryParseSpreadsheetComparatorNameAndDirectionsAndCheck(final String text,
-                                                                        final List<SpreadsheetComparatorNameAndDirection> nameAndDirections) {
-        this.checkEquals(
-            nameAndDirections,
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseSpreadsheetComparatorNameAndDirections(text),
-            () -> "tryParseSpreadsheetComparatorNameAndDirections " + CharSequences.quoteAndEscape(text)
         );
     }
 
@@ -627,7 +521,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 SpreadsheetSelection.parseColumn("A"),
                 Lists.of(
                     SpreadsheetComparatorName.with("text123")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
@@ -641,83 +534,23 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 SpreadsheetSelection.parseRow("23"),
                 Lists.of(
                     SpreadsheetComparatorName.with("text456")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
     }
 
     @Test
-    public void testParseInvalidSeparatorComparatorNameInvalidDirectoryFails() {
-        final String text = "A=text UD";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('D')
-            )
-        );
-    }
-
-    @Test
-    public void testParseInvalidSeparatorComparatorNameInvalidDirectoryFails2() {
-        final String text = "A=text UPQ";
-
-        this.parseStringFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('Q')
-            )
-        );
-    }
-
-    @Test
-    public void testParseColumnSpreadsheetComparatorNameUp() {
+    public void testParseColumnSpreadsheetComparatorNameSpreadsheetComparatorName() {
         this.parseStringAndCheck(
-            "A=text UP",
+            "A=text,text-case-insensitive,xyz",
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseColumn("A"),
                 Lists.of(
                     SpreadsheetComparators.text()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseRowSpreadsheetComparatorNameDown() {
-        this.parseStringAndCheck(
-            "23=text DOWN",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("23"),
-                Lists.of(
-                    SpreadsheetComparators.text()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseColumnSpreadsheetComparatorNameUpSpreadsheetComparatorNameDown() {
-        this.parseStringAndCheck(
-            "A=text UP,text-case-insensitive DOWN,xyz",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("A"),
-                Lists.of(
-                    SpreadsheetComparators.text()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP),
+                        .name(),
                     SpreadsheetComparators.textCaseInsensitive()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN),
+                        .name(),
                     SpreadsheetComparatorName.with("xyz")
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
@@ -843,7 +676,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
@@ -858,7 +690,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
@@ -873,7 +704,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
@@ -881,59 +711,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
     @Test
     public void testParseListSpreadsheetComparatorNameSpaceFails() {
-        this.parseListFails(
-            "A=day-of-month ",
-            new IllegalArgumentException("Missing UP/DOWN")
-        );
-    }
-
-    @Test
-    public void testParseListSpreadsheetComparatorNameSpaceEmptyUpOrDownFails() {
-        final String text = "A=day-of-month ,";
+        final String text = "A=day-of-month ";
 
         this.parseListFails(
             text,
             new InvalidCharacterException(
                 text,
-                text.indexOf(',')
+                text.length() - 1
             )
-        );
-    }
-
-    @Test
-    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownCharacterFails() {
-        final String text = "A=day-of-month !,";
-
-        this.parseListFails(
-            text,
-            new InvalidCharacterException(
-                text,
-                text.indexOf('!')
-            )
-        );
-    }
-
-    @Test
-    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownCharacterFails2() {
-        this.parseListFails(
-            "A=day-of-month U!,",
-            IllegalArgumentException.class
-        );
-    }
-
-    @Test
-    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownFails() {
-        this.parseListFails(
-            "A=day-of-month INVALID",
-            IllegalArgumentException.class
-        );
-    }
-
-    @Test
-    public void testParseListSpreadsheetComparatorNameSpaceInvalidUpOrDownFails2() {
-        this.parseListFails(
-            "A=day-of-month INVALID,",
-            IllegalArgumentException.class
         );
     }
 
@@ -948,108 +733,30 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
-    public void testParseListColumnSpreadsheetComparatorNameUp() {
+    public void testParseListAbsoluteColumnSpreadsheetComparatorName() {
         this.parseListAndCheck(
-            "A=day-of-month UP",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("A"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListAbsoluteColumnSpreadsheetComparatorNameUp() {
-        this.parseListAndCheck(
-            "$A=day-of-month UP",
+            "$A=day-of-month",
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseColumn("$A"),
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
                 )
             )
         );
     }
 
     @Test
-    public void testParseListColumnSpreadsheetComparatorNameDown() {
+    public void testParseListAbsoluteRowSpreadsheetComparatorName() {
         this.parseListAndCheck(
-            "A=day-of-month DOWN",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("A"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameUp() {
-        this.parseListAndCheck(
-            "2=day-of-month UP",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListAbsoluteRowSpreadsheetComparatorNameUp() {
-        this.parseListAndCheck(
-            "$2=day-of-month UP",
+            "$2=day-of-month",
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseRow("$2"),
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
                 )
             )
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameDown() {
-        this.parseListAndCheck(
-            "2=day-of-month DOWN",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameUpCommaFails() {
-        this.parseListFails(
-            "2=day-of-month UP,",
-            new IllegalArgumentException("Missing comparator name")
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameDownCommaFails() {
-        this.parseListFails(
-            "2=day-of-month DOWN,",
-            new IllegalArgumentException("Missing comparator name")
         );
     }
 
@@ -1061,65 +768,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 SpreadsheetSelection.parseRow("2"),
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
+                        .name(),
                     SpreadsheetComparators.monthOfYear()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListColumnSpreadsheetComparatorNameUpSpreadsheetComparatorNameUp() {
-        this.parseListAndCheck(
-            "2=day-of-month,month-of-year",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-                    SpreadsheetComparators.monthOfYear()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameDefaultSpreadsheetComparatorNameDown() {
-        this.parseListAndCheck(
-            "2=day-of-month,month-of-year DOWN",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT),
-                    SpreadsheetComparators.monthOfYear()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameUpSpreadsheetComparatorNameDown() {
-        this.parseListAndCheck(
-            "2=day-of-month UP,month-of-year DOWN",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP),
-                    SpreadsheetComparators.monthOfYear()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
                 )
             )
         );
@@ -1186,7 +837,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ),
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
@@ -1194,56 +844,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.monthOfYear()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListColumnSpreadsheetComparatorNameUpColumnSpreadsheetComparatorNameDown() {
-        this.parseListAndCheck(
-            "A=day-of-month UP;B=month-of-year DOWN",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("A"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
-                )
-            ),
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("B"),
-                Lists.of(
-                    SpreadsheetComparators.monthOfYear()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testParseListRowSpreadsheetComparatorNameUpRowSpreadsheetComparatorNameDownSpreadsheetComparatorNameUp() {
-        this.parseListAndCheck(
-            "1=day-of-month UP;2=month-of-year DOWN,year",
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("1"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
-                )
-            ),
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseRow("2"),
-                Lists.of(
-                    SpreadsheetComparators.monthOfYear()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN),
-                    SpreadsheetComparators.year()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             )
         );
@@ -1301,7 +901,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
     @Test
     public void testList() {
-        final String text = "A=text123 DOWN";
+        final String text = "A=text123";
 
         this.checkEquals(
             SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse(text),
@@ -1319,7 +919,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ),
             "AB=day-of-month"
@@ -1334,7 +933,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ),
             "$AB=day-of-month"
@@ -1349,7 +947,6 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.text()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ),
             "12=text"
@@ -1364,48 +961,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 Lists.of(
                     SpreadsheetComparators.text()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.DEFAULT)
                 )
             ),
             "$12=text"
-        );
-    }
-
-    @Test
-    public void testToStringUp() {
-        this.toStringAndCheck(
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("BC"),
-                Lists.of(
-                    SpreadsheetComparators.time()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
-                )
-            ),
-            "BC=time UP"
-        );
-    }
-
-    @Test
-    public void testToStringDown() {
-        this.toStringAndCheck(
-            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
-                SpreadsheetSelection.parseColumn("ABC"),
-                Lists.of(
-                    SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN)
-                )
-            ),
-            "ABC=day-of-month DOWN"
-        );
-    }
-
-    @Test
-    public void testToStringDown2() {
-        this.toStringAndCheck(
-            this.createObject(),
-            "A=text-123 DOWN"
         );
     }
 
@@ -1416,17 +974,14 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
                 SpreadsheetSelection.parseColumn("AB"),
                 Lists.of(
                     SpreadsheetComparators.dayOfMonth()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP),
+                        .name(),
                     SpreadsheetComparators.monthOfYear()
-                        .name()
-                        .setDirection(SpreadsheetComparatorDirection.DOWN),
+                        .name(),
                     SpreadsheetComparators.year()
                         .name()
-                        .setDirection(SpreadsheetComparatorDirection.UP)
                 )
             ),
-            "AB=day-of-month UP,month-of-year DOWN,year UP"
+            "AB=day-of-month,month-of-year,year"
         );
     }
 
@@ -1435,10 +990,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames names = SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
             SpreadsheetSelection.parseColumn("AB"),
             Lists.of(
-                SpreadsheetComparatorName.with("abc123")
-                    .setDirection(SpreadsheetComparatorDirection.UP),
+                SpreadsheetComparatorName.with("abc123"),
                 SpreadsheetComparatorName.with("xyz456")
-                    .setDirection(SpreadsheetComparatorDirection.DOWN)
             )
         );
 
@@ -1462,18 +1015,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     }
 
     @Test
-    public void testTextRowUp() {
-        this.parseAndTextCheck("23=text UP");
-    }
-
-    @Test
-    public void testTextRowDown() {
-        this.parseAndTextCheck("23=text DOWN");
-    }
-
-    @Test
     public void testTextManyComparators() {
-        this.parseAndTextCheck("BCD=day-month,month-of-year UP,year DOWN");
+        this.parseAndTextCheck("BCD=day-month,month-of-year,year");
     }
 
     private void parseAndTextCheck(final String text) {
@@ -1491,22 +1034,22 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseColumn("AB"),
                 Lists.of(
-                    SpreadsheetComparatorNameAndDirection.parse("text123 DOWN")
+                    SpreadsheetComparatorName.with("text123")
                 )
             ),
-            "\"AB=text123 DOWN\""
+            "\"AB=text123\""
         );
     }
 
     @Test
     public void testUnmarshall() {
         this.unmarshallAndCheck(
-            "\"AB=text123 DOWN,abc456 UP\"",
+            "\"AB=text123,abc456\"",
             SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                 SpreadsheetSelection.parseColumn("AB"),
                 Lists.of(
-                    SpreadsheetComparatorNameAndDirection.parse("text123 DOWN"),
-                    SpreadsheetComparatorNameAndDirection.parse("abc456 UP")
+                    SpreadsheetComparatorName.with("text123"),
+                    SpreadsheetComparatorName.with("abc456")
                 )
             )
         );

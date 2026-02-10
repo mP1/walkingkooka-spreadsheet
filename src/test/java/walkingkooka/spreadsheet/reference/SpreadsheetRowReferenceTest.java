@@ -271,7 +271,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
             "1",
-            "A=text UP;B=text DOWN;C=text UP;D=text DOWN"
+            "A=text1;B=text2;C=text3;D=text4"
         );
     }
 

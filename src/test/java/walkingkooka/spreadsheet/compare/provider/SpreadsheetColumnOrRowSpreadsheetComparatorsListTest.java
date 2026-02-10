@@ -149,7 +149,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
 
     @Test
     public void testTextReversed() {
-        this.parseAndTextAndCheck("A=day-of-month DOWN");
+        this.parseAndTextAndCheck("A=day-of-month-reversed");
     }
 
     @Test
@@ -158,8 +158,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
     }
 
     @Test
-    public void testTextSeveralComparatorsDown() {
-        this.parseAndTextAndCheck("A=day-of-month DOWN,month-of-year DOWN,year DOWN");
+    public void testTextSeveralComparatorsReversed() {
+        this.parseAndTextAndCheck("A=day-of-month-reversed,month-of-year-reversed,year-reversed");
     }
 
     private void parseAndTextAndCheck(final String text) {

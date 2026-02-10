@@ -34,8 +34,6 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     HashCodeEqualsDefinedTesting2<BasicSpreadsheetComparator<String>>,
     ToStringTesting<BasicSpreadsheetComparator<String>> {
 
-    private final static SpreadsheetComparatorDirection DIRECTION = SpreadsheetComparatorDirection.DOWN;
-
     private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("name");
 
     @Test
@@ -45,7 +43,6 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
             () -> BasicSpreadsheetComparator.with(
                 null,
                 String.CASE_INSENSITIVE_ORDER,
-                DIRECTION,
                 NAME
             )
         );
@@ -57,20 +54,6 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
             NullPointerException.class,
             () -> BasicSpreadsheetComparator.with(
                 String.class,
-                null,
-                DIRECTION,
-                NAME
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullDirectionFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetComparator.with(
-                String.class,
-                String.CASE_INSENSITIVE_ORDER,
                 null,
                 NAME
             )
@@ -84,43 +67,17 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
             () -> BasicSpreadsheetComparator.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                SpreadsheetComparatorDirection.UP,
                 null
             )
         );
     }
 
     @Test
-    public void testWithUp() {
-        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.UP;
-
+    public void testWith() {
         final BasicSpreadsheetComparator<Temporal> comparator = BasicSpreadsheetComparator.with(
             Temporal.class,
             DateTimeComparators.dayOfMonth(),
-            direction,
             NAME
-        );
-
-        this.directionAndCheck(
-            comparator,
-            direction
-        );
-    }
-
-    @Test
-    public void testWithDown() {
-        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DOWN;
-
-        final BasicSpreadsheetComparator<Temporal> comparator = BasicSpreadsheetComparator.with(
-            Temporal.class,
-            DateTimeComparators.dayOfMonth(),
-            direction,
-            NAME
-        );
-
-        this.directionAndCheck(
-            comparator,
-            direction
         );
     }
 
@@ -154,31 +111,11 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
             BasicSpreadsheetComparator.with(
                 String.class,
                 Comparators.fake(),
-                DIRECTION,
                 NAME
             ),
             BasicSpreadsheetComparator.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                DIRECTION,
-                NAME
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentDirection() {
-        this.checkNotEquals(
-            BasicSpreadsheetComparator.with(
-                String.class,
-                String.CASE_INSENSITIVE_ORDER,
-                DIRECTION,
-                NAME
-            ),
-            BasicSpreadsheetComparator.with(
-                String.class,
-                String.CASE_INSENSITIVE_ORDER,
-                DIRECTION.flip(),
                 NAME
             )
         );
@@ -190,13 +127,11 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
             BasicSpreadsheetComparator.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                DIRECTION,
                 NAME
             ),
             BasicSpreadsheetComparator.with(
                 String.class,
                 String.CASE_INSENSITIVE_ORDER,
-                DIRECTION,
                 SpreadsheetComparatorName.with(
                     NAME.value() + "-different"
                 )
@@ -210,60 +145,26 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     }
 
     @Test
-    public void tesToStringDefault() {
+    public void tesToString() {
         final Comparator<String> comparator = Comparators.fake();
-        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DEFAULT;
 
         this.toStringAndCheck(
             BasicSpreadsheetComparator.with(
                 String.class,
                 comparator,
-                direction,
                 NAME
             ),
             NAME.toString()
         );
     }
 
-    @Test
-    public void tesToStringUp() {
-        final Comparator<String> comparator = Comparators.fake();
-        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.UP;
-
-        this.toStringAndCheck(
-            BasicSpreadsheetComparator.with(
-                String.class,
-                comparator,
-                direction,
-                NAME
-            ),
-            NAME + " " + direction
-        );
-    }
-
-    @Test
-    public void tesToStringDown() {
-        final Comparator<String> comparator = Comparators.fake();
-        final SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DOWN;
-
-        this.toStringAndCheck(
-            BasicSpreadsheetComparator.with(
-                String.class,
-                comparator,
-                direction,
-                NAME
-            ),
-            NAME + " " + direction
-        );
-    }
-
     // Comparator.......................................................................................................
+
     @Override
     public BasicSpreadsheetComparator<String> createComparator() {
         return BasicSpreadsheetComparator.with(
             String.class,
             String.CASE_INSENSITIVE_ORDER,
-            DIRECTION,
             NAME
         );
     }

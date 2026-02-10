@@ -113,10 +113,9 @@ public final class ReverseSpreadsheetComparatorTest implements SpreadsheetCompar
         final SpreadsheetComparator<String> comparator = SpreadsheetComparators.textCaseInsensitive();
 
         this.toStringAndCheck(
-            ReverseSpreadsheetComparator.with(
-                comparator
-            ),
-            "text-case-insensitive DOWN"
+            ReverseSpreadsheetComparator.with(comparator),
+            comparator.reversed()
+                .toString()
         );
     }
 

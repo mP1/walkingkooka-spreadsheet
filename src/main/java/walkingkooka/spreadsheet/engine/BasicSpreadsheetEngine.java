@@ -819,17 +819,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final List<SpreadsheetColumnOrRowSpreadsheetComparators> comparators = columnOrRowAndComparatorNames.stream()
             .map(n -> SpreadsheetColumnOrRowSpreadsheetComparators.with(
                     n.columnOrRow(),
-                    n.comparatorNameAndDirections()
+                    n.comparatorNames()
                         .stream()
                         .map(
-                            nad -> nad.direction()
-                                .apply(
-                                    context.spreadsheetComparator(
-                                        nad.name(),
-                                        Lists.empty(),
-                                        providerContext
-                                    )
-                                )
+                            nn -> context.spreadsheetComparator(
+                                nn,
+                                Lists.empty(),
+                                providerContext
+                            )
                         ).collect(Collectors.toList())
                 )
             ).collect(Collectors.toList());

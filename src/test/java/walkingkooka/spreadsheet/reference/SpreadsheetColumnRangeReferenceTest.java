@@ -337,7 +337,7 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
     public void testComparatorNamesBoundsCheckWithColumns() {
         this.comparatorNamesBoundsCheckAndCheck(
             "A:C",
-            "A=text UP;B=text DOWN;C=text UP"
+            "A=text;B=text;C=text"
         );
     }
 

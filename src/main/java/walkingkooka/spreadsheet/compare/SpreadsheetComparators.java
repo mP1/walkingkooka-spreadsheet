@@ -43,12 +43,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
      */
     public static <T> SpreadsheetComparator<T> basic(final Class<T> type,
                                                      final Comparator<? super T> comparator,
-                                                     final SpreadsheetComparatorDirection direction,
                                                      final SpreadsheetComparatorName name) {
         return BasicSpreadsheetComparator.with(
             type,
             comparator,
-            direction,
             name
         );
     }
@@ -60,7 +58,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDate> DATE = basic(
         LocalDate.class,
         Comparator.naturalOrder(),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.DATE
     );
 
@@ -71,7 +68,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalDateTime> DATETIME = basic(
         LocalDateTime.class,
         Comparator.naturalOrder(),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.DATE_TIME
     );
 
@@ -85,7 +81,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.dayOfMonth()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.DAY_OF_MONTH
     );
 
@@ -98,7 +93,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.dayOfWeek()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.DAY_OF_WEEK
     );
 
@@ -118,7 +112,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.hourOfAmPm()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.HOUR_OF_AMPM
     );
 
@@ -131,7 +124,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.hourOfDay()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.HOUR_OF_DAY
     );
 
@@ -144,7 +136,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.minuteOfHour()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.MINUTE_OF_HOUR
     );
 
@@ -157,7 +148,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.monthOfYear()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.MONTH_OF_YEAR
     );
 
@@ -170,30 +160,25 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.nanoOfSecond()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.NANO_OF_SECOND
     );
 
     public static <T> SpreadsheetComparator<T> nullAfter(final Class<T> type,
                                                          final Comparator<T> comparator,
-                                                         final SpreadsheetComparatorDirection direction,
                                                          final SpreadsheetComparatorName name) {
         return basic(
             type,
             Comparators.nullAfter(comparator),
-            direction,
             name
         );
     }
 
     public static <T> SpreadsheetComparator<T> nullBefore(final Class<T> type,
                                                           final Comparator<T> comparator,
-                                                          final SpreadsheetComparatorDirection direction,
                                                           final SpreadsheetComparatorName name) {
         return basic(
             type,
             Comparators.nullBefore(comparator),
-            direction,
             name
         );
     }
@@ -205,16 +190,15 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<ExpressionNumber> NUMBER = basic(
         ExpressionNumber.class,
         Comparator.naturalOrder(),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.NUMBER
     );
 
     /**
-     * Accepts a string with compare names and optional UP or DOWN separated by commas.
+     * Accepts a string with compare names separated by commas.
      * <pre>
-     * text DOWN, text-case-insensitive UP
+     * text, text-case-insensitive
      *
-     * day-of-month UP, month-of-year UP, year
+     * day-of-month, month-of-year, year
      * </pre>
      */
     public static List<SpreadsheetComparator<?>> parse(final String comparators,
@@ -228,33 +212,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         int pos = 0;
 
         for (final String nameAndMaybeUpOrDown : comparators.split(",")) {
-            String name = nameAndMaybeUpOrDown;
-            final int upOrDownStartIndex = name.lastIndexOf(' ');
-            SpreadsheetComparatorDirection direction = SpreadsheetComparatorDirection.DEFAULT;
-
-            if (-1 != upOrDownStartIndex) {
-                String upOrDown = nameAndMaybeUpOrDown.substring(upOrDownStartIndex + 1);
-                try {
-                    direction = SpreadsheetComparatorDirection.valueOf(upOrDown);
-                } catch (final IllegalArgumentException invalid) {
-                    throw new IllegalArgumentException(
-                        "Expected \"" + SpreadsheetComparatorDirection.UP + "\" or \"" + SpreadsheetComparatorDirection.DOWN + "\" and got " +
-                            CharSequences.quoteAndEscape(upOrDown) +
-                            " in " +
-                            CharSequences.quoteAndEscape(nameAndMaybeUpOrDown)
-                    );
-                }
-
-                name = nameAndMaybeUpOrDown.substring(
-                    0,
-                    upOrDownStartIndex
-                );
-            }
-
             final SpreadsheetComparatorName spreadsheetComparatorName;
 
             try {
-                spreadsheetComparatorName = SpreadsheetComparatorName.with(name);
+                spreadsheetComparatorName = SpreadsheetComparatorName.with(nameAndMaybeUpOrDown);
             } catch (final InvalidCharacterException cause) {
                 throw cause.setTextAndPosition(
                     comparators,
@@ -263,12 +224,10 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
             }
 
             result.add(
-                direction.apply(
-                    provider.spreadsheetComparator(
-                        spreadsheetComparatorName,
-                        Lists.empty(),
-                        context
-                    )
+                provider.spreadsheetComparator(
+                    spreadsheetComparatorName,
+                    Lists.empty(),
+                    context
                 )
             );
 
@@ -294,7 +253,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.secondOfMinute()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.SECONDS_OF_MINUTE
     );
 
@@ -305,7 +263,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<String> TEXT = basic(
         String.class,
         Comparator.naturalOrder(),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.TEXT
     );
 
@@ -316,7 +273,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<String> TEXT_CASE_INSENSITIVE = basic(
         String.class,
         String.CASE_INSENSITIVE_ORDER,
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
     );
 
@@ -327,7 +283,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     private final static SpreadsheetComparator<LocalTime> TIME = basic(
         LocalTime.class,
         Comparator.naturalOrder(),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.TIME
     );
 
@@ -340,7 +295,6 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
         Cast.to(
             DateTimeComparators.year()
         ),
-        SpreadsheetComparatorDirection.DEFAULT,
         SpreadsheetComparatorName.YEAR
     );
 
