@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.compare.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.plugin.PluginNameTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -181,6 +184,22 @@ final public class SpreadsheetComparatorNameTest implements PluginNameTesting<Sp
             expected,
             name.unreversed(),
             name::toString
+        );
+    }
+
+    // setColumnOrRow...................................................................................................
+
+    @Test
+    public void testSetColumnOrRow() {
+        final SpreadsheetComparatorName name = SpreadsheetComparatorName.YEAR;
+        final SpreadsheetColumnOrRowReferenceOrRange columnOrRow = SpreadsheetSelection.A1.column();
+
+        this.checkEquals(
+            SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+                columnOrRow,
+                Lists.of(name)
+            ),
+            name.setColumnOrRow(columnOrRow)
         );
     }
 
