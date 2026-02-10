@@ -57,6 +57,10 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         );
     }
 
+    /**
+     * Lookup of a {@link SpreadsheetComparator} is performed using the given {@link SpreadsheetComparatorName} and
+     * {@link SpreadsheetComparatorName#reversed()}, with the {@link SpreadsheetComparator#reversed()} for the later.
+     */
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
                                                           final List<?> values,
@@ -65,9 +69,15 @@ final class SpreadsheetComparatorsSpreadsheetComparatorProvider implements Sprea
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        final SpreadsheetComparator<?> comparator = NAME_TO_COMPARATOR.get(name);
+        SpreadsheetComparator<?> comparator = NAME_TO_COMPARATOR.get(name);
         if (null == comparator) {
-            throw new IllegalArgumentException("Unknown comparator " + name);
+            comparator = NAME_TO_COMPARATOR.get(
+                name.unreversed()
+            );
+            if (null == comparator) {
+                throw new IllegalArgumentException("Unknown comparator " + name);
+            }
+            comparator = comparator.reversed();
         }
         if (false == values.isEmpty()) {
             throw new IllegalArgumentException("Got " + values + " expected none");

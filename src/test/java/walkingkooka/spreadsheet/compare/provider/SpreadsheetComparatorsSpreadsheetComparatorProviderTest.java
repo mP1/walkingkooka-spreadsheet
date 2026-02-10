@@ -71,6 +71,31 @@ public final class SpreadsheetComparatorsSpreadsheetComparatorProviderTest imple
     }
 
     @Test
+    public void testSpreadsheetComparatorNameWithUnreversed() {
+        final SpreadsheetComparatorName name = SpreadsheetComparatorName.DAY_OF_MONTH;
+
+        this.spreadsheetComparatorAndCheck(
+            name,
+            Lists.empty(),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.dayOfMonth()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorNameWithReversed() {
+        final SpreadsheetComparatorName name = SpreadsheetComparatorName.DAY_OF_MONTH.reversed();
+
+        this.spreadsheetComparatorAndCheck(
+            name,
+            Lists.empty(),
+            ProviderContexts.fake(),
+            SpreadsheetComparators.dayOfMonth()
+                .reversed()
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorInfos() {
         this.spreadsheetComparatorInfosAndCheck(
             SpreadsheetComparatorsSpreadsheetComparatorProvider.INSTANCE,
