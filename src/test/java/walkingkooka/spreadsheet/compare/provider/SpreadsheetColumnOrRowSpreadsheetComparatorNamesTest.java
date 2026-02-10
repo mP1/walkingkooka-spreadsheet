@@ -415,6 +415,99 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
         );
     }
 
+    // tryParseSpreadsheetComparatorNames...............................................................................
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithNullTextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseSpreadsheetComparatorNames(null)
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithEmpty() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck("");
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithInvalidColumnOrRow() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck("!");
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithInvalidColumnOrRow2() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck("A/");
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithOnlyColumn() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "A"
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithOnlyColumn2() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "$BC"
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithOnlyRow() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "1"
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithOnlyColumnNoComparatorNames() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "D="
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithComparatorNames() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "E=text-1",
+            SpreadsheetComparatorName.with("text-1")
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithComparatorNames2() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "G=text-1,text-2",
+            SpreadsheetComparatorName.with("text-1"),
+            SpreadsheetComparatorName.with("text-2")
+        );
+    }
+
+    @Test
+    public void testTryParseSpreadsheetComparatorNamesWithComparatorNames3() {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            "G=text-1,text-2,!!!"
+        );
+    }
+
+    private void tryParseSpreadsheetComparatorNamesAndCheck(final String text,
+                                                            final SpreadsheetComparatorName... expected) {
+        this.tryParseSpreadsheetComparatorNamesAndCheck(
+            text,
+            Lists.of(expected)
+        );
+    }
+
+    private void tryParseSpreadsheetComparatorNamesAndCheck(final String text,
+                                                            final List<SpreadsheetComparatorName> expected) {
+        this.checkEquals(
+            expected,
+            SpreadsheetColumnOrRowSpreadsheetComparatorNames.tryParseSpreadsheetComparatorNames(text)
+        );
+    }
+
     // parse............................................................................................................
 
     @Test

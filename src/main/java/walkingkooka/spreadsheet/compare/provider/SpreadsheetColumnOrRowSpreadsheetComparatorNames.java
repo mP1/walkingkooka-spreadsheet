@@ -79,6 +79,28 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     }
 
     /**
+     * Tries to parse the {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames} text returning just its
+     * {@link SpreadsheetComparatorName}.
+     * <br>
+     * This is mostly a helper for building the SORT UI, where it would be better to have all {@link SpreadsheetComparatorName}
+     * with remove links even if there are duplicate columns/rows.
+     */
+    public static List<SpreadsheetComparatorName> tryParseSpreadsheetComparatorNames(final String text) {
+        List<SpreadsheetComparatorName> names;
+
+        try {
+            names = parse(text)
+                .comparatorNames();
+        } catch (final NullPointerException rethrow) {
+            throw rethrow;
+        } catch (final RuntimeException ignore) {
+            names = Lists.empty();
+        }
+
+        return names;
+    }
+
+    /**
      * Parses the text into a single {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
      * <pre>
      * A=day-of-month,month-of-year
