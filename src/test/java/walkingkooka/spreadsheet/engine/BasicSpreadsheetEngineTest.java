@@ -55,8 +55,9 @@ import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
 import walkingkooka.spreadsheet.SpreadsheetContexts;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
-import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
+import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -139,9 +140,11 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationList;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.tree.expression.Expression;
@@ -20026,7 +20029,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             () -> this.createSpreadsheetEngine()
                 .sortCells(
                     SpreadsheetSelection.A1.toCellRange(),
-                    SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month,month-of-year,year"),
+                    SpreadsheetColumnOrRowSpreadsheetComparatorNamesList.parse("A=day-of-month,unknown1,unknown2"),
                     SpreadsheetDeltaProperties.ALL,
                     new FakeSpreadsheetEngineContext() {
 
@@ -20042,9 +20045,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                         @Override
                         public SpreadsheetMetadata spreadsheetMetadata() {
-                            return METADATA.set(
-                                SpreadsheetMetadataPropertyName.SORT_COMPARATORS,
-                                SpreadsheetComparatorNameList.parse("day-of-month")
+                            return METADATA;
+                        }
+
+                        @Override
+                        public ProviderContext providerContext() {
+                            return PROVIDER_CONTEXT;
+                        }
+
+                        @Override
+                        public <C extends ConverterContext> Converter<C> converter(final ConverterName name,
+                                                                                   final List<?> value,
+                                                                                   final ProviderContext context) {
+                            return SPREADSHEET_PROVIDER.converter(
+                                name,
+                                value,
+                                context
+                            );
+                        }
+
+                        @Override
+                        public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name,
+                                                                              final List<?> values,
+                                                                              final ProviderContext context) {
+                            return SPREADSHEET_PROVIDER.spreadsheetComparator(
+                                name,
+                                values,
+                                context
                             );
                         }
 
@@ -20053,13 +20080,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                              final SpreadsheetExpressionReferenceLoader loader) {
                             return SpreadsheetExpressionEvaluationContexts.fake();
                         }
+
+                        @Override
+                        public Optional<StoragePath> currentWorkingDirectory() {
+                            return NO_CURRENT_WORKING_DIRECTORY;
+                        }
+
+                        @Override
+                        public Indentation indentation() {
+                            return BasicSpreadsheetEngineTest.INDENTATION;
+                        }
+
+                        @Override
+                        public LineEnding lineEnding() {
+                            return BasicSpreadsheetEngineTest.LINE_ENDING;
+                        }
+
+                        @Override
+                        public Locale locale() {
+                            return BasicSpreadsheetEngineTest.LOCALE;
+                        }
                     }
                 )
         );
 
         // day-of-month is available others are absent
         this.checkEquals(
-            "Invalid comparators: month-of-year,year",
+            "Unknown comparator unknown1",
             thrown.getMessage()
         );
     }

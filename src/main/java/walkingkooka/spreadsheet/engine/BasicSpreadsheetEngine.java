@@ -25,8 +25,6 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparators;
-import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
-import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -802,17 +800,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                             final SpreadsheetEngineContext context) {
 
         final SpreadsheetMetadata metadata = context.spreadsheetMetadata();
-        final SpreadsheetComparatorNameList sortComparators = metadata.getOrFail(SpreadsheetMetadataPropertyName.SORT_COMPARATORS);
-
-        final Set<SpreadsheetComparatorName> requiredNames = columnOrRowAndComparatorNames.names();
-
-        final String missing = requiredNames.stream()
-            .filter(n -> false == sortComparators.contains(n))
-            .map(SpreadsheetComparatorName::toString)
-            .collect(Collectors.joining(","));
-        if (false == missing.isEmpty()) {
-            throw new IllegalArgumentException("Invalid comparators: " + missing);
-        }
 
         final ProviderContext providerContext = context.providerContext();
 
