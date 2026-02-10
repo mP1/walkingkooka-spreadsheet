@@ -18,11 +18,13 @@
 package walkingkooka.spreadsheet.compare.provider;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.naming.Name;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -252,6 +254,20 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
         }
 
         return unreversed;
+    }
+
+    // setColumnOrRow...................................................................................................
+
+    /**
+     * Setter that creates a new {@link SpreadsheetColumnOrRowSpreadsheetComparatorNames}.
+     */
+    public SpreadsheetColumnOrRowSpreadsheetComparatorNames setColumnOrRow(final SpreadsheetColumnOrRowReferenceOrRange columnOrRow) {
+        return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
+            columnOrRow,
+            Lists.of(
+                this
+            )
+        );
     }
 
     // Object...........................................................................................................
