@@ -227,6 +227,28 @@ final public class SpreadsheetComparatorName implements PluginNameLike<Spreadshe
     }
 
     /**
+     * The inverse of {@link #reversed()} removes the {@link #REVERSED} if necessary.
+     */
+    public SpreadsheetComparatorName unreversed() {
+        final SpreadsheetComparatorName unreversed;
+
+        final String name = this.name.value();
+        if (name.endsWith(REVERSED)) {
+            unreversed = with(
+                CharSequences.subSequence(
+                    name,
+                    0,
+                    -REVERSED.length()
+                ).toString()
+            );
+        } else {
+            unreversed = this;
+        }
+
+        return unreversed;
+    }
+
+    /**
      * Create a {@link SpreadsheetComparatorNameAndDirection} using this name and the given {@link SpreadsheetComparatorDirection direction}
      */
     public SpreadsheetComparatorNameAndDirection setDirection(final SpreadsheetComparatorDirection direction) {

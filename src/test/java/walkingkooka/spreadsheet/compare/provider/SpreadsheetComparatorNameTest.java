@@ -106,6 +106,41 @@ final public class SpreadsheetComparatorNameTest implements PluginNameTesting<Sp
         );
     }
 
+    // unreversed.......................................................................................................
+
+    @Test
+    public void testUnreversed() {
+        this.unreverseAndCheck(
+            "text-reversed",
+            "text"
+        );
+    }
+
+    @Test
+    public void testUnreversedWhenNotReversed() {
+        this.unreverseAndCheck(
+            "text",
+            "text"
+        );
+    }
+
+    private void unreverseAndCheck(final String name,
+                                   final String expected) {
+        this.unreverseAndCheck(
+            SpreadsheetComparatorName.with(name),
+            SpreadsheetComparatorName.with(expected)
+        );
+    }
+
+    private void unreverseAndCheck(final SpreadsheetComparatorName name,
+                                   final SpreadsheetComparatorName expected) {
+        this.checkEquals(
+            expected,
+            name.unreversed(),
+            name::toString
+        );
+    }
+
     // class............................................................................................................
 
     @Override
