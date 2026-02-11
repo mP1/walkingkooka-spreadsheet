@@ -286,9 +286,4 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
 
     @Override
     SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor);
-
-    // TerminalContext..................................................................................................
-
-    @Override
-    SpreadsheetExpressionEvaluationContext exitTerminal();
 }

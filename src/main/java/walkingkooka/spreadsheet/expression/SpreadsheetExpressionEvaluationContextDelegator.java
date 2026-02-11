@@ -179,12 +179,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // TerminalContextDelegator.........................................................................................
 
     @Override
-    default SpreadsheetExpressionEvaluationContext exitTerminal() {
-        return this.spreadsheetExpressionEvaluationContext()
-            .exitTerminal();
-    }
-
-    @Override
     default TerminalContext terminalContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
