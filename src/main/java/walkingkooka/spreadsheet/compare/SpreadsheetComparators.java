@@ -99,7 +99,7 @@ public final class SpreadsheetComparators implements PublicStaticHelper {
     /**
      * {@see FakeSpreadsheetComparatorContext}
      */
-    public static <T> SpreadsheetComparator<T> fake() {
+    public static <T> FakeSpreadsheetComparator<T> fake() {
         return new FakeSpreadsheetComparator<>();
     }
 
