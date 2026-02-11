@@ -411,8 +411,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNames implements H
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-            .labelSeparator(String.valueOf(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR))
-            .valueSeparator(String.valueOf(COMPARATOR_NAME_SEPARATOR))
+            .labelSeparator(COLUMN_ROW_AND_COMPARATOR_NAME_SEPARATOR.string())
+            .valueSeparator(COMPARATOR_NAME_SEPARATOR.string())
             .label(this.columnOrRow.text())
             .value(this.comparatorNames)
             .build();
