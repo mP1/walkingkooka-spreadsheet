@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 
-class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
+public class FakeSpreadsheetComparator<T> implements SpreadsheetComparator<T> {
 
-    FakeSpreadsheetComparator() {
+    public FakeSpreadsheetComparator() {
         super();
     }
 
