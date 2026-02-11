@@ -514,9 +514,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     TerminalContext TERMINAL_CONTEXT = TerminalContexts.basic(
         TerminalId.with(1),
-        () -> false, // closed
-        () -> {
-        }, // closer
+        () -> false, // closedx
         TextReaders.fake(),
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // output
         Printers.sink(SPREADSHEET_ENVIRONMENT_CONTEXT), // error
