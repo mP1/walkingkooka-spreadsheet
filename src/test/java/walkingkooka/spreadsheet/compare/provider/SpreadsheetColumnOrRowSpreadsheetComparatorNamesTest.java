@@ -151,9 +151,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.comparatorNamesAndCheck(
             different,
-            Lists.of(
-                SpreadsheetComparatorName.with("text")
-            )
+            Lists.of(SpreadsheetComparatorName.TEXT)
         );
     }
 
@@ -176,9 +174,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.comparatorNamesAndCheck(
             different,
-            Lists.of(
-                SpreadsheetComparatorName.with("text")
-            )
+            Lists.of(SpreadsheetComparatorName.TEXT)
         );
     }
 
@@ -201,9 +197,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
 
         this.comparatorNamesAndCheck(
             different,
-            Lists.of(
-                SpreadsheetComparatorName.with("text")
-            )
+            Lists.of(SpreadsheetComparatorName.TEXT)
         );
     }
 
@@ -230,9 +224,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     public void testSetComparatorNameWithDifferent() {
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames columnAndNames = SpreadsheetColumnOrRowSpreadsheetComparatorNames.parse("A=text");
 
-        final List<SpreadsheetComparatorName> names = Lists.of(
-            SpreadsheetComparatorName.with("text-case-insensitive")
-        );
+        final List<SpreadsheetComparatorName> names = Lists.of(SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE);
         final SpreadsheetColumnOrRowSpreadsheetComparatorNames different = columnAndNames.setComparatorNameAndDirections(names);
 
         assertNotSame(
