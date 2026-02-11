@@ -524,6 +524,9 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
          final TerminalContext terminalContext) -> {
             throw new UnsupportedOperationException();
         },
+        (final Object exitValue) -> {
+            throw new UnsupportedOperationException();
+        },
         EnvironmentContexts.readOnly(
             Predicates.always(), // all values are read-only
             terminalContextSpreadsheetEnvironmentContext()
