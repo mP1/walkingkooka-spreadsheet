@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * A {@link SpreadsheetComparatorProvider} that uses the given aliases definition and {@link SpreadsheetComparatorProvider}
@@ -49,8 +48,11 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
     @Override
     public SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorSelector selector,
                                                           final ProviderContext context) {
-        return this.provider.spreadsheetComparator(
-            this.aliases.selector(selector),
+        Objects.requireNonNull(selector, "selector");
+        Objects.requireNonNull(context, "context");
+
+        return selector.evaluateValueText(
+            this,
             context
         );
     }
@@ -68,23 +70,51 @@ final class AliasesSpreadsheetComparatorProvider implements SpreadsheetComparato
         final SpreadsheetComparatorAliasSet aliases = this.aliases;
         final SpreadsheetComparatorProvider provider = this.provider;
 
-        final Optional<SpreadsheetComparatorSelector> selector = aliases.aliasSelector(name);
-        if (selector.isPresent()) {
+        final SpreadsheetComparatorSelector selector = aliases.aliasSelector(name)
+            .orElse(null);
+        if (null != selector) {
             if (false == values.isEmpty()) {
                 throw new IllegalArgumentException("Alias " + name + " should have no values");
             }
-            // assumes that $provider caches selectors to comparator
             comparator = provider.spreadsheetComparator(
-                selector.get(),
+                selector,
                 context
             );
         } else {
-            comparator = provider.spreadsheetComparator(
-                aliases.aliasOrName(name)
-                    .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name)),
-                values,
-                context
-            );
+            final SpreadsheetComparatorSelector reversedSelector = aliases.aliasSelector(name.reversed())
+                .orElse(null);
+            if (null != reversedSelector) {
+                if (false == values.isEmpty()) {
+                    throw new IllegalArgumentException("Alias " + name + " should have no values");
+                }
+                // aliasSelector lookup was reversed so reversed the response and then lookup
+                comparator = provider.spreadsheetComparator(
+                    reversedSelector.setName(
+                        reversedSelector.name()
+                            .reversed()
+                    ),
+                    context
+                );
+            } else {
+                SpreadsheetComparatorName aliasOrName = aliases.aliasOrName(name)
+                    .orElse(null);
+                if (null != aliasOrName) {
+                    comparator = provider.spreadsheetComparator(
+                        aliasOrName,
+                        values,
+                        context
+                    );
+                } else {
+                    // aliasOrName with reversed, reverse the response then ask provider
+                    comparator = provider.spreadsheetComparator(
+                        aliases.aliasOrName(name.reversed())
+                            .orElseThrow(() -> new IllegalArgumentException("Unknown comparator " + name))
+                            .reversed(),
+                        values,
+                        context
+                    );
+                }
+            }
         }
 
         return comparator;

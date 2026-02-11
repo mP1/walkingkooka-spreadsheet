@@ -23,8 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.compare.FakeSpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
-import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 
 import java.util.List;
 
@@ -38,13 +38,13 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
 
     private final static SpreadsheetComparatorName ALIAS2 = SpreadsheetComparatorName.with("alias2");
 
-    private final static SpreadsheetComparator<?> COMPARATOR1 = SpreadsheetComparators.fake();
+    private final static SpreadsheetComparator<?> COMPARATOR1 = spreadsheetComparator(NAME1);
 
     private final static String NAME2_STRING = "comparator2";
 
     private final static SpreadsheetComparatorName NAME2 = SpreadsheetComparatorName.with(NAME2_STRING);
 
-    private final static SpreadsheetComparator<?> COMPARATOR2 = SpreadsheetComparators.fake();
+    private final static SpreadsheetComparator<?> COMPARATOR2 = spreadsheetComparator(NAME2);
 
     private final static SpreadsheetComparatorInfo INFO2 = SpreadsheetComparatorInfo.parse("https://example.com/comparator2 " + NAME2);
 
@@ -52,7 +52,7 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
 
     private final static SpreadsheetComparatorName NAME3 = SpreadsheetComparatorName.with(NAME3_STRING);
 
-    private final static SpreadsheetComparator<?> COMPARATOR3 = SpreadsheetComparators.fake();
+    private final static SpreadsheetComparator<?> COMPARATOR3 = spreadsheetComparator(NAME3);
 
     private final static SpreadsheetComparatorInfo INFO3 = SpreadsheetComparatorInfo.parse("https://example.com/comparator3 " + NAME3);
 
@@ -65,6 +65,20 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
     private final static SpreadsheetComparatorInfo INFO4 = SpreadsheetComparatorInfo.parse("https://example.com/custom4 " + NAME4);
 
     private final static ProviderContext CONTEXT = ProviderContexts.fake();
+
+    private static SpreadsheetComparator<?> spreadsheetComparator(final SpreadsheetComparatorName name) {
+        return new FakeSpreadsheetComparator<>() {
+            @Override
+            public SpreadsheetComparatorName name() {
+                return name;
+            }
+
+            @Override
+            public String toString() {
+                return name.toString();
+            }
+        };
+    }
 
     @Test
     public void testWithUnknownComparatorName() {
@@ -109,11 +123,30 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
     }
 
     @Test
+    public void testSpreadsheetComparatorNameWithAliasReversed() {
+        this.spreadsheetComparatorAndCheck(
+            ALIAS2.reversed(),
+            Lists.empty(),
+            CONTEXT,
+            COMPARATOR2.reversed()
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorSelectorWithAlias() {
         this.spreadsheetComparatorAndCheck(
             SpreadsheetComparatorSelector.parse(ALIAS2 + ""),
             CONTEXT,
             COMPARATOR2
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorSelectorWithAliasReversed() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse(ALIAS2.reversed() + ""),
+            CONTEXT,
+            COMPARATOR2.reversed()
         );
     }
 
@@ -128,11 +161,30 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
     }
 
     @Test
+    public void testSpreadsheetComparatorNameWithSelectorReversed() {
+        this.spreadsheetComparatorAndCheck(
+            NAME4.reversed(),
+            Lists.empty(),
+            CONTEXT,
+            COMPARATOR3.reversed()
+        );
+    }
+
+    @Test
     public void testSpreadsheetComparatorSelectorWithSelector() {
         this.spreadsheetComparatorAndCheck(
             SpreadsheetComparatorSelector.parse(NAME4 + ""),
             CONTEXT,
             COMPARATOR3
+        );
+    }
+
+    @Test
+    public void testSpreadsheetComparatorSelectorWithSelectorReversed() {
+        this.spreadsheetComparatorAndCheck(
+            SpreadsheetComparatorSelector.parse(NAME4.reversed() + ""),
+            CONTEXT,
+            COMPARATOR3.reversed()
         );
     }
 
@@ -184,6 +236,18 @@ public final class AliasesSpreadsheetComparatorProviderTest implements Spreadshe
                         case NAME3_STRING:
                             checkEquals(Lists.of(VALUE3), values, "values");
                             comparator = COMPARATOR3;
+                            break;
+                        case NAME1_STRING + SpreadsheetComparatorName.REVERSED:
+                            checkEquals(Lists.empty(), values, "values");
+                            comparator = COMPARATOR1.reversed();
+                            break;
+                        case NAME2_STRING + SpreadsheetComparatorName.REVERSED:
+                            checkEquals(Lists.empty(), values, "values");
+                            comparator = COMPARATOR2.reversed();
+                            break;
+                        case NAME3_STRING + SpreadsheetComparatorName.REVERSED:
+                            checkEquals(Lists.of(VALUE3), values, "values");
+                            comparator = COMPARATOR3.reversed();
                             break;
                         default:
                             throw new IllegalArgumentException("Unknown comparator " + name);
