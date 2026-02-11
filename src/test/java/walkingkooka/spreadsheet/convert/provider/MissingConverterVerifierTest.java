@@ -205,7 +205,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         public StoragePath parseStoragePath(final String value) {
             return StoragePath.parseMaybeRelative(
                 value,
-                this.currentWorkingDirectory()
+                this  // HasUserDirectories
             );
         }
 
