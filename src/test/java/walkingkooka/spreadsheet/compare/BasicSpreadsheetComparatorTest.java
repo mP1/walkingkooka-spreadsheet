@@ -34,7 +34,7 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
     HashCodeEqualsDefinedTesting2<BasicSpreadsheetComparator<String>>,
     ToStringTesting<BasicSpreadsheetComparator<String>> {
 
-    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.with("name");
+    private final static SpreadsheetComparatorName NAME = SpreadsheetComparatorName.TEXT;
 
     @Test
     public void testWithNullTypeFails() {
