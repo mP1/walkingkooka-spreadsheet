@@ -75,15 +75,11 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 Lists.of(
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
-                        Lists.of(
-                            SpreadsheetComparatorName.with("text")
-                        )
+                        Lists.of(SpreadsheetComparatorName.TEXT)
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("12"),
-                        Lists.of(
-                            SpreadsheetComparatorName.with("text")
-                        )
+                        Lists.of(SpreadsheetComparatorName.TEXT)
                     )
                 )
             )
@@ -104,19 +100,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("AB"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("CD"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-sensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -138,19 +134,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-sensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -172,19 +168,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("$A"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-sensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -206,19 +202,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("2"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("$1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-sensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -240,19 +236,19 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("$1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("$1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-sensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -334,7 +330,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                         SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                             SpreadsheetSelection.parseRow("1"),
                             Lists.of(
-                                SpreadsheetComparatorName.with("text")
+                                SpreadsheetComparatorName.TEXT
                             )
                         ),
                         null
@@ -413,13 +409,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-insensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -436,13 +432,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("A"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseColumn("B"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-insensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
@@ -459,13 +455,13 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("1"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text")
+                            SpreadsheetComparatorName.TEXT
                         )
                     ),
                     SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
                         SpreadsheetSelection.parseRow("23"),
                         Lists.of(
-                            SpreadsheetComparatorName.with("text-case-insensitive")
+                            SpreadsheetComparatorName.TEXT_CASE_INSENSITIVE
                         )
                     )
                 )
