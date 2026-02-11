@@ -363,7 +363,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public SpreadsheetExpressionEvaluationContext exitTerminal() {
+    public void exitTerminal() {
         throw new UnsupportedOperationException();
     }
 

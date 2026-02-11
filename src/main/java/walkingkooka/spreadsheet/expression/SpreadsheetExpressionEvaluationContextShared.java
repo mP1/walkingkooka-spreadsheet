@@ -202,12 +202,6 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     // TerminalContextDelegator.........................................................................................
 
     @Override
-    public final SpreadsheetExpressionEvaluationContext exitTerminal() {
-        this.terminalContext.exitTerminal();
-        return this;
-    }
-
-    @Override
     public final TerminalContext terminalContext() {
         return this.terminalContext;
     }
