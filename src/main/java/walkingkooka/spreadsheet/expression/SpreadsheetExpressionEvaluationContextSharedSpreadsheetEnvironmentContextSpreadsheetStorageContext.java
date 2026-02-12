@@ -214,7 +214,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     public StoragePath parseStoragePath(final String text) {
-        return StoragePath.parseMaybeRelative(
+        return StoragePath.parseSpecial(
             text,
             this // HasUserDirectories
         );
