@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
@@ -165,7 +166,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
         );
 
         final SpreadsheetConverterContext converterContext = SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.collection(

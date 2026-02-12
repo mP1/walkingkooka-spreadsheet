@@ -81,6 +81,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.HasText;
 import walkingkooka.text.LineEnding;
@@ -3544,7 +3545,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         final Locale locale = Locale.forLanguageTag("EN-AU");
 
         return SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used
@@ -3775,7 +3776,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     private SpreadsheetConverterContext spreadsheetConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(), // not used

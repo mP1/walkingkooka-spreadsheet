@@ -223,6 +223,18 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     @Override
+    public final Optional<StoragePath> homeDirectory() {
+        return this.spreadsheetEnvironmentContext()
+            .homeDirectory();
+    }
+
+    @Override
+    public final void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        this.spreadsheetEnvironmentContext()
+            .setHomeDirectory(homeDirectory);
+    }
+
+    @Override
     public final Indentation indentation() {
         return this.spreadsheetEnvironmentContext()
             .indentation();

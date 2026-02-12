@@ -76,6 +76,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.storage.FakeStorageContext;
+import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StorageContext;
 import walkingkooka.storage.StoragePath;
@@ -399,6 +400,22 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         StoragePath.parse("/current1/working2/directory3")
     );
 
+    Optional<StoragePath> HOME_DIRECTORY = Optional.of(
+        StoragePath.parse("/home/user")
+    );
+
+    HasUserDirectories HAS_USER_DIRECTORIES = new HasUserDirectories() {
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
+            return CURRENT_WORKING_DIRECTORY;
+        }
+
+        @Override
+        public Optional<StoragePath> homeDirectory() {
+            return HOME_DIRECTORY;
+        }
+    };
+
     LineEnding LINE_ENDING = EOL;
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
@@ -557,7 +574,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         SpreadsheetMetadata.NO_CELL,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-        CURRENT_WORKING_DIRECTORY,
+        HAS_USER_DIRECTORIES,
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
@@ -593,7 +610,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-        CURRENT_WORKING_DIRECTORY,
+        HAS_USER_DIRECTORIES,
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
@@ -605,7 +622,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
-        CURRENT_WORKING_DIRECTORY,
+        HAS_USER_DIRECTORIES,
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,

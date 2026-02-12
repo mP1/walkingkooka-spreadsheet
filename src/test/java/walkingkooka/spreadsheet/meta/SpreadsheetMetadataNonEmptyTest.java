@@ -81,6 +81,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
@@ -1407,7 +1408,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             expected,
             converter,
             SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+                HasUserDirectorieses.fake(),
                 Optional.of(metadata),
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 converter,
@@ -2041,7 +2042,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
@@ -2088,7 +2089,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 (final Optional<Object> v) -> {
                     throw new UnsupportedOperationException();
                 },
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
@@ -2423,7 +2424,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                  final SpreadsheetExpressionReference c) -> {
                     throw new UnsupportedOperationException();
                 },
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,

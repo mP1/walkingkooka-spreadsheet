@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -113,7 +114,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 throw new UnsupportedOperationException();
             },
             SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+                HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 new FakeConverter<>() {

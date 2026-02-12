@@ -214,6 +214,16 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
+    public Optional<StoragePath> homeDirectory() {
+        return this.context.homeDirectory();
+    }
+
+    @Override
+    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        this.context.setHomeDirectory(homeDirectory);
+    }
+    
+    @Override
     public Indentation indentation() {
         return this.context.indentation();
     }

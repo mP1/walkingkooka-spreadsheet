@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -352,7 +353,7 @@ public class TestGwtTest extends GWTTestCase {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+                            HasUserDirectorieses.empty(),,
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,

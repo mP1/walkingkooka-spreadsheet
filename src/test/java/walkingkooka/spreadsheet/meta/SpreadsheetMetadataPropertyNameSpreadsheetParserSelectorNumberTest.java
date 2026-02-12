@@ -24,12 +24,12 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePattern;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -85,7 +85,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
             text,
             ExpressionNumber.class,
             SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+                HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 SpreadsheetConverters.system(),

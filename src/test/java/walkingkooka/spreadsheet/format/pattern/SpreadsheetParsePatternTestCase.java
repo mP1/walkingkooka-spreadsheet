@@ -59,6 +59,7 @@ import walkingkooka.spreadsheet.formula.parser.YearSpreadsheetFormulaParserToken
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -861,7 +862,7 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
 
     private SpreadsheetConverterContext converterContext() {
         return SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),

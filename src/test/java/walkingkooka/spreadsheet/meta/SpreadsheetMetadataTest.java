@@ -68,6 +68,8 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.FakeHasUserDirectories;
+import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.Indentation;
@@ -129,6 +131,23 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     private final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
         StoragePath.parse("/current1/working2/directory3")
     );
+
+    private final static Optional<StoragePath> HOME_DIRECTORY = Optional.of(
+        StoragePath.parse("/home/user123")
+    );
+
+    private final static HasUserDirectories HAS_USER_DIRECTORIES = new FakeHasUserDirectories() {
+
+        @Override
+        public Optional<StoragePath> currentWorkingDirectory() {
+            return CURRENT_WORKING_DIRECTORY;
+        }
+
+        @Override
+        public Optional<StoragePath> homeDirectory() {
+            return HOME_DIRECTORY;
+        }
+    };
 
     private final static Indentation INDENTATION = Indentation.SPACES2;
 
@@ -806,7 +825,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -825,7 +844,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 null,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -844,7 +863,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 null,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -863,7 +882,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 null,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -875,7 +894,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testSpreadsheetConverterContextWithNullCurrentWorkingDirectoryFails() {
+    public void testSpreadsheetConverterContextWithNullHasUserDirectoriesFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
@@ -901,7 +920,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 null,
                 LINE_ENDING,
@@ -920,7 +939,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 null,
@@ -939,7 +958,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -958,7 +977,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -977,7 +996,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -996,7 +1015,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                CURRENT_WORKING_DIRECTORY,
+                HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
@@ -1073,7 +1092,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             Optional.of(cell),
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            CURRENT_WORKING_DIRECTORY,
+            HAS_USER_DIRECTORIES,
             INDENTATION,
             SpreadsheetLabelNameResolvers.fake(),
             LINE_ENDING,

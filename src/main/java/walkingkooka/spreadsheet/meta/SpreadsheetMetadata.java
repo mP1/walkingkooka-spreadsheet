@@ -94,7 +94,7 @@ import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
-import walkingkooka.storage.StoragePath;
+import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -980,7 +980,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link SpreadsheetComparatorContext} which may be used for sorting.
      */
-    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final Optional<StoragePath> currentWorkingDirectory,
+    public final SpreadsheetComparatorContext sortSpreadsheetComparatorContext(final HasUserDirectories hasUserDirectories,
                                                                                final Indentation indentation,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final LineEnding lineEnding,
@@ -991,7 +991,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             this.sortSpreadsheetConverterContext(
                 resolveIfLabel,
                 spreadsheetProvider, // ConverterProvider
-                currentWorkingDirectory,
+                hasUserDirectories,
                 indentation,
                 lineEnding,
                 localeContext,
@@ -1005,7 +1005,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     private SpreadsheetConverterContext sortSpreadsheetConverterContext(final SpreadsheetLabelNameResolver labelNameResolver,
                                                                         final ConverterProvider converterProvider,
-                                                                        final Optional<StoragePath> currentWorkingDirectory,
+                                                                        final HasUserDirectories hasUserDirectories,
                                                                         final Indentation indentation,
                                                                         final LineEnding lineEnding,
                                                                         final LocaleContext localeContext,
@@ -1014,7 +1014,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             NO_CELL,
             NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SORT_CONVERTER,
-            currentWorkingDirectory,
+            hasUserDirectories,
             indentation,
             labelNameResolver,
             lineEnding,
@@ -1043,7 +1043,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetConverterContext spreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Optional<SpreadsheetExpressionReference> validationReference,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
-                                                                         final Optional<StoragePath> currentWorkingDirectory,
+                                                                         final HasUserDirectories hasUserDirectories,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
@@ -1053,7 +1053,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converterSelectorPropertyName, "converterSelectorPropertyName");
-        Objects.requireNonNull(currentWorkingDirectory, "currentWorkingDirectory");
+        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
@@ -1121,7 +1121,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return SpreadsheetConverterContexts.basic(
-            currentWorkingDirectory,
+            hasUserDirectories,
             Optional.of(this),
             validationReference,
             converter,
@@ -1203,7 +1203,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetFormatterContext spreadsheetFormatterContext(final Optional<SpreadsheetCell> cell,
                                                                          final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                                                         final Optional<StoragePath> currentWorkingDirectory,
+                                                                         final HasUserDirectories hasUserDirectories,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
@@ -1212,7 +1212,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(spreadsheetExpressionEvaluationContext, "spreadsheetExpressionEvaluationContext");
-        Objects.requireNonNull(currentWorkingDirectory, "currentWorkingDirectory");
+        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
@@ -1239,7 +1239,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 cell,
                 NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-                currentWorkingDirectory,
+                hasUserDirectories,
                 indentation,
                 labelNameResolver,
                 lineEnding,
@@ -1276,7 +1276,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final SpreadsheetFormatterProviderSamplesContext spreadsheetFormatterProviderSamplesContext(final Optional<SpreadsheetCell> cell,
                                                                                                        final Function<Optional<Object>, SpreadsheetExpressionEvaluationContext> spreadsheetExpressionEvaluationContext,
-                                                                                                       final Optional<StoragePath> currentWorkingDirectory,
+                                                                                                       final HasUserDirectories hasUserDirectories,
                                                                                                        final Indentation indentation,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final LineEnding lineEnding,
@@ -1287,7 +1287,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             this.spreadsheetFormatterContext(
                 cell,
                 spreadsheetExpressionEvaluationContext,
-                currentWorkingDirectory,
+                hasUserDirectories,
                 indentation,
                 labelNameResolver,
                 lineEnding,
@@ -1391,7 +1391,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetExpressionReference cellOrLabel,
                                                                          final Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
                                                                          final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
-                                                                         final Optional<StoragePath> currentWorkingDirectory,
+                                                                         final HasUserDirectories hasUserDirectories,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
@@ -1401,7 +1401,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
         Objects.requireNonNull(referenceToExpressionEvaluationContext, "referenceToExpressionEvaluationContext");
-        Objects.requireNonNull(currentWorkingDirectory, "currentWorkingDirectory");
+        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
@@ -1416,7 +1416,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 NO_CELL,
                 Optional.of(cellOrLabel), // validationReference
                 SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER,
-                currentWorkingDirectory,
+                hasUserDirectories,
                 indentation,
                 labelNameResolver,
                 lineEnding,

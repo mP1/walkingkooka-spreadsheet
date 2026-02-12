@@ -42,6 +42,16 @@ public class FakeSpreadsheetEnvironmentContext extends FakeEnvironmentContext im
     public void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Optional<StoragePath> homeDirectory() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        throw new UnsupportedOperationException();
+    }
     
     @Override
     public AbsoluteUrl serverUrl() {

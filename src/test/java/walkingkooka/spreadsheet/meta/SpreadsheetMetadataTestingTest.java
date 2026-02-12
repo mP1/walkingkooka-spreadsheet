@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -90,7 +91,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             SpreadsheetMetadata.NO_CELL,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            Optional.empty(), // no current working directory
+            HasUserDirectorieses.empty(), // no current working directory
             INDENTATION,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
@@ -281,7 +282,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },
-            CURRENT_WORKING_DIRECTORY,
+            HAS_USER_DIRECTORIES,
             Indentation.SPACES2,
             (label) -> {
                 throw new UnsupportedOperationException();

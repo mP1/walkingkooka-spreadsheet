@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.formula.parser.NumberSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -1247,7 +1248,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
 
     private SpreadsheetConverterContext createConverterContext(final ExpressionNumberKind kind) {
         return SpreadsheetConverterContexts.basic(
-            SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+            HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.textToText(),

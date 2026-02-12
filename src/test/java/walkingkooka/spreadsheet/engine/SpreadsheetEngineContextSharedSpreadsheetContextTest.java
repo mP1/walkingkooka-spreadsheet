@@ -935,6 +935,19 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
+        public Optional<StoragePath> homeDirectory() {
+            return this.environmentValue(HOME_DIRECTORY);
+        }
+
+        @Override
+        public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+            this.setOrRemoveEnvironmentValue(
+                HOME_DIRECTORY,
+                homeDirectory
+            );
+        }
+        
+        @Override
         public AbsoluteUrl serverUrl() {
             return SpreadsheetEngineContextSharedSpreadsheetContextTest.SERVER_URL;
         }

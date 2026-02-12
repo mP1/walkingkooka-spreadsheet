@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.HasUserDirectories;
+import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
@@ -39,18 +41,19 @@ import java.util.Objects;
 import java.util.Optional;
 
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
+    HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
     LocaleContextDelegator,
     UsesToStringBuilder {
 
-    static BasicSpreadsheetConverterContext with(final Optional<StoragePath> currentWorkingDirectory,
+    static BasicSpreadsheetConverterContext with(final HasUserDirectories hasUserDirectories,
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetExpressionReference> validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
                                                  final LocaleContext localeContext) {
-        Objects.requireNonNull(currentWorkingDirectory, "currentWorkingDirectory");
+        Objects.requireNonNull(hasUserDirectories, "hasUserDirectories");
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
@@ -59,7 +62,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(localeContext, "localeContext");
 
         return new BasicSpreadsheetConverterContext(
-            currentWorkingDirectory,
+            hasUserDirectories,
             spreadsheetMetadata,
             validationReference,
             converter,
@@ -69,14 +72,14 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         );
     }
 
-    private BasicSpreadsheetConverterContext(final Optional<StoragePath> currentWorkingDirectory,
+    private BasicSpreadsheetConverterContext(final HasUserDirectories hasUserDirectories,
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetExpressionReference> validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final JsonNodeConverterContext jsonNodeConverterContext,
                                              final LocaleContext localeContext) {
-        this.currentWorkingDirectory = currentWorkingDirectory;
+        this.hasUserDirectories = hasUserDirectories;
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
@@ -92,7 +95,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new BasicSpreadsheetConverterContext(
-                this.currentWorkingDirectory,
+                this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
@@ -109,7 +112,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         return before.equals(after) ?
             this :
             new BasicSpreadsheetConverterContext(
-                this.currentWorkingDirectory,
+                this.hasUserDirectories,
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
@@ -205,14 +208,16 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private final LocaleContext localeContext;
 
-    // StorageConverterContext..........................................................................................
+    // HasUserDirectories...............................................................................................
 
     @Override
-    public Optional<StoragePath> currentWorkingDirectory() {
-        return this.currentWorkingDirectory;
+    public HasUserDirectories hasUserDirectories() {
+        return this.hasUserDirectories;
     }
 
-    private final Optional<StoragePath> currentWorkingDirectory;
+    private final HasUserDirectories hasUserDirectories;
+
+    // StorageConverterContext..........................................................................................
 
     @Override
     public StoragePath parseStoragePath(final String text) {
