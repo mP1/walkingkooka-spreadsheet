@@ -822,7 +822,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             comparators,
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
-                context.currentWorkingDirectory(),
+                context, // HasUserDirectories
                 context.indentation(),
                 context, // ConverterProvider
                 context.lineEnding(),
@@ -1870,7 +1870,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     SpreadsheetValidatorContext.VALUE,
                                     Optional.ofNullable(value)
                                 ),
-                                context.currentWorkingDirectory(),
+                                context, // HasUserDirectories
                                 context.indentation(),
                                 context, // SpreadsheetLabelNameResolver
                                 context.lineEnding(),

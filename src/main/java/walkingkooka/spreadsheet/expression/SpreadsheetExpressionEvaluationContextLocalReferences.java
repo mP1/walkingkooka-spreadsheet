@@ -119,6 +119,16 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
+    public Optional<StoragePath> homeDirectory() {
+        return this.context.homeDirectory();
+    }
+
+    @Override
+    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        this.context.setHomeDirectory(homeDirectory);
+    }
+
+    @Override
     public StoragePath parseStoragePath(final String text) {
         return this.context.parseStoragePath(text);
     }

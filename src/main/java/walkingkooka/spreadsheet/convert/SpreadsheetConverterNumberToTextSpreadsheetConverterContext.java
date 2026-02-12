@@ -99,6 +99,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
+    public Optional<StoragePath> homeDirectory() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Indentation indentation() {
         throw new UnsupportedOperationException();
     }

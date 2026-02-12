@@ -44,6 +44,19 @@ public interface SpreadsheetEnvironmentContextDelegator extends SpreadsheetEnvir
     }
 
     @Override
+    default Optional<StoragePath> homeDirectory() {
+        return this.environmentValue(HOME_DIRECTORY);
+    }
+
+    @Override
+    default void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        this.setOrRemoveEnvironmentValue(
+            HOME_DIRECTORY,
+            homeDirectory
+        );
+    }
+
+    @Override
     default AbsoluteUrl serverUrl() {
         return this.environmentValueOrFail(SERVER_URL);
     }

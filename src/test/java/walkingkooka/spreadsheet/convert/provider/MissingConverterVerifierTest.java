@@ -329,6 +329,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
+        public Optional<StoragePath> homeDirectory() {
+            return HOME_DIRECTORY;
+        }
+
+        @Override
         public SpreadsheetExpressionReference validationReference() {
             return SpreadsheetSelection.A1;
         }

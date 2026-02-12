@@ -115,9 +115,27 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // SpreadsheetEnvironmentContext....................................................................................
 
     @Override
+    default Optional<StoragePath> currentWorkingDirectory() {
+        return this.spreadsheetEnvironmentContext()
+            .currentWorkingDirectory();
+    }
+    
+    @Override
     default void setCurrentWorkingDirectory(final Optional<StoragePath> currentWorkingDirectory) {
         this.spreadsheetExpressionEvaluationContext()
             .setCurrentWorkingDirectory(currentWorkingDirectory);
+    }
+
+    @Override
+    default Optional<StoragePath> homeDirectory() {
+        return this.spreadsheetEnvironmentContext()
+            .homeDirectory();
+    }
+
+    @Override
+    default void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        this.spreadsheetExpressionEvaluationContext()
+            .setHomeDirectory(homeDirectory);
     }
 
     @Override
@@ -158,12 +176,6 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     SpreadsheetExpressionEvaluationContext spreadsheetExpressionEvaluationContext();
 
     // StorageExpressionEvaluationContextDelegator......................................................................
-
-    @Override
-    default Optional<StoragePath> currentWorkingDirectory() {
-        return this.spreadsheetExpressionEvaluationContext()
-            .currentWorkingDirectory();
-    }
 
     @Override
     default StoragePath parseStoragePath(final String text) {

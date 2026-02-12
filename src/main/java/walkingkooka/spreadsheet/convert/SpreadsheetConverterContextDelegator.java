@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.storage.HasUserDirectories;
+import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
@@ -32,6 +34,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
+    HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
     LocaleContextDelegator {
 
@@ -58,9 +61,8 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
-    default Optional<StoragePath> currentWorkingDirectory() {
-        return this.spreadsheetConverterContext()
-            .currentWorkingDirectory();
+    default HasUserDirectories hasUserDirectories() {
+        return this.spreadsheetConverterContext();
     }
 
     @Override

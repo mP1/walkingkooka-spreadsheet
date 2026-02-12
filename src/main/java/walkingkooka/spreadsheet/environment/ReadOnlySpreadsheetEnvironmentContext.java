@@ -123,6 +123,19 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
     }
 
     @Override
+    public Optional<StoragePath> homeDirectory() {
+        return this.context.homeDirectory();
+    }
+
+    @Override
+    public void setHomeDirectory(final Optional<StoragePath> homeDirectory) {
+        this.setOrRemoveEnvironmentValue(
+            HOME_DIRECTORY,
+            homeDirectory
+        );
+    }
+
+    @Override
     public Indentation indentation() {
         return this.context.indentation();
     }

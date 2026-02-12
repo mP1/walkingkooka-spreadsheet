@@ -26,6 +26,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
@@ -184,7 +185,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
 
         return SpreadsheetConverterNumberToTextSpreadsheetConverterContext.with(
             SpreadsheetConverterContexts.basic(
-                SpreadsheetConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+                HasUserDirectorieses.fake(),
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),

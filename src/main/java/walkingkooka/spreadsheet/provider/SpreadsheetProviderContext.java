@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
-import walkingkooka.storage.convert.StorageConverterContext;
+import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -117,7 +117,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         final LocaleContext localeContext = this.localeContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
-            StorageConverterContext.NO_CURRENT_WORKING_DIRECTORY,
+            HasUserDirectorieses.empty(),
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
