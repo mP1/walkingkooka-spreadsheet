@@ -50,9 +50,7 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
 
         if (environmentContext instanceof SpreadsheetEnvironmentContext) {
             spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) environmentContext;
-            if (spreadsheetEnvironmentContext.storage().equals(storage)) {
-                spreadsheetEnvironmentContext = (SpreadsheetEnvironmentContext) environmentContext;
-            } else {
+            if (false == spreadsheetEnvironmentContext.storage().equals(storage)) {
                 spreadsheetEnvironmentContext = null;
             }
         }
