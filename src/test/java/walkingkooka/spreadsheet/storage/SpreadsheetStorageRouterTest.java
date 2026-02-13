@@ -307,8 +307,6 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 )
         );
 
-        thrown.printStackTrace();
-
         this.checkEquals(
             SpreadsheetEnvironmentContext.SPREADSHEET_ID,
             thrown.environmentValueName(),
