@@ -36,6 +36,7 @@ import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -76,6 +77,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
 
     @Override
     public void testSetEnvironmentValueWithNowFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetCurrencyWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -163,6 +169,17 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             return new TestSpreadsheetContextDelegator();
         }
 
+        @Override
+        public Currency currency() {
+            return Currency.getInstance("AUD");
+        }
+
+        @Override
+        public void setCurrency(final Currency currency) {
+            Objects.requireNonNull(currency, "currency");
+            throw new UnsupportedOperationException();
+        }
+        
         @Override
         public Indentation indentation() {
             return Indentation.SPACES4;

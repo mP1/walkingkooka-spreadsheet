@@ -42,6 +42,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -61,6 +62,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         )
     );
 
+    private final static Currency CURRENCY = Currency.getInstance("AUD");
+
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
@@ -79,6 +82,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
         Predicates.always(), // all values are read-only
         EnvironmentContexts.empty(
+            CURRENCY,
             INDENTATION,
             LINE_ENDING,
             LOCALE,

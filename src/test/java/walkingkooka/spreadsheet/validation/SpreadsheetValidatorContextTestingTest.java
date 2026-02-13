@@ -53,6 +53,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
     }
 
     @Override
+    public void testSetCurrencyWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetIndentationWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

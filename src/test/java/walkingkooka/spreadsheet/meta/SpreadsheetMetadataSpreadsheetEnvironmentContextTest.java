@@ -37,6 +37,7 @@ import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -46,6 +47,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
+
+    private final static Currency CURRENCY = Currency.getInstance("AUD");
 
     private final static Indentation INDENTATION = Indentation.SPACES4;
 
@@ -66,6 +69,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     static {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 Locale.FRENCH,
@@ -238,6 +242,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
                     EnvironmentContexts.empty(
+                        CURRENCY,
                         INDENTATION,
                         LineEnding.NL,
                         Locale.FRENCH,
@@ -246,6 +251,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     )
                 )
             ),
+            SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -266,6 +272,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
                     EnvironmentContexts.empty(
+                        CURRENCY,
                         INDENTATION,
                         LineEnding.NL,
                         Locale.FRENCH,
@@ -274,6 +281,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     )
                 )
             ),
+            SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -311,6 +319,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ).spreadsheetEnvironmentContext(
                     CONTEXT.cloneEnvironment()
                 ),
+            SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
             SpreadsheetEnvironmentContext.LOCALE,
@@ -563,7 +572,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{currency=AUD, indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
         );
     }
 
@@ -714,6 +723,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    url\n" +
                 "    url-to-hyperlink\n" +
                 "    url-to-image\n" +
+                "  currency\n" +
+                "    AUD (java.util.Currency)\n" +
                 "  dateFormatter\n" +
                 "    date\n" +
                 "      \"yyyy/mm/dd\"\n" +

@@ -274,6 +274,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            CURRENCY,
             INDENTATION,
             lineEnding,
             LOCALE,
@@ -295,6 +296,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -315,6 +317,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     LOCALE,
@@ -344,6 +347,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -364,6 +368,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     Locale.FRANCE,
@@ -471,6 +476,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,

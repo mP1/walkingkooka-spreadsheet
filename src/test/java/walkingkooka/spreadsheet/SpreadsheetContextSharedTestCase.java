@@ -56,6 +56,7 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -71,6 +72,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     final static AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
 
     final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    final static Currency CURRENCY = Currency.getInstance("AUD");
 
     final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
@@ -90,6 +93,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -238,6 +242,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testSetEnvironmentContextWithSame() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 Locale.ENGLISH,
@@ -265,6 +270,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testSetEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 Locale.ENGLISH,
@@ -437,7 +443,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z}"
+            "{currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z}"
         );
     }
 

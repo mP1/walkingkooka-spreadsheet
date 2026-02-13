@@ -39,6 +39,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -159,6 +160,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetEnvironmentContexts.basic(
                     Storages.fake(),
                     EnvironmentContexts.empty(
+                        Currency.getInstance("AUD"),
                         Indentation.SPACES4,
                         LineEnding.NL,
                         LOCALE_CONTEXT.locale(),

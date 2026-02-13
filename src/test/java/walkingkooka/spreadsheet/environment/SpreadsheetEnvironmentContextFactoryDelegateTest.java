@@ -30,6 +30,7 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -74,6 +75,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
         {
             final EnvironmentContext context = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    Currency.getInstance("AUD"),
                     Indentation.SPACES4,
                     LineEnding.NL,
                     SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE,

@@ -96,6 +96,11 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
+    public void testSetCurrencyWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetIndentationWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

@@ -33,6 +33,7 @@ import walkingkooka.text.printer.TreePrintable;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -109,6 +110,19 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         throw name.readOnlyEnvironmentValueException();
     }
 
+    @Override
+    public Currency currency() {
+        return this.context.currency();
+    }
+
+    @Override
+    public void setCurrency(final Currency currency) {
+        this.setEnvironmentValue(
+            EnvironmentValueName.CURRENCY,
+            currency
+        );
+    }
+    
     @Override
     public Optional<StoragePath> currentWorkingDirectory() {
         return this.context.currentWorkingDirectory();

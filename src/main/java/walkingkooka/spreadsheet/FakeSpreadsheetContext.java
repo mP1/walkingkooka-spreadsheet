@@ -42,6 +42,7 @@ import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -53,7 +54,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     public FakeSpreadsheetContext() {
         super();
     }
-
+    
     @Override
     public Optional<StoragePath> currentWorkingDirectory() {
         throw new UnsupportedOperationException();
@@ -183,6 +184,18 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    // HasCurrency......................................................................................................
+
+    @Override
+    public Currency currency() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCurrency(final Currency currency) {
+        throw new UnsupportedOperationException();
+    }
+    
     // HasIndentation...................................................................................................
 
     @Override

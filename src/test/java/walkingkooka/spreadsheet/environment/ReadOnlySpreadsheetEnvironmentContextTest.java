@@ -37,6 +37,7 @@ import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -47,6 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
+    private final static Currency CURRENCY = Currency.getInstance("AUD");
     private final static LineEnding LINE_ENDING = LineEnding.NL;
     private final static Locale LOCALE = Locale.GERMAN;
     private final static LocalDateTime NOW = LocalDateTime.MIN;
@@ -125,6 +127,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 Locale.FRENCH,
@@ -151,6 +154,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             storage,
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 Locale.FRENCH,
@@ -165,6 +169,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
             storage,
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.CRNL,
                 Locale.GERMAN,
@@ -188,6 +193,32 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         );
     }
 
+    // currency.........................................................................................................
+
+    @Test
+    public void testCurrency() {
+        this.currencyAndCheck(
+            this.createContext(),
+            CURRENCY
+        );
+    }
+
+    // setCurrency......................................................................................................
+
+    @Test
+    public void testSetCurrencyFails() {
+        assertThrows(
+            ReadOnlyEnvironmentValueException.class,
+            () -> this.createContext()
+                .setCurrency(CURRENCY)
+        );
+    }
+
+    @Override
+    public void testSetCurrencyWithDifferentAndWatcher() {
+        throw new UnsupportedOperationException();
+    }
+    
     // currentWorkingDirectory..........................................................................................
 
     @Test
@@ -410,6 +441,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -444,6 +476,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testEnvironmentalValueNames() {
         this.environmentValueNamesAndCheck(
+            SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
@@ -479,7 +512,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, timeOffset=Z, user=user123@example.com}"
+            "{currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -493,6 +526,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "  BasicSpreadsheetEnvironmentContext\n" +
                 "    environment\n" +
                 "      EnvironmentContextSharedMap\n" +
+                "        currency\n" +
+                "          AUD (java.util.Currency)\n" +
                 "        currentWorkingDirectory\n" +
                 "          /current1/working2/directory3\n" +
                 "        indentation\n" +
