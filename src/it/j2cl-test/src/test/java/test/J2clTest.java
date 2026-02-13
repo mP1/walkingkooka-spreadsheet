@@ -367,7 +367,7 @@ public class J2clTest {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                            HasUserDirectorieses.empty(),,
+                            HasUserDirectorieses.empty(),
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
@@ -423,7 +423,7 @@ public class J2clTest {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
-                        Optional.empty(), // currentWorkingDirectory
+                        HasUserDirectorieses.empty(),
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,

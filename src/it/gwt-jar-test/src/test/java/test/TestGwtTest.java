@@ -353,7 +353,7 @@ public class TestGwtTest extends GWTTestCase {
                             SpreadsheetMetadata.NO_CELL,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-                            HasUserDirectorieses.empty(),,
+                            HasUserDirectorieses.empty(),
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
@@ -409,7 +409,7 @@ public class TestGwtTest extends GWTTestCase {
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },
-                        Optional.empty(), // currentWorkingDirectory
+                        HasUserDirectorieses.empty(),
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
