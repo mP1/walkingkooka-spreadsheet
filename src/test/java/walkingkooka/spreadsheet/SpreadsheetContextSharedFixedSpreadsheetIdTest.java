@@ -307,6 +307,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     public SpreadsheetContextSharedFixedSpreadsheetId createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,

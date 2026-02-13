@@ -53,6 +53,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -258,6 +259,18 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    // HasCurrency......................................................................................................
+
+    @Override
+    public Currency currency() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCurrency(final Currency currency) {
+        throw new UnsupportedOperationException();
+    }
+    
     // HasIndentation...................................................................................................
 
     @Override

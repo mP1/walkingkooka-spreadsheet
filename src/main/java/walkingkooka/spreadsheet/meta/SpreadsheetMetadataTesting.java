@@ -112,6 +112,7 @@ import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -416,6 +417,8 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         }
     };
 
+    Currency CURRENCY = Currency.getInstance("AUD");
+
     LineEnding LINE_ENDING = EOL;
 
     AbsoluteUrl SERVER_URL = Url.parseAbsolute("https://example.com");
@@ -427,6 +430,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     private static EnvironmentContext environmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,

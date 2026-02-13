@@ -55,6 +55,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.lang.reflect.Field;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -286,6 +287,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         );
 
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            CURRENCY,
             INDENTATION,
             lineEnding,
             LOCALE,
@@ -297,6 +299,61 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         this.checkNotEquals(
             context,
             afterSet
+        );
+    }
+
+    // HasCurrency..................................................................................................
+
+    @Test
+    public void testCurrency() {
+        final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
+            EnvironmentContexts.empty(
+                CURRENCY,
+                INDENTATION,
+                LINE_ENDING,
+                LOCALE,
+                HAS_NOW,
+                EnvironmentContext.ANONYMOUS
+            )
+        );
+
+        this.currencyAndCheck(
+            this.createContext(context),
+            context.currency()
+        );
+    }
+
+    @Test
+    public void testSetCurrency() {
+        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
+            Storages.fake(),
+            EnvironmentContexts.map(
+                EnvironmentContexts.empty(
+                    CURRENCY,
+                    INDENTATION,
+                    LINE_ENDING,
+                    LOCALE,
+                    HAS_NOW,
+                    EnvironmentContext.ANONYMOUS
+                )
+            )
+        );
+
+        final SpreadsheetEnvironmentContextFactory context = this.createContext(spreadsheetEnvironmentContext);
+
+        final Currency currency = Currency.getInstance("NZD");
+
+        this.checkNotEquals(
+            CURRENCY,
+            currency
+        );
+
+        context.setCurrency(currency);
+
+        this.currencyAndCheck(
+            context,
+            currency
         );
     }
 
@@ -317,6 +374,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -337,6 +395,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     LOCALE,
@@ -370,6 +429,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -390,6 +450,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     LOCALE,
@@ -421,6 +482,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -441,6 +503,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
             Storages.fake(),
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     Locale.FRANCE,
@@ -546,6 +609,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,

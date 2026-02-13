@@ -125,6 +125,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -1893,6 +1894,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         Storages.fake(),
                         EnvironmentContexts.map(
                             EnvironmentContexts.empty(
+                                Currency.getInstance("AUD"),
                                 Indentation.SPACES2,
                                 LineEnding.NL,
                                 LOCALE_CONTEXT.locale(),

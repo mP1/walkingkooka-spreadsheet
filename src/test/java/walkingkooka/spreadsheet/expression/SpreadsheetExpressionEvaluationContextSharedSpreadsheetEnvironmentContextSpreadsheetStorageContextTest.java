@@ -472,6 +472,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 locale,

@@ -85,7 +85,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     SpreadsheetMetadataTesting,
     HashCodeEqualsDefinedTesting2<C> {
 
-    final static String CURRENCY = "CURR";
+    final static String CURRENCY_SYMBOL = "CURR";
     final static char DECIMAL = '.';
     final static String EXPONENT = "e";
     final static char GROUP_SEPARATOR = ',';
@@ -124,7 +124,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
                 MINUS,
                 PLUS,
                 ZERO_DIGIT,
-                CURRENCY,
+                CURRENCY_SYMBOL,
                 DECIMAL,
                 EXPONENT,
                 GROUP_SEPARATOR,
@@ -489,6 +489,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testIndentation() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -507,6 +508,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetIndentation() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -538,6 +540,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -556,6 +559,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -591,6 +595,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -609,6 +614,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 Locale.FRANCE,
@@ -911,7 +917,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
                 MINUS,
                 PLUS,
                 ZERO_DIGIT,
-                CURRENCY,
+                CURRENCY_SYMBOL,
                 DECIMAL,
                 EXPONENT,
                 GROUP_SEPARATOR,

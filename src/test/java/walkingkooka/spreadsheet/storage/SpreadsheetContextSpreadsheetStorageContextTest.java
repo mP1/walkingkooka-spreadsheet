@@ -71,12 +71,15 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext> {
+
+    private final static Currency CURRENCY = Currency.getInstance("AUD");
 
     private final static Locale LOCALE = Locale.ENGLISH;
 
@@ -466,6 +469,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
                 LOCALE,

@@ -47,6 +47,7 @@ import walkingkooka.text.LineEnding;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -105,6 +106,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
             this.environmentContext.setEnvironmentValue(name, value);
         }
 
+        @Override
+        public Currency currency() {
+            return this.environmentContext.currency();
+        }
+
+        @Override
+        public void setCurrency(final Currency currency) {
+            this.environmentContext.setCurrency(currency);
+        }
+        
         @Override
         public Optional<StoragePath> currentWorkingDirectory() {
             return this.environmentContext.currentWorkingDirectory();
@@ -198,6 +209,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    Currency.getInstance("AUD"),
                     Indentation.SPACES4,
                     LineEnding.NL,
                     Locale.ENGLISH,

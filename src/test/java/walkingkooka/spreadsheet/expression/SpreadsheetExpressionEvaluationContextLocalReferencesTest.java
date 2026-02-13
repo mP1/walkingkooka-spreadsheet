@@ -75,6 +75,7 @@ import walkingkooka.validation.form.FormField;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -460,6 +461,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                Currency.getInstance("AUD"),
                 INDENTATION,
                 LineEnding.NL,
                 LOCALE_CONTEXT.locale(),
@@ -946,6 +948,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     @Override
     public void testFindByLocaleTextWithInvalidCountFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetCurrencyWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }
 

@@ -181,6 +181,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testCurrentWorkingDirectoryMissing() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -230,6 +231,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             () -> BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     LOCALE,
@@ -244,6 +246,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testServerUrl() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
                 LOCALE,
@@ -273,6 +276,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             BasicSpreadsheetEnvironmentContext.with(
                 STORAGE,
                 EnvironmentContexts.empty(
+                    CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
                     LOCALE,
@@ -301,6 +305,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                     STORAGE,
                     EnvironmentContexts.map(
                         EnvironmentContexts.empty(
+                            CURRENCY,
                             INDENTATION,
                             LINE_ENDING,
                             LOCALE,
@@ -320,6 +325,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
                 STORAGE,
                 EnvironmentContexts.map(
                     EnvironmentContexts.empty(
+                        CURRENCY,
                         INDENTATION,
                         LINE_ENDING,
                         LOCALE,
@@ -514,7 +520,7 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
         );
     }
 
@@ -527,6 +533,8 @@ public final class BasicSpreadsheetEnvironmentContextTest implements Spreadsheet
             "BasicSpreadsheetEnvironmentContext\n" +
                 "  environment\n" +
                 "    EnvironmentContextSharedMap\n" +
+                "      currency\n" +
+                "        AUD (java.util.Currency)\n" +
                 "      currentWorkingDirectory\n" +
                 "        /current1/working2/directory3\n" +
                 "      indentation\n" +

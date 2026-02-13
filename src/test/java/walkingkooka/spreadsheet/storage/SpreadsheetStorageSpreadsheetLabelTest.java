@@ -63,6 +63,7 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -432,6 +433,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                Currency.getInstance("AUD"),
                 Indentation.SPACES4,
                 LineEnding.NL,
                 LOCALE,
