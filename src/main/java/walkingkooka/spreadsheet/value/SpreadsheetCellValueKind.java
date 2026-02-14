@@ -32,6 +32,13 @@ public enum SpreadsheetCellValueKind {
         }
     },
 
+    CURRENCY {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.currency();
+        }
+    },
+
     DATE_TIME_SYMBOLS {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
