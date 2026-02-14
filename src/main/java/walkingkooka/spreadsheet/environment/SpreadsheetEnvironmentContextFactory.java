@@ -64,6 +64,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -526,6 +527,9 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             missing.reportIfMissing();
 
             JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
+                (String cc) -> Optional.ofNullable(
+                    Currency.getInstance(cc)
+                ),
                 expressionNumberKind,
                 mathContext
             );

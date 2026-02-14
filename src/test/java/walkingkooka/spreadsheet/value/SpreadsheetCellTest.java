@@ -2559,6 +2559,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
+            (String cc) -> Optional.ofNullable(
+                Currency.getInstance(cc)
+            ),
             ExpressionNumberKind.BIG_DECIMAL,
             MathContext.UNLIMITED
         );

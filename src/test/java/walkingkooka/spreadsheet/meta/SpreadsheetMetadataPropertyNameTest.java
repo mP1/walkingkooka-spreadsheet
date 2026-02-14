@@ -46,6 +46,7 @@ import java.lang.reflect.Field;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -435,6 +436,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             initial.patch(
                 propertyName.patch(value),
                 JsonNodeUnmarshallContexts.basic(
+                    (String cc) -> Optional.ofNullable(
+                        Currency.getInstance(cc)
+                    ),
                     ExpressionNumberKind.BIG_DECIMAL,
                     MathContext.DECIMAL32
                 )

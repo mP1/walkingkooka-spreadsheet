@@ -111,6 +111,7 @@ import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -1567,6 +1568,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
+            (String cc) -> Optional.ofNullable(
+                Currency.getInstance(cc)
+            ),
             ExpressionNumberKind.BIG_DECIMAL,
             MathContext.UNLIMITED
         );

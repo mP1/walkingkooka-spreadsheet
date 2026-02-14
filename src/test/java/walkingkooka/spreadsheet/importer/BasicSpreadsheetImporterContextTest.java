@@ -24,6 +24,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
+import java.util.Currency;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,6 +33,9 @@ public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImp
     ToStringTesting<BasicSpreadsheetImporterContext> {
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
+        (String cc) -> Optional.ofNullable(
+            Currency.getInstance(cc)
+        ),
         ExpressionNumberKind.BIG_DECIMAL,
         MathContext.DECIMAL64
     );

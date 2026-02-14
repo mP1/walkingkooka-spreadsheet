@@ -55,6 +55,7 @@ import walkingkooka.validation.form.FormField;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -142,7 +143,12 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
         throw new UnsupportedOperationException();
     }
-    
+
+    @Override
+    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+        throw new UnsupportedOperationException();
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Override
