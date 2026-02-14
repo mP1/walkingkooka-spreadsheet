@@ -153,10 +153,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(cell);
+        this.localeAndCheck2(cell);
         this.parserAndCheck(cell);
         this.styleAndCheck(cell);
+        this.validatorAndCheck(cell);
         this.formattedValueAndCheck(cell);
     }
 
@@ -173,10 +174,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
         this.formatterAndCheckNone(cell);
+        this.localeAndCheck2(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
+        this.validatorAndCheckNone(cell);
         this.formattedValueAndCheck(
             cell,
             SpreadsheetCell.NO_FORMATTED_VALUE_CELL
@@ -191,10 +193,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(cell);
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
         this.formatterAndCheckNone(cell);
+        this.localeAndCheck2(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
+        this.validatorAndCheckNone(cell);
         this.formattedValueAndCheckNone(cell);
     }
 
@@ -223,10 +226,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
         this.formatterAndCheckNone(cell);
+        this.localeAndCheck2(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
+        this.validatorAndCheckNone(cell);
         this.formattedValueAndCheckNone(cell);
     }
 
@@ -250,10 +254,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(cell);
         this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheckNone(cell);
         this.formatterAndCheckNone(cell);
+        this.localeAndCheckNone(cell);
         this.parserAndCheckNone(cell);
         this.styleAndCheck(cell);
+        this.validatorAndCheckNone(cell);
         this.formattedValueAndCheckNone(cell);
     }
 
@@ -290,7 +295,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different, this.formula());
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(cell);
+        this.formatterAndCheck(cell);
         this.localeAndCheck2(cell);
+        this.parserAndCheck(cell);
         this.referenceAndCheck(cell);
         this.checkEquals(
             cell.parser(),
@@ -369,10 +376,10 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             different,
             differentFormula
         );
-        this.dateTimeSymbolsAndCheck(cell);
-        this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
+        this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -405,9 +412,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 )
         );
         this.dateTimeSymbolsAndCheck(different);
-        this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -472,9 +479,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             different,
             differentDateTimeSymbols
         );
-        this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -537,8 +544,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             different,
             differentDecimalNumberSymbols
         );
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -605,8 +612,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck(
+            different,
+            differentLocale
+        );
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -676,13 +686,13 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             this.formula()
         );
         this.formulaAndCheck(different);
-        this.dateTimeSymbolsAndCheck(cell);
-        this.decimalNumberSymbolsAndCheck(cell);
-        this.localeAndCheck2(cell);
+        this.dateTimeSymbolsAndCheck(different);
+        this.decimalNumberSymbolsAndCheck(different);
         this.formatterAndCheck(
             different,
             differentFormatter
         );
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -699,8 +709,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheckNone(different);
         this.styleAndCheck(different);
         this.validatorAndCheckNone(different);
@@ -804,8 +814,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(
             different,
             differentParser
@@ -844,8 +854,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different, formula);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different, differentParser);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
@@ -862,6 +872,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         this.formulaAndCheck(different);
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
+        this.localeAndCheck2(cell);
         this.formatterAndCheckNone(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
@@ -946,8 +957,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(
             different,
@@ -1013,8 +1024,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(different);
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(
@@ -1101,11 +1112,11 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
         this.dateTimeSymbolsAndCheck(different);
         this.decimalNumberSymbolsAndCheck(different);
-        this.localeAndCheck2(cell);
         this.formatterAndCheck(
             different,
             this.formatter()
         );
+        this.localeAndCheck2(different);
         this.parserAndCheck(different);
         this.styleAndCheck(different);
         this.validatorAndCheck(different);
