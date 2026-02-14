@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -598,6 +599,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
+            CurrencyContexts.fake(),
             SpreadsheetEnvironmentContexts.basic(
                 Storages.tree(),
                 environmentContext

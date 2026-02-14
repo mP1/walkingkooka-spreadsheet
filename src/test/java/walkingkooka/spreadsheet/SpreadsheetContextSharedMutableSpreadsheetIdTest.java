@@ -78,6 +78,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_METADATA_CONTEXT,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -94,6 +95,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SPREADSHEET_ENGINE,
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -109,6 +111,24 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                null,
+                CURRENCY_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                LOCALE_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullCurrencyContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                SPREADSHEET_METADATA_CONTEXT,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
@@ -492,6 +512,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 },
                 store
             ),
+            CURRENCY_CONTEXT,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,

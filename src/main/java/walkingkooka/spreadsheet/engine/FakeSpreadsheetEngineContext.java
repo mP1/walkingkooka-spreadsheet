@@ -213,6 +213,37 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
         throw new UnsupportedOperationException();
     }
 
+    // CurrencyContext..................................................................................................
+
+    @Override
+    public Set<Currency> availableCurrencies() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Currency> currencyForLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Currency> findByCurrencyText(final String text,
+                                            final int offset,
+                                            final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Number exchangeRate(final Currency from,
+                               final Currency to,
+                               final Optional<LocalDateTime> dateTime) {
+        throw new UnsupportedOperationException();
+    }
+
     // LocaleContext....................................................................................................
 
     @Override

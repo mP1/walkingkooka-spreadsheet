@@ -267,6 +267,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                         (c) -> {
                             throw new UnsupportedOperationException();
                         }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                        CURRENCY_CONTEXT,
                         spreadsheetEnvironmentContext,
                         LOCALE_CONTEXT,
                         SpreadsheetProviders.basic(

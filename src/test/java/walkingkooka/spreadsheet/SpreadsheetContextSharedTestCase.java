@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterProviders;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -125,6 +127,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             spreadsheetEnvironmentContextEnvironmentContext()
         )
     );
+
+    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.fake();
 
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
         LocaleContexts.jre(Locale.ENGLISH)
@@ -346,6 +350,32 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         this.localeAndCheck(
             context,
             locale
+        );
+    }
+
+    // currency.........................................................................................................
+
+    @Test
+    public final void testCurrency() {
+        this.currencyAndCheck(
+            this.createContext(),
+            CURRENCY
+        );
+    }
+
+    // setCurrency.......................................................................................................
+
+    @Test
+    public final void testSetCurrency() {
+        final Currency different = Currency.getInstance("NZD");
+        this.checkNotEquals(
+            CURRENCY,
+            different
+        );
+
+        this.setCurrencyAndCheck(
+            this.createContext(),
+            different
         );
     }
 

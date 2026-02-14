@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -460,6 +461,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
+            CurrencyContexts.fake(),
             SpreadsheetEnvironmentContexts.basic(
                 storage,
                 environmentContext

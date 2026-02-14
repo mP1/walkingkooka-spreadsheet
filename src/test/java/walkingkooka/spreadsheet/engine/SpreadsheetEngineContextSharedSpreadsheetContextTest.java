@@ -24,6 +24,8 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentContexts;
@@ -86,6 +88,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -798,6 +801,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
 
     private final static class TestSpreadsheetContext implements SpreadsheetContext,
         EnvironmentContextDelegator,
+        CurrencyContextDelegator,
         LocaleContextDelegator,
         SpreadsheetProviderDelegator {
 
@@ -999,6 +1003,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         }
 
         @Override
+        public Currency currency() {
+            return this.environmentContext.currency();
+        }
+
+        @Override
+        public void setCurrency(final Currency currency) {
+            this.environmentContext.setCurrency(currency);
+        }
+        
+        @Override
         public LineEnding lineEnding() {
             return this.environmentContext.lineEnding();
         }
@@ -1033,6 +1047,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
         @Override
         public Storage<SpreadsheetStorageContext> storage() {
             return STORAGE;
+        }
+
+        @Override
+        public CurrencyContext currencyContext() {
+            return CURRENCY_CONTEXT;
         }
 
         @Override

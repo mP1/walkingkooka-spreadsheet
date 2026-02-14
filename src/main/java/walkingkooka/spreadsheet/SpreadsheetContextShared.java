@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
@@ -35,6 +37,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.store.MissingStoreException;
 
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,11 +48,13 @@ import java.util.Optional;
 abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetEnvironmentContextDelegator,
+    CurrencyContextDelegator,
     LocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
     SpreadsheetContextShared(final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
+                             final CurrencyContext currencyContext,
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final LocaleContext localeContext,
                              final SpreadsheetProvider spreadsheetProvider,
@@ -62,6 +67,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
         this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
 
+        this.currencyContext = currencyContext;
         this.localeContext = LocaleContexts.readOnly(localeContext);
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
@@ -169,6 +175,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
             spreadsheetContext = this.replaceEnvironmentContext(
                 this.spreadsheetEngineContext,
+                this.currencyContext,
                 spreadsheetEnvironmentContext,
                 this.localeContext,
                 this.spreadsheetProvider,
@@ -180,6 +187,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     }
 
     abstract SpreadsheetContext replaceEnvironmentContext(final SpreadsheetEngineContext spreadsheetEngineContext,
+                                                          final CurrencyContext currencyContext,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                           final LocaleContext localeContext,
                                                           final SpreadsheetProvider spreadsheetProvider,
@@ -223,6 +231,18 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
      */
     abstract boolean canChangeSpreadsheetId();
 
+    // SpreadsheetEnvironmentContext.current/setCurrency NOT CurrencyContext.currency/setCurrency
+
+    @Override
+    public final Currency currency() {
+        return this.spreadsheetEnvironmentContext.currency();
+    }
+
+    @Override
+    public final void setCurrency(final Currency currency) {
+        this.spreadsheetEnvironmentContext.setCurrency(currency);
+    }
+    
     @Override
     public final Locale locale() {
         return this.spreadsheetEnvironmentContext.locale();
@@ -242,6 +262,15 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
     private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
 
+    // CurrencyContextDelegator.........................................................................................
+
+    @Override
+    public final CurrencyContext currencyContext() {
+        return this.currencyContext;
+    }
+
+    private final CurrencyContext currencyContext;
+    
     // LocaleContext....................................................................................................
 
     @Override

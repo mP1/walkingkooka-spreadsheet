@@ -73,6 +73,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionSelector
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -460,6 +461,32 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     final ValueExpression<?> expression(final Number value) {
         return Expression.value(
             this.number(value)
+        );
+    }
+
+    // currency.........................................................................................................
+
+    @Test
+    public final void testCurrency() {
+        this.currencyAndCheck(
+            this.createContext(),
+            CURRENCY
+        );
+    }
+
+    // setCurrency.......................................................................................................
+
+    @Test
+    public final void testSetCurrency() {
+        final Currency different = Currency.getInstance("NZD");
+        this.checkNotEquals(
+            CURRENCY,
+            different
+        );
+
+        this.setCurrencyAndCheck(
+            this.createContext(),
+            different
         );
     }
 

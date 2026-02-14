@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.provider.ConverterName;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
@@ -125,6 +126,24 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 null,
+                CURRENCY_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullCurrencyContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -141,6 +160,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 null,
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -157,6 +177,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -173,6 +194,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 null,
@@ -189,6 +211,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -205,6 +228,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -227,6 +251,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                                                                                       final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
             spreadsheetContextSupplier,
+            CURRENCY_CONTEXT,
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SpreadsheetMetadataContexts.basic(
@@ -523,6 +548,23 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SpreadsheetContextSuppliers.fake(),
+                CURRENCY_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                LOCALE_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentCurrencyContext() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                CurrencyContexts.fake(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -547,6 +589,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -562,6 +605,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LocaleContexts.jre(Locale.FRANCE),
                 SPREADSHEET_METADATA_CONTEXT,
@@ -577,6 +621,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SpreadsheetMetadataContexts.fake(),
@@ -592,6 +637,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -607,6 +653,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -622,6 +669,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 LOCALE_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,

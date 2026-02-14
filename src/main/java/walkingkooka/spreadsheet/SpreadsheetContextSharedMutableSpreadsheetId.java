@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -45,6 +46,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     static SpreadsheetContextSharedMutableSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
                                                              final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
+                                                             final CurrencyContext currencyContext,
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final LocaleContext localeContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
@@ -52,6 +54,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
+        Objects.requireNonNull(currencyContext, "currencyContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
@@ -62,6 +65,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
             null, // SpreadsheetEngineContext will be created in ctor
+            currencyContext,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,
@@ -73,6 +77,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                          final SpreadsheetEngineContext spreadsheetEngineContext,
+                                                         final CurrencyContext currencyContext,
                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                          final LocaleContext localeContext,
                                                          final SpreadsheetProvider spreadsheetProvider,
@@ -80,6 +85,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         super(
             spreadsheetEngine,
             spreadsheetEngineContext,
+            currencyContext,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,
@@ -118,6 +124,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     SpreadsheetEngineContext createSpreadsheetEngineContext() {
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             this.spreadsheetContextSupplier,
+            this.currencyContext(),
             this.spreadsheetEnvironmentContext(),
             this.localeContext(),
             this.spreadsheetMetadataContext,
@@ -138,6 +145,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
 
     @Override
     SpreadsheetContext replaceEnvironmentContext(final SpreadsheetEngineContext spreadsheetEngineContext,
+                                                 final CurrencyContext currencyContext,
                                                  final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                  final LocaleContext localeContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
@@ -147,6 +155,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
             this.spreadsheetContextSupplier,
             this.spreadsheetMetadataContext,
             null, // recreate SpreadsheetEngineContext
+            currencyContext,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,

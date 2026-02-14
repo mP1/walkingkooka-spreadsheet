@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
@@ -36,11 +38,13 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
 public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     SpreadsheetEnvironmentContextDelegator,
+    CurrencyContextDelegator,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetProviderDelegator {
@@ -57,8 +61,29 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
             .httpRouter();
     }
 
+    // CurrencyContext..................................................................................................
+
+    @Override
+    default CurrencyContext currencyContext() {
+        return this.spreadsheetContext();
+    }
+
     // EnvironmentContextDelegator......................................................................................
 
+    // currency: delegate to EnvironmentContext not CurrencyContext
+
+    @Override
+    default Currency currency() {
+        return this.spreadsheetContext()
+            .currency();
+    }
+
+    @Override
+    default void setCurrency(final Currency currency) {
+        this.spreadsheetContext()
+            .setCurrency(currency);
+    }
+    
     @Override
     default Optional<SpreadsheetId> spreadsheetId() {
         return this.spreadsheetContext()
@@ -97,7 +122,7 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
         return this.environmentContext()
             .lineEnding();
     }
-    
+
     // LocaleContext....................................................................................................
 
     @Override

@@ -34,6 +34,8 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.convert.provider.FakeConverterProvider;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -206,6 +208,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -580,6 +583,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static class TestSpreadsheetContext implements SpreadsheetContext,
         SpreadsheetEnvironmentContextDelegator,
+        CurrencyContextDelegator,
         LocaleContextDelegator,
         SpreadsheetProviderDelegator {
 
@@ -685,6 +689,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         }
 
         @Override
+        public CurrencyContext currencyContext() {
+            return CURRENCY_CONTEXT;
+        }
+
+        @Override
         public LocaleContext localeContext() {
             return this.localeContext;
         }
@@ -755,6 +764,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         @Override
         public SpreadsheetEnvironmentContext spreadsheetEnvironmentContext() {
             return this.spreadsheetEnvironmentContext;
+        }
+
+        @Override
+        public Currency currency() {
+            return this.environmentValueOrFail(CURRENCY);
+        }
+
+        @Override
+        public void setCurrency(final Currency currency) {
+            this.setEnvironmentValue(
+                CURRENCY,
+                currency
+            );
         }
 
         private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
@@ -1299,6 +1321,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 (c) -> {
                                     throw new UnsupportedOperationException();
                                 }, // httpRouterFactory
+                                CURRENCY_CONTEXT,
                                 spreadsheetEnvironmentContext,
                                 localeContext,
                                 SPREADSHEET_PROVIDER,
@@ -1310,6 +1333,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
             },
+            CURRENCY_CONTEXT,
             spreadsheetEnvironmentContext,
             localeContext,
             SpreadsheetMetadataContexts.basic(

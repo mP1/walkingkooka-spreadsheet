@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConverterLike;
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -400,6 +401,13 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     private final SpreadsheetMetadataMode mode;
+
+    // CurrencyContextDelegator.........................................................................................
+
+    @Override
+    public CurrencyContext currencyContext() {
+        return this.spreadsheetContext;
+    }
 
     // LocaleContext....................................................................................................
 
