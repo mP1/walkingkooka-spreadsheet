@@ -39,6 +39,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -49,6 +50,16 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     LocaleContextTesting,
     SpreadsheetEnvironmentContextTesting,
     TreePrintableTesting {
+
+    @Test
+    public void testCurrencyContextReadOnly() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> SpreadsheetMetadataTesting.CURRENCY_CONTEXT.setCurrency(
+                Currency.getInstance("NZD")
+            )
+        );
+    }
 
     @Test
     public void testEffectiveStyle() {
