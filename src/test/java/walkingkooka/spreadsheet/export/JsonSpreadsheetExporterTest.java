@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
@@ -39,6 +40,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -67,6 +69,13 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         )
     );
 
+    private final static Optional<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = Optional.of(
+        DecimalNumberSymbols.fromDecimalFormatSymbols(
+            '+',
+            new DecimalFormatSymbols(LOCALE)
+        )
+    );
+
     private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
     );
@@ -92,6 +101,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 Sets.of(
                     CELL_A1.setCurrency(CURRENCY)
                         .setDateTimeSymbols(DATE_TIME_SYMBOLS)
+                        .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
                         .setFormatter(FORMATTER)
                         .setParser(PARSER)
                         .setStyle(STYLE)
@@ -159,6 +169,20 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "        \"Fri.\",\n" +
                 "        \"Sat.\"\n" +
                 "      ]\n" +
+                "    },\n" +
+                "    \"decimalNumberSymbols\": {\n" +
+                "      \"negativeSign\": \"-\",\n" +
+                "      \"positiveSign\": \"+\",\n" +
+                "      \"zeroDigit\": \"0\",\n" +
+                "      \"currencySymbol\": \"$\",\n" +
+                "      \"decimalSeparator\": \".\",\n" +
+                "      \"exponentSymbol\": \"e\",\n" +
+                "      \"groupSeparator\": \",\",\n" +
+                "      \"infinitySymbol\": \"∞\",\n" +
+                "      \"monetaryDecimalSeparator\": \".\",\n" +
+                "      \"nanSymbol\": \"NaN\",\n" +
+                "      \"percentSymbol\": \"%\",\n" +
+                "      \"permillSymbol\": \"‰\"\n" +
                 "    },\n" +
                 "    \"formatter\": \"text @\",\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
@@ -284,6 +308,39 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "      \"Fri.\",\n" +
                 "      \"Sat.\"\n" +
                 "    ]\n" +
+                "  },\n" +
+                "  \"A2\": null\n" +
+                "}"
+        );
+    }
+
+    @Test
+    public void testExportWithDecimalNumberSymbols() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    CELL_A1.setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS),
+                    CELL_A2
+                )
+            ),
+            SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
+            "A1-XFD1048576.decimal-number-symbols.json.txt",
+            SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"negativeSign\": \"-\",\n" +
+                "    \"positiveSign\": \"+\",\n" +
+                "    \"zeroDigit\": \"0\",\n" +
+                "    \"currencySymbol\": \"$\",\n" +
+                "    \"decimalSeparator\": \".\",\n" +
+                "    \"exponentSymbol\": \"e\",\n" +
+                "    \"groupSeparator\": \",\",\n" +
+                "    \"infinitySymbol\": \"∞\",\n" +
+                "    \"monetaryDecimalSeparator\": \".\",\n" +
+                "    \"nanSymbol\": \"NaN\",\n" +
+                "    \"percentSymbol\": \"%\",\n" +
+                "    \"permillSymbol\": \"‰\"\n" +
                 "  },\n" +
                 "  \"A2\": null\n" +
                 "}"
