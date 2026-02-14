@@ -36,6 +36,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
 
+import java.util.Currency;
 import java.util.Optional;
 
 public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTesting<JsonSpreadsheetExporter>,
@@ -119,6 +120,35 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             "{\n" +
                 "  \"A1\": \"=1+2\",\n" +
                 "  \"A2\": \"=333\"\n" +
+                "}"
+        );
+    }
+
+    @Test
+    public void testExportWithCurrency() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setCurrency(
+                        Optional.of(
+                            Currency.getInstance("AUD")
+                        )
+                    ),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
+                        )
+                )
+            ),
+            SpreadsheetCellValueKind.CURRENCY,
+            "A1-XFD1048576.currency.json.txt",
+            SpreadsheetMediaTypes.JSON_CURRENCY,
+            "{\n" +
+                "  \"A1\": \"AUD\",\n" +
+                "  \"A2\": null\n" +
                 "}"
         );
     }

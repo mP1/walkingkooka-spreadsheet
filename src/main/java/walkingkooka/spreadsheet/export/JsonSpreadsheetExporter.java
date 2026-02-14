@@ -87,6 +87,14 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMULA;
                 break;
+            case CURRENCY:
+                value = (c) -> context.marshallOptional(
+                    c.currency()
+                ).setName(
+                    name(c)
+                );
+                contentType = SpreadsheetMediaTypes.JSON_CURRENCY;
+                break;
             case FORMATTER:
                 value = (c) -> context.marshallOptional(
                     c.formatter()
