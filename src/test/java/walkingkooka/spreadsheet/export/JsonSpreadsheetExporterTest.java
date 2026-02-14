@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
 import walkingkooka.tree.text.TextNode;
@@ -45,12 +46,42 @@ import java.util.Optional;
 public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTesting<JsonSpreadsheetExporter>,
     SpreadsheetMetadataTesting {
 
+    private static final SpreadsheetCell CELL_A1 = SpreadsheetSelection.A1.setFormula(
+        SpreadsheetFormula.EMPTY.setText("=1+2")
+    );
+
+    private static final SpreadsheetCell CELL_A2 = SpreadsheetSelection.parseCell("A2")
+        .setFormula(
+            SpreadsheetFormula.EMPTY.setText("=333")
+        );
+
     private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    private final static Optional<Currency> CURRENCY = java.util.Optional.of(
+        Currency.getInstance("AUD")
+    );
 
     private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
         DateTimeSymbols.fromDateFormatSymbols(
             new DateFormatSymbols(LOCALE)
         )
+    );
+
+    private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
+        SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+    );
+
+    private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
+        SpreadsheetParserSelector.parse("test-parser-123")
+    );
+
+    private final static TextStyle STYLE = TextStyle.EMPTY.set(
+        TextStylePropertyName.COLOR,
+        Color.BLACK
+    );
+
+    private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
+        TextNode.text("Formatted text 123")
     );
 
     @Test
@@ -59,31 +90,13 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=1+2")
-                        ).setCurrency(
-                            Optional.of(
-                                Currency.getInstance("AUD")
-                            )
-                        ).setDateTimeSymbols(DATE_TIME_SYMBOLS)
-                        .setFormatter(
-                            Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                        ).setParser(
-                            Optional.of(SpreadsheetParserSelector.parse("test-parser-123"))
-                        ).setStyle(
-                            TextStyle.EMPTY.set(
-                                TextStylePropertyName.COLOR,
-                                Color.BLACK
-                            )
-                        ).setFormattedValue(
-                            Optional.of(
-                                TextNode.text("Formatted text 123")
-                            )
-                        ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setCurrency(CURRENCY)
+                        .setDateTimeSymbols(DATE_TIME_SYMBOLS)
+                        .setFormatter(FORMATTER)
+                        .setParser(PARSER)
+                        .setStyle(STYLE)
+                        .setFormattedValue(FORMATTED_VALUE),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.CELL,
@@ -172,15 +185,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setFormatter(
-                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setFormatter(FORMATTER),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.FORMULA,
@@ -199,17 +205,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setCurrency(
-                        Optional.of(
-                            Currency.getInstance("AUD")
-                        )
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setCurrency(CURRENCY),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.CURRENCY,
@@ -228,13 +225,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setDateTimeSymbols(DATE_TIME_SYMBOLS),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setDateTimeSymbols(DATE_TIME_SYMBOLS),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
@@ -304,15 +296,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setFormatter(
-                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setFormatter(FORMATTER),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.FORMATTER,
@@ -331,22 +316,15 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setParser(
-                        Optional.of(SpreadsheetParserSelector.parse("test-parser-123 @@@"))
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setParser(PARSER),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.PARSER,
             "A1-XFD1048576.parser.json.txt",
             SpreadsheetMediaTypes.JSON_PARSER,
             "{\n" +
-                "  \"A1\": \"test-parser-123 @@@\",\n" +
+                "  \"A1\": \"test-parser-123\",\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
@@ -358,18 +336,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setStyle(
-                        TextStyle.EMPTY.set(
-                            TextStylePropertyName.COLOR,
-                            Color.BLACK
-                        )
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setStyle(STYLE),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.STYLE,
@@ -390,17 +358,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setFormattedValue(
-                        Optional.of(
-                            TextNode.text("Formatted 123.5")
-                        )
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1.setFormattedValue(FORMATTED_VALUE),
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.VALUE,
@@ -409,7 +368,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             "{\n" +
                 "  \"A1\": {\n" +
                 "    \"type\": \"text\",\n" +
-                "    \"value\": \"Formatted 123.5\"\n" +
+                "    \"value\": \"Formatted text 123\"\n" +
                 "  },\n" +
                 "  \"A2\": null\n" +
                 "}"
@@ -422,13 +381,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A1,
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.VALUE,
@@ -455,10 +409,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                                 )
                             )
                     ),
-                    SpreadsheetSelection.parseCell("A2")
-                        .setFormula(
-                            SpreadsheetFormula.EMPTY.setText("=333")
-                        )
+                    CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.VALUE_TYPE,
