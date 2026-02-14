@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.terminal.TerminalContexts;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 
@@ -478,6 +479,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
                                         return Optional.of(
                                             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest.CURRENT_WORKING_DIRECTORY
                                         );
+                                    }
+
+                                    @Override
+                                    public Indentation indentation() {
+                                        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest.INDENTATION;
                                     }
 
                                     @Override
