@@ -100,6 +100,13 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 );
                 contentType = SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS;
                 break;
+            case DECIMAL_NUMBER_SYMBOLS:
+                value = marshallOptional(
+                    SpreadsheetCell::decimalNumberSymbols,
+                    context
+                );
+                contentType = SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS;
+                break;
             case FORMATTER:
                 value = marshallOptional(
                     SpreadsheetCell::formatter,
