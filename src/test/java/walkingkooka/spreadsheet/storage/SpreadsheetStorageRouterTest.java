@@ -1661,21 +1661,6 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetContexts.mutableSpreadsheetId(
             SpreadsheetEngines.basic(),
-//            (final SpreadsheetId id) -> {
-//                final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
-//                if (null == repo) {
-//                    throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
-//                }
-//                return Optional.of(
-//                    new FakeSpreadsheetContext() {
-//
-//                        @Override
-//                        public SpreadsheetStoreRepository storeRepository() {
-//                            return repo;
-//                        }
-//                    }
-//                );
-//            }, // spreadsheetIdToStoreRepository
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
             CURRENCY_CONTEXT,
