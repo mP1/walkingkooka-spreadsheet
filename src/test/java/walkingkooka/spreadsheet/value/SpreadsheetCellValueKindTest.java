@@ -36,6 +36,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -49,6 +50,10 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
                 Optional.of(
                     ValueType.with("hello-value-type")
                 )
+            )
+        ).setCurrency(
+            Optional.of(
+                Currency.getInstance("AUD")
             )
         ).setDateTimeSymbols(
             Optional.of(
@@ -114,6 +119,14 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.CELL,
             "cell"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithCurrency() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.CURRENCY,
+            "currency"
         );
     }
 
