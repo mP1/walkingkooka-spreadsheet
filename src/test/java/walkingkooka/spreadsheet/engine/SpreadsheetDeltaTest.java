@@ -2900,6 +2900,45 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     }
 
     @Test
+    public void testPatchWithCurrency() {
+        final SpreadsheetCell a1 = SpreadsheetSelection.A1
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrency(
+                Optional.of(Currency.getInstance("AUD"))
+            );
+        final SpreadsheetCell a2 = SpreadsheetSelection.parseCell("A2")
+            .setFormula(SpreadsheetFormula.EMPTY)
+            .setCurrency(
+                Optional.empty()
+            );
+
+        final SpreadsheetDelta before = SpreadsheetDelta.EMPTY
+            .setCells(
+                Sets.of(a1, a2)
+            );
+
+        final Optional<Currency> currency = Optional.of(
+            Currency.getInstance("NZD")
+        );
+
+        final SpreadsheetDelta after = before.setCells(
+            Sets.of(
+                a1.setCurrency(currency),
+                a2.setCurrency(currency)
+            )
+        );
+
+        this.patchAndCheck(
+            before,
+            SpreadsheetDelta.currencyPatch(
+                currency,
+                MARSHALL_CONTEXT
+            ),
+            after
+        );
+    }
+
+    @Test
     public void testPatchWithDateTimeSymbols() {
         final SpreadsheetCell a1 = SpreadsheetSelection.A1
             .setFormula(SpreadsheetFormula.EMPTY)
