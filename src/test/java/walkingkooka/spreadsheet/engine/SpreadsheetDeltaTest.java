@@ -64,6 +64,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -5445,6 +5446,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     private final static JsonNodeMarshallContext MARSHALL_CONTEXT = JsonNodeMarshallContexts.basic();
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
+        (String cc) -> Optional.ofNullable(
+            Currency.getInstance(cc)
+        ),
         ExpressionNumberKind.BIG_DECIMAL,
         MathContext.DECIMAL32
     );
@@ -5462,6 +5466,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
+            (String cc) -> Optional.ofNullable(
+                Currency.getInstance(cc)
+            ),
             ExpressionNumberKind.BIG_DECIMAL,
             MathContext.UNLIMITED
         );

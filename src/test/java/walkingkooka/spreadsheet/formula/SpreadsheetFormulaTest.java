@@ -86,6 +86,7 @@ import walkingkooka.validation.ValueType;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -2946,6 +2947,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
+            (String cc) -> Optional.ofNullable(
+                Currency.getInstance(cc)
+            ),
             ExpressionNumberKind.BIG_DECIMAL,
             MathContext.UNLIMITED
         );

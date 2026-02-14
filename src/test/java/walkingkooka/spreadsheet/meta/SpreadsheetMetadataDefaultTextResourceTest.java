@@ -27,6 +27,8 @@ import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
+import java.util.Currency;
+import java.util.Optional;
 
 public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTesting<SpreadsheetMetadataDefaultTextResource> {
 
@@ -37,6 +39,9 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
         final JsonObject resource = JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text())
             .objectOrFail();
         final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(
+                (String cc) -> Optional.ofNullable(
+                    Currency.getInstance(cc)
+                ),
                 ExpressionNumberKind.DEFAULT,
                 MathContext.DECIMAL32
             )

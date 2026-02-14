@@ -1102,6 +1102,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
+        (String cc) -> Optional.ofNullable(
+            Currency.getInstance(cc)
+        ),
         ExpressionNumberKind.BIG_DECIMAL,
         MathContext.UNLIMITED
     );

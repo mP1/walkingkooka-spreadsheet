@@ -39,6 +39,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.MathContext;
+import java.util.Currency;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -86,6 +87,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         this.checkEquals(
             metadata,
             JsonNodeUnmarshallContexts.basic(
+                (String cc) -> Optional.ofNullable(
+                    Currency.getInstance(cc)
+                ),
                 ExpressionNumberKind.DOUBLE,
                 MathContext.DECIMAL32
             ).unmarshall(node, SpreadsheetMetadata.class)

@@ -45,6 +45,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -227,6 +228,9 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             JsonNodeMarshallUnmarshallContexts.basic(
                 JsonNodeMarshallContexts.basic(),
                 JsonNodeUnmarshallContexts.basic(
+                    (String cc) -> Optional.ofNullable(
+                        Currency.getInstance(cc)
+                    ),
                     KIND,
                     this.decimalNumberContext()
                         .mathContext()

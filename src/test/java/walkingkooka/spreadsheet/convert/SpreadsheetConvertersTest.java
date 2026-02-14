@@ -124,6 +124,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -1085,6 +1086,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
         JsonNodeMarshallContexts.basic(),
         JsonNodeUnmarshallContexts.basic(
+            (String cc) -> Optional.ofNullable(
+                Currency.getInstance(cc)
+            ),
             EXPRESSION_NUMBER_KIND,
             MathContext.DECIMAL32
         )
@@ -3320,6 +3324,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 private final JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
+                    (String cc) -> Optional.ofNullable(
+                        Currency.getInstance(cc)
+                    ),
                     ExpressionNumberKind.BIG_DECIMAL,
                     MathContext.DECIMAL32
                 );
