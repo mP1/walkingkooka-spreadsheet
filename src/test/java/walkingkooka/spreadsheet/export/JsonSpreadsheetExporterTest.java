@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.export;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
@@ -36,11 +37,21 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
 
+import java.text.DateFormatSymbols;
 import java.util.Currency;
+import java.util.Locale;
 import java.util.Optional;
 
 public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTesting<JsonSpreadsheetExporter>,
     SpreadsheetMetadataTesting {
+
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
+        DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(LOCALE)
+        )
+    );
 
     @Test
     public void testExportWithCells() {
@@ -49,25 +60,26 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
                     SpreadsheetSelection.A1.setFormula(
-                        SpreadsheetFormula.EMPTY.setText("=1+2")
-                    ).setCurrency(
-                        Optional.of(
-                            Currency.getInstance("AUD")
-                        )
-                    ).setFormatter(
-                        Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-                    ).setParser(
-                        Optional.of(SpreadsheetParserSelector.parse("test-parser-123"))
-                    ).setStyle(
-                        TextStyle.EMPTY.set(
-                            TextStylePropertyName.COLOR,
-                            Color.BLACK
-                        )
-                    ).setFormattedValue(
-                        Optional.of(
-                            TextNode.text("Formatted text 123")
-                        )
-                    ),
+                            SpreadsheetFormula.EMPTY.setText("=1+2")
+                        ).setCurrency(
+                            Optional.of(
+                                Currency.getInstance("AUD")
+                            )
+                        ).setDateTimeSymbols(DATE_TIME_SYMBOLS)
+                        .setFormatter(
+                            Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
+                        ).setParser(
+                            Optional.of(SpreadsheetParserSelector.parse("test-parser-123"))
+                        ).setStyle(
+                            TextStyle.EMPTY.set(
+                                TextStylePropertyName.COLOR,
+                                Color.BLACK
+                            )
+                        ).setFormattedValue(
+                            Optional.of(
+                                TextNode.text("Formatted text 123")
+                            )
+                        ),
                     SpreadsheetSelection.parseCell("A2")
                         .setFormula(
                             SpreadsheetFormula.EMPTY.setText("=333")
@@ -83,6 +95,58 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
                 "    \"currency\": \"AUD\",\n" +
+                "    \"dateTimeSymbols\": {\n" +
+                "      \"ampms\": [\n" +
+                "        \"am\",\n" +
+                "        \"pm\"\n" +
+                "      ],\n" +
+                "      \"monthNames\": [\n" +
+                "        \"January\",\n" +
+                "        \"February\",\n" +
+                "        \"March\",\n" +
+                "        \"April\",\n" +
+                "        \"May\",\n" +
+                "        \"June\",\n" +
+                "        \"July\",\n" +
+                "        \"August\",\n" +
+                "        \"September\",\n" +
+                "        \"October\",\n" +
+                "        \"November\",\n" +
+                "        \"December\"\n" +
+                "      ],\n" +
+                "      \"monthNameAbbreviations\": [\n" +
+                "        \"Jan.\",\n" +
+                "        \"Feb.\",\n" +
+                "        \"Mar.\",\n" +
+                "        \"Apr.\",\n" +
+                "        \"May\",\n" +
+                "        \"Jun.\",\n" +
+                "        \"Jul.\",\n" +
+                "        \"Aug.\",\n" +
+                "        \"Sep.\",\n" +
+                "        \"Oct.\",\n" +
+                "        \"Nov.\",\n" +
+                "        \"Dec.\"\n" +
+                "      ],\n" +
+                "      \"weekDayNames\": [\n" +
+                "        \"Sunday\",\n" +
+                "        \"Monday\",\n" +
+                "        \"Tuesday\",\n" +
+                "        \"Wednesday\",\n" +
+                "        \"Thursday\",\n" +
+                "        \"Friday\",\n" +
+                "        \"Saturday\"\n" +
+                "      ],\n" +
+                "      \"weekDayNameAbbreviations\": [\n" +
+                "        \"Sun.\",\n" +
+                "        \"Mon.\",\n" +
+                "        \"Tue.\",\n" +
+                "        \"Wed.\",\n" +
+                "        \"Thu.\",\n" +
+                "        \"Fri.\",\n" +
+                "        \"Sat.\"\n" +
+                "      ]\n" +
+                "    },\n" +
                 "    \"formatter\": \"text @\",\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
                 "    \"style\": {\n" +
@@ -153,6 +217,82 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             SpreadsheetMediaTypes.JSON_CURRENCY,
             "{\n" +
                 "  \"A1\": \"AUD\",\n" +
+                "  \"A2\": null\n" +
+                "}"
+        );
+    }
+
+    @Test
+    public void testExportWithDateTimeSymbols() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    SpreadsheetSelection.A1.setFormula(
+                        SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setDateTimeSymbols(DATE_TIME_SYMBOLS),
+                    SpreadsheetSelection.parseCell("A2")
+                        .setFormula(
+                            SpreadsheetFormula.EMPTY.setText("=333")
+                        )
+                )
+            ),
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
+            "A1-XFD1048576.date-time-symbols.json.txt",
+            SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"ampms\": [\n" +
+                "      \"am\",\n" +
+                "      \"pm\"\n" +
+                "    ],\n" +
+                "    \"monthNames\": [\n" +
+                "      \"January\",\n" +
+                "      \"February\",\n" +
+                "      \"March\",\n" +
+                "      \"April\",\n" +
+                "      \"May\",\n" +
+                "      \"June\",\n" +
+                "      \"July\",\n" +
+                "      \"August\",\n" +
+                "      \"September\",\n" +
+                "      \"October\",\n" +
+                "      \"November\",\n" +
+                "      \"December\"\n" +
+                "    ],\n" +
+                "    \"monthNameAbbreviations\": [\n" +
+                "      \"Jan.\",\n" +
+                "      \"Feb.\",\n" +
+                "      \"Mar.\",\n" +
+                "      \"Apr.\",\n" +
+                "      \"May\",\n" +
+                "      \"Jun.\",\n" +
+                "      \"Jul.\",\n" +
+                "      \"Aug.\",\n" +
+                "      \"Sep.\",\n" +
+                "      \"Oct.\",\n" +
+                "      \"Nov.\",\n" +
+                "      \"Dec.\"\n" +
+                "    ],\n" +
+                "    \"weekDayNames\": [\n" +
+                "      \"Sunday\",\n" +
+                "      \"Monday\",\n" +
+                "      \"Tuesday\",\n" +
+                "      \"Wednesday\",\n" +
+                "      \"Thursday\",\n" +
+                "      \"Friday\",\n" +
+                "      \"Saturday\"\n" +
+                "    ],\n" +
+                "    \"weekDayNameAbbreviations\": [\n" +
+                "      \"Sun.\",\n" +
+                "      \"Mon.\",\n" +
+                "      \"Tue.\",\n" +
+                "      \"Wed.\",\n" +
+                "      \"Thu.\",\n" +
+                "      \"Fri.\",\n" +
+                "      \"Sat.\"\n" +
+                "    ]\n" +
+                "  },\n" +
                 "  \"A2\": null\n" +
                 "}"
         );
