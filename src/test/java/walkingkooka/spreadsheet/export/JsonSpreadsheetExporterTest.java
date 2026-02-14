@@ -50,6 +50,10 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 Sets.of(
                     SpreadsheetSelection.A1.setFormula(
                         SpreadsheetFormula.EMPTY.setText("=1+2")
+                    ).setCurrency(
+                        Optional.of(
+                            Currency.getInstance("AUD")
+                        )
                     ).setFormatter(
                         Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
                     ).setParser(
@@ -78,6 +82,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "    \"formula\": {\n" +
                 "      \"text\": \"=1+2\"\n" +
                 "    },\n" +
+                "    \"currency\": \"AUD\",\n" +
                 "    \"formatter\": \"text @\",\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
                 "    \"style\": {\n" +
