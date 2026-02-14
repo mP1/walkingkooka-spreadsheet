@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterLikeDelegator;
+import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
@@ -36,12 +37,14 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
 abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContext,
     SpreadsheetEnvironmentContextDelegator,
+    CurrencyContextDelegator,
     LocaleContextDelegator,
     ConverterLikeDelegator,
     SpreadsheetProviderDelegator {
@@ -91,6 +94,20 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
         );
     }
 
+    // delegate to SpreadsheetEnvironmentContext.currency/setCurrency NOT CurrencyContextDelegator
+
+    @Override
+    public final Currency currency() {
+        return this.spreadsheetEnvironmentContext()
+            .currency();
+    }
+
+    @Override
+    public final void setCurrency(final Currency currency) {
+        this.spreadsheetEnvironmentContext()
+            .setCurrency(currency);
+    }
+    
     @Override
     public final LineEnding lineEnding() {
         return this.spreadsheetEnvironmentContext()

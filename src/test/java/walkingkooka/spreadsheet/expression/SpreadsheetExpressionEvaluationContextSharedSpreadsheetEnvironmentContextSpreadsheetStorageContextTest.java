@@ -533,6 +533,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                 (c) -> {
                                     throw new UnsupportedOperationException();
                                 }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                                CURRENCY_CONTEXT,
                                 spreadsheetEnvironmentContext,
                                 localeContext,
                                 spreadsheetProvider,

@@ -428,6 +428,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 (c) -> {
                     throw new UnsupportedOperationException();
                 }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
+                CURRENCY_CONTEXT,
                 spreadsheetEnvironmentContext,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,

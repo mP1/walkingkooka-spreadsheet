@@ -75,6 +75,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 null,
                 REPO,
                 HTTP_ROUTER_FACTORY,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -91,6 +92,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SPREADSHEET_ENGINE,
                 null,
                 HTTP_ROUTER_FACTORY,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -107,6 +109,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SPREADSHEET_ENGINE,
                 REPO,
                 null,
+                CURRENCY_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -409,6 +412,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                     throw new UnsupportedOperationException();
                 }
             },
+            CURRENCY_CONTEXT,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,

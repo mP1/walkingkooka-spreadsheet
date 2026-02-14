@@ -1615,6 +1615,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                     (c) -> {
                         throw new UnsupportedOperationException();
                     },// httpRouterFactory
+                    CURRENCY_CONTEXT,
                     spreadsheetEnvironmentContext2,
                     LOCALE_CONTEXT,
                     SPREADSHEET_PROVIDER,
@@ -1677,6 +1678,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 //            }, // spreadsheetIdToStoreRepository
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
+            CURRENCY_CONTEXT,
             spreadsheetEnvironmentContext,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,

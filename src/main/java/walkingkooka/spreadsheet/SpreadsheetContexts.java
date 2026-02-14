@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -40,6 +41,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
+                                                        final CurrencyContext currencyContext,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                         final LocaleContext localeContext,
                                                         final SpreadsheetProvider spreadsheetProvider,
@@ -48,6 +50,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
             spreadsheetEngine,
             storeRepository,
             httpRouterFactory,
+            currencyContext,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,
@@ -68,6 +71,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext mutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
+                                                          final CurrencyContext currencyContext,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                           final LocaleContext localeContext,
                                                           final SpreadsheetProvider spreadsheetProvider,
@@ -76,6 +80,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
             spreadsheetEngine,
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
+            currencyContext,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetProvider,

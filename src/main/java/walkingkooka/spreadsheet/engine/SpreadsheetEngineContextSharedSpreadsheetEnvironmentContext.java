@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.ConverterLike;
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -57,6 +58,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
     static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                            final CurrencyContext currencyContext,
                                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                             final LocaleContext localeContext,
                                                                             final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -64,6 +66,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                                                                             final SpreadsheetProvider spreadsheetProvider,
                                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
+        Objects.requireNonNull(currencyContext, "currencyContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
@@ -73,6 +76,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
         return new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
             spreadsheetContextSupplier,
+            currencyContext,
             SpreadsheetEnvironmentContextFactory.with(
                 spreadsheetEnvironmentContext,
                 localeContext,
@@ -85,6 +89,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                        final CurrencyContext currencyContext,
                                                                         final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                         final TerminalContext terminalContext) {
@@ -92,6 +97,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
         this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
+        this.currencyContext = currencyContext;
         this.spreadsheetEnvironmentContextFactory = spreadsheetEnvironmentContextFactory;
         this.spreadsheetMetadataContext = spreadsheetMetadataContext;
         this.terminalContext = terminalContext;
@@ -248,6 +254,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         throw new UnsupportedOperationException();
     }
 
+    // CurrencyContextDelegator.........................................................................................
+
+    @Override
+    public CurrencyContext currencyContext() {
+        return this.currencyContext;
+    }
+
+    private final CurrencyContext currencyContext;
+
     // LocaleContext....................................................................................................
 
     @Override
@@ -329,6 +344,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             this :
             new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
                 this.spreadsheetContextSupplier,
+                this.currencyContext,
                 after,
                 this.spreadsheetMetadataContext,
                 this.terminalContext

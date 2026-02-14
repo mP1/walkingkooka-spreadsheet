@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -53,6 +54,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext}
      */
     public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                         final CurrencyContext currencyContext,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                          final LocaleContext localeContext,
                                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -61,6 +63,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                                          final ProviderContext providerContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
             spreadsheetContextSupplier,
+            currencyContext,
             spreadsheetEnvironmentContext,
             localeContext,
             spreadsheetMetadataContext,
