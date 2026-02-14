@@ -22,6 +22,8 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
@@ -418,6 +420,13 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     };
 
     Currency CURRENCY = Currency.getInstance("AUD");
+
+    CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
+        CurrencyContexts.jdk(
+            CURRENCY,
+            (f, t) -> f.getDisplayName().length() / t.getDisplayName().length()
+        )
+    );
 
     LineEnding LINE_ENDING = EOL;
 
