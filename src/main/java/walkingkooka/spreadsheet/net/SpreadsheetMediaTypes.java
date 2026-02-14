@@ -32,6 +32,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValueType;
 
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -43,6 +44,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     // json.............................................................................................................
 
     public static final MediaType JSON_CELL = json(SpreadsheetCell.class);
+
+    public static final MediaType JSON_CURRENCY = json(Currency.class);
 
     public static final MediaType JSON_DATE_TIME_SYMBOLS = json(DateTimeSymbols.class);
 
