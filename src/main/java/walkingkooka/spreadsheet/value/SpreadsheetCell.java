@@ -59,6 +59,7 @@ import walkingkooka.tree.text.HasTextNode;
 import walkingkooka.tree.text.HasTextStyle;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.util.HasOptionalCurrency;
 import walkingkooka.util.HasOptionalLocale;
 import walkingkooka.validation.HasValidationPromptValue;
 import walkingkooka.validation.ValidationPromptValue;
@@ -69,6 +70,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.MathContext;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -82,6 +84,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     HasSpreadsheetReference<SpreadsheetCellReference>,
     HateosResource<SpreadsheetCellReference>,
     Patchable<SpreadsheetCell>,
+    HasOptionalCurrency,
     HasOptionalDateTimeSymbols,
     HasOptionalDecimalNumberSymbols,
     HasOptionalLocale,
@@ -148,6 +151,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
             checkReference(reference),
             checkFormula(formula),
+            NO_CURRENCY,
             NO_DATETIME_SYMBOLS,
             NO_DECIMAL_NUMBER_SYMBOLS,
             NO_LOCALE,
@@ -164,6 +168,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private SpreadsheetCell(final SpreadsheetCellReference reference,
                             final SpreadsheetFormula formula,
+                            final Optional<Currency> currency,
                             final Optional<DateTimeSymbols> dateTimeSymbols,
                             final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                             final Optional<Locale> locale,
@@ -176,6 +181,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
         this.reference = reference;
         this.formula = formula;
+        
+        this.currency = currency;
         this.dateTimeSymbols = dateTimeSymbols;
         this.decimalNumberSymbols = decimalNumberSymbols;
         this.locale = locale;
@@ -211,6 +218,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.replace(
                 checkReference(reference),
                 this.formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -249,6 +257,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.replace(
                 this.reference,
                 formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -283,6 +292,45 @@ public final class SpreadsheetCell implements CanBeEmpty,
         );
     }
 
+    // currency..................................................................................................
+
+    @Override
+    public Optional<Currency> currency() {
+        return this.currency;
+    }
+
+    /**
+     * Returns a {@link SpreadsheetCell} with the given {@link Currency}. If the formula has a token or
+     * expression they will be cleared.
+     */
+    public SpreadsheetCell setCurrency(final Optional<Currency> currency) {
+        return this.currency.equals(currency) ?
+            this :
+            this.replaceCurrency(
+                Objects.requireNonNull(currency, "currency")
+            );
+    }
+
+    private SpreadsheetCell replaceCurrency(final Optional<Currency> currency) {
+        return this.replace(
+            this.reference,
+            this.formula,
+            currency,
+            this.dateTimeSymbols,
+            this.decimalNumberSymbols,
+            this.locale,
+            this.formatter,
+            this.parser,
+            this.style,
+            this.validator
+        );
+    }
+
+    /**
+     * An optional {@link Currency} which will override the default {@link Currency}.
+     */
+    private final Optional<Currency> currency;
+
     // dateTimeSymbols..................................................................................................
 
     @Override
@@ -306,6 +354,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.replace(
             this.reference,
             this.formula,
+            this.currency,
             dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -344,6 +393,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.replace(
             this.reference,
             this.formula,
+            this.currency,
             this.dateTimeSymbols,
             decimalNumberSymbols,
             this.locale,
@@ -372,6 +422,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.replace(
                 this.reference,
                 this.formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 Objects.requireNonNull(locale, "locale"),
@@ -396,6 +447,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.replace(
                 this.reference,
                 this.formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -443,6 +495,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.reference,
             formula.setToken(SpreadsheetFormula.NO_TOKEN)
                 .setText(formula.text()),
+            this.currency,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -477,6 +530,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.replace(
                 this.reference,
                 this.formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -514,6 +568,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             new SpreadsheetCell(
                 this.reference,
                 this.formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -542,6 +597,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
             this.replace(
                 reference,
                 this.formula,
+                this.currency,
                 this.dateTimeSymbols,
                 this.decimalNumberSymbols,
                 this.locale,
@@ -578,6 +634,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
      */
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
+                                    final Optional<Currency> currency,
                                     final Optional<DateTimeSymbols> dateTimeSymbols,
                                     final Optional<DecimalNumberSymbols> decimalNumberSymbols,
                                     final Optional<Locale> locale,
@@ -588,6 +645,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
             reference,
             formula,
+            currency,
             dateTimeSymbols,
             decimalNumberSymbols,
             locale,
@@ -607,6 +665,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     @Override
     public boolean isEmpty() {
         return this.formula.isEmpty() &&
+            false == this.currency.isPresent() &&
             false == this.dateTimeSymbols.isPresent() &&
             false == this.decimalNumberSymbols.isPresent() &&
             false == this.locale.isPresent() &&
@@ -660,6 +719,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                 propertyAndValue,
                                 context
                             )
+                    );
+                    break;
+                case CURRENCY_PROPERTY_STRING:
+                    patched = patched.setCurrency(
+                        context.unmarshallOptional(
+                            propertyAndValue,
+                            Currency.class
+                        )
                     );
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
@@ -744,6 +811,19 @@ public final class SpreadsheetCell implements CanBeEmpty,
         );
     }
 
+    /**
+     * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
+     * a {@link Currency}.
+     */
+    public JsonNode currencyPatch(final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(context, "context");
+
+        return this.makePatch(
+            CURRENCY_PROPERTY,
+            context.marshallOptional(this.currency)
+        );
+    }
+    
     /**
      * Creates a {@link JsonNode} patch that may be used by {@link #patch(JsonNode, JsonNodeUnmarshallContext)} to patch
      * a {@link DateTimeSymbols}.
@@ -868,6 +948,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                 formula.text(),
                 toText(formula.valueType()),
                 toJsonText(formula.value()),
+                this.currency.map(Currency::toString).orElse(""),
                 toText(this.dateTimeSymbols),
                 toText(this.decimalNumberSymbols),
                 toJsonText(this.locale),
@@ -927,8 +1008,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         final CsvStringList list = CsvStringList.parse(csv);
 
         final int count = list.size();
-        if (12 != count) {
-            throw new IllegalArgumentException("Expected 12 tokens but got " + count);
+        if (13 != count) {
+            throw new IllegalArgumentException("Expected 13 tokens but got " + count);
         }
 
         SpreadsheetCell cell = SpreadsheetCell.with(
@@ -952,45 +1033,50 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         list.get(3)
                     )
                 )
-        ).setDateTimeSymbols(
+        ).setCurrency(
             parseCellComponent(
                 list.get(4),
+                Currency::getInstance
+            )
+        ).setDateTimeSymbols(
+            parseCellComponent(
+                list.get(5),
                 DateTimeSymbols::parse
             )
         ).setDecimalNumberSymbols(
             parseCellComponent(
-                list.get(5),
+                list.get(6),
                 DecimalNumberSymbols::parse
             )
         ).setLocale(
             parseCellComponent(
-                list.get(6),
+                list.get(7),
                 Locale::forLanguageTag
             )
         ).setFormatter(
             parseCellComponent(
-                list.get(7),
+                list.get(8),
                 SpreadsheetFormatterSelector::parse
             )
         ).setParser(
             parseCellComponent(
-                list.get(8),
+                list.get(9),
                 SpreadsheetParserSelector::parse
             )
         ).setStyle(
             TextStyle.parse(
-                list.get(9)
+                list.get(10)
             )
         );
 
         final Optional<TextNode> formattedValue = unmarshallCellComponentWithType(
-            list.get(10)
+            list.get(11)
         );
 
         // must call setFormattedValue after setValidator because later clears former
         return cell.setValidator(
             parseCellComponent(
-                list.get(11),
+                list.get(12),
                 ValidatorSelector::parse
             )
         ).setFormattedValue(formattedValue);
@@ -1028,6 +1114,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
         printer.indent();
         {
             this.formula.printTree(printer);
+
+            this.printTreeLabel(
+                "currency",
+                this.currency,
+                printer
+            );
 
             this.printTreeLabel(
                 "dateTimeSymbols",
@@ -1146,6 +1238,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
                                                         final JsonNode node,
                                                         final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = SpreadsheetFormula.EMPTY;
+        Optional<Currency> currency = NO_CURRENCY;
         Optional<DateTimeSymbols> dateTimeSymbols = NO_DATETIME_SYMBOLS;
         Optional<DecimalNumberSymbols> decimalNumberSymbols = NO_DECIMAL_NUMBER_SYMBOLS;
         Optional<Locale> locale = NO_LOCALE;
@@ -1160,6 +1253,12 @@ public final class SpreadsheetCell implements CanBeEmpty,
             switch (name.value()) {
                 case FORMULA_PROPERTY_STRING:
                     formula = context.unmarshall(child, SpreadsheetFormula.class);
+                    break;
+                case CURRENCY_PROPERTY_STRING:
+                    currency = context.unmarshallOptional(
+                        child,
+                        Currency.class
+                    );
                     break;
                 case DATE_TIME_SYMBOLS_PROPERTY_STRING:
                     dateTimeSymbols = context.unmarshallOptional(
@@ -1218,6 +1317,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return new SpreadsheetCell(
             reference,
             formula,
+            currency,
             dateTimeSymbols,
             decimalNumberSymbols,
             locale,
@@ -1262,6 +1362,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private JsonNode marshallProperties(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object()
             .set(FORMULA_PROPERTY, context.marshall(this.formula));
+
+        if (this.currency.isPresent()) {
+            object = object.set(
+                CURRENCY_PROPERTY,
+                context.marshallOptional(this.currency)
+            );
+        }
 
         if (this.dateTimeSymbols.isPresent()) {
             object = object.set(
@@ -1324,6 +1431,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String FORMULA_PROPERTY_STRING = "formula";
 
+    private final static String CURRENCY_PROPERTY_STRING = "currency";
+
     private final static String DATE_TIME_SYMBOLS_PROPERTY_STRING = "dateTimeSymbols";
 
     private final static String DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING = "decimalNumberSymbols";
@@ -1341,6 +1450,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private final static String VALIDATOR_PROPERTY_STRING = "validator";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
+
+    final static JsonPropertyName CURRENCY_PROPERTY = JsonPropertyName.with(CURRENCY_PROPERTY_STRING);
 
     final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_PROPERTY_STRING);
 
@@ -1376,6 +1487,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return Objects.hash(
             this.reference,
             this.formula,
+            this.currency,
             this.dateTimeSymbols,
             this.decimalNumberSymbols,
             this.locale,
@@ -1397,6 +1509,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     private boolean equals0(final SpreadsheetCell other) {
         return this.reference.equals(other.reference()) &&
             this.formula.equals(other.formula()) &&
+            this.currency.equals(other.currency) &&
             this.dateTimeSymbols.equals(other.dateTimeSymbols) &&
             this.decimalNumberSymbols.equals(other.decimalNumberSymbols) &&
             this.locale.equals(other.locale) &&
@@ -1416,6 +1529,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
     public void buildToString(final ToStringBuilder builder) {
         builder.value(this.reference)
             .value(this.formula)
+            .label("currency")
+            .value(this.currency.map(Object::toString))
             .label("dateTimeSymbols")
             .value(this.dateTimeSymbols.map(Object::toString))
             .label("decimalNumberSymbols")
