@@ -79,53 +79,47 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 contentType = SpreadsheetMediaTypes.JSON_CELL;
                 break;
             case FORMULA:
-                value = (c) -> context.marshall(
-                    c.formula()
-                        .text()
-                ).setName(
-                    name(c)
+                value = marshall(
+                    c -> c.formula()
+                        .text(),
+                    context
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMULA;
                 break;
             case CURRENCY:
-                value = (c) -> context.marshallOptional(
-                    c.currency()
-                ).setName(
-                    name(c)
+                value = marshallOptional(
+                    SpreadsheetCell::currency,
+                    context
                 );
                 contentType = SpreadsheetMediaTypes.JSON_CURRENCY;
                 break;
             case DATE_TIME_SYMBOLS:
-                value = (c) -> context.marshallOptional(
-                    c.dateTimeSymbols()
-                ).setName(
-                    name(c)
+                value = marshallOptional(
+                    SpreadsheetCell::dateTimeSymbols,
+                    context
                 );
                 contentType = SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS;
                 break;
             case FORMATTER:
-                value = (c) -> context.marshallOptional(
-                    c.formatter()
-                ).setName(
-                    name(c)
+                value = marshallOptional(
+                    SpreadsheetCell::formatter,
+                    context
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMATTER;
                 break;
-            case STYLE:
-                value = (c) -> context.marshall(
-                    c.style()
-                ).setName(
-                    name(c)
-                );
-                contentType = SpreadsheetMediaTypes.JSON_STYLE;
-                break;
             case PARSER:
-                value = (c) -> context.marshallOptional(
-                    c.parser()
-                ).setName(
-                    name(c)
+                value = marshallOptional(
+                    SpreadsheetCell::parser,
+                    context
                 );
                 contentType = SpreadsheetMediaTypes.JSON_PARSER;
+                break;
+            case STYLE:
+                value = marshall(
+                    SpreadsheetCell::style,
+                    context
+                );
+                contentType = SpreadsheetMediaTypes.JSON_STYLE;
                 break;
             case VALUE:
                 value = (c) -> context.marshallOptionalWithType(
@@ -179,6 +173,24 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                     )
                 )
             );
+    }
+
+    private static Function<SpreadsheetCell, JsonNode> marshall(final Function<SpreadsheetCell, Object> valueExtractor,
+                                                                final SpreadsheetExporterContext context) {
+        return (SpreadsheetCell cell) -> context.marshall(
+            valueExtractor.apply(cell)
+        ).setName(
+            name(cell)
+        );
+    }
+
+    private static Function<SpreadsheetCell, JsonNode> marshallOptional(final Function<SpreadsheetCell, Optional<?>> valueExtractor,
+                                                                        final SpreadsheetExporterContext context) {
+        return (SpreadsheetCell cell) -> context.marshallOptional(
+            valueExtractor.apply(cell)
+        ).setName(
+            name(cell)
+        );
     }
 
     private static JsonPropertyName name(final SpreadsheetCell cell) {
