@@ -70,6 +70,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -1097,6 +1098,21 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
      */
+    public static JsonNode cellsCurrencyPatch(final Map<SpreadsheetCellReference, Optional<Currency>> cellToCurrency,
+                                              final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(cellToCurrency, "cellToCurrency");
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.cellsPatchFromMap(
+            cellToCurrency,
+            CURRENCY_PROPERTY,
+            context::marshallOptional
+        );
+    }
+
+    /**
+     * Creates a {@link JsonNode patch} which may be used to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext)}.
+     */
     public static JsonNode cellsDateTimeSymbolsPatch(final Map<SpreadsheetCellReference, Optional<DateTimeSymbols>> cellToDateTimeSymbols,
                                                      final JsonNodeMarshallContext context) {
         Objects.requireNonNull(cellToDateTimeSymbols, "cellToDateTimeSymbols");
@@ -1268,6 +1284,20 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                             )
                         ).collect(Collectors.toList())
                 )
+        );
+    }
+
+    /**
+     * Creates a {@link Currency} which can then be used to as an argument to {@link #patchCells(SpreadsheetCellReferenceOrRange, JsonNode, JsonNodeUnmarshallContext).}
+     */
+    public static JsonNode currencyPatch(final Optional<Currency> currency,
+                                         final JsonNodeMarshallContext context) {
+        Objects.requireNonNull(currency, "currency");
+        Objects.requireNonNull(context, "context");
+
+        return makePatch(
+            CURRENCY_PROPERTY,
+            context.marshallOptional(currency)
         );
     }
 
@@ -1517,6 +1547,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         Sets.of(
             SpreadsheetDelta.CELLS_PROPERTY_STRING,
             SpreadsheetDelta.FORMULA_PROPERTY_STRING,
+            SpreadsheetDelta.CURRENCY_STRING,
             SpreadsheetDelta.DATE_TIME_SYMBOLS_STRING,
             SpreadsheetDelta.DECIMAL_NUMBER_SYMBOLS_STRING,
             SpreadsheetDelta.FORMATTER_PROPERTY_STRING,
@@ -1634,6 +1665,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 case COLUMNS_PROPERTY_STRING:
                     column = true;
                     break;
+                case CURRENCY_STRING:
                 case DATE_TIME_SYMBOLS_STRING:
                 case DECIMAL_NUMBER_SYMBOLS_STRING:
                 case FORMATTER_PROPERTY_STRING:
@@ -1732,6 +1764,18 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                     columns = patchColumns(
                         selection,
                         propertyAndValue,
+                        context
+                    );
+                    break;
+                case CURRENCY_STRING:
+                    cells = patchCurrency(
+                        selection,
+                        cells,
+                        JsonNode.object()
+                            .set(
+                                CURRENCY_PROPERTY,
+                                propertyAndValue
+                            ),
                         context
                     );
                     break;
@@ -1919,6 +1963,33 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             cells,
             c -> c.setFormula(formula),
             r -> r.setFormula(formula)
+        );
+    }
+
+    /**
+     * Traverses the cells, patching each with the provided {@link JsonNode symbols}.
+     * <pre>
+     * {
+     *   "currency": "AUD"
+     * }
+     * </pre>
+     */
+    private static Set<SpreadsheetCell> patchCurrency(final SpreadsheetSelection selection,
+                                                      final Set<SpreadsheetCell> cells,
+                                                      final JsonNode patch,
+                                                      final JsonNodeUnmarshallContext context) {
+        final Optional<Currency> currency = context.unmarshallOptional(
+            patch.objectOrFail()
+                .getOrFail(CURRENCY_PROPERTY),
+            Currency.class
+        );
+
+        return patchAllCells(
+            selection,
+            cells,
+            c -> c.setCurrency(currency),
+            r -> r.setFormula(SpreadsheetFormula.EMPTY)
+                .setCurrency(currency)
         );
     }
 
@@ -2957,6 +3028,11 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     // @VisibleForTesting
     final static JsonPropertyName COLUMNS_PROPERTY = JsonPropertyName.with(COLUMNS_PROPERTY_STRING);
+
+    private final static String CURRENCY_STRING = "currency";
+
+    // @VisibleForTesting
+    final static JsonPropertyName CURRENCY_PROPERTY = JsonPropertyName.with(CURRENCY_STRING);
 
     private final static String DATE_TIME_SYMBOLS_STRING = "dateTimeSymbols";
 
