@@ -37,6 +37,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
+    public void testJsonCurrency() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.JSON_CURRENCY,
+            "application/json+java.util.Currency"
+        );
+    }
+
+    @Test
     public void testJsonDateTimeSymbols() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS,
