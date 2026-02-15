@@ -34,6 +34,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.OptionalCurrency;
 import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
+import walkingkooka.validation.provider.OptionalValidatorSelector;
 
 import java.util.Objects;
 
@@ -120,6 +121,17 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         );
     }
 
+    public static SpreadsheetImporterCellValue validator(final SpreadsheetCellReference cell, 
+                                                         final OptionalValidatorSelector validator) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(validator, "validator");
+
+        return new SpreadsheetImporterCellValue(
+            cell,
+            validator
+        );
+    }
+    
     public static SpreadsheetImporterCellValue value(final SpreadsheetCellReference cell,
                                                      final OptionalSpreadsheetValue<?> value) {
         Objects.requireNonNull(cell, "cell");

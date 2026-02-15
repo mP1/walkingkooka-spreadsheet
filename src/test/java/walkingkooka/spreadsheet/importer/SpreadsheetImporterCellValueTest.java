@@ -40,6 +40,8 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.OptionalCurrency;
 import walkingkooka.util.OptionalLocale;
+import walkingkooka.validation.provider.OptionalValidatorSelector;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -320,6 +322,47 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         );
     }
 
+    // validator........................................................................................................
+
+    @Test
+    public void testValidatorWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.validator(
+                null,
+                OptionalValidatorSelector.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testValidatorWithNullValidatorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.validator(
+                SpreadsheetSelection.A1,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testValidator() {
+        final OptionalValidatorSelector validator = OptionalValidatorSelector.with(
+            Optional.of(
+                ValidatorSelector.parse("test-validator-123")
+            )
+        );
+
+        this.check(
+            SpreadsheetImporterCellValue.validator(
+                CELL_REFERENCE,
+                validator
+            ),
+            validator
+        );
+    }
+    
     // value............................................................................................................
 
     @Test
