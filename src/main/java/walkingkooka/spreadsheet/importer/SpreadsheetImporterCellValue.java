@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.spreadsheet.currency.OptionalCurrency;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
@@ -32,6 +31,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.util.OptionalCurrency;
 import walkingkooka.validation.OptionalValueType;
 
 import java.util.Objects;
