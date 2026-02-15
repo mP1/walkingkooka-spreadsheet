@@ -51,17 +51,17 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_DECIMAL_NUMBER_SYMBOLS = json(DecimalNumberSymbols.class);
 
-    public static final MediaType JSON_FORMULA = json(SpreadsheetFormula.class);
+    public static final MediaType JSON_FORMATTED_VALUE = json(TextNode.class);
 
     public static final MediaType JSON_FORMATTER = json(SpreadsheetFormatterSelector.class);
+
+    public static final MediaType JSON_FORMULA = json(SpreadsheetFormula.class);
 
     public static final MediaType JSON_LOCALE = json(Locale.class);
 
     public static final MediaType JSON_PARSER = json(SpreadsheetParserSelector.class);
 
     public static final MediaType JSON_STYLE = json(TextStyle.class);
-
-    public static final MediaType JSON_FORMATTED_VALUE = json(TextNode.class);
 
     public static final MediaType JSON_VALUE = json(Object.class);
 
