@@ -77,10 +77,6 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             Optional.of(
                 SpreadsheetFormatterSelector.parse("hello-formatter")
             )
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("formatted-value")
-            )
         ).setParser(
             Optional.of(
                 SpreadsheetParserSelector.parse("hello-parser")
@@ -93,6 +89,10 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
         ).setValidator(
             Optional.of(
                 ValidatorSelector.parse("hello-validator")
+            )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("formatted-value")
             )
         );
 
@@ -210,6 +210,14 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
             SpreadsheetCellValueKind.VALUE_TYPE,
             (c) -> c.formula()
                 .valueType()
+        );
+    }
+
+    @Test
+    public void testCellValueWithFormattedValue() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.FORMATTED_VALUE,
+            SpreadsheetCell::formattedValue
         );
     }
 

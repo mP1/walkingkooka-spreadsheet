@@ -540,6 +540,29 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         );
     }
 
+    @Test
+    public void testExportWithFormattedValue() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    CELL_A1.setFormattedValue(FORMATTED_VALUE),
+                    CELL_A2
+                )
+            ),
+            SpreadsheetCellValueKind.FORMATTED_VALUE,
+            "A1-XFD1048576.formatted-value.json",
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"type\": \"text\",\n" +
+                "    \"value\": \"Formatted text 123\"\n" +
+                "  },\n" +
+                "  \"A2\": null\n" +
+                "}"
+        );
+    }
+
     private void exportAndCheck(final SpreadsheetCellRange cells,
                                 final SpreadsheetCellValueKind valueKind,
                                 final String filename,
