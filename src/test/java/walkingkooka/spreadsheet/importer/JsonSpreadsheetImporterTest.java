@@ -25,6 +25,7 @@ import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.OptionalDecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterContexts;
@@ -182,6 +183,21 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetImporterCellValue.dateTimeSymbols(
                 A2,
                 OptionalDateTimeSymbols.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testDoImportWithDecimalNumberSymbols() {
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
+            SpreadsheetImporterCellValue.decimalNumberSymbols(
+                A1,
+                OptionalDecimalNumberSymbols.with(DECIMAL_NUMBER_SYMBOLS)
+            ),
+            SpreadsheetImporterCellValue.decimalNumberSymbols(
+                A2,
+                OptionalDecimalNumberSymbols.EMPTY
             )
         );
     }
