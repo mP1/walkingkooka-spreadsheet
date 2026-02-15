@@ -23,6 +23,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.currency.OptionalCurrency;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -39,6 +40,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
+import java.util.Currency;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -109,6 +111,47 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         );
     }
 
+    // currency..........................................................................................................
+
+    @Test
+    public void testCurrencyWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.currency(
+                null,
+                OptionalCurrency.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testCurrencyWithNullCurrencyFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.currency(
+                SpreadsheetSelection.A1,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testCurrency() {
+        final OptionalCurrency currency = OptionalCurrency.with(
+            Optional.of(
+                Currency.getInstance("AUD")
+            )
+        );
+
+        this.check(
+            SpreadsheetImporterCellValue.currency(
+                CELL_REFERENCE,
+                currency
+            ),
+            currency
+        );
+    }
+    
     // formatter........................................................................................................
 
     @Test
