@@ -109,8 +109,8 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         );
     }
 
-    public static SpreadsheetImporterCellValue textStyle(final SpreadsheetCellReference cell,
-                                                         final TextStyle textStyle) {
+    public static SpreadsheetImporterCellValue style(final SpreadsheetCellReference cell,
+                                                     final TextStyle textStyle) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(textStyle, "textStyle");
 
