@@ -74,7 +74,8 @@ public final class OptionalSpreadsheetFormatterSelector implements Value<Optiona
 
     @Override
     public String toString() {
-        return this.value.toString();
+        return this.value.map(SpreadsheetFormatterSelector::toString)
+            .orElse("");
     }
 
     // json.............................................................................................................

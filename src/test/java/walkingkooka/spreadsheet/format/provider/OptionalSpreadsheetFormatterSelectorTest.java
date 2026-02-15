@@ -91,12 +91,23 @@ public final class OptionalSpreadsheetFormatterSelectorTest implements ClassTest
 
     @Test
     public void testToString() {
-        final Optional<SpreadsheetFormatterSelector> selector = Optional.of(
-            SpreadsheetFormatterSelector.parse("different")
-        );
+        final String selector = "test-selector-123";
+
         this.toStringAndCheck(
-            OptionalSpreadsheetFormatterSelector.with(selector),
-            selector.toString()
+            OptionalSpreadsheetFormatterSelector.with(
+                Optional.of(
+                    SpreadsheetFormatterSelector.parse(selector)
+                )
+            ),
+            selector
+        );
+    }
+
+    @Test
+    public void testToStringWithEmpty() {
+        this.toStringAndCheck(
+            OptionalSpreadsheetFormatterSelector.EMPTY,
+            ""
         );
     }
 
