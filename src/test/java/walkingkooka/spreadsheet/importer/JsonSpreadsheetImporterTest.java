@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.export.SpreadsheetExporterContexts;
@@ -33,6 +35,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
@@ -43,8 +46,13 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.OptionalValueType;
 import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTesting<JsonSpreadsheetImporter>,
@@ -52,297 +60,187 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     ToStringTesting<JsonSpreadsheetImporter>,
     ClassTesting2<JsonSpreadsheetImporter> {
 
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    private final static Optional<Currency> CURRENCY = java.util.Optional.of(
+        Currency.getInstance("AUD")
+    );
+
+    private final static Optional<DateTimeSymbols> DATE_TIME_SYMBOLS = Optional.of(
+        DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(LOCALE)
+        )
+    );
+
+    private final static Optional<DecimalNumberSymbols> DECIMAL_NUMBER_SYMBOLS = Optional.of(
+        DecimalNumberSymbols.fromDecimalFormatSymbols(
+            '+',
+            new DecimalFormatSymbols(LOCALE)
+        )
+    );
+
+    private final static Optional<SpreadsheetFormatterSelector> FORMATTER = Optional.of(
+        SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
+    );
+
+    private final static Optional<Locale> OPTIONAL_LOCALE = Optional.of(
+        Locale.forLanguageTag("en-AU")
+    );
+
+    private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
+        SpreadsheetParserSelector.parse("test-parser-123")
+    );
+
+    private final static TextStyle STYLE = TextStyle.EMPTY.set(
+        TextStylePropertyName.COLOR,
+        Color.BLACK
+    );
+
+    private final static Optional<ValidatorSelector> VALIDATOR = Optional.of(
+        ValidatorSelector.parse("test-validator-123")
+    );
+
+    private final static Optional<ValueType> VALUE_TYPE = Optional.of(
+        ValueType.with("hello")
+    );
+
+    private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
+        TextNode.text("Formatted text 123")
+    );
+
+    private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
+
+    private final static SpreadsheetFormula FORMULA_A1 = SpreadsheetFormula.EMPTY.setText("=1")
+        .setValueType(VALUE_TYPE);
+
+    private final static SpreadsheetCell CELL_A1 = A1.setFormula(FORMULA_A1)
+        .setCurrency(CURRENCY)
+        .setDateTimeSymbols(DATE_TIME_SYMBOLS)
+        .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
+        .setFormatter(FORMATTER)
+        .setLocale(OPTIONAL_LOCALE)
+        .setParser(PARSER)
+        .setStyle(STYLE)
+        .setValidator(VALIDATOR)
+        .setFormattedValue(FORMATTED_VALUE);
+
+    private final static SpreadsheetCellReference A2 = SpreadsheetSelection.parseCell("A2");
+
+    private final static SpreadsheetFormula FORMULA_A2 = SpreadsheetFormula.EMPTY.setText("=2");
+
+    private final static SpreadsheetCell CELL_A2 = A2.setFormula(FORMULA_A2);
+
     @Test
     public void testDoImportWithCells() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setFormatter(
-            Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-        ).setParser(
-            Optional.of(SpreadsheetParserSelector.parse("test-parser-123"))
-        ).setStyle(
-            TextStyle.EMPTY.set(
-                TextStylePropertyName.COLOR,
-                Color.BLACK
-            )
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("Formatted text 123")
-            )
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
         this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
             SpreadsheetCellValueKind.CELL,
-            SpreadsheetImporterCellValue.cell(
-                cellA1
-            ),
-            SpreadsheetImporterCellValue.cell(
-                cellA2
-            )
+            SpreadsheetImporterCellValue.cell(CELL_A1),
+            SpreadsheetImporterCellValue.cell(CELL_A2)
         );
     }
 
     @Test
     public void testDoImportWithFormula() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setFormatter(
-            Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
         this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
             SpreadsheetCellValueKind.FORMULA,
             SpreadsheetImporterCellValue.formula(
-                cellA1.reference(),
-                cellA1.formula()
+                A1,
+                FORMULA_A1.setValueType(SpreadsheetFormula.NO_VALUE_TYPE)
             ),
             SpreadsheetImporterCellValue.formula(
-                cellA2.reference(),
-                cellA2.formula()
+                A2,
+                FORMULA_A2
             )
         );
     }
 
     @Test
     public void testDoImportWithFormatter() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setFormatter(
-            Optional.of(SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT)
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
         this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
             SpreadsheetCellValueKind.FORMATTER,
             SpreadsheetImporterCellValue.formatter(
-                cellA1.reference(),
-                OptionalSpreadsheetFormatterSelector.with(
-                    cellA1.formatter()
-                )
+                A1,
+                OptionalSpreadsheetFormatterSelector.with(FORMATTER)
             ),
             SpreadsheetImporterCellValue.formatter(
-                cellA2.reference(),
-                OptionalSpreadsheetFormatterSelector.with(
-                    cellA2.formatter()
-                )
+                A2,
+                OptionalSpreadsheetFormatterSelector.EMPTY
             )
         );
     }
 
     @Test
     public void testDoImportWithParser() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setParser(
-            Optional.of(SpreadsheetParserSelector.parse("test-parser-123 @@@"))
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
         this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
             SpreadsheetCellValueKind.PARSER,
             SpreadsheetImporterCellValue.parser(
-                cellA1.reference(),
-                OptionalSpreadsheetParserSelector.with(
-                    cellA1.parser()
-                )
+                A1,
+                OptionalSpreadsheetParserSelector.with(PARSER)
             ),
             SpreadsheetImporterCellValue.parser(
-                cellA2.reference(),
-                OptionalSpreadsheetParserSelector.with(
-                    cellA2.parser()
-                )
+                A2,
+                OptionalSpreadsheetParserSelector.EMPTY
             )
         );
     }
 
     @Test
     public void testDoImportWithStyle() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setParser(
-            Optional.of(SpreadsheetParserSelector.parse("test-parser-123 @@@"))
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
         this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
             SpreadsheetCellValueKind.STYLE,
             SpreadsheetImporterCellValue.textStyle(
-                cellA1.reference(),
-                cellA1.style()
+                A1,
+                STYLE
             ),
             SpreadsheetImporterCellValue.textStyle(
-                cellA2.reference(),
-                cellA2.style()
-            )
-        );
-    }
-
-    @Test
-    public void testDoImportWithFormattedValue() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("Formatted 123.5")
-            )
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
-        this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
-            SpreadsheetCellValueKind.VALUE,
-            SpreadsheetImporterCellValue.formattedValue(
-                cellA1.reference(),
-                OptionalTextNode.with(
-                    cellA1.formattedValue()
-                )
-            ),
-            SpreadsheetImporterCellValue.formattedValue(
-                cellA2.reference(),
-                OptionalTextNode.with(
-                    cellA2.formattedValue()
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testDoImportWithMissingFormattedValue() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("Formatted 123.5")
-            )
-        );
-
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-            );
-
-        this.doImportAndCheck(
-            SpreadsheetCellRange.with(
-                SpreadsheetSelection.ALL_CELLS,
-                Sets.of(
-                    cellA1,
-                    cellA2
-                )
-            ),
-            SpreadsheetCellValueKind.VALUE,
-            SpreadsheetImporterCellValue.formattedValue(
-                cellA1.reference(),
-                OptionalTextNode.with(
-                    cellA1.formattedValue()
-                )
-            ),
-            SpreadsheetImporterCellValue.formattedValue(
-                cellA2.reference(),
-                OptionalTextNode.EMPTY
+                A2,
+                TextStyle.EMPTY
             )
         );
     }
 
     @Test
     public void testDoImportWithValueType() {
-        final SpreadsheetCell cellA1 = SpreadsheetSelection.A1.setFormula(
-            SpreadsheetFormula.EMPTY.setText("=1+2")
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.VALUE_TYPE,
+            SpreadsheetImporterCellValue.valueType(
+                A1,
+                OptionalValueType.with(VALUE_TYPE)
+            ),
+            SpreadsheetImporterCellValue.valueType(
+                A2,
+                OptionalValueType.EMPTY
+            )
         );
+    }
 
-        final Optional<ValueType> valueType = Optional.of(
-            ValueType.with("hello")
+    @Test
+    public void testDoImportWithFormattedValue() {
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.VALUE,
+            SpreadsheetImporterCellValue.formattedValue(
+                A1,
+                OptionalTextNode.with(FORMATTED_VALUE)
+            ),
+            SpreadsheetImporterCellValue.formattedValue(
+                A2,
+                OptionalTextNode.EMPTY
+            )
         );
+    }
 
-        final SpreadsheetCell cellA2 = SpreadsheetSelection.parseCell("A2")
-            .setFormula(
-                SpreadsheetFormula.EMPTY.setText("=333")
-                    .setValueType(valueType)
-            );
-
+    private void doImportAndCheck(final SpreadsheetCellValueKind valueKind,
+                                  final SpreadsheetImporterCellValue... values) {
         this.doImportAndCheck(
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    cellA1,
-                    cellA2
+                    CELL_A1,
+                    CELL_A2
                 )
             ),
-            SpreadsheetCellValueKind.VALUE_TYPE,
-            SpreadsheetImporterCellValue.valueType(
-                cellA1.reference(),
-                OptionalValueType.EMPTY
-            ),
-            SpreadsheetImporterCellValue.valueType(
-                cellA2.reference(),
-                OptionalValueType.with(valueType)
-            )
+            valueKind,
+            values
         );
     }
 
