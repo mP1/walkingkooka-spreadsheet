@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.value;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -74,7 +75,9 @@ public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
 
     @Override
     public String toString() {
-        return this.value.toString();
+        return this.value.map(CharSequences::quoteIfChars)
+            .orElse("")
+            .toString();
     }
 
     // json.............................................................................................................
