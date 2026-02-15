@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.spreadsheet.currency.OptionalCurrency;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
@@ -49,6 +50,17 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         return new SpreadsheetImporterCellValue(
             cell.reference(),
             cell
+        );
+    }
+
+    public static SpreadsheetImporterCellValue currency(final SpreadsheetCellReference cell,
+                                                        final OptionalCurrency currency) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(currency, "currency");
+
+        return new SpreadsheetImporterCellValue(
+            cell,
+            currency
         );
     }
 
