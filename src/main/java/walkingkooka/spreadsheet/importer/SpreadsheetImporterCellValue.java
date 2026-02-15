@@ -90,14 +90,14 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         );
     }
 
-    public static SpreadsheetImporterCellValue formula(final SpreadsheetCellReference cell,
-                                                       final SpreadsheetFormula formula) {
+    public static SpreadsheetImporterCellValue formattedValue(final SpreadsheetCellReference cell,
+                                                              final OptionalTextNode value) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(formula, "formula");
+        Objects.requireNonNull(value, "value");
 
         return new SpreadsheetImporterCellValue(
             cell,
-            formula
+            value
         );
     }
 
@@ -109,6 +109,17 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         return new SpreadsheetImporterCellValue(
             cell,
             formatterSelector
+        );
+    }
+
+    public static SpreadsheetImporterCellValue formula(final SpreadsheetCellReference cell,
+                                                       final SpreadsheetFormula formula) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(formula, "formula");
+
+        return new SpreadsheetImporterCellValue(
+            cell,
+            formula
         );
     }
 
@@ -158,17 +169,6 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
     
     public static SpreadsheetImporterCellValue value(final SpreadsheetCellReference cell,
                                                      final OptionalSpreadsheetValue<?> value) {
-        Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(value, "value");
-
-        return new SpreadsheetImporterCellValue(
-            cell,
-            value
-        );
-    }
-
-    public static SpreadsheetImporterCellValue formattedValue(final SpreadsheetCellReference cell,
-                                                              final OptionalTextNode value) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(value, "value");
 
