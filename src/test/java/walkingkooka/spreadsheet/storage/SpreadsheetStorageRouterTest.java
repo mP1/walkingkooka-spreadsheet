@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
+import walkingkooka.spreadsheet.file.SpreadsheetFileExtensions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
@@ -235,6 +236,17 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 METADATAS,
                 null
             )
+        );
+    }
+
+    // fileExtension....................................................................................................
+
+    @Test
+    public void testFileExtension() {
+        this.checkEquals(
+            "json",
+            SpreadsheetFileExtensions.JSON
+                .value()
         );
     }
 
