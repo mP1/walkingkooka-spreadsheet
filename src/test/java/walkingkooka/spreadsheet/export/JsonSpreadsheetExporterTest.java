@@ -189,8 +189,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "      \"percentSymbol\": \"%\",\n" +
                 "      \"permillSymbol\": \"‰\"\n" +
                 "    },\n" +
-                "    \"locale\": \"en-AU\",\n" +
                 "    \"formatter\": \"text @\",\n" +
+                "    \"locale\": \"en-AU\",\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
                 "    \"style\": {\n" +
                 "      \"color\": \"black\"\n" +
