@@ -422,7 +422,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     Currency CURRENCY = Currency.getInstance("AUD");
 
     CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
-        CurrencyContexts.jdk(
+        CurrencyContexts.jre(
             CURRENCY,
             (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length()
         )
