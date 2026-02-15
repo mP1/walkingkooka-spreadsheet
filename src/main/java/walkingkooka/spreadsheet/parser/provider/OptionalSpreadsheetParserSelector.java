@@ -74,7 +74,8 @@ public final class OptionalSpreadsheetParserSelector implements Value<Optional<S
 
     @Override
     public String toString() {
-        return this.value.toString();
+        return this.value.map(Object::toString)
+            .orElse("");
     }
 
     // json.............................................................................................................

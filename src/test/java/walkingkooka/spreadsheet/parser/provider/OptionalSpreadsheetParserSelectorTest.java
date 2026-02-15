@@ -91,12 +91,23 @@ public final class OptionalSpreadsheetParserSelectorTest implements ClassTesting
 
     @Test
     public void testToString() {
-        final Optional<SpreadsheetParserSelector> selector = Optional.of(
-            SpreadsheetParserSelector.parse("parser123")
-        );
+        final String selector = "test-parser-123";
+
         this.toStringAndCheck(
-            OptionalSpreadsheetParserSelector.with(selector),
-            selector.toString()
+            OptionalSpreadsheetParserSelector.with(
+                Optional.of(
+                    SpreadsheetParserSelector.parse(selector)
+                )
+            ),
+            selector
+        );
+    }
+
+    @Test
+    public void testToStringWithEmpty() {
+        this.toStringAndCheck(
+            OptionalSpreadsheetParserSelector.EMPTY,
+            ""
         );
     }
 
