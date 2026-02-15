@@ -1137,14 +1137,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
 
             this.printTreeLabel(
-                "locale",
-                this.locale,
+                "formatter",
+                this.formatter,
                 printer
             );
 
             this.printTreeLabel(
-                "formatter",
-                this.formatter,
+                "locale",
+                this.locale,
                 printer
             );
 
@@ -1164,14 +1164,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
             }
 
             this.printTreeLabel(
-                "formattedValue",
-                this.formattedValue,
+                "validator",
+                this.validator,
                 printer
             );
 
             this.printTreeLabel(
-                "validator",
-                this.validator,
+                "formattedValue",
+                this.formattedValue,
                 printer
             );
         }

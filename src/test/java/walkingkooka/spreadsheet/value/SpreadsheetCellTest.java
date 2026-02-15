@@ -3453,6 +3453,126 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
         );
     }
 
+    @Test
+    public void testTreePrintAllProperties() {
+        this.treePrintAndCheck(
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA)
+            ).setCurrency(
+                Optional.of(CURRENCY)
+            ).setDateTimeSymbols(
+                Optional.of(DATE_TIME_SYMBOLS)
+            ).setDecimalNumberSymbols(
+                Optional.of(DECIMAL_NUMBER_SYMBOLS)
+            ).setFormatter(
+                Optional.of(
+                    SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+                )
+            ).setLocale(
+                Optional.of(LOCALE)
+            ).setParser(
+                Optional.of(
+                    SpreadsheetParserSelector.parse("parser-123")
+
+                )
+            ).setValidator(
+                Optional.of(
+                    ValidatorSelector.parse("validator-123")
+                )
+            ),
+            "Cell A1\n" +
+                "  Formula\n" +
+                "    text:\n" +
+                "      \"=1+2\"\n" +
+                "  currency:\n" +
+                "    AUD (java.util.Currency)\n" +
+                "  dateTimeSymbols:\n" +
+                "    DateTimeSymbols\n" +
+                "      ampms\n" +
+                "        am\n" +
+                "        pm\n" +
+                "      monthNames\n" +
+                "        January\n" +
+                "        February\n" +
+                "        March\n" +
+                "        April\n" +
+                "        May\n" +
+                "        June\n" +
+                "        July\n" +
+                "        August\n" +
+                "        September\n" +
+                "        October\n" +
+                "        November\n" +
+                "        December\n" +
+                "      monthNameAbbreviations\n" +
+                "        Jan.\n" +
+                "        Feb.\n" +
+                "        Mar.\n" +
+                "        Apr.\n" +
+                "        May\n" +
+                "        Jun.\n" +
+                "        Jul.\n" +
+                "        Aug.\n" +
+                "        Sep.\n" +
+                "        Oct.\n" +
+                "        Nov.\n" +
+                "        Dec.\n" +
+                "      weekDayNames\n" +
+                "        Sunday\n" +
+                "        Monday\n" +
+                "        Tuesday\n" +
+                "        Wednesday\n" +
+                "        Thursday\n" +
+                "        Friday\n" +
+                "        Saturday\n" +
+                "      weekDayNameAbbreviations\n" +
+                "        Sun.\n" +
+                "        Mon.\n" +
+                "        Tue.\n" +
+                "        Wed.\n" +
+                "        Thu.\n" +
+                "        Fri.\n" +
+                "        Sat.\n" +
+                "  decimalNumberSymbols:\n" +
+                "    DecimalNumberSymbols\n" +
+                "      negativeSign\n" +
+                "        '-'\n" +
+                "      positiveSign\n" +
+                "        '+'\n" +
+                "      zeroDigit\n" +
+                "        '0'\n" +
+                "      currencySymbol\n" +
+                "        \"$\"\n" +
+                "      decimalSeparator\n" +
+                "        '.'\n" +
+                "      exponentSymbol\n" +
+                "        \"e\"\n" +
+                "      groupSeparator\n" +
+                "        ','\n" +
+                "      infinitySymbol\n" +
+                "        \"∞\"\n" +
+                "      monetaryDecimalSeparator\n" +
+                "        '.'\n" +
+                "      nanSymbol\n" +
+                "        \"NaN\"\n" +
+                "      percentSymbol\n" +
+                "        '%'\n" +
+                "      permillSymbol\n" +
+                "        '‰'\n" +
+                "  formatter:\n" +
+                "    text\n" +
+                "      \"@\"\n" +
+                "  locale:\n" +
+                "    en_AU (java.util.Locale)\n" +
+                "  parser:\n" +
+                "    parser-123\n" +
+                "  validator:\n" +
+                "    validator-123\n"
+        );
+    }
+
     private final static String FORMULA_TEXT = "=1+2";
 
     private Optional<SpreadsheetFormulaParserToken> token() {
