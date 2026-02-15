@@ -109,6 +109,13 @@ public enum SpreadsheetCellValueKind {
             return cell.formula()
                 .valueType();
         }
+    },
+
+    FORMATTED_VALUE {
+        @Override
+        public Object cellValue(final SpreadsheetCell cell) {
+            return cell.formattedValue();
+        }
     };
 
     SpreadsheetCellValueKind() {
