@@ -32,6 +32,7 @@ import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.OptionalCurrency;
+import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
 
 import java.util.Objects;
@@ -86,6 +87,17 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         );
     }
 
+    public static SpreadsheetImporterCellValue locale(final SpreadsheetCellReference cell,
+                                                      final OptionalLocale locale) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(locale, "locale");
+
+        return new SpreadsheetImporterCellValue(
+            cell,
+            locale
+        );
+    }
+    
     public static SpreadsheetImporterCellValue parser(final SpreadsheetCellReference cell,
                                                       final OptionalSpreadsheetParserSelector parserSelector) {
         Objects.requireNonNull(cell, "cell");
