@@ -25,7 +25,7 @@ import walkingkooka.reflect.PublicStaticHelper;
  */
 public final class SpreadsheetFileExtensions implements PublicStaticHelper {
 
-    public static final FileExtension JSON = FileExtension.with("json");
+    public static final FileExtension JSON = FileExtension.JSON;
 
     private SpreadsheetFileExtensions() {
         throw new UnsupportedOperationException();
