@@ -23,6 +23,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
+import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.OptionalDecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
@@ -46,6 +48,7 @@ import walkingkooka.validation.provider.OptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -201,6 +204,50 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
                 dateTimeSymbols
             ),
             dateTimeSymbols
+        );
+    }
+
+    // decimalNumberSymbols.............................................................................................
+
+    @Test
+    public void testDecimalNumberSymbolsWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.decimalNumberSymbols(
+                null,
+                OptionalDecimalNumberSymbols.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testDecimalNumberSymbolsWithNullDecimalNumberSymbolsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.decimalNumberSymbols(
+                SpreadsheetSelection.A1,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testDecimalNumberSymbols() {
+        final OptionalDecimalNumberSymbols decimalNumberSymbols = OptionalDecimalNumberSymbols.with(
+            Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                    '+',
+                    new DecimalFormatSymbols(LOCALE)
+                )
+            )
+        );
+
+        this.check(
+            SpreadsheetImporterCellValue.decimalNumberSymbols(
+                CELL_REFERENCE,
+                decimalNumberSymbols
+            ),
+            decimalNumberSymbols
         );
     }
     
