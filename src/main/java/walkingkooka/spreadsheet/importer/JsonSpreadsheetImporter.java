@@ -94,22 +94,22 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                 )
             );
         } else {
-            if (SpreadsheetMediaTypes.JSON_CURRENCY.equals(contentType)) {
-                value = (j) -> SpreadsheetImporterCellValue.currency(
+            if (SpreadsheetMediaTypes.JSON_FORMULA.equals(contentType)) {
+                value = (j) -> SpreadsheetImporterCellValue.formula(
                     cell(j),
-                    OptionalCurrency.with(
-                        context.unmarshallOptional(
-                            j,
-                            Currency.class
-                        )
+                    SpreadsheetFormula.EMPTY.setText(
+                        j.stringOrFail()
                     )
                 );
             } else {
-                if (SpreadsheetMediaTypes.JSON_FORMULA.equals(contentType)) {
-                    value = (j) -> SpreadsheetImporterCellValue.formula(
+                if (SpreadsheetMediaTypes.JSON_CURRENCY.equals(contentType)) {
+                    value = (j) -> SpreadsheetImporterCellValue.currency(
                         cell(j),
-                        SpreadsheetFormula.EMPTY.setText(
-                            j.stringOrFail()
+                        OptionalCurrency.with(
+                            context.unmarshallOptional(
+                                j,
+                                Currency.class
+                            )
                         )
                     );
                 } else {
