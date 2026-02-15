@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -96,6 +97,10 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
 
     private final static Optional<ValidatorSelector> VALIDATOR = Optional.of(
         ValidatorSelector.parse("test-validator-123")
+    );
+
+    private final static Optional<Object> VALUE = Optional.of(
+        ExpressionNumberKind.BIG_DECIMAL.create(123)
     );
 
     private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
@@ -463,22 +468,25 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportWithFormattedValue() {
+    public void testExportWithValue() {
         this.exportAndCheck(
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
                 Sets.of(
-                    CELL_A1.setFormattedValue(FORMATTED_VALUE),
+                    CELL_A1.setFormula(
+                        CELL_A1.formula()
+                            .setValue(VALUE)
+                    ),
                     CELL_A2
                 )
             ),
             SpreadsheetCellValueKind.VALUE,
             "A1-XFD1048576.value.json",
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
+            SpreadsheetMediaTypes.JSON_VALUE,
             "{\n" +
                 "  \"A1\": {\n" +
-                "    \"type\": \"text\",\n" +
-                "    \"value\": \"Formatted text 123\"\n" +
+                "    \"type\": \"expression-number\",\n" +
+                "    \"value\": \"123\"\n" +
                 "  },\n" +
                 "  \"A2\": null\n" +
                 "}"
@@ -486,7 +494,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
     }
 
     @Test
-    public void testExportWithMissingFormattedValue() {
+    public void testExportWithMissingValue() {
         this.exportAndCheck(
             SpreadsheetCellRange.with(
                 SpreadsheetSelection.ALL_CELLS,
@@ -497,7 +505,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
             ),
             SpreadsheetCellValueKind.VALUE,
             "A1-XFD1048576.value.json",
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
+            SpreadsheetMediaTypes.JSON_VALUE,
             "{\n" +
                 "  \"A1\": null,\n" +
                 "  \"A2\": null\n" +

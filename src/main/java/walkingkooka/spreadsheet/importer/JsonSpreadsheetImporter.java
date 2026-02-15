@@ -31,9 +31,9 @@ import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelecto
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.OptionalSpreadsheetValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.util.OptionalCurrency;
 import walkingkooka.util.OptionalLocale;
@@ -82,8 +82,8 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
             SpreadsheetMediaTypes.JSON_PARSER.test(contentType) ||
             SpreadsheetMediaTypes.JSON_STYLE.test(contentType) ||
             SpreadsheetMediaTypes.JSON_VALIDATOR.test(contentType) ||
-            SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType) ||
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType);
+            SpreadsheetMediaTypes.JSON_VALUE.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType);
     }
 
     @Override
@@ -211,22 +211,22 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                                                         )
                                                     );
                                                 } else {
-                                                    if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
-                                                        value = (j) -> SpreadsheetImporterCellValue.valueType(
+                                                    if (SpreadsheetMediaTypes.JSON_VALUE.equals(contentType)) {
+                                                        value = (j) -> SpreadsheetImporterCellValue.value(
                                                             cell(j),
-                                                            OptionalValueType.with(
-                                                                context.unmarshallOptional(
-                                                                    j,
-                                                                    ValueType.class
-                                                                )
+                                                            OptionalSpreadsheetValue.with(
+                                                                context.unmarshallOptionalWithType(j)
                                                             )
                                                         );
                                                     } else {
-                                                        if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.equals(contentType)) {
-                                                            value = (j) -> SpreadsheetImporterCellValue.formattedValue(
+                                                        if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
+                                                            value = (j) -> SpreadsheetImporterCellValue.valueType(
                                                                 cell(j),
-                                                                OptionalTextNode.with(
-                                                                    context.unmarshallOptionalWithType(j)
+                                                                OptionalValueType.with(
+                                                                    context.unmarshallOptional(
+                                                                        j,
+                                                                        ValueType.class
+                                                                    )
                                                                 )
                                                             );
                                                         } else {

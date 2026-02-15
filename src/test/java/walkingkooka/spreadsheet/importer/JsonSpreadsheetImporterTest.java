@@ -39,10 +39,10 @@ import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelecto
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.value.OptionalSpreadsheetValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCellRange;
 import walkingkooka.spreadsheet.value.SpreadsheetCellValueKind;
-import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -105,6 +105,10 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
         ValidatorSelector.parse("test-validator-123")
     );
 
+    private final static Optional<Object> VALUE = Optional.of(
+        EXPRESSION_NUMBER_KIND.create(123)
+    );
+
     private final static Optional<ValueType> VALUE_TYPE = Optional.of(
         ValueType.with("hello")
     );
@@ -116,7 +120,8 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     private final static SpreadsheetCellReference A1 = SpreadsheetSelection.A1;
 
     private final static SpreadsheetFormula FORMULA_A1 = SpreadsheetFormula.EMPTY.setText("=1")
-        .setValueType(VALUE_TYPE);
+        .setValueType(VALUE_TYPE)
+        .setValue(VALUE); // setValue AFTER setValueType otherwise value gets cleared
 
     private final static SpreadsheetCell CELL_A1 = A1.setFormula(FORMULA_A1)
         .setCurrency(CURRENCY)
@@ -282,6 +287,21 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     }
 
     @Test
+    public void testDoImportWithValue() {
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.VALUE,
+            SpreadsheetImporterCellValue.value(
+                A1,
+                OptionalSpreadsheetValue.with(VALUE)
+            ),
+            SpreadsheetImporterCellValue.value(
+                A2,
+                OptionalSpreadsheetValue.EMPTY
+            )
+        );
+    }
+
+    @Test
     public void testDoImportWithValueType() {
         this.doImportAndCheck(
             SpreadsheetCellValueKind.VALUE_TYPE,
@@ -292,21 +312,6 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetImporterCellValue.valueType(
                 A2,
                 OptionalValueType.EMPTY
-            )
-        );
-    }
-
-    @Test
-    public void testDoImportWithFormattedValue() {
-        this.doImportAndCheck(
-            SpreadsheetCellValueKind.VALUE,
-            SpreadsheetImporterCellValue.formattedValue(
-                A1,
-                OptionalTextNode.with(FORMATTED_VALUE)
-            ),
-            SpreadsheetImporterCellValue.formattedValue(
-                A2,
-                OptionalTextNode.EMPTY
             )
         );
     }
