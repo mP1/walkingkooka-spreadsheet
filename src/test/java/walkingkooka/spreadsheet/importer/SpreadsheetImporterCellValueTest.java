@@ -39,8 +39,10 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.OptionalCurrency;
+import walkingkooka.util.OptionalLocale;
 
 import java.util.Currency;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -193,6 +195,47 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         );
     }
 
+    // locale..........................................................................................................
+
+    @Test
+    public void testLocaleWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.locale(
+                null,
+                OptionalLocale.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testLocaleWithNullLocaleFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.locale(
+                SpreadsheetSelection.A1,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testLocale() {
+        final OptionalLocale locale = OptionalLocale.with(
+            Optional.of(
+                Locale.forLanguageTag("en-AU")
+            )
+        );
+
+        this.check(
+            SpreadsheetImporterCellValue.locale(
+                CELL_REFERENCE,
+                locale
+            ),
+            locale
+        );
+    }
+    
     // parser...........................................................................................................
 
     @Test
