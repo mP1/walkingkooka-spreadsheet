@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
@@ -67,6 +69,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
         return SpreadsheetMediaTypes.JSON_CELL.test(contentType) ||
             SpreadsheetMediaTypes.JSON_FORMULA.test(contentType) ||
             SpreadsheetMediaTypes.JSON_CURRENCY.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS.test(contentType) ||
             SpreadsheetMediaTypes.JSON_FORMATTER.test(contentType) ||
             SpreadsheetMediaTypes.JSON_PARSER.test(contentType) ||
             SpreadsheetMediaTypes.JSON_STYLE.test(contentType) ||
@@ -113,57 +116,69 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                         )
                     );
                 } else {
-                    if (SpreadsheetMediaTypes.JSON_FORMATTER.equals(contentType)) {
-                        value = (j) -> SpreadsheetImporterCellValue.formatter(
+                    if (SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS.equals(contentType)) {
+                        value = (j) -> SpreadsheetImporterCellValue.dateTimeSymbols(
                             cell(j),
-                            OptionalSpreadsheetFormatterSelector.with(
+                            OptionalDateTimeSymbols.with(
                                 context.unmarshallOptional(
                                     j,
-                                    SpreadsheetFormatterSelector.class
+                                    DateTimeSymbols.class
                                 )
                             )
                         );
                     } else {
-                        if (SpreadsheetMediaTypes.JSON_PARSER.equals(contentType)) {
-                            value = (j) -> SpreadsheetImporterCellValue.parser(
+                        if (SpreadsheetMediaTypes.JSON_FORMATTER.equals(contentType)) {
+                            value = (j) -> SpreadsheetImporterCellValue.formatter(
                                 cell(j),
-                                OptionalSpreadsheetParserSelector.with(
+                                OptionalSpreadsheetFormatterSelector.with(
                                     context.unmarshallOptional(
                                         j,
-                                        SpreadsheetParserSelector.class
+                                        SpreadsheetFormatterSelector.class
                                     )
                                 )
                             );
                         } else {
-                            if (SpreadsheetMediaTypes.JSON_STYLE.equals(contentType)) {
-                                value = (j) -> SpreadsheetImporterCellValue.style(
+                            if (SpreadsheetMediaTypes.JSON_PARSER.equals(contentType)) {
+                                value = (j) -> SpreadsheetImporterCellValue.parser(
                                     cell(j),
-                                    context.unmarshall(
-                                        j,
-                                        TextStyle.class
+                                    OptionalSpreadsheetParserSelector.with(
+                                        context.unmarshallOptional(
+                                            j,
+                                            SpreadsheetParserSelector.class
+                                        )
                                     )
                                 );
                             } else {
-                                if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
-                                    value = (j) -> SpreadsheetImporterCellValue.valueType(
+                                if (SpreadsheetMediaTypes.JSON_STYLE.equals(contentType)) {
+                                    value = (j) -> SpreadsheetImporterCellValue.style(
                                         cell(j),
-                                        OptionalValueType.with(
-                                            context.unmarshallOptional(
-                                                j,
-                                                ValueType.class
-                                            )
+                                        context.unmarshall(
+                                            j,
+                                            TextStyle.class
                                         )
                                     );
                                 } else {
-                                    if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.equals(contentType)) {
-                                        value = (j) -> SpreadsheetImporterCellValue.formattedValue(
+                                    if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
+                                        value = (j) -> SpreadsheetImporterCellValue.valueType(
                                             cell(j),
-                                            OptionalTextNode.with(
-                                                context.unmarshallOptionalWithType(j)
+                                            OptionalValueType.with(
+                                                context.unmarshallOptional(
+                                                    j,
+                                                    ValueType.class
+                                                )
                                             )
                                         );
                                     } else {
-                                        throw new IllegalArgumentException("Unknown contentType " + contentType);
+                                        if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.equals(contentType)) {
+                                            value = (j) -> SpreadsheetImporterCellValue.formattedValue(
+                                                cell(j),
+                                                OptionalTextNode.with(
+                                                    context.unmarshallOptionalWithType(j)
+                                                )
+                                            );
+                                        } else {
+                                            throw new IllegalArgumentException("Unknown contentType " + contentType);
+                                        }
                                     }
                                 }
                             }
