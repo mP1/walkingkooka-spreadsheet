@@ -201,11 +201,11 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "    \"style\": {\n" +
                 "      \"color\": \"black\"\n" +
                 "    },\n" +
+                "    \"validator\": \"test-validator-123\",\n" +
                 "    \"formattedValue\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"Formatted text 123\"\n" +
-                "    },\n" +
-                "    \"validator\": \"test-validator-123\"\n" +
+                "    }\n" +
                 "  },\n" +
                 "  \"A2\": {\n" +
                 "    \"formula\": {\n" +

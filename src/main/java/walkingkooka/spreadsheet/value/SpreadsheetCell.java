@@ -1248,8 +1248,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Optional<Locale> locale = NO_LOCALE;
         Optional<SpreadsheetParserSelector> parser = NO_PARSER;
         TextStyle style = TextStyle.EMPTY;
-        Optional<TextNode> formatted = NO_FORMATTED_VALUE_CELL;
         Optional<ValidatorSelector> validator = NO_VALIDATOR;
+
+        Optional<TextNode> formatted = NO_FORMATTED_VALUE_CELL;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -1299,14 +1300,14 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         TextStyle.class
                     );
                     break;
-                case FORMATTED_VALUE_PROPERTY_STRING:
-                    formatted = context.unmarshallOptionalWithType(child);
-                    break;
                 case VALIDATOR_PROPERTY_STRING:
                     validator = context.unmarshallOptional(
                         child,
                         ValidatorSelector.class
                     );
+                    break;
+                case FORMATTED_VALUE_PROPERTY_STRING:
+                    formatted = context.unmarshallOptionalWithType(child);
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(
@@ -1413,17 +1414,17 @@ public final class SpreadsheetCell implements CanBeEmpty,
             object = object.set(STYLE_PROPERTY, context.marshall(this.style));
         }
 
-        if (this.formattedValue.isPresent()) {
-            object = object.set(
-                FORMATTED_VALUE_PROPERTY,
-                context.marshallOptionalWithType(this.formattedValue)
-            );
-        }
-
         if (this.validator.isPresent()) {
             object = object.set(
                 VALIDATOR_PROPERTY,
                 context.marshallOptional(this.validator)
+            );
+        }
+
+        if (this.formattedValue.isPresent()) {
+            object = object.set(
+                FORMATTED_VALUE_PROPERTY,
+                context.marshallOptionalWithType(this.formattedValue)
             );
         }
 
@@ -1448,9 +1449,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String STYLE_PROPERTY_STRING = "style";
 
-    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
-
     private final static String VALIDATOR_PROPERTY_STRING = "validator";
+
+    private final static String FORMATTED_VALUE_PROPERTY_STRING = "formattedValue";
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
@@ -1470,9 +1471,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
 
-    final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
-
     final static JsonPropertyName VALIDATOR_PROPERTY = JsonPropertyName.with(VALIDATOR_PROPERTY_STRING);
+
+    final static JsonPropertyName FORMATTED_VALUE_PROPERTY = JsonPropertyName.with(FORMATTED_VALUE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register(
