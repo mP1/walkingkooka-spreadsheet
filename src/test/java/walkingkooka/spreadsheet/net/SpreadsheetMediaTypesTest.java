@@ -112,7 +112,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     public void testJsonValidator() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_VALIDATOR,
-            "application/json+walkingkooka.validation.Validator"
+            "application/json+walkingkooka.validation.provider.ValidatorSelector"
         );
     }
 
