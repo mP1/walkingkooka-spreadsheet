@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.importer;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
+import walkingkooka.math.OptionalDecimalNumberSymbols;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.OptionalSpreadsheetParserSelector;
@@ -75,6 +76,17 @@ public final class SpreadsheetImporterCellValue implements HasSpreadsheetReferen
         return new SpreadsheetImporterCellValue(
             cell,
             dateTimeSymbols
+        );
+    }
+
+    public static SpreadsheetImporterCellValue decimalNumberSymbols(final SpreadsheetCellReference cell,
+                                                                    final OptionalDecimalNumberSymbols decimalNumberSymbols) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(decimalNumberSymbols, "decimalNumberSymbols");
+
+        return new SpreadsheetImporterCellValue(
+            cell,
+            decimalNumberSymbols
         );
     }
 
