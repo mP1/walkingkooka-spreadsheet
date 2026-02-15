@@ -122,7 +122,7 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                         );
                     } else {
                         if (SpreadsheetMediaTypes.JSON_STYLE.equals(contentType)) {
-                            value = (j) -> SpreadsheetImporterCellValue.textStyle(
+                            value = (j) -> SpreadsheetImporterCellValue.style(
                                 cell(j),
                                 context.unmarshall(
                                     j,

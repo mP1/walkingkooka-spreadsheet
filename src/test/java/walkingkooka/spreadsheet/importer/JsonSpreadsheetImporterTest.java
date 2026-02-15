@@ -188,11 +188,11 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
     public void testDoImportWithStyle() {
         this.doImportAndCheck(
             SpreadsheetCellValueKind.STYLE,
-            SpreadsheetImporterCellValue.textStyle(
+            SpreadsheetImporterCellValue.style(
                 A1,
                 STYLE
             ),
-            SpreadsheetImporterCellValue.textStyle(
+            SpreadsheetImporterCellValue.style(
                 A2,
                 TextStyle.EMPTY
             )

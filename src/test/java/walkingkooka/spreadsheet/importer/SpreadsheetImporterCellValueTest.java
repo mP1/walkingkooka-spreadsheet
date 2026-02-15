@@ -280,10 +280,10 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     // textStyle........................................................................................................
 
     @Test
-    public void testTextStyleWithNullCellFails() {
+    public void testStyleWithNullCellFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetImporterCellValue.textStyle(
+            () -> SpreadsheetImporterCellValue.style(
                 null,
                 TextStyle.EMPTY.set(
                     TextStylePropertyName.COLOR,
@@ -294,10 +294,10 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     }
 
     @Test
-    public void testTextStyleWithNullStyleFails() {
+    public void testStyleFails() {
         assertThrows(
             NullPointerException.class,
-            () -> SpreadsheetImporterCellValue.textStyle(
+            () -> SpreadsheetImporterCellValue.style(
                 SpreadsheetSelection.A1,
                 null
             )
@@ -305,14 +305,14 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     }
 
     @Test
-    public void testTextStyle() {
+    public void testStyle() {
         final TextStyle textStyle = TextStyle.EMPTY.set(
             TextStylePropertyName.COLOR,
             Color.BLACK
         );
 
         this.check(
-            SpreadsheetImporterCellValue.textStyle(
+            SpreadsheetImporterCellValue.style(
                 CELL_REFERENCE,
                 textStyle
             ),
