@@ -250,7 +250,48 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
             decimalNumberSymbols
         );
     }
-    
+
+    // formattedValue...................................................................................................
+
+    @Test
+    public void testFormattedValueWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formattedValue(
+                null,
+                OptionalTextNode.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testFormattedValueWithNullFormattedValueFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.formattedValue(
+                SpreadsheetSelection.A1,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testFormattedValue() {
+        final OptionalTextNode formattedValue = OptionalTextNode.with(
+            Optional.of(
+                TextNode.text("Hello")
+            )
+        );
+
+        this.check(
+            SpreadsheetImporterCellValue.formattedValue(
+                CELL_REFERENCE,
+                formattedValue
+            ),
+            formattedValue
+        );
+    }
+
     // formatter........................................................................................................
 
     @Test
@@ -497,46 +538,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
         );
     }
 
-    // formattedValue...................................................................................................
-
-    @Test
-    public void testFormattedValueWithNullCellFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetImporterCellValue.formattedValue(
-                null,
-                OptionalTextNode.EMPTY
-            )
-        );
-    }
-
-    @Test
-    public void testFormattedValueWithNullFormattedValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetImporterCellValue.formattedValue(
-                SpreadsheetSelection.A1,
-                null
-            )
-        );
-    }
-
-    @Test
-    public void testFormattedValue() {
-        final OptionalTextNode formattedValue = OptionalTextNode.with(
-            Optional.of(
-                TextNode.text("Hello")
-            )
-        );
-
-        this.check(
-            SpreadsheetImporterCellValue.formattedValue(
-                CELL_REFERENCE,
-                formattedValue
-            ),
-            formattedValue
-        );
-    }
+    // helper...........................................................................................................
 
     private void check(final SpreadsheetImporterCellValue importCellValue,
                        final Object value) {
