@@ -967,7 +967,12 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     }
 
     @Override
-    public void testLocaleTextWithNullFails() {
+    public void testLocaleTextWithNullLocaleFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testLocaleTextWithNullRequestedLocaleFails() {
         throw new UnsupportedOperationException();
     }
 
