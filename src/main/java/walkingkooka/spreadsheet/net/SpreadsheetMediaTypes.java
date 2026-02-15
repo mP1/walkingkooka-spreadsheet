@@ -81,9 +81,33 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType MEMORY_CELL = object(SpreadsheetCell.class);
 
+    public static final MediaType MEMORY_CURRENCY = object(Currency.class);
+
+    public static final MediaType MEMORY_DATE_TIME_SYMBOLS = object(DateTimeSymbols.class);
+
+    public static final MediaType MEMORY_DECIMAL_NUMBER_SYMBOLS = object(DecimalNumberSymbols.class);
+
+    public static final MediaType MEMORY_FORMATTED_VALUE = object(TextNode.class);
+
+    public static final MediaType MEMORY_FORMATTER = object(SpreadsheetFormatterSelector.class);
+
+    public static final MediaType MEMORY_FORMULA = object(SpreadsheetFormula.class);
+
     public static final MediaType MEMORY_LABEL = object(SpreadsheetLabelName.class);
 
+    public static final MediaType MEMORY_LOCALE = object(Locale.class);
+
+    public static final MediaType MEMORY_PARSER = object(SpreadsheetParserSelector.class);
+
     public static final MediaType MEMORY_SPREADSHEET_METADATA = object(SpreadsheetMetadata.class);
+
+    public static final MediaType MEMORY_STYLE = object(TextStyle.class);
+
+    public static final MediaType MEMORY_VALUE = object(Object.class);
+
+    public static final MediaType MEMORY_VALIDATOR = object(ValidatorSelector.class);
+
+    public static final MediaType MEMORY_VALUE_TYPE = object(ValueType.class);
 
     private static MediaType object(final Class<?> type) {
         return MEMORY.setSuffix(
