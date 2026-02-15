@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -40,8 +41,10 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
-public final class SpreadsheetCellValueKindTest implements ClassTesting<SpreadsheetCellValueKind> {
+public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
+    ClassTesting<SpreadsheetCellValueKind> {
 
     @Test
     public void testCellValue() {
@@ -110,6 +113,171 @@ public final class SpreadsheetCellValueKindTest implements ClassTesting<Spreadsh
                 () -> kind + " returned duplicate value (must be returning wrong property"
             );
         }
+    }
+
+    @Test
+    public void testCellValueWithCell() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.CELL,
+            (c) -> c
+        );
+    }
+
+    @Test
+    public void testCellValueWithCurrency() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.CURRENCY,
+            (c) -> c.currency()
+        );
+    }
+
+    @Test
+    public void testCellValueWithDateTimeSymbols() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
+            (c) -> c.dateTimeSymbols()
+        );
+    }
+
+    @Test
+    public void testCellValueWithDecimalNumberSymbols() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
+            (c) -> c.decimalNumberSymbols()
+        );
+    }
+
+    @Test
+    public void testCellValueWithFormula() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.FORMULA,
+            (c) -> c.formula()
+        );
+    }
+
+    @Test
+    public void testCellValueWithFormatter() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.FORMATTER,
+            (c) -> c.formatter()
+        );
+    }
+
+    @Test
+    public void testCellValueWithLocale() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.LOCALE,
+            (c) -> c.locale()
+        );
+    }
+
+    @Test
+    public void testCellValueWithParser() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.PARSER,
+            (c) -> c.parser()
+        );
+    }
+
+    @Test
+    public void testCellValueWithStyle() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.STYLE,
+            (c) -> c.style()
+        );
+    }
+
+    @Test
+    public void testCellValueWithValidator() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.VALIDATOR,
+            (c) -> c.validator()
+        );
+    }
+
+    @Test
+    public void testCellValueWithValue() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.VALUE,
+            (c) -> c.formula()
+                .value()
+        );
+    }
+
+    @Test
+    public void testCellValueWithValueType() {
+        this.cellValueAndCheck(
+            SpreadsheetCellValueKind.VALUE_TYPE,
+            (c) -> c.formula()
+                .valueType()
+        );
+    }
+
+    private void cellValueAndCheck(final SpreadsheetCellValueKind kind,
+                                   final Function<SpreadsheetCell, Object> expected) {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValueType(
+                Optional.of(
+                    ValueType.with("hello-value-type")
+                )
+            )
+        ).setCurrency(
+            Optional.of(
+                Currency.getInstance("AUD")
+            )
+        ).setDateTimeSymbols(
+            Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(Locale.FRANCE)
+                )
+            )
+        ).setDecimalNumberSymbols(
+            Optional.of(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                    '+',
+                    new DecimalFormatSymbols(Locale.FRANCE)
+                )
+            )
+        ).setLocale(
+            Optional.of(Locale.ENGLISH)
+        ).setFormatter(
+            Optional.of(
+                SpreadsheetFormatterSelector.parse("hello-formatter")
+            )
+        ).setFormattedValue(
+            Optional.of(
+                TextNode.text("formatted-value")
+            )
+        ).setParser(
+            Optional.of(
+                SpreadsheetParserSelector.parse("hello-parser")
+            )
+        ).setStyle(
+            TextStyle.EMPTY.set(
+                TextStylePropertyName.TEXT_ALIGN,
+                TextAlign.CENTER
+            )
+        ).setValidator(
+            Optional.of(
+                ValidatorSelector.parse("hello-validator")
+            )
+        );
+
+        this.cellValueAndCheck(
+            kind,
+            cell,
+            expected.apply(cell)
+        );
+    }
+
+    private void cellValueAndCheck(final SpreadsheetCellValueKind kind,
+                                   final SpreadsheetCell cell,
+                                   final Object expected) {
+        this.checkEquals(
+            expected,
+            kind.cellValue(cell),
+            cell::toString
+        );
     }
 
     // fileExtension....................................................................................................
