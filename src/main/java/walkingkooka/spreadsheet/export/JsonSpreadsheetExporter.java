@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.export;
 
 import walkingkooka.NeverError;
+import walkingkooka.io.FileExtension;
 import walkingkooka.net.WebEntity;
 import walkingkooka.net.WebEntityFileName;
 import walkingkooka.net.header.MediaType;
+import walkingkooka.spreadsheet.file.SpreadsheetFileExtensions;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -174,9 +176,10 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                         cells.range()
                             .toString()
                             .replace(SpreadsheetSelection.SEPARATOR.character(), '-') + // make a helper that gives safe WebEntityFileName
-                            "." +
+                            FileExtension.SEPARATOR +
                             valueKind.fileExtension() +
-                            ".json.txt"
+                            FileExtension.SEPARATOR +
+                            SpreadsheetFileExtensions.JSON
                     )
                 )
             );
