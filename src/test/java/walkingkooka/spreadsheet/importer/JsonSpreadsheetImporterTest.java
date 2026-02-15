@@ -50,6 +50,7 @@ import walkingkooka.util.OptionalCurrency;
 import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
 import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.OptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
@@ -261,6 +262,21 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetImporterCellValue.style(
                 A2,
                 TextStyle.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testDoImportWithValidator() {
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.VALIDATOR,
+            SpreadsheetImporterCellValue.validator(
+                A1,
+                OptionalValidatorSelector.with(VALIDATOR)
+            ),
+            SpreadsheetImporterCellValue.validator(
+                A2,
+                OptionalValidatorSelector.EMPTY
             )
         );
     }
