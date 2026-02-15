@@ -1948,6 +1948,116 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     // json.............................................................................................................
 
     @Test
+    public void testMarshallAllProperties() {
+        this.marshallAndCheck(
+            SpreadsheetCell.with(
+                REFERENCE,
+                SpreadsheetFormula.EMPTY
+                    .setText(FORMULA)
+            ).setCurrency(
+                Optional.of(CURRENCY)
+            ).setDateTimeSymbols(
+                Optional.of(DATE_TIME_SYMBOLS)
+            ).setDecimalNumberSymbols(
+                Optional.of(DECIMAL_NUMBER_SYMBOLS)
+            ).setFormatter(
+                Optional.of(
+                    SpreadsheetPattern.DEFAULT_TEXT_FORMAT_PATTERN.spreadsheetFormatterSelector()
+                )
+            ).setLocale(
+                Optional.of(LOCALE)
+            ).setParser(
+                Optional.of(
+                    SpreadsheetParserSelector.parse("parser-123")
+
+                )
+            ).setValidator(
+                Optional.of(
+                    ValidatorSelector.parse("validator-123")
+                )
+            ),
+            "{\n" +
+                "  \"A1\": {\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"=1+2\"\n" +
+                "    },\n" +
+                "    \"currency\": \"AUD\",\n" +
+                "    \"dateTimeSymbols\": {\n" +
+                "      \"ampms\": [\n" +
+                "        \"am\",\n" +
+                "        \"pm\"\n" +
+                "      ],\n" +
+                "      \"monthNames\": [\n" +
+                "        \"January\",\n" +
+                "        \"February\",\n" +
+                "        \"March\",\n" +
+                "        \"April\",\n" +
+                "        \"May\",\n" +
+                "        \"June\",\n" +
+                "        \"July\",\n" +
+                "        \"August\",\n" +
+                "        \"September\",\n" +
+                "        \"October\",\n" +
+                "        \"November\",\n" +
+                "        \"December\"\n" +
+                "      ],\n" +
+                "      \"monthNameAbbreviations\": [\n" +
+                "        \"Jan.\",\n" +
+                "        \"Feb.\",\n" +
+                "        \"Mar.\",\n" +
+                "        \"Apr.\",\n" +
+                "        \"May\",\n" +
+                "        \"Jun.\",\n" +
+                "        \"Jul.\",\n" +
+                "        \"Aug.\",\n" +
+                "        \"Sep.\",\n" +
+                "        \"Oct.\",\n" +
+                "        \"Nov.\",\n" +
+                "        \"Dec.\"\n" +
+                "      ],\n" +
+                "      \"weekDayNames\": [\n" +
+                "        \"Sunday\",\n" +
+                "        \"Monday\",\n" +
+                "        \"Tuesday\",\n" +
+                "        \"Wednesday\",\n" +
+                "        \"Thursday\",\n" +
+                "        \"Friday\",\n" +
+                "        \"Saturday\"\n" +
+                "      ],\n" +
+                "      \"weekDayNameAbbreviations\": [\n" +
+                "        \"Sun.\",\n" +
+                "        \"Mon.\",\n" +
+                "        \"Tue.\",\n" +
+                "        \"Wed.\",\n" +
+                "        \"Thu.\",\n" +
+                "        \"Fri.\",\n" +
+                "        \"Sat.\"\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    \"decimalNumberSymbols\": {\n" +
+                "      \"negativeSign\": \"-\",\n" +
+                "      \"positiveSign\": \"+\",\n" +
+                "      \"zeroDigit\": \"0\",\n" +
+                "      \"currencySymbol\": \"$\",\n" +
+                "      \"decimalSeparator\": \".\",\n" +
+                "      \"exponentSymbol\": \"e\",\n" +
+                "      \"groupSeparator\": \",\",\n" +
+                "      \"infinitySymbol\": \"∞\",\n" +
+                "      \"monetaryDecimalSeparator\": \".\",\n" +
+                "      \"nanSymbol\": \"NaN\",\n" +
+                "      \"percentSymbol\": \"%\",\n" +
+                "      \"permillSymbol\": \"‰\"\n" +
+                "    },\n" +
+                "    \"formatter\": \"text @\",\n" +
+                "    \"locale\": \"en-AU\",\n" +
+                "    \"parser\": \"parser-123\",\n" +
+                "    \"validator\": \"validator-123\"\n" +
+                "  }\n" +
+                "}"
+        );
+    }
+
+    @Test
     public void testMarshallWithFormula() {
         this.marshallAndCheck(
             SpreadsheetCell.with(
