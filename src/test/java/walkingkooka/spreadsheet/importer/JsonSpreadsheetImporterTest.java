@@ -47,6 +47,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.util.OptionalCurrency;
+import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.provider.ValidatorSelector;
@@ -213,6 +214,23 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetImporterCellValue.formatter(
                 A2,
                 OptionalSpreadsheetFormatterSelector.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testDoImportWithLocale() {
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.LOCALE,
+            SpreadsheetImporterCellValue.locale(
+                A1,
+                OptionalLocale.with(
+                    Optional.of(LOCALE)
+                )
+            ),
+            SpreadsheetImporterCellValue.locale(
+                A2,
+                OptionalLocale.EMPTY
             )
         );
     }
