@@ -116,6 +116,13 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 );
                 contentType = SpreadsheetMediaTypes.JSON_FORMATTER;
                 break;
+            case LOCALE:
+                value = marshallOptional(
+                    SpreadsheetCell::locale,
+                    context
+                );
+                contentType = SpreadsheetMediaTypes.JSON_LOCALE;
+                break;
             case PARSER:
                 value = marshallOptional(
                     SpreadsheetCell::parser,
