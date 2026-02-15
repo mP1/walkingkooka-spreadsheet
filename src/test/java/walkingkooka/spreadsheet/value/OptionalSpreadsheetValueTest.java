@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -94,11 +95,22 @@ public final class OptionalSpreadsheetValueTest implements ClassTesting<Optional
 
     @Test
     public void testToString() {
-        final Optional<String> value = Optional.of("Hello123");
+        final String value = "Hello123";
 
         this.toStringAndCheck(
-            OptionalSpreadsheetValue.with(value),
-            value.toString()
+            OptionalSpreadsheetValue.with(
+                Optional.of(value)
+            ),
+            CharSequences.quoteAndEscape(value)
+                .toString()
+        );
+    }
+
+    @Test
+    public void testToStringWithEmpty() {
+        this.toStringAndCheck(
+            OptionalSpreadsheetValue.EMPTY,
+            ""
         );
     }
 
