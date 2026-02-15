@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -166,6 +167,21 @@ public final class JsonSpreadsheetImporterTest implements SpreadsheetImporterTes
             SpreadsheetImporterCellValue.currency(
                 A2,
                 OptionalCurrency.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testDoImportWithDateTimeSymbols() {
+        this.doImportAndCheck(
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
+            SpreadsheetImporterCellValue.dateTimeSymbols(
+                A1,
+                OptionalDateTimeSymbols.with(DATE_TIME_SYMBOLS)
+            ),
+            SpreadsheetImporterCellValue.dateTimeSymbols(
+                A2,
+                OptionalDateTimeSymbols.EMPTY
             )
         );
     }
