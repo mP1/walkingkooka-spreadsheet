@@ -38,6 +38,7 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
@@ -93,6 +94,10 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         Color.BLACK
     );
 
+    private final static Optional<ValidatorSelector> VALIDATOR = Optional.of(
+        ValidatorSelector.parse("test-validator-123")
+    );
+
     private final static Optional<TextNode> FORMATTED_VALUE = Optional.of(
         TextNode.text("Formatted text 123")
     );
@@ -110,6 +115,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         .setLocale(OPTIONAL_LOCALE)
                         .setParser(PARSER)
                         .setStyle(STYLE)
+                        .setValidator(VALIDATOR)
                         .setFormattedValue(FORMATTED_VALUE),
                     CELL_A2
                 )
@@ -198,7 +204,8 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "    \"formattedValue\": {\n" +
                 "      \"type\": \"text\",\n" +
                 "      \"value\": \"Formatted text 123\"\n" +
-                "    }\n" +
+                "    },\n" +
+                "    \"validator\": \"test-validator-123\"\n" +
                 "  },\n" +
                 "  \"A2\": {\n" +
                 "    \"formula\": {\n" +
@@ -431,6 +438,26 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "    \"color\": \"black\"\n" +
                 "  },\n" +
                 "  \"A2\": {}\n" +
+                "}"
+        );
+    }
+
+    @Test
+    public void testExportWithValidator() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    CELL_A1.setValidator(VALIDATOR),
+                    CELL_A2
+                )
+            ),
+            SpreadsheetCellValueKind.VALIDATOR,
+            "A1-XFD1048576.validator.json",
+            SpreadsheetMediaTypes.JSON_VALIDATOR,
+            "{\n" +
+                "  \"A1\": \"test-validator-123\",\n" +
+                "  \"A2\": null\n" +
                 "}"
         );
     }

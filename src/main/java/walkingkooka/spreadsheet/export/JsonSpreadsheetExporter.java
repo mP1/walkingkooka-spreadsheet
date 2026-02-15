@@ -137,6 +137,13 @@ final class JsonSpreadsheetExporter implements SpreadsheetExporter {
                 );
                 contentType = SpreadsheetMediaTypes.JSON_STYLE;
                 break;
+            case VALIDATOR:
+                value = marshallOptional(
+                    SpreadsheetCell::validator,
+                    context
+                );
+                contentType = SpreadsheetMediaTypes.JSON_VALIDATOR;
+                break;
             case VALUE:
                 value = (c) -> context.marshallOptionalWithType(
                     c.formattedValue()
