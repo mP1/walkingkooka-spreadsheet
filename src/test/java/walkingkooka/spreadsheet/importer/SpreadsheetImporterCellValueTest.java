@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
@@ -43,6 +45,7 @@ import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.provider.OptionalValidatorSelector;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.text.DateFormatSymbols;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -56,6 +59,8 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     ClassTesting2<SpreadsheetImporterCellValue> {
 
     private final static SpreadsheetCellReference CELL_REFERENCE = SpreadsheetSelection.A1;
+
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     // cell.............................................................................................................
 
@@ -155,6 +160,49 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
             currency
         );
     }
+
+    // dateTimeSymbols..................................................................................................
+
+    @Test
+    public void testDateTimeSymbolsWithNullCellFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.dateTimeSymbols(
+                null,
+                OptionalDateTimeSymbols.EMPTY
+            )
+        );
+    }
+
+    @Test
+    public void testDateTimeSymbolsWithNullDateTimeSymbolsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetImporterCellValue.dateTimeSymbols(
+                SpreadsheetSelection.A1,
+                null
+            )
+        );
+    }
+
+    @Test
+    public void testDateTimeSymbols() {
+        final OptionalDateTimeSymbols dateTimeSymbols = OptionalDateTimeSymbols.with(
+            Optional.of(
+                DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(LOCALE)
+                )
+            )
+        );
+
+        this.check(
+            SpreadsheetImporterCellValue.dateTimeSymbols(
+                CELL_REFERENCE,
+                dateTimeSymbols
+            ),
+            dateTimeSymbols
+        );
+    }
     
     // formatter........................................................................................................
 
@@ -224,9 +272,7 @@ public final class SpreadsheetImporterCellValueTest implements HasSpreadsheetRef
     @Test
     public void testLocale() {
         final OptionalLocale locale = OptionalLocale.with(
-            Optional.of(
-                Locale.forLanguageTag("en-AU")
-            )
+            Optional.of(LOCALE)
         );
 
         this.check(
