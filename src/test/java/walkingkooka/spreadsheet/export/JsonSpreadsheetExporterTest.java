@@ -80,6 +80,10 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         SpreadsheetFormatterSelector.DEFAULT_TEXT_FORMAT
     );
 
+    private final static Optional<Locale> OPTIONAL_LOCALE = Optional.of(
+        Locale.forLanguageTag("en-AU")
+    );
+
     private final static Optional<SpreadsheetParserSelector> PARSER = Optional.of(
         SpreadsheetParserSelector.parse("test-parser-123")
     );
@@ -103,6 +107,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                         .setDateTimeSymbols(DATE_TIME_SYMBOLS)
                         .setDecimalNumberSymbols(DECIMAL_NUMBER_SYMBOLS)
                         .setFormatter(FORMATTER)
+                        .setLocale(OPTIONAL_LOCALE)
                         .setParser(PARSER)
                         .setStyle(STYLE)
                         .setFormattedValue(FORMATTED_VALUE),
@@ -184,6 +189,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 "      \"percentSymbol\": \"%\",\n" +
                 "      \"permillSymbol\": \"‰\"\n" +
                 "    },\n" +
+                "    \"locale\": \"en-AU\",\n" +
                 "    \"formatter\": \"text @\",\n" +
                 "    \"parser\": \"test-parser-123\",\n" +
                 "    \"style\": {\n" +
@@ -367,6 +373,26 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
         );
     }
 
+    @Test
+    public void testExportWithLocale() {
+        this.exportAndCheck(
+            SpreadsheetCellRange.with(
+                SpreadsheetSelection.ALL_CELLS,
+                Sets.of(
+                    CELL_A1.setLocale(OPTIONAL_LOCALE),
+                    CELL_A2
+                )
+            ),
+            SpreadsheetCellValueKind.LOCALE,
+            "A1-XFD1048576.locale.json",
+            SpreadsheetMediaTypes.JSON_LOCALE,
+            "{\n" +
+                "  \"A1\": \"en-AU\",\n" +
+                "  \"A2\": null\n" +
+                "}"
+        );
+    }
+    
     @Test
     public void testExportWithParser() {
         this.exportAndCheck(
