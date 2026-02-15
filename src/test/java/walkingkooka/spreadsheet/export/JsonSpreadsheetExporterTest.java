@@ -110,7 +110,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.CELL,
-            "A1-XFD1048576.cell.json.txt",
+            "A1-XFD1048576.cell.json",
             SpreadsheetMediaTypes.JSON_CELL,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -214,7 +214,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.FORMULA,
-            "A1-XFD1048576.formula.json.txt",
+            "A1-XFD1048576.formula.json",
             SpreadsheetMediaTypes.JSON_FORMULA,
             "{\n" +
                 "  \"A1\": \"=1+2\",\n" +
@@ -234,7 +234,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.CURRENCY,
-            "A1-XFD1048576.currency.json.txt",
+            "A1-XFD1048576.currency.json",
             SpreadsheetMediaTypes.JSON_CURRENCY,
             "{\n" +
                 "  \"A1\": \"AUD\",\n" +
@@ -254,7 +254,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
-            "A1-XFD1048576.date-time-symbols.json.txt",
+            "A1-XFD1048576.date-time-symbols.json",
             SpreadsheetMediaTypes.JSON_DATE_TIME_SYMBOLS,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -325,7 +325,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
-            "A1-XFD1048576.decimal-number-symbols.json.txt",
+            "A1-XFD1048576.decimal-number-symbols.json",
             SpreadsheetMediaTypes.JSON_DECIMAL_NUMBER_SYMBOLS,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -358,7 +358,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.FORMATTER,
-            "A1-XFD1048576.formatter.json.txt",
+            "A1-XFD1048576.formatter.json",
             SpreadsheetMediaTypes.JSON_FORMATTER,
             "{\n" +
                 "  \"A1\": \"text @\",\n" +
@@ -378,7 +378,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.PARSER,
-            "A1-XFD1048576.parser.json.txt",
+            "A1-XFD1048576.parser.json",
             SpreadsheetMediaTypes.JSON_PARSER,
             "{\n" +
                 "  \"A1\": \"test-parser-123\",\n" +
@@ -398,7 +398,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.STYLE,
-            "A1-XFD1048576.style.json.txt",
+            "A1-XFD1048576.style.json",
             SpreadsheetMediaTypes.JSON_STYLE,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -420,7 +420,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.VALUE,
-            "A1-XFD1048576.value.json.txt",
+            "A1-XFD1048576.value.json",
             SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
             "{\n" +
                 "  \"A1\": {\n" +
@@ -443,7 +443,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.VALUE,
-            "A1-XFD1048576.value.json.txt",
+            "A1-XFD1048576.value.json",
             SpreadsheetMediaTypes.JSON_FORMATTED_VALUE,
             "{\n" +
                 "  \"A1\": null,\n" +
@@ -470,7 +470,7 @@ public final class JsonSpreadsheetExporterTest implements SpreadsheetExporterTes
                 )
             ),
             SpreadsheetCellValueKind.VALUE_TYPE,
-            "A1-XFD1048576.value-type.json.txt",
+            "A1-XFD1048576.value-type.json",
             SpreadsheetMediaTypes.JSON_VALUE_TYPE,
             "{\n" +
                 "  \"A1\": \"hello-value-type\",\n" +
