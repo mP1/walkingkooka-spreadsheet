@@ -2967,7 +2967,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     // treePrintable....................................................................................................
 
     @Test
-    public void testTreePrintableFormula() {
+    public void testTreePrintFormula() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -2981,7 +2981,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaToken() {
+    public void testTreePrintFormulaToken() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3003,7 +3003,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpression() {
+    public void testTreePrintFormulaTokenExpression() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3030,7 +3030,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValue() {
+    public void testTreePrintFormulaTokenExpressionValue() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3060,7 +3060,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionError() {
+    public void testTreePrintFormulaTokenExpressionError() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3095,7 +3095,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyle() {
+    public void testTreePrintFormulaTokenExpressionValueStyle() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3128,7 +3128,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaCurrency() {
+    public void testTreePrintFormulaCurrency() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3144,7 +3144,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaDateTimeSymbols() {
+    public void testTreePrintFormulaDateTimeSymbols() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3206,7 +3206,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
 
 
     @Test
-    public void testTreePrintableFormulaDecimalNumberSymbols() {
+    public void testTreePrintFormulaDecimalNumberSymbols() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3246,7 +3246,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaLocale() {
+    public void testTreePrintFormulaLocale() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
@@ -3264,7 +3264,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParser() {
+    public void testTreePrintFormulaTokenExpressionValueStyleParser() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseCell("$A$1")
                 .setFormula(SpreadsheetFormula.EMPTY)
@@ -3303,7 +3303,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleParserFormatter() {
+    public void testTreePrintFormulaTokenExpressionValueStyleParserFormatter() {
         this.treePrintAndCheck(
             SpreadsheetSelection.parseCell("$A$1")
                 .setFormula(SpreadsheetFormula.EMPTY)
@@ -3346,7 +3346,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleFormatter() {
+    public void testTreePrintFormulaTokenExpressionValueStyleFormatter() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                     SpreadsheetSelection.parseCell("$A$1"),
@@ -3383,7 +3383,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaTokenExpressionValueStyleFormatterFormatted() {
+    public void testTreePrintFormulaTokenExpressionValueStyleFormatterFormatted() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                     SpreadsheetSelection.parseCell("$A$1"),
@@ -3423,7 +3423,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     }
 
     @Test
-    public void testTreePrintableFormulaValidator() {
+    public void testTreePrintFormulaValidator() {
         this.treePrintAndCheck(
             SpreadsheetCell.with(
                 SpreadsheetSelection.parseCell("$A$1"),
