@@ -70,8 +70,8 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
             SpreadsheetMediaTypes.JSON_FORMATTER.test(contentType) ||
             SpreadsheetMediaTypes.JSON_PARSER.test(contentType) ||
             SpreadsheetMediaTypes.JSON_STYLE.test(contentType) ||
-            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType) ||
-            SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType);
+            SpreadsheetMediaTypes.JSON_VALUE_TYPE.test(contentType) ||
+            SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.test(contentType);
     }
 
     @Override
@@ -144,22 +144,22 @@ final class JsonSpreadsheetImporter implements SpreadsheetImporter {
                                     )
                                 );
                             } else {
-                                if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.equals(contentType)) {
-                                    value = (j) -> SpreadsheetImporterCellValue.formattedValue(
+                                if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
+                                    value = (j) -> SpreadsheetImporterCellValue.valueType(
                                         cell(j),
-                                        OptionalTextNode.with(
-                                            context.unmarshallOptionalWithType(j)
+                                        OptionalValueType.with(
+                                            context.unmarshallOptional(
+                                                j,
+                                                ValueType.class
+                                            )
                                         )
                                     );
                                 } else {
-                                    if (SpreadsheetMediaTypes.JSON_VALUE_TYPE.equals(contentType)) {
-                                        value = (j) -> SpreadsheetImporterCellValue.valueType(
+                                    if (SpreadsheetMediaTypes.JSON_FORMATTED_VALUE.equals(contentType)) {
+                                        value = (j) -> SpreadsheetImporterCellValue.formattedValue(
                                             cell(j),
-                                            OptionalValueType.with(
-                                                context.unmarshallOptional(
-                                                    j,
-                                                    ValueType.class
-                                                )
+                                            OptionalTextNode.with(
+                                                context.unmarshallOptionalWithType(j)
                                             )
                                         );
                                     } else {
