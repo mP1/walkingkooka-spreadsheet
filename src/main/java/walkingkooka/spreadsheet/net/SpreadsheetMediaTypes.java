@@ -29,8 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -65,7 +65,7 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType JSON_VALUE = json(Object.class);
 
-    public static final MediaType JSON_VALIDATOR = json(Validator.class);
+    public static final MediaType JSON_VALIDATOR = json(ValidatorSelector.class);
 
     public static final MediaType JSON_VALUE_TYPE = json(ValueType.class);
 
