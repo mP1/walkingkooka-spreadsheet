@@ -1244,8 +1244,8 @@ public final class SpreadsheetCell implements CanBeEmpty,
         Optional<Currency> currency = NO_CURRENCY;
         Optional<DateTimeSymbols> dateTimeSymbols = NO_DATETIME_SYMBOLS;
         Optional<DecimalNumberSymbols> decimalNumberSymbols = NO_DECIMAL_NUMBER_SYMBOLS;
-        Optional<Locale> locale = NO_LOCALE;
         Optional<SpreadsheetFormatterSelector> formatter = NO_FORMATTER;
+        Optional<Locale> locale = NO_LOCALE;
         Optional<SpreadsheetParserSelector> parser = NO_PARSER;
         TextStyle style = TextStyle.EMPTY;
         Optional<TextNode> formatted = NO_FORMATTED_VALUE_CELL;
@@ -1275,16 +1275,16 @@ public final class SpreadsheetCell implements CanBeEmpty,
                         DecimalNumberSymbols.class
                     );
                     break;
-                case LOCALE_PROPERTY_STRING:
-                    locale = context.unmarshallOptional(
-                        child,
-                        Locale.class
-                    );
-                    break;
                 case FORMATTER_PROPERTY_STRING:
                     formatter = context.unmarshallOptional(
                         child,
                         SpreadsheetFormatterSelector.class
+                    );
+                    break;
+                case LOCALE_PROPERTY_STRING:
+                    locale = context.unmarshallOptional(
+                        child,
+                        Locale.class
                     );
                     break;
                 case PARSER_PROPERTY_STRING:
@@ -1387,17 +1387,17 @@ public final class SpreadsheetCell implements CanBeEmpty,
             );
         }
 
-        if (this.locale.isPresent()) {
-            object = object.set(
-                LOCALE_PROPERTY,
-                context.marshallOptional(this.locale)
-            );
-        }
-
         if (this.formatter.isPresent()) {
             object = object.set(
                 FORMATTER_PROPERTY,
                 context.marshallOptional(this.formatter)
+            );
+        }
+
+        if (this.locale.isPresent()) {
+            object = object.set(
+                LOCALE_PROPERTY,
+                context.marshallOptional(this.locale)
             );
         }
 
@@ -1440,9 +1440,9 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     private final static String DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING = "decimalNumberSymbols";
 
-    private final static String LOCALE_PROPERTY_STRING = "locale";
-
     private final static String FORMATTER_PROPERTY_STRING = "formatter";
+
+    private final static String LOCALE_PROPERTY_STRING = "locale";
 
     private final static String PARSER_PROPERTY_STRING = "parser";
 
@@ -1454,17 +1454,17 @@ public final class SpreadsheetCell implements CanBeEmpty,
 
     final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
+    final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
+
     final static JsonPropertyName CURRENCY_PROPERTY = JsonPropertyName.with(CURRENCY_PROPERTY_STRING);
 
     final static JsonPropertyName DATE_TIME_SYMBOLS_PROPERTY = JsonPropertyName.with(DATE_TIME_SYMBOLS_PROPERTY_STRING);
 
     final static JsonPropertyName DECIMAL_NUMBER_SYMBOLS_PROPERTY = JsonPropertyName.with(DECIMAL_NUMBER_SYMBOLS_PROPERTY_STRING);
 
-    final static JsonPropertyName LOCALE_PROPERTY = JsonPropertyName.with(LOCALE_PROPERTY_STRING);
-
-    final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
-
     final static JsonPropertyName FORMATTER_PROPERTY = JsonPropertyName.with(FORMATTER_PROPERTY_STRING);
+
+    final static JsonPropertyName LOCALE_PROPERTY = JsonPropertyName.with(LOCALE_PROPERTY_STRING);
 
     final static JsonPropertyName PARSER_PROPERTY = JsonPropertyName.with(PARSER_PROPERTY_STRING);
 
