@@ -98,7 +98,8 @@ public enum SpreadsheetCellValueKind {
     VALUE {
         @Override
         public Object cellValue(final SpreadsheetCell cell) {
-            return cell.formattedValue();
+            return cell.formula()
+                .value();
         }
     },
 
