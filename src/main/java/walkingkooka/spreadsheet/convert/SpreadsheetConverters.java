@@ -383,7 +383,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
      * {@link Converters#localeToString}
      */
     public static Converter<SpreadsheetConverterContext> localeToText() {
-        return Converters.localeToText();
+        return Converters.localeToString();
     }
 
     /**
