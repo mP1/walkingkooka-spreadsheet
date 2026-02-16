@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.SpreadsheetStrings;
 
 /**
  * A {@link Converter} that converts {@link Boolean} to {@link String}.
@@ -60,8 +61,8 @@ final class SpreadsheetConverterBooleanToText extends SpreadsheetConverter {
                                                         final SpreadsheetConverterContext context) {
         return this.successfulConversion(
             Boolean.TRUE.equals(booleanValue) ?
-                "TRUE" :
-                "FALSE",
+                SpreadsheetStrings.BOOLEAN_TRUE :
+                SpreadsheetStrings.BOOLEAN_FALSE,
             type
         );
     }
