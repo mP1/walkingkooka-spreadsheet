@@ -246,8 +246,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     @Override
     public Set<Currency> findByCurrencyText(final String text,
                                             final int offset,
-                                            final int count,
-                                            final Locale locale) {
+                                            final int count) {
         throw new UnsupportedOperationException();
     }
 
