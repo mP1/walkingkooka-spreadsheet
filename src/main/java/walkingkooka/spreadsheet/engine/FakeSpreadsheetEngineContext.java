@@ -231,8 +231,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
-    public Optional<String> currencyText(final Currency currency,
-                                         final Locale requestedLocale) {
+    public Optional<String> currencyText(final Currency currency) {
         throw new UnsupportedOperationException();
     }
 
