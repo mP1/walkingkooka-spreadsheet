@@ -789,10 +789,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterTextToLocale}
+     * {@see Converters#textToLocale()}
      */
     public static Converter<SpreadsheetConverterContext> textToLocale() {
-        return SpreadsheetConverterTextToLocale.INSTANCE;
+        return Converters.textToLocale();
     }
 
     /**
