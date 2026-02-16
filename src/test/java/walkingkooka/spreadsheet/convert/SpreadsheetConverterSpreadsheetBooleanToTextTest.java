@@ -70,7 +70,7 @@ public final class SpreadsheetConverterSpreadsheetBooleanToTextTest extends Spre
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterBooleanToText.INSTANCE,
-            "Boolean to String"
+            "Boolean to Text"
         );
     }
 
