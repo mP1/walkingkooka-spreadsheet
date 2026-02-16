@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.currency.OptionalCurrency;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.math.OptionalDecimalNumberSymbols;
 import walkingkooka.spreadsheet.format.provider.OptionalSpreadsheetFormatterSelector;
@@ -33,7 +34,6 @@ import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 import walkingkooka.tree.text.OptionalTextNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.util.OptionalCurrency;
 import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
 import walkingkooka.validation.provider.OptionalValidatorSelector;

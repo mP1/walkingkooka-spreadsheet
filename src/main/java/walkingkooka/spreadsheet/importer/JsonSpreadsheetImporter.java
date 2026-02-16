@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.importer;
 
+import walkingkooka.currency.OptionalCurrency;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -35,7 +36,6 @@ import walkingkooka.spreadsheet.value.OptionalSpreadsheetValue;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.util.OptionalCurrency;
 import walkingkooka.util.OptionalLocale;
 import walkingkooka.validation.OptionalValueType;
 import walkingkooka.validation.ValueType;
