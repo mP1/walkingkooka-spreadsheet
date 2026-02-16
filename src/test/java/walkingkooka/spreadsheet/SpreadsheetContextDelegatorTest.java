@@ -280,10 +280,8 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
-            public Optional<String> localeText(final Locale locale,
-                                               final Locale requestedLocale) {
+            public Optional<String> localeText(final Locale locale) {
                 Objects.requireNonNull(locale, "locale");
-                Objects.requireNonNull(requestedLocale, "requestedLocale");
                 throw new UnsupportedOperationException();
             }
 
