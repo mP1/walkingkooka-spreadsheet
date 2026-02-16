@@ -239,7 +239,8 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     @Override
     public Set<Currency> findByCurrencyText(final String text,
                                             final int offset,
-                                            final int count) {
+                                            final int count,
+                                            final Locale locale) {
         throw new UnsupportedOperationException();
     }
 
