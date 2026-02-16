@@ -191,12 +191,9 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public Set<Locale> findByLocaleText(final String text,
                                             final int offset,
-                                            final int count,
-                                            final Locale locale) {
+                                            final int count) {
             Objects.requireNonNull(text, "text");
             Store.checkOffsetAndCount(offset, count);
-            Objects.requireNonNull(locale, "locale");
-
             throw new UnsupportedOperationException();
         }
 
