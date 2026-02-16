@@ -424,7 +424,8 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
         CurrencyContexts.jre(
             CURRENCY,
-            (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length()
+            (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length(),
+            () -> LOCALE
         )
     );
 
