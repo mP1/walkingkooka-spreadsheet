@@ -168,7 +168,7 @@ eg
 - [text-to-host-address](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterTextToHostAddress.java)
 - [text-to-json-node](https://github.com/mP1/walkingkooka-tree-json-convert/blob/master/src/main/java/walkingkooka/tree/json/convert/JsonNodeConverterTextToJsonNode.java)
 - [text-to-line-ending](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToLineEnding.java)
-- [text-to-locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToLocale.java)
+- [text-to-locale](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/convert/ConverterTextToLocale.java)
 - [text-to-number-list](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterTextToListNumberList.java)
 - [text-to-object](https://github.com/mP1/walkingkooka-tree-json-convert/blob/master/src/main/java/walkingkooka/tree/json/convert/JsonNodeConverterTextToObject.java)
 - [text-to-spreadsheet-color-name](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterTextToSpreadsheetColorName.java)
