@@ -380,10 +380,10 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
-     * {@link LocaleConverters#localeToText}
+     * {@link Converters#localeToString}
      */
     public static Converter<SpreadsheetConverterContext> localeToText() {
-        return LocaleConverters.localeToText();
+        return Converters.localeToText();
     }
 
     /**
