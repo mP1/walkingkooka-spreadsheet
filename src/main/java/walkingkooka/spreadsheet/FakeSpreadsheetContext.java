@@ -288,8 +288,7 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public Optional<String> localeText(final Locale locale,
-                                       final Locale requestedLocale) {
+    public Optional<String> localeText(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 
