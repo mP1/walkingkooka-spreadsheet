@@ -3562,6 +3562,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ConverterContexts.basic(
                         (l) -> {
                             throw new UnsupportedOperationException();
+                        }, // canCurrencyForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
                         }, // canDateTimeSymbolsForLocale
                         (l) -> {
                             throw new UnsupportedOperationException();
@@ -3797,6 +3800,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canCurrencyForLocale
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canDateTimeSymbolsForLocale

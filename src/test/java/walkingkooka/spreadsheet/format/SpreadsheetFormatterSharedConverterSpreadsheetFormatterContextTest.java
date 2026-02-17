@@ -46,6 +46,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
+import java.util.Objects;
 
 public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
     DecimalNumberContextDelegator {
@@ -180,6 +181,10 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
+                        (l) -> {
+                            Objects.requireNonNull(l, "locale");
+                            throw new UnsupportedOperationException();
+                        }, // canCurrencyForLocale
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canDateTimeSymbolsForLocale

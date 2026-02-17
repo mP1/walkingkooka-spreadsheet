@@ -1259,6 +1259,9 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                     ConverterContexts.basic(
                         (l) -> {
                             throw new UnsupportedOperationException();
+                        }, // canCurrencyForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
                         }, // canDateTimeSymbolsForLocale
                         (l) -> {
                             throw new UnsupportedOperationException();

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContexts;
@@ -101,6 +102,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
+                CurrencyContexts.fake(),
                 spreadsheetEnvironmentContext,
                 LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE),
                 SpreadsheetProviders.fake(),

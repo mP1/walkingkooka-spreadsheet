@@ -41,6 +41,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContextDelegato
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -97,6 +98,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Optional<Currency> currencyForLocale(final Locale locale) {
+        Objects.requireNonNull(locale, "locale");
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public boolean canNumbersHaveGroupSeparator() {

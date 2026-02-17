@@ -152,6 +152,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 Indentation.SPACES2,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                CURRENCY_CONTEXT,
                 LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -4772,6 +4773,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             Indentation.SPACES2,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
+            CURRENCY_CONTEXT,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

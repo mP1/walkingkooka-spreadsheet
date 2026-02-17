@@ -107,6 +107,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
             CONVERTER_PROVIDER,
+            CURRENCY_CONTEXT,
             LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );
@@ -299,6 +300,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 throw new UnsupportedOperationException();
             },
             LINE_ENDING,
+            CURRENCY_CONTEXT,
             LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

@@ -56,6 +56,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -277,6 +278,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             JSON_NODE_MARSHALL_CONTEXT,
             JSON_NODE_UNMARSHALL_CONTEXT
         );
+
+        @Override
+        public Optional<Currency> currencyForLocale(final Locale locale) {
+            return CURRENCY_CONTEXT.currencyForLocale(locale);
+        }
 
         @Override
         public boolean canNumbersHaveGroupSeparator() {

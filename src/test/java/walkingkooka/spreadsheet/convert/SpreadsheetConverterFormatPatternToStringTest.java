@@ -309,6 +309,9 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                     ConverterContexts.basic(
                         (l) -> {
                             throw new UnsupportedOperationException();
+                        }, // canCurrencyForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
                         }, // canDateTimeSymbolsForLocale
                         (l) -> {
                             throw new UnsupportedOperationException();

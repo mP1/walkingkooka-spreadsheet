@@ -243,6 +243,10 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 Converters.fake(),
                 ConverterContexts.basic(
                     (l) -> {
+                        Objects.requireNonNull(l, "locale");
+                        throw new UnsupportedOperationException();
+                    }, // canCurrencyForLocale
+                    (l) -> {
                         throw new UnsupportedOperationException();
                     }, // canDateTimeSymbolsForLocale
                     (l) -> {

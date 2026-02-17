@@ -28,6 +28,8 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContexts;
@@ -297,6 +299,7 @@ public class J2clTest {
         );
 
         final LineEnding lineEnding = LineEnding.NL;
+        final CurrencyContext currencyContext = CurrencyContexts.fake();
         final ProviderContext providerContext = ProviderContexts.fake();
 
         return new FakeSpreadsheetEngineContext() {
@@ -372,6 +375,7 @@ public class J2clTest {
                             LABEL_NAME_RESOLVER,
                             lineEnding,
                             converterProvider,
+                            currencyContext,
                             this.localeContext,
                             providerContext
                         ),
@@ -427,6 +431,7 @@ public class J2clTest {
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
+                        currencyContext,
                         this.localeContext,
                         SpreadsheetProviders.basic(
                             converterProvider,

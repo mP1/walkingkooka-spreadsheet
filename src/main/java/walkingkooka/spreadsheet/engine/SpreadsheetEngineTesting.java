@@ -2937,6 +2937,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 (l) -> {
                     Objects.requireNonNull(l, "locale");
                     throw new UnsupportedOperationException();
+                }, // canCurrencyForLocale
+                (l) -> {
+                    Objects.requireNonNull(l, "locale");
+                    throw new UnsupportedOperationException();
                 }, // canDateTimeSymbolsForLocale
                 (l) -> {
                     Objects.requireNonNull(l, "locale");

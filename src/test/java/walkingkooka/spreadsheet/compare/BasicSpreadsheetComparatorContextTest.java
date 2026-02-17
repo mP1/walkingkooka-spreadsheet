@@ -107,6 +107,10 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                 Converters.fake(),
                 ConverterContexts.basic(
                     (l) -> {
+                        Objects.requireNonNull(l, "locale");
+                        throw new UnsupportedOperationException();
+                    }, // canCurrencyForLocale
+                    (l) -> {
                         throw new UnsupportedOperationException();
                     }, // canDateTimeSymbolsForLocale
                     (l) -> {

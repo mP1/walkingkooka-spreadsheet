@@ -1420,6 +1420,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ConverterContexts.basic(
                             (l) -> {
                                 throw new UnsupportedOperationException();
+                            }, // canCurrencyForLocale
+                            (l) -> {
+                                throw new UnsupportedOperationException();
                             }, // canDateTimeSymbolsForLocale
                             (l) -> {
                                 throw new UnsupportedOperationException();
@@ -2054,6 +2057,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                CURRENCY_CONTEXT,
                 LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2101,6 +2105,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                CURRENCY_CONTEXT,
                 LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2437,6 +2442,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 ConverterProviders.converters(),
+                CURRENCY_CONTEXT,
                 LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             );
