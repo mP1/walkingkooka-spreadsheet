@@ -4263,6 +4263,9 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         ConverterContexts.basic(
                             (l) -> {
                                 throw new UnsupportedOperationException();
+                            }, // canCurrencyForLocale
+                            (l) -> {
+                                throw new UnsupportedOperationException();
                             }, // canDateTimeSymbolsForLocale
                             (l) -> {
                                 throw new UnsupportedOperationException();

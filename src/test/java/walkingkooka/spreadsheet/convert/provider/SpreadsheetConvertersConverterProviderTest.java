@@ -183,6 +183,9 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         ConverterContexts.basic(
                             (l) -> {
                                 throw new UnsupportedOperationException();
+                            }, // canCurrencyForLocale
+                            (l) -> {
+                                throw new UnsupportedOperationException();
                             }, // canDateTimeSymbolsForLocale
                             (l) -> {
                                 throw new UnsupportedOperationException();

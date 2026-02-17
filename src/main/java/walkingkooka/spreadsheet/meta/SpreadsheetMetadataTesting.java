@@ -491,6 +491,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.spreadsheet(
             PluginStores.fake(),
+            CURRENCY_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
@@ -593,6 +594,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
         CONVERTER_PROVIDER,
+        CURRENCY_CONTEXT,
         LOCALE_CONTEXT,
         PROVIDER_CONTEXT
     );
@@ -628,6 +630,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
+        CURRENCY_CONTEXT,
         LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
@@ -640,6 +643,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
+        CURRENCY_CONTEXT,
         LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT

@@ -786,6 +786,12 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
+        public Optional<Currency> currencyForLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
             return LOCALE_CONTEXT.dateTimeSymbolsForLocale(locale);
         }

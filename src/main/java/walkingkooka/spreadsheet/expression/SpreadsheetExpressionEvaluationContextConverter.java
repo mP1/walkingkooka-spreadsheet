@@ -73,6 +73,7 @@ import walkingkooka.validation.form.FormField;
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -187,6 +188,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
      */
     // @VisibleForTesting
     final Converter<SpreadsheetExpressionEvaluationContext> converter;
+
+    @Override
+    public Optional<Currency> currencyForLocale(final Locale locale) {
+        return this.context.currencyForLocale(locale);
+    }
 
     @Override
     public boolean canNumbersHaveGroupSeparator() {

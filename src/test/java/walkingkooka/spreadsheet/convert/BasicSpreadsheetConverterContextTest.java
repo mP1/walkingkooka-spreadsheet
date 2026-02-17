@@ -47,6 +47,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -207,6 +208,10 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
                 ConverterContexts.basic(
+                    (l) -> {
+                        Objects.requireNonNull(l, "locale");
+                        throw new UnsupportedOperationException();
+                    }, // canCurrencyForLocale
                     (l) -> {
                         throw new UnsupportedOperationException();
                     }, // canDateTimeSymbolsForLocale

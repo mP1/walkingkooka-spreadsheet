@@ -542,6 +542,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
+                CURRENCY_CONTEXT,
                 localeContext,
                 spreadsheetEnvironmentContext,
                 SpreadsheetMetadataContexts.basic(

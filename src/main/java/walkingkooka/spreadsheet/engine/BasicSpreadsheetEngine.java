@@ -827,6 +827,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context, // ConverterProvider
                 context.lineEnding(),
                 context, // SpreadsheetLabelNameResolver
+                context, // CurrencyContext
                 context, // LocaleContext
                 providerContext// ProviderContext
             )
@@ -1875,6 +1876,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 context, // SpreadsheetLabelNameResolver
                                 context.lineEnding(),
                                 context, // ConverterProvider
+                                context, // CurrencyContext
                                 context, // LocaleContext
                                 providerContext // ProviderContext
                             )

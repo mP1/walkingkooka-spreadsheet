@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterLike;
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextMissingValues;
@@ -84,6 +85,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
     static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                          final CurrencyContext currencyContext,
                                                                                           final LocaleContext localeContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -91,6 +93,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                                                                                           final SpreadsheetProvider spreadsheetProvider,
                                                                                           final ProviderContext providerContext) {
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
+        Objects.requireNonNull(currencyContext, "currencyContext");
         Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
@@ -101,6 +104,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
+                currencyContext,
                 spreadsheetEnvironmentContext,
                 localeContext,
                 spreadsheetProvider,

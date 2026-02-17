@@ -78,6 +78,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             spreadsheetContextSupplier,
             currencyContext,
             SpreadsheetEnvironmentContextFactory.with(
+                currencyContext,
                 spreadsheetEnvironmentContext,
                 localeContext,
                 spreadsheetProvider,
@@ -196,6 +197,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
             spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
                 this.spreadsheetContextSupplier,
+                spreadsheetEnvironmentContextFactory.currencyContext(),
                 spreadsheetEnvironmentContextFactory.localeContext(),
                 spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(),
                 this.spreadsheetMetadataContext,

@@ -19,6 +19,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -123,6 +124,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
     public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+                                                                                       final CurrencyContext currencyContext,
                                                                                        final LocaleContext localeContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -131,6 +133,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                                        final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
             spreadsheetContextSupplier,
+            currencyContext,
             localeContext,
             spreadsheetEnvironmentContext,
             spreadsheetMetadataContext,

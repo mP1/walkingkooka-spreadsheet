@@ -131,6 +131,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     this.indentation(),
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
+                    spreadsheetContext, // CurrencyContext
                     spreadsheetContext, // SpreadsheetProvider
                     spreadsheetContext, // LocaleContext
                     spreadsheetContext.providerContext()
@@ -311,6 +312,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                 this.indentation(),
                 this, // SpreadsheetLabelNameResolver,
                 this.lineEnding(),
+                context, // CurrencyContext
                 context, // LocaleContext
                 context, // spreadsheetProvider,
                 context.providerContext() // ProviderContext

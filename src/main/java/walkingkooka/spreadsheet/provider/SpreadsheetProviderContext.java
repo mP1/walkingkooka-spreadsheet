@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
@@ -57,12 +58,14 @@ final class SpreadsheetProviderContext implements ProviderContext,
     ConverterContextDelegator {
 
     static SpreadsheetProviderContext with(final PluginStore pluginStore,
+                                           final CurrencyContext currencyContext,
                                            final EnvironmentContext environmentContext,
                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                            final LocaleContext localeContext) {
         return new SpreadsheetProviderContext(
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
+            Objects.requireNonNull(currencyContext, "currencyContext"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
             Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext"),
             Objects.requireNonNull(localeContext, "localeContext")
@@ -71,12 +74,15 @@ final class SpreadsheetProviderContext implements ProviderContext,
 
     private SpreadsheetProviderContext(final PluginStore pluginStore,
                                        final ConverterContext converterContext,
+                                       final CurrencyContext currencyContext,
                                        final EnvironmentContext environmentContext,
                                        final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
                                        final LocaleContext localeContext) {
         this.pluginStore = pluginStore;
 
         this.converterContext = converterContext;
+
+        this.currencyContext = currencyContext;
         this.environmentContext = environmentContext;
         this.localeContext = localeContext;
         this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
@@ -126,6 +132,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
                     ConverterContexts.basic(
+                        this.currencyContext, // canCurrencyForLocale
                         localeContext, // canDateTimeSymbolsForLocale
                         localeContext, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
@@ -176,11 +183,14 @@ final class SpreadsheetProviderContext implements ProviderContext,
             new SpreadsheetProviderContext(
                 this.pluginStore,
                 null, // recreate because environmentContext changed.
+                this.currencyContext,
                 Objects.requireNonNull(environmentContext, "environmentContext"),
                 this.jsonNodeMarshallUnmarshallContext,
                 this.localeContext
             );
     }
+
+    private final CurrencyContext currencyContext;
 
     private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
