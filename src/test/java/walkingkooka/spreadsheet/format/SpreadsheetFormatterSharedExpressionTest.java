@@ -199,6 +199,12 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDateTimeSymbolsForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         Indentation.SPACES2,

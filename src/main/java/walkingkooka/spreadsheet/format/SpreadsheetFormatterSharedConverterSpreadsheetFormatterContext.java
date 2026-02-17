@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -44,8 +42,7 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext,
     StorageConverterContextDelegator,
-    JsonNodeMarshallUnmarshallContextDelegator,
-    LocaleContextDelegator {
+    JsonNodeMarshallUnmarshallContextDelegator {
 
     static SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext with(final SpreadsheetConverterContext context) {
         return new SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext(context);
@@ -149,18 +146,6 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
         return before.equals(after) ?
             this :
             new SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext(after);
-    }
-
-    // LocaleContextDelegator...........................................................................................
-
-    @Override
-    public LocaleContext localeContext() {
-        return this.context;
-    }
-
-    @Override
-    public void setLocale(final Locale locale) {
-        this.context.setLocale(locale);
     }
 
     // HasSpreadsheetMetadata............................................................................................

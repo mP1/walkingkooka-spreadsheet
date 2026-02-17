@@ -126,6 +126,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
                     ConverterContexts.basic(
+                        localeContext, // canDateTimeSymbolsForLocale
+                        localeContext, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
                         environmentContext.indentation(),

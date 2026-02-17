@@ -306,6 +306,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             missing.reportIfMissing();
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
+            final LocaleContext localeContext = this.localeContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
                 spreadsheetEnvironmentContext, // HasUserDirectories
@@ -317,6 +318,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                            localeContext, // canDateTimeSymbolsForLocale
+                            localeContext, // canDecimalNumberSymbolsForLocale
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
                             spreadsheetEnvironmentContext.indentation(),

@@ -31,7 +31,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.MathContext;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -165,11 +164,6 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
 
         @Override
         public SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void setLocale(final Locale locale) {
             throw new UnsupportedOperationException();
         }
 

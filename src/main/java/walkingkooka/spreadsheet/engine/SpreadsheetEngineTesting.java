@@ -72,6 +72,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -2933,6 +2934,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return ExpressionNumberConverterContexts.basic(
             this.converter(),
             ConverterContexts.basic(
+                (l) -> {
+                    Objects.requireNonNull(l, "locale");
+                    throw new UnsupportedOperationException();
+                }, // canDateTimeSymbolsForLocale
+                (l) -> {
+                    Objects.requireNonNull(l, "locale");
+                    throw new UnsupportedOperationException();
+                }, // canDecimalNumberSymbolsForLocale
                 false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
                 INDENTATION,

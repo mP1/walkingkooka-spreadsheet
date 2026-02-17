@@ -24,7 +24,6 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.environment.convert.EnvironmentConverters;
-import walkingkooka.locale.convert.LocaleConverters;
 import walkingkooka.net.Url;
 import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
@@ -209,17 +208,17 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link LocaleConverters#dateTimeSymbols()}
+     * {@link Converters#localeToDateTimeSymbols()}
      */
     public static Converter<SpreadsheetConverterContext> dateTimeSymbols() {
-        return LocaleConverters.dateTimeSymbols();
+        return Converters.localeToDateTimeSymbols();
     }
 
     /**
-     * {@link LocaleConverters#decimalNumberSymbols()}
+     * {@link Converters#localeToDecimalNumberSymbols()}
      */
     public static Converter<SpreadsheetConverterContext> decimalNumberSymbols() {
-        return LocaleConverters.decimalNumberSymbols();
+        return Converters.localeToDecimalNumberSymbols();
     }
 
     /**
@@ -374,7 +373,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> LOCALE = namedCollection(
         "locale",
         localeToText(),
-        LocaleConverters.locale(),
+        Converters.toLocale(),
         dateTimeSymbols(),
         decimalNumberSymbols()
     );

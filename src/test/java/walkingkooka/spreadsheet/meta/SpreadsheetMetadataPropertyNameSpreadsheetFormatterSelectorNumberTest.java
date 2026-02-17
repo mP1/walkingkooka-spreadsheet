@@ -141,6 +141,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                            (l) -> {
+                                throw new UnsupportedOperationException();
+                            }, // canDateTimeSymbolsForLocale
+                            (l) -> {
+                                throw new UnsupportedOperationException();
+                            }, // canDecimalNumberSymbolsForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,

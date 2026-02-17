@@ -20,8 +20,11 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -63,6 +66,7 @@ import java.util.Set;
 abstract class SpreadsheetExpressionEvaluationContextShared implements SpreadsheetExpressionEvaluationContext,
     SpreadsheetEnvironmentContextDelegator,
     SpreadsheetConverterContextDelegator,
+    LocaleContextDelegator,
     TerminalContextDelegator {
 
     SpreadsheetExpressionEvaluationContextShared(final TerminalContext terminalContext) {
@@ -198,6 +202,20 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     }
 
     abstract Optional<Optional<Object>> handleSpreadsheetExpressionReference(final SpreadsheetExpressionReference reference);
+
+    // LocaleContextDelegator...........................................................................................
+
+    @Override
+    public final Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+        return this.localeContext()
+            .dateTimeSymbolsForLocale(locale);
+    }
+
+    @Override
+    public final Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+        return this.localeContext()
+            .decimalNumberSymbolsForLocale(locale);
+    }
 
     // TerminalContextDelegator.........................................................................................
 

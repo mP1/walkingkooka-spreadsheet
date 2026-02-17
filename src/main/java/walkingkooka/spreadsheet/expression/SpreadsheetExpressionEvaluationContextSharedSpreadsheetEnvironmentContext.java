@@ -328,6 +328,13 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         );
     }
 
+    // LocaleContext....................................................................................................
+
+    @Override
+    public LocaleContext localeContext() {
+        return this.spreadsheetEnvironmentContextFactory.localeContext();
+    }
+
     // ValidationExpressionEvaluationContext............................................................................
 
     @Override

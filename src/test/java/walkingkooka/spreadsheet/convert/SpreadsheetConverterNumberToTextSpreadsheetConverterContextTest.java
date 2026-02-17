@@ -39,6 +39,7 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<SpreadsheetConverterNumberToTextSpreadsheetConverterContext>,
@@ -180,6 +181,16 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
     }
 
     @Override
+    public void testDateTimeSymbolsForLocaleWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testDecimalNumberSymbolsForLocaleWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetConverterNumberToTextSpreadsheetConverterContext createContext() {
         final Locale locale = Locale.ENGLISH;
         final LocaleContext localeContext = LocaleContexts.jre(locale);
@@ -196,6 +207,14 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
+                            (l) -> {
+                                Objects.requireNonNull(l, "locale");
+                                throw new UnsupportedOperationException();
+                            }, // canDateTimeSymbolsForLocale
+                            (l) -> {
+                                Objects.requireNonNull(l, "locale");
+                                throw new UnsupportedOperationException();
+                            }, // canDecimalNumberSymbolsForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             INDENTATION,

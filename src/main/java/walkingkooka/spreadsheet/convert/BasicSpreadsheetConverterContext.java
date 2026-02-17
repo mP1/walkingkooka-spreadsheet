@@ -21,8 +21,9 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -43,7 +44,6 @@ import java.util.Optional;
 final class BasicSpreadsheetConverterContext implements SpreadsheetConverterContext,
     HasUserDirectoriesDelegator,
     JsonNodeConverterContextDelegator,
-    LocaleContextDelegator,
     UsesToStringBuilder {
 
     static BasicSpreadsheetConverterContext with(final HasUserDirectories hasUserDirectories,
@@ -192,18 +192,19 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     // LocaleContext....................................................................................................
 
     @Override
+    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+        return this.localeContext.dateTimeSymbolsForLocale(locale);
+    }
+
+    @Override
+    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+        return this.localeContext.decimalNumberSymbolsForLocale(locale);
+    }
+
+    // without this override JsonNodeConverterContextDelegator#locale
+    @Override
     public Locale locale() {
         return this.localeContext.locale();
-    }
-
-    @Override
-    public void setLocale(final Locale locale) {
-        this.localeContext.setLocale(locale);
-    }
-
-    @Override
-    public LocaleContext localeContext() {
-        return this.localeContext;
     }
 
     private final LocaleContext localeContext;

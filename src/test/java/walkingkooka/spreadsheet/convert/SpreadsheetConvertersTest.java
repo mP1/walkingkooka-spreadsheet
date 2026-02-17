@@ -43,7 +43,6 @@ import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.locale.convert.LocaleConverters;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -560,7 +559,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
                 SpreadsheetConverters.text(),
-                LocaleConverters.locale()
+                Converters.toLocale()
             )
         );
 
@@ -615,7 +614,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
             Lists.of(
                 SpreadsheetConverters.text(),
-                LocaleConverters.locale()
+                Converters.toLocale()
             )
         );
 
@@ -3561,6 +3560,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDateTimeSymbolsForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
@@ -3792,6 +3797,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDateTimeSymbolsForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
