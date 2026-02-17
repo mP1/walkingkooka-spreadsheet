@@ -204,6 +204,12 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         }
 
         @Override
+        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            Objects.requireNonNull(languageTag, "languageTag");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public Locale locale() {
             return Locale.ENGLISH;
         }

@@ -958,6 +958,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     }
 
     @Override
+    public void testLocaleForLanguageTagWithNullFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSetCurrencyWithDifferentAndWatcher() {
         throw new UnsupportedOperationException();
     }

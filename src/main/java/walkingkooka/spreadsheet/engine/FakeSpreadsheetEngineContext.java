@@ -243,6 +243,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
+    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Number exchangeRate(final Currency from,
                                final Currency to,
                                final Optional<LocalDateTime> dateTime) {
