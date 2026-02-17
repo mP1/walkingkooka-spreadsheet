@@ -26,8 +26,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcesso
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
-import java.util.Locale;
-import java.util.Objects;
 
 public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements SpreadsheetFormatterProviderSamplesContextTesting<TestSpreadsheetFormatterProviderSamplesContextDelegator>,
     SpreadsheetMetadataTesting,
@@ -56,12 +54,6 @@ public class SpreadsheetFormatterProviderSamplesContextDelegatorTest implements 
                 SPREADSHEET_FORMATTER_CONTEXT,
                 PROVIDER_CONTEXT
             );
-        }
-
-        @Override
-        public void setLocale(final Locale locale) {
-            Objects.requireNonNull(locale, "locale");
-            throw new UnsupportedOperationException();
         }
 
         @Override

@@ -142,6 +142,12 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDateTimeSymbolsForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,

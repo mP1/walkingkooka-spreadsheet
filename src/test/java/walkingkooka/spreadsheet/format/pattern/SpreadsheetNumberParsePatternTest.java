@@ -1257,6 +1257,12 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 ExpressionNumberConverterContexts.basic(
                     Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                     ConverterContexts.basic(
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDateTimeSymbolsForLocale
+                        (l) -> {
+                            throw new UnsupportedOperationException();
+                        }, // canDecimalNumberSymbolsForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,

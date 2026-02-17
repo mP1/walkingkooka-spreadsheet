@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -34,7 +32,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -205,40 +202,6 @@ public class FakeSpreadsheetConverterContext extends FakeExpressionNumberConvert
 
     @Override
     public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
-        throw new UnsupportedOperationException();
-    }
-
-    // LocaleContext....................................................................................................
-
-    @Override
-    public Set<Locale> availableLocales() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<Locale> findByLocaleText(final String text,
-                                        final int offset,
-                                        final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<String> localeText(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 }

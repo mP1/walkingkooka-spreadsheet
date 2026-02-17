@@ -23,10 +23,12 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.convert.ConverterLike;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -394,6 +396,16 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public LocaleContext localeContext() {
         return this.context;
+    }
+
+    @Override
+    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+        return this.context.dateTimeSymbolsForLocale(locale);
+    }
+
+    @Override
+    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+        return this.context.decimalNumberSymbolsForLocale(locale);
     }
 
     // EnvironmentContext...............................................................................................

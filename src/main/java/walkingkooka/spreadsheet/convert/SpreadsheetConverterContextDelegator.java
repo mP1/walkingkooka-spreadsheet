@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
@@ -35,8 +33,7 @@ import java.util.Optional;
 
 public interface SpreadsheetConverterContextDelegator extends SpreadsheetConverterContext,
     HasUserDirectoriesDelegator,
-    JsonNodeConverterContextDelegator,
-    LocaleContextDelegator {
+    JsonNodeConverterContextDelegator {
 
     @Override
     default JsonNodeConverterContext jsonNodeConverterContext() {
@@ -45,13 +42,8 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
 
     @Override
     default Locale locale() {
-        return this.localeContext()
+        return this.spreadsheetConverterContext()
             .locale();
-    }
-
-    @Override
-    default LocaleContext localeContext() {
-        return this.spreadsheetConverterContext();
     }
 
     @Override

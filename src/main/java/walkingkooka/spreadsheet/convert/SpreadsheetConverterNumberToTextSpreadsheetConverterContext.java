@@ -22,11 +22,11 @@ import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -49,7 +49,6 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
-    LocaleContextDelegator,
     SpreadsheetLabelNameResolverDelegator {
 
     static SpreadsheetConverterNumberToTextSpreadsheetConverterContext with(final SpreadsheetConverterContext context) {
@@ -89,6 +88,17 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
+    public Optional<DateTimeSymbols> dateTimeSymbolsForLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+
+    @Override
     public boolean canNumbersHaveGroupSeparator() {
         throw new UnsupportedOperationException();
     }
@@ -111,6 +121,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     @Override
     public LineEnding lineEnding() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Locale locale() {
+        return this.spreadsheetConverterContext.locale();
     }
 
     @Override
@@ -177,23 +192,6 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
 
     @Override
     public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
-        return this.spreadsheetConverterContext;
-    }
-
-    // LocaleContextDelegator...........................................................................................
-
-    @Override
-    public Locale locale() {
-        return this.spreadsheetConverterContext.locale();
-    }
-
-    @Override
-    public void setLocale(final Locale locale) {
-        this.spreadsheetConverterContext.setLocale(locale);
-    }
-
-    @Override
-    public LocaleContext localeContext() {
         return this.spreadsheetConverterContext;
     }
 
