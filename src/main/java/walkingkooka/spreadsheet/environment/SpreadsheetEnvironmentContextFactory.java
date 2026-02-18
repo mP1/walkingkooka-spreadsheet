@@ -325,9 +325,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         Converters.fake(),
                         ConverterContexts.basic(
                             this.currencyContext, // canCurrencyForLocale
-                            localeContext, // canDateTimeSymbolsForLocale
-                            localeContext, // canDecimalNumberSymbolsForLocale
-                            localeContext, // canLocaleForLanguageTag
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
                             spreadsheetEnvironmentContext.indentation(),
@@ -335,7 +332,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                             valueSeparator, // valueSeparator
                             Converters.fake(),
                             dateTimeContext,
-                            decimalNumberContext
+                            decimalNumberContext,
+                            localeContext
                         ),
                         expressionNumberKind
                     ),

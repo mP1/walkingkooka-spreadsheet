@@ -24,6 +24,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
@@ -334,15 +335,6 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                             (l) -> {
                                 throw new UnsupportedOperationException();
                             }, // canCurrencyForLocale
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canDateTimeSymbolsForLocale
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canDecimalNumberSymbolsForLocale
-                            (lt) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canLocaleForLanguageTag
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             TreePrintableTesting.INDENTATION,
@@ -350,7 +342,8 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                             ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.fake(),
-                            this
+                            this,
+                            LocaleContexts.fake()
                         ),
                         ExpressionNumberKind.DEFAULT
                     )

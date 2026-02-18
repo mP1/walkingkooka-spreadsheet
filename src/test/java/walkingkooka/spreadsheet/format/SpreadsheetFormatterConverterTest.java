@@ -145,15 +145,6 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canCurrencyForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDateTimeSymbolsForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDecimalNumberSymbolsForLocale
-                        (lt) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
@@ -161,7 +152,8 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                         ',', // valueSeparator
                         Converters.fake(),
                         DateTimeContexts.fake(),
-                        DecimalNumberContexts.american(MathContext.UNLIMITED)
+                        DecimalNumberContexts.american(MathContext.UNLIMITED),
+                        LocaleContexts.fake()
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),

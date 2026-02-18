@@ -27,6 +27,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
@@ -2938,18 +2939,6 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     Objects.requireNonNull(l, "locale");
                     throw new UnsupportedOperationException();
                 }, // canCurrencyForLocale
-                (l) -> {
-                    Objects.requireNonNull(l, "locale");
-                    throw new UnsupportedOperationException();
-                }, // canDateTimeSymbolsForLocale
-                (l) -> {
-                    Objects.requireNonNull(l, "locale");
-                    throw new UnsupportedOperationException();
-                }, // canDecimalNumberSymbolsForLocale
-                (lt) -> {
-                    Objects.requireNonNull(lt, "languageTag");
-                    throw new UnsupportedOperationException();
-                }, // canLocaleForLanguageTag
                 false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
                 INDENTATION,
@@ -2957,7 +2946,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 ',', // valueSeparator
                 Converters.fake(),
                 this.dateTimeContext(),
-                this.decimalNumberContext()
+                this.decimalNumberContext(),
+                LocaleContexts.jre(
+                    this.decimalNumberContext()
+                        .locale()
+                )
             ),
             this.expressionNumberKind()
         );

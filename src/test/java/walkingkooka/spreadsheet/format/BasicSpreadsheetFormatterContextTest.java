@@ -246,16 +246,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                         Objects.requireNonNull(l, "locale");
                         throw new UnsupportedOperationException();
                     }, // canCurrencyForLocale
-                    (l) -> {
-                        throw new UnsupportedOperationException();
-                    }, // canDateTimeSymbolsForLocale
-                    (l) -> {
-                        throw new UnsupportedOperationException();
-                    }, // canDecimalNumberSymbolsForLocale
-                    (lt) -> {
-                        Objects.requireNonNull(lt, "languageTag");
-                        throw new UnsupportedOperationException();
-                    }, // canLocaleForLanguageTag
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     INDENTATION,
@@ -263,7 +253,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                     ',', // valueSeparator
                     Converters.fake(),
                     DATE_TIME_CONTEXT,
-                    DECIMAL_NUMBER_CONTEXT
+                    DECIMAL_NUMBER_CONTEXT,
+                    LocaleContexts.jre(LOCALE)
                 ),
                 EXPRESSION_NUMBER_KIND
             ),

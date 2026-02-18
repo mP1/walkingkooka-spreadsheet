@@ -211,17 +211,6 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                                 Objects.requireNonNull(l, "locale");
                                 throw new UnsupportedOperationException();
                             }, // canCurrencyForLocale
-                            (l) -> {
-                                Objects.requireNonNull(l, "locale");
-                                throw new UnsupportedOperationException();
-                            }, // canDateTimeSymbolsForLocale
-                            (l) -> {
-                                Objects.requireNonNull(l, "locale");
-                                throw new UnsupportedOperationException();
-                            }, // canDecimalNumberSymbolsForLocale
-                            (lt) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canLocaleForLanguageTag
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             INDENTATION,
@@ -236,7 +225,8 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                                 20,
                                 LocalDateTime::now
                             ),
-                            DECIMAL_NUMBER_CONTEXT
+                            DECIMAL_NUMBER_CONTEXT,
+                            LocaleContexts.fake()
                         ),
                         expressionNumberKind
                     ),

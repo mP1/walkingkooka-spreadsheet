@@ -184,15 +184,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                             (l) -> {
                                 throw new UnsupportedOperationException();
                             }, // canCurrencyForLocale
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canDateTimeSymbolsForLocale
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canDecimalNumberSymbolsForLocale
-                            (lt) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canLocaleForLanguageTag
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
@@ -207,7 +198,8 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                                 20,
                                 LocalDateTime::now
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32)
+                            DecimalNumberContexts.american(MathContext.DECIMAL32),
+                            LocaleContexts.fake()
                         ),
                         ExpressionNumberKind.BIG_DECIMAL
                     ),
