@@ -135,6 +135,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         this.currencyContext, // canCurrencyForLocale
                         localeContext, // canDateTimeSymbolsForLocale
                         localeContext, // canDecimalNumberSymbolsForLocale
+                        localeContext, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
                         environmentContext.indentation(),

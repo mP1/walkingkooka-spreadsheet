@@ -1144,6 +1144,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         currencyContext, // canCurrencyForLocale
                         localeContext, // canDateTimeSymbolsForLocale
                         localeContext, // canDecimalNumberSymbolsForLocale
+                        localeContext, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
                         indentation,

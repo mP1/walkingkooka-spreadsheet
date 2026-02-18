@@ -327,6 +327,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                             this.currencyContext, // canCurrencyForLocale
                             localeContext, // canDateTimeSymbolsForLocale
                             localeContext, // canDecimalNumberSymbolsForLocale
+                            localeContext, // canLocaleForLanguageTag
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
                             spreadsheetEnvironmentContext.indentation(),
