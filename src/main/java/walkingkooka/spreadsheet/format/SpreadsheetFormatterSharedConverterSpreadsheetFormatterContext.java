@@ -117,6 +117,11 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     }
 
     @Override
+    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        return this.context.localeForLanguageTag(languageTag);
+    }
+
+    @Override
     public MathContext mathContext() {
         return this.context.mathContext();
     }

@@ -235,6 +235,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
+    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        return this.context.localeForLanguageTag(languageTag);
+    }
+
+    @Override
     public MathContext mathContext() {
         return this.context.mathContext();
     }

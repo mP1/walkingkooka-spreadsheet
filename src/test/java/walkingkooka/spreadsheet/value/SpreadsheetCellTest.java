@@ -2672,6 +2672,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             (String cc) -> Optional.ofNullable(
                 Currency.getInstance(cc)
             ),
+            (String lt) -> Optional.of(
+                Locale.forLanguageTag(lt)
+            ),
             ExpressionNumberKind.BIG_DECIMAL,
             MathContext.UNLIMITED
         );

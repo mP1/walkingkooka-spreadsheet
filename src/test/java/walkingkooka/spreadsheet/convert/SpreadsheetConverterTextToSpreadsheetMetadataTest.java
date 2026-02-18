@@ -37,6 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Currency;
+import java.util.Locale;
 import java.util.Optional;
 
 public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends SpreadsheetConverterTestCase<SpreadsheetConverterTextToSpreadsheetMetadata> {
@@ -141,6 +142,9 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
             private final JsonNodeUnmarshallContext unmarshallContext = JsonNodeUnmarshallContexts.basic(
                 (String cc) -> Optional.ofNullable(
                     Currency.getInstance(cc)
+                ),
+                (String lt) -> Optional.of(
+                    Locale.forLanguageTag(lt)
                 ),
                 ExpressionNumberKind.BIG_DECIMAL,
                 MathContext.UNLIMITED

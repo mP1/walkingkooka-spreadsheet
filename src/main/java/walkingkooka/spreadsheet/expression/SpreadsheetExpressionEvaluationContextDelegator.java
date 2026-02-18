@@ -92,6 +92,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
+    default Optional<Locale> localeForLanguageTag(final String languageTag) {
+        return this.spreadsheetExpressionEvaluationContext()
+            .localeForLanguageTag(languageTag);
+    }
+
+    @Override
     default SpreadsheetConverterContext spreadsheetConverterContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }

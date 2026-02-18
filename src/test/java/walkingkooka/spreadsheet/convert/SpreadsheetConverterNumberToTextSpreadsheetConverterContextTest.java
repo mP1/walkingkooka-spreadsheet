@@ -236,6 +236,9 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                             (String cc) -> Optional.ofNullable(
                                 Currency.getInstance(cc)
                             ),
+                            (String lt) -> Optional.of(
+                                Locale.forLanguageTag(lt)
+                            ),
                             expressionNumberKind,
                             DECIMAL_NUMBER_CONTEXT.mathContext()
                         )
