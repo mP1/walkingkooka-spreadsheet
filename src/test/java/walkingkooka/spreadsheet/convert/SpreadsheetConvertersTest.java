@@ -573,6 +573,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             return LocaleContexts.jre(locale)
                 .dateTimeSymbolsForLocale(locale);
         }
+
+        @Override
+        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            return Optional.of(
+                Locale.forLanguageTag(languageTag)
+            );
+        }
     };
 
     // decimalNumberSymbols.............................................................................................
@@ -627,6 +634,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
             return LocaleContexts.jre(locale)
                 .decimalNumberSymbolsForLocale(locale);
+        }
+
+        @Override
+        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            return Optional.of(
+                Locale.forLanguageTag(languageTag)
+            );
         }
     };
 
@@ -1461,6 +1475,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         @Override
         public Optional<DecimalNumberSymbols> decimalNumberSymbolsForLocale(final Locale locale) {
             return this.localeContext.decimalNumberSymbolsForLocale(locale);
+        }
+
+        @Override
+        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            return Optional.of(
+                Locale.forLanguageTag(languageTag)
+            );
         }
 
         private final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
