@@ -3584,15 +3584,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canCurrencyForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDateTimeSymbolsForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDecimalNumberSymbolsForLocale
-                        (lt) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
@@ -3610,7 +3601,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                                 throw new UnsupportedOperationException("now() not supported");
                             }
                         ),
-                        DecimalNumberContexts.fake()
+                        DecimalNumberContexts.fake(),
+                        LocaleContexts.fake()
                     ),
                     ExpressionNumberKind.BIG_DECIMAL
                 ),
@@ -3827,15 +3819,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canCurrencyForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDateTimeSymbolsForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDecimalNumberSymbolsForLocale
-                        (lt) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
@@ -3843,7 +3826,8 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         ',', // valueSeparator
                         Converters.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
-                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        DecimalNumberContexts.american(MathContext.DECIMAL32),
+                        LocaleContexts.fake()
                     ),
                     kind
                 ),

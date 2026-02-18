@@ -1142,9 +1142,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     Converters.fake(),
                     ConverterContexts.basic(
                         currencyContext, // canCurrencyForLocale
-                        localeContext, // canDateTimeSymbolsForLocale
-                        localeContext, // canDecimalNumberSymbolsForLocale
-                        localeContext, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
                         indentation,
@@ -1152,7 +1149,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
                         dateTimeContext,
-                        decimalNumberContext
+                        decimalNumberContext,
+                        localeContext
                     ),
                     expressionNumberKind
                 ),

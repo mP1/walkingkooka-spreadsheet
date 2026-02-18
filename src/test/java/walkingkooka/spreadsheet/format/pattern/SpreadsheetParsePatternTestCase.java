@@ -874,15 +874,6 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canCurrencyForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDateTimeSymbolsForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDecimalNumberSymbolsForLocale
-                        (lt) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
@@ -890,7 +881,8 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                         ',', // valueSeparator
                         Converters.fake(),
                         this.dateTimeContext(),
-                        this.decimalNumberContext()
+                        this.decimalNumberContext(),
+                        LocaleContexts.fake()
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),

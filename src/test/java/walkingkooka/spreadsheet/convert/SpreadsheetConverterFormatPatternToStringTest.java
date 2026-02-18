@@ -310,15 +310,6 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                         (l) -> {
                             throw new UnsupportedOperationException();
                         }, // canCurrencyForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDateTimeSymbolsForLocale
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canDecimalNumberSymbolsForLocale
-                        (lt) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canLocaleForLanguageTag
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
@@ -334,7 +325,8 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                             50,
                             LocalDateTime::now
                         ),
-                        DecimalNumberContexts.american(MathContext.DECIMAL128)
+                        DecimalNumberContexts.american(MathContext.DECIMAL128),
+                        LocaleContexts.fake()
                     ),
                     KIND
                 ),

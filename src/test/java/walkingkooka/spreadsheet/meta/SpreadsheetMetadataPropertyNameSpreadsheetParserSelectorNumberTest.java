@@ -97,15 +97,6 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                             (l) -> {
                                 throw new UnsupportedOperationException();
                             }, // canCurrencyForLocale
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canDateTimeSymbolsForLocale
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canDecimalNumberSymbolsForLocale
-                            (lt) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canLocaleForLanguageTag
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
@@ -121,7 +112,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                                 20,
                                 LocalDateTime::now
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32)
+                            DecimalNumberContexts.american(MathContext.DECIMAL32),
+                            LocaleContexts.jre(locale)
                         ),
                         kind
                     ),
