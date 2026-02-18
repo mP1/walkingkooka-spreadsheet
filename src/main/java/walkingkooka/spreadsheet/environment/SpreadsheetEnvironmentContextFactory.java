@@ -547,6 +547,9 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 (String cc) -> Optional.ofNullable(
                     Currency.getInstance(cc)
                 ),
+                (String lt) -> Optional.of(
+                    Locale.forLanguageTag(lt)
+                ),
                 expressionNumberKind,
                 mathContext
             );

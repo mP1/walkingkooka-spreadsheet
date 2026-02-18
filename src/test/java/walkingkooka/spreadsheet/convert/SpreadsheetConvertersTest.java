@@ -1102,6 +1102,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             (String cc) -> Optional.ofNullable(
                 Currency.getInstance(cc)
             ),
+            (String lt) -> Optional.of(
+                Locale.forLanguageTag(lt)
+            ),
             EXPRESSION_NUMBER_KIND,
             MathContext.DECIMAL32
         )
@@ -3346,6 +3349,9 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 private final JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
                     (String cc) -> Optional.ofNullable(
                         Currency.getInstance(cc)
+                    ),
+                    (String lt) -> Optional.of(
+                        Locale.forLanguageTag(lt)
                     ),
                     ExpressionNumberKind.BIG_DECIMAL,
                     MathContext.DECIMAL32

@@ -237,6 +237,9 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     (String cc) -> Optional.ofNullable(
                         Currency.getInstance(cc)
                     ),
+                    (String lt) -> Optional.of(
+                        Locale.forLanguageTag(lt)
+                    ),
                     KIND,
                     this.decimalNumberContext()
                         .mathContext()

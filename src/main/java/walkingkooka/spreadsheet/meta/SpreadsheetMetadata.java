@@ -845,6 +845,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             (String cc) -> Optional.ofNullable(
                 Currency.getInstance(cc)
             ),
+            (String lt) -> Optional.of(
+                Locale.forLanguageTag(lt)
+            ),
             expressionNumberKind,
             mathContext
         );
@@ -1695,6 +1698,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return JsonNodeUnmarshallContexts.basic(
             (String cc) -> Optional.ofNullable(
                 Currency.getInstance(cc)
+            ),
+            (String lt) -> Optional.of(
+                Locale.forLanguageTag(lt)
             ),
             ExpressionNumberKind.DEFAULT,
             MathContext.DECIMAL32

@@ -363,6 +363,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         public SpreadsheetConverterContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
             throw new UnsupportedOperationException();
         }
+
+        @Override
+        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            return LOCALE_CONTEXT.localeForLanguageTag(languageTag);
+        }
     }
 
     private void verifyAndCheck(final Converter<SpreadsheetConverterContext> converter,

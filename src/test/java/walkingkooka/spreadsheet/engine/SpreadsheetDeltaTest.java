@@ -5488,6 +5488,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         (String cc) -> Optional.ofNullable(
             Currency.getInstance(cc)
         ),
+        (String lt) -> Optional.of(
+            Locale.forLanguageTag(lt)
+        ),
         ExpressionNumberKind.BIG_DECIMAL,
         MathContext.DECIMAL32
     );
@@ -5507,6 +5510,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         return JsonNodeUnmarshallContexts.basic(
             (String cc) -> Optional.ofNullable(
                 Currency.getInstance(cc)
+            ),
+            (String lt) -> Optional.of(
+                Locale.forLanguageTag(lt)
             ),
             ExpressionNumberKind.BIG_DECIMAL,
             MathContext.UNLIMITED

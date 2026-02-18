@@ -137,6 +137,9 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     (String cc) -> Optional.ofNullable(
                         Currency.getInstance(cc)
                     ),
+                    (String lt) -> Optional.of(
+                        Locale.forLanguageTag(lt)
+                    ),
                     ExpressionNumberKind.BIG_DECIMAL,
                     MathContext.DECIMAL32
                 )
