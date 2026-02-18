@@ -105,6 +105,12 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
+    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        Objects.requireNonNull(languageTag, "languageTag");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean canNumbersHaveGroupSeparator() {
         throw new UnsupportedOperationException();
     }

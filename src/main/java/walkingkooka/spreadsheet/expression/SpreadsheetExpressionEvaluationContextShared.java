@@ -217,6 +217,12 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
             .decimalNumberSymbolsForLocale(locale);
     }
 
+    @Override
+    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        return this.localeContext()
+            .localeForLanguageTag(languageTag);
+    }
+
     // TerminalContextDelegator.........................................................................................
 
     @Override

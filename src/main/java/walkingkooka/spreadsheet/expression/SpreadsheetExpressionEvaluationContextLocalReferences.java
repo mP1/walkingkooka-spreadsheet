@@ -408,6 +408,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
         return this.context.decimalNumberSymbolsForLocale(locale);
     }
 
+    @Override
+    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        return this.context.localeForLanguageTag(languageTag);
+    }
+
     // EnvironmentContext...............................................................................................
 
     @Override

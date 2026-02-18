@@ -218,6 +218,10 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     (l) -> {
                         throw new UnsupportedOperationException();
                     }, // canDecimalNumberSymbolsForLocale
+                    (lt) -> {
+                        Objects.requireNonNull(lt, "languageTag");
+                        throw new UnsupportedOperationException();
+                    }, // canLocaleForLanguageTag
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     INDENTATION,
