@@ -252,7 +252,7 @@ final class MissingConverterVerifier {
             Color.BLACK
         );
 
-        final Locale locale = Locale.forLanguageTag("en-AU");
+        final Locale locale = context.localeForLanguageTagOrFail("en-AU");
 
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
