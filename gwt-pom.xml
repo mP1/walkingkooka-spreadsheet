@@ -139,12 +139,6 @@
 
         <dependency>
             <groupId>walkingkooka</groupId>
-            <artifactId>walkingkooka-tree-json-convert-gwt</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>walkingkooka</groupId>
             <artifactId>walkingkooka-tree-text-gwt</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
