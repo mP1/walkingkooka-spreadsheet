@@ -32,6 +32,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CanCurrencyForCurrencyCode;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -39,6 +40,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.locale.CanLocaleForLanguageTag;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -824,9 +826,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
     // HasJsonNodeUnmarshallContext......................................................................................
 
-    public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
+    public final JsonNodeUnmarshallContext jsonNodeUnmarshallContext(final CanCurrencyForCurrencyCode canCurrencyForCurrencyCode,
+                                                                     final CanLocaleForLanguageTag canLocaleForLanguageTag) {
+        Objects.requireNonNull(canCurrencyForCurrencyCode, "canCurrencyForCurrencyCode");
+        Objects.requireNonNull(canLocaleForLanguageTag, "canLocaleForLanguageTag");
 
-    final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
         final ExpressionNumberKind expressionNumberKind = missing.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
@@ -842,12 +846,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return JsonNodeUnmarshallContexts.basic(
-            (String cc) -> Optional.ofNullable(
-                Currency.getInstance(cc)
-            ),
-            (String lt) -> Optional.of(
-                Locale.forLanguageTag(lt)
-            ),
+            canCurrencyForCurrencyCode,
+            canLocaleForLanguageTag,
             expressionNumberKind,
             mathContext
         );
@@ -856,17 +856,16 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link JsonNodeMarshallUnmarshallContext} build using properties from this metadata.
      */
-    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
-        if(null == this.jsonNodeMarshallUnmarshallContext) {
-            this.jsonNodeMarshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.basic(
-                this.jsonNodeMarshallContext(),
-                this.jsonNodeUnmarshallContext()
-            );
-        }
-        return this.jsonNodeMarshallUnmarshallContext;
+    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext(final CanCurrencyForCurrencyCode canCurrencyForCurrencyCode,
+                                                                                     final CanLocaleForLanguageTag canLocaleForLanguageTag) {
+        return JsonNodeMarshallUnmarshallContexts.basic(
+            this.jsonNodeMarshallContext(),
+            this.jsonNodeUnmarshallContext(
+                canCurrencyForCurrencyCode,
+                canLocaleForLanguageTag
+            )
+        );
     }
-
-    private JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
     // loadFromLocale...................................................................................................
 
@@ -1122,7 +1121,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
         try {
-            jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext();
+            jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext(
+                currencyContext, // CanCurrencyForCurrencyCode
+                localeContext // CanLocaleForLanguageTag
+            );
         } catch (final MissingMetadataPropertiesException cause) {
             jsonNodeUnmarshallContext = null;
             missing.addMissing(cause);

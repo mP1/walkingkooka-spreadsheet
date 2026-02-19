@@ -182,7 +182,10 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testUnmarshallContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(
             IllegalStateException.class,
-            SpreadsheetMetadata.EMPTY::jsonNodeUnmarshallContext
+            () -> SpreadsheetMetadata.EMPTY.jsonNodeUnmarshallContext(
+                CURRENCY_CONTEXT,
+                LOCALE_CONTEXT
+            )
         );
         this.checkEquals(
             "Metadata missing: expressionNumberKind, precision, roundingMode",

@@ -23,7 +23,6 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
-import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.List;
@@ -198,19 +197,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cache {link Function}
      */
     private Function<Integer, Optional<SpreadsheetColorName>> numberToColorName;
-
-    @Override
-    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
-        if (null == this.jsonNodeUnmarshallContext) {
-            this.jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext0();
-        }
-        return this.jsonNodeUnmarshallContext;
-    }
-
-    /**
-     * Cached {@link JsonNodeUnmarshallContext}.
-     */
-    private JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
 
     @Override
     public MathContext mathContext() {
