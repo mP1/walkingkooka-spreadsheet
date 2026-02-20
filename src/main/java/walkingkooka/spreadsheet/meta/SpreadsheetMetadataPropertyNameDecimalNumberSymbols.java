@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 
 import java.util.Optional;
@@ -55,8 +55,8 @@ final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends Spreadsh
         visitor.visitDecimalNumberSymbols(value);
     }
 
-    @Override
-    Optional<DecimalNumberSymbols> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<DecimalNumberSymbols> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return context.decimalNumberSymbolsForLocale(
             context.locale()
         );

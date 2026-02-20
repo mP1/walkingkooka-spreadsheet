@@ -151,7 +151,9 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SPREADSHEET_ID
@@ -195,7 +197,9 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 id
@@ -317,7 +321,9 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
             ).loadFromLocale(
-                LocaleContexts.jre(LOCALE)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(LOCALE)
+                )
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SPREADSHEET_ID
@@ -420,7 +426,9 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
         ).loadFromLocale(
-            LocaleContexts.jre(LOCALE)
+            CURRENCY_CONTEXT.setLocaleContext(
+                LocaleContexts.jre(LOCALE)
+            )
         ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SPREADSHEET_ID
@@ -475,7 +483,9 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
             SpreadsheetMetadataPropertyName.LOCALE,
             OTHER_SPREADSHEET_LOCALE
         ).loadFromLocale(
-            LocaleContexts.jre(OTHER_SPREADSHEET_LOCALE)
+            CURRENCY_CONTEXT.setLocaleContext(
+                LocaleContexts.jre(OTHER_SPREADSHEET_LOCALE)
+            )
         );
 
         store.save(otherMetadata);

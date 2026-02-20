@@ -20,7 +20,10 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -66,6 +69,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextNode;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,10 +84,22 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     private final static SpreadsheetId ID = SpreadsheetId.parse("123");
 
+    final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
+    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
+        Currency.getInstance(LOCALE),
+        (Currency from, Currency to) -> {
+            throw new UnsupportedOperationException();
+        },
+        LOCALE_CONTEXT
+    );
+
     private final static SpreadsheetMetadata BEFORE = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
-        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+        .set(SpreadsheetMetadataPropertyName.LOCALE, LOCALE)
         .loadFromLocale(
-            LocaleContexts.jre(Locale.forLanguageTag("EN-AU"))
+            CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
         ).set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, ID)
         .set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,

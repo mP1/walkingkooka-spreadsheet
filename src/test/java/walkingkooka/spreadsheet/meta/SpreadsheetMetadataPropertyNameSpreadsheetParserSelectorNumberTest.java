@@ -44,8 +44,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber>
-    implements SpreadsheetMetadataTesting {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumberTest extends SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber> {
 
     @Test
     public void testExtractLocaleAwareValue() throws ParseException {
@@ -73,13 +72,15 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetParserSelector parserSelector = SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumber.instance()
             .extractLocaleAwareValue(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).get();
 
         final ExpressionNumber value = SpreadsheetConverters.textToNumber(
-            SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
+            SpreadsheetMetadataTesting.SPREADSHEET_PARSER_PROVIDER.spreadsheetParser(
                 parserSelector,
-                PROVIDER_CONTEXT
+                SpreadsheetMetadataTesting.PROVIDER_CONTEXT
             )
         ).convertOrFail(
             text,
@@ -100,7 +101,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
-                            LINE_ENDING,
+                            SpreadsheetMetadataTesting.LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
                             DateTimeContexts.basic(

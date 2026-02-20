@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.plugin.PluginNameSet;
 
 import java.util.Optional;
@@ -54,8 +54,8 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
         return PluginNameSet.class.getSimpleName();
     }
 
-    @Override
-    Optional<PluginNameSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<PluginNameSet> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty();
     }
 

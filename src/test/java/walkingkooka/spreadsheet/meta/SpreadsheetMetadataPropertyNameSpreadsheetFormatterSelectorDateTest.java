@@ -31,15 +31,16 @@ import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate>
-    implements SpreadsheetMetadataTesting {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDateTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate> {
 
     @Test
     public void testExtractLocaleAwareValue() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDate.instance()
             .extractLocaleAwareValue(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).get()
             .spreadsheetFormatPattern()
             .get();
@@ -48,7 +49,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorDa
         final String formatted = pattern.formatter()
             .format(
                 Optional.of(date),
-                SPREADSHEET_FORMATTER_CONTEXT
+                SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
             ).get()
             .text();
 

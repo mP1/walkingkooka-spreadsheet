@@ -82,7 +82,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 
-    private final static Locale LOCALE = Locale.ENGLISH;
+    private final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
     // with.............................................................................................................
 
@@ -406,66 +406,73 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         metadataStore.save(
             SpreadsheetMetadata.EMPTY.set(
-                    SpreadsheetMetadataPropertyName.LOCALE,
-                    LOCALE
-                ).loadFromLocale(localeContext)
-                .set(
-                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
-                    AuditInfo.create(
-                        EmailAddress.parse("user@example.com"),
-                        LocalDateTime.MIN
-                    )
-                ).set(
-                    SpreadsheetMetadataPropertyName.STYLE,
-                    TextStyle.parse("width: 100px; height: 30px")
-                ).set(
-                    SpreadsheetMetadataPropertyName.DATE_FORMATTER,
-                    formatter
-                ).set(
-                    SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
-                    formatter
-                ).set(
-                    SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
-                    formatter
-                ).set(
-                    SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
-                    formatter
-                ).set(
-                    SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
-                    formatter
-                ).set(
-                    SpreadsheetMetadataPropertyName.TIME_FORMATTER,
-                    formatter
-                ).set(
-                    SpreadsheetMetadataPropertyName.COMPARATORS,
-                    SpreadsheetComparatorAliasSet.EMPTY
-                ).set(
-                    SpreadsheetMetadataPropertyName.CONVERTERS,
-                    SpreadsheetConvertersConverterProviders.ALL.aliasSet()
-                ).set(
-                    SpreadsheetMetadataPropertyName.EXPORTERS,
-                    SpreadsheetExporterAliasSet.EMPTY
-                ).set(
-                    SpreadsheetMetadataPropertyName.FORM_HANDLERS,
-                    FormHandlerAliasSet.EMPTY
-                ).set(
-                    SpreadsheetMetadataPropertyName.FORMATTERS,
-                    SpreadsheetFormatterAliasSet.parse(formatter.name().text())
-                ).set(
-                    SpreadsheetMetadataPropertyName.FUNCTIONS,
-                    SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-                ).set(
-                    SpreadsheetMetadataPropertyName.IMPORTERS,
-                    SpreadsheetImporterAliasSet.EMPTY
-                ).set(
-                    SpreadsheetMetadataPropertyName.PARSERS,
-                    SpreadsheetParserAliasSet.EMPTY
-                ).set(
-                    SpreadsheetMetadataPropertyName.VALIDATORS,
-                    ValidatorAliasSet.EMPTY
-                ).setDefaults(
-                    SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+                SpreadsheetMetadataPropertyName.LOCALE,
+                LOCALE
+            ).loadFromLocale(
+                CurrencyContexts.jre(
+                    Currency.getInstance(LOCALE),
+                    (Currency from, Currency to) -> {
+                        throw new UnsupportedOperationException();
+                    },
+                    localeContext
+                ).setLocaleContext(localeContext)
+            ).set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    EmailAddress.parse("user@example.com"),
+                    LocalDateTime.MIN
                 )
+            ).set(
+                SpreadsheetMetadataPropertyName.STYLE,
+                TextStyle.parse("width: 100px; height: 30px")
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_FORMATTER,
+                formatter
+            ).set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                formatter
+            ).set(
+                SpreadsheetMetadataPropertyName.ERROR_FORMATTER,
+                formatter
+            ).set(
+                SpreadsheetMetadataPropertyName.NUMBER_FORMATTER,
+                formatter
+            ).set(
+                SpreadsheetMetadataPropertyName.TEXT_FORMATTER,
+                formatter
+            ).set(
+                SpreadsheetMetadataPropertyName.TIME_FORMATTER,
+                formatter
+            ).set(
+                SpreadsheetMetadataPropertyName.COMPARATORS,
+                SpreadsheetComparatorAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.CONVERTERS,
+                SpreadsheetConvertersConverterProviders.ALL.aliasSet()
+            ).set(
+                SpreadsheetMetadataPropertyName.EXPORTERS,
+                SpreadsheetExporterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FORM_HANDLERS,
+                FormHandlerAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.FORMATTERS,
+                SpreadsheetFormatterAliasSet.parse(formatter.name().text())
+            ).set(
+                SpreadsheetMetadataPropertyName.FUNCTIONS,
+                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
+            ).set(
+                SpreadsheetMetadataPropertyName.IMPORTERS,
+                SpreadsheetImporterAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.PARSERS,
+                SpreadsheetParserAliasSet.EMPTY
+            ).set(
+                SpreadsheetMetadataPropertyName.VALIDATORS,
+                ValidatorAliasSet.EMPTY
+            ).setDefaults(
+                SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+            )
         );
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(

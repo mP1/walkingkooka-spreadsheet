@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
@@ -56,7 +56,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParserSelector extends 
     }
 
     @Override //
-    final Optional<SpreadsheetParserSelector> extractLocaleAwareValue(final LocaleContext context) {
+    final Optional<SpreadsheetParserSelector> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return this.extractLocaleAwareValueSpreadsheetParsePattern(
             context.locale()
         ).map(SpreadsheetParsePattern::spreadsheetParserSelector);

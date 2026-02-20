@@ -510,8 +510,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             SpreadsheetMetadata.EMPTY.set(
                     SpreadsheetMetadataPropertyName.LOCALE,
                     LOCALE
-                ).loadFromLocale(localeContext)
-                .set(
+                ).loadFromLocale(
+                    CURRENCY_CONTEXT.setLocaleContext(localeContext)
+                ).set(
                     SpreadsheetMetadataPropertyName.AUDIT_INFO,
                     AuditInfo.create(
                         EmailAddress.parse("user@example.com"),

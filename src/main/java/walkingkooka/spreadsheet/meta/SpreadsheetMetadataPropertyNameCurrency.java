@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Currency;
 import java.util.Optional;
@@ -61,22 +61,10 @@ final class SpreadsheetMetadataPropertyNameCurrency extends SpreadsheetMetadataP
     }
 
     @Override
-    Optional<Currency> extractLocaleAwareValue(final LocaleContext context) {
-        Currency currency;
-
-        // https://github.com/mP1/walkingkooka-spreadsheet/issues/8828
-        // SpreadsheetMetadata.loadFromLocale added CurrencyContext
-        try {
-            currency = Currency.getInstance(
-                context.locale()
-            );
-        } catch (final IllegalArgumentException ignore) {
-            // not all Locale's have a currency
-            currency = null;
-        }
-
-
-        return Optional.ofNullable(currency);
+    Optional<Currency> extractLocaleAwareValue(final CurrencyLocaleContext context) {
+        return context.currencyForLocale(
+            context.locale()
+        );
     }
 
     @Override

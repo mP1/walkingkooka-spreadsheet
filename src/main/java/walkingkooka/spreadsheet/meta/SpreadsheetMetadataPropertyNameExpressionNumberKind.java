@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Optional;
@@ -55,8 +55,8 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
         visitor.visitExpressionNumberKind(value);
     }
 
-    @Override
-    Optional<ExpressionNumberKind> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<ExpressionNumberKind> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty(); // ExpressionNumberKind have nothing todo with Locales
     }
 

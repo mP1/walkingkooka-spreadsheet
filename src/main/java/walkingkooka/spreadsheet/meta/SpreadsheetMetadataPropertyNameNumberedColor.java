@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.text.CharSequences;
@@ -89,8 +89,8 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
         return Color.class.getSimpleName();
     }
 
-    @Override
-    Optional<Color> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<Color> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty(); // colours are not Locale aware
     }
 

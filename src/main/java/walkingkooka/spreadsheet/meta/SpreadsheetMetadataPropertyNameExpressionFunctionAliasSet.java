@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
@@ -46,7 +46,8 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
         return ExpressionFunctionAliasSet.class.getSimpleName();
     }
 
-    @Override final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    final Optional<ExpressionFunctionAliasSet> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty();
     }
 

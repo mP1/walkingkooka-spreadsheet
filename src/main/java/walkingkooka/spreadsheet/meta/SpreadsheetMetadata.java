@@ -34,6 +34,7 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CanCurrencyForCurrencyCode;
 import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -875,14 +876,14 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Date, DateTime and Time defaults are loaded parse {@link java.text.DateFormat} using the provided locale, formats pick the FULL style,
      * while parse pattern will include all patterns with all styles.
      */
-    public final SpreadsheetMetadata loadFromLocale(final LocaleContext context) {
+    public final SpreadsheetMetadata loadFromLocale(final CurrencyLocaleContext context) {
         Objects.requireNonNull(context, "context");
         context.setLocale(this.locale());
 
         return loadFromLocale0(context);
     }
 
-    private SpreadsheetMetadata loadFromLocale0(final LocaleContext context) {
+    private SpreadsheetMetadata loadFromLocale0(final CurrencyLocaleContext context) {
         SpreadsheetMetadata updated = this;
 
         for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
