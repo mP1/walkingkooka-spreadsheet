@@ -23,6 +23,8 @@ import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationReference;
 
+import java.util.Iterator;
+
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}.
  * Either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName} with the later can be used for untargeted
@@ -74,6 +76,14 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
      */
     @Override
     abstract public SpreadsheetExpressionReference toRelative();
+
+    /**
+     * Iterating over columns or rows for {@link SpreadsheetExpressionReference} is not supported.
+     */
+    @Override
+    public final Iterator<SpreadsheetColumnOrRowReference> columnOrRowsIterator() {
+        throw new UnsupportedOperationException();
+    }
 
     // ValidationError..................................................................................................
 

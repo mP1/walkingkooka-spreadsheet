@@ -1487,6 +1487,19 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         this.toRowOrRowRangeFails();
     }
 
+    // SpreadsheetColumnOrRowReferenceOrRange...........................................................................
+
+    @Test
+    public void testColumnOrRowsIterator() {
+        this.iterateAndCheck(
+            SpreadsheetSelection.parseColumnRange("B:D")
+                .columnOrRowsIterator(),
+            SpreadsheetSelection.parseColumn("B"),
+            SpreadsheetSelection.parseColumn("C"),
+            SpreadsheetSelection.parseColumn("D")
+        );
+    }
+
     // json.............................................................................................................
 
     @Test

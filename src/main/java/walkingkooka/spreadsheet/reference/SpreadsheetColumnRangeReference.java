@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.HasRange;
 import walkingkooka.collect.HasRangeBounds;
 import walkingkooka.collect.Range;
@@ -531,6 +532,15 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
             .boxed()
             .map(SpreadsheetReferenceKind.RELATIVE::column)
             .iterator();
+    }
+
+    // SpreadsheetColumnOrRowReferenceOrRange...........................................................................
+
+    @Override
+    public Iterator<SpreadsheetColumnOrRowReference> columnOrRowsIterator() {
+        return Cast.to(
+            this.iterator()
+        );
     }
 
     // HasParserToken...................................................................................................
