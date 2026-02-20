@@ -17,12 +17,18 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 
 public abstract class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSetTestCase<N extends SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet> extends SpreadsheetMetadataPropertyNameTestCase<N, SpreadsheetComparatorAliasSet> {
 
     SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSetTestCase() {
         super();
+    }
+
+    @Test
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Override final String propertyValueType() {

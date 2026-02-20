@@ -18,10 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 
 import java.math.RoundingMode;
-import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameRoundingMode, RoundingMode> {
@@ -36,10 +34,7 @@ public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends Sprea
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

@@ -19,20 +19,15 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.environment.AuditInfo;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameAuditInfoTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameAuditInfo, AuditInfo> {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

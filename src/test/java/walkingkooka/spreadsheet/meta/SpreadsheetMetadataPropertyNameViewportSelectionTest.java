@@ -18,12 +18,9 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
-
-import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameViewportSelectionTest extends SpreadsheetMetadataPropertyNameTestCase<
@@ -87,10 +84,7 @@ public final class SpreadsheetMetadataPropertyNameViewportSelectionTest extends 
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

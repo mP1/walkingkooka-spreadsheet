@@ -18,10 +18,17 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
+
 public abstract class SpreadsheetMetadataPropertyNameBooleanTestCase<N extends SpreadsheetMetadataPropertyNameBoolean> extends SpreadsheetMetadataPropertyNameTestCase<N, Boolean> {
 
     SpreadsheetMetadataPropertyNameBooleanTestCase() {
         super();
+    }
+
+    @Test
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Override final Boolean propertyValue() {

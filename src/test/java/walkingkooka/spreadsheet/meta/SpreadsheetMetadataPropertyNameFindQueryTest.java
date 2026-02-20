@@ -18,10 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
-
-import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameFindQueryTest extends SpreadsheetMetadataPropertyNameTestCase<
@@ -38,10 +35,7 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     // parseUrlFragmentSaveValue........................................................................................

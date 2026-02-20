@@ -18,10 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-
-import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameExpressionNumberKind, ExpressionNumberKind> {
@@ -36,10 +33,7 @@ public final class SpreadsheetMetadataPropertyNameExpressionNumberKindTest exten
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

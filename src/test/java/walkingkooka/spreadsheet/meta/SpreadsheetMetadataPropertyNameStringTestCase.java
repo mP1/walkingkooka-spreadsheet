@@ -17,10 +17,17 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
+
 public abstract class SpreadsheetMetadataPropertyNameStringTestCase<N extends SpreadsheetMetadataPropertyNameString> extends SpreadsheetMetadataPropertyNameTestCase<N, String> {
 
     SpreadsheetMetadataPropertyNameStringTestCase() {
         super();
+    }
+
+    @Test
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Override final String propertyValue() {

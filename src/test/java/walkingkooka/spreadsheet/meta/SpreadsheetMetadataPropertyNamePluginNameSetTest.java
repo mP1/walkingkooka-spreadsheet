@@ -17,9 +17,16 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.plugin.PluginNameSet;
 
 public final class SpreadsheetMetadataPropertyNamePluginNameSetTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNamePluginNameSet, PluginNameSet> {
+
+    @Test
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
+    }
+
     @Override
     SpreadsheetMetadataPropertyNamePluginNameSet createName() {
         return SpreadsheetMetadataPropertyNamePluginNameSet.instance();
