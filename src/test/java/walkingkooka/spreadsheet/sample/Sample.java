@@ -99,6 +99,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -222,6 +223,7 @@ public final class Sample {
                         LocalDateTime.of(2000, 1, 2, 3, 4, 5)
                     )
                 ).set(SpreadsheetMetadataPropertyName.CELL_CHARACTER_WIDTH, 10)
+                .set(SpreadsheetMetadataPropertyName.CURRENCY, Currency.getInstance("AUD"))
                 .set(
                     SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS,
                     DecimalNumberSymbols.with(
