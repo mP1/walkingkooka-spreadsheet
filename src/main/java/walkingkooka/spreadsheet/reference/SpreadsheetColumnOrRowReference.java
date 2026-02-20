@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.text.HasText;
+
 /**
  * Simple interface to unite both {@link SpreadsheetColumnReference} and {@link SpreadsheetRowReference}.
  */
-public interface SpreadsheetColumnOrRowReference {
+public interface SpreadsheetColumnOrRowReference extends HasText {
 
     /**
      * Test if this {@link SpreadsheetSelection} is a column.
