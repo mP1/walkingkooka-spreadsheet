@@ -65,6 +65,7 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -121,10 +122,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final static LineEnding LINE_ENDING = LineEnding.NL;
 
-    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.fake();
-
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
         Locale.forLanguageTag("EN-AU")
+    );
+
+    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
+        Currency.getInstance("AUD"),
+        (Currency from, Currency to) -> {
+            throw new UnsupportedOperationException();
+        },
+        LOCALE_CONTEXT
     );
 
     final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();

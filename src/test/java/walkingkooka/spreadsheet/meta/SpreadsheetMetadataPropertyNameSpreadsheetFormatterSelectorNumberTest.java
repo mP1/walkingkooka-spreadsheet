@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
@@ -49,6 +50,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -77,7 +79,17 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNumber.instance()
             .extractLocaleAwareValue(
-                LocaleContexts.jre(locale)
+                new FakeCurrencyContext() {
+
+                    @Override
+                    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        return Optional.of(
+                            Currency.getInstance(currencyCode)
+                        );
+                    }
+                }.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).get()
             .spreadsheetFormatPattern()
             .get();

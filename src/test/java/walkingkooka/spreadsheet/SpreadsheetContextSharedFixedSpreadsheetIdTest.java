@@ -131,7 +131,9 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SPREADSHEET_ID
@@ -175,7 +177,9 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 id
@@ -254,7 +258,9 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
             ).loadFromLocale(
-                LocaleContexts.jre(LOCALE)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(LOCALE)
+                )
             ).set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SPREADSHEET_ID
@@ -358,7 +364,9 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
         ).loadFromLocale(
-            LocaleContexts.jre(LOCALE)
+            CURRENCY_CONTEXT.setLocaleContext(
+                LocaleContexts.jre(LOCALE)
+            )
         ).set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SPREADSHEET_ID

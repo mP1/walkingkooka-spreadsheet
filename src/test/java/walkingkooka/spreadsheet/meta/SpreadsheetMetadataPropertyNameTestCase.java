@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.HasUrlFragment;
@@ -49,6 +52,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
     TypeNameTesting<N>,
     ToStringTesting<N> {
+
+    final static Locale LOCALE = Locale.forLanguageTag("en-AU");
+
+    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(LOCALE);
+
+    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
+        Currency.getInstance(LOCALE),
+        (Currency from, Currency to) -> {
+            throw new UnsupportedOperationException();
+        },
+        LOCALE_CONTEXT
+    );
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
@@ -180,7 +195,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
     final void extractLocaleValueAwareAndCheck() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.fake(),
+            CURRENCY_CONTEXT.setLocaleContext(
+                LocaleContexts.jre(LOCALE)
+            ),
             Optional.empty()
         );
     }
@@ -188,18 +205,26 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     final void extractLocaleValueAwareAndCheck(final LocaleContext context,
                                                final V value) {
         this.extractLocaleValueAwareAndCheck(
+            CURRENCY_CONTEXT.setLocaleContext(context),
+            value
+        );
+    }
+
+    final void extractLocaleValueAwareAndCheck(final CurrencyLocaleContext context,
+                                               final V value) {
+        this.extractLocaleValueAwareAndCheck(
             context,
             Optional.of(value)
         );
     }
 
-    final void extractLocaleValueAwareAndCheck(final LocaleContext context,
+    final void extractLocaleValueAwareAndCheck(final CurrencyLocaleContext context,
                                                final Optional<V> value) {
         final N propertyName = this.createName();
         this.checkEquals(
             value,
             propertyName.extractLocaleAwareValue(context),
-            propertyName + " extractLocaleAwareValue for " + context
+            propertyName + " extractLocaleAwareValue for " + context.locale()
         );
     }
 

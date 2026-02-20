@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.text.CharSequences;
 
 import java.text.DecimalFormatSymbols;
@@ -47,7 +47,8 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
         return Character.class.getSimpleName() + " symbol, not control character, whitespace, letter or digit";
     }
 
-    @Override final Optional<Character> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    final Optional<Character> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.of(
             this.extractLocaleValueCharacter(
                 DecimalFormatSymbols.getInstance(

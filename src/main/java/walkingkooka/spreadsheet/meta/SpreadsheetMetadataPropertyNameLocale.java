@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -55,8 +55,8 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
         visitor.visitLocale(value);
     }
 
-    @Override
-    Optional<Locale> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<Locale> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty();
     }
 

@@ -98,7 +98,11 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
     private final static SpreadsheetMetadata METADATA = SpreadsheetMetadata.NON_LOCALE_DEFAULTS
         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-US"))
         .loadFromLocale(
-            LocaleContexts.jre(Locale.forLanguageTag("EN-US"))
+            CURRENCY_CONTEXT.setLocaleContext(
+                LocaleContexts.jre(
+                    Locale.forLanguageTag("EN-US")
+                )
+            )
         ).set(SpreadsheetMetadataPropertyName.PRECISION, DECIMAL_NUMBER_CONTEXT.mathContext().getPrecision())
         .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, DECIMAL_NUMBER_CONTEXT.mathContext().getRoundingMode())
         .set(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, 0L)

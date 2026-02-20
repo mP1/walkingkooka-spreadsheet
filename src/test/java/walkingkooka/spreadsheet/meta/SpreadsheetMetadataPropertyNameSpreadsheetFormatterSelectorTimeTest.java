@@ -28,8 +28,7 @@ import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Optional;
 
-public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime>
-    implements SpreadsheetMetadataTesting {
+public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTimeTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime> {
 
     @Test
     public void testExtractLocaleAwareValue() {
@@ -45,7 +44,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTime.instance()
             .extractLocaleAwareValue(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).get()
             .spreadsheetFormatPattern()
             .get();
@@ -54,7 +55,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTi
         final String formatted = pattern.formatter()
             .format(
                 Optional.of(time),
-                SPREADSHEET_FORMATTER_CONTEXT
+                SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT
             ).get()
             .text();
 

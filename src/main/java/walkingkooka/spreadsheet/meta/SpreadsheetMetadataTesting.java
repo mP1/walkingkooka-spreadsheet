@@ -24,6 +24,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
@@ -197,9 +198,21 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     ValidatorProvider VALIDATOR_PROVIDER = ValidatorProviders.validators();
 
+    Currency CURRENCY = Currency.getInstance("AUD");
+
+    CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
+        CurrencyContexts.jre(
+            CURRENCY,
+            (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length(),
+            () -> LOCALE
+        )
+    );
+
     LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
         LocaleContexts.jre(LOCALE)
     );
+
+    CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     /**
      * Creates a {@link SpreadsheetMetadata} with Locale=EN-AU and standard patterns and other sensible defaults.
@@ -208,8 +221,9 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         .set(
             SpreadsheetMetadataPropertyName.LOCALE,
             LOCALE
-        ).loadFromLocale(LOCALE_CONTEXT)
-        .set(
+        ).loadFromLocale(
+            CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
+        ).set(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.create(
                 USER,
@@ -418,16 +432,6 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             return HOME_DIRECTORY;
         }
     };
-
-    Currency CURRENCY = Currency.getInstance("AUD");
-
-    CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
-        CurrencyContexts.jre(
-            CURRENCY,
-            (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length(),
-            () -> LOCALE
-        )
-    );
 
     LineEnding LINE_ENDING = EOL;
 

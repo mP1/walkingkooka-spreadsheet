@@ -18,8 +18,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeSymbols;
-import walkingkooka.locale.LocaleContext;
 
 import java.util.Optional;
 
@@ -61,8 +61,8 @@ final class SpreadsheetMetadataPropertyNameDateTimeSymbols extends SpreadsheetMe
         visitor.visitDateTimeSymbols(value);
     }
 
-    @Override
-    Optional<DateTimeSymbols> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<DateTimeSymbols> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return context.dateTimeSymbolsForLocale(
             context.locale()
         );

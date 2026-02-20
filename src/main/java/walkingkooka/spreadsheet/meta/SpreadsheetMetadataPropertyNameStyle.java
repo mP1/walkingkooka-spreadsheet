@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Optional;
@@ -56,8 +56,8 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
         return "TextStyle";
     }
 
-    @Override
-    Optional<TextStyle> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<TextStyle> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty();
     }
 

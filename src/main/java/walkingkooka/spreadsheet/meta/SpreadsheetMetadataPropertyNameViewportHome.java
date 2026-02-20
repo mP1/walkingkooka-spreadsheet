@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -57,8 +57,8 @@ final class SpreadsheetMetadataPropertyNameViewportHome extends SpreadsheetMetad
         return SpreadsheetCellReference.class.getSimpleName();
     }
 
-    @Override
-    Optional<SpreadsheetCellReference> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<SpreadsheetCellReference> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty();
     }
 

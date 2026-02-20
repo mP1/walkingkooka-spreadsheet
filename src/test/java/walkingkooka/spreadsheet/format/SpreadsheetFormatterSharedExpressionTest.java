@@ -99,7 +99,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
         .set(
             SpreadsheetMetadataPropertyName.LOCALE,
             Locale.forLanguageTag("en-AU")
-        ).loadFromLocale(LOCALE_CONTEXT)
+        ).loadFromLocale(CURRENCY_LOCALE_CONTEXT)
         .set(
             SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
             SPREADSHEET_ID

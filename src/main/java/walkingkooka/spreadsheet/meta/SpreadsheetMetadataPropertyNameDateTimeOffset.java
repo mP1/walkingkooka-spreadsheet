@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Optional;
 
@@ -54,8 +54,8 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
         visitor.visitDateTimeOffset(value);
     }
 
-    @Override
-    Optional<Long> extractLocaleAwareValue(final LocaleContext context) {
+    @Override //
+    Optional<Long> extractLocaleAwareValue(final CurrencyLocaleContext context) {
         return Optional.empty(); // Unrelated to Locales
     }
 

@@ -30,7 +30,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyContext;
-import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContext;
@@ -156,9 +156,16 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
-    private final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.fake();
-
     private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.fake();
+
+    private final static CurrencyContext CURRENCY_CONTEXT = new FakeCurrencyContext() {
+        @Override
+        public Optional<Currency> currencyForLocale(final Locale locale) {
+            return Optional.of(
+                Currency.getInstance(locale)
+            );
+        }
+    };
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -284,14 +291,15 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testLoadFromLocale() {
-        final Locale locale = Locale.ENGLISH;
+        final Locale locale = Locale.forLanguageTag("en-AU");
 
         this.checkEquals(
             SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("dddd, mmmm d, yyyy").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("dddd, mmmm d, yyyy;dddd, mmmm d, yy;dddd, mmmm d;mmmm d, yyyy;mmmm d, yy;mmmm d;mmm d, yyyy;mmm d, yy;mmm d;m/d/yy;m/d/yyyy;m/d").spreadsheetParserSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM").spreadsheetFormatterSelector())
-                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yy \\a\\t h:mm:ss;dddd, mmmm d, yy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss.0;dddd, mmmm d, yyyy \\a\\t h:mm:ss;dddd, mmmm d, yyyy \\a\\t h:mm AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss AM/PM;dddd, mmmm d, yy, h:mm:ss;dddd, mmmm d, yy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0 AM/PM;dddd, mmmm d, yyyy, h:mm:ss.0;dddd, mmmm d, yyyy, h:mm:ss;dddd, mmmm d, yyyy, h:mm AM/PM;dddd, mmmm d, yyyy, h:mm;dddd, mmmm d, yy, h:mm;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss AM/PM;mmmm d, yy \\a\\t h:mm:ss;mmmm d, yy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0 AM/PM;mmmm d, yyyy \\a\\t h:mm:ss.0;mmmm d, yyyy \\a\\t h:mm:ss;mmmm d, yyyy \\a\\t h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss AM/PM;mmmm d, yy, h:mm:ss;mmmm d, yy, h:mm AM/PM;mmmm d, yyyy, h:mm:ss.0 AM/PM;mmmm d, yyyy, h:mm:ss.0;mmmm d, yyyy, h:mm:ss;mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy, h:mm;mmmm d, yy, h:mm;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss AM/PM;mmm d, yy, h:mm:ss;mmm d, yy, h:mm AM/PM;mmm d, yyyy, h:mm:ss.0 AM/PM;mmm d, yyyy, h:mm:ss.0;mmm d, yyyy, h:mm:ss;mmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm;mmm d, yy, h:mm;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss;m/d/yy, h:mm AM/PM;m/d/yyyy, h:mm:ss AM/PM;m/d/yyyy, h:mm:ss.0 AM/PM;m/d/yyyy, h:mm:ss.0;m/d/yyyy, h:mm:ss;m/d/yyyy, h:mm AM/PM;m/d/yy, h:mm:ss.0;m/d/yy, h:mm;m/d/yyyy, h:mm").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.CURRENCY, Currency.getInstance(locale))
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("dddd, d mmmm yyyy").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("dddd, d mmmm yyyy;dddd, d mmmm yy;dddd, d mmmm;d mmmm yyyy;d mmmm yy;d mmmm;d mmm yyyy;d mmm yy;d mmm;d/m/yy;d/m/yyyy;d/m").spreadsheetParserSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM").spreadsheetFormatterSelector())
+                .set(SpreadsheetMetadataPropertyName.DATE_TIME_PARSER, SpreadsheetPattern.parseDateTimeParsePattern("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM;dddd, d mmmm yy \\a\\t h:mm:ss AM/PM;dddd, d mmmm yy \\a\\t h:mm:ss;dddd, d mmmm yy \\a\\t h:mm AM/PM;dddd, d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM;dddd, d mmmm yyyy \\a\\t h:mm:ss.0;dddd, d mmmm yyyy \\a\\t h:mm:ss;dddd, d mmmm yyyy \\a\\t h:mm AM/PM;dddd, d mmmm yyyy \\a\\t h:mm;dddd, d mmmm yyyy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss AM/PM;dddd, d mmmm yy, h:mm:ss;dddd, d mmmm yy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm:ss.0 AM/PM;dddd, d mmmm yyyy, h:mm:ss.0;dddd, d mmmm yyyy, h:mm:ss;dddd, d mmmm yyyy, h:mm AM/PM;dddd, d mmmm yyyy, h:mm;dddd, d mmmm yy, h:mm;d mmmm yyyy \\a\\t h:mm:ss AM/PM;d mmmm yy \\a\\t h:mm:ss AM/PM;d mmmm yy \\a\\t h:mm:ss;d mmmm yy \\a\\t h:mm AM/PM;d mmmm yyyy \\a\\t h:mm:ss.0 AM/PM;d mmmm yyyy \\a\\t h:mm:ss.0;d mmmm yyyy \\a\\t h:mm:ss;d mmmm yyyy \\a\\t h:mm AM/PM;d mmmm yyyy \\a\\t h:mm;d mmmm yyyy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss AM/PM;d mmmm yy, h:mm:ss;d mmmm yy, h:mm AM/PM;d mmmm yyyy, h:mm:ss.0 AM/PM;d mmmm yyyy, h:mm:ss.0;d mmmm yyyy, h:mm:ss;d mmmm yyyy, h:mm AM/PM;d mmmm yyyy, h:mm;d mmmm yy, h:mm;d mmm yyyy, h:mm:ss AM/PM;d mmm yy, h:mm:ss AM/PM;d mmm yy, h:mm:ss;d mmm yy, h:mm AM/PM;d mmm yyyy, h:mm:ss.0 AM/PM;d mmm yyyy, h:mm:ss.0;d mmm yyyy, h:mm:ss;d mmm yyyy, h:mm AM/PM;d mmm yyyy, h:mm;d mmm yy, h:mm;d/m/yy, h:mm:ss AM/PM;d/m/yy, h:mm:ss;d/m/yy, h:mm AM/PM;d/m/yyyy, h:mm:ss AM/PM;d/m/yyyy, h:mm:ss.0 AM/PM;d/m/yyyy, h:mm:ss.0;d/m/yyyy, h:mm:ss;d/m/yyyy, h:mm AM/PM;d/m/yy, h:mm:ss.0;d/m/yy, h:mm;d/m/yyyy, h:mm").spreadsheetParserSelector())
                 .set(
                     SpreadsheetMetadataPropertyName.DATE_TIME_SYMBOLS,
                     DateTimeSymbols.fromDateFormatSymbols(
@@ -303,9 +311,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         '-', // negativeSign
                         '+', // positiveSign
                         '0', // zeroDigit
-                        "¤", // currencySymbol
+                        "$", // currencySymbol
                         '.', // decimalSeparator
-                        "E", // exponent
+                        "e", // exponent
                         ',', // groupSeparator
                         "\u221e",
                         '.',
@@ -323,7 +331,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             )
         );
     }
@@ -637,7 +647,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             );
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
@@ -666,7 +678,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             );
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
@@ -696,7 +710,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             );
 
         final Converter<SpreadsheetConverterContext> converter = metadata.converter(
@@ -768,7 +784,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadataPropertyName.LOCALE,
                 locale
             ).loadFromLocale(
-                LocaleContexts.jre(locale)
+                CURRENCY_CONTEXT.setLocaleContext(
+                    LocaleContexts.jre(locale)
+                )
             ).dateTimeConverter(
                 spreadsheetFormatterProvider(),
                 spreadsheetParserProvider(),
@@ -1097,7 +1115,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetMetadataPropertyName.LOCALE,
             locale
         ).loadFromLocale(
-            LocaleContexts.jre(locale)
+            CURRENCY_CONTEXT.setLocaleContext(
+                LocaleContexts.jre(locale)
+            )
         ).set(
             SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET,
             Converters.EXCEL_1900_DATE_SYSTEM_OFFSET

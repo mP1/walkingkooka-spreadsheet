@@ -19,21 +19,14 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
-
-import java.util.Optional;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorErrorTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorError>
     implements SpreadsheetMetadataTesting {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.checkEquals(
-            Optional.empty(),
-            SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorError.instance()
-                .extractLocaleAwareValue(LocaleContexts.fake())
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test
