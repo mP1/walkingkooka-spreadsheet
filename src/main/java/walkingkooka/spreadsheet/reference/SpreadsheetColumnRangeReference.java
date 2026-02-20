@@ -103,8 +103,6 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
 
 
     public SpreadsheetColumnRangeReference setRange(final Range<SpreadsheetColumnReference> range) {
-        Objects.requireNonNull(range, "range");
-
         return this.range.equals(range) ?
             this :
             with(range);
