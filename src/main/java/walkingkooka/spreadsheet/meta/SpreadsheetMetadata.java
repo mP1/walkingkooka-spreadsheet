@@ -880,10 +880,6 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(context, "context");
         context.setLocale(this.locale());
 
-        return loadFromLocale0(context);
-    }
-
-    private SpreadsheetMetadata loadFromLocale0(final CurrencyLocaleContext context) {
         SpreadsheetMetadata updated = this;
 
         for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
