@@ -18,8 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.currency.CurrencyContextTesting2;
-import walkingkooka.locale.LocaleContextTesting2;
+import walkingkooka.currency.CurrencyLocaleContextTesting2;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
@@ -29,12 +28,13 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 
 import java.util.Currency;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends SpreadsheetEnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
-    CurrencyContextTesting2<C>,
-    LocaleContextTesting2<C>,
+    CurrencyLocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 
     // setCurrency......................................................................................................
@@ -42,7 +42,7 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     @Test
     @Override
     default void testSetCurrencyWithNullFails() {
-        CurrencyContextTesting2.super.testSetCurrencyWithNullFails();
+        CurrencyLocaleContextTesting2.super.testSetCurrencyWithNullFails();
     }
 
     //@Override
@@ -59,7 +59,11 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     @Test
     @Override
     default void testSetLocaleWithNullFails() {
-        LocaleContextTesting2.super.testSetLocaleWithNullFails();
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .setLocale(null)
+        );
     }
 
     // spreadsheetEngine................................................................................................

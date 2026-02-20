@@ -46,6 +46,18 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     SpreadsheetLabelNameResolverTesting<C>,
     SpreadsheetProviderTesting<C> {
 
+    // setLocale........................................................................................................
+
+    @Test
+    @Override
+    default void testSetLocaleWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createContext()
+                .setLocale(null)
+        );
+    }
+
     // SpreadsheetLabelNameResolverTesting..............................................................................
 
     @Override
