@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.currency.CurrencyContextTesting2;
 import walkingkooka.locale.LocaleContextTesting2;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -26,13 +27,32 @@ import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContextTesting;
 import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrlTesting;
 
+import java.util.Currency;
+
 public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends SpreadsheetEnvironmentContextTesting2<C>,
     HasProviderContextTesting,
     HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
+    CurrencyContextTesting2<C>,
     LocaleContextTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 
+    // setCurrency......................................................................................................
+
+    @Test
+    @Override
+    default void testSetCurrencyWithNullFails() {
+        CurrencyContextTesting2.super.testSetCurrencyWithNullFails();
+    }
+
+    //@Override
+    default void setCurrencyAndCheck(final C context,
+                                     final Currency currency) {
+        SpreadsheetEnvironmentContextTesting2.super.setCurrencyAndCheck(
+            context,
+            currency
+        );
+    }
 
     // setLocale........................................................................................................
 
