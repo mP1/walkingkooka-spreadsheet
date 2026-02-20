@@ -60,6 +60,7 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -128,10 +129,19 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         )
     );
 
-    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.fake();
-
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
         LocaleContexts.jre(Locale.ENGLISH)
+    );
+
+    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
+        Currency.getInstance("AUD"),
+        (Currency from, Currency to) -> {
+            Objects.requireNonNull(from, "from");
+            Objects.requireNonNull(to, "to");
+
+            throw new UnsupportedOperationException();
+        },
+        LOCALE_CONTEXT
     );
 
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(

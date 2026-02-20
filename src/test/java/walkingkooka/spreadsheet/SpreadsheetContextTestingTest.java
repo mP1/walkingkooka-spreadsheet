@@ -32,6 +32,7 @@ import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
 import java.util.List;
@@ -301,6 +302,49 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         @Override
         public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
             Objects.requireNonNull(watcher, "watcher");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+            Objects.requireNonNull(currencyCode, "currencyCode");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Currency> currencyForLocale(final Locale locale) {
+            Objects.requireNonNull(locale, "locale");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<String> currencyText(final Currency currency) {
+            Objects.requireNonNull(currency, "currency");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<Currency> findByCurrencyText(final String text,
+                                                final int offset,
+                                                final int count) {
+            Objects.requireNonNull(text, "text");
+            if (offset < 0) {
+                throw new IllegalArgumentException("Invalid offset " + offset + " < 0");
+            }
+            if (count < 0) {
+                throw new IllegalArgumentException("Invalid count " + count + " < 0");
+            }
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Number exchangeRate(final Currency from,
+                                   final Currency to,
+                                   final Optional<LocalDateTime> dateTime) {
+            Objects.requireNonNull(from, "from");
+            Objects.requireNonNull(to, "to");
+            Objects.requireNonNull(dateTime, "dateTime");
             throw new UnsupportedOperationException();
         }
 
