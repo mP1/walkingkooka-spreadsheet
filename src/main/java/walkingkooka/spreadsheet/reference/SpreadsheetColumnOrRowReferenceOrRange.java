@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import java.util.Objects;
-
 /**
  * Base class for all column and row references
  */
@@ -26,15 +24,6 @@ public abstract class SpreadsheetColumnOrRowReferenceOrRange extends Spreadsheet
 
     SpreadsheetColumnOrRowReferenceOrRange() {
         super();
-    }
-
-    /**
-     * Tests if the given {@link SpreadsheetColumnOrRowReference} is within this {@link SpreadsheetColumnOrRowReferenceOrRange}.
-     */
-    public boolean test(final SpreadsheetColumnOrRowReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        return this.test(reference.toSelection());
     }
 
     /**
