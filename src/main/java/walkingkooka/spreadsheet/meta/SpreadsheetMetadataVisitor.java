@@ -49,6 +49,7 @@ import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
 import java.math.RoundingMode;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -130,6 +131,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitConverters(final ConverterAliasSet aliases) {
+        // nop
+    }
+
+    protected void visitCurrency(final Currency currency) {
         // nop
     }
 

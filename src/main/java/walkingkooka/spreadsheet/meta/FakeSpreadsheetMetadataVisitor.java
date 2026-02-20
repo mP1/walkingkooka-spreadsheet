@@ -46,6 +46,7 @@ import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
+import java.util.Currency;
 import java.util.Locale;
 
 public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
@@ -106,6 +107,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitConverters(final ConverterAliasSet aliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitCurrency(final Currency currency) {
         throw new UnsupportedOperationException();
     }
 

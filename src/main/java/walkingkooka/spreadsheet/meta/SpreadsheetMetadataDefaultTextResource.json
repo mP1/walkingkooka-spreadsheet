@@ -67,6 +67,7 @@
   "colorYellow": 6,
   "colorMagenta": 7,
   "colorCyan": 8,
+  "currency": "AUD",
   "dateTimeOffset": -25569,
   "decimalNumberDigitCount": 9,
   "defaultFormHandler": "non-null",

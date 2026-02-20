@@ -2708,6 +2708,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetMetadataPropertyName.CONVERTERS,
             ConverterAliasSet.parse("text, number, date-time, basic, spreadsheet-value, boolean")
         );
+        properties.put(
+            SpreadsheetMetadataPropertyName.CURRENCY,
+            Currency.getInstance("AUD")
+        );
         properties.put(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern("DD/MM/YYYY").spreadsheetFormatterSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern("DD/MM/YYYY;DDMMYYYY").spreadsheetParserSelector());
         properties.put(SpreadsheetMetadataPropertyName.DATE_TIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
