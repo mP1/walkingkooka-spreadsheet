@@ -155,16 +155,6 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
     public SpreadsheetFormatterContext createContext() {
         final Locale locale = Locale.forLanguageTag("en-AU");
 
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS.set(
-            SpreadsheetMetadataPropertyName.LOCALE,
-            locale
-        ).loadFromLocale(
-            LocaleContexts.jre(locale)
-        ).set(
-            SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
-            SpreadsheetExpressionFunctions.parseAliasSet("hello")
-        );
-
         final SpreadsheetConverterContext converterContext = SpreadsheetConverterContexts.basic(
             HasUserDirectorieses.fake(),
             SpreadsheetConverterContexts.NO_METADATA,
