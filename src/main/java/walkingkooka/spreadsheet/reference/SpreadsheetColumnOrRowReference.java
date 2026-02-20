@@ -49,7 +49,7 @@ public interface SpreadsheetColumnOrRowReference extends HasText {
             .toRow();
     }
 
-    private SpreadsheetSelection toSelection() {
+    default SpreadsheetSelection toSelection() {
         return (SpreadsheetSelection) this;
     }
 }
