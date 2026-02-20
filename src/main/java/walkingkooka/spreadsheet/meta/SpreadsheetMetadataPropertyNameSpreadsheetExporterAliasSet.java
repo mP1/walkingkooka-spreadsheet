@@ -57,7 +57,9 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSet extend
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override final SpreadsheetExporterAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override //
+    final SpreadsheetExporterAliasSet parseUrlFragmentSaveValueNonNull(final String value,
+                                                                       final CurrencyLocaleContext context) {
         return SpreadsheetExporterAliasSet.parse(value);
     }
 }

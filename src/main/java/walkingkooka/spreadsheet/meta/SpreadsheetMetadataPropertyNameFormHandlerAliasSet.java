@@ -58,7 +58,8 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerAliasSet extends Spread
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    public final FormHandlerAliasSet parseUrlFragmentSaveValueNonNull(final String value) {
+    public final FormHandlerAliasSet parseUrlFragmentSaveValueNonNull(final String value,
+                                                                      final CurrencyLocaleContext context) {
         return FormHandlerAliasSet.parse(value);
     }
 }

@@ -75,8 +75,9 @@ final class SpreadsheetMetadataPropertyNameDateTimeSymbols extends SpreadsheetMe
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override
-    DateTimeSymbols parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override //
+    DateTimeSymbols parseUrlFragmentSaveValueNonNull(final String value,
+                                                     final CurrencyLocaleContext context) {
         return DateTimeSymbols.parse(value);
     }
 }

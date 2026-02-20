@@ -70,7 +70,8 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    TextStyle parseUrlFragmentSaveValueNonNull(final String value) {
+    TextStyle parseUrlFragmentSaveValueNonNull(final String value,
+                                               final CurrencyLocaleContext context) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

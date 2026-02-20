@@ -70,7 +70,9 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
 
     // parseUrlFragmentSaveValue........................................................................................
 
-    @Override final Character parseUrlFragmentSaveValueNonNull(final String value) {
+    @Override //
+    final Character parseUrlFragmentSaveValueNonNull(final String value,
+                                                     final CurrencyLocaleContext context) {
         if (value.length() != 1) {
             throw new IllegalArgumentException("Invalid value " + CharSequences.quoteAndEscape(value) + " expected a single character");
         }

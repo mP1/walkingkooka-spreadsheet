@@ -23,8 +23,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.locale.LocaleContexts;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ConstantsTesting;
@@ -61,6 +64,11 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>>,
     ConstantsTesting<SpreadsheetMetadataPropertyName<?>>,
     HasSpreadsheetPatternKindTesting {
+
+    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CurrencyContexts.fake()
+        .setLocaleContext(
+            LocaleContexts.fake()
+        );
 
     @Test
     public void testWithUnknownConstantFails() {
@@ -507,7 +515,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         this.checkEquals(
             color,
             SpreadsheetMetadataPropertyName.numberedColor(1)
-                .parseUrlFragmentSaveValue(color.toString())
+                .parseUrlFragmentSaveValue(
+                    color.toString(),
+                    CURRENCY_LOCALE_CONTEXT
+                )
         );
     }
 
@@ -552,7 +563,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                                  final String propertyValue) {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> propertyName.parseUrlFragmentSaveValue(propertyValue)
+            () -> propertyName.parseUrlFragmentSaveValue(
+                propertyValue,
+                CURRENCY_LOCALE_CONTEXT
+            )
         );
     }
 
@@ -562,7 +576,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
         this.checkEquals(
             SpreadsheetName.with(value),
-            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseUrlFragmentSaveValue(value)
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseUrlFragmentSaveValue(
+                value,
+                CURRENCY_LOCALE_CONTEXT
+            )
         );
     }
 

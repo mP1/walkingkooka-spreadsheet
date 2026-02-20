@@ -76,7 +76,8 @@ final class SpreadsheetMetadataPropertyNameViewportHome extends SpreadsheetMetad
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    SpreadsheetCellReference parseUrlFragmentSaveValueNonNull(final String value) {
+    SpreadsheetCellReference parseUrlFragmentSaveValueNonNull(final String value,
+                                                              final CurrencyLocaleContext context) {
         return SpreadsheetSelection.parseCell(value);
     }
 }

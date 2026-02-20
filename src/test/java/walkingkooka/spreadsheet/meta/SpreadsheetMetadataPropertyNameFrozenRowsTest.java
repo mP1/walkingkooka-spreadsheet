@@ -42,10 +42,9 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
 
     @Test
     public void testParseUrlFragmentSaveValueFrozenRows() {
-        this.checkEquals(
-            SpreadsheetSelection.parseRowRange("1:2"),
-            SpreadsheetMetadataPropertyName.FROZEN_ROWS
-                .parseUrlFragmentSaveValue("1:2")
+        this.parseUrlFragmentSaveValueAndCheck(
+            "1:2",
+            SpreadsheetSelection.parseRowRange("1:2")
         );
     }
 

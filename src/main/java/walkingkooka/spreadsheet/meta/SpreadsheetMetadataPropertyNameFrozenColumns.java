@@ -79,7 +79,8 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    SpreadsheetColumnRangeReference parseUrlFragmentSaveValueNonNull(final String value) {
+    SpreadsheetColumnRangeReference parseUrlFragmentSaveValueNonNull(final String value,
+                                                                     final CurrencyLocaleContext context) {
         return SpreadsheetSelection.parseColumnRange(value);
     }
 }

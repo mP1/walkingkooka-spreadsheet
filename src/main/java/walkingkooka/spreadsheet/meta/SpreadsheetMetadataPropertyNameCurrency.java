@@ -75,7 +75,8 @@ final class SpreadsheetMetadataPropertyNameCurrency extends SpreadsheetMetadataP
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    Currency parseUrlFragmentSaveValueNonNull(final String value) {
-        return Currency.getInstance(value);
+    Currency parseUrlFragmentSaveValueNonNull(final String value,
+                                              final CurrencyLocaleContext context) {
+        return context.currencyForCurrencyCodeOrFail(value);
     }
 }

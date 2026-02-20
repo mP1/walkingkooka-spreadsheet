@@ -70,7 +70,8 @@ final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    DecimalNumberSymbols parseUrlFragmentSaveValueNonNull(final String value) {
+    DecimalNumberSymbols parseUrlFragmentSaveValueNonNull(final String value,
+                                                          final CurrencyLocaleContext context) {
         return DecimalNumberSymbols.parse(value);
     }
 }
