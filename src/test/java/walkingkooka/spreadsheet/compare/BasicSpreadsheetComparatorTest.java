@@ -79,6 +79,11 @@ public final class BasicSpreadsheetComparatorTest implements SpreadsheetComparat
             DateTimeComparators.dayOfMonth(),
             NAME
         );
+
+        this.nameAndCheck(
+            comparator,
+            NAME
+        );
     }
 
     @Test
