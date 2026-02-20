@@ -174,18 +174,17 @@ public abstract class SpreadsheetSelection implements HasText,
      */
     public final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
-    // modes used by isCellReferenceText
-    private final static int MODE_COLUMN_FIRST = 0;
-    private final static int MODE_COLUMN = MODE_COLUMN_FIRST + 1;
-    private final static int MODE_ROW_FIRST = MODE_COLUMN + 1;
-    private final static int MODE_ROW = MODE_ROW_FIRST + 1;
-    private final static int MODE_FAIL = MODE_ROW + 1;
-
     /**
      * Tests if the {@link String name} is a valid cell reference.
      */
     public static boolean isCellText(final String text) {
         Objects.requireNonNull(text, "text");
+
+        final int MODE_COLUMN_FIRST = 0;
+        final int MODE_COLUMN = MODE_COLUMN_FIRST + 1;
+        final int MODE_ROW_FIRST = MODE_COLUMN + 1;
+        final int MODE_ROW = MODE_ROW_FIRST + 1;
+        final int MODE_FAIL = MODE_ROW + 1;
 
         int mode = MODE_COLUMN_FIRST; // -1 too long or contains invalid char
         int columnLength = 0;
