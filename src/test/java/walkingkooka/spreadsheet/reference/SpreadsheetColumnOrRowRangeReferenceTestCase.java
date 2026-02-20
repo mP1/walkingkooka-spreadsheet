@@ -35,7 +35,10 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
 
     @Test
     public final void testWithNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> this.createSelection(null));
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSelection(null)
+        );
     }
 
     // add..............................................................................................................
@@ -70,7 +73,7 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
         );
     }
 
-    // toRange.........................................................................................................
+    // toRange..........................................................................................................
 
     @Test
     public final void testToRange() {
@@ -85,11 +88,12 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
     public final void testToParserTokenFails() {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> this.createSelection().toParserToken()
+            () -> this.createSelection()
+                .toParserToken()
         );
     }
 
-    // compare.........................................................................................................
+    // compare..........................................................................................................
 
     @Override
     public final void testCompareToNullFails() {
