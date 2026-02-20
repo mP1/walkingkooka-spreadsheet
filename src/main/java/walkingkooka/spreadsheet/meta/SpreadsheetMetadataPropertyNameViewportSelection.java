@@ -74,7 +74,8 @@ final class SpreadsheetMetadataPropertyNameViewportSelection extends Spreadsheet
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    AnchoredSpreadsheetSelection parseUrlFragmentSaveValueNonNull(final String value) {
+    AnchoredSpreadsheetSelection parseUrlFragmentSaveValueNonNull(final String value,
+                                                                  final CurrencyLocaleContext context) {
         throw new UnsupportedOperationException();
     }
 }

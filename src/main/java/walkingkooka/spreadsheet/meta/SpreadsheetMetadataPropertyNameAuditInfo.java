@@ -73,7 +73,8 @@ final class SpreadsheetMetadataPropertyNameAuditInfo extends SpreadsheetMetadata
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    AuditInfo parseUrlFragmentSaveValueNonNull(final String value) {
+    AuditInfo parseUrlFragmentSaveValueNonNull(final String value,
+                                               final CurrencyLocaleContext context) {
         throw new UnsupportedOperationException();
     }
 }

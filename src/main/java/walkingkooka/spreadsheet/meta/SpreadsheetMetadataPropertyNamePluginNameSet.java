@@ -67,7 +67,8 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
     // parseUrlFragmentSaveValue........................................................................................
 
     @Override
-    PluginNameSet parseUrlFragmentSaveValueNonNull(final String text) {
+    PluginNameSet parseUrlFragmentSaveValueNonNull(final String text,
+                                                   final CurrencyLocaleContext context) {
         return PluginNameSet.parse(text);
     }
 

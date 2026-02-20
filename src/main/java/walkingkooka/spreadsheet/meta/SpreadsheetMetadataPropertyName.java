@@ -675,18 +675,24 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * This parse method is called with the encoded text from a {@link UrlFragment} representing a save operation of this
      * property. Not all properties support this operation, and will throw a {@link UnsupportedOperationException}.
      */
-    public final T parseUrlFragmentSaveValue(final String value) {
+    public final T parseUrlFragmentSaveValue(final String value,
+                                             final CurrencyLocaleContext context) {
         Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(context, "context");
 
         return this.checkValue(
-            this.parseUrlFragmentSaveValueNonNull(value)
+            this.parseUrlFragmentSaveValueNonNull(
+                value,
+                context
+            )
         );
     }
 
-    abstract T parseUrlFragmentSaveValueNonNull(final String value);
+    abstract T parseUrlFragmentSaveValueNonNull(final String value,
+                                                final CurrencyLocaleContext context);
 
     /**
-     * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String)} is not supported.
+     * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String, CurrencyLocaleContext)} is not supported.
      */
     final T failParseUrlFragmentSaveValueUnsupported() {
         throw new UnsupportedOperationException("UrlFragment save value not supported for " + CharSequences.quoteAndEscape(this.value()));

@@ -262,12 +262,24 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         }
     }
 
+    final void parseUrlFragmentSaveValueAndCheck(final String urlFragment,
+                                                 final V value) {
+        this.parseUrlFragmentSaveValueAndCheck(
+            this.createName(),
+            urlFragment,
+            value
+        );
+    }
+
     final void parseUrlFragmentSaveValueAndCheck(final SpreadsheetMetadataPropertyName<V> propertyName,
                                                  final String urlFragment,
                                                  final V value) {
         this.checkEquals(
             value,
-            propertyName.parseUrlFragmentSaveValue(urlFragment)
+            propertyName.parseUrlFragmentSaveValue(
+                urlFragment,
+                CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
+            )
         );
     }
 

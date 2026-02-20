@@ -47,7 +47,10 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
         this.checkEquals(
             query,
             SpreadsheetMetadataPropertyName.FIND_QUERY
-                .parseUrlFragmentSaveValue(query.text())
+                .parseUrlFragmentSaveValue(
+                    query.text(),
+                    CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
+                )
         );
     }
 
