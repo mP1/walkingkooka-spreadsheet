@@ -24,8 +24,8 @@ import walkingkooka.compare.ComparableTesting2;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends SpreadsheetSelection & Comparable<S>,
-    R extends SpreadsheetSelection & Comparable<R>>
+public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends SpreadsheetColumnOrRowReferenceOrRange & Comparable<S>,
+    R extends SpreadsheetColumnOrRowReference & Comparable<R>>
     extends SpreadsheetSelectionTestCase<S>
     implements ComparableTesting2<S> {
 
