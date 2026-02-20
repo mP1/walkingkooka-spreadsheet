@@ -28,8 +28,10 @@ public final class SpreadsheetMetadataPropertyNameCurrencyTest extends Spreadshe
     @Test
     public void testExtractLocaleAwareValueWithLocaleEnglish() {
         this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
+            LocaleContexts.jre(
+                Locale.forLanguageTag("en-AU")
+            ),
+            Currency.getInstance("AUD")
         );
     }
 

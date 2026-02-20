@@ -17,12 +17,18 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
 public abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase<N extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet> extends SpreadsheetMetadataPropertyNameTestCase<N, ExpressionFunctionAliasSet> {
 
     SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase() {
         super();
+    }
+
+    @Test
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Override final String propertyValueType() {

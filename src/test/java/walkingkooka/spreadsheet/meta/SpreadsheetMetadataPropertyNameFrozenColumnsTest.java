@@ -19,11 +19,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-
-import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameFrozenColumns, SpreadsheetColumnRangeReference> {
 
@@ -37,10 +34,7 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     // parseUrlFragmentSaveValue........................................................................................

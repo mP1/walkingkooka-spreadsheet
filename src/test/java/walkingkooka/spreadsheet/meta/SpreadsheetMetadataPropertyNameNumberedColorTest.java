@@ -19,10 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 
-import java.util.Locale;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -87,10 +85,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

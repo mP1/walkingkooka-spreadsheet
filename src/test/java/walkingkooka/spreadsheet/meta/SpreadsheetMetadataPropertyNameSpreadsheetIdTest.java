@@ -18,9 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
-
-import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetId, SpreadsheetId> {
@@ -35,10 +32,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

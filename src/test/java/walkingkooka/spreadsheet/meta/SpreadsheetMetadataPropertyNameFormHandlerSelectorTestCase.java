@@ -17,12 +17,18 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 
 public abstract class SpreadsheetMetadataPropertyNameFormHandlerSelectorTestCase<N extends SpreadsheetMetadataPropertyNameFormHandlerSelector> extends SpreadsheetMetadataPropertyNameTestCase<N, FormHandlerSelector> {
 
     SpreadsheetMetadataPropertyNameFormHandlerSelectorTestCase() {
         super();
+    }
+
+    @Test
+    public final void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Override final String propertyValueType() {

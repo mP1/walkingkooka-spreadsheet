@@ -18,20 +18,14 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
-
-import java.util.Locale;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTextTest extends SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorTestCase<SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorText> {
 
     @Test
     public void testExtractLocaleAwareValue() {
-        this.extractLocaleValueAwareAndCheck(
-            LocaleContexts.jre(Locale.ENGLISH),
-            null
-        );
+        this.extractLocaleValueAwareAndCheck();
     }
 
     @Test

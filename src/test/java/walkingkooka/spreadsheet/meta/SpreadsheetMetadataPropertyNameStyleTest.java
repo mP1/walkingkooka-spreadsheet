@@ -32,6 +32,11 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
     }
 
     @Test
+    public void testExtractLocaleAwareValue() {
+        this.extractLocaleValueAwareAndCheck();
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetMetadataPropertyNameStyle.instance(), "style");
     }
