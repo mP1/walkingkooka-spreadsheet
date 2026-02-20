@@ -59,6 +59,7 @@ A wide variety of items are stored for each spreadsheet including but not limite
   - [Default Year](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameDefaultYear.java)
   - [Two Digit Year](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameTwoDigitYear.java)
 - Numbers
+  - [Currency](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameCurrency.java) 
   - [NumberKind](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadataPropertyNameExpressionNumberKind.java)
     - Mathematical computations in two flavours are supported
       - 64 bit fast with limited precision (12 decimal places) just like Excel and Google Sheets

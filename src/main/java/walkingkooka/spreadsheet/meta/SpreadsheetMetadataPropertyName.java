@@ -66,6 +66,7 @@ import walkingkooka.validation.form.provider.FormHandlerSelector;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
 import java.math.RoundingMode;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -148,6 +149,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>converters</code>
      */
     public static final SpreadsheetMetadataPropertyName<ConverterAliasSet> CONVERTERS = registerConstant(SpreadsheetMetadataPropertyNameConverterAliasSetConverters.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Currency> CURRENCY = registerConstant(
+        SpreadsheetMetadataPropertyNameCurrency.instance()
+    );
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>dateFormatter</code>

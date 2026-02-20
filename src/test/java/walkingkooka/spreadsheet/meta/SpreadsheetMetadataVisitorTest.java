@@ -58,6 +58,7 @@ import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -213,6 +214,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             ConverterProviders.converters()
                 .converterInfos()
                 .aliasSet()
+        );
+    }
+
+    @Test
+    public void testVisitCurrency() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitCurrency(final Currency c) {
+                this.visited = c;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.CURRENCY,
+            Currency.getInstance("AUD")
         );
     }
 
