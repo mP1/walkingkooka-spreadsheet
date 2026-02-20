@@ -676,7 +676,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * property. Not all properties support this operation, and will throw a {@link UnsupportedOperationException}.
      */
     public final T parseUrlFragmentSaveValue(final String value) {
-        Objects.requireNonNull(value, value);
+        Objects.requireNonNull(value, "value");
 
         return this.checkValue(
             this.parseUrlFragmentSaveValueNonNull(value)
