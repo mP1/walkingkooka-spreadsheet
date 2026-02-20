@@ -74,6 +74,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -1233,6 +1234,11 @@ public abstract class SpreadsheetSelection implements HasText,
      * while {@link SpreadsheetCellRangeReference} will return itself. {@link SpreadsheetLabelName} will throw {@link UnsupportedOperationException}.
      */
     public abstract SpreadsheetSelection toRange();
+
+    /**
+     * An {@link Iterator} that returns all the {@link SpreadsheetColumnReference} or {@link SpreadsheetRowReference}.
+     */
+    public abstract Iterator<SpreadsheetColumnOrRowReference> columnOrRowsIterator();
 
     /**
      * Returns true if this selection is a unit or has a count of 1.

@@ -539,6 +539,15 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
             .iterator();
     }
 
+    // SpreadsheetColumnOrRowReferenceOrRange...........................................................................
+
+    @Override
+    public Iterator<SpreadsheetColumnOrRowReference> columnOrRowsIterator() {
+        return Cast.to(
+            this.iterator()
+        );
+    }
+
     // HasParserToken...................................................................................................
 
     @Override

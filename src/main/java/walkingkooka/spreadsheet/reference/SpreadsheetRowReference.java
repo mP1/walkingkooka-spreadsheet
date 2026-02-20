@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -27,6 +28,7 @@ import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -376,6 +378,13 @@ public final class SpreadsheetRowReference extends SpreadsheetRowReferenceOrRang
     @Override
     void accept(final SpreadsheetSelectionVisitor visitor) {
         visitor.visit(this);
+    }
+
+    // SpreadsheetColumnOrRowReferenceOrRange...........................................................................
+
+    @Override
+    public Iterator<SpreadsheetColumnOrRowReference> columnOrRowsIterator() {
+        return Iterators.one(this);
     }
 
     // SpreadsheetViewportNavigation....................................................................................

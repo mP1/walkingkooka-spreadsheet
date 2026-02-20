@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
+import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.compare.ComparableTesting2;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -27,7 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends SpreadsheetColumnOrRowReferenceOrRange & Comparable<S>,
     R extends SpreadsheetColumnOrRowReference & Comparable<R>>
     extends SpreadsheetSelectionTestCase<S>
-    implements ComparableTesting2<S> {
+    implements IteratorTesting,
+    ComparableTesting2<S> {
 
     SpreadsheetColumnOrRowRangeReferenceTestCase() {
         super();
@@ -90,6 +92,16 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
             UnsupportedOperationException.class,
             () -> this.createSelection()
                 .toParserToken()
+        );
+    }
+
+    // SpreadsheetColumnOrRowReferenceOrRange...........................................................................
+
+    final void columnOrRowsIterateAndCheck(final S selection,
+                                           final R...expected) {
+        this.iterateAndCheck(
+            selection.columnOrRowsIterator(),
+            expected
         );
     }
 
