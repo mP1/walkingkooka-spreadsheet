@@ -23,7 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -31,7 +31,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextMissingValues;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValuesException;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -164,14 +163,13 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
 
-    public static SpreadsheetEnvironmentContextFactory with(final CurrencyContext currencyContext,
+    public static SpreadsheetEnvironmentContextFactory with(final CurrencyLocaleContext currencyLocaleContext,
                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                            final LocaleContext localeContext,
                                                             final SpreadsheetProvider spreadsheetProvider,
                                                             final ProviderContext providerContext) {
         return new SpreadsheetEnvironmentContextFactory(
             null, // Converter
-            Objects.requireNonNull(currencyContext, "currencyContext"),
+            Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
             null, // SpreadsheetConverterContext
             null, // DateTimeContext
             null, // DecimalNumberContext
@@ -182,14 +180,13 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             null, // JsonNodeUnmarshallContextPreProcessor
             null, // MathContext
             Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext"),
-            Objects.requireNonNull(localeContext, "localeContext"),
             Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider"),
             Objects.requireNonNull(providerContext, "providerContext")
         );
     }
 
     private SpreadsheetEnvironmentContextFactory(final Converter<SpreadsheetConverterContext> converter,
-                                                 final CurrencyContext currencyContext,
+                                                 final CurrencyLocaleContext currencyLocaleContext,
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
                                                  final DateTimeContext dateTimeContext,
                                                  final DecimalNumberContext decimalNumberContext,
@@ -200,7 +197,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                  final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
                                                  final MathContext mathContext,
                                                  final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                 final LocaleContext localeContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         super();
@@ -208,7 +204,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         this.converter = converter;
         this.spreadsheetConverterContext = spreadsheetConverterContext;
 
-        this.currencyContext = currencyContext;
+        this.currencyLocaleContext = currencyLocaleContext;
         this.dateTimeContext = dateTimeContext;
         this.decimalNumberContext = decimalNumberContext;
         this.expressionNumberContext = expressionNumberContext;
@@ -222,7 +218,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         this.mathContext = mathContext;
 
         this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
-        this.localeContext = localeContext;
 
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
@@ -311,7 +306,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             missing.reportIfMissing();
 
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
-            final LocaleContext localeContext = this.localeContext;
+            final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             this.spreadsheetConverterContext = SpreadsheetConverterContexts.basic(
                 spreadsheetEnvironmentContext, // HasUserDirectories
@@ -323,7 +318,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            this.currencyContext, // canCurrencyForLocale
+                            currencyLocaleContext, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
                             spreadsheetEnvironmentContext.indentation(),
@@ -332,7 +327,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                             Converters.fake(),
                             dateTimeContext,
                             decimalNumberContext,
-                            localeContext
+                            currencyLocaleContext // LocaleContext
                         ),
                         expressionNumberKind
                     ),
@@ -341,7 +336,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         jsonNodeUnmarshallContext
                     )
                 ),
-                this.localeContext
+                currencyLocaleContext
             );
         }
         return this.spreadsheetConverterContext;
@@ -375,13 +370,13 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     private transient Converter<SpreadsheetConverterContext> converter;
 
-    // CurrencyContext..................................................................................................
+    // CurrencyLocaleContext............................................................................................
 
-    public CurrencyContext currencyContext() {
-        return this.currencyContext;
+    public CurrencyLocaleContext currencyLocaleContext() {
+        return this.currencyLocaleContext;
     }
 
-    private final CurrencyContext currencyContext;
+    private final CurrencyLocaleContext currencyLocaleContext;
 
     // dateTimeContext..................................................................................................
 
@@ -399,7 +394,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             DateTimeSymbols dateTimeSymbols = missing.getOrNull(DATE_TIME_SYMBOLS);
 
             if (null == dateTimeSymbols) {
-                dateTimeSymbols = this.localeContext.dateTimeSymbolsForLocale(locale)
+                dateTimeSymbols = this.currencyLocaleContext.dateTimeSymbolsForLocale(locale)
                     // Missing DateTimeSymbols for locale EN-AU
                     .orElseThrow(() -> new IllegalArgumentException("Missing " + DateTimeSymbols.class.getSimpleName() + " for locale " + locale));
             }
@@ -440,7 +435,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             DecimalNumberSymbols decimalNumberSymbols = missing.getOrNull(DECIMAL_NUMBER_SYMBOLS);
 
             if (null == decimalNumberSymbols) {
-                decimalNumberSymbols = this.localeContext.decimalNumberSymbolsForLocale(locale)
+                decimalNumberSymbols = this.currencyLocaleContext.decimalNumberSymbolsForLocale(locale)
                     .orElseThrow(
                         // Missing DecimalNumberSymbols for locale EN-AU
                         () -> new IllegalArgumentException("Missing " + DecimalNumberSymbols.class.getSimpleName() + " for locale " + locale)
@@ -542,9 +537,11 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             missing.reportIfMissing();
 
+            final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
+
             JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
-                this.currencyContext,
-                this.localeContext,
+                currencyLocaleContext, // CanCurrencyForCurrencyCode
+                currencyLocaleContext, // CanLocaleForLanguageTag
                 expressionNumberKind,
                 mathContext
             );
@@ -598,7 +595,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                                                 final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetEnvironmentContextFactory(
             this.converter,
-            this.currencyContext,
+            this.currencyLocaleContext,
             spreadsheetConverterContext,
             this.dateTimeContext, //
             this.decimalNumberContext, //
@@ -609,7 +606,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             jsonNodeUnmarshallContextPreProcessor,
             this.mathContext,
             this.spreadsheetEnvironmentContext,
-            this.localeContext,
             this.spreadsheetProvider,
             this.providerContext
         );
@@ -721,12 +717,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     // constants........................................................................................................
 
-    public LocaleContext localeContext() {
-        return this.localeContext;
-    }
-
-    private final LocaleContext localeContext;
-
     public SpreadsheetProvider spreadsheetProvider() {
         return this.spreadsheetProvider;
     }
@@ -759,9 +749,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return before == after ?
             this :
             with(
-                this.currencyContext,
+                this.currencyLocaleContext,
                 after,
-                this.localeContext,
                 this.spreadsheetProvider,
                 this.providerContext
             );
@@ -791,9 +780,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     private boolean equals0(final SpreadsheetEnvironmentContextFactory other) {
         return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
             Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
-            this.currencyContext.equals(other.currencyContext) &&
+            this.currencyLocaleContext.equals(other.currencyLocaleContext) &&
             this.spreadsheetEnvironmentContext.equals(other.spreadsheetEnvironmentContext) &&
-            this.localeContext.equals(other.localeContext) &&
             this.spreadsheetProvider.equals(other.spreadsheetProvider) &&
             this.providerContext.equals(other.providerContext);
     }

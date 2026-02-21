@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -78,9 +79,8 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             spreadsheetContextSupplier,
             currencyContext,
             SpreadsheetEnvironmentContextFactory.with(
-                currencyContext,
+                currencyContext.setLocaleContext(localeContext),
                 spreadsheetEnvironmentContext,
-                localeContext,
                 spreadsheetProvider,
                 providerContext
             ),
@@ -195,10 +195,12 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
             final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory = this.spreadsheetEnvironmentContextFactory;
 
+            final CurrencyLocaleContext currencyLocaleContext = spreadsheetEnvironmentContextFactory.currencyLocaleContext();
+
             spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
                 this.spreadsheetContextSupplier,
-                spreadsheetEnvironmentContextFactory.currencyContext(),
-                spreadsheetEnvironmentContextFactory.localeContext(),
+                currencyLocaleContext, // CurrencyContext
+                currencyLocaleContext, // LocaleContext
                 spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(),
                 this.spreadsheetMetadataContext,
                 terminalContext,
@@ -269,7 +271,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     @Override
     public LocaleContext localeContext() {
-        return this.spreadsheetEnvironmentContextFactory.localeContext();
+        return this.spreadsheetEnvironmentContextFactory.currencyLocaleContext();
     }
 
     // SpreadsheetContextDelegator......................................................................................
