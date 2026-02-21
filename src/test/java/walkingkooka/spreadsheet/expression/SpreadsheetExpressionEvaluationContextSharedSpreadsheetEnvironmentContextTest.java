@@ -154,8 +154,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 null,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -166,29 +165,11 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     }
 
     @Test
-    public void testWithNullCurrencyContextFails() {
+    public void testWithNullCurrencyLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                null,
-                LOCALE_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullLocaleContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -205,8 +186,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -222,8 +202,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
                 TERMINAL_CONTEXT,
@@ -239,8 +218,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
                 null,
@@ -256,8 +234,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -273,8 +250,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
                 SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_METADATA_CONTEXT,
                 TERMINAL_CONTEXT,
@@ -1241,8 +1217,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                                                                                     final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
             spreadsheetContextSupplier,
-            CURRENCY_CONTEXT,
-            LOCALE_CONTEXT,
+            CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             new FakeSpreadsheetMetadataContext() {
                 @Override
