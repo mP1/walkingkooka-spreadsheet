@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -499,7 +499,9 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             environmentContext
         );
 
-        final LocaleContext localeContext = LocaleContexts.jre(locale);
+        final CurrencyLocaleContext currencyLocaleContext = CURRENCY_CONTEXT.setLocaleContext(
+            LocaleContexts.jre(locale)
+        );
 
         final ProviderContext providerContext = ProviderContexts.basic(
             ConverterContexts.fake(),
@@ -533,7 +535,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                 (c) -> {
                                     throw new UnsupportedOperationException();
                                 }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                                CURRENCY_CONTEXT.setLocaleContext(localeContext),
+                                currencyLocaleContext,
                                 spreadsheetEnvironmentContext,
                                 spreadsheetProvider,
                                 providerContext
@@ -541,8 +543,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                         );
                     }
                 },
-                CURRENCY_CONTEXT,
-                localeContext,
+                currencyLocaleContext,
                 spreadsheetEnvironmentContext,
                 SpreadsheetMetadataContexts.basic(
                     (e, l) -> {
