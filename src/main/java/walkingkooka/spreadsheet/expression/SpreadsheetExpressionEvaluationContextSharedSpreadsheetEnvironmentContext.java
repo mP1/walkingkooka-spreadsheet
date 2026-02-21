@@ -104,9 +104,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
-                currencyContext,
+                currencyContext.setLocaleContext(localeContext),
                 spreadsheetEnvironmentContext,
-                localeContext,
                 spreadsheetProvider,
                 providerContext
             ),
@@ -336,7 +335,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     @Override
     public LocaleContext localeContext() {
-        return this.spreadsheetEnvironmentContextFactory.localeContext();
+        return this.spreadsheetEnvironmentContextFactory.currencyLocaleContext();
     }
 
     // ValidationExpressionEvaluationContext............................................................................

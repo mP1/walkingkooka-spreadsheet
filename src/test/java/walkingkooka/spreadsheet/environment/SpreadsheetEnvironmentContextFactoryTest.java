@@ -22,11 +22,10 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.ConverterTesting;
-import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
@@ -211,13 +210,12 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // with.............................................................................................................
 
     @Test
-    public void testWithNullCurrencyContextFails() {
+    public void testWithNullCurrencyLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -229,37 +227,22 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 null,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
         );
     }
 
-    @Test
-    public void testWithNullLocaleContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                null,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
 
     @Test
     public void testWithNullSpreadsheetProviderFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -271,9 +254,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 null
             )
@@ -715,9 +697,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                final ProviderContext providerContext) {
         return SpreadsheetEnvironmentContextFactory.with(
-            CURRENCY_CONTEXT,
+            CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
-            LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             providerContext
         );
@@ -802,12 +783,11 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // hashCode/equals..................................................................................................
 
     @Test
-    public void testEqualsDifferentCurrencyContext() {
+    public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
-                CurrencyContexts.fake(),
+                CurrencyLocaleContexts.fake(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -827,22 +807,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 spreadsheetEnvironmentContext,
-                LOCALE_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentLocaleContext() {
-        this.checkNotEquals(
-            SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LocaleContexts.fake(),
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -853,9 +819,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LOCALE_CONTEXT,
                 SpreadsheetProviders.fake(),
                 PROVIDER_CONTEXT
             )
@@ -866,9 +831,8 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 ProviderContexts.fake()
             )

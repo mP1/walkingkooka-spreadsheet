@@ -102,9 +102,11 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
-                CurrencyContexts.fake(),
+                CurrencyContexts.fake()
+                    .setLocaleContext(
+                        LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE)
+                    ),
                 spreadsheetEnvironmentContext,
-                LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE),
                 SpreadsheetProviders.fake(),
                 ProviderContexts.fake()
             );
