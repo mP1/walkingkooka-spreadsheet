@@ -21,10 +21,10 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.convert.provider.ConverterAliasSet;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
@@ -78,9 +78,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_METADATA_CONTEXT,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -95,9 +94,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SPREADSHEET_ENGINE,
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -112,26 +110,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullCurrencyContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
-                SPREADSHEET_ENGINE,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                SPREADSHEET_METADATA_CONTEXT,
-                null,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -410,16 +390,16 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     @Override
     SpreadsheetContextSharedMutableSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
+            CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
-            LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
     }
 
     @Override
-    SpreadsheetContextSharedMutableSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                               final LocaleContext localeContext,
+    SpreadsheetContextSharedMutableSpreadsheetId createContext(final CurrencyLocaleContext currencyLocaleContext,
+                                                               final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                final SpreadsheetProvider spreadsheetProvider,
                                                                final ProviderContext providerContext) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
@@ -522,9 +502,8 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
                 },
                 store
             ),
-            CURRENCY_CONTEXT,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );

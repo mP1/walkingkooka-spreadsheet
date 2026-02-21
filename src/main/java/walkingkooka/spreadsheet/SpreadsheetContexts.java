@@ -17,8 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -41,18 +40,16 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
-                                                        final CurrencyContext currencyContext,
+                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                        final LocaleContext localeContext,
                                                         final SpreadsheetProvider spreadsheetProvider,
                                                         final ProviderContext providerContext) {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
             spreadsheetEngine,
             storeRepository,
             httpRouterFactory,
-            currencyContext,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );
@@ -71,18 +68,16 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext mutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
-                                                          final CurrencyContext currencyContext,
+                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                          final LocaleContext localeContext,
                                                           final SpreadsheetProvider spreadsheetProvider,
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
             spreadsheetEngine,
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
-            currencyContext,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );

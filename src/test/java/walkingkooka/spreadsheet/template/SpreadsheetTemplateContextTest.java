@@ -277,9 +277,8 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                     (c) -> {
                         throw new UnsupportedOperationException();
                     }, // Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory
-                    CURRENCY_CONTEXT,
+                    CURRENCY_LOCALE_CONTEXT,
                     spreadsheetEnvironmentContext,
-                    LOCALE_CONTEXT,
                     SpreadsheetProviders.basic(
                         SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                             (ProviderContext p) -> METADATA_EN_AU.dateTimeConverter(

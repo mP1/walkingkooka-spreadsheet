@@ -17,8 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -46,17 +45,15 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
     static SpreadsheetContextSharedFixedSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
                                                            final SpreadsheetStoreRepository storeRepository,
                                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
-                                                           final CurrencyContext currencyContext,
+                                                           final CurrencyLocaleContext currencyLocaleContext,
                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                           final LocaleContext localeContext,
                                                            final SpreadsheetProvider spreadsheetProvider,
                                                            final ProviderContext providerContext) {
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(httpRouterFactory, "httpRouterFactory");
-        Objects.requireNonNull(currencyContext, "currencyContext");
+        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
-        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -67,9 +64,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
             null, // SpreadsheetEngineContext will be created in ctor
             httpRouterFactory,
             null, // HttpRouter
-            currencyContext,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );
@@ -81,17 +77,15 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final SpreadsheetEngineContext spreadsheetEngineContext,
                                                        final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                                        final Router<HttpRequestAttribute<?>, HttpHandler> httpRouter,
-                                                       final CurrencyContext currencyContext,
+                                                       final CurrencyLocaleContext currencyLocaleContext,
                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                       final LocaleContext localeContext,
                                                        final SpreadsheetProvider spreadsheetProvider,
                                                        final ProviderContext providerContext) {
         super(
             spreadsheetEngine,
             spreadsheetEngineContext,
-            currencyContext,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );
@@ -160,9 +154,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
 
     @Override
     SpreadsheetContext replaceEnvironmentContext(final SpreadsheetEngineContext spreadsheetEngineContext,
-                                                 final CurrencyContext currencyContext,
+                                                 final CurrencyLocaleContext currencyLocaleContext,
                                                  final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                 final LocaleContext localeContext,
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedFixedSpreadsheetId(
@@ -172,9 +165,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
             spreadsheetEngineContext,
             this.httpRouterFactory,
             null, // recreate HttpRouter,
-            currencyContext,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );

@@ -600,12 +600,12 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
-            CurrencyContexts.fake(),
+            CurrencyContexts.fake()
+                .setLocaleContext(localeContext),
             SpreadsheetEnvironmentContexts.basic(
                 Storages.tree(),
                 environmentContext
             ),
-            localeContext,
             SpreadsheetProviders.basic(
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                     (ProviderContext p) -> Converters.never()
