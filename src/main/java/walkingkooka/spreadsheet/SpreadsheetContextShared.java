@@ -17,13 +17,11 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.currency.CurrencyContextDelegator;
+import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContextDelegator;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
-import walkingkooka.locale.LocaleContextDelegator;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -48,15 +46,13 @@ import java.util.Optional;
 abstract class SpreadsheetContextShared implements SpreadsheetContext,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetEnvironmentContextDelegator,
-    CurrencyContextDelegator,
-    LocaleContextDelegator,
+    CurrencyLocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
     SpreadsheetContextShared(final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
-                             final CurrencyContext currencyContext,
+                             final CurrencyLocaleContext currencyLocaleContext,
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                             final LocaleContext localeContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext) {
         super();
@@ -65,10 +61,9 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
         this.spreadsheetEngineContext = spreadsheetEngineContext;
 
+        this.currencyLocaleContext = CurrencyLocaleContexts.readOnly(currencyLocaleContext);
         this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
 
-        this.currencyContext = currencyContext;
-        this.localeContext = LocaleContexts.readOnly(localeContext);
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
     }
@@ -175,9 +170,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
 
             spreadsheetContext = this.replaceEnvironmentContext(
                 this.spreadsheetEngineContext,
-                this.currencyContext,
+                this.currencyLocaleContext,
                 spreadsheetEnvironmentContext,
-                this.localeContext,
                 this.spreadsheetProvider,
                 this.providerContext
             );
@@ -187,9 +181,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     }
 
     abstract SpreadsheetContext replaceEnvironmentContext(final SpreadsheetEngineContext spreadsheetEngineContext,
-                                                          final CurrencyContext currencyContext,
+                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                          final LocaleContext localeContext,
                                                           final SpreadsheetProvider spreadsheetProvider,
                                                           final ProviderContext providerContext);
 
@@ -265,20 +258,11 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     // CurrencyContextDelegator.........................................................................................
 
     @Override
-    public final CurrencyContext currencyContext() {
-        return this.currencyContext;
+    public final CurrencyLocaleContext currencyLocaleContext() {
+        return this.currencyLocaleContext;
     }
 
-    private final CurrencyContext currencyContext;
-    
-    // LocaleContext....................................................................................................
-
-    @Override
-    public final LocaleContext localeContext() {
-        return this.localeContext;
-    }
-
-    private final LocaleContext localeContext;
+    private final CurrencyLocaleContext currencyLocaleContext;
 
     // HasProviderContext...............................................................................................
 

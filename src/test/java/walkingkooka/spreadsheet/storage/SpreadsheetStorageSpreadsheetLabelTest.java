@@ -462,12 +462,12 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             (c) -> {
                 throw new UnsupportedOperationException();
             }, // HttpRouter
-            CurrencyContexts.fake(),
+            CurrencyContexts.fake()
+                .setLocaleContext(localeContext),
             SpreadsheetEnvironmentContexts.basic(
                 storage,
                 environmentContext
             ),
-            localeContext,
             SpreadsheetProviders.basic(
                 SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                     (ProviderContext p) -> Converters.never()

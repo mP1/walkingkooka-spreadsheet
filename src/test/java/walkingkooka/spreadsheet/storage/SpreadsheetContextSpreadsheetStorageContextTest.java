@@ -503,12 +503,12 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
                 (c) -> {
                     throw new UnsupportedOperationException();
                 }, // HttpRouter
-                CurrencyContexts.fake(),
+                CurrencyContexts.fake()
+                    .setLocaleContext(localeContext),
                 SpreadsheetEnvironmentContexts.basic(
                     storage,
                     environmentContext
                 ),
-                localeContext,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         (ProviderContext p) -> Converters.never()

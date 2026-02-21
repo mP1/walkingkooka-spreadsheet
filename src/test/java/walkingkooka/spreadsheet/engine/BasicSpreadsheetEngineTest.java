@@ -1321,9 +1321,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 (c) -> {
                                     throw new UnsupportedOperationException();
                                 }, // httpRouterFactory
-                                CURRENCY_CONTEXT,
+                                CURRENCY_CONTEXT.setLocaleContext(localeContext),
                                 spreadsheetEnvironmentContext,
-                                localeContext,
                                 SPREADSHEET_PROVIDER,
                                 PROVIDER_CONTEXT
                             ) :

@@ -22,6 +22,8 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -129,20 +131,31 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         )
     );
 
-    final static LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
-        LocaleContexts.jre(Locale.ENGLISH)
-    );
+    static {
+        final LocaleContext localeContext = LocaleContexts.readOnly(
+            LocaleContexts.jre(Locale.ENGLISH)
+        );
 
-    final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
-        Currency.getInstance("AUD"),
-        (Currency from, Currency to) -> {
-            Objects.requireNonNull(from, "from");
-            Objects.requireNonNull(to, "to");
+        final CurrencyContext currencyContext = CurrencyContexts.jre(
+            Currency.getInstance("AUD"),
+            (Currency from, Currency to) -> {
+                Objects.requireNonNull(from, "from");
+                Objects.requireNonNull(to, "to");
 
-            throw new UnsupportedOperationException();
-        },
-        LOCALE_CONTEXT
-    );
+                throw new UnsupportedOperationException();
+            },
+            localeContext
+        );
+
+        CURRENCY_CONTEXT = currencyContext;
+        CURRENCY_LOCALE_CONTEXT = CurrencyLocaleContexts.readOnly(
+            currencyContext.setLocaleContext(localeContext)
+        );
+    }
+
+    final static CurrencyContext CURRENCY_CONTEXT;
+
+    final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT;
 
     final static SpreadsheetProvider SPREADSHEET_PROVIDER = SpreadsheetProviders.basic(
         ConverterProviders.empty(),
@@ -163,12 +176,12 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     // with.............................................................................................................
 
     @Test
-    public final void testWithNullSpreadsheetEnvironmentContextFails() {
+    public final void testWithNullCurrencyLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
                 null,
-                LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -176,11 +189,11 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     }
 
     @Test
-    public final void testWithNullLocaleContextFails() {
+    public final void testWithNullSpreadsheetEnvironmentContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -193,8 +206,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -206,8 +219,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
         assertThrows(
             NullPointerException.class,
             () -> this.createContext(
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 null
             )
@@ -472,8 +485,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
     abstract C createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext);
 
-    abstract C createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                             final LocaleContext localeContext,
+    abstract C createContext(final CurrencyLocaleContext localeCurrencyContext,
+                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext);
 

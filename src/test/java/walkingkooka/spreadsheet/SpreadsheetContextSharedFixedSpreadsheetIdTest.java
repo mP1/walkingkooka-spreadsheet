@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.provider.ConverterAliasSet;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -75,9 +75,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 null,
                 REPO,
                 HTTP_ROUTER_FACTORY,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -92,9 +91,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SPREADSHEET_ENGINE,
                 null,
                 HTTP_ROUTER_FACTORY,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -109,9 +107,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                 SPREADSHEET_ENGINE,
                 REPO,
                 null,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
-                LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
             )
@@ -348,16 +345,16 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     @Override
     SpreadsheetContextSharedFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return this.createContext(
+            CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
-            LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );
     }
 
     @Override
-    SpreadsheetContextSharedFixedSpreadsheetId createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                             final LocaleContext localeContext,
+    SpreadsheetContextSharedFixedSpreadsheetId createContext(final CurrencyLocaleContext currencyLocaleContext,
+                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
@@ -420,9 +417,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
                     throw new UnsupportedOperationException();
                 }
             },
-            CURRENCY_CONTEXT,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetProvider,
             providerContext
         );
