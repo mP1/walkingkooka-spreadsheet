@@ -1635,31 +1635,6 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             );
         };
 
-
-//        return SpreadsheetContexts.mutableSpreadsheetId(
-//            SpreadsheetEngines.basic(),
-//            (final SpreadsheetId id) -> {
-//                final SpreadsheetStoreRepository repo = spreadsheetIdSpreadsheetStoreRepository.get(id);
-//                if (null == repo) {
-//                    throw new IllegalArgumentException("SpreadsheetStoreRepository: Missing for SpreadsheetId " + id);
-//                }
-//                return Optional.of(
-//                    new FakeSpreadsheetContext() {
-//
-//                        @Override
-//                        public SpreadsheetStoreRepository storeRepository() {
-//                            return repo;
-//                        }
-//                    }
-//                );
-//            }, // spreadsheetIdToStoreRepository
-//            spreadsheetMetadataContext,
-//            spreadsheetEnvironmentContext,
-//            LOCALE_CONTEXT,
-//            SPREADSHEET_PROVIDER,
-//            PROVIDER_CONTEXT
-//        );
-
         return this.createSpreadsheetContext(
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
