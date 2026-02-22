@@ -24,6 +24,8 @@ import walkingkooka.reflect.PublicStaticHelperTesting;
 
 import java.lang.reflect.Method;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTesting<SpreadsheetMediaTypes> {
 
     // json.............................................................................................................
@@ -155,6 +157,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA,
             "application/memory+walkingkooka.spreadsheet.meta.SpreadsheetMetadata"
+        );
+    }
+
+    @Test
+    public void testObjectWithNullClassFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMediaTypes.object(null)
         );
     }
 
