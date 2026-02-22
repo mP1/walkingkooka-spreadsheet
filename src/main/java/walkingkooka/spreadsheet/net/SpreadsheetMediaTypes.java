@@ -34,6 +34,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -109,7 +110,9 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     public static final MediaType MEMORY_VALUE_TYPE = object(ValueType.class);
 
-    private static MediaType object(final Class<?> type) {
+    public static MediaType object(final Class<?> type) {
+        Objects.requireNonNull(type, "type");
+
         return MEMORY.setSuffix(
             Optional.of(
                 type.getName()
