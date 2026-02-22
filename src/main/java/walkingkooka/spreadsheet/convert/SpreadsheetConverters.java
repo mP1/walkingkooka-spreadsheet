@@ -559,6 +559,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "storage",
         textToStoragePath(),
         storagePathJsonToClass(),
+        storagePathTxtToClass(),
         storageValueInfoListToText()
     );
 

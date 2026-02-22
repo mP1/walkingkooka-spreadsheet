@@ -1048,6 +1048,12 @@ final class MissingConverterVerifier {
                     Class.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_PATH_JSON_TO_CLASS
                 );
+
+                verifier.addIfConversionFail(
+                    StoragePath.parse("/path1/file2.txt"),
+                    Class.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_PATH_TXT_TO_CLASS
+                );
             }
 
             // text-to-error............................................................................................
