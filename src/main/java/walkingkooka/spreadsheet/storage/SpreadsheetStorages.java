@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.storage;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.storage.Storage;
+import walkingkooka.storage.Storages;
 
 /**
  * A collection of {@link Storage} for a spreadsheet terminal.
@@ -30,6 +31,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
      */
     public static Storage<SpreadsheetStorageContext> cell() {
         return SpreadsheetStorageSpreadsheetCell.INSTANCE;
+    }
+
+    /**
+     * {@link Storages#environment()}
+     */
+    public static Storage<SpreadsheetStorageContext> env() {
+        return Storages.environment();
     }
 
     /**
