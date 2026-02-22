@@ -127,6 +127,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     );
 
     private final Storage<SpreadsheetStorageContext> CELLS = Storages.fake();
+    private final Storage<SpreadsheetStorageContext> ENVIRONMENT = Storages.fake();
     private final Storage<SpreadsheetStorageContext> LABELS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> METADATAS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> OTHER = Storages.fake();
@@ -193,6 +194,21 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             NullPointerException.class,
             () -> SpreadsheetStorageRouter.with(
                 null,
+                ENVIRONMENT,
+                LABELS,
+                METADATAS,
+                OTHER
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullEnvironmentFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetStorageRouter.with(
+                CELLS,
+                null,
                 LABELS,
                 METADATAS,
                 OTHER
@@ -206,6 +222,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             NullPointerException.class,
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
+                ENVIRONMENT,
                 null,
                 METADATAS,
                 OTHER
@@ -219,6 +236,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             NullPointerException.class,
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
+                ENVIRONMENT,
                 LABELS,
                 null,
                 OTHER
@@ -232,6 +250,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             NullPointerException.class,
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
+                ENVIRONMENT,
                 LABELS,
                 METADATAS,
                 null
@@ -425,6 +444,69 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             StoragePath.parse("/cell/Z999"),
             context
+        );
+    }
+
+    @Test
+    public void testLoadWithEnvironmentCurrency() {
+        final StoragePath path = StoragePath.parse("/env/currency");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(ENVIRONMENT_CONTEXT.currency())
+            )
+        );
+    }
+
+    @Test
+    public void testLoadWithEnvironmentLineEndingUpperCased() {
+        final StoragePath path = StoragePath.parse("/env/LINEENDING");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(ENVIRONMENT_CONTEXT.lineEnding())
+            )
+        );
+    }
+
+    @Test
+    public void testLoadWithEnvironmentLineEnding() {
+        final StoragePath path = StoragePath.parse("/env/lineEnding");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(ENVIRONMENT_CONTEXT.lineEnding())
+            )
         );
     }
 
@@ -1336,6 +1418,47 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         );
     }
 
+    // /env/converter
+    //  AuditInfo
+    //    created
+    //      user@example.com 1999-12-31T12:58
+    //    modified
+    //      user@example.com 1999-12-31T12:58
+    //
+
+    // /env/currency
+    //  AuditInfo
+    //    created
+    //      user@example.com 1999-12-31T12:58
+    //    modified
+    //      user@example.com 1999-12-31T12:58
+    @Test
+    public void testListWithEnvironment() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.listAndCheck(
+            storage,
+            StoragePath.parse("/env"),
+            0, // offset
+            2, // count
+            context,
+            StorageValueInfo.with(
+                StoragePath.parse("/env/converter"),
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                StoragePath.parse("/env/currency"),
+                AUDIT_INFO
+            )
+        );
+    }
+
     @Test
     public void testListWithLabel() {
         final SpreadsheetStorageRouter storage = this.createStorage();
@@ -1501,6 +1624,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     public SpreadsheetStorageRouter createStorage() {
         return SpreadsheetStorageRouter.with(
             SpreadsheetStorages.cell(),
+            SpreadsheetStorages.env(),
             SpreadsheetStorages.label(),
             SpreadsheetStorages.metadata(),
             Storages.tree()
@@ -1663,11 +1787,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         this.toStringAndCheck(
             SpreadsheetStorageRouter.with(
                 CELLS,
+                ENVIRONMENT,
                 LABELS,
                 METADATAS,
                 OTHER
             ),
-            "/cell " + CELLS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + OTHER
+            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + OTHER
         );
     }
 
