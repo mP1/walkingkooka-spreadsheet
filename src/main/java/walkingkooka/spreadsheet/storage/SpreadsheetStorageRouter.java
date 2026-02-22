@@ -57,11 +57,13 @@ import java.util.function.BiFunction;
 final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     static SpreadsheetStorageRouter with(final Storage<SpreadsheetStorageContext> cells,
+                                         final Storage<SpreadsheetStorageContext> environment,
                                          final Storage<SpreadsheetStorageContext> labels,
                                          final Storage<SpreadsheetStorageContext> metadatas,
                                          final Storage<SpreadsheetStorageContext> other) {
         return new SpreadsheetStorageRouter(
             Objects.requireNonNull(cells, "cells"),
+            Objects.requireNonNull(environment, "environment"),
             Objects.requireNonNull(labels, "labels"),
             Objects.requireNonNull(metadatas, "metadatas"),
             Objects.requireNonNull(other, "other")
@@ -69,12 +71,14 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     }
 
     private SpreadsheetStorageRouter(final Storage<SpreadsheetStorageContext> cells,
+                                     final Storage<SpreadsheetStorageContext> environment,
                                      final Storage<SpreadsheetStorageContext> labels,
                                      final Storage<SpreadsheetStorageContext> metadatas,
                                      final Storage<SpreadsheetStorageContext> other) {
         super();
 
         this.cells = cells.setPrefix(CELL);
+        this.environment = environment.setPrefix(ENVIRONMENT);
         this.labels = labels.setPrefix(LABEL);
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
 
@@ -165,6 +169,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                 // /spreadsheet/1/cell/A1
                 // /spreadsheet/1/label/Label123
                 // /cell/A1
+                // /env/line-ending
                 // /label/Label123
                 final StorageName storageName1 = names.get(1);
                 switch (storageName1.value()) {
@@ -218,6 +223,10 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                         storage = this.cells;
                         executeContext = context;
                         break;
+                    case ENVIRONMENT_STRING:
+                        storage = this.environment;
+                        executeContext = context;
+                        break;
                     case LABEL_STRING:
                         storage = this.labels;
                         executeContext = context;
@@ -249,6 +258,12 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         StorageName.with(CELL_STRING)
     );
 
+    private final static String ENVIRONMENT_STRING = "env";
+
+    private final static StoragePath ENVIRONMENT = StoragePath.ROOT.append(
+        StorageName.with(ENVIRONMENT_STRING)
+    );
+
     private final static String LABEL_STRING = "label";
 
     private final static StoragePath LABEL = StoragePath.ROOT.append(
@@ -256,6 +271,8 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     );
 
     private final Storage<SpreadsheetStorageContext> cells;
+
+    private final Storage<SpreadsheetStorageContext> environment;
 
     private final Storage<SpreadsheetStorageContext> labels;
 
@@ -270,6 +287,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     @Override
     public String toString() {
-        return this.cells + ", " + this.labels + ", " + this.metadatas + ", /* " + this.other;
+        return this.cells + ", " + this.environment + ", " + this.labels + ", " + this.metadatas + ", /* " + this.other;
     }
 }
