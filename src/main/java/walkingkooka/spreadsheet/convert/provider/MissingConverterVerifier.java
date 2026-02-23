@@ -853,18 +853,6 @@ final class MissingConverterVerifier {
                 );
             }
 
-            // text-to-spreadsheet-property-name........................................................................
-            final SpreadsheetMetadataPropertyName<SpreadsheetName> spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
-
-            if (scripting) {
-                verifier.addIfConversionFail(
-                    spreadsheetMetadataPropertyName.value(),
-                    SpreadsheetMetadataPropertyName.class,
-                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
-                );
-            }
-
-
             // text-to-spreadsheet-name.................................................................................
             final SpreadsheetName spreadsheetName = SpreadsheetName.with("SpreadsheetName123");
 
@@ -873,6 +861,17 @@ final class MissingConverterVerifier {
                     spreadsheetName.text(),
                     SpreadsheetName.class,
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_NAME
+                );
+            }
+
+            // text-to-spreadsheet-property-name........................................................................
+            final SpreadsheetMetadataPropertyName<SpreadsheetName> spreadsheetMetadataPropertyName = SpreadsheetMetadataPropertyName.SPREADSHEET_NAME;
+
+            if (scripting) {
+                verifier.addIfConversionFail(
+                    spreadsheetMetadataPropertyName.value(),
+                    SpreadsheetMetadataPropertyName.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
                 );
             }
         }
@@ -1256,38 +1255,89 @@ final class MissingConverterVerifier {
         }
 
         // text.........................................................................................................
-        verifier.addIfConversionFail(
-            Lists.of(
-                'A',
-                "Text",
-                Url.parseAbsolute("https://example.com/123"),
-                spreadsheetCell.formula()
-            ),
-            String.class,
-            SpreadsheetConvertersConverterProvider.TEXT
-        );
+        {
+            verifier.addIfConversionFail(
+                Lists.of(
+                    'A',
+                    "Text",
+                    Url.parseAbsolute("https://example.com/123"),
+                    spreadsheetCell.formula()
+                ),
+                String.class,
+                SpreadsheetConvertersConverterProvider.TEXT
+            );
+
+            // text-to-boolean-list.................................................................................
+            verifier.addIfConversionFail(
+                "TRUE, FALSE, true",
+                BooleanList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST
+            );
+
+            // text-to-csv-string-list..............................................................................
+            verifier.addIfConversionFail(
+                "apple, banana, \"333 444\"",
+                CsvStringList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
+            );
+
+            // text-to-date-list....................................................................................
+            verifier.addIfConversionFail(
+                "1999/12/31",
+                LocalDateList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST
+            );
+
+            // text-to-date-time-list...............................................................................
+            verifier.addIfConversionFail(
+                "1999/12/31 12:58",
+                LocalDateTimeList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST
+            );
+
+            if (formatting) {
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        "",
+                        "\n",
+                        "\r",
+                        "\r\n",
+                        "CR",
+                        "CRLF",
+                        "LF",
+                        "NL"
+                    ),
+                    LineEnding.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING
+                );
+            }
+
+            // text-to-number-list..................................................................................
+            verifier.addIfConversionFail(
+                "1, 22, 333.5",
+                NumberList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST
+            );
+
+            // text-to-string-list..................................................................................
+            verifier.addIfConversionFail(
+                "apple, banana, 333",
+                StringList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST
+            );
+
+            // text-to-time-list....................................................................................
+            verifier.addIfConversionFail(
+                "12:58:59",
+                LocalTimeList.class,
+                SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
+            );
+        }
 
         // text-node....................................................................................................
         {
             // text-to-line-ending......................................................................................
             if (scripting) {
-                if (formatting) {
-                    verifier.addIfConversionFail(
-                        Lists.of(
-                        "",
-                            "\n",
-                            "\r",
-                            "\r\n",
-                            "CR",
-                            "CRLF",
-                            "LF",
-                            "NL"
-                        ),
-                        LineEnding.class,
-                        SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING
-                    );
-                }
-
                 // text-to-flag.........................................................................................
                 verifier.addIfConversionFail(
                     "AU",
@@ -1388,59 +1438,9 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.TEXT_NODE // URL_TO_IMAGE
                 );
             }
+        }
 
-            // text-to-XXX-list.........................................................................................
-            {
-                // text-to-boolean-list.................................................................................
-                verifier.addIfConversionFail(
-                    "TRUE, FALSE, true",
-                    BooleanList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_BOOLEAN_LIST
-                );
-
-                // text-to-csv-string-list..............................................................................
-                verifier.addIfConversionFail(
-                    "apple, banana, \"333 444\"",
-                    CsvStringList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_CSV_STRING_LIST
-                );
-
-                // text-to-date-list....................................................................................
-                verifier.addIfConversionFail(
-                    "1999/12/31",
-                    LocalDateList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST
-                );
-
-                // text-to-date-time-list...............................................................................
-                verifier.addIfConversionFail(
-                    "1999/12/31 12:58",
-                    LocalDateTimeList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_TIME_LIST
-                );
-
-                // text-to-number-list..................................................................................
-                verifier.addIfConversionFail(
-                    "1, 22, 333.5",
-                    NumberList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_NUMBER_LIST
-                );
-
-                // text-to-string-list..................................................................................
-                verifier.addIfConversionFail(
-                    "apple, banana, 333",
-                    StringList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_STRING_LIST
-                );
-
-                // text-to-time-list....................................................................................
-                verifier.addIfConversionFail(
-                    "12:58:59",
-                    LocalTimeList.class,
-                    SpreadsheetConvertersConverterProvider.TEXT_TO_TIME_LIST
-                );
-            }
-
+        {
             // validation...............................................................................................
             {
                 if (scripting || validation) {
