@@ -2448,8 +2448,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
                 ConverterProviders.converters(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             );
 
