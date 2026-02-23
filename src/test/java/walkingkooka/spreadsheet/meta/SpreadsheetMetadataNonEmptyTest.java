@@ -2099,8 +2099,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
                         (ProviderContext p) -> metadata.dateTimeConverter(

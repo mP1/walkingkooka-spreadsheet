@@ -1289,8 +1289,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                                        final Indentation indentation,
                                                                                                        final SpreadsheetLabelNameResolver labelNameResolver,
                                                                                                        final LineEnding lineEnding,
-                                                                                                       final CurrencyContext currencyContext,
-                                                                                                       final LocaleContext localeContext,
+                                                                                                       final CurrencyLocaleContext currencyLocaleContext,
                                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                                        final ProviderContext providerContext) {
         return SpreadsheetFormatterProviderSamplesContexts.basic(
@@ -1301,7 +1300,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 indentation,
                 labelNameResolver,
                 lineEnding,
-                currencyContext.setLocaleContext(localeContext),
+                currencyLocaleContext,
                 spreadsheetProvider,
                 providerContext
             ),
