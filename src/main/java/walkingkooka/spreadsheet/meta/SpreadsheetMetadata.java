@@ -33,7 +33,6 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CanCurrencyForCurrencyCode;
-import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -1405,8 +1404,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
                                                                          final ConverterProvider converterProvider,
-                                                                         final CurrencyContext currencyContext,
-                                                                         final LocaleContext localeContext,
+                                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
         Objects.requireNonNull(validatorSelectorToValidator, "validatorSelectorToValidator");
@@ -1416,7 +1414,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(currencyContext, "currencyContext");
+        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1432,7 +1430,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 converterProvider,
-                currencyContext.setLocaleContext(localeContext),
+                currencyLocaleContext,
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
