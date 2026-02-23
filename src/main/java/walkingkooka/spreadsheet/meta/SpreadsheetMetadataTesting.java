@@ -636,8 +636,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
-        CURRENCY_CONTEXT,
-        LOCALE_CONTEXT,
+        CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
     );

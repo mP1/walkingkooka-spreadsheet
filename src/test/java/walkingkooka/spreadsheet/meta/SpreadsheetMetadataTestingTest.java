@@ -302,8 +302,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
                 throw new UnsupportedOperationException();
             },
             LINE_ENDING,
-            CURRENCY_CONTEXT,
-            LOCALE_CONTEXT,
+            CURRENCY_LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT
         );

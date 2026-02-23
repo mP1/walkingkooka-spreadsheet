@@ -418,8 +418,7 @@ public class TestGwtTest extends GWTTestCase {
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
-                        currencyContext,
-                        this.localeContext,
+                        currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,
                             ExpressionFunctionProviders.fake(),

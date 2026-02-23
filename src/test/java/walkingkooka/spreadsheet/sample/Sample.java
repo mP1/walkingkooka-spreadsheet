@@ -429,8 +429,7 @@ public final class Sample {
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
-                        currencyContext,
-                        this.localeContext,
+                        currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,
                             ExpressionFunctionProviders.fake(),

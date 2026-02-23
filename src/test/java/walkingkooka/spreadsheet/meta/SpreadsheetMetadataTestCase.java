@@ -29,6 +29,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -133,6 +134,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         },
         LOCALE_CONTEXT
     );
+
+    final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
