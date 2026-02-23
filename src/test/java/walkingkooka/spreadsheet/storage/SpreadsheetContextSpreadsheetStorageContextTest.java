@@ -494,7 +494,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             Url.parseAbsolute("https://example.com")
         );
 
-        final Storage<SpreadsheetStorageContext> storage = Storages.tree();
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(

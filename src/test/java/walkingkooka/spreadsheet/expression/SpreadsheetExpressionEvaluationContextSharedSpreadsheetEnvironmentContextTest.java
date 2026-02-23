@@ -1162,7 +1162,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     public SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext createContext() {
         return this.createContext(
             SpreadsheetEnvironmentContexts.basic(
-                Storages.tree(),
+                Storages.treeMapStore(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment()
             )
         );

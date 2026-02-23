@@ -454,7 +454,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             Url.parseAbsolute("https://example.com")
         );
 
-        final Storage<SpreadsheetStorageContext> storage = Storages.tree();
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
             SpreadsheetEngines.basic(),

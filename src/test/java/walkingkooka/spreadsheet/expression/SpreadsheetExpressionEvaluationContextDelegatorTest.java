@@ -322,7 +322,7 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
             );
         }
 
-        private final Storage<StorageContext> storage = Storages.tree();
+        private final Storage<StorageContext> storage = Storages.treeMapStore();
 
         @Override
         public String toString() {
