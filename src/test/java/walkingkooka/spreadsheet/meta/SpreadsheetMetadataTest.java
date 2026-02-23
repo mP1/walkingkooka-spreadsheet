@@ -30,6 +30,7 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
@@ -166,6 +167,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             );
         }
     };
+
+    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -853,8 +856,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -873,8 +875,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -893,8 +894,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -913,8 +913,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -933,8 +932,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -953,8 +951,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 null,
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -973,8 +970,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 null,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -993,15 +989,14 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 null,
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
     }
 
     @Test
-    public void testSpreadsheetConverterContextWithNullCurrencyContextFails() {
+    public void testSpreadsheetConverterContextWithNullCurrencyLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
@@ -1013,27 +1008,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                null,
-                LOCALE_CONTEXT,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testSpreadsheetConverterContextWithNullLocaleContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
-                SpreadsheetMetadata.NO_CELL,
-                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                HAS_USER_DIRECTORIES,
-                INDENTATION,
-                SpreadsheetLabelNameResolvers.fake(),
-                LINE_ENDING,
-                ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
                 null,
                 PROVIDER_CONTEXT
             )
@@ -1053,8 +1027,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 null
             )
         );
@@ -1073,8 +1046,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetLabelNameResolvers.fake(),
                 LINE_ENDING,
                 ConverterProviders.fake(),
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT
             )
         );
@@ -1153,8 +1125,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             SpreadsheetLabelNameResolvers.fake(),
             LINE_ENDING,
             ConverterProviders.converters(),
-            CURRENCY_CONTEXT,
-            LOCALE_CONTEXT,
+            CURRENCY_LOCALE_CONTEXT,
             PROVIDER_CONTEXT
         );
 

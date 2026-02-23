@@ -266,8 +266,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
                     spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
-                    spreadsheetContext, // CurrencyContext
-                    this, // LocaleContext
+                    spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext.providerContext()
                 );
         }

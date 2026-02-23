@@ -377,8 +377,7 @@ public class J2clTest {
                             LABEL_NAME_RESOLVER,
                             lineEnding,
                             converterProvider,
-                            currencyContext,
-                            this.localeContext,
+                            currencyContext.setLocaleContext(this.localeContext),
                             providerContext
                         ),
                         EnvironmentContexts.fake(),
