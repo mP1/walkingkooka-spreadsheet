@@ -84,6 +84,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonString;
+import walkingkooka.tree.text.Flag;
 import walkingkooka.tree.text.Hyperlink;
 import walkingkooka.tree.text.Image;
 import walkingkooka.tree.text.Styleable;
@@ -1286,6 +1287,13 @@ final class MissingConverterVerifier {
                         SpreadsheetConvertersConverterProvider.TEXT_TO_LINE_ENDING
                     );
                 }
+
+                // text-to-flag.........................................................................................
+                verifier.addIfConversionFail(
+                    "AU",
+                    Flag.class,
+                    SpreadsheetConvertersConverterProvider.TEXT_TO_FLAG // TEXT_TO_FLAG
+                );
 
                 // url-to-hyperlink.....................................................................................
                 verifier.addIfConversionFail(
