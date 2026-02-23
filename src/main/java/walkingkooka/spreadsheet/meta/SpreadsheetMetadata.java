@@ -989,8 +989,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                                final SpreadsheetLabelNameResolver resolveIfLabel,
                                                                                final LineEnding lineEnding,
                                                                                final SpreadsheetProvider spreadsheetProvider,
-                                                                               final CurrencyContext currencyContext,
-                                                                               final LocaleContext localeContext,
+                                                                               final CurrencyLocaleContext currencyLocaleContext,
                                                                                final ProviderContext providerContext) {
         return this.spreadsheetComparatorContext(
             this.sortSpreadsheetConverterContext(
@@ -999,8 +998,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 hasUserDirectories,
                 indentation,
                 lineEnding,
-                currencyContext,
-                localeContext,
+                currencyLocaleContext,
                 providerContext // ProviderContext
             )
         );
@@ -1014,8 +1012,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                         final HasUserDirectories hasUserDirectories,
                                                                         final Indentation indentation,
                                                                         final LineEnding lineEnding,
-                                                                        final CurrencyContext currencyContext,
-                                                                        final LocaleContext localeContext,
+                                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                                         final ProviderContext providerContext) {
         return this.spreadsheetConverterContext(
             NO_CELL,
@@ -1026,8 +1023,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             labelNameResolver,
             lineEnding,
             converterProvider,
-            currencyContext,
-            localeContext,
+            currencyLocaleContext,
             providerContext
         );
     }
@@ -1056,8 +1052,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
                                                                          final ConverterProvider converterProvider,
-                                                                         final CurrencyContext currencyContext,
-                                                                         final LocaleContext localeContext,
+                                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(validationReference, "validationReference");
@@ -1067,8 +1062,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
         Objects.requireNonNull(converterProvider, "converterProvider");
-        Objects.requireNonNull(currencyContext, "currencyContext");
-        Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(providerContext, "providerContext");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
@@ -1090,7 +1084,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             dateTimeContext = this.dateTimeContext(
                 cell,
                 providerContext, // now
-                localeContext
+                currencyLocaleContext // LocaleContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             missing.addMissing(cause);
@@ -1101,7 +1095,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         try {
             decimalNumberContext = this.decimalNumberContext(
                 cell,
-                localeContext
+                currencyLocaleContext // LocaleContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             decimalNumberContext = null;
@@ -1119,8 +1113,8 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
         try {
             jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext(
-                currencyContext, // CanCurrencyForCurrencyCode
-                localeContext // CanLocaleForLanguageTag
+                currencyLocaleContext, // CanCurrencyForCurrencyCode
+                currencyLocaleContext // CanLocaleForLanguageTag
             );
         } catch (final MissingMetadataPropertiesException cause) {
             jsonNodeUnmarshallContext = null;
@@ -1143,7 +1137,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
-                        currencyContext, // canCurrencyForLocale
+                        currencyLocaleContext, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
                         indentation,
@@ -1152,7 +1146,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         Converters.fake(),
                         dateTimeContext,
                         decimalNumberContext,
-                        localeContext
+                        currencyLocaleContext // LocaleContext
                     ),
                     expressionNumberKind
                 ),
@@ -1161,7 +1155,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                     jsonNodeUnmarshallContext
                 )
             ),
-            localeContext
+            currencyLocaleContext // LocaleContext
         );
     }
 
@@ -1261,8 +1255,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 spreadsheetProvider,
-                currencyContext,
-                localeContext,
+                currencyContext.setLocaleContext(localeContext),
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1443,8 +1436,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 converterProvider,
-                currencyContext,
-                localeContext,
+                currencyContext.setLocaleContext(localeContext),
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
