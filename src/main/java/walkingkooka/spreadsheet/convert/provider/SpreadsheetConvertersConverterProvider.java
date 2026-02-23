@@ -393,6 +393,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToExpression();
                 break;
+            case TEXT_TO_FLAG_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToFlag();
+                break;
             case TEXT_TO_FORM_NAME_STRING:
                 noParameterCheck(copy);
 
@@ -888,6 +893,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_EXPRESSION = ConverterName.with(TEXT_TO_EXPRESSION_STRING);
 
+    private final static String TEXT_TO_FLAG_STRING = "text-to-flag";
+
+    final static ConverterName TEXT_TO_FLAG = ConverterName.with(TEXT_TO_FLAG_STRING);
+
     private final static String TEXT_TO_FORM_NAME_STRING = "text-to-form-name";
 
     final static ConverterName TEXT_TO_FORM_NAME = ConverterName.with(TEXT_TO_FORM_NAME_STRING);
@@ -1137,6 +1146,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_ENVIRONMENT_VALUE_NAME),
             converterInfo(TEXT_TO_ERROR),
             converterInfo(TEXT_TO_EXPRESSION),
+            converterInfo(TEXT_TO_FLAG),
             converterInfo(TEXT_TO_FORM_NAME),
             converterInfo(TEXT_TO_HAS_HOST_ADDRESS),
             converterInfo(TEXT_TO_HOST_ADDRESS),
