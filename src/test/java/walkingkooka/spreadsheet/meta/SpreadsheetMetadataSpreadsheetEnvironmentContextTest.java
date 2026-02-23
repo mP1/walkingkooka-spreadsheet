@@ -679,6 +679,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-environment-value-name\n" +
                 "    text-to-error\n" +
                 "    text-to-expression\n" +
+                "    text-to-flag\n" +
                 "    text-to-form-name\n" +
                 "    text-to-has-host-address\n" +
                 "    text-to-host-address\n" +

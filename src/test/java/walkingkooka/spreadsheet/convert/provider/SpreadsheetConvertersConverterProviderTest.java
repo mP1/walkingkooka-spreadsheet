@@ -651,6 +651,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToFlag() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_FLAG + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToFlag()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToHasHostAddress() {
         this.converterAndCheck(
             "text-to-has-host-address",

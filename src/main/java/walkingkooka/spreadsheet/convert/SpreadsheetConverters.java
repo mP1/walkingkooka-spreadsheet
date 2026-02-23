@@ -762,6 +762,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link TreeTextConverters#textToFlag()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToFlag() {
+        return TreeTextConverters.textToFlag();
+    }
+
+    /**
      * {@see ValidationConvertConverters.textToFormName}
      */
     public static Converter<SpreadsheetConverterContext> textToFormName() {
