@@ -1216,8 +1216,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,
                                                                          final LineEnding lineEnding,
-                                                                         final CurrencyContext currencyContext,
-                                                                         final LocaleContext localeContext,
+                                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         Objects.requireNonNull(cell, "cell");
@@ -1226,8 +1225,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         Objects.requireNonNull(indentation, "indentation");
         Objects.requireNonNull(labelNameResolver, "labelNameResolver");
         Objects.requireNonNull(lineEnding, "lineEnding");
-        Objects.requireNonNull(currencyContext, "currencyContext");
-        Objects.requireNonNull(localeContext, "localeContext");
+        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
         Objects.requireNonNull(providerContext, "providerContext");
 
@@ -1255,7 +1253,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 labelNameResolver,
                 lineEnding,
                 spreadsheetProvider,
-                currencyContext.setLocaleContext(localeContext),
+                currencyLocaleContext,
                 providerContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
@@ -1303,8 +1301,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 indentation,
                 labelNameResolver,
                 lineEnding,
-                currencyContext,
-                localeContext,
+                currencyContext.setLocaleContext(localeContext),
                 spreadsheetProvider,
                 providerContext
             ),
