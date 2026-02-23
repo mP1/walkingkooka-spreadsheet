@@ -869,7 +869,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             );
         }
 
-        private final Storage<StorageContext> storage = Storages.tree();
+        private final Storage<StorageContext> storage = Storages.treeMapStore();
     }
 
     @Override

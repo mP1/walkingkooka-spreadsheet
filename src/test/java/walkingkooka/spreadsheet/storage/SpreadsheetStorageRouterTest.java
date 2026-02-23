@@ -1627,7 +1627,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             SpreadsheetStorages.env(),
             SpreadsheetStorages.label(),
             SpreadsheetStorages.metadata(),
-            Storages.tree()
+            Storages.treeMapStore()
         );
     }
 

@@ -493,7 +493,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             SERVER_URL
         );
 
-        final Storage<SpreadsheetStorageContext> storage = Storages.tree();
+        final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             storage,
             environmentContext

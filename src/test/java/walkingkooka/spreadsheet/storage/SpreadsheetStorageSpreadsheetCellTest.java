@@ -603,7 +603,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             CurrencyContexts.fake()
                 .setLocaleContext(localeContext),
             SpreadsheetEnvironmentContexts.basic(
-                Storages.tree(),
+                Storages.treeMapStore(),
                 environmentContext
             ),
             SpreadsheetProviders.basic(
