@@ -23,11 +23,10 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.plugin.ProviderContext;
@@ -58,33 +57,29 @@ final class SpreadsheetProviderContext implements ProviderContext,
     ConverterContextDelegator {
 
     static SpreadsheetProviderContext with(final PluginStore pluginStore,
-                                           final CurrencyContext currencyContext,
+                                           final CurrencyLocaleContext currencyLocaleContext,
                                            final EnvironmentContext environmentContext,
-                                           final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                           final LocaleContext localeContext) {
+                                           final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return new SpreadsheetProviderContext(
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
-            Objects.requireNonNull(currencyContext, "currencyContext"),
+            Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
             Objects.requireNonNull(environmentContext, "environmentContext"),
-            Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext"),
-            Objects.requireNonNull(localeContext, "localeContext")
+            Objects.requireNonNull(jsonNodeMarshallUnmarshallContext, "jsonNodeMarshallUnmarshallContext")
         );
     }
 
     private SpreadsheetProviderContext(final PluginStore pluginStore,
                                        final ConverterContext converterContext,
-                                       final CurrencyContext currencyContext,
+                                       final CurrencyLocaleContext currencyLocaleContext,
                                        final EnvironmentContext environmentContext,
-                                       final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                       final LocaleContext localeContext) {
+                                       final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         this.pluginStore = pluginStore;
 
         this.converterContext = converterContext;
 
-        this.currencyContext = currencyContext;
+        this.currencyLocaleContext = currencyLocaleContext;
         this.environmentContext = environmentContext;
-        this.localeContext = localeContext;
         this.jsonNodeMarshallUnmarshallContext = jsonNodeMarshallUnmarshallContext;
 
         if (null == converterContext) {
@@ -119,8 +114,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private void setConverterContext(final Locale locale) {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
 
+        final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
         final EnvironmentContext environmentContext = this.environmentContext;
-        final LocaleContext localeContext = this.localeContext;
 
         this.converterContext = SpreadsheetConverterContexts.basic(
             HasUserDirectorieses.empty(),
@@ -138,9 +133,9 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         environmentContext.lineEnding(),
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
-                        currencyContext.setLocaleContext(localeContext),
+                        this.currencyLocaleContext,
                         DateTimeContexts.basic(
-                            localeContext.dateTimeSymbolsForLocale(locale)
+                            currencyLocaleContext.dateTimeSymbolsForLocale(locale)
                                 .orElseThrow(() -> new IllegalArgumentException("DateTimeSymbols missing for " + locale)),
                             locale,
                             1950, // defaultYear
@@ -149,7 +144,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         ),
                         DecimalNumberContexts.basic(
                             DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
-                            localeContext.decimalNumberSymbolsForLocale(locale)
+                            currencyLocaleContext.decimalNumberSymbolsForLocale(locale)
                                 .orElseThrow(() -> new IllegalArgumentException("DecimalNumberSymbols missing for " + locale)),
                             locale,
                             MathContext.DECIMAL32
@@ -159,7 +154,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                 ),
                 this.jsonNodeMarshallUnmarshallContext
             ),
-            localeContext
+            currencyLocaleContext
         );
     }
 
@@ -181,18 +176,15 @@ final class SpreadsheetProviderContext implements ProviderContext,
             new SpreadsheetProviderContext(
                 this.pluginStore,
                 null, // recreate because environmentContext changed.
-                this.currencyContext,
+                this.currencyLocaleContext,
                 Objects.requireNonNull(environmentContext, "environmentContext"),
-                this.jsonNodeMarshallUnmarshallContext,
-                this.localeContext
+                this.jsonNodeMarshallUnmarshallContext
             );
     }
 
-    private final CurrencyContext currencyContext;
+    private final CurrencyLocaleContext currencyLocaleContext;
 
     private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
-
-    private final LocaleContext localeContext;
 
     // EnvironmentContextDelegator......................................................................................
 
