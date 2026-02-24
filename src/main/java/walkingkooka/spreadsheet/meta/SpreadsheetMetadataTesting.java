@@ -498,7 +498,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.spreadsheet(
             PluginStores.fake(),
-            CURRENCY_CONTEXT,
+            CURRENCY_LOCALE_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.LOCALE,
                 LOCALE
@@ -537,8 +537,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
                     providerContextSpreadsheetEnvironmentContext()
                 )
             ),
-            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-            LOCALE_CONTEXT
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         )
     );
 

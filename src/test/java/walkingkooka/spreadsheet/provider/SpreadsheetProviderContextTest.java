@@ -21,13 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
-import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContextTesting;
@@ -56,8 +55,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext> {
 
     private final static PluginStore PLUGIN_STORE = PluginStores.fake();
-
-    private final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.fake();
 
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
         JsonNodeMarshallContexts.basic(),
@@ -88,6 +85,11 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         String.class
     );
 
+    private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CurrencyContexts.fake()
+        .setLocaleContext(
+            LocaleContexts.jre(LOCALE)
+        );
+
     private final static String ENVIRONMENT_VALUE = "EnvironmentValue123";
 
     private final static EnvironmentContext ENVIRONMENT_CONTEXT = EnvironmentContexts.readOnly(
@@ -102,8 +104,6 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         )
     );
 
-    private final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(Locale.ENGLISH);
-
     // with.............................................................................................................
 
     @Test
@@ -112,24 +112,22 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
                 null,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LOCALE_CONTEXT
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
 
     @Test
-    public void testWithNullCurrencyContextFails() {
+    public void testWithNullCurrencyLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
                 null,
                 ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LOCALE_CONTEXT
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
@@ -140,10 +138,9 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 null,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LOCALE_CONTEXT
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
@@ -154,23 +151,8 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
-                null,
-                LOCALE_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullLocaleContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetProviderContext.with(
-                PLUGIN_STORE,
-                CURRENCY_CONTEXT,
-                ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
                 null
             )
         );
@@ -305,10 +287,9 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
         return SpreadsheetProviderContext.with(
             PLUGIN_STORE,
-            CURRENCY_CONTEXT,
+            CURRENCY_LOCALE_CONTEXT,
             environmentContext,
-            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-            LOCALE_CONTEXT
+            JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
         );
     }
 
@@ -341,23 +322,24 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
                 PluginStores.fake(),
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LOCALE_CONTEXT
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
 
     @Test
-    public void testEqualsDifferentCurrencyContext() {
+    public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
-                CurrencyContexts.fake(),
+                CurrencyContexts.fake()
+                    .setLocaleContext(
+                        LocaleContexts.jre(LOCALE)
+                    ),
                 ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LOCALE_CONTEXT
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
@@ -370,10 +352,9 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 environmentContext,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LOCALE_CONTEXT
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
             )
         );
     }
@@ -383,23 +364,9 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
                 PLUGIN_STORE,
-                CURRENCY_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
-                JsonNodeMarshallUnmarshallContexts.fake(),
-                LOCALE_CONTEXT
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentLocaleContext() {
-        this.checkNotEquals(
-            SpreadsheetProviderContext.with(
-                PLUGIN_STORE,
-                CURRENCY_CONTEXT,
-                ENVIRONMENT_CONTEXT,
-                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT,
-                LocaleContexts.jre(Locale.FRANCE)
+                JsonNodeMarshallUnmarshallContexts.fake()
             )
         );
     }

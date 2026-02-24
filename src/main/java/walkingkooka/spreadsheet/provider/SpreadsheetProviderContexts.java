@@ -17,9 +17,8 @@
 
 package walkingkooka.spreadsheet.provider;
 
-import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.PublicStaticHelper;
@@ -31,16 +30,14 @@ public final class SpreadsheetProviderContexts implements PublicStaticHelper {
      * {@see SpreadsheetProviderContext}
      */
     public static ProviderContext spreadsheet(final PluginStore pluginStore,
-                                              final CurrencyContext currencyContext,
+                                              final CurrencyLocaleContext currencyLocaleContext,
                                               final EnvironmentContext environmentContext,
-                                              final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext,
-                                              final LocaleContext localeContext) {
+                                              final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return SpreadsheetProviderContext.with(
             pluginStore,
-            currencyContext,
+            currencyLocaleContext,
             environmentContext,
-            jsonNodeMarshallUnmarshallContext,
-            localeContext
+            jsonNodeMarshallUnmarshallContext
         );
     }
 
