@@ -28,6 +28,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.locale.LocaleContexts;
@@ -4261,18 +4262,15 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            CurrencyLocaleContexts.fake(),
                             dateTimeContext(),
-                            decimalNumberContext(),
-                            LocaleContexts.fake()
+                            decimalNumberContext()
                         ),
                         this.expressionNumberKind()
                     )

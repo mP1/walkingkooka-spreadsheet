@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -58,6 +59,7 @@ import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -242,19 +244,24 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
                 ConverterContexts.basic(
-                    (l) -> {
-                        Objects.requireNonNull(l, "locale");
-                        throw new UnsupportedOperationException();
-                    }, // canCurrencyForLocale
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     INDENTATION,
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.fake(),
+                    new FakeCurrencyContext() {
+                        @Override
+                        public Optional<Currency> currencyForLocale(final Locale locale) {
+                            return Optional.of(
+                                Currency.getInstance(locale)
+                            );
+                        }
+                    }.setLocaleContext(
+                        LocaleContexts.jre(LOCALE)
+                    ),
                     DATE_TIME_CONTEXT,
-                    DECIMAL_NUMBER_CONTEXT,
-                    LocaleContexts.jre(LOCALE)
+                    DECIMAL_NUMBER_CONTEXT
                 ),
                 EXPRESSION_NUMBER_KIND
             ),

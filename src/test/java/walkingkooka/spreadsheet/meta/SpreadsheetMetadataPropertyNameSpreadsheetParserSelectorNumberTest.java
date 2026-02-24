@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
@@ -95,15 +96,16 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             SpreadsheetMetadataTesting.LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
+                            CurrencyContexts.fake()
+                                .setLocaleContext(
+                                    LocaleContexts.jre(locale)
+                                ),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(
                                     new DateFormatSymbols(locale)
@@ -113,8 +115,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                                 20,
                                 LocalDateTime::now
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32),
-                            LocaleContexts.jre(locale)
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
                         ),
                         kind
                     ),

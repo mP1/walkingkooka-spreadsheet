@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -47,7 +48,6 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -208,16 +208,24 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
                 ConverterContexts.basic(
-                    (l) -> {
-                        Objects.requireNonNull(l, "locale");
-                        throw new UnsupportedOperationException();
-                    }, // canCurrencyForLocale
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     INDENTATION,
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.fake(),
+                    new FakeCurrencyContext() {
+                        @Override
+                        public Optional<Currency> currencyForLocale(final Locale locale) {
+                            return Optional.of(
+                                Currency.getInstance(locale)
+                            );
+                        }
+                    }.setLocaleContext(
+                        LocaleContexts.jre(
+                            this.locale()
+                        )
+                    ),
                     DateTimeContexts.basic(
                         LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
                             .get(),
@@ -226,8 +234,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         20,
                         LocalDateTime::now
                     ),
-                    this.decimalNumberContext(),
-                    LocaleContexts.jre(this.locale())
+                    this.decimalNumberContext()
                 ),
                 KIND
             ),

@@ -1136,16 +1136,15 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
-                        currencyLocaleContext, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
                         indentation,
                         lineEnding,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
+                        currencyLocaleContext,
                         dateTimeContext,
-                        decimalNumberContext,
-                        currencyLocaleContext // LocaleContext
+                        decimalNumberContext
                     ),
                     expressionNumberKind
                 ),

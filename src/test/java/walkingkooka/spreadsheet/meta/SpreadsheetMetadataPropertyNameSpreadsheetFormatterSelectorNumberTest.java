@@ -153,15 +153,22 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             lineEnding,
                             ',', // valueSeparator
                             Converters.fake(),
+                            new FakeCurrencyContext() {
+                                @Override
+                                public Optional<Currency> currencyForLocale(final Locale locale) {
+                                    return Optional.of(
+                                        Currency.getInstance(locale)
+                                    );
+                                }
+                            }.setLocaleContext(
+                                LocaleContexts.jre(locale)
+                            ),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(
                                     new DateFormatSymbols(locale)
@@ -171,8 +178,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                                 20,
                                 LocalDateTime::now
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32),
-                            LocaleContexts.jre(locale)
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
                         ),
                         ExpressionNumberKind.DEFAULT
                     ),

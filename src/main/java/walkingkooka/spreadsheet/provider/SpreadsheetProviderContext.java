@@ -132,13 +132,13 @@ final class SpreadsheetProviderContext implements ProviderContext,
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
                     ConverterContexts.basic(
-                        this.currencyContext, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
                         environmentContext.indentation(),
                         environmentContext.lineEnding(),
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
+                        currencyContext.setLocaleContext(localeContext),
                         DateTimeContexts.basic(
                             localeContext.dateTimeSymbolsForLocale(locale)
                                 .orElseThrow(() -> new IllegalArgumentException("DateTimeSymbols missing for " + locale)),
@@ -153,8 +153,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                                 .orElseThrow(() -> new IllegalArgumentException("DecimalNumberSymbols missing for " + locale)),
                             locale,
                             MathContext.DECIMAL32
-                        ),
-                        localeContext
+                        )
                     ),
                     ExpressionNumberKind.DEFAULT
                 ),
