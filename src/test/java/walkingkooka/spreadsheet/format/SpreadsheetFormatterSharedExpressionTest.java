@@ -25,6 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
@@ -189,18 +190,18 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         Indentation.SPACES2,
                         LINE_ENDING,
                         ',', // valueSeparator
                         Converters.fake(),
+                        CurrencyLocaleContexts.fake()
+                            .setLocaleContext(
+                                LocaleContexts.jre(locale)
+                            ),
                         DateTimeContexts.fake(),
-                        DecimalNumberContexts.american(MathContext.UNLIMITED),
-                        LocaleContexts.jre(locale)
+                        DecimalNumberContexts.american(MathContext.UNLIMITED)
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),

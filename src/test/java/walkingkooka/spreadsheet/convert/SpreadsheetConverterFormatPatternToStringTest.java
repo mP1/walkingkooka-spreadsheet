@@ -24,6 +24,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContexts;
@@ -307,15 +308,13 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
+                        CurrencyLocaleContexts.fake(),
                         DateTimeContexts.basic(
                             DateTimeSymbols.fromDateFormatSymbols(
                                 new DateFormatSymbols(locale)
@@ -325,8 +324,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
                             50,
                             LocalDateTime::now
                         ),
-                        DecimalNumberContexts.american(MathContext.DECIMAL128),
-                        LocaleContexts.fake()
+                        DecimalNumberContexts.american(MathContext.DECIMAL128)
                     ),
                     KIND
                 ),

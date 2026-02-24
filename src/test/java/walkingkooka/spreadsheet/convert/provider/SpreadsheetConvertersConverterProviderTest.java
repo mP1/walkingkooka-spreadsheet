@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -181,15 +182,13 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
                                     .get(),
@@ -198,8 +197,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                                 20,
                                 LocalDateTime::now
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32),
-                            LocaleContexts.fake()
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
                         ),
                         ExpressionNumberKind.BIG_DECIMAL
                     ),

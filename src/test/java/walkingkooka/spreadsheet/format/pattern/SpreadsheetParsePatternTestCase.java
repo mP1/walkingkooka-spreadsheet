@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -871,18 +872,15 @@ public abstract class SpreadsheetParsePatternTestCase<P extends SpreadsheetParse
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        CurrencyLocaleContexts.fake(),
                         this.dateTimeContext(),
-                        this.decimalNumberContext(),
-                        LocaleContexts.fake()
+                        this.decimalNumberContext()
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),

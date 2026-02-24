@@ -32,6 +32,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -3587,15 +3588,13 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        CurrencyLocaleContexts.fake(),
                         DateTimeContexts.basic(
                             DateTimeSymbols.fromDateFormatSymbols(
                                 new DateFormatSymbols(locale)
@@ -3607,8 +3606,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                                 throw new UnsupportedOperationException("now() not supported");
                             }
                         ),
-                        DecimalNumberContexts.fake(),
-                        LocaleContexts.fake()
+                        DecimalNumberContexts.fake()
                     ),
                     ExpressionNumberKind.BIG_DECIMAL
                 ),
@@ -3822,18 +3820,15 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
-                        DecimalNumberContexts.american(MathContext.DECIMAL32),
-                        LocaleContexts.fake()
+                        DecimalNumberContexts.american(MathContext.DECIMAL32)
                     ),
                     kind
                 ),

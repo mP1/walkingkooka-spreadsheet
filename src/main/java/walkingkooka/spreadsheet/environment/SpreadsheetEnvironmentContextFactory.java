@@ -318,16 +318,15 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            currencyLocaleContext, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
                             spreadsheetEnvironmentContext.indentation(),
                             spreadsheetEnvironmentContext.lineEnding(),
                             valueSeparator, // valueSeparator
                             Converters.fake(),
+                            currencyLocaleContext,
                             dateTimeContext,
-                            decimalNumberContext,
-                            currencyLocaleContext // LocaleContext
+                            decimalNumberContext
                         ),
                         expressionNumberKind
                     ),

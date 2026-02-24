@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -106,16 +107,20 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
                 ConverterContexts.basic(
-                    (l) -> {
-                        Objects.requireNonNull(l, "locale");
-                        throw new UnsupportedOperationException();
-                    }, // canCurrencyForLocale
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     Indentation.SPACES2,
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.objectToString(),
+                    new FakeCurrencyContext() {
+                        @Override
+                        public Optional<Currency> currencyForLocale(final Locale locale) {
+                            return Optional.of(
+                                Currency.getInstance(locale)
+                            );
+                        }
+                    }.setLocaleContext(LOCALE_CONTEXT),
                     DateTimeContexts.basic(
                         LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE_CONTEXT.locale())
                             .get(),
@@ -126,8 +131,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     ),
                     DecimalNumberContexts.american(
                         MathContext.DECIMAL32
-                    ),
-                    LOCALE_CONTEXT
+                    )
                 ),
                 ExpressionNumberKind.BIG_DECIMAL
             ),

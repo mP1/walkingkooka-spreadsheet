@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -71,9 +72,9 @@ import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
@@ -2935,22 +2936,27 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return ExpressionNumberConverterContexts.basic(
             this.converter(),
             ConverterContexts.basic(
-                (l) -> {
-                    Objects.requireNonNull(l, "locale");
-                    throw new UnsupportedOperationException();
-                }, // canCurrencyForLocale
                 false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
                 INDENTATION,
                 LineEnding.NL,
                 ',', // valueSeparator
                 Converters.fake(),
+                new FakeCurrencyContext() {
+                    @Override
+                    public Optional<Currency> currencyForLocale(final Locale locale) {
+                        return Optional.of(
+                            Currency.getInstance(locale)
+                        );
+                    }
+                }.setLocaleContext(
+                    LocaleContexts.jre(
+                        this.decimalNumberContext()
+                            .locale()
+                    )
+                ),
                 this.dateTimeContext(),
-                this.decimalNumberContext(),
-                LocaleContexts.jre(
-                    this.decimalNumberContext()
-                        .locale()
-                )
+                this.decimalNumberContext()
             ),
             this.expressionNumberKind()
         );

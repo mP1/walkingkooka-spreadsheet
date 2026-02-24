@@ -31,6 +31,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
@@ -1418,15 +1419,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
+                            CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(
                                     new DateFormatSymbols(locale)
@@ -1436,8 +1435,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 20,
                                 NOW
                             ),
-                            DecimalNumberContexts.american(MathContext.DECIMAL32),
-                            LocaleContexts.fake()
+                            DecimalNumberContexts.american(MathContext.DECIMAL32)
                         ),
                         metadata.expressionNumberKind()
                     ),

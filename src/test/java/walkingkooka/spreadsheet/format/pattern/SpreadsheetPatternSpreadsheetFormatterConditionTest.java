@@ -23,8 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.ConditionSpreadsheetFormatParserToken;
@@ -332,18 +332,15 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             TreePrintableTesting.INDENTATION,
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            CurrencyLocaleContexts.fake(),
                             DateTimeContexts.fake(),
-                            this,
-                            LocaleContexts.fake()
+                            this
                         ),
                         ExpressionNumberKind.DEFAULT
                     )

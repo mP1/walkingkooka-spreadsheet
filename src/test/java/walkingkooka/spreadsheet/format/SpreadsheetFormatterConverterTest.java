@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContexts;
@@ -142,18 +143,15 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(),
-                        DecimalNumberContexts.american(MathContext.UNLIMITED),
-                        LocaleContexts.fake()
+                        DecimalNumberContexts.american(MathContext.UNLIMITED)
                     ),
                     EXPRESSION_NUMBER_KIND
                 ),

@@ -25,6 +25,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -1257,18 +1258,15 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                 ExpressionNumberConverterContexts.basic(
                     Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
                     ConverterContexts.basic(
-                        (l) -> {
-                            throw new UnsupportedOperationException();
-                        }, // canCurrencyForLocale
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // DateTimeContext unused
-                        this.decimalNumberContext(),
-                        LocaleContexts.fake()
+                        this.decimalNumberContext()
                     ),
                     kind
                 ),

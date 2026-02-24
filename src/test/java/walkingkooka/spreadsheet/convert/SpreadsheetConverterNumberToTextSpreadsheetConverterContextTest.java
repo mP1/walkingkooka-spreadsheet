@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -39,7 +40,6 @@ import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTest implements SpreadsheetConverterContextTesting<SpreadsheetConverterNumberToTextSpreadsheetConverterContext>,
@@ -207,16 +207,20 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
                         ConverterContexts.basic(
-                            (l) -> {
-                                Objects.requireNonNull(l, "locale");
-                                throw new UnsupportedOperationException();
-                            }, // canCurrencyForLocale
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             INDENTATION,
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            new FakeCurrencyContext() {
+                                @Override
+                                public Optional<Currency> currencyForLocale(final Locale locale) {
+                                    return Optional.of(
+                                        Currency.getInstance(locale)
+                                    );
+                                }
+                            }.setLocaleContext(localeContext),
                             DateTimeContexts.basic(
                                 localeContext.dateTimeSymbolsForLocale(locale)
                                     .get(),
@@ -225,8 +229,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                                 20,
                                 LocalDateTime::now
                             ),
-                            DECIMAL_NUMBER_CONTEXT,
-                            LocaleContexts.fake()
+                            DECIMAL_NUMBER_CONTEXT
                         ),
                         expressionNumberKind
                     ),
