@@ -531,6 +531,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStoragePathPropertiesToClass() {
+        this.converterAndCheck(
+            "storage-path-properties-to-class",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storagePathPropertiesToClass()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStoragePathTxtToClass() {
         this.converterAndCheck(
             "storage-path-txt-to-class",

@@ -663,6 +663,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    spreadsheet-value\n" +
                 "    storage\n" +
                 "    storage-path-json-to-class\n" +
+                "    storage-path-properties-to-class\n" +
                 "    storage-path-txt-to-class\n" +
                 "    storage-value-info-list-to-text\n" +
                 "    style\n" +
