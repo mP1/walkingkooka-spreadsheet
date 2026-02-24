@@ -571,6 +571,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see StorageConverters#storagePathPropertiesToClass}
+     */
+    public static Converter<SpreadsheetConverterContext> storagePathPropertiesToClass() {
+        return StorageConverters.storagePathPropertiesToClass();
+    }
+
+    /**
      * {@see StorageConverters#storagePathTxtToClass}
      */
     public static Converter<SpreadsheetConverterContext> storagePathTxtToClass() {
