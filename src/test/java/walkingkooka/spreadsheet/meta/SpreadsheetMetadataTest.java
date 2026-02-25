@@ -1456,6 +1456,30 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    @Override
+    public SpreadsheetMetadata createPatchable() {
+        return this.createObject();
+    }
+
+    @Override
+    public JsonNode createPatch() {
+        return JsonNode.object();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext createPatchContext() {
+        return JsonNodeUnmarshallContexts.basic(
+            (String cc) -> Optional.ofNullable(
+                Currency.getInstance(cc)
+            ),
+            (String lt) -> Optional.of(
+                Locale.forLanguageTag(lt)
+            ),
+            ExpressionNumberKind.BIG_DECIMAL,
+            MathContext.UNLIMITED
+        );
+    }
+
     // urlFragment......................................................................................................
 
     @Test
@@ -1514,11 +1538,24 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Override
+    public SpreadsheetMetadata createObject() {
+        return this.metadata();
+    }
+
     // json.............................................................................................................
 
-    private JsonNode marshall(final Object value) {
-        return JsonNodeMarshallContexts.basic()
-            .marshall(value);
+    @Override
+    public SpreadsheetMetadata unmarshall(final JsonNode from,
+                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetMetadata.unmarshall(from, context);
+    }
+
+    @Override
+    public SpreadsheetMetadata createJsonNodeMarshallingValue() {
+        return this.createObject();
     }
 
     // HasProperties....................................................................................................
@@ -1637,11 +1674,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     // helpers..........................................................................................................
 
-    @Override
-    public SpreadsheetMetadata createObject() {
-        return this.metadata();
-    }
-
     private SpreadsheetMetadata metadata() {
         return SpreadsheetMetadataNonEmpty.with(
             Maps.of(this.property1(), this.value1()),
@@ -1684,43 +1716,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMarshallingTesting...........................................................................................
+    // helper...........................................................................................................
 
-    @Override
-    public SpreadsheetMetadata unmarshall(final JsonNode from,
-                                          final JsonNodeUnmarshallContext context) {
-        return SpreadsheetMetadata.unmarshall(from, context);
-    }
-
-    @Override
-    public SpreadsheetMetadata createJsonNodeMarshallingValue() {
-        return this.createObject();
-    }
-
-    // PatchableTesting.................................................................................................
-
-    @Override
-    public SpreadsheetMetadata createPatchable() {
-        return this.createObject();
-    }
-
-    @Override
-    public JsonNode createPatch() {
-        return JsonNode.object();
-    }
-
-    @Override
-    public JsonNodeUnmarshallContext createPatchContext() {
-        return JsonNodeUnmarshallContexts.basic(
-            (String cc) -> Optional.ofNullable(
-                Currency.getInstance(cc)
-            ),
-            (String lt) -> Optional.of(
-                Locale.forLanguageTag(lt)
-            ),
-            ExpressionNumberKind.BIG_DECIMAL,
-            MathContext.UNLIMITED
-        );
+    private JsonNode marshall(final Object value) {
+        return JsonNodeMarshallContexts.basic()
+            .marshall(value);
     }
 
     private static SpreadsheetFormatterProvider spreadsheetFormatterProvider() {
