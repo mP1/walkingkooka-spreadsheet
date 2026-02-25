@@ -3098,7 +3098,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSystemConvertStringToTextStyle() {
-        final String text = "{color: #123}";
+        final String text = "color: #123";
 
         this.systemConvertAndCheck(
             text,
