@@ -51,6 +51,9 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.props.HasProperties;
+import walkingkooka.props.Properties;
+import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.SpreadsheetStartup;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
@@ -98,6 +101,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.storage.HasUserDirectories;
+import walkingkooka.text.HasText;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
@@ -143,6 +147,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -165,6 +170,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HasLocale,
     HasMathContext,
     HasOptionalName<SpreadsheetName>,
+    HasProperties,
     HateosResource<SpreadsheetId>,
     Patchable<SpreadsheetMetadata>,
     TreePrintable,
@@ -1831,5 +1837,46 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public final ExpressionNumber missingCellNumberValue() {
         return this.expressionNumberKind()
             .zero();
+    }
+
+    // HasProperties....................................................................................................
+
+    @Override
+    public final Properties properties() {
+        Properties properties = Properties.EMPTY;
+
+        for(final Entry<SpreadsheetMetadataPropertyName<?>, ?> nameAndValue : this.value().entrySet() ) {
+            final SpreadsheetMetadataPropertyName<?> name = nameAndValue.getKey();
+
+            final PropertiesPath propertiesPath = name.propertiesPath;
+            final Object value = nameAndValue.getValue();
+
+            if(SpreadsheetMetadataPropertyName.AUDIT_INFO.equals(name)) {
+                final AuditInfo auditInfo = (AuditInfo) value;
+
+                properties = properties.setAll(
+                    propertiesPath,
+                    auditInfo.properties()
+                );
+            } else {
+                if(SpreadsheetMetadataPropertyName.STYLE.equals(name)) {
+                    final TextStyle textStyle = (TextStyle) value;
+
+                    properties = properties.setAll(
+                        propertiesPath,
+                        textStyle.properties()
+                    );
+                } else {
+                    properties = properties.set(
+                        propertiesPath,
+                        value instanceof HasText ?
+                            ((HasText) value).text() :
+                        String.valueOf(value)
+                    );
+                }
+            }
+        }
+
+        return properties;
     }
 }
