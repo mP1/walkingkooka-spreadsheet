@@ -36,6 +36,7 @@ import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.UrlPathName;
 import walkingkooka.plugin.PluginNameSet;
+import walkingkooka.props.PropertiesPath;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
@@ -571,6 +572,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
         this.jsonPropertyName = JsonPropertyName.with(finalName);
 
+        this.propertiesPath = PropertiesPath.parse(finalName);
+
         this.patchRemove = JsonNode.object()
             .setNull(
                 this.jsonPropertyName
@@ -588,6 +591,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     final String name;
 
     final JsonPropertyName jsonPropertyName;
+
+    // SpreadsheetMetadata.properties
+    final PropertiesPath propertiesPath;
 
     /**
      * Validates the value, returning the value that will be saved.
