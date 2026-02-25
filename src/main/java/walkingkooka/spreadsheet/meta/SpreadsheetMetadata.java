@@ -1839,6 +1839,68 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             .zero();
     }
 
+    // fromProperties...................................................................................................
+
+    public static SpreadsheetMetadata fromProperties(final Properties properties,
+                                                     final CurrencyLocaleContext currencyLocaleContext) {
+        Objects.requireNonNull(properties, "properties");
+        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
+
+        SpreadsheetMetadata metadata = EMPTY;
+
+        for (final Entry<PropertiesPath, String> nameAndValue : properties.entries()) {
+            final String key = nameAndValue.getKey()
+                .value();
+
+            if(key.startsWith(SpreadsheetMetadataPropertyName.AUDIT_INFO.propertiesPath.value())) {
+                continue;
+            }
+            if(key.startsWith(SpreadsheetMetadataPropertyName.STYLE.propertiesPath.value())) {
+                continue;
+            }
+
+            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.with(key);
+
+            metadata = metadata.set(
+                name,
+                Cast.to(
+                    name.parseUrlFragmentSaveValue(
+                        nameAndValue.getValue(),
+                        currencyLocaleContext
+                    )
+                )
+            );
+        }
+
+        {
+            final Properties auditInfo = properties.view(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO.propertiesPath
+            );
+
+            if (auditInfo.isNotEmpty()) {
+                metadata = metadata.set(
+                    SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                    AuditInfo.fromProperties(auditInfo)
+                );
+            }
+        }
+
+        {
+            final Properties style = properties.view(
+                SpreadsheetMetadataPropertyName.STYLE.propertiesPath
+            );
+
+            if (style.isNotEmpty()) {
+                metadata = metadata.set(
+                    SpreadsheetMetadataPropertyName.STYLE,
+                    TextStyle.fromProperties(style)
+                );
+            }
+        }
+
+        return metadata;
+    }
+
     // HasProperties....................................................................................................
 
     @Override
