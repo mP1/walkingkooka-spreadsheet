@@ -44,6 +44,8 @@ import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.props.HasPropertiesTesting;
+import walkingkooka.props.Properties;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
@@ -126,6 +128,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
     HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
+    HasPropertiesTesting,
     HasUrlFragmentTesting,
     JsonNodeMarshallingTesting<SpreadsheetMetadata>,
     LocaleContextTesting,
@@ -1516,6 +1519,120 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     private JsonNode marshall(final Object value) {
         return JsonNodeMarshallContexts.basic()
             .marshall(value);
+    }
+
+    // HasProperties....................................................................................................
+
+    @Test
+    public void testPropertiesWhenEmpty() {
+        this.propertiesAndCheck(
+            SpreadsheetMetadata.EMPTY,
+            Properties.EMPTY
+        );
+    }
+
+    @Test
+    public void testPropertiesWithAuditInfo() {
+        this.propertiesAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.AUDIT_INFO,
+                AuditInfo.create(
+                    EmailAddress.parse("user@example.com"),
+                    LocalDateTime.MIN
+                )
+            ),
+            "auditInfo.createdBy=user@example.com\r\n" +
+                "auditInfo.createdTimestamp=-999999999-01-01T00:00\r\n" +
+                "auditInfo.modifiedBy=user@example.com\r\n" +
+                "auditInfo.modifiedTimestamp=-999999999-01-01T00:00\r\n"
+        );
+    }
+
+    @Test
+    public void testPropertiesWithTextStyle() {
+        this.propertiesAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.STYLE,
+                TextStyle.EMPTY.set(
+                    TextStylePropertyName.COLOR,
+                    Color.BLACK
+                ).set(
+                    TextStylePropertyName.TEXT_ALIGN,
+                    TextAlign.LEFT
+                )
+            ),
+            "style.color=black\r\n" +
+                "style.text-align=LEFT\r\n"
+        );
+    }
+
+    @Test
+    public void testProperties() {
+        this.propertiesAndCheck(
+            SpreadsheetMetadataTesting.METADATA_EN_AU,
+            "auditInfo.createdBy=user@example.com\r\n" +
+                "auditInfo.createdTimestamp=1999-12-31T12:58\r\n" +
+                "auditInfo.modifiedBy=user@example.com\r\n" +
+                "auditInfo.modifiedTimestamp=1999-12-31T12:58\r\n" +
+                "autoHideScrollbars=false\r\n" +
+                "cellCharacterWidth=1\r\n" +
+                "color1=black\r\n" +
+                "color2=white\r\n" +
+                "colorBlack=1\r\n" +
+                "colorWhite=2\r\n" +
+                "comparators=date, date-time, day-of-month, day-of-week, hour-of-am-pm, hour-of-day, minute-of-hour, month-of-year, nano-of-second, number, seconds-of-minute, text, text-case-insensitive, time, year\r\n" +
+                "converters=basic, boolean, boolean-to-text, collection, collection-to, collection-to-list, color, color-to-color, color-to-number, date-time, date-time-symbols, decimal-number-symbols, environment, error-throwing, error-to-error, error-to-number, expression, form-and-validation, format-pattern-to-string, has-formatter-selector, has-host-address, has-parser-selector, has-spreadsheet-selection, has-style, has-text-node, has-validator-selector, json, json-to, locale, locale-to-text, net, null-to-number, number, number-to-color, number-to-number, number-to-text, optional-to, plugins, spreadsheet-cell-set, spreadsheet-metadata, spreadsheet-selection-to-spreadsheet-selection, spreadsheet-selection-to-text, spreadsheet-value, storage, storage-path-json-to-class, storage-path-properties-to-class, storage-path-txt-to-class, storage-value-info-list-to-text, style, system, template, text, text-node, text-to-boolean-list, text-to-color, text-to-csv-string-list, text-to-date-list, text-to-date-time-list, text-to-email-address, text-to-environment-value-name, text-to-error, text-to-expression, text-to-flag, text-to-form-name, text-to-has-host-address, text-to-host-address, text-to-json, text-to-line-ending, text-to-locale, text-to-number-list, text-to-object, text-to-spreadsheet-color-name, text-to-spreadsheet-formatter-selector, text-to-spreadsheet-id, text-to-spreadsheet-metadata, text-to-spreadsheet-metadata-color, text-to-spreadsheet-metadata-property-name, text-to-spreadsheet-name, text-to-spreadsheet-selection, text-to-spreadsheet-text, text-to-storage-path, text-to-string-list, text-to-template-value-name, text-to-text, text-to-text-node, text-to-text-style, text-to-text-style-property-name, text-to-time-list, text-to-url, text-to-url-fragment, text-to-url-query-string, text-to-validation-error, text-to-validator-selector, text-to-value-type, text-to-zone-offset, to-boolean, to-json-node, to-json-text, to-number, to-string, to-styleable, to-validation-checkbox, to-validation-choice, to-validation-choice-list, to-validation-error-list, url, url-to-hyperlink, url-to-image\r\n" +
+                "currency=AUD\r\n" +
+                "dateFormatter=date yyyy/mm/dd\r\n" +
+                "dateParser=date yyyy/mm/dd\r\n" +
+                "dateTimeFormatter=date-time yyyy/mm/dd hh:mm\r\n" +
+                "dateTimeOffset=-25569\r\n" +
+                "dateTimeParser=date-time yyyy/mm/dd hh:mm\r\n" +
+                "dateTimeSymbols=\"am,pm\",\"January,February,March,April,May,June,July,August,September,October,November,December\",\"Jan.,Feb.,Mar.,Apr.,May,Jun.,Jul.,Aug.,Sep.,Oct.,Nov.,Dec.\",\"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday\",\"Sun.,Mon.,Tue.,Wed.,Thu.,Fri.,Sat.\"\r\n" +
+                "decimalNumberDigitCount=8\r\n" +
+                "decimalNumberSymbols=-,+,0,$,.,e,\",\",\\u221e,.,NaN,%,\\u2030\r\n" +
+                "defaultFormHandler=basic\r\n" +
+                "defaultYear=2000\r\n" +
+                "errorFormatter=badge-error text @\r\n" +
+                "exporters=collection, empty, json\r\n" +
+                "expressionNumberKind=BIG_DECIMAL\r\n" +
+                "findConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\r\n" +
+                "findFunctions=\r\n" +
+                "formHandlers=\r\n" +
+                "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\r\n" +
+                "formattingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, style, text-node, template, net)\r\n" +
+                "formattingFunctions=\r\n" +
+                "formulaConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, template, net, json)\r\n" +
+                "formulaFunctions=\r\n" +
+                "functions=\r\n" +
+                "importers=collection, empty, json\r\n" +
+                "locale=en_AU\r\n" +
+                "numberFormatter=number 0.#;0.#;0\r\n" +
+                "numberParser=number 0.#;0.#;0\r\n" +
+                "parsers=date, date-time, general, number, time, whole-number\r\n" +
+                "plugins=\r\n" +
+                "precision=7\r\n" +
+                "roundingMode=HALF_UP\r\n" +
+                "scriptingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\r\n" +
+                "scriptingFunctions=\r\n" +
+                "showFormulaEditor=true\r\n" +
+                "showFormulas=false\r\n" +
+                "showGridLines=true\r\n" +
+                "showHeadings=true\r\n" +
+                "sortComparators=date,datetime,day-of-month,day-of-year,hour-of-ampm,hour-of-day,minute-of-hour,month-of-year,nano-of-second,number,seconds-of-minute,text,text-case-insensitive,time,year\r\n" +
+                "sortConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, locale)\r\n" +
+                "style.height=50px\r\n" +
+                "style.width=100px\r\n" +
+                "textFormatter=text @\r\n" +
+                "timeFormatter=time hh:mm:ss\r\n" +
+                "timeParser=time hh:mm:ss\r\n" +
+                "twoDigitYear=50\r\n" +
+                "validationConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\r\n" +
+                "validationFunctions=\r\n" +
+                "validationValidators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\r\n" +
+                "validators=absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\r\n" +
+                "valueSeparator=,\r\n"
+        );
     }
 
     // helpers..........................................................................................................
