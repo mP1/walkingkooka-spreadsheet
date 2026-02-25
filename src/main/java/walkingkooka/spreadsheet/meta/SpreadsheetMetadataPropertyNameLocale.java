@@ -70,6 +70,6 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     @Override
     Locale parseUrlFragmentSaveValueNonNull(final String value,
                                             final CurrencyLocaleContext context) {
-        return Locale.forLanguageTag(value);
+        return context.localeForLanguageTagOrFail(value);
     }
 }
