@@ -856,6 +856,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToProperties}
+     */
+    public static Converter<SpreadsheetConverterContext> textToProperties() {
+        return Converters.textToProperties();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToSpreadsheetColorName}
      */
     public static Converter<SpreadsheetConverterContext> textToSpreadsheetColorName() {
