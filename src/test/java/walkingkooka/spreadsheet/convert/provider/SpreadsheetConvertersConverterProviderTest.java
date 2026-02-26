@@ -730,6 +730,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToProperties() {
+        this.converterAndCheck(
+            "text-to-properties",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToProperties()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToSpreadsheetMetadata() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_METADATA + "",

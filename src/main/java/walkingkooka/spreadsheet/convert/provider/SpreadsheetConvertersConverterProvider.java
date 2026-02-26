@@ -448,6 +448,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToObject();
                 break;
+            case TEXT_TO_PROPERTIES_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToProperties();
+                break;
             case TEXT_TO_SPREADSHEET_COLOR_NAME_STRING:
                 noParameterCheck(copy);
 
@@ -947,6 +952,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_OBJECT = ConverterName.with(TEXT_TO_OBJECT_STRING);
 
+    private final static String TEXT_TO_PROPERTIES_STRING = "text-to-properties";
+
+    final static ConverterName TEXT_TO_PROPERTIES = ConverterName.with(TEXT_TO_PROPERTIES_STRING);
+
     private final static String TEXT_TO_SPREADSHEET_COLOR_NAME_STRING = "text-to-spreadsheet-color-name";
 
     final static ConverterName TEXT_TO_SPREADSHEET_COLOR_NAME = ConverterName.with(TEXT_TO_SPREADSHEET_COLOR_NAME_STRING);
@@ -1175,6 +1184,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_LOCALE),
             converterInfo(TEXT_TO_NUMBER_LIST),
             converterInfo(TEXT_TO_OBJECT),
+            converterInfo(TEXT_TO_PROPERTIES),
             converterInfo(TEXT_TO_SPREADSHEET_COLOR_NAME),
             converterInfo(TEXT_TO_SPREADSHEET_FORMATTER_SELECTOR),
             converterInfo(TEXT_TO_SPREADSHEET_ID),

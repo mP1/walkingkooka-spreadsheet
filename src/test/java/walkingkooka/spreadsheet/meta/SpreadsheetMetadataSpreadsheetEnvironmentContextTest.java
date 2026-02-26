@@ -690,6 +690,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-locale\n" +
                 "    text-to-number-list\n" +
                 "    text-to-object\n" +
+                "    text-to-properties\n" +
                 "    text-to-spreadsheet-color-name\n" +
                 "    text-to-spreadsheet-formatter-selector\n" +
                 "    text-to-spreadsheet-id\n" +
