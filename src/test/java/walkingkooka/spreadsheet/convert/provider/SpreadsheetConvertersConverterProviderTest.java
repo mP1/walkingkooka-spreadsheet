@@ -457,6 +457,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithProperties() {
+        this.converterAndCheck(
+            "properties",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.properties()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithSpreadsheetCellSet() {
         this.converterAndCheck(
             "spreadsheet-cell-set",
