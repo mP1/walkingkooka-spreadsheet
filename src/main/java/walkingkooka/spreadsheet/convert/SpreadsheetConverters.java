@@ -484,6 +484,19 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * A converter for properties
+     */
+    public static Converter<SpreadsheetConverterContext> properties() {
+        return PROPERTIES;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> PROPERTIES = namedCollection(
+        "properties",
+        hasProperties(),
+        textToProperties()
+    );
+    
+    /**
      * {@see SpreadsheetConverterSpreadsheetCellSet}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetCellSet() {

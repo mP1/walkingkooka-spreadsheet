@@ -283,6 +283,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.plugins();
                 break;
+            case PROPERTIES_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.properties();
+                break;
             case SPREADSHEET_CELL_SET_STRING:
                 noParameterCheck(copy);
 
@@ -820,6 +825,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName PLUGINS = ConverterName.with(PLUGINS_STRING);
 
+    private final static String PROPERTIES_STRING = "properties";
+
+    final static ConverterName PROPERTIES = ConverterName.with(PROPERTIES_STRING);
+
     private final static String SPREADSHEET_CELL_SET_STRING = "spreadsheet-cell-set";
 
     final static ConverterName SPREADSHEET_CELL_SET = ConverterName.with(SPREADSHEET_CELL_SET_STRING);
@@ -1151,6 +1160,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(NUMBER_TO_TEXT),
             converterInfo(OPTIONAL_TO),
             converterInfo(PLUGINS),
+            converterInfo(PROPERTIES),
             converterInfo(SPREADSHEET_CELL_SET),
             converterInfo(SPREADSHEET_METADATA),
             converterInfo(SPREADSHEET_SELECTION_TO_SPREADSHEET_SELECTION),

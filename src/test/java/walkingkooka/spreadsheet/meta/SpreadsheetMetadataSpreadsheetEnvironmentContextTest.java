@@ -657,6 +657,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    number-to-text\n" +
                 "    optional-to\n" +
                 "    plugins\n" +
+                "    properties\n" +
                 "    spreadsheet-cell-set\n" +
                 "    spreadsheet-metadata\n" +
                 "    spreadsheet-selection-to-spreadsheet-selection\n" +
