@@ -640,6 +640,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    has-formatter-selector\n" +
                 "    has-host-address\n" +
                 "    has-parser-selector\n" +
+                "    has-properties\n" +
                 "    has-spreadsheet-selection\n" +
                 "    has-style\n" +
                 "    has-text-node\n" +

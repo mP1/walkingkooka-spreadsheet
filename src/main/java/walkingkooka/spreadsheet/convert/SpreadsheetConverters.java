@@ -299,6 +299,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#hasProperties}
+     */
+    public static Converter<SpreadsheetConverterContext> hasProperties() {
+        return Converters.hasProperties();
+    }
+
+    /**
      * {@see SpreadsheetConverterHasOptionalSpreadsheetFormatterSelector}
      */
     public static Converter<SpreadsheetConverterContext> hasSpreadsheetFormatterSelector() {
