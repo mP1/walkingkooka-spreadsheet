@@ -1867,12 +1867,21 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         textStyle.properties()
                     );
                 } else {
-                    properties = properties.set(
-                        propertiesPath,
-                        value instanceof HasText ?
-                            ((HasText) value).text() :
-                        String.valueOf(value)
-                    );
+                    if(SpreadsheetMetadataPropertyName.LOCALE.equals(name)) {
+                        final Locale locale = (Locale) value;
+
+                        properties = properties.set(
+                            SpreadsheetMetadataPropertyName.LOCALE.propertiesPath,
+                            locale.toLanguageTag()
+                        );
+                    } else {
+                        properties = properties.set(
+                            propertiesPath,
+                            value instanceof HasText ?
+                                ((HasText) value).text() :
+                                String.valueOf(value)
+                        );
+                    }
                 }
             }
         }
