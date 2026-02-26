@@ -43,6 +43,7 @@ import walkingkooka.net.MailToUrl;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.props.Properties;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -822,6 +823,23 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.PLUGINS // TEXT_TO_VALIDATOR_SELECTOR
                 );
             }
+        }
+
+        // properties...................................................................................................
+        if (find || formatting || formula || scripting || validation) {
+            final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(1)
+            ).set(
+                SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
+                SpreadsheetName.with("Spreadsheet111")
+            );
+
+            verifier.addIfConversionFail(
+                metadata,
+                Properties.class,
+                SpreadsheetConvertersConverterProvider.PROPERTIES
+            );
         }
 
         // spreadsheetMetadata..........................................................................................

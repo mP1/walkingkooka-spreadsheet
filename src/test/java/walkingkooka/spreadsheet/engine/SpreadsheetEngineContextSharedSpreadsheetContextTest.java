@@ -1346,13 +1346,13 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"errorFormatter\": \"badge-error default-text\",\n" +
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                "  \"findConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"findConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
-                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
-                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
+                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, properties, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"hideZeroValues\": false,\n" +
@@ -1364,7 +1364,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +
@@ -1399,7 +1399,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"timeFormatter\": \"time h:mm:ss AM/PM\",\n" +
                 "  \"timeParser\": \"time h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                 "  \"twoDigitYear\": 20,\n" +
-                "  \"validationConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\",\n" +
+                "  \"validationConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
                 "  \"validators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
@@ -1572,13 +1572,13 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"errorFormatter\": \"badge-error default-text\",\n" +
                 "  \"exporters\": \"collection, empty, json\",\n" +
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
-                "  \"findConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"findConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
                 "  \"findFunctions\": \"@\",\n" +
                 "  \"findHighlighting\": false,\n" +
                 "  \"formHandlers\": \"basic\",\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
-                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, spreadsheet-metadata, style, text-node, template, net)\",\n" +
-                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, template, net)\",\n" +
+                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, properties, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"hideZeroValues\": false,\n" +
@@ -1590,7 +1590,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +
@@ -1625,7 +1625,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"timeFormatter\": \"time h:mm:ss AM/PM\",\n" +
                 "  \"timeParser\": \"time h:mm:ss AM/PM;h:mm:ss;h:mm:ss.0;h:mm AM/PM;h:mm\",\n" +
                 "  \"twoDigitYear\": 20,\n" +
-                "  \"validationConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, template, json)\",\n" +
+                "  \"validationConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json)\",\n" +
                 "  \"validationFunctions\": \"@\",\n" +
                 "  \"validationValidators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
                 "  \"validators\": \"absolute-url, checkbox, choice-list, collection, email-address, expression, non-null, text-length, text-mask\",\n" +
