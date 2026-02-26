@@ -198,6 +198,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasSpreadsheetParserSelector();
                 break;
+            case HAS_PROPERTIES_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasProperties();
+                break;
             case HAS_SPREADSHEET_SELECTION_STRING:
                 noParameterCheck(copy);
 
@@ -742,6 +747,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_PARSER_SELECTOR = ConverterName.with(HAS_PARSER_SELECTOR_STRING);
 
+    private final static String HAS_PROPERTIES_STRING = "has-properties";
+
+    final static ConverterName HAS_PROPERTIES = ConverterName.with(HAS_PROPERTIES_STRING);
+
     private final static String HAS_SPREADSHEET_SELECTION_STRING = "has-spreadsheet-selection";
 
     final static ConverterName HAS_SPREADSHEET_SELECTION = ConverterName.with(HAS_SPREADSHEET_SELECTION_STRING);
@@ -1116,6 +1125,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_HOST_ADDRESS),
             converterInfo(HAS_PARSER_SELECTOR),
+            converterInfo(HAS_PROPERTIES),
             converterInfo(HAS_SPREADSHEET_SELECTION),
             converterInfo(HAS_STYLE),
             converterInfo(HAS_TEXT_NODE),

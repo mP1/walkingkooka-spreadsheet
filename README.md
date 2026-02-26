@@ -128,6 +128,7 @@ eg
 - [has-formatter-selector](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/HasOptionalSpreadsheetFormatterSelector.java)
 - [has-host-address](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverterHasHostAddress.java)
 - [has-parser-selector](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/HasOptionalSpreadsheetParserSelector.java)
+- [has-properties](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterHasProperties.java)
 - [has-spreadsheet-selection](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterHasSpreadsheetSelection.java)
 - [has-text-node](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TreeTextConverterHasTextNode.java)
 - [has-text-style](https://github.com/mP1/walkingkooka-tree-text/blob/master/src/main/java/walkingkooka/tree/text/convert/TreeTextConverterHasTextStyle.java)
