@@ -1586,6 +1586,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
+    public void testPropertiesWithLocale() {
+        this.propertiesAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("en-AU")
+            ),
+            "locale=en-AU\r\n"
+        );
+    }
+
+    @Test
     public void testPropertiesWithTextStyle() {
         this.propertiesAndCheck(
             SpreadsheetMetadata.EMPTY.set(
@@ -1643,7 +1654,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "formulaFunctions=\r\n" +
                 "functions=\r\n" +
                 "importers=collection, empty, json\r\n" +
-                "locale=en_AU\r\n" +
+                "locale=en-AU\r\n" +
                 "numberFormatter=number 0.#;0.#;0\r\n" +
                 "numberParser=number 0.#;0.#;0\r\n" +
                 "parsers=date, date-time, general, number, time, whole-number\r\n" +
