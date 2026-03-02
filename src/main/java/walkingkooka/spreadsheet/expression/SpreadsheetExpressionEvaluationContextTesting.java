@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.expression.function.StorageExpressionEvaluationContextTesting2;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContextTesting;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextTesting;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextTesting;
 
@@ -52,6 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
     HasSpreadsheetCellTesting<C>,
+    JsonNodeExpressionEvaluationContextTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
     StorageExpressionEvaluationContextTesting2<C>,
