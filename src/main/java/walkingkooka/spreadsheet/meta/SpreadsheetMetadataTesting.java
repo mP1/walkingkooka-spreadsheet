@@ -200,16 +200,16 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     Currency CURRENCY = Currency.getInstance("AUD");
 
+    LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
+        LocaleContexts.jre(LOCALE)
+    );
+
     CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
         CurrencyContexts.jre(
             CURRENCY,
             (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length(),
-            () -> LOCALE
+            LOCALE_CONTEXT
         )
-    );
-
-    LocaleContext LOCALE_CONTEXT = LocaleContexts.readOnly(
-        LocaleContexts.jre(LOCALE)
     );
 
     CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT);
