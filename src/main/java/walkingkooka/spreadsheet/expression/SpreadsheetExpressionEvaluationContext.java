@@ -48,6 +48,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.expression.JsonNodeExpressionEvaluationContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
@@ -79,6 +80,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     HasSpreadsheetCell,
     HasSpreadsheetMetadata,
     FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    JsonNodeExpressionEvaluationContext,
     SpreadsheetEnvironmentContext,
     TerminalExpressionEvaluationContext,
     ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
