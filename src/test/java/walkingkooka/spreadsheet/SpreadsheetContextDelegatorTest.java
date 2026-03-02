@@ -385,6 +385,12 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
+            public Set<Locale> localesForCurrencyCode(final String currencyCode) {
+                Objects.requireNonNull(currencyCode, "currencyCode");
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
             public Set<Currency> findByCurrencyText(final String text,
                                                     final int offset,
                                                     final int count) {
