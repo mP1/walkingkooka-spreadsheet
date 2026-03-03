@@ -897,8 +897,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  parsers\n" +
                 "    date\n" +
                 "    date-time\n" +
+                "    full-date\n" +
                 "    general\n" +
+                "    long-date\n" +
+                "    medium-date\n" +
                 "    number\n" +
+                "    short-date\n" +
                 "    time\n" +
                 "    whole-number\n" +
                 "  plugins\n" +

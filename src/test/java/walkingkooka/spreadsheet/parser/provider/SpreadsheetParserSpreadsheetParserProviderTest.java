@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.parser.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
@@ -31,12 +31,19 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetParserSpreadsheetParserProviderTest implements SpreadsheetParserProviderTesting<SpreadsheetParserSpreadsheetParserProvider>,
     ToStringTesting<SpreadsheetParserSpreadsheetParserProvider> {
 
-    private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
+    private final static ProviderContext PROVIDER_CONTEXT = new FakeProviderContext() {
+        @Override
+        public Locale locale() {
+            return Locale.forLanguageTag("en-AU");
+        }
+    };
 
     @Test
     public void testWithNullSpreadsheetFormatterProviderFails() {
@@ -86,10 +93,34 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetFormatterSelectorWithFullDate() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("full-date"),
+            SpreadsheetFormatterSelector.parse("full-date")
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorWithGeneral() {
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.GENERAL_STRING),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.GENERAL + "")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithLongDate() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("long-date"),
+            SpreadsheetFormatterSelector.parse("long-date")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithMediumDate() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("medium-date"),
+            SpreadsheetFormatterSelector.parse("medium-date")
         );
     }
 
@@ -100,6 +131,14 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.NUMBER + text),
             SpreadsheetFormatterSelector.parse(SpreadsheetFormatterName.NUMBER + text)
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithShortDate() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("short-date"),
+            SpreadsheetFormatterSelector.parse("short-date")
         );
     }
 
@@ -145,6 +184,17 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserNameWithFullDate() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.FULL_DATE,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("dddd, d mmmm yyyy")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserNameWithGeneral() {
         this.spreadsheetParserAndCheck(
             SpreadsheetParserName.GENERAL,
@@ -155,12 +205,45 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserNameWithLongDate() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.LONG_DATE,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithMediumDate() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.MEDIUM_DATE,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d mmm yyyy")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserNameWithNumber() {
         this.spreadsheetParserAndCheck(
             SpreadsheetParserName.NUMBER,
             Lists.of("$0.00"),
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserNameWithShortDate() {
+        this.spreadsheetParserAndCheck(
+            SpreadsheetParserName.SHORT_DATE,
+            Lists.empty(),
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d/m/yy")
                 .parser()
         );
     }
@@ -219,6 +302,16 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserSelectorWithFullDate() {
+        this.spreadsheetParserAndCheck(
+            "full-date",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("dddd, d mmmm yyyy")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserSelectorWithGeneral() {
         this.spreadsheetParserAndCheck(
             "general",
@@ -228,11 +321,41 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetParserSelectorWithLongDate() {
+        this.spreadsheetParserAndCheck(
+            "long-date",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithMediumDate() {
+        this.spreadsheetParserAndCheck(
+            "medium-date",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d mmm yyyy")
+                .parser()
+        );
+    }
+
+    @Test
     public void testSpreadsheetParserSelectorWithNumber() {
         this.spreadsheetParserAndCheck(
             "number $0.00",
             PROVIDER_CONTEXT,
             SpreadsheetPattern.parseNumberParsePattern("$0.00")
+                .parser()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetParserSelectorWithShortDate() {
+        this.spreadsheetParserAndCheck(
+            "short-date",
+            PROVIDER_CONTEXT,
+            SpreadsheetPattern.parseDateParsePattern("d/m/yy")
                 .parser()
         );
     }
@@ -813,8 +936,12 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
             "SpreadsheetParserInfoSet\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date full-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date long-date\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date medium-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date short-date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\n"
         );
@@ -829,8 +956,12 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
                 "[\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date full-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date long-date\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date medium-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date short-date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\"\n" +
                     "]"
