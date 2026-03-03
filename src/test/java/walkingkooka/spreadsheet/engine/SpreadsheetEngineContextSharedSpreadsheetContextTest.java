@@ -1360,7 +1360,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"numberFormatter\": \"number #,##0.###\",\n" +
                 "  \"numberParser\": \"number #,##0.###;#,##0\",\n" +
-                "  \"parsers\": \"date, date-time, full-date, general, long-date, medium-date, number, short-date, time, whole-number\",\n" +
+                "  \"parsers\": \"date, date-time, full-date, full-date-time, general, long-date, long-date-time, medium-date, medium-date-time, number, short-date, short-date-time, time, whole-number\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
@@ -1586,7 +1586,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"locale\": \"en-AU\",\n" +
                 "  \"numberFormatter\": \"number #,##0.###\",\n" +
                 "  \"numberParser\": \"number #,##0.###;#,##0\",\n" +
-                "  \"parsers\": \"date, date-time, full-date, general, long-date, medium-date, number, short-date, time, whole-number\",\n" +
+                "  \"parsers\": \"date, date-time, full-date, full-date-time, general, long-date, long-date-time, medium-date, medium-date-time, number, short-date, short-date-time, time, whole-number\",\n" +
                 "  \"plugins\": \"\",\n" +
                 "  \"precision\": 10,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +

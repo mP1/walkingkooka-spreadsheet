@@ -101,6 +101,14 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetFormatterSelectorWithFullDateTime() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("full-date-time"),
+            SpreadsheetFormatterSelector.parse("full-date-time")
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorWithGeneral() {
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse(SpreadsheetParserName.GENERAL_STRING),
@@ -117,10 +125,26 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
     }
 
     @Test
+    public void testSpreadsheetFormatterSelectorWithLongDateTime() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("long-date-time"),
+            SpreadsheetFormatterSelector.parse("long-date-time")
+        );
+    }
+
+    @Test
     public void testSpreadsheetFormatterSelectorWithMediumDate() {
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse("medium-date"),
             SpreadsheetFormatterSelector.parse("medium-date")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithMediumDateTime() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("medium-date-time"),
+            SpreadsheetFormatterSelector.parse("medium-date-time")
         );
     }
 
@@ -139,6 +163,14 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
         this.spreadsheetFormatterSelectorAndCheck(
             SpreadsheetParserSelector.parse("short-date"),
             SpreadsheetFormatterSelector.parse("short-date")
+        );
+    }
+
+    @Test
+    public void testSpreadsheetFormatterSelectorWithShortDateTime() {
+        this.spreadsheetFormatterSelectorAndCheck(
+            SpreadsheetParserSelector.parse("short-date-time"),
+            SpreadsheetFormatterSelector.parse("short-date-time")
         );
     }
 
@@ -937,11 +969,15 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date full-date\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date-time full-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date long-date\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date-time long-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date medium-date\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date-time medium-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date short-date\n" +
+                "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date-time short-date-time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\n" +
                 "  https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\n"
         );
@@ -957,11 +993,15 @@ public final class SpreadsheetParserSpreadsheetParserProviderTest implements Spr
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date date\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/date-time date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date full-date\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/full-date-time full-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/general general\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date long-date\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/long-date-time long-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date medium-date\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/medium-date-time medium-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/number number\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date short-date\",\n" +
+                    "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/short-date-time short-date-time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/time time\",\n" +
                     "  \"https://github.com/mP1/walkingkooka-spreadsheet/SpreadsheetParser/whole-number whole-number\"\n" +
                     "]"
