@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 
@@ -75,7 +76,7 @@ final class SpreadsheetMetadataPropertyNameViewportSelection extends Spreadsheet
 
     @Override
     AnchoredSpreadsheetSelection parseUrlFragmentSaveValueNonNull(final String value,
-                                                                  final CurrencyLocaleContext context) {
+                                                                  final CurrencyCodeLanguageTagContext context) {
         throw new UnsupportedOperationException();
     }
 }

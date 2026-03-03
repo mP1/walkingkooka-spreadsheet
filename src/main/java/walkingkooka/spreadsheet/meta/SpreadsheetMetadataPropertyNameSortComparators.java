@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorNameList;
 
@@ -75,7 +76,7 @@ final class SpreadsheetMetadataPropertyNameSortComparators extends SpreadsheetMe
 
     @Override
     SpreadsheetComparatorNameList parseUrlFragmentSaveValueNonNull(final String value,
-                                                                   final CurrencyLocaleContext context) {
+                                                                   final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetComparatorNameList.parse(value);
     }
 }

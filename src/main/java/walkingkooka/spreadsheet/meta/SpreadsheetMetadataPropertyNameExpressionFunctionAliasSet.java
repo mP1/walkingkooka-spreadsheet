@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
@@ -60,7 +61,7 @@ abstract class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet extends
 
     @Override //
     final ExpressionFunctionAliasSet parseUrlFragmentSaveValueNonNull(final String value,
-                                                                      final CurrencyLocaleContext context) {
+                                                                      final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetExpressionFunctions.parseAliasSet(value);
     }
 }

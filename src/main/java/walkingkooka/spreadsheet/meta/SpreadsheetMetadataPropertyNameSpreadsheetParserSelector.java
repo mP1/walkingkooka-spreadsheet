@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPatternKind;
@@ -77,7 +78,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParserSelector extends 
 
     @Override //
     final SpreadsheetParserSelector parseUrlFragmentSaveValueNonNull(final String value,
-                                                                     final CurrencyLocaleContext context) {
+                                                                     final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetParserSelector.parse(value);
     }
 }

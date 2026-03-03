@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.AuditInfo;
 
@@ -74,7 +75,7 @@ final class SpreadsheetMetadataPropertyNameAuditInfo extends SpreadsheetMetadata
 
     @Override
     AuditInfo parseUrlFragmentSaveValueNonNull(final String value,
-                                               final CurrencyLocaleContext context) {
+                                               final CurrencyCodeLanguageTagContext context) {
         throw new UnsupportedOperationException();
     }
 }

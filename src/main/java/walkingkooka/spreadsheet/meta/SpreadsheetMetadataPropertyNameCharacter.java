@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.text.CharSequences;
 
@@ -72,7 +73,7 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
 
     @Override //
     final Character parseUrlFragmentSaveValueNonNull(final String value,
-                                                     final CurrencyLocaleContext context) {
+                                                     final CurrencyCodeLanguageTagContext context) {
         if (value.length() != 1) {
             throw new IllegalArgumentException("Invalid value " + CharSequences.quoteAndEscape(value) + " expected a single character");
         }

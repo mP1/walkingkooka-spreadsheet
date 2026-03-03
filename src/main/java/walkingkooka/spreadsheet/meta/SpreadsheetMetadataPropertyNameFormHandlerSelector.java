@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.validation.form.provider.FormHandlerSelector;
 
@@ -59,7 +60,7 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerSelector extends Spread
 
     @Override //
     final FormHandlerSelector parseUrlFragmentSaveValueNonNull(final String value,
-                                                               final CurrencyLocaleContext context) {
+                                                               final CurrencyCodeLanguageTagContext context) {
         return FormHandlerSelector.parse(value);
     }
 }

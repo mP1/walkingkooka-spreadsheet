@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.math.RoundingMode;
@@ -69,7 +70,7 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
 
     @Override
     RoundingMode parseUrlFragmentSaveValueNonNull(final String value,
-                                                  final CurrencyLocaleContext context) {
+                                                  final CurrencyCodeLanguageTagContext context) {
         return RoundingMode.valueOf(value);
     }
 }

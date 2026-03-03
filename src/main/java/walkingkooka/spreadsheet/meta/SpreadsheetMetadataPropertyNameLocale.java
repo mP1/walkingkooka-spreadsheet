@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Locale;
@@ -69,7 +70,7 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
 
     @Override
     Locale parseUrlFragmentSaveValueNonNull(final String value,
-                                            final CurrencyLocaleContext context) {
+                                            final CurrencyCodeLanguageTagContext context) {
         return context.localeForLanguageTagOrFail(value);
     }
 }

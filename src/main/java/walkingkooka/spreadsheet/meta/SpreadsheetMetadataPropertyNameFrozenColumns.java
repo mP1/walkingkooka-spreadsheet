@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -80,7 +81,7 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
 
     @Override
     SpreadsheetColumnRangeReference parseUrlFragmentSaveValueNonNull(final String value,
-                                                                     final CurrencyLocaleContext context) {
+                                                                     final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetSelection.parseColumnRange(value);
     }
 }
