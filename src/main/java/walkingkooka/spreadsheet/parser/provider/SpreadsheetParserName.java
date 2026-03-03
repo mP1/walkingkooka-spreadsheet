@@ -96,7 +96,17 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         FULL_DATE_TIME_STRING,
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
+    
+    final static String FULL_TIME_STRING = "full-time";
 
+    /**
+     * The name of the full-time {@link Parser}
+     */
+    public final static SpreadsheetParserName FULL_TIME = new SpreadsheetParserName(
+        FULL_TIME_STRING,
+        SpreadsheetPatternKind.TIME_PARSE_PATTERN
+    );
+    
     final static String GENERAL_STRING = "general";
 
     public final static SpreadsheetParserName GENERAL = new SpreadsheetParserName(
@@ -123,9 +133,19 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         LONG_DATE_TIME_STRING,
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
+
+    final static String LONG_TIME_STRING = "long-time";
+
+    /**
+     * The name of the long-time {@link Parser}
+     */
+    public final static SpreadsheetParserName LONG_TIME = new SpreadsheetParserName(
+        LONG_TIME_STRING,
+        SpreadsheetPatternKind.TIME_PARSE_PATTERN
+    );
     
     final static String MEDIUM_DATE_STRING = "medium-date";
-
+    
     /**
      * The name of the medoum-date {@link Parser}
      */
@@ -142,6 +162,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     public final static SpreadsheetParserName MEDIUM_DATE_TIME = new SpreadsheetParserName(
         MEDIUM_DATE_TIME_STRING,
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+    );
+
+    final static String MEDIUM_TIME_STRING = "medium-time";
+
+    /**
+     * The name of the medoum-time {@link Parser}
+     */
+    public final static SpreadsheetParserName MEDIUM_TIME = new SpreadsheetParserName(
+        MEDIUM_TIME_STRING,
+        SpreadsheetPatternKind.TIME_PARSE_PATTERN
     );
     
     final static String NUMBER_PARSER_PATTERN_STRING = "number";
@@ -172,6 +202,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     public final static SpreadsheetParserName SHORT_DATE_TIME = new SpreadsheetParserName(
         SHORT_DATE_TIME_STRING,
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+    );
+
+    final static String SHORT_TIME_STRING = "short-time";
+
+    /**
+     * The name of the short-time {@link Parser}
+     */
+    public final static SpreadsheetParserName SHORT_TIME = new SpreadsheetParserName(
+        SHORT_TIME_STRING,
+        SpreadsheetPatternKind.TIME_PARSE_PATTERN
     );
 
     final static String TIME_STRING = "time";
@@ -215,6 +255,9 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             case FULL_DATE_TIME_STRING:
                 parserName = FULL_DATE_TIME;
                 break;
+            case FULL_TIME_STRING:
+                parserName = FULL_TIME;
+                break;
             case GENERAL_STRING:
                 parserName = GENERAL;
                 break;
@@ -224,12 +267,18 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             case LONG_DATE_TIME_STRING:
                 parserName = LONG_DATE_TIME;
                 break;
+            case LONG_TIME_STRING:
+                parserName = LONG_TIME;
+                break;
             case MEDIUM_DATE_STRING:
                 parserName = MEDIUM_DATE;
                 break;
             case MEDIUM_DATE_TIME_STRING:
                 parserName = MEDIUM_DATE_TIME;
-                break;            
+                break;
+            case MEDIUM_TIME_STRING:
+                parserName = MEDIUM_TIME;
+                break;
             case NUMBER_PARSER_PATTERN_STRING:
                 parserName = NUMBER;
                 break;
@@ -238,6 +287,9 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
                 break;
             case SHORT_DATE_TIME_STRING:
                 parserName = SHORT_DATE_TIME;
+                break;
+            case SHORT_TIME_STRING:
+                parserName = SHORT_TIME;
                 break;
             case TIME_STRING:
                 parserName = TIME;
