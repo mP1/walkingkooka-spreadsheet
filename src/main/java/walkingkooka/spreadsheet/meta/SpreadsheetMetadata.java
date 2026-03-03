@@ -33,6 +33,7 @@ import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CanCurrencyForCurrencyCode;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -852,9 +853,18 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         missing.reportIfMissing();
 
         return JsonNodeUnmarshallContexts.basic(
-            canCurrencyForCurrencyCode,
-            canLocaleForLanguageTag,
             expressionNumberKind,
+            new CurrencyCodeLanguageTagContext() {
+                @Override
+                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    return canCurrencyForCurrencyCode.currencyForCurrencyCode(currencyCode);
+                }
+
+                @Override
+                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    return canLocaleForLanguageTag.localeForLanguageTag(languageTag);
+                }
+            },
             mathContext
         );
     }
@@ -1686,13 +1696,22 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         final SpreadsheetFormatterProvider spreadsheetFormatterProvider = SpreadsheetFormatterProviders.spreadsheetFormatters();
 
         return JsonNodeUnmarshallContexts.basic(
-            (String cc) -> Optional.ofNullable(
-                Currency.getInstance(cc)
-            ),
-            (String lt) -> Optional.of(
-                Locale.forLanguageTag(lt)
-            ),
             ExpressionNumberKind.DEFAULT,
+            new CurrencyCodeLanguageTagContext() {
+                @Override
+                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    return Optional.ofNullable(
+                        Currency.getInstance(currencyCode)
+                    );
+                }
+
+                @Override
+                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    return Optional.of(
+                        Locale.forLanguageTag(languageTag)
+                    );
+                }
+            },
             MathContext.DECIMAL32
         ).unmarshall(
             JsonNode.parse(

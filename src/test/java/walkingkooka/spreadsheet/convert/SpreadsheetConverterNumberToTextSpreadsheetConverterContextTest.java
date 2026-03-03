@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
@@ -236,13 +237,22 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                     JsonNodeMarshallUnmarshallContexts.basic(
                         JsonNodeMarshallContexts.basic(),
                         JsonNodeUnmarshallContexts.basic(
-                            (String cc) -> Optional.ofNullable(
-                                Currency.getInstance(cc)
-                            ),
-                            (String lt) -> Optional.of(
-                                Locale.forLanguageTag(lt)
-                            ),
                             expressionNumberKind,
+                            new CurrencyCodeLanguageTagContext() {
+                                @Override
+                                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                                    return Optional.ofNullable(
+                                        Currency.getInstance(currencyCode)
+                                    );
+                                }
+
+                                @Override
+                                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                                    return Optional.of(
+                                        Locale.forLanguageTag(languageTag)
+                                    );
+                                }
+                            },
                             DECIMAL_NUMBER_CONTEXT.mathContext()
                         )
                     )

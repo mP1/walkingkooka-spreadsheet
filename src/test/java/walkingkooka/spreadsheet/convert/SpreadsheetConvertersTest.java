@@ -32,6 +32,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -1100,13 +1101,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     private final static JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(
         JsonNodeMarshallContexts.basic(),
         JsonNodeUnmarshallContexts.basic(
-            (String cc) -> Optional.ofNullable(
-                Currency.getInstance(cc)
-            ),
-            (String lt) -> Optional.of(
-                Locale.forLanguageTag(lt)
-            ),
             EXPRESSION_NUMBER_KIND,
+            new CurrencyCodeLanguageTagContext() {
+                @Override
+                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    return Optional.ofNullable(
+                        Currency.getInstance(currencyCode)
+                    );
+                }
+
+                @Override
+                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    return Optional.of(
+                        Locale.forLanguageTag(languageTag)
+                    );
+                }
+            },
             MathContext.DECIMAL32
         )
     );
@@ -3348,13 +3358,22 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 private final JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
-                    (String cc) -> Optional.ofNullable(
-                        Currency.getInstance(cc)
-                    ),
-                    (String lt) -> Optional.of(
-                        Locale.forLanguageTag(lt)
-                    ),
                     ExpressionNumberKind.BIG_DECIMAL,
+                    new CurrencyCodeLanguageTagContext() {
+                        @Override
+                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                            return Optional.ofNullable(
+                                Currency.getInstance(currencyCode)
+                            );
+                        }
+
+                        @Override
+                        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                            return Optional.of(
+                                Locale.forLanguageTag(languageTag)
+                            );
+                        }
+                    },
                     MathContext.DECIMAL32
                 );
             },
