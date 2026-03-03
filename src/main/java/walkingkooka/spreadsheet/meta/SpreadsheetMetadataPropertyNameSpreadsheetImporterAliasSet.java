@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 
@@ -60,7 +61,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetImporterAliasSet extend
 
     @Override //
     final SpreadsheetImporterAliasSet parseUrlFragmentSaveValueNonNull(final String value,
-                                                                       final CurrencyLocaleContext context) {
+                                                                       final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetImporterAliasSet.parse(value);
     }
 }

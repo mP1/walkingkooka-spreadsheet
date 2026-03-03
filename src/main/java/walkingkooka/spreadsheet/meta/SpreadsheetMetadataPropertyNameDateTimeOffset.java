@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Optional;
@@ -68,7 +69,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
 
     @Override
     Long parseUrlFragmentSaveValueNonNull(final String value,
-                                          final CurrencyLocaleContext context) {
+                                          final CurrencyCodeLanguageTagContext context) {
         return Long.parseLong(value);
     }
 }

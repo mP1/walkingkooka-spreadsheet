@@ -25,6 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.AuditInfo;
@@ -682,7 +683,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * property. Not all properties support this operation, and will throw a {@link UnsupportedOperationException}.
      */
     public final T parseUrlFragmentSaveValue(final String value,
-                                             final CurrencyLocaleContext context) {
+                                             final CurrencyCodeLanguageTagContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
@@ -695,10 +696,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     }
 
     abstract T parseUrlFragmentSaveValueNonNull(final String value,
-                                                final CurrencyLocaleContext context);
+                                                final CurrencyCodeLanguageTagContext context);
 
     /**
-     * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String, CurrencyLocaleContext)} is not supported.
+     * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String, CurrencyCodeLanguageTagContext)} is not supported.
      */
     final T failParseUrlFragmentSaveValueUnsupported() {
         throw new UnsupportedOperationException("UrlFragment save value not supported for " + CharSequences.quoteAndEscape(this.value()));

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.plugin.PluginNameSet;
 
@@ -68,7 +69,7 @@ final class SpreadsheetMetadataPropertyNamePluginNameSet extends SpreadsheetMeta
 
     @Override
     PluginNameSet parseUrlFragmentSaveValueNonNull(final String text,
-                                                   final CurrencyLocaleContext context) {
+                                                   final CurrencyCodeLanguageTagContext context) {
         return PluginNameSet.parse(text);
     }
 

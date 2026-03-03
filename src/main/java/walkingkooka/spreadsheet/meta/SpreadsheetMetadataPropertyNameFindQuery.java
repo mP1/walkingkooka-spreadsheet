@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 
@@ -76,7 +77,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
 
     @Override
     SpreadsheetCellQuery parseUrlFragmentSaveValueNonNull(final String value,
-                                                          final CurrencyLocaleContext context) {
+                                                          final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetCellQuery.parse(value);
     }
 }

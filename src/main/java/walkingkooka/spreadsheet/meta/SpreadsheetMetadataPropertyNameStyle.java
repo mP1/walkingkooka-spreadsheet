@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.tree.text.TextStyle;
 
@@ -71,7 +72,7 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
 
     @Override
     TextStyle parseUrlFragmentSaveValueNonNull(final String value,
-                                               final CurrencyLocaleContext context) {
+                                               final CurrencyCodeLanguageTagContext context) {
         return this.failParseUrlFragmentSaveValueUnsupported();
     }
 }

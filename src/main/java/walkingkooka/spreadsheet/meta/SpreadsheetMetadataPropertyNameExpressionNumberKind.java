@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -69,7 +70,7 @@ final class SpreadsheetMetadataPropertyNameExpressionNumberKind extends Spreadsh
 
     @Override
     ExpressionNumberKind parseUrlFragmentSaveValueNonNull(final String value,
-                                                          final CurrencyLocaleContext context) {
+                                                          final CurrencyCodeLanguageTagContext context) {
         return ExpressionNumberKind.valueOf(value);
     }
 }

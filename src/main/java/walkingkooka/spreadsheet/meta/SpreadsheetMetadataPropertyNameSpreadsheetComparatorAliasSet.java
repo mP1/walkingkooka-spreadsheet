@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorAliasSet;
 
@@ -60,7 +61,7 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetComparatorAliasSet exte
 
     @Override //
     final SpreadsheetComparatorAliasSet parseUrlFragmentSaveValueNonNull(final String value,
-                                                                         final CurrencyLocaleContext context) {
+                                                                         final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetComparatorAliasSet.parse(value);
     }
 }

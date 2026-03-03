@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeSymbols;
 
@@ -77,7 +78,7 @@ final class SpreadsheetMetadataPropertyNameDateTimeSymbols extends SpreadsheetMe
 
     @Override //
     DateTimeSymbols parseUrlFragmentSaveValueNonNull(final String value,
-                                                     final CurrencyLocaleContext context) {
+                                                     final CurrencyCodeLanguageTagContext context) {
         return DateTimeSymbols.parse(value);
     }
 }

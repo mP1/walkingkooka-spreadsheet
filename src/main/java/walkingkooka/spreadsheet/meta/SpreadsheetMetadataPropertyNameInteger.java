@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 
 import java.util.Optional;
@@ -52,7 +53,7 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
 
     @Override //
     final Integer parseUrlFragmentSaveValueNonNull(final String value,
-                                                   final CurrencyLocaleContext context) {
+                                                   final CurrencyCodeLanguageTagContext context) {
         return Integer.parseInt(value);
     }
 }

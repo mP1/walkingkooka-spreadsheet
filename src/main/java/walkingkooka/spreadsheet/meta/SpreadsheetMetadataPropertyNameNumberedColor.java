@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.naming.Name;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
@@ -103,7 +104,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
 
     @Override
     Color parseUrlFragmentSaveValueNonNull(final String value,
-                                           final CurrencyLocaleContext context) {
+                                           final CurrencyCodeLanguageTagContext context) {
         return Color.parse(value);
     }
 

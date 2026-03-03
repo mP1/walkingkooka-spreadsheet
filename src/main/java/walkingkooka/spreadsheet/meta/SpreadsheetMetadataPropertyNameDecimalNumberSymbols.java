@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 
@@ -71,7 +72,7 @@ final class SpreadsheetMetadataPropertyNameDecimalNumberSymbols extends Spreadsh
 
     @Override
     DecimalNumberSymbols parseUrlFragmentSaveValueNonNull(final String value,
-                                                          final CurrencyLocaleContext context) {
+                                                          final CurrencyCodeLanguageTagContext context) {
         return DecimalNumberSymbols.parse(value);
     }
 }
