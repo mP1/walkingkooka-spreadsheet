@@ -1713,7 +1713,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testFromPropertiesWithNullCurrencyLocaleContextFails() {
+    public void testFromPropertiesWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.fromProperties(
@@ -1886,7 +1886,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     private void fromPropertiesAndCheck(final Properties properties,
-                                        final CurrencyLocaleContext context,
+                                        final CurrencyCodeLanguageTagContext context,
                                         final SpreadsheetMetadata expected) {
         this.checkEquals(
             expected,
