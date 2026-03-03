@@ -44,13 +44,33 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     }
 
     @Test
+    public void testWithFullDate() {
+        this.verifyConstant("full-date");
+    }
+
+    @Test
     public void testWithGeneral() {
         this.verifyConstant("general");
     }
 
     @Test
+    public void testWithLongDate() {
+        this.verifyConstant("long-date");
+    }
+
+    @Test
+    public void testWithMediumDate() {
+        this.verifyConstant("medium-date");
+    }
+
+    @Test
     public void testWithNumber() {
         this.verifyConstant("number");
+    }
+
+    @Test
+    public void testWithShortDate() {
+        this.verifyConstant("short-date");
     }
 
     @Test

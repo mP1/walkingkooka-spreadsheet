@@ -77,11 +77,41 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
+    final static String FULL_DATE_STRING = "full-date";
+
+    /**
+     * The name of the full-date {@link Parser}
+     */
+    public final static SpreadsheetParserName FULL_DATE = new SpreadsheetParserName(
+        FULL_DATE_STRING,
+        SpreadsheetPatternKind.DATE_PARSE_PATTERN
+    );
+
     final static String GENERAL_STRING = "general";
 
     public final static SpreadsheetParserName GENERAL = new SpreadsheetParserName(
         GENERAL_STRING,
         null
+    );
+
+    final static String LONG_DATE_STRING = "long-date";
+
+    /**
+     * The name of the long-date {@link Parser}
+     */
+    public final static SpreadsheetParserName LONG_DATE = new SpreadsheetParserName(
+        LONG_DATE_STRING,
+        SpreadsheetPatternKind.DATE_PARSE_PATTERN
+    );
+
+    final static String MEDIUM_DATE_STRING = "medium-date";
+
+    /**
+     * The name of the medoum-date {@link Parser}
+     */
+    public final static SpreadsheetParserName MEDIUM_DATE = new SpreadsheetParserName(
+        MEDIUM_DATE_STRING,
+        SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
     final static String NUMBER_PARSER_PATTERN_STRING = "number";
@@ -94,8 +124,18 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.NUMBER_PARSE_PATTERN
     );
 
-    final static String TIME_STRING = "time";
+    final static String SHORT_DATE_STRING = "short-date";
 
+    /**
+     * The name of the short-date {@link Parser}
+     */
+    public final static SpreadsheetParserName SHORT_DATE = new SpreadsheetParserName(
+        SHORT_DATE_STRING,
+        SpreadsheetPatternKind.DATE_PARSE_PATTERN
+    );
+
+    final static String TIME_STRING = "time";
+    
     /**
      * The name of the time {@link Parser}
      */
@@ -129,11 +169,23 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             case DATE_TIME_STRING:
                 parserName = DATE_TIME;
                 break;
+            case FULL_DATE_STRING:
+                parserName = FULL_DATE;
+                break;
             case GENERAL_STRING:
                 parserName = GENERAL;
                 break;
+            case LONG_DATE_STRING:
+                parserName = LONG_DATE;
+                break;
+            case MEDIUM_DATE_STRING:
+                parserName = MEDIUM_DATE;
+                break;            
             case NUMBER_PARSER_PATTERN_STRING:
                 parserName = NUMBER;
+                break;
+            case SHORT_DATE_STRING:
+                parserName = SHORT_DATE;
                 break;
             case TIME_STRING:
                 parserName = TIME;
