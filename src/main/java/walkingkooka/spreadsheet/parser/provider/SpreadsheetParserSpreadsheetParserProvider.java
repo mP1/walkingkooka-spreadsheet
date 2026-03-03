@@ -259,13 +259,22 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
             case SpreadsheetParserName.FULL_DATE_STRING:
                 next = null;
                 break;
+            case SpreadsheetParserName.FULL_DATE_TIME_STRING:
+                next = null;
+                break;
             case SpreadsheetParserName.GENERAL_STRING:
                 next = null;
                 break;
             case SpreadsheetParserName.LONG_DATE_STRING:
                 next = null;
                 break;
+            case SpreadsheetParserName.LONG_DATE_TIME_STRING:
+                next = null;
+                break;
             case SpreadsheetParserName.MEDIUM_DATE_STRING:
+                next = null;
+                break;
+            case SpreadsheetParserName.MEDIUM_DATE_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetParserName.NUMBER_PARSER_PATTERN_STRING:
@@ -275,6 +284,9 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
                 );
                 break;
             case SpreadsheetParserName.SHORT_DATE_STRING:
+                next = null;
+                break;
+            case SpreadsheetParserName.SHORT_DATE_TIME_STRING:
                 next = null;
                 break;
             case SpreadsheetParserName.TIME_STRING:
