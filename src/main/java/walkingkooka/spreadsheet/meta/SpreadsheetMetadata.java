@@ -1842,9 +1842,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     // fromProperties...................................................................................................
 
     public static SpreadsheetMetadata fromProperties(final Properties properties,
-                                                     final CurrencyLocaleContext currencyLocaleContext) {
+                                                     final CurrencyCodeLanguageTagContext context) {
         Objects.requireNonNull(properties, "properties");
-        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
+        Objects.requireNonNull(context, "context");
 
         SpreadsheetMetadata metadata = EMPTY;
 
@@ -1866,7 +1866,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                 Cast.to(
                     name.parseUrlFragmentSaveValue(
                         nameAndValue.getValue(),
-                        currencyLocaleContext
+                        context
                     )
                 )
             );
