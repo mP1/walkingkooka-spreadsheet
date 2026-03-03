@@ -71,9 +71,12 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
 
         switch (name.value()) {
             case SpreadsheetParserName.FULL_DATE_STRING:
+            case SpreadsheetParserName.FULL_DATE_TIME_STRING:
             case SpreadsheetParserName.GENERAL_STRING:
             case SpreadsheetParserName.LONG_DATE_STRING:
+            case SpreadsheetParserName.LONG_DATE_TIME_STRING:
             case SpreadsheetParserName.MEDIUM_DATE_STRING:
+            case SpreadsheetParserName.MEDIUM_DATE_TIME_STRING:
             case SpreadsheetParserName.SHORT_DATE_STRING:
             case SpreadsheetParserName.WHOLE_NUMBER_STRING:
                 parser = selector.evaluateValueText(
@@ -105,17 +108,29 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
             case SpreadsheetParserName.FULL_DATE_STRING:
                 parser = fullDate(context);
                 break;
+            case SpreadsheetParserName.FULL_DATE_TIME_STRING:
+                parser = fullDateTime(context);
+                break;
             case SpreadsheetParserName.GENERAL_STRING:
                 parser = SpreadsheetParsers.general();
                 break;
             case SpreadsheetParserName.LONG_DATE_STRING:
                 parser = longDate(context);
                 break;
+            case SpreadsheetParserName.LONG_DATE_TIME_STRING:
+                parser = longDateTime(context);
+                break;
             case SpreadsheetParserName.MEDIUM_DATE_STRING:
                 parser = mediumDate(context);
                 break;
+            case SpreadsheetParserName.MEDIUM_DATE_TIME_STRING:
+                parser = mediumDateTime(context);
+                break;
             case SpreadsheetParserName.SHORT_DATE_STRING:
                 parser = shortDate(context);
+                break;
+            case SpreadsheetParserName.SHORT_DATE_TIME_STRING:
+                parser = shortDateTime(context);
                 break;
             case SpreadsheetParserName.WHOLE_NUMBER_STRING:
                 parser = SpreadsheetParsers.wholeNumber();
@@ -154,8 +169,26 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
         ).parser();
     }
 
+    private static SpreadsheetParser dateTime(final int dateFormat,
+                                              final ProviderContext context) {
+        return SpreadsheetPattern.dateTimeParsePattern(
+            (SimpleDateFormat) DateFormat.getDateTimeInstance(
+                dateFormat,
+                dateFormat,
+                context.locale()
+            )
+        ).parser();
+    }
+
     private static SpreadsheetParser fullDate(final ProviderContext context) {
         return date(
+            DateFormat.FULL,
+            context
+        );
+    }
+
+    private static SpreadsheetParser fullDateTime(final ProviderContext context) {
+        return dateTime(
             DateFormat.FULL,
             context
         );
@@ -168,6 +201,13 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
         );
     }
 
+    private static SpreadsheetParser longDateTime(final ProviderContext context) {
+        return dateTime(
+            DateFormat.LONG,
+            context
+        );
+    }
+
     private static SpreadsheetParser mediumDate(final ProviderContext context) {
         return date(
             DateFormat.MEDIUM,
@@ -175,8 +215,22 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
         );
     }
 
+    private static SpreadsheetParser mediumDateTime(final ProviderContext context) {
+        return dateTime(
+            DateFormat.MEDIUM,
+            context
+        );
+    }
+
     private static SpreadsheetParser shortDate(final ProviderContext context) {
         return date(
+            DateFormat.SHORT,
+            context
+        );
+    }
+
+    private static SpreadsheetParser shortDateTime(final ProviderContext context) {
+        return dateTime(
             DateFormat.SHORT,
             context
         );
@@ -313,6 +367,12 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
                     selector.valueText()
                 );
                 break;
+            case SpreadsheetParserName.FULL_DATE_TIME_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                    SpreadsheetFormatterName.FULL_DATE_TIME,
+                    selector.valueText()
+                );
+                break;
             case SpreadsheetParserName.GENERAL_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.GENERAL,
@@ -325,9 +385,21 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
                     selector.valueText()
                 );
                 break;
+            case SpreadsheetParserName.LONG_DATE_TIME_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                    SpreadsheetFormatterName.LONG_DATE_TIME,
+                    selector.valueText()
+                );
+                break;
             case SpreadsheetParserName.MEDIUM_DATE_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.MEDIUM_DATE,
+                    selector.valueText()
+                );
+                break;
+            case SpreadsheetParserName.MEDIUM_DATE_TIME_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                    SpreadsheetFormatterName.MEDIUM_DATE_TIME,
                     selector.valueText()
                 );
                 break;
@@ -340,6 +412,12 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
             case SpreadsheetParserName.SHORT_DATE_STRING:
                 spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
                     SpreadsheetFormatterName.SHORT_DATE,
+                    selector.valueText()
+                );
+                break;
+            case SpreadsheetParserName.SHORT_DATE_TIME_STRING:
+                spreadsheetFormatterSelector = this.spreadsheetFormatterSelector(
+                    SpreadsheetFormatterName.SHORT_DATE_TIME,
                     selector.valueText()
                 );
                 break;
@@ -393,11 +471,15 @@ final class SpreadsheetParserSpreadsheetParserProvider implements SpreadsheetPar
             spreadsheetParserInfo(SpreadsheetParserName.DATE),
             spreadsheetParserInfo(SpreadsheetParserName.DATE_TIME),
             spreadsheetParserInfo(SpreadsheetParserName.FULL_DATE),
+            spreadsheetParserInfo(SpreadsheetParserName.FULL_DATE_TIME),
             spreadsheetParserInfo(SpreadsheetParserName.GENERAL),
             spreadsheetParserInfo(SpreadsheetParserName.LONG_DATE),
+            spreadsheetParserInfo(SpreadsheetParserName.LONG_DATE_TIME),
             spreadsheetParserInfo(SpreadsheetParserName.MEDIUM_DATE),
+            spreadsheetParserInfo(SpreadsheetParserName.MEDIUM_DATE_TIME),
             spreadsheetParserInfo(SpreadsheetParserName.NUMBER),
             spreadsheetParserInfo(SpreadsheetParserName.SHORT_DATE),
+            spreadsheetParserInfo(SpreadsheetParserName.SHORT_DATE_TIME),
             spreadsheetParserInfo(SpreadsheetParserName.TIME),
             spreadsheetParserInfo(SpreadsheetParserName.WHOLE_NUMBER)
         )

@@ -87,6 +87,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
+    final static String FULL_DATE_TIME_STRING = "full-date-time";
+
+    /**
+     * The name of the full-date-time {@link Parser}
+     */
+    public final static SpreadsheetParserName FULL_DATE_TIME = new SpreadsheetParserName(
+        FULL_DATE_TIME_STRING,
+        SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+    );
+
     final static String GENERAL_STRING = "general";
 
     public final static SpreadsheetParserName GENERAL = new SpreadsheetParserName(
@@ -104,6 +114,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
+    final static String LONG_DATE_TIME_STRING = "long-date-time";
+
+    /**
+     * The name of the long-date-time {@link Parser}
+     */
+    public final static SpreadsheetParserName LONG_DATE_TIME = new SpreadsheetParserName(
+        LONG_DATE_TIME_STRING,
+        SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+    );
+    
     final static String MEDIUM_DATE_STRING = "medium-date";
 
     /**
@@ -114,6 +134,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
         SpreadsheetPatternKind.DATE_PARSE_PATTERN
     );
 
+    final static String MEDIUM_DATE_TIME_STRING = "medium-date-time";
+
+    /**
+     * The name of the medium-date-time {@link Parser}
+     */
+    public final static SpreadsheetParserName MEDIUM_DATE_TIME = new SpreadsheetParserName(
+        MEDIUM_DATE_TIME_STRING,
+        SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
+    );
+    
     final static String NUMBER_PARSER_PATTERN_STRING = "number";
 
     /**
@@ -132,6 +162,16 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
     public final static SpreadsheetParserName SHORT_DATE = new SpreadsheetParserName(
         SHORT_DATE_STRING,
         SpreadsheetPatternKind.DATE_PARSE_PATTERN
+    );
+
+    final static String SHORT_DATE_TIME_STRING = "short-date-time";
+
+    /**
+     * The name of the short-date {@link Parser}
+     */
+    public final static SpreadsheetParserName SHORT_DATE_TIME = new SpreadsheetParserName(
+        SHORT_DATE_TIME_STRING,
+        SpreadsheetPatternKind.DATE_TIME_PARSE_PATTERN
     );
 
     final static String TIME_STRING = "time";
@@ -172,20 +212,32 @@ final public class SpreadsheetParserName implements PluginNameLike<SpreadsheetPa
             case FULL_DATE_STRING:
                 parserName = FULL_DATE;
                 break;
+            case FULL_DATE_TIME_STRING:
+                parserName = FULL_DATE_TIME;
+                break;
             case GENERAL_STRING:
                 parserName = GENERAL;
                 break;
             case LONG_DATE_STRING:
                 parserName = LONG_DATE;
                 break;
+            case LONG_DATE_TIME_STRING:
+                parserName = LONG_DATE_TIME;
+                break;
             case MEDIUM_DATE_STRING:
                 parserName = MEDIUM_DATE;
+                break;
+            case MEDIUM_DATE_TIME_STRING:
+                parserName = MEDIUM_DATE_TIME;
                 break;            
             case NUMBER_PARSER_PATTERN_STRING:
                 parserName = NUMBER;
                 break;
             case SHORT_DATE_STRING:
                 parserName = SHORT_DATE;
+                break;
+            case SHORT_DATE_TIME_STRING:
+                parserName = SHORT_DATE_TIME;
                 break;
             case TIME_STRING:
                 parserName = TIME;

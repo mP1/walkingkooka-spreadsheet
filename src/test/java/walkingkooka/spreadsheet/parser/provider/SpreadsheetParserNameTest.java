@@ -49,6 +49,11 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     }
 
     @Test
+    public void testWithFullDateTime() {
+        this.verifyConstant("full-date-time");
+    }
+
+    @Test
     public void testWithGeneral() {
         this.verifyConstant("general");
     }
@@ -59,8 +64,18 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     }
 
     @Test
+    public void testWithLongDateTIme() {
+        this.verifyConstant("long-date-time");
+    }
+
+    @Test
     public void testWithMediumDate() {
         this.verifyConstant("medium-date");
+    }
+
+    @Test
+    public void testWithMediumDateTime() {
+        this.verifyConstant("medium-date-time");
     }
 
     @Test
@@ -71,6 +86,11 @@ final public class SpreadsheetParserNameTest implements PluginNameTesting<Spread
     @Test
     public void testWithShortDate() {
         this.verifyConstant("short-date");
+    }
+
+    @Test
+    public void testWithShortDateTime() {
+        this.verifyConstant("short-date-time");
     }
 
     @Test
