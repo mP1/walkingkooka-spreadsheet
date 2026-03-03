@@ -2129,10 +2129,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             () -> SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
-                .jsonNodeUnmarshallContext(
-                    CURRENCY_CONTEXT,
-                    LOCALE_CONTEXT
-                )
+                .jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT)
         );
         this.checkEquals(
             "Metadata missing: roundingMode",
@@ -2146,10 +2143,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
-            .jsonNodeUnmarshallContext(
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT
-            )
+            .jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT)
         );
         this.checkEquals(
             "Metadata missing: precision",
@@ -2166,10 +2160,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind)
             .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
-            .jsonNodeUnmarshallContext(
-                CURRENCY_CONTEXT,
-                LOCALE_CONTEXT
-            );
+            .jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT);
         this.checkEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
         this.checkNotEquals(null, context.mathContext(), "mathContext");
     }
@@ -2181,10 +2172,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING);
 
-        final JsonNodeUnmarshallContext context = metadata.jsonNodeUnmarshallContext(
-            CURRENCY_CONTEXT,
-            LOCALE_CONTEXT
-        );
+        final JsonNodeUnmarshallContext context = metadata.jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT);
         final JsonNodeMarshallContext marshallContext = metadata.jsonNodeMarshallContext();
 
         final BigDecimal bigDecimal = BigDecimal.valueOf(1.5);

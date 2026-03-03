@@ -477,8 +477,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     JsonNodeMarshallContext JSON_NODE_MARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeMarshallContext();
 
     JsonNodeUnmarshallContext JSON_NODE_UNMARSHALL_CONTEXT = METADATA_EN_AU.jsonNodeUnmarshallContext(
-        CURRENCY_CONTEXT, // CanCurrencyForCurrencyCode
-        LOCALE_CONTEXT // CanLocaleForLanguageTag
+        CURRENCY_LOCALE_CONTEXT // CurrencyCodeLanguageTagContext
     );
 
     JsonNodeMarshallUnmarshallContext JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT = JsonNodeMarshallUnmarshallContexts.basic(

@@ -32,7 +32,6 @@ import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
-import walkingkooka.currency.CanCurrencyForCurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
@@ -41,7 +40,6 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
-import walkingkooka.locale.CanLocaleForLanguageTag;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -831,12 +829,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         return JsonNodeMarshallContexts.basic();
     }
 
-    // HasJsonNodeUnmarshallContext......................................................................................
+    // jsonNodeUnmarshallContext........................................................................................
 
-    public final JsonNodeUnmarshallContext jsonNodeUnmarshallContext(final CanCurrencyForCurrencyCode canCurrencyForCurrencyCode,
-                                                                     final CanLocaleForLanguageTag canLocaleForLanguageTag) {
-        Objects.requireNonNull(canCurrencyForCurrencyCode, "canCurrencyForCurrencyCode");
-        Objects.requireNonNull(canLocaleForLanguageTag, "canLocaleForLanguageTag");
+    public final JsonNodeUnmarshallContext jsonNodeUnmarshallContext(final CurrencyCodeLanguageTagContext context) {
+        Objects.requireNonNull(context, "context");
 
         final SpreadsheetMetadataMissingComponents missing = SpreadsheetMetadataMissingComponents.with(this);
 
@@ -854,17 +850,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
 
         return JsonNodeUnmarshallContexts.basic(
             expressionNumberKind,
-            new CurrencyCodeLanguageTagContext() {
-                @Override
-                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
-                    return canCurrencyForCurrencyCode.currencyForCurrencyCode(currencyCode);
-                }
-
-                @Override
-                public Optional<Locale> localeForLanguageTag(final String languageTag) {
-                    return canLocaleForLanguageTag.localeForLanguageTag(languageTag);
-                }
-            },
+            context,
             mathContext
         );
     }
@@ -872,14 +858,10 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Returns a {@link JsonNodeMarshallUnmarshallContext} build using properties from this metadata.
      */
-    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext(final CanCurrencyForCurrencyCode canCurrencyForCurrencyCode,
-                                                                                     final CanLocaleForLanguageTag canLocaleForLanguageTag) {
+    public final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext(final CurrencyCodeLanguageTagContext context) {
         return JsonNodeMarshallUnmarshallContexts.basic(
             this.jsonNodeMarshallContext(),
-            this.jsonNodeUnmarshallContext(
-                canCurrencyForCurrencyCode,
-                canLocaleForLanguageTag
-            )
+            this.jsonNodeUnmarshallContext(context)
         );
     }
 
@@ -1128,8 +1110,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
         try {
             jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext(
-                currencyLocaleContext, // CanCurrencyForCurrencyCode
-                currencyLocaleContext // CanLocaleForLanguageTag
+                currencyLocaleContext // CurrencyCodeLanguageTagContext
             );
         } catch (final MissingMetadataPropertiesException cause) {
             jsonNodeUnmarshallContext = null;
