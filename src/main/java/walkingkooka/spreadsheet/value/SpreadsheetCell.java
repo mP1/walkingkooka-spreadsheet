@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.HasOptionalCurrency;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbols;
@@ -1102,13 +1103,22 @@ public final class SpreadsheetCell implements CanBeEmpty,
     }
 
     private final static JsonNodeUnmarshallContext UNMARSHALL_CONTEXT = JsonNodeUnmarshallContexts.basic(
-        (String cc) -> Optional.ofNullable(
-            Currency.getInstance(cc)
-        ),
-        (String lt) -> Optional.of(
-            Locale.forLanguageTag(lt)
-        ),
         ExpressionNumberKind.BIG_DECIMAL,
+        new CurrencyCodeLanguageTagContext() {
+            @Override
+            public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                return Optional.ofNullable(
+                    Currency.getInstance(currencyCode)
+                );
+            }
+
+            @Override
+            public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                return Optional.of(
+                    Locale.forLanguageTag(languageTag)
+                );
+            }
+        },
         MathContext.UNLIMITED
     );
 

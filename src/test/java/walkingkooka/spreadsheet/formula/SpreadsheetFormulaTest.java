@@ -22,6 +22,7 @@ import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -2947,13 +2948,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
-            (String cc) -> Optional.ofNullable(
-                Currency.getInstance(cc)
-            ),
-            (String lt) -> Optional.of(
-                Locale.forLanguageTag(lt)
-            ),
             ExpressionNumberKind.BIG_DECIMAL,
+            new CurrencyCodeLanguageTagContext() {
+                @Override
+                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    return Optional.ofNullable(
+                        Currency.getInstance(currencyCode)
+                    );
+                }
+
+                @Override
+                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    return Optional.of(
+                        Locale.forLanguageTag(languageTag)
+                    );
+                }
+            },
             MathContext.UNLIMITED
         );
     }

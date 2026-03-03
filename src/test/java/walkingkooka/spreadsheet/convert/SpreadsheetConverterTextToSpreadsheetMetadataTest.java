@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
@@ -140,13 +141,22 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
             );
 
             private final JsonNodeUnmarshallContext unmarshallContext = JsonNodeUnmarshallContexts.basic(
-                (String cc) -> Optional.ofNullable(
-                    Currency.getInstance(cc)
-                ),
-                (String lt) -> Optional.of(
-                    Locale.forLanguageTag(lt)
-                ),
                 ExpressionNumberKind.BIG_DECIMAL,
+                new CurrencyCodeLanguageTagContext() {
+                    @Override
+                    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        return Optional.ofNullable(
+                            Currency.getInstance(currencyCode)
+                        );
+                    }
+
+                    @Override
+                    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                        return Optional.of(
+                            Locale.forLanguageTag(languageTag)
+                        );
+                    }
+                },
                 MathContext.UNLIMITED
             );
 

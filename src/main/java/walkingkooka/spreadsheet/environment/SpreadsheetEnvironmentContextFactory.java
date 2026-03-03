@@ -539,9 +539,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
             JsonNodeUnmarshallContext jsonNodeUnmarshallContext = JsonNodeUnmarshallContexts.basic(
-                currencyLocaleContext, // CanCurrencyForCurrencyCode
-                currencyLocaleContext, // CanLocaleForLanguageTag
                 expressionNumberKind,
+                currencyLocaleContext, // CurrencyCodeLanguageTagContext
                 mathContext
             );
 

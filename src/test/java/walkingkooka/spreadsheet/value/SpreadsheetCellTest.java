@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.HasOptionalCurrencyTesting;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
@@ -2669,13 +2670,22 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     @Override
     public JsonNodeUnmarshallContext createPatchContext() {
         return JsonNodeUnmarshallContexts.basic(
-            (String cc) -> Optional.ofNullable(
-                Currency.getInstance(cc)
-            ),
-            (String lt) -> Optional.of(
-                Locale.forLanguageTag(lt)
-            ),
             ExpressionNumberKind.BIG_DECIMAL,
+            new CurrencyCodeLanguageTagContext() {
+                @Override
+                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    return Optional.ofNullable(
+                        Currency.getInstance(currencyCode)
+                    );
+                }
+
+                @Override
+                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    return Optional.of(
+                        Locale.forLanguageTag(languageTag)
+                    );
+                }
+            },
             MathContext.UNLIMITED
         );
     }
