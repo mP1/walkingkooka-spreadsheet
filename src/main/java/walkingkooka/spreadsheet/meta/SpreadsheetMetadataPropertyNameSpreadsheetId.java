@@ -71,6 +71,6 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     @Override
     SpreadsheetId parseUrlFragmentSaveValueNonNull(final String value,
                                                    final CurrencyCodeLanguageTagContext context) {
-        return this.failParseUrlFragmentSaveValueUnsupported();
+        return SpreadsheetId.parse(value);
     }
 }
