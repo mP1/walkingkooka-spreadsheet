@@ -238,10 +238,10 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         );
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Test
-    public final void testParseUrlFragmentSaveValue() {
+    public final void testParseValueText() {
         final SpreadsheetMetadataPropertyName<V> propertyName = this.createName();
 
         if (false == propertyName instanceof SpreadsheetMetadataPropertyNameAuditInfo &&
@@ -263,7 +263,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                 }
             }
 
-            this.parseUrlFragmentSaveValueAndCheck(
+            this.parseValueTextAndCheck(
                 propertyName,
                 text,
                 value
@@ -271,22 +271,22 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         }
     }
 
-    final void parseUrlFragmentSaveValueAndCheck(final String urlFragment,
-                                                 final V value) {
-        this.parseUrlFragmentSaveValueAndCheck(
+    final void parseValueTextAndCheck(final String valueText,
+                                      final V value) {
+        this.parseValueTextAndCheck(
             this.createName(),
-            urlFragment,
+            valueText,
             value
         );
     }
 
-    final void parseUrlFragmentSaveValueAndCheck(final SpreadsheetMetadataPropertyName<V> propertyName,
-                                                 final String urlFragment,
-                                                 final V value) {
+    final void parseValueTextAndCheck(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                      final String valueText,
+                                      final V value) {
         this.checkEquals(
             value,
-            propertyName.parseUrlFragmentSaveValue(
-                urlFragment,
+            propertyName.parseValueText(
+                valueText,
                 CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
             )
         );

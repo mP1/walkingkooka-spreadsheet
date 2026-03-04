@@ -72,11 +72,11 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelector exten
         return SpreadsheetFormatterSelector.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final SpreadsheetFormatterSelector parseUrlFragmentSaveValueNonNull(final String value,
-                                                                        final CurrencyCodeLanguageTagContext context) {
+    final SpreadsheetFormatterSelector parseValueTextNonNull(final String value,
+                                                             final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetFormatterSelector.parse(value);
     }
 }

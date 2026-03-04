@@ -40,8 +40,8 @@ public final class SpreadsheetMetadataPropertyNameFrozenColumnsTest extends Spre
     // parseUrlFragmentSaveValue........................................................................................
 
     @Test
-    public void testParseUrlFragmentSaveValueQuery() {
-        this.parseUrlFragmentSaveValueAndCheck(
+    public void testParseValueTextQuery() {
+        this.parseValueTextAndCheck(
             "A:B",
             SpreadsheetSelection.parseColumnRange("A:B")
         );

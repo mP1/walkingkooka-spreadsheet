@@ -63,11 +63,11 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
 
     abstract String extractLocaleValueString(final DecimalFormatSymbols symbols);
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final String parseUrlFragmentSaveValueNonNull(final String value,
-                                                  final CurrencyCodeLanguageTagContext context) {
+    final String parseValueTextNonNull(final String value,
+                                       final CurrencyCodeLanguageTagContext context) {
         return value;
     }
 }

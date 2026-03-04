@@ -73,11 +73,11 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
         visitor.visitFindQuery(value);
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    SpreadsheetCellQuery parseUrlFragmentSaveValueNonNull(final String value,
-                                                          final CurrencyCodeLanguageTagContext context) {
+    SpreadsheetCellQuery parseValueTextNonNull(final String value,
+                                               final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetCellQuery.parse(value);
     }
 }

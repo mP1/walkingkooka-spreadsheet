@@ -73,11 +73,11 @@ final class SpreadsheetMetadataPropertyNameCurrency extends SpreadsheetMetadataP
         return Currency.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    Currency parseUrlFragmentSaveValueNonNull(final String value,
-                                              final CurrencyCodeLanguageTagContext context) {
+    Currency parseValueTextNonNull(final String value,
+                                   final CurrencyCodeLanguageTagContext context) {
         return context.currencyForCurrencyCodeOrFail(value);
     }
 }

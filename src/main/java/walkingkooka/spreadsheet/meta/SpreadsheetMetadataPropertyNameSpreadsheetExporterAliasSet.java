@@ -56,11 +56,11 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetExporterAliasSet extend
         return SpreadsheetExporterAliasSet.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final SpreadsheetExporterAliasSet parseUrlFragmentSaveValueNonNull(final String value,
-                                                                       final CurrencyCodeLanguageTagContext context) {
+    final SpreadsheetExporterAliasSet parseValueTextNonNull(final String value,
+                                                            final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetExporterAliasSet.parse(value);
     }
 }

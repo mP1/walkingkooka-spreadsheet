@@ -41,13 +41,13 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
     // parseUrlFragmentSaveValue........................................................................................
 
     @Test
-    public void testParseUrlFragmentSaveValueQuery() {
+    public void testParseValueTextQuery() {
         final SpreadsheetCellQuery query = SpreadsheetCellQuery.parse("1+2");
 
         this.checkEquals(
             query,
             SpreadsheetMetadataPropertyName.FIND_QUERY
-                .parseUrlFragmentSaveValue(
+                .parseValueText(
                     query.text(),
                     CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
                 )

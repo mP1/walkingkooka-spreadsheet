@@ -66,11 +66,11 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
         return SpreadsheetId.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    SpreadsheetId parseUrlFragmentSaveValueNonNull(final String value,
-                                                   final CurrencyCodeLanguageTagContext context) {
+    SpreadsheetId parseValueTextNonNull(final String value,
+                                        final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetId.parse(value);
     }
 }

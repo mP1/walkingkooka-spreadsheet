@@ -41,8 +41,8 @@ public final class SpreadsheetMetadataPropertyNameFrozenRowsTest extends Spreads
     // parseUrlFragmentSaveValue........................................................................................
 
     @Test
-    public void testParseUrlFragmentSaveValueFrozenRows() {
-        this.parseUrlFragmentSaveValueAndCheck(
+    public void testParseValueTextFrozenRows() {
+        this.parseValueTextAndCheck(
             "1:2",
             SpreadsheetSelection.parseRowRange("1:2")
         );
