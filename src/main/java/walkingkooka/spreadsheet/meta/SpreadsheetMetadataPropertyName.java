@@ -698,13 +698,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     abstract T parseValueTextNonNull(final String value,
                                      final CurrencyCodeLanguageTagContext context);
 
-    /**
-     * This common method should be called by subclasses to indicate {@link #parseValueText(String, CurrencyCodeLanguageTagContext)} is not supported.
-     */
-    final T failParseValueText() {
-        throw new UnsupportedOperationException("UrlFragment save value not supported for " + CharSequences.quoteAndEscape(this.value()));
-    }
-
     // SpreadsheetCellStore.............................................................................................
 
     /**

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.props.Properties;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Optional;
@@ -73,6 +74,8 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
     @Override
     TextStyle parseValueTextNonNull(final String value,
                                     final CurrencyCodeLanguageTagContext context) {
-        return this.failParseValueText();
+        return TextStyle.fromProperties(
+            Properties.parse(value)
+        );
     }
 }

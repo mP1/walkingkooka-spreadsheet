@@ -545,14 +545,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    @Test
-    public void testParseValueTextStyleFails() {
-        this.parseValueFails(
-            SpreadsheetMetadataPropertyName.STYLE,
-            "style"
-        );
-    }
-
     private <T> void parseValueFails(final SpreadsheetMetadataPropertyName<T> propertyName,
                                      final T propertyValue) {
         this.parseValueFails(

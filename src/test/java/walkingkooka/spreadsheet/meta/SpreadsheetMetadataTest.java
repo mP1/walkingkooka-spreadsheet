@@ -1784,6 +1784,25 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
+    public void testFromPropertiesStyle() {
+        final TextStyle textStyle = TextStyle.EMPTY.set(
+            TextStylePropertyName.COLOR,
+            Color.BLACK
+        );
+
+        this.fromPropertiesAndCheck(
+            Properties.EMPTY.setAll(
+                SpreadsheetMetadataPropertyName.STYLE.propertiesPath,
+                textStyle.properties()
+            ),
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.STYLE,
+                textStyle
+            )
+        );
+    }
+
+    @Test
     public void testFromPropertiesAllProperties() {
         this.fromPropertiesAndCheck(
             "auditInfo.createdBy=user@example.com\n" +
