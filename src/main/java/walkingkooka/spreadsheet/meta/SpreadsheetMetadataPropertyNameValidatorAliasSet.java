@@ -56,11 +56,11 @@ abstract class SpreadsheetMetadataPropertyNameValidatorAliasSet extends Spreadsh
         return ValidatorAliasSet.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    public final ValidatorAliasSet parseUrlFragmentSaveValueNonNull(final String value,
-                                                                    final CurrencyCodeLanguageTagContext context) {
+    public final ValidatorAliasSet parseValueTextNonNull(final String value,
+                                                         final CurrencyCodeLanguageTagContext context) {
         return ValidatorAliasSet.parse(value);
     }
 }

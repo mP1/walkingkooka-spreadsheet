@@ -676,32 +676,32 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     private final UrlFragment urlFragment;
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     /**
      * This parse method is called with the encoded text from a {@link UrlFragment} representing a save operation of this
      * property. Not all properties support this operation, and will throw a {@link UnsupportedOperationException}.
      */
-    public final T parseUrlFragmentSaveValue(final String value,
-                                             final CurrencyCodeLanguageTagContext context) {
+    public final T parseValueText(final String value,
+                                  final CurrencyCodeLanguageTagContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
         return this.checkValue(
-            this.parseUrlFragmentSaveValueNonNull(
+            this.parseValueTextNonNull(
                 value,
                 context
             )
         );
     }
 
-    abstract T parseUrlFragmentSaveValueNonNull(final String value,
-                                                final CurrencyCodeLanguageTagContext context);
+    abstract T parseValueTextNonNull(final String value,
+                                     final CurrencyCodeLanguageTagContext context);
 
     /**
-     * This common method should be called by subclasses to indicate {@link #parseUrlFragmentSaveValue(String, CurrencyCodeLanguageTagContext)} is not supported.
+     * This common method should be called by subclasses to indicate {@link #parseValueText(String, CurrencyCodeLanguageTagContext)} is not supported.
      */
-    final T failParseUrlFragmentSaveValueUnsupported() {
+    final T failParseValueText() {
         throw new UnsupportedOperationException("UrlFragment save value not supported for " + CharSequences.quoteAndEscape(this.value()));
     }
 

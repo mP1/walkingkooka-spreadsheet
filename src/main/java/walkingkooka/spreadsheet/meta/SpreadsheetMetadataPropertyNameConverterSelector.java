@@ -56,11 +56,11 @@ abstract class SpreadsheetMetadataPropertyNameConverterSelector extends Spreadsh
         return ConverterSelector.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final ConverterSelector parseUrlFragmentSaveValueNonNull(final String value,
-                                                             final CurrencyCodeLanguageTagContext context) {
+    final ConverterSelector parseValueTextNonNull(final String value,
+                                                  final CurrencyCodeLanguageTagContext context) {
         return ConverterSelector.parse(value);
     }
 }

@@ -66,11 +66,11 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetName extends SpreadsheetMe
         return SpreadsheetName.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    SpreadsheetName parseUrlFragmentSaveValueNonNull(final String value,
-                                                     final CurrencyCodeLanguageTagContext context) {
+    SpreadsheetName parseValueTextNonNull(final String value,
+                                          final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetName.with(value);
     }
 }

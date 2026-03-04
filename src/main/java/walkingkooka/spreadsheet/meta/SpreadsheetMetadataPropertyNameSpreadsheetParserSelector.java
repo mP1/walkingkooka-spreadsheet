@@ -74,11 +74,11 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetParserSelector extends 
         return SpreadsheetParserSelector.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final SpreadsheetParserSelector parseUrlFragmentSaveValueNonNull(final String value,
-                                                                     final CurrencyCodeLanguageTagContext context) {
+    final SpreadsheetParserSelector parseValueTextNonNull(final String value,
+                                                          final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetParserSelector.parse(value);
     }
 }

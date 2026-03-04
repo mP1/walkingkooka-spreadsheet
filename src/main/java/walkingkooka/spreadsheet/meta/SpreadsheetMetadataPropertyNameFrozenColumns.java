@@ -77,11 +77,11 @@ final class SpreadsheetMetadataPropertyNameFrozenColumns extends SpreadsheetMeta
         visitor.visitFrozenColumns(value);
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    SpreadsheetColumnRangeReference parseUrlFragmentSaveValueNonNull(final String value,
-                                                                     final CurrencyCodeLanguageTagContext context) {
+    SpreadsheetColumnRangeReference parseValueTextNonNull(final String value,
+                                                          final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetSelection.parseColumnRange(value);
     }
 }

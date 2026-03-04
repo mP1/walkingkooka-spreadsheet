@@ -74,11 +74,11 @@ final class SpreadsheetMetadataPropertyNameViewportHome extends SpreadsheetMetad
         visitor.visitViewportHome(value);
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    SpreadsheetCellReference parseUrlFragmentSaveValueNonNull(final String value,
-                                                              final CurrencyCodeLanguageTagContext context) {
+    SpreadsheetCellReference parseValueTextNonNull(final String value,
+                                                   final CurrencyCodeLanguageTagContext context) {
         return SpreadsheetSelection.parseCell(value);
     }
 }

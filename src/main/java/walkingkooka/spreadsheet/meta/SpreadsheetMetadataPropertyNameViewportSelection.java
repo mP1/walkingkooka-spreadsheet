@@ -72,11 +72,11 @@ final class SpreadsheetMetadataPropertyNameViewportSelection extends Spreadsheet
         visitor.visitViewportSelection(value);
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    AnchoredSpreadsheetSelection parseUrlFragmentSaveValueNonNull(final String value,
-                                                                  final CurrencyCodeLanguageTagContext context) {
+    AnchoredSpreadsheetSelection parseValueTextNonNull(final String value,
+                                                       final CurrencyCodeLanguageTagContext context) {
         throw new UnsupportedOperationException();
     }
 }

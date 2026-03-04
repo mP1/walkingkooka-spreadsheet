@@ -1864,7 +1864,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             metadata = metadata.set(
                 name,
                 Cast.to(
-                    name.parseUrlFragmentSaveValue(
+                    name.parseValueText(
                         nameAndValue.getValue(),
                         context
                     )

@@ -68,11 +68,11 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
         visitor.visitStyle(value);
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    TextStyle parseUrlFragmentSaveValueNonNull(final String value,
-                                               final CurrencyCodeLanguageTagContext context) {
-        return this.failParseUrlFragmentSaveValueUnsupported();
+    TextStyle parseValueTextNonNull(final String value,
+                                    final CurrencyCodeLanguageTagContext context) {
+        return this.failParseValueText();
     }
 }

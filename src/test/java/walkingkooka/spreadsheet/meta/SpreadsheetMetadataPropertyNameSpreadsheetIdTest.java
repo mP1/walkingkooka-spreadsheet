@@ -36,10 +36,10 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
     }
 
     @Test
-    public void testParseUrlFragmentSaveValue2() {
+    public void testParseValueText2() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(1);
 
-        this.parseUrlFragmentSaveValueAndCheck(
+        this.parseValueTextAndCheck(
             spreadsheetId.urlFragment()
                 .value(),
             spreadsheetId

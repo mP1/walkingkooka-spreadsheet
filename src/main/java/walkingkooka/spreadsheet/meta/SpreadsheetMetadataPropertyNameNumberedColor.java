@@ -100,11 +100,11 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
         return Color.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override
-    Color parseUrlFragmentSaveValueNonNull(final String value,
-                                           final CurrencyCodeLanguageTagContext context) {
+    Color parseValueTextNonNull(final String value,
+                                final CurrencyCodeLanguageTagContext context) {
         return Color.parse(value);
     }
 

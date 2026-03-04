@@ -516,16 +516,16 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    // parseUrlFragmentSaveValue.......................................................................................................
+    // parseValueText...................................................................................................
 
     @Test
-    public void testParseUrlFragmentSaveValueColor() {
+    public void testParseValueTextColor() {
         final Color color = Color.parse("#123456");
 
         this.checkEquals(
             color,
             SpreadsheetMetadataPropertyName.numberedColor(1)
-                .parseUrlFragmentSaveValue(
+                .parseValueText(
                     color.toString(),
                     CURRENCY_LOCALE_CONTEXT
                 )
@@ -533,7 +533,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseUrlFragmentSaveValueAuditInfoFails() {
+    public void testParseValueTextAuditInfoFails() {
         this.parseValueFails(
             SpreadsheetMetadataPropertyName.AUDIT_INFO,
             AuditInfo.with(
@@ -546,7 +546,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseUrlFragmentSaveValueStyleFails() {
+    public void testParseValueTextStyleFails() {
         this.parseValueFails(
             SpreadsheetMetadataPropertyName.STYLE,
             "style"
@@ -565,7 +565,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                                  final String propertyValue) {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> propertyName.parseUrlFragmentSaveValue(
+            () -> propertyName.parseValueText(
                 propertyValue,
                 CURRENCY_LOCALE_CONTEXT
             )
@@ -573,12 +573,12 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseUrlFragmentSaveValueSpreadsheetName() {
+    public void testParseValueTextSpreadsheetName() {
         final String value = "SpreadsheetName123";
 
         this.checkEquals(
             SpreadsheetName.with(value),
-            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseUrlFragmentSaveValue(
+            SpreadsheetMetadataPropertyName.SPREADSHEET_NAME.parseValueText(
                 value,
                 CURRENCY_LOCALE_CONTEXT
             )

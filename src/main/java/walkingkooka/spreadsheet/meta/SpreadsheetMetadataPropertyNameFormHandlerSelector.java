@@ -56,11 +56,11 @@ abstract class SpreadsheetMetadataPropertyNameFormHandlerSelector extends Spread
         return FormHandlerSelector.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final FormHandlerSelector parseUrlFragmentSaveValueNonNull(final String value,
-                                                               final CurrencyCodeLanguageTagContext context) {
+    final FormHandlerSelector parseValueTextNonNull(final String value,
+                                                    final CurrencyCodeLanguageTagContext context) {
         return FormHandlerSelector.parse(value);
     }
 }

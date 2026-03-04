@@ -56,11 +56,11 @@ abstract class SpreadsheetMetadataPropertyNameConverterAliasSet extends Spreadsh
         return ConverterAliasSet.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final ConverterAliasSet parseUrlFragmentSaveValueNonNull(final String value,
-                                                             final CurrencyCodeLanguageTagContext context) {
+    final ConverterAliasSet parseValueTextNonNull(final String value,
+                                                  final CurrencyCodeLanguageTagContext context) {
         return ConverterAliasSet.parse(value);
     }
 }

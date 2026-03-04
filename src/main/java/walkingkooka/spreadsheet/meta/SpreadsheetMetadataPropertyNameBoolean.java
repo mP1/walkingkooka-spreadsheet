@@ -52,11 +52,11 @@ abstract class SpreadsheetMetadataPropertyNameBoolean extends SpreadsheetMetadat
         return Boolean.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final Boolean parseUrlFragmentSaveValueNonNull(final String value,
-                                                   final CurrencyCodeLanguageTagContext context) {
+    final Boolean parseValueTextNonNull(final String value,
+                                        final CurrencyCodeLanguageTagContext context) {
         return Boolean.valueOf(value);
     }
 }

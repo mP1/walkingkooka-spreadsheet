@@ -49,11 +49,11 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
         return Integer.class;
     }
 
-    // parseUrlFragmentSaveValue........................................................................................
+    // parseValueText...................................................................................................
 
     @Override //
-    final Integer parseUrlFragmentSaveValueNonNull(final String value,
-                                                   final CurrencyCodeLanguageTagContext context) {
+    final Integer parseValueTextNonNull(final String value,
+                                        final CurrencyCodeLanguageTagContext context) {
         return Integer.parseInt(value);
     }
 }
