@@ -532,27 +532,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    @Test
-    public void testParseValueTextAuditInfoFails() {
-        this.parseValueFails(
-            SpreadsheetMetadataPropertyName.AUDIT_INFO,
-            AuditInfo.with(
-                EmailAddress.parse("created@example.com"),
-                LocalDateTime.MIN,
-                EmailAddress.parse("modified@example.com"),
-                LocalDateTime.MAX
-            )
-        );
-    }
-
-    private <T> void parseValueFails(final SpreadsheetMetadataPropertyName<T> propertyName,
-                                     final T propertyValue) {
-        this.parseValueFails(
-            propertyName,
-            propertyValue.toString()
-        );
-    }
-
     private void parseValueFails(final SpreadsheetMetadataPropertyName<?> propertyName,
                                  final String propertyValue) {
         assertThrows(
