@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
@@ -34,6 +36,22 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
     @Test
     public void testExtractLocaleAwareValue() {
         this.extractLocaleValueAwareAndCheck();
+    }
+
+    @Test
+    public void testParseValueText2() {
+        final TextStyle textStyle = TextStyle.EMPTY.set(
+            TextStylePropertyName.COLOR,
+            Color.BLACK
+        ).set(
+            TextStylePropertyName.TEXT_ALIGN,
+            TextAlign.LEFT
+        );
+        this.parseValueTextAndCheck(
+            textStyle.properties()
+                .text(),
+            textStyle
+        );
     }
 
     @Test
