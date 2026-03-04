@@ -892,6 +892,16 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // TEXT_TO_SPREADSHEET_METADATA_PROPERTY_NAME
                 );
             }
+
+            // properties-to-spreadsheet-metadata.......................................................................
+
+            if (scripting) {
+                verifier.addIfConversionFail(
+                    metadata.properties(),
+                    SpreadsheetMetadata.class,
+                    SpreadsheetConvertersConverterProvider.SPREADSHEET_METADATA // text-to-spreadsheet-metadata
+                );
+            }
         }
 
         // spreadsheetValue.............................................................................................
