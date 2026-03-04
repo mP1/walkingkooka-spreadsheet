@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.props.Properties;
 
 import java.util.Optional;
 
@@ -76,6 +77,8 @@ final class SpreadsheetMetadataPropertyNameAuditInfo extends SpreadsheetMetadata
     @Override
     AuditInfo parseValueTextNonNull(final String value,
                                     final CurrencyCodeLanguageTagContext context) {
-        throw new UnsupportedOperationException();
+        return AuditInfo.fromProperties(
+            Properties.parse(value)
+        );
     }
 }

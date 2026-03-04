@@ -31,6 +31,17 @@ public final class SpreadsheetMetadataPropertyNameAuditInfoTest extends Spreadsh
     }
 
     @Test
+    public void testParseValueText2() {
+        final AuditInfo auditInfo = this.propertyValue();
+
+        this.parseValueTextAndCheck(
+            auditInfo.properties()
+                .text(),
+            auditInfo
+        );
+    }
+
+    @Test
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetMetadataPropertyNameAuditInfo.instance(),
