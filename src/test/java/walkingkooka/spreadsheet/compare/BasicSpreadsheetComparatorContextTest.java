@@ -115,6 +115,14 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     ',', // valueSeparator
                     Converters.objectToString(),
                     new FakeCurrencyContext() {
+
+                        @Override
+                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                            return Optional.of(
+                                Currency.getInstance(currencyCode)
+                            );
+                        }
+
                         @Override
                         public Optional<Currency> currencyForLocale(final Locale locale) {
                             return Optional.of(

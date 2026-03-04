@@ -37,6 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.MathContext;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -114,6 +115,11 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     @Override
     public Converter<SpreadsheetConverterContext> converter() {
         return this.context.converter();
+    }
+
+    @Override
+    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+        return this.context.currencyForCurrencyCode(currencyCode);
     }
 
     @Override

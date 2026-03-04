@@ -190,6 +190,11 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     final Converter<SpreadsheetExpressionEvaluationContext> converter;
 
     @Override
+    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+        return this.context.currencyForCurrencyCode(currencyCode);
+    }
+
+    @Override
     public Optional<Currency> currencyForLocale(final Locale locale) {
         return this.context.currencyForLocale(locale);
     }
