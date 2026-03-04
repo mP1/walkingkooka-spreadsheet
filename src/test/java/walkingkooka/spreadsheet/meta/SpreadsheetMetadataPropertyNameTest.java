@@ -546,14 +546,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testParseUrlFragmentSaveValueSpreadsheetIdFails() {
-        this.parseValueFails(
-            SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
-            SpreadsheetId.parse("123abc")
-        );
-    }
-
-    @Test
     public void testParseUrlFragmentSaveValueStyleFails() {
         this.parseValueFails(
             SpreadsheetMetadataPropertyName.STYLE,
