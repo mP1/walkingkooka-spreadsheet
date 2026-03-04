@@ -532,17 +532,6 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         );
     }
 
-    private void parseValueFails(final SpreadsheetMetadataPropertyName<?> propertyName,
-                                 final String propertyValue) {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> propertyName.parseValueText(
-                propertyValue,
-                CURRENCY_LOCALE_CONTEXT
-            )
-        );
-    }
-
     @Test
     public void testParseValueTextSpreadsheetName() {
         final String value = "SpreadsheetName123";
