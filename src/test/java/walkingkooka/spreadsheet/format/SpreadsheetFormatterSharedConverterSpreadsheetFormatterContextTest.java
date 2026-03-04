@@ -193,6 +193,14 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                         ',', // valueSeparator
                         Converters.fake(),
                         new FakeCurrencyContext() {
+
+                            @Override
+                            public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                                return Optional.of(
+                                    Currency.getInstance(currencyCode)
+                                );
+                            }
+
                             @Override
                             public Optional<Currency> currencyForLocale(final Locale locale) {
                                 return Optional.of(

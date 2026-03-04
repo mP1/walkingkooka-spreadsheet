@@ -72,6 +72,7 @@ import walkingkooka.validation.form.FormHandlerContextDelegator;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -342,6 +343,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public Converter<SpreadsheetConverterContext> converter() {
         return this.context.converter();
+    }
+
+    @Override
+    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+        return this.context.currencyForCurrencyCode(currencyCode);
     }
 
     @Override
