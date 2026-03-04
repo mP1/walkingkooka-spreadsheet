@@ -522,7 +522,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         textToSpreadsheetId(),
         textToSpreadsheetMetadata(),
         textToSpreadsheetMetadataPropertyName(),
-        textToSpreadsheetName()
+        textToSpreadsheetName(),
+        propertiesToSpreadsheetMetadata()
     );
 
     /**
