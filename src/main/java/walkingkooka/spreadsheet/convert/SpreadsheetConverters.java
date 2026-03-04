@@ -495,7 +495,14 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         hasProperties(),
         textToProperties()
     );
-    
+
+    /**
+     * {@see SpreadsheetConverterPropertiesToSpreadsheetMetadata}
+     */
+    public static Converter<SpreadsheetConverterContext> propertiesToSpreadsheetMetadata() {
+        return SpreadsheetConverterPropertiesToSpreadsheetMetadata.INSTANCE;
+    }
+
     /**
      * {@see SpreadsheetConverterSpreadsheetCellSet}
      */
