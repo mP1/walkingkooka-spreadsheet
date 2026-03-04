@@ -299,7 +299,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     // loadFromLocale...................................................................................................
 
     @Test
-    public void testLoadFromLocaleWithNullLocaleContextFails() {
+    public void testLoadFromLocaleWithNullContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.loadFromLocale(null)
