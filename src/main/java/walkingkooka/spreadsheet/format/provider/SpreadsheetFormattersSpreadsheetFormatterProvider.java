@@ -318,9 +318,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.SHORT_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = shortDate(
-                    context
-                );
+                formatter = SpreadsheetFormatters.date(DateFormatKind.SHORT);
                 break;
             case SpreadsheetFormatterName.SHORT_DATE_TIME_STRING:
                 parameterCountCheck(count);
@@ -458,12 +456,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 decimalPlaces(decimalPlaces) +
                 "E+00"
         ).formatter();
-    }
-
-    private static SpreadsheetFormatter shortDate(final ProviderContext context) {
-        return SpreadsheetFormatters.date(
-            DateFormatKind.SHORT
-        );
     }
 
     private static SpreadsheetFormatter shortTime(final ProviderContext context) {
