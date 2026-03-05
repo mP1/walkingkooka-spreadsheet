@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.provider;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.WebColorName;
+import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
@@ -238,8 +239,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.FULL_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = fullDate(
-                    context
+                formatter = SpreadsheetFormatters.dateFormatKind(
+                    DateFormatKind.FULL
                 );
                 break;
             case SpreadsheetFormatterName.FULL_DATE_TIME_STRING:
@@ -271,8 +272,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.LONG_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = longDate(
-                    context
+                formatter = SpreadsheetFormatters.dateFormatKind(
+                    DateFormatKind.LONG
                 );
                 break;
             case SpreadsheetFormatterName.LONG_DATE_TIME_STRING:
@@ -290,8 +291,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = mediumDate(
-                    context
+                formatter = SpreadsheetFormatters.dateFormatKind(
+                    DateFormatKind.MEDIUM
                 );
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_TIME_STRING:
@@ -411,16 +412,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         ).formatter();
     }
 
-    private static SpreadsheetFormatter date(final int dateFormat,
-                                             final ProviderContext context) {
-        return SpreadsheetPattern.dateParsePattern(
-            (SimpleDateFormat) DateFormat.getDateInstance(
-                dateFormat,
-                context.locale()
-            )
-        ).formatter();
-    }
-
     private static SpreadsheetFormatter dateTime(final int dateFormat,
                                                  final ProviderContext context) {
         return SpreadsheetPattern.dateTimeParsePattern(
@@ -430,13 +421,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
                 context.locale()
             )
         ).formatter();
-    }
-
-    private static SpreadsheetFormatter fullDate(final ProviderContext context) {
-        return date(
-            DateFormat.FULL,
-            context
-        );
     }
 
     private static SpreadsheetFormatter fullDateTime(final ProviderContext context) {
@@ -452,13 +436,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             context
         );
     }
-    
-    private static SpreadsheetFormatter longDate(final ProviderContext context) {
-        return date(
-            DateFormat.LONG,
-            context
-        );
-    }
 
     private static SpreadsheetFormatter longDateTime(final ProviderContext context) {
         return dateTime(
@@ -470,13 +447,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     private static SpreadsheetFormatter longTime(final ProviderContext context) {
         return time(
             DateFormat.LONG,
-            context
-        );
-    }
-
-    private static SpreadsheetFormatter mediumDate(final ProviderContext context) {
-        return date(
-            DateFormat.MEDIUM,
             context
         );
     }
@@ -529,9 +499,8 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     }
 
     private static SpreadsheetFormatter shortDate(final ProviderContext context) {
-        return date(
-            DateFormat.SHORT,
-            context
+        return SpreadsheetFormatters.dateFormatKind(
+            DateFormatKind.SHORT
         );
     }
 

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.parser.ColorSpreadsheetFormatParserToken;
@@ -110,6 +111,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetFormatterSharedDate}
+     */
+    public static SpreadsheetFormatter dateFormatKind(final DateFormatKind kind) {
+        return SpreadsheetFormatterSharedDate.with(kind);
+    }
+
+    /**
      * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
     public static SpreadsheetFormatter dateTime(final DateTimeSpreadsheetFormatParserToken token,
@@ -182,7 +190,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * {@see SpreadsheetPatternSpreadsheetFormatterNumber}
      */
     public static SpreadsheetFormatter number(final NumberSpreadsheetFormatParserToken token,
-                                                                final boolean suppressMinusSignsWithinParens) {
+                                              final boolean suppressMinusSignsWithinParens) {
         return SpreadsheetPatternSpreadsheetFormatters.number(
             token,
             suppressMinusSignsWithinParens
@@ -214,7 +222,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
             toString
         );
     }
-    
+
     /**
      * Stops creation
      */
