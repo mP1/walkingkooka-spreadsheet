@@ -80,6 +80,7 @@ final class SpreadsheetFormatterSharedDate extends SpreadsheetFormatterShared {
         return this.kind.hashCode();
     }
 
+    @Override
     public boolean equals(final Object other) {
         return this == other || other instanceof SpreadsheetFormatterSharedDate &&
             this.equals0(
