@@ -239,7 +239,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.FULL_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = SpreadsheetFormatters.dateFormatKind(
+                formatter = SpreadsheetFormatters.date(
                     DateFormatKind.FULL
                 );
                 break;
@@ -272,7 +272,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.LONG_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = SpreadsheetFormatters.dateFormatKind(
+                formatter = SpreadsheetFormatters.date(
                     DateFormatKind.LONG
                 );
                 break;
@@ -291,7 +291,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
                 parameterCountCheck(count);
 
-                formatter = SpreadsheetFormatters.dateFormatKind(
+                formatter = SpreadsheetFormatters.date(
                     DateFormatKind.MEDIUM
                 );
                 break;
@@ -499,7 +499,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
     }
 
     private static SpreadsheetFormatter shortDate(final ProviderContext context) {
-        return SpreadsheetFormatters.dateFormatKind(
+        return SpreadsheetFormatters.date(
             DateFormatKind.SHORT
         );
     }

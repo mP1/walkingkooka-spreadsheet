@@ -250,7 +250,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.LONG_DATE,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.LONG)
+            SpreadsheetFormatters.date(DateFormatKind.LONG)
         );
     }
 
@@ -282,7 +282,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.MEDIUM_DATE,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.MEDIUM)
+            SpreadsheetFormatters.date(DateFormatKind.MEDIUM)
         );
     }
 
@@ -324,7 +324,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.SHORT_DATE,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.SHORT)
+            SpreadsheetFormatters.date(DateFormatKind.SHORT)
         );
     }
 
@@ -610,7 +610,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.FULL_DATE.text(),
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.FULL)
+            SpreadsheetFormatters.date(DateFormatKind.FULL)
         );
     }
 
@@ -669,7 +669,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "long-date",
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.LONG)
+            SpreadsheetFormatters.date(DateFormatKind.LONG)
         );
     }
 
@@ -704,7 +704,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "medium-date",
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.MEDIUM)
+            SpreadsheetFormatters.date(DateFormatKind.MEDIUM)
         );
     }
 
@@ -750,7 +750,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "short-date",
             PROVIDER_CONTEXT,
-            SpreadsheetFormatters.dateFormatKind(DateFormatKind.SHORT)
+            SpreadsheetFormatters.date(DateFormatKind.SHORT)
         );
     }
 
