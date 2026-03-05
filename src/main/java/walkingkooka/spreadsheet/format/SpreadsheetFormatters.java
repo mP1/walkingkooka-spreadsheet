@@ -120,8 +120,8 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
-    public static SpreadsheetFormatter dateTime(final DateTimeSpreadsheetFormatParserToken token,
-                                                final Class<? extends Temporal> valueType) {
+    public static SpreadsheetFormatter dateTimeSpreadsheetFormatParserToken(final DateTimeSpreadsheetFormatParserToken token,
+                                                                            final Class<? extends Temporal> valueType) {
         return SpreadsheetPatternSpreadsheetFormatters.dateTime(
             token,
             valueType
