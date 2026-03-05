@@ -260,8 +260,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.LONG_DATE_TIME,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("d mmmm yyyy \\a\\t h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.dateTime(DateFormatKind.LONG)
         );
     }
     
@@ -292,8 +291,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.MEDIUM_DATE_TIME,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("d mmm yyyy, h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.dateTime(DateFormatKind.MEDIUM)
         );
     }
 
@@ -334,8 +332,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.SHORT_DATE_TIME,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("d/m/yy, h:mm AM/PM")
-                .formatter()
+            SpreadsheetFormatters.dateTime(DateFormatKind.SHORT)
         );
     }
 
@@ -621,8 +618,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.FULL_DATE_TIME.text(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("dddd, d mmmm yyyy \\a\\t h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.dateTime(DateFormatKind.FULL)
         );
     }
 
@@ -680,8 +676,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "long-date-time",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("d mmmm yyyy \\a\\t h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.dateTime(DateFormatKind.LONG)
         );
     }
 
@@ -715,8 +710,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "medium-date-time",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateTimeParsePattern("d mmm yyyy, h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.dateTime(DateFormatKind.MEDIUM)
         );
     }
 

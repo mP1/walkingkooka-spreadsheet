@@ -118,6 +118,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetFormatterSharedDateTime}
+     */
+    public static SpreadsheetFormatter dateTime(final DateFormatKind kind) {
+        return SpreadsheetFormatterSharedDateTime.with(kind);
+    }
+
+    /**
      * {@see SpreadsheetPatternSpreadsheetFormatterDateTime}
      */
     public static SpreadsheetFormatter dateTimeSpreadsheetFormatParserToken(final DateTimeSpreadsheetFormatParserToken token,
