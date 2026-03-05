@@ -32,7 +32,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that wraps a {@link DateFormat} using the provided {@link DateFormatKind#dateFormatStyle()}.
+ * A {@link SpreadsheetFormatter} that wraps a {@link DateFormat} using the provided {@link DateFormatKind#dateFormatStyle()}
+ * and formats {@link java.time.LocalTime} values.
  */
 final class SpreadsheetFormatterSharedTime extends SpreadsheetFormatterShared {
 
