@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateFormatKind;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.plugin.ProviderContext;
@@ -249,8 +250,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.LONG_DATE,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.LONG)
         );
     }
 
@@ -282,8 +282,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.MEDIUM_DATE,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("d mmm yyyy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.MEDIUM)
         );
     }
 
@@ -325,8 +324,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.SHORT_DATE,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("d/m/yy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.SHORT)
         );
     }
 
@@ -612,8 +610,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.FULL_DATE.text(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("dddd, d mmmm yyyy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.FULL)
         );
     }
 
@@ -672,8 +669,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "long-date",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("d mmmm yyyy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.LONG)
         );
     }
 
@@ -708,8 +704,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "medium-date",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("d mmm yyyy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.MEDIUM)
         );
     }
 
@@ -755,8 +750,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "short-date",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseDateParsePattern("d/m/yy")
-                .formatter()
+            SpreadsheetFormatters.dateFormatKind(DateFormatKind.SHORT)
         );
     }
 
