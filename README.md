@@ -294,7 +294,7 @@ to allow user customisation of that value type along with a single color.
 - short-date-time
 - short-time
 - [text](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterText.java)
-- [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetPatternSpreadsheetFormatterDateTime.java) hh:mm:ss
+- [time](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterSharedTime.java)
 
 - Additional `SpreadsheetFormatter(s)` may be provided via a custom [SpreadsheetFormatterProvider](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/format/SpreadsheetFormatterProvider.java) *DONE*
 - Uploaded plugins [TODO](https://github.com/mP1/walkingkooka-spreadsheet-plugin/issues/14)

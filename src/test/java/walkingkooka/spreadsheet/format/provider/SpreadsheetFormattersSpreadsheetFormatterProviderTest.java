@@ -270,8 +270,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.LONG_TIME,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.time(DateFormatKind.LONG)
         );
     }
     
@@ -301,8 +300,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.MEDIUM_TIME,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.time(DateFormatKind.MEDIUM)
         );
     }
 
@@ -342,8 +340,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             SpreadsheetFormatterName.SHORT_TIME,
             Lists.empty(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("h:mm AM/PM")
-                .formatter()
+            SpreadsheetFormatters.time(DateFormatKind.SHORT)
         );
     }
 
@@ -629,8 +626,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             SpreadsheetFormatterName.FULL_TIME.text(),
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.time(DateFormatKind.FULL)
         );
     }
     
@@ -687,8 +683,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "long-time",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.time(DateFormatKind.LONG)
         );
     }
 
@@ -721,8 +716,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         this.spreadsheetFormatterAndCheck(
             "medium-time",
             PROVIDER_CONTEXT,
-            SpreadsheetPattern.parseTimeParsePattern("h:mm:ss AM/PM")
-                .formatter()
+            SpreadsheetFormatters.time(DateFormatKind.MEDIUM)
         );
     }
 

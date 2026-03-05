@@ -220,6 +220,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetFormatterSharedTime}
+     */
+    public static SpreadsheetFormatter time(final DateFormatKind kind) {
+        return SpreadsheetFormatterSharedTime.with(kind);
+    }
+
+    /**
      * {@see SpreadsheetFormatterSharedToString}
      */
     public static SpreadsheetFormatter toString(final SpreadsheetFormatter formatter,

@@ -251,9 +251,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.FULL_TIME_STRING:
                 parameterCountCheck(count);
 
-                formatter = fullTime(
-                    context
-                );
+                formatter = SpreadsheetFormatters.time(DateFormatKind.FULL);
                 break;
             case SpreadsheetFormatterName.GENERAL_STRING:
                 parameterCountCheck(count);
@@ -282,7 +280,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.LONG_TIME_STRING:
                 parameterCountCheck(count);
 
-                formatter = longTime(context);
+                formatter = SpreadsheetFormatters.time(DateFormatKind.LONG);
                 break;
             case SpreadsheetFormatterName.MEDIUM_DATE_STRING:
                 parameterCountCheck(count);
@@ -299,9 +297,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.MEDIUM_TIME_STRING:
                 parameterCountCheck(count);
 
-                formatter = mediumTime(
-                    context
-                );
+                formatter = SpreadsheetFormatters.time(DateFormatKind.MEDIUM);
                 break;
             case SpreadsheetFormatterName.PERCENT_STRING:
                 formatter = percent(
@@ -328,7 +324,7 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             case SpreadsheetFormatterName.SHORT_TIME_STRING:
                 parameterCountCheck(count);
 
-                formatter = shortTime(context);
+                formatter = SpreadsheetFormatters.time(DateFormatKind.SHORT);
                 break;
             default:
                 final SpreadsheetPatternKind kind = name.patternKind;
@@ -404,27 +400,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
         ).formatter();
     }
 
-    private static SpreadsheetFormatter fullTime(final ProviderContext context) {
-        return time(
-            DateFormat.FULL,
-            context
-        );
-    }
-
-    private static SpreadsheetFormatter longTime(final ProviderContext context) {
-        return time(
-            DateFormat.LONG,
-            context
-        );
-    }
-
-    private static SpreadsheetFormatter mediumTime(final ProviderContext context) {
-        return time(
-            DateFormat.MEDIUM,
-            context
-        );
-    }
-
     private static SpreadsheetFormatter percent(final List<?> values,
                                                 final ProviderContext context) {
         final int decimalPlaces = values.isEmpty() ?
@@ -455,23 +430,6 @@ final class SpreadsheetFormattersSpreadsheetFormatterProvider implements Spreads
             "0." +
                 decimalPlaces(decimalPlaces) +
                 "E+00"
-        ).formatter();
-    }
-
-    private static SpreadsheetFormatter shortTime(final ProviderContext context) {
-        return time(
-            DateFormat.SHORT,
-            context
-        );
-    }
-
-    private static SpreadsheetFormatter time(final int dateFormat,
-                                             final ProviderContext context) {
-        return SpreadsheetPattern.timeParsePattern(
-            (SimpleDateFormat) DateFormat.getTimeInstance(
-                dateFormat,
-                context.locale()
-            )
         ).formatter();
     }
 
