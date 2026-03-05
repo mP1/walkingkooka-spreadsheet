@@ -113,7 +113,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see SpreadsheetFormatterSharedDate}
      */
-    public static SpreadsheetFormatter dateFormatKind(final DateFormatKind kind) {
+    public static SpreadsheetFormatter date(final DateFormatKind kind) {
         return SpreadsheetFormatterSharedDate.with(kind);
     }
 
