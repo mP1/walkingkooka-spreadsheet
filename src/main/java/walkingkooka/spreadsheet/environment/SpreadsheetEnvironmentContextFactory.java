@@ -222,7 +222,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
 
-        spreadsheetEnvironmentContext.addEventValueWatcher(this::onEnvironmentValueName);
+        spreadsheetEnvironmentContext.addEnvironmentValueWatcher(this::onEnvironmentValueName);
     }
 
     /**
@@ -701,7 +701,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
             missing.reportIfMissing();
 
             this.spreadsheetParserContext = SpreadsheetParserContexts.basic(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+                InvalidCharacterExceptionFactory.POSITION_EXPECTED,
                 dateTimeContext,
                 expressionNumberContext,
                 valueSeparator

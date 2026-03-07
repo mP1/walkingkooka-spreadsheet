@@ -197,13 +197,13 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
-            return this.environmentContext.addEventValueWatcher(watcher);
+        public Runnable addEnvironmentValueWatcher(final EnvironmentValueWatcher watcher) {
+            return this.environmentContext.addEnvironmentValueWatcher(watcher);
         }
 
         @Override
-        public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-            return this.environmentContext.addEventValueWatcherOnce(watcher);
+        public Runnable addEnvironmentValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+            return this.environmentContext.addEnvironmentValueWatcherOnce(watcher);
         }
 
         {

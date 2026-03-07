@@ -581,13 +581,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
-                public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
-                    return this.environmentContext.addEventValueWatcher(watcher);
+                public Runnable addEnvironmentValueWatcher(final EnvironmentValueWatcher watcher) {
+                    return this.environmentContext.addEnvironmentValueWatcher(watcher);
                 }
 
                 @Override
-                public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-                    return this.environmentContext.addEventValueWatcherOnce(watcher);
+                public Runnable addEnvironmentValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+                    return this.environmentContext.addEnvironmentValueWatcherOnce(watcher);
                 }
 
                 private final EnvironmentContext environmentContext = EnvironmentContexts.map(

@@ -149,7 +149,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
 
         this.parseExpressionAndFail(
             text,
-            "Invalid character '=' at (1,1) expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
+            "Invalid character '=' at 0 expected BINARY_EXPRESSION | LAMBDA_FUNCTION | NAMED_FUNCTION | \"TRUE\" | \"FALSE\" | LABEL | CELL_RANGE | CELL | GROUP | NEGATIVE | \"#.#E+#;#.#%;#.#;#%;#\" | TEXT | \"#NULL!\" | \"#DIV/0!\" | \"#VALUE!\" | \"#REF!\" | \"#NAME?\" | \"#NAME?\" | \"#NUM!\" | \"#N/A\" | \"#ERROR\" | \"#SPILL!\" | \"#CALC!\""
         );
     }
 
@@ -159,7 +159,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
     public final void testParseValueOrExpressionDoubleQuotedStringFails() {
         this.parseValueOrExpressionAndFail(
             "\"abc123\"",
-            "Invalid character '\\\"' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
+            "Invalid character '\\\"' at 0 expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
         );
     }
 
@@ -311,7 +311,7 @@ public abstract class SpreadsheetExpressionEvaluationContextSharedTestCase<C ext
 
         this.parseValueOrExpressionAndFail(
             text,
-            "Invalid character '1' at (1,1) expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
+            "Invalid character '1' at 0 expected \"\\'\", [STRING] | EQUALS_EXPRESSION | VALUE"
         );
     }
 
