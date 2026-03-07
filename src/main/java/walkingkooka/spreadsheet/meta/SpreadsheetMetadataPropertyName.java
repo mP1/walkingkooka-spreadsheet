@@ -960,4 +960,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public final String id() {
         return this.value();
     }
+
+    // missingSpreadsheetMetadataPropertyName...........................................................................
+
+    public final MissingSpreadsheetMetadataPropertyNameException missingSpreadsheetMetadataPropertyName() {
+        return new MissingSpreadsheetMetadataPropertyNameException(this);
+    }
 }
