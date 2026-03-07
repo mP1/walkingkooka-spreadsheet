@@ -284,11 +284,11 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     abstract <V> Optional<V> getIgnoringDefaults0(final SpreadsheetMetadataPropertyName<V> propertyName);
 
     /**
-     * Fetches the required property or throws a {@link SpreadsheetMetadataPropertyValueException}.
+     * Fetches the required property or throws a {@link MissingSpreadsheetMetadataPropertyNameException}.
      */
     public final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return this.get(propertyName)
-            .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Missing", propertyName, null));
+            .orElseThrow(propertyName::missingSpreadsheetMetadataPropertyNameException);
     }
 
     /**
