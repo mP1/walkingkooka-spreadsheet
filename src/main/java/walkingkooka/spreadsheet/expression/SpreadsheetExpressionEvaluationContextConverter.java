@@ -643,13 +643,13 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
-    public Runnable addEventValueWatcher(final EnvironmentValueWatcher watcher) {
-        return this.context.addEventValueWatcher(watcher);
+    public Runnable addEnvironmentValueWatcher(final EnvironmentValueWatcher watcher) {
+        return this.context.addEnvironmentValueWatcher(watcher);
     }
 
     @Override
-    public Runnable addEventValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-        return this.context.addEventValueWatcher(watcher);
+    public Runnable addEnvironmentValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+        return this.context.addEnvironmentValueWatcher(watcher);
     }
 
     @Override
