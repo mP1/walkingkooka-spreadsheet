@@ -87,7 +87,7 @@ public interface SpreadsheetExpressionEvaluationContextTesting<C extends Spreads
         this.evaluateAndCheck(
             this.createContext(),
             " ",
-            SpreadsheetErrorKind.ERROR.setMessage("Invalid character \' \' at (1,1) expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
+            SpreadsheetErrorKind.ERROR.setMessage("Invalid character \' \' expected \"\\\'\", [STRING] | EQUALS_EXPRESSION | VALUE")
         );
     }
 
