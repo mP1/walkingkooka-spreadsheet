@@ -963,7 +963,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
 
     // missingSpreadsheetMetadataPropertyName...........................................................................
 
-    public final MissingSpreadsheetMetadataPropertyNameException missingSpreadsheetMetadataPropertyName() {
+    public final MissingSpreadsheetMetadataPropertyNameException missingSpreadsheetMetadataPropertyNameException() {
         return new MissingSpreadsheetMetadataPropertyNameException(this);
     }
 }
