@@ -233,25 +233,20 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testGetOrFailFails() {
         final SpreadsheetMetadataPropertyName<DecimalNumberSymbols> propertyName = SpreadsheetMetadataPropertyName.DECIMAL_NUMBER_SYMBOLS;
 
-        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(
-            SpreadsheetMetadataPropertyValueException.class,
+        final MissingSpreadsheetMetadataPropertyNameException thrown = assertThrows(
+            MissingSpreadsheetMetadataPropertyNameException.class,
             () -> this.createObject()
                 .getOrFail(propertyName)
         );
 
         this.checkMessage(
             thrown,
-            "Metadata " + propertyName.value() + "=null, Missing"
+            "Metadata: Missing property value \"decimalNumberSymbols\""
         );
         this.checkEquals(
             propertyName,
-            thrown.name(),
+            thrown.propertyName(),
             "property name"
-        );
-        this.checkEquals(
-            null,
-            thrown.value(),
-            "property value"
         );
     }
 
