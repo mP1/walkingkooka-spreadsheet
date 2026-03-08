@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCurrencyContext;
@@ -78,6 +81,20 @@ public final class SpreadsheetConverterPropertiesToSpreadsheetMetadataTest exten
         );
     }
 
+    @Test
+    public void testConvertStringPropertiesToSpreadsheetMetadataWithNotEmpty() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            LOCALE
+        ).loadFromLocale(CURRENCY_LOCALE_CONTEXT);
+
+        this.convertAndCheck(
+            metadata.properties()
+                .text(),
+            metadata
+        );
+    }
+
     @Override
     public SpreadsheetConverterPropertiesToSpreadsheetMetadata createConverter() {
         return SpreadsheetConverterPropertiesToSpreadsheetMetadata.INSTANCE;
@@ -90,13 +107,29 @@ public final class SpreadsheetConverterPropertiesToSpreadsheetMetadataTest exten
             @Override
             public boolean canConvert(final Object value,
                                       final Class<?> type) {
-                return Converters.simple()
-                    .canConvert(
-                        value,
-                        type,
-                        this
-                    );
+                return CONVERTER.canConvert(
+                    value,
+                    type,
+                    this
+                );
             }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> type) {
+                return CONVERTER.convert(
+                    value,
+                    type,
+                    this
+                );
+            }
+
+            private final Converter<SpreadsheetConverterContext> CONVERTER = SpreadsheetConverters.collection(
+                Lists.of(
+                    Converters.simple(),
+                    SpreadsheetConverters.textToProperties()
+                )
+            );
 
             @Override
             public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {

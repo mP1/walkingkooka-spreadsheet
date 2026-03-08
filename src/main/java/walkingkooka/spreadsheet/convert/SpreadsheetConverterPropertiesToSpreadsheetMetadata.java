@@ -57,7 +57,10 @@ final class SpreadsheetConverterPropertiesToSpreadsheetMetadata extends Spreadsh
                                            final SpreadsheetConverterContext context) {
         return this.successfulConversion(
             SpreadsheetMetadata.fromProperties(
-                (Properties) value,
+                context.convertOrFail(
+                    value,
+                    Properties.class
+                ),
                 context
             ),
             type
