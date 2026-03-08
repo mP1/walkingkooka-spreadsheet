@@ -639,7 +639,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         hasStyle(),
         textToTextStyle(),
         textToTextStylePropertyName(),
-        SpreadsheetConverters.toStyleable()
+        SpreadsheetConverters.toStyleable(),
+        propertiesToTextStyle()
     );
 
     /**

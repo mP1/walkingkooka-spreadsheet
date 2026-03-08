@@ -1250,6 +1250,25 @@ final class MissingConverterVerifier {
                 );
             }
 
+            // properties-to-text-style.................................................................................
+
+            if (formatting || scripting) {
+                final TextStyle textStyle = TextStyle.parse("color: black; text-align: left;");
+
+                verifier.addIfConversionFail(
+                    textStyle.properties(),
+                    TextStyle.class,
+                    SpreadsheetConvertersConverterProvider.STYLE // PROPERTIES_TO_TEXT_STYLE
+                );
+
+                verifier.addIfConversionFail(
+                    textStyle.properties()
+                        .toString(),
+                    TextStyle.class,
+                    SpreadsheetConvertersConverterProvider.STYLE // PROPERTIES_TO_TEXT_STYLE
+                );
+            }
+
             // text-to-spreadsheet-text.................................................................................
             final SpreadsheetText spreadsheetText = SpreadsheetText.with("Text123");
 
