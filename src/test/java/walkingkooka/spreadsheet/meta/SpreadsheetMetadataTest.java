@@ -1774,6 +1774,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
+    public void testFromPropertiesDateTimeFormatterIncludesSlash() {
+        this.fromPropertiesAndCheck(
+            "dateTimeFormatter=ddmmyyyy \\\\a\\\\t hhmmss",
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetFormatterSelector.parse("ddmmyyyy \\a\\t hhmmss")
+            )
+        );
+    }
+
+    @Test
     public void testFromPropertiesExpressionNumberKind() {
         this.fromPropertiesAndCheck(
             "expressionNumberKind=BIG_DECIMAL",
