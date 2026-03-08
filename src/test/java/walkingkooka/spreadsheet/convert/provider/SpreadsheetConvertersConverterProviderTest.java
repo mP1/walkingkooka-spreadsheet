@@ -475,6 +475,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithPropertiesToTextStyle() {
+        this.converterAndCheck(
+            "properties-to-text-style",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.propertiesToTextStyle()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithSpreadsheetCellSet() {
         this.converterAndCheck(
             "spreadsheet-cell-set",

@@ -659,6 +659,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    plugins\n" +
                 "    properties\n" +
                 "    properties-to-spreadsheet-metadata\n" +
+                "    properties-to-text-style\n" +
                 "    spreadsheet-cell-set\n" +
                 "    spreadsheet-metadata\n" +
                 "    spreadsheet-selection-to-spreadsheet-selection\n" +
