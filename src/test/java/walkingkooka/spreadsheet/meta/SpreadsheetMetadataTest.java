@@ -63,6 +63,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterAliasSet;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProvider;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterAliasSet;
 import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterProviders;
@@ -1598,6 +1599,17 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "auditInfo.createdTimestamp=-999999999-01-01T00:00\r\n" +
                 "auditInfo.modifiedBy=user@example.com\r\n" +
                 "auditInfo.modifiedTimestamp=-999999999-01-01T00:00\r\n"
+        );
+    }
+
+    @Test
+    public void testPropertiesWithDateTimeFormatterIncludesSlash() {
+        this.propertiesAndCheck(
+            SpreadsheetMetadata.EMPTY.set(
+                SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER,
+                SpreadsheetFormatterSelector.parse("date-time yyyy/MM/dd \\a\\t hh:mm")
+            ),
+            "dateTimeFormatter=date-time yyyy/MM/dd \\\\a\\\\t hh:mm"
         );
     }
 
