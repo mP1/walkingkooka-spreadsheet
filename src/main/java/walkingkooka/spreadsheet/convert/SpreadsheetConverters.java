@@ -504,6 +504,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetConverterPropertiesToSpreadsheetMetadata}
+     */
+    public static Converter<SpreadsheetConverterContext> propertiesToTextStyle() {
+        return TreeTextConverters.propertiesToTextStyle();
+    }
+
+    /**
      * {@see SpreadsheetConverterSpreadsheetCellSet}
      */
     public static Converter<SpreadsheetConverterContext> spreadsheetCellSet() {
