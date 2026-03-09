@@ -504,6 +504,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#propertiesToDecimalNumberSymbols()}.
+     */
+    public static Converter<SpreadsheetConverterContext> propertiesToDecimalNumberSymbols() {
+        return Converters.propertiesToDecimalNumberSymbols();
+    }
+
+    /**
      * {@see SpreadsheetConverterPropertiesToSpreadsheetMetadata}
      */
     public static Converter<SpreadsheetConverterContext> propertiesToSpreadsheetMetadata() {
