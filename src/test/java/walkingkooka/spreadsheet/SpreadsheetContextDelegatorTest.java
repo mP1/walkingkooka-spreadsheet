@@ -412,6 +412,7 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
                 Objects.requireNonNull(from, "from");
                 Objects.requireNonNull(to, "to");
                 Objects.requireNonNull(dateTime, "dateTime");
+
                 throw new UnsupportedOperationException();
             }
         };

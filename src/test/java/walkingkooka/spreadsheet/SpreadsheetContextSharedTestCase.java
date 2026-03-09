@@ -138,9 +138,12 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
         final CurrencyContext currencyContext = CurrencyContexts.jre(
             Currency.getInstance("AUD"),
-            (Currency from, Currency to) -> {
+            (final Currency from,
+             final Currency to,
+             final Optional<LocalDateTime> dateTime) -> {
                 Objects.requireNonNull(from, "from");
                 Objects.requireNonNull(to, "to");
+                Objects.requireNonNull(dateTime, "dateTime");
 
                 throw new UnsupportedOperationException();
             },

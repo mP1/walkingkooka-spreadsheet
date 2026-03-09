@@ -207,7 +207,17 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
         CurrencyContexts.jre(
             CURRENCY,
-            (f, t) -> 1.0 * f.getDisplayName().length() / t.getDisplayName().length(),
+            (final Currency from,
+             final Currency to,
+             final Optional<LocalDateTime> dateTime) -> {
+                Objects.requireNonNull(from, "from");
+                Objects.requireNonNull(from, "to");
+                Objects.requireNonNull(dateTime, "dateTime");
+
+                return 1.0 *
+                    from.getDisplayName().length() /
+                    to.getDisplayName().length();
+            },
             LOCALE_CONTEXT
         )
     );

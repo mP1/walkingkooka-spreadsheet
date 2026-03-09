@@ -351,6 +351,7 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
             Objects.requireNonNull(from, "from");
             Objects.requireNonNull(to, "to");
             Objects.requireNonNull(dateTime, "dateTime");
+
             throw new UnsupportedOperationException();
         }
 
