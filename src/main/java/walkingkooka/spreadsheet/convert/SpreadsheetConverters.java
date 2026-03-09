@@ -23,11 +23,13 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.convert.EnvironmentConverters;
 import walkingkooka.net.Url;
 import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.props.Properties;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.convert.provider.SpreadsheetConvertersConverterProviders;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -208,10 +210,15 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link Converters#localeToDateTimeSymbols()}
+     * A converter that handles transformations such as {@link Locale} and {@link Properties} to {@link DateTimeSymbols}.
      */
     public static Converter<SpreadsheetConverterContext> dateTimeSymbols() {
-        return Converters.localeToDateTimeSymbols();
+        return collection(
+            Lists.of(
+                Converters.localeToDateTimeSymbols(),
+                SpreadsheetConverters.propertiesToDateTimeSymbols()
+            )
+        );
     }
 
     /**

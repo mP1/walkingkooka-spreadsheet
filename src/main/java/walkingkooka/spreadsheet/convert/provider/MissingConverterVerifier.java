@@ -104,6 +104,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -582,6 +583,25 @@ final class MissingConverterVerifier {
                 "12:58:59",
                 LocalTime.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME
+            );
+        }
+
+        // date-time-symbols............................................................................................
+        {
+            final DateTimeSymbols dateTimeSymbols = DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+            );
+
+            verifier.addIfConversionFail(
+                locale,
+                DateTimeSymbols.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS // DATE_TIME_SYMBOLS
+            );
+
+            verifier.addIfConversionFail(
+                dateTimeSymbols.properties(),
+                DateTimeSymbols.class,
+                SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS // DATE_TIME_SYMBOLS
             );
         }
 
