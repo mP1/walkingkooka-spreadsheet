@@ -475,6 +475,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithPropertiesToDecimalNumberSymbols() {
+        this.converterAndCheck(
+            "properties-to-decimal-number-symbols",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.propertiesToDecimalNumberSymbols()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithPropertiesToSpreadsheetMetadata() {
         this.converterAndCheck(
             "properties-to-spreadsheet-metadata",
