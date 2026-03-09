@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.FakeCanCurrencyExchangeRate;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -411,9 +412,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             ).loadFromLocale(
                 CurrencyContexts.jre(
                     Currency.getInstance(LOCALE),
-                    (Currency from, Currency to) -> {
-                        throw new UnsupportedOperationException();
-                    },
+                    new FakeCanCurrencyExchangeRate(),
                     localeContext
                 ).setLocaleContext(localeContext)
             ).set(

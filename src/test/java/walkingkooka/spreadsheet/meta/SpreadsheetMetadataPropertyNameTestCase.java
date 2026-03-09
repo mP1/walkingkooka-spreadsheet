@@ -24,6 +24,7 @@ import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.currency.FakeCanCurrencyExchangeRate;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.HasUrlFragment;
@@ -60,9 +61,7 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
 
     final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
         Currency.getInstance(LOCALE),
-        (Currency from, Currency to) -> {
-            throw new UnsupportedOperationException();
-        },
+        new FakeCanCurrencyExchangeRate(),
         LOCALE_CONTEXT
     );
 

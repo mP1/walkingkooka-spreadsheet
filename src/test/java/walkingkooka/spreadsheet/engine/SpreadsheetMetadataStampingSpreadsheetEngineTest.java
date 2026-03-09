@@ -22,6 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.FakeCanCurrencyExchangeRate;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -90,9 +91,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
 
     final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
         Currency.getInstance(LOCALE),
-        (Currency from, Currency to) -> {
-            throw new UnsupportedOperationException();
-        },
+        new FakeCanCurrencyExchangeRate(),
         LOCALE_CONTEXT
     );
 
