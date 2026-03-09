@@ -25,6 +25,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.convert.EnvironmentConverters;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.Url;
 import walkingkooka.net.convert.NetConverters;
 import walkingkooka.plugin.ProviderContext;
@@ -222,10 +223,15 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@link Converters#localeToDecimalNumberSymbols()}
+     * A converter that handles transformations such as {@link Locale} and {@link Properties} to {@link DecimalNumberSymbols}.
      */
     public static Converter<SpreadsheetConverterContext> decimalNumberSymbols() {
-        return Converters.localeToDecimalNumberSymbols();
+        return collection(
+            Lists.of(
+                Converters.localeToDecimalNumberSymbols(),
+                SpreadsheetConverters.propertiesToDecimalNumberSymbols()
+            )
+        );
     }
 
     /**
