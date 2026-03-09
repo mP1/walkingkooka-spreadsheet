@@ -466,6 +466,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithPropertiesToDateTimeSymbols() {
+        this.converterAndCheck(
+            "properties-to-date-time-symbols",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.propertiesToDateTimeSymbols()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithPropertiesToSpreadsheetMetadata() {
         this.converterAndCheck(
             "properties-to-spreadsheet-metadata",
