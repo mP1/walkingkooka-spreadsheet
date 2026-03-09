@@ -105,6 +105,7 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -602,6 +603,28 @@ final class MissingConverterVerifier {
                 dateTimeSymbols.properties(),
                 DateTimeSymbols.class,
                 SpreadsheetConvertersConverterProvider.DATE_TIME_SYMBOLS // DATE_TIME_SYMBOLS
+            );
+        }
+
+        // decimal-number-symbols............................................................................................
+        {
+            final DecimalNumberSymbols decimalNumberSymbols = DecimalNumberSymbols.fromDecimalFormatSymbols(
+                '+',
+                new DecimalFormatSymbols(
+                    locale
+                )
+            );
+
+            verifier.addIfConversionFail(
+                locale,
+                DecimalNumberSymbols.class,
+                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS // DECIMAL_NUMBER_SYMBOLS
+            );
+
+            verifier.addIfConversionFail(
+                decimalNumberSymbols.properties(),
+                DecimalNumberSymbols.class,
+                SpreadsheetConvertersConverterProvider.DECIMAL_NUMBER_SYMBOLS // DECIMAL_NUMBER_SYMBOLS
             );
         }
 
