@@ -497,6 +497,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@link Converters#propertiesToDateTimeSymbols()}.
+     */
+    public static Converter<SpreadsheetConverterContext> propertiesToDateTimeSymbols() {
+        return Converters.propertiesToDateTimeSymbols();
+    }
+
+    /**
      * {@see SpreadsheetConverterPropertiesToSpreadsheetMetadata}
      */
     public static Converter<SpreadsheetConverterContext> propertiesToSpreadsheetMetadata() {
