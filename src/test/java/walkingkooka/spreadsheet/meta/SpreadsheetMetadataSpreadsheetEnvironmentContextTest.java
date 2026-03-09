@@ -658,6 +658,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    optional-to\n" +
                 "    plugins\n" +
                 "    properties\n" +
+                "    properties-to-date-time-symbols\n" +
                 "    properties-to-spreadsheet-metadata\n" +
                 "    properties-to-text-style\n" +
                 "    spreadsheet-cell-set\n" +

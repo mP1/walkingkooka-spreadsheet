@@ -288,6 +288,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.properties();
                 break;
+            case PROPERTIES_TO_DATE_TIME_SYMBOLS_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.propertiesToDateTimeSymbols();
+                break;
             case PROPERTIES_TO_SPREADSHEET_METADATA_STRING:
                 noParameterCheck(copy);
 
@@ -839,6 +844,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName PROPERTIES = ConverterName.with(PROPERTIES_STRING);
 
+    private final static String PROPERTIES_TO_DATE_TIME_SYMBOLS_STRING = "properties-to-date-time-symbols";
+
+    final static ConverterName PROPERTIES_TO_DATE_TIME_SYMBOLS = ConverterName.with(PROPERTIES_TO_DATE_TIME_SYMBOLS_STRING);
+
     private final static String PROPERTIES_TO_SPREADSHEET_METADATA_STRING = "properties-to-spreadsheet-metadata";
 
     final static ConverterName PROPERTIES_TO_SPREADSHEET_METADATA = ConverterName.with(PROPERTIES_TO_SPREADSHEET_METADATA_STRING);
@@ -1179,6 +1188,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(OPTIONAL_TO),
             converterInfo(PLUGINS),
             converterInfo(PROPERTIES),
+            converterInfo(PROPERTIES_TO_DATE_TIME_SYMBOLS),
             converterInfo(PROPERTIES_TO_SPREADSHEET_METADATA),
             converterInfo(PROPERTIES_TO_TEXT_STYLE),
             converterInfo(SPREADSHEET_CELL_SET),
