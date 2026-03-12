@@ -35,7 +35,6 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
@@ -215,7 +214,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         final SpreadsheetExpressionReferenceLoader loader = this.loader;
         final SpreadsheetEngineContext context = this.context;
 
-        final SpreadsheetCellReference cellReference = context.resolveIfLabel((ExpressionReference) reference)
+        final SpreadsheetCellReference cellReference = context.resolveIfLabel(reference)
             .map(SpreadsheetSelection::toCell)
             .orElse(null);
 

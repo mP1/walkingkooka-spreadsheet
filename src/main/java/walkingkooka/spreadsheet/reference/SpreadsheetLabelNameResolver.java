@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.tree.expression.ExpressionReference;
-
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,18 +25,6 @@ import java.util.Optional;
  * {@link SpreadsheetSelection}. In the cases of a unknown label, a {@link RuntimeException} will be thrown.
  */
 public interface SpreadsheetLabelNameResolver {
-
-    /**
-     * Helper that resolves labels into a {@link SpreadsheetSelection}. Non {@link SpreadsheetExpressionReference}
-     * return an {@link Optional#empty()}.
-     */
-    default Optional<SpreadsheetSelection> resolveIfLabel(final ExpressionReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        return reference instanceof SpreadsheetExpressionReference ?
-            this.resolveIfLabel((SpreadsheetSelection) reference) :
-            Optional.empty();
-    }
 
     /**
      * Resolves a {@link SpreadsheetSelection} never returning a {@link SpreadsheetLabelName}, resolving labels to their

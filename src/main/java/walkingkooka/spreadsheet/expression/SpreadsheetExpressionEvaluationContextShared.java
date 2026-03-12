@@ -173,7 +173,7 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
             if (temp instanceof SpreadsheetExpressionReference) {
                 SpreadsheetExpressionReference spreadsheetExpressionReference = (SpreadsheetExpressionReference) temp;
                 final SpreadsheetSelection selection = this.resolveIfLabel(
-                    (ExpressionReference) temp
+                    (SpreadsheetSelection) temp
                 ).orElse(null);
 
                 if (null != selection) {
