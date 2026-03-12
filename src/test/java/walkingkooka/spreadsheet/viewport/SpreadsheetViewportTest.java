@@ -494,7 +494,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testUrlFragmentLabelNone() {
         this.urlFragmentAndCheck(
-            SpreadsheetSelection.parseCellOrLabel("Label123")
+            SpreadsheetSelection.parseValidationReference("Label123")
+                .toSpreadsheetSelection()
                 .setDefaultAnchor(),
             "/home/A1/width/100/height/50/selection/Label123"
         );
@@ -503,7 +504,8 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     @Test
     public void testUrlFragmentLabelBottomRight() {
         this.urlFragmentAndCheck(
-            SpreadsheetSelection.parseCellOrLabel("Label123")
+            SpreadsheetSelection.parseValidationReference("Label123")
+                .toSpreadsheetSelection()
                 .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT),
             "/home/A1/width/100/height/50/selection/Label123/bottom-right"
         );

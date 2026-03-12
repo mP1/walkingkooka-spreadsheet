@@ -444,18 +444,6 @@ public abstract class SpreadsheetSelection implements HasText,
         .setToString("CELL");
 
     /**
-     * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
-     * Note text holding <pre>*</pre> or a cell-range such as A1:B2 will fail.
-     */
-    public static SpreadsheetExpressionReference parseCellOrLabel(final String text) {
-        checkText(text);
-
-        return isCellText(text) ?
-            parseCell(text) :
-            labelName(text);
-    }
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetCell} or {@link SpreadsheetCellRangeReference} or fails.
      * eg
      * <pre>
@@ -586,6 +574,18 @@ public abstract class SpreadsheetSelection implements HasText,
     private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetFormulaParsers.row()
         .orFailIfCursorNotEmpty(ParserReporters.basic())
         .orReport(ParserReporters.basic());
+
+    /**
+     * Parses text expecting either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
+     * Note text holding <pre>*</pre> or a cell-range such as A1:B2 will fail.
+     */
+    public static SpreadsheetValidationReference parseValidationReference(final String text) {
+        checkText(text);
+
+        return isCellText(text) ?
+            parseCell(text) :
+            labelName(text);
+    }
 
     /**
      * Parsers the text into a {@link ParserToken} or fails.
