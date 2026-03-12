@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.printer.TreePrintableTesting;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
 
@@ -28,20 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetLabelNameResolverTesting<R extends SpreadsheetLabelNameResolver> extends TreePrintableTesting {
 
     @Test
-    default void testResolveIfLabelWithNullExpressionReferenceFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createSpreadsheetLabelNameResolver()
-                .resolveIfLabel((ExpressionReference) null)
-        );
-    }
-
-    @Test
     default void testResolveIfLabelWithNullSpreadsheetSelectionFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSpreadsheetLabelNameResolver()
-                .resolveIfLabel((SpreadsheetSelection) null)
+                .resolveIfLabel(null)
         );
     }
 
