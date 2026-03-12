@@ -27,9 +27,9 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.terminal.HasTerminalErrorTextTesting;
 import walkingkooka.test.ParseStringTesting;
@@ -403,7 +403,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
-    private void validationErrorsAndCheck(final List<ValidationError<SpreadsheetExpressionReference>> errors,
+    private void validationErrorsAndCheck(final List<ValidationError<SpreadsheetValidationReference>> errors,
                                           final Optional<SpreadsheetError> expected) {
         this.checkEquals(
             expected,
@@ -777,7 +777,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     public void testToExpressionErrorWithValidationError() {
         final String message = "Bad choice 123";
 
-        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> errors = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(
                     SpreadsheetSelection.A1
@@ -802,7 +802,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             )
         );
 
-        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> errors = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(
                         SpreadsheetSelection.A1

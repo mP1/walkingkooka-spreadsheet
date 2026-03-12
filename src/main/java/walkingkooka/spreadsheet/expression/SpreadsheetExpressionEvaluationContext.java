@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -79,11 +80,11 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
     SpreadsheetConverterContext,
     HasSpreadsheetCell,
     HasSpreadsheetMetadata,
-    FormHandlerExpressionEvaluationContext<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    FormHandlerExpressionEvaluationContext<SpreadsheetValidationReference, SpreadsheetDelta>,
     JsonNodeExpressionEvaluationContext,
     SpreadsheetEnvironmentContext,
     TerminalExpressionEvaluationContext,
-    ValidatorExpressionEvaluationContext<SpreadsheetExpressionReference> {
+    ValidatorExpressionEvaluationContext<SpreadsheetValidationReference> {
 
     @Override
     default CaseSensitivity stringEqualsCaseSensitivity() {
@@ -279,7 +280,7 @@ public interface SpreadsheetExpressionEvaluationContext extends StorageExpressio
      * {@link walkingkooka.validation.form.FormHandlerContext#validatorContext(ValidationReference)}.
      */
     @Override
-    SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference);
+    SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference);
 
     // JsonNodeConverterContext.........................................................................................
 

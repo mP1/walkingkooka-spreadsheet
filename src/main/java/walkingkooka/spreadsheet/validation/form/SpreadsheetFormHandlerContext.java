@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FormHandlerContext;
 
@@ -30,7 +31,7 @@ import java.util.Comparator;
  * A type-safe {@link FormHandlerContext} using {@link SpreadsheetExpressionReference} as the {@link walkingkooka.validation.ValidationReference}.
  * No new methods are added.
  */
-public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> {
+public interface SpreadsheetFormHandlerContext extends FormHandlerContext<SpreadsheetValidationReference, SpreadsheetDelta> {
 
     @Override
     SpreadsheetFormHandlerContext cloneEnvironment();
@@ -39,10 +40,10 @@ public interface SpreadsheetFormHandlerContext extends FormHandlerContext<Spread
      * {@link SpreadsheetSelection#IGNORES_REFERENCE_KIND_COMPARATOR}
      */
     @Override
-    default Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+    default Comparator<SpreadsheetValidationReference> formFieldReferenceComparator() {
         return Cast.to(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
     @Override
-    SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference spreadsheetExpressionReference);
+    SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference spreadsheetValidationReference);
 }

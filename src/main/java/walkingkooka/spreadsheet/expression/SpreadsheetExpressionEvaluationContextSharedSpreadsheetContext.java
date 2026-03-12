@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContexts;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
@@ -105,7 +106,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                                                                            final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                            final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor,
                                                                            final SpreadsheetParser spreadsheetParser,
-                                                                           final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext,
+                                                                           final FormHandlerContext<SpreadsheetValidationReference, SpreadsheetDelta> formHandlerContext,
                                                                            final SpreadsheetContext spreadsheetContext,
                                                                            final SpreadsheetParserContext spreadsheetParserContext,
                                                                            final TerminalContext terminalContext) {
@@ -352,33 +353,33 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
     // FormHandlerContext...............................................................................................
 
     @Override
-    public Form<SpreadsheetExpressionReference> form() {
+    public Form<SpreadsheetValidationReference> form() {
         return this.formHandlerContext.form();
     }
 
     @Override
-    public Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+    public Comparator<SpreadsheetValidationReference> formFieldReferenceComparator() {
         return this.formHandlerContext.formFieldReferenceComparator();
     }
 
     @Override
-    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFormFieldValue(final SpreadsheetValidationReference reference) {
         return this.formHandlerContext.loadFormFieldValue(reference);
     }
 
     @Override
-    public SpreadsheetDelta saveFormFieldValues(List<FormField<SpreadsheetExpressionReference>> formFields) {
+    public SpreadsheetDelta saveFormFieldValues(List<FormField<SpreadsheetValidationReference>> formFields) {
         return this.formHandlerContext.saveFormFieldValues(formFields);
     }
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         return Cast.to(
             this.formHandlerContext.validatorContext(reference)
         );
     }
 
-    private final FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext;
+    private final FormHandlerContext<SpreadsheetValidationReference, SpreadsheetDelta> formHandlerContext;
 
     // JsonNodeUnmarshallContext........................................................................................
 

@@ -25,10 +25,10 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.StoragePath;
@@ -48,7 +48,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     static BasicSpreadsheetConverterContext with(final HasUserDirectories hasUserDirectories,
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
-                                                 final Optional<SpreadsheetExpressionReference> validationReference,
+                                                 final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
@@ -74,7 +74,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
 
     private BasicSpreadsheetConverterContext(final HasUserDirectories hasUserDirectories,
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
-                                             final Optional<SpreadsheetExpressionReference> validationReference,
+                                             final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final JsonNodeConverterContext jsonNodeConverterContext,
@@ -134,13 +134,13 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     // ValidationReference..............................................................................................
 
     @Override
-    public SpreadsheetExpressionReference validationReference() {
+    public SpreadsheetValidationReference validationReference() {
         return this.validationReference.orElseThrow(
             () -> new IllegalStateException("Missing validation reference")
         );
     }
 
-    private final Optional<SpreadsheetExpressionReference> validationReference;
+    private final Optional<SpreadsheetValidationReference > validationReference;
 
     // ConverterLike....................................................................................................
 

@@ -46,10 +46,10 @@ import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterProviders;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.FakeHasUserDirectories;
 import walkingkooka.storage.HasUserDirectories;
@@ -88,12 +88,12 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     TreePrintableTesting,
     SpreadsheetEnvironmentContextTesting {
 
-    private final static Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
+    private final static Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
         throw new UnsupportedOperationException();
     };
 
-    final static BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (final Object value,
-                                                                                                                                                                         final SpreadsheetExpressionReference cellOrLabel) -> {
+    final static BiFunction<Object, SpreadsheetValidationReference, SpreadsheetExpressionEvaluationContext> VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT = (final Object value,
+                                                                                                                                                                              final SpreadsheetValidationReference cellOrLabel) -> {
         throw new UnsupportedOperationException();
     };
 
@@ -790,7 +790,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     null,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -810,7 +810,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     null,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -850,7 +850,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     null,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -870,7 +870,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     null,
                     LABEL_NAME_RESOLVER,
@@ -890,7 +890,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     null,
@@ -910,7 +910,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -930,7 +930,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -950,7 +950,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
@@ -970,7 +970,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
-                    VALUE_N_CELL_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,

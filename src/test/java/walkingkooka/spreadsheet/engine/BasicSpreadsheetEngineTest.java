@@ -124,6 +124,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContext;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
@@ -5442,9 +5443,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             throw new RuntimeException("Validator throws 123");
                                         }
@@ -5571,9 +5572,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return this.noValidationErrors();
                                         }
@@ -5620,7 +5621,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellValidatorFails() {
-        final ValidationErrorList<SpreadsheetExpressionReference> validationError = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> validationError = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
                     .setMessage("ValidationConverterErrorMessage")
@@ -5693,9 +5694,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return validationError;
                                         }
@@ -5753,7 +5754,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testSaveCellValidatorWithValidationConverter() {
         final Object converterInput = this;
-        final ValidationErrorList<SpreadsheetExpressionReference> converterOutput = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> converterOutput = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
                     .setMessage("ValidationConverterErrorMessage")
@@ -5840,9 +5841,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return context.convertOrFail(
                                                 converterInput,
@@ -5904,7 +5905,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellValidatorWithValidationFunction() {
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrors = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> validationErrors = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(SpreadsheetSelection.A1)
                     .setMessage("ValidationConverterErrorMessage")
@@ -5981,9 +5982,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return Cast.to(
                                                 context.expressionEvaluationContext(value)
@@ -6067,7 +6068,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrorsFail1 = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> validationErrorsFail1 = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(
                     SpreadsheetSelection.A1
@@ -6077,7 +6078,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     )
             );
 
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrorsFail2 = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> validationErrorsFail2 = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(
                         SpreadsheetSelection.A1
@@ -6155,9 +6156,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorFailSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return validationErrorsFail1;
                                         }
@@ -6166,9 +6167,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             }
                             if (validatorPassSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return validationErrorsFail2;
                                         }
@@ -6275,7 +6276,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrorsFail = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> validationErrorsFail = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(
                         SpreadsheetSelection.A1
@@ -6285,7 +6286,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     )
             );
 
-        final ValidationErrorList<SpreadsheetExpressionReference> validationErrorsPass = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> validationErrorsPass = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(
                     SpreadsheetSelection.A1
@@ -6362,9 +6363,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                         final ProviderContext context) {
                             if (validatorFailSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return validationErrorsFail;
                                         }
@@ -6373,9 +6374,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                             }
                             if (validatorPassSelector.equals(selector)) {
                                 return Cast.to(
-                                    new FakeValidator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>() {
+                                    new FakeValidator<SpreadsheetValidationReference, SpreadsheetValidatorContext>() {
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validate(final Object value,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validate(final Object value,
                                                                                                               final SpreadsheetValidatorContext context) {
                                             return validationErrorsPass;
                                         }
@@ -25010,11 +25011,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        final SpreadsheetExpressionReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(cell)
@@ -25057,11 +25058,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final SpreadsheetExpressionReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(cell)
@@ -25111,7 +25112,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(label)
@@ -25178,7 +25179,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(a1Cell.reference())
@@ -25289,11 +25290,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c3CellMissing = SpreadsheetSelection.parseCell("C3");
         final SpreadsheetLabelName d4LabelMissing = SpreadsheetSelection.labelName("D4Label");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
-                    SpreadsheetForms.field(a1Label.reference())
-                        .setLabel("A1LabelText"),
+                    SpreadsheetForms.field(
+                        a1Label.reference()
+                            .toValidationReference()
+                        ).setLabel("A1LabelText"),
                     SpreadsheetForms.field(b2Cell.reference())
                         .setLabel("B2LabelText"),
                     SpreadsheetForms.field(c3CellMissing)
@@ -25381,7 +25384,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(a1Cell.reference())
@@ -25426,14 +25429,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        final SpreadsheetExpressionReference a1 = SpreadsheetSelection.A1;
-        final SpreadsheetExpressionReference b2 = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetExpressionReference label1 = SpreadsheetSelection.labelName("Label1");
-        final SpreadsheetExpressionReference label2 = SpreadsheetSelection.labelName("Label2");
+        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+        final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
+        final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(a1)
@@ -25540,12 +25543,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        final List<Form<SpreadsheetExpressionReference>> forms = Lists.array();
+        final List<Form<SpreadsheetValidationReference>> forms = Lists.array();
 
         for (int i = 1; i < 1 + 5; i++) {
             final FormName formName = FormName.with("Form" + i);
 
-            final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+            final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
                 .setFields(
                     Lists.of(
                         SpreadsheetForms.field(SpreadsheetSelection.labelName("FormField" + i))
@@ -25604,7 +25607,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             IllegalArgumentException.class,
             () -> engine.prepareForm(
                 FormName.with("Form123"),
-                SpreadsheetSelection.parseCellRange("B2:C3"),
+                SpreadsheetSelection.A1,
                 context
             )
         );
@@ -25632,7 +25635,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(
@@ -25718,14 +25721,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("UnknownLabel404")
             ).setLabel("TextLabel111")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(field)
             );
@@ -25738,7 +25741,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             IllegalArgumentException.class,
             () -> engine.prepareForm(
                 formName,
-                SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+                SpreadsheetSelection.A1, // 1 cells
                 context
             )
         );
@@ -25828,14 +25831,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("UnknownLabel404")
             ).setLabel("TextLabel111")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(field)
             );
@@ -25847,7 +25850,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.prepareFormAndCheck(
             engine,
             formName,
-            SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+            SpreadsheetSelection.parseCell("B2"),
             context,
             SpreadsheetDelta.EMPTY.setForms(
                 Sets.of(
@@ -25881,7 +25884,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("UnknownLabel404")
             ).setLabel("TextLabel111")
             .setValue(
@@ -25907,9 +25910,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
                                         @Override
-                                        public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                        public Form<SpreadsheetValidationReference> prepareForm(final Form<SpreadsheetValidationReference> form,
                                                                                                 final SpreadsheetFormHandlerContext context) {
                                             return form.setFields(
                                                 form.fields()
@@ -25920,7 +25923,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         }
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return ValidationErrorList.empty();
                                         }
@@ -25953,7 +25956,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(field)
             );
@@ -25973,7 +25976,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.prepareFormAndCheck(
             engine,
             formName,
-            SpreadsheetSelection.A1.toCellRange(), // 1 cells
+            SpreadsheetSelection.A1,
             context,
             SpreadsheetDelta.EMPTY.setForms(
                 Sets.of(
@@ -26007,7 +26010,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("UnknownLabel404")
             ).setLabel("TextLabel111")
             .setValue(
@@ -26037,9 +26040,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                    final ProviderContext context) {
                         if (formHandler.equals(selector.toString())) {
                             return Cast.to(
-                                new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
                                     @Override
-                                    public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                    public Form<SpreadsheetValidationReference> prepareForm(final Form<SpreadsheetValidationReference> form,
                                                                                             final SpreadsheetFormHandlerContext context) {
                                         return form.setFields(
                                             form.fields()
@@ -26050,7 +26053,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                     }
 
                                     @Override
-                                    public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                    public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                               final SpreadsheetFormHandlerContext context) {
                                         return context.validateFormFields(
                                             form.fields()
@@ -26106,7 +26109,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(field)
             );
@@ -26126,7 +26129,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.prepareFormAndCheck(
             engine,
             formName,
-            SpreadsheetSelection.A1.toCellRange(), // 1 cells
+            SpreadsheetSelection.A1, // 1 cells
             context,
             SpreadsheetDelta.EMPTY.setForms(
                 Sets.of(
@@ -26137,7 +26140,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         )
                     ).setErrors(
                         Lists.of(
-                            ValidationError.<SpreadsheetExpressionReference>with(SpreadsheetSelection.A1)
+                            ValidationError.<SpreadsheetValidationReference>with(SpreadsheetSelection.A1)
                                 .setMessage(message)
                                 .setValue(
                                     Optional.of(cellValue)
@@ -26167,14 +26170,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field1 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("FormField1")
             ).setLabel("TextLabel111")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final FormField<SpreadsheetExpressionReference> field2 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field2 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("FormField2")
             ).setLabel("TextLabel222")
             .setValue(
@@ -26200,9 +26203,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
                                         @Override
-                                        public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                        public Form<SpreadsheetValidationReference> prepareForm(final Form<SpreadsheetValidationReference> form,
                                                                                                 final SpreadsheetFormHandlerContext context) {
                                             return form.setFields(
                                                 form.fields()
@@ -26217,7 +26220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         }
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return ValidationErrorList.empty();
                                         }
@@ -26312,14 +26315,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             FormHandlerSelector.parse(formHandler)
         );
 
-        final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field1 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("FormField1")
             ).setLabel("TextLabel111")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final FormField<SpreadsheetExpressionReference> field2 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field2 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("FormField2")
             ).setLabel("TextLabel222")
             .setValue(
@@ -26345,9 +26348,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
                                         @Override
-                                        public Form<SpreadsheetExpressionReference> prepareForm(final Form<SpreadsheetExpressionReference> form,
+                                        public Form<SpreadsheetValidationReference> prepareForm(final Form<SpreadsheetValidationReference> form,
                                                                                                 final SpreadsheetFormHandlerContext context) {
                                             return form.setFields(
                                                 form.fields()
@@ -26362,7 +26365,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         }
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return ValidationErrorList.empty();
                                         }
@@ -26463,7 +26466,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Form.with(
                     FormName.with("UnknownForm123")
                 ),
-                SpreadsheetSelection.parseCellRange("B2:C3"),
+                SpreadsheetSelection.parseCell("B2"),
                 context
             )
         );
@@ -26491,7 +26494,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final FormName formName = FormName.with("Form123");
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(formName)
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName)
             .setFields(
                 Lists.of(
                     SpreadsheetForms.field(
@@ -26575,7 +26578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             TERMINAL_CONTEXT
         );
 
-        final Form<SpreadsheetExpressionReference> form = Form.with(
+        final Form<SpreadsheetValidationReference> form = Form.with(
             FormName.with("Form123")
         );
 
@@ -26587,7 +26590,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             IllegalArgumentException.class,
             () -> engine.submitForm(
                 form,
-                SpreadsheetSelection.parseCellRange("B2"), // 1 cells
+                SpreadsheetSelection.parseCell("B2"),
                 context
             )
         );
@@ -26650,7 +26653,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             TERMINAL_CONTEXT
         );
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(
             FormName.with("Form123")
         ).setHandler(
             Optional.of(
@@ -26693,20 +26696,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
-        final ValidationErrorList<SpreadsheetExpressionReference> errors = SpreadsheetForms.errorList()
+        final ValidationErrorList<SpreadsheetValidationReference> errors = SpreadsheetForms.errorList()
             .concat(
                 SpreadsheetForms.error(cellReference)
                     .setMessage("ValidationError1")
             );
 
-        final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field1")
             ).setLabel("TextLabel1")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(
             FormName.with("Form123")
         ).setFields(
             Lists.of(
@@ -26744,16 +26747,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return errors;
                                         }
 
                                         @Override
-                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                                                            final SpreadsheetFormHandlerContext context) {
                                             return expected;
                                         }
@@ -26791,7 +26794,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.submitFormAndCheck(
             engine,
             form,
-            cellReference.toCellRange(), // 1 cells
+            cellReference,
             context,
             expected
         );
@@ -26813,11 +26816,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(
             FormName.with("Form123")
         );
 
-        final FormField<SpreadsheetExpressionReference> field = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field1")
             ).setLabel("TextLabel1")
             .setValue(
@@ -26853,16 +26856,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return Lists.empty(); // no errors
                                         }
 
                                         @Override
-                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                                                            final SpreadsheetFormHandlerContext context) {
                                             return expected;
                                         }
@@ -26900,7 +26903,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.submitFormAndCheck(
             engine,
             form,
-            cellReference.toCellRange(), // 1 cells
+            cellReference,
             context,
             expected
         );
@@ -26930,20 +26933,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference cellReference = SpreadsheetSelection.A1;
 
-        final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field1 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field1")
             ).setLabel("TextLabel1")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(
             FormName.with("Form123")
         ).setFields(
             Lists.of(field1)
         );
 
-        final FormField<SpreadsheetExpressionReference> field2 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field2 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field2")
             ).setLabel("TextLabel2")
             .setValue(
@@ -26982,16 +26985,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return Lists.empty(); // no errors
                                         }
 
                                         @Override
-                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                                                            final SpreadsheetFormHandlerContext context) {
                                             return expected;
                                         }
@@ -27063,21 +27066,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String loadedValue1 = "LoadedFormFieldValue1";
         final String loadedValue2 = "LoadedFormFieldValue2";
 
-        final FormField<SpreadsheetExpressionReference> field1 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field1 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field1")
             ).setLabel("TextLabel1")
             .setValue(
                 Optional.of("InitialFormFieldValue1")
             );
 
-        final FormField<SpreadsheetExpressionReference> field2 = SpreadsheetForms.field(
+        final FormField<SpreadsheetValidationReference> field2 = SpreadsheetForms.field(
                 SpreadsheetSelection.labelName("Field2")
             ).setLabel("TextLabel2")
             .setValue(
                 Optional.of("InitialFormFieldValue2")
             );
 
-        final Form<SpreadsheetExpressionReference> form = SpreadsheetForms.form(
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(
             FormName.with("Form123")
         ).setFields(
             Lists.of(
@@ -27089,7 +27092,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String submittedValue1 = "SubmittedFormFieldValue1";
         final String submittedValue2 = "SubmittedFormFieldValue2";
 
-        final Form<SpreadsheetExpressionReference> submittedForm = form.setFields(
+        final Form<SpreadsheetValidationReference> submittedForm = form.setFields(
             Lists.of(
                 field1.setReference(cellReference1)
                     .setValue(
@@ -27119,16 +27122,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                                                                                                        final ProviderContext context) {
                             if (formHandler.equals(selector.toString())) {
                                 return Cast.to(
-                                    new FakeFormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
+                                    new FakeFormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext>() {
 
                                         @Override
-                                        public List<ValidationError<SpreadsheetExpressionReference>> validateForm(final Form<SpreadsheetExpressionReference> form,
+                                        public List<ValidationError<SpreadsheetValidationReference>> validateForm(final Form<SpreadsheetValidationReference> form,
                                                                                                                   final SpreadsheetFormHandlerContext context) {
                                             return Lists.empty(); // no errors
                                         }
 
                                         @Override
-                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+                                        public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                                                            final SpreadsheetFormHandlerContext context) {
                                             return context.saveFormFieldValues(
                                                 form.fields()

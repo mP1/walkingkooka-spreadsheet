@@ -31,12 +31,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
@@ -135,7 +135,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         throw new UnsupportedOperationException();
     }
 
@@ -192,7 +192,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public SpreadsheetExpressionReference validationReference() {
+    public SpreadsheetValidationReference validationReference() {
         throw new UnsupportedOperationException();
     }
 
@@ -339,22 +339,22 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+    public Comparator<SpreadsheetValidationReference> formFieldReferenceComparator() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFormFieldValue(final SpreadsheetValidationReference reference) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetValidationReference>> fields) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Form<SpreadsheetExpressionReference> form() {
+    public Form<SpreadsheetValidationReference> form() {
         throw new UnsupportedOperationException();
     }
 

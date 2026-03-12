@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -253,7 +254,7 @@ public interface SpreadsheetEngine {
      * If the form contains duplicate {@link SpreadsheetExpressionReference} a {@link walkingkooka.validation.form.DuplicateFormFieldReferencesException}
      * will be thrown.
      */
-    SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
+    SpreadsheetDelta saveForm(final Form<SpreadsheetValidationReference> form,
                               final SpreadsheetEngineContext context);
 
     /**
@@ -275,7 +276,7 @@ public interface SpreadsheetEngine {
     /**
      * Submits a form for validation and then saving using the selected or default {@link walkingkooka.validation.form.FormHandler}.
      */
-    SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+    SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                 final SpreadsheetExpressionReference selection,
                                 final SpreadsheetEngineContext context);
 

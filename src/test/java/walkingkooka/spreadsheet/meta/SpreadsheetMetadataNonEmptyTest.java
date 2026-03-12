@@ -79,8 +79,8 @@ import walkingkooka.spreadsheet.importer.provider.SpreadsheetImporterSelector;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.storage.Storages;
@@ -2377,7 +2377,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         );
     }
 
-    private void spreadsheetValidatorContextAndCheck(final SpreadsheetExpressionReference cellOrLabel) {
+    private void spreadsheetValidatorContextAndCheck(final SpreadsheetValidationReference cellOrLabel) {
         final Locale locale = LOCALE;
 
         final SpreadsheetValidatorContext context = this.createSpreadsheetMetadata()
@@ -2426,7 +2426,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     throw new UnsupportedOperationException();
                 },
                 (final Object value,
-                 final SpreadsheetExpressionReference c) -> {
+                 final SpreadsheetValidationReference c) -> {
                     throw new UnsupportedOperationException();
                 },
                 HAS_USER_DIRECTORIES,

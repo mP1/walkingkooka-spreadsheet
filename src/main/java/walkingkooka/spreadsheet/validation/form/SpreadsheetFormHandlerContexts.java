@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.validation.form;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormHandlerContext;
@@ -37,7 +37,7 @@ public final class SpreadsheetFormHandlerContexts implements PublicStaticHelper 
     /**
      * {@see BasicSpreadsheetFormHandlerContext}
      */
-    public static SpreadsheetFormHandlerContext basic(final Form<SpreadsheetExpressionReference> form,
+    public static SpreadsheetFormHandlerContext basic(final Form<SpreadsheetValidationReference> form,
                                                       final SpreadsheetExpressionReferenceLoader loader,
                                                       final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                       final SpreadsheetEngineContext context) {

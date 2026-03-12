@@ -45,11 +45,11 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
@@ -671,13 +671,13 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+        public Optional<Object> loadFormFieldValue(final SpreadsheetValidationReference reference) {
             Objects.requireNonNull(reference, "reference");
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+        public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetValidationReference>> fields) {
             Objects.requireNonNull(fields, "fields");
             throw new UnsupportedOperationException();
         }
@@ -779,7 +779,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         @Override
-        public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+        public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
             Objects.requireNonNull(reference, "reference");
 
             throw new UnsupportedOperationException();

@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.formula.parser.RowSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
@@ -1234,6 +1235,15 @@ public abstract class SpreadsheetSelection implements HasText,
      * while {@link SpreadsheetCellRangeReference} will return itself. {@link SpreadsheetLabelName} will throw {@link UnsupportedOperationException}.
      */
     public abstract SpreadsheetSelection toRange();
+
+    /**
+     * A {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName}.
+     */
+    public final SpreadsheetValidationReference toValidationReference() {
+        return this.isLabelName() ?
+            this.toLabelName() :
+            this.toCell();
+    }
 
     /**
      * An {@link Iterator} that returns all the {@link SpreadsheetColumnReference} or {@link SpreadsheetRowReference}.

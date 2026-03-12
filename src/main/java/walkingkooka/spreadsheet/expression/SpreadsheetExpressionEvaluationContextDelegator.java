@@ -32,10 +32,10 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
@@ -67,8 +67,8 @@ import java.util.Set;
  */
 public interface SpreadsheetExpressionEvaluationContextDelegator extends SpreadsheetExpressionEvaluationContext,
     SpreadsheetConverterContextDelegator,
-    FormHandlerExpressionEvaluationContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
-    ValidatorExpressionEvaluationContextDelegator<SpreadsheetExpressionReference>,
+    FormHandlerExpressionEvaluationContextDelegator<SpreadsheetValidationReference, SpreadsheetDelta>,
+    ValidatorExpressionEvaluationContextDelegator<SpreadsheetValidationReference>,
     SpreadsheetEnvironmentContextDelegator,
     StorageExpressionEvaluationContextDelegator,
     TerminalContextDelegator {
@@ -259,7 +259,7 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     // FormHandlerExpressionEvaluationContextDelegator..................................................................
 
     @Override
-    default Form<SpreadsheetExpressionReference> form() {
+    default Form<SpreadsheetValidationReference> form() {
         return this.spreadsheetExpressionEvaluationContext()
             .form();
     }
@@ -283,13 +283,13 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     }
 
     @Override
-    default SpreadsheetExpressionReference validationReference() {
+    default SpreadsheetValidationReference validationReference() {
         return this.spreadsheetExpressionEvaluationContext()
             .validationReference();
     }
 
     @Override
-    default SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    default SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         return this.spreadsheetExpressionEvaluationContext()
             .validatorContext(reference);
     }

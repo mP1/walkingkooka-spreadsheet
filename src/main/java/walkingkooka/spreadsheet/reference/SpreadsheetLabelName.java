@@ -26,6 +26,7 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.formula.parser.LabelSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
@@ -48,7 +49,8 @@ import java.util.function.Predicate;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 final public class SpreadsheetLabelName extends SpreadsheetExpressionReference
-    implements Comparable<SpreadsheetLabelName>,
+    implements SpreadsheetValidationReference,
+    Comparable<SpreadsheetLabelName>,
     Name,
     HateosResource<String> {
     private final static CharPredicate LETTER = CharPredicates.letter();

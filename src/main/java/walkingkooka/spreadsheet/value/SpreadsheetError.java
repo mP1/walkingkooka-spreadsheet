@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.terminal.HasTerminalErrorText;
 import walkingkooka.text.CharSequences;
@@ -169,13 +170,13 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     /**
      * Accepts potentially a list of {@link ValidationError errors} and returns a {@link SpreadsheetError}.
      */
-    public static Optional<SpreadsheetError> validationErrors(final List<ValidationError<SpreadsheetExpressionReference>> errors) {
+    public static Optional<SpreadsheetError> validationErrors(final List<ValidationError<SpreadsheetValidationReference>> errors) {
         Objects.requireNonNull(errors, "errors");
 
         SpreadsheetError spreadsheetError = null;
 
         if (false == errors.isEmpty()) {
-            final ValidationError<SpreadsheetExpressionReference> firstValidationError = errors.get(0);
+            final ValidationError<SpreadsheetValidationReference> firstValidationError = errors.get(0);
             final Optional<Object> value = firstValidationError.value();
             final Object valueOrNull = value.orElse(null);
 
@@ -449,12 +450,8 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
 
     // toValidationError................................................................................................
 
-    public ValidationError<SpreadsheetExpressionReference> toValidationError(final SpreadsheetExpressionReference cellOrLabel) {
+    public ValidationError<SpreadsheetValidationReference> toValidationError(final SpreadsheetValidationReference cellOrLabel) {
         Objects.requireNonNull(cellOrLabel, "cellOrLabel");
-
-        if (cellOrLabel.isCellRange()) {
-            throw new IllegalArgumentException("ValidationErrors only accept cell or label but got cell-range");
-        }
 
         return SpreadsheetForms.error(cellOrLabel)
             .setMessage(this.message)

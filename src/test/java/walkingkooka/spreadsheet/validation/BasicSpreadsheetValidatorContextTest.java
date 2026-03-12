@@ -23,7 +23,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -132,7 +131,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
                         throw new UnsupportedOperationException();
                     },
                     (final Object value,
-                     final SpreadsheetExpressionReference cellOrLabel) -> {
+                     final SpreadsheetValidationReference cellOrLabel) -> {
                         throw new UnsupportedOperationException();
                     },
                     SPREADSHEET_FORMATTER_CONTEXT,

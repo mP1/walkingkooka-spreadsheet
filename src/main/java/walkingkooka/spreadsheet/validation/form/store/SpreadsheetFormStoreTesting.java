@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.validation.form.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.store.FormStoreTesting;
 
-public interface SpreadsheetFormStoreTesting<S extends SpreadsheetFormStore> extends FormStoreTesting<S, SpreadsheetExpressionReference> {
+public interface SpreadsheetFormStoreTesting<S extends SpreadsheetFormStore> extends FormStoreTesting<S, SpreadsheetValidationReference> {
 }

@@ -24,9 +24,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CaseSensitivity;
@@ -119,7 +119,7 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
     // SpreadsheetExpressionEvaluationContextDelegator..................................................................
 
     @Override
-    public Form<SpreadsheetExpressionReference> form() {
+    public Form<SpreadsheetValidationReference> form() {
         return this.context.form();
     }
 
@@ -216,7 +216,7 @@ final class SpreadsheetExpressionEvaluationContextCell implements SpreadsheetExp
     // 2025-05-25T06:25:48.9710546Z [INFO]               Closure compiler
     // 2025-05-25T06:25:48.9710772Z [INFO]                 Exit code
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         return this.context.validatorContext(reference);
     }
 

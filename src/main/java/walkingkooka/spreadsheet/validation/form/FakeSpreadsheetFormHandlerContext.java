@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.validation.form;
 
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.validation.form.FakeFormHandlerContext;
 
-public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta>
+public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<SpreadsheetValidationReference, SpreadsheetDelta>
     implements SpreadsheetFormHandlerContext {
 
     public FakeSpreadsheetFormHandlerContext() {
@@ -35,7 +35,7 @@ public class FakeSpreadsheetFormHandlerContext extends FakeFormHandlerContext<Sp
     }
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         throw new UnsupportedOperationException();
     }
 }

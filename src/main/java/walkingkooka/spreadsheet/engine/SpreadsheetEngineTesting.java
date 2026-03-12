@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
@@ -1863,7 +1864,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void saveFormWithDuplicateFieldsCheck(final SpreadsheetEngine engine,
-                                                  final Form<SpreadsheetExpressionReference> form,
+                                                  final Form<SpreadsheetValidationReference> form,
                                                   final SpreadsheetEngineContext context,
                                                   final SpreadsheetExpressionReference... expected) {
         this.saveFormWithDuplicateFieldsCheck(
@@ -1875,7 +1876,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void saveFormWithDuplicateFieldsCheck(final SpreadsheetEngine engine,
-                                                  final Form<SpreadsheetExpressionReference> form,
+                                                  final Form<SpreadsheetValidationReference> form,
                                                   final SpreadsheetEngineContext context,
                                                   final Set<SpreadsheetExpressionReference> expected) {
         final DuplicateFormFieldReferencesException thrown = assertThrows(
@@ -1893,7 +1894,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void saveFormAndCheck(final SpreadsheetEngine engine,
-                                  final Form<SpreadsheetExpressionReference> form,
+                                  final Form<SpreadsheetValidationReference> form,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetDelta expected) {
         this.checkEquals(
@@ -2103,7 +2104,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void submitFormAndCheck(final SpreadsheetEngine engine,
-                                    final Form<SpreadsheetExpressionReference> form,
+                                    final Form<SpreadsheetValidationReference> form,
                                     final SpreadsheetExpressionReference selection,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetDelta expected) {

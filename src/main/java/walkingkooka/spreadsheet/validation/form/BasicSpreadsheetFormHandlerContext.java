@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -56,7 +57,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     ConverterLikeDelegator,
     EnvironmentContextDelegator {
 
-    static BasicSpreadsheetFormHandlerContext with(final Form<SpreadsheetExpressionReference> form,
+    static BasicSpreadsheetFormHandlerContext with(final Form<SpreadsheetValidationReference> form,
                                                    final SpreadsheetExpressionReferenceLoader loader,
                                                    final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                    final SpreadsheetEngineContext context) {
@@ -68,7 +69,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         );
     }
 
-    private BasicSpreadsheetFormHandlerContext(final Form<SpreadsheetExpressionReference> form,
+    private BasicSpreadsheetFormHandlerContext(final Form<SpreadsheetValidationReference> form,
                                                final SpreadsheetExpressionReferenceLoader loader,
                                                final Function<Set<SpreadsheetCell>, SpreadsheetDelta> cellsSaver,
                                                final SpreadsheetEngineContext context) {
@@ -79,17 +80,17 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     }
 
     @Override
-    public Form<SpreadsheetExpressionReference> form() {
+    public Form<SpreadsheetValidationReference> form() {
         return this.form;
     }
 
     /**
      * The current active form.
      */
-    private final Form<SpreadsheetExpressionReference> form;
+    private final Form<SpreadsheetValidationReference> form;
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         Objects.requireNonNull(reference, "reference");
 
         final Optional<SpreadsheetCell> cell = this.loadCell(reference);
@@ -104,7 +105,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
                     context.providerContext()
                 ),
                 (final Object validatingValue,
-                 final SpreadsheetExpressionReference r) -> context.spreadsheetExpressionEvaluationContext(
+                 final SpreadsheetValidationReference r) -> context.spreadsheetExpressionEvaluationContext(
                     cell,
                     SpreadsheetExpressionReferenceLoaders.fake() // SpreadsheetExpressionReferenceLoader
                 ).addLocalVariable(
@@ -118,19 +119,15 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     }
 
     @Override
-    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFormFieldValue(final SpreadsheetValidationReference reference) {
         Objects.requireNonNull(reference, "reference");
-
-        if (reference.isCellRange()) {
-            throw new IllegalArgumentException("Invalid reference " + reference + " expected only cell or label");
-        }
 
         return this.loadCell(reference)
             .flatMap((SpreadsheetCell cell) -> cell.formula().value());
     }
 
     @Override
-    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> fields) {
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetValidationReference>> fields) {
         return this.saveFormFieldValues0(
             FormFieldList.with(
                 Objects.requireNonNull(fields, "fields")
@@ -138,15 +135,15 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
         );
     }
 
-    private SpreadsheetDelta saveFormFieldValues0(final FormFieldList<SpreadsheetExpressionReference> fields) {
+    private SpreadsheetDelta saveFormFieldValues0(final FormFieldList<SpreadsheetValidationReference> fields) {
         final SpreadsheetEngineContext context = this.context;
 
         // build a map of cell or label to cell
-        final Map<SpreadsheetExpressionReference, SpreadsheetCellReference> cellOrLabelToCell = SpreadsheetSelectionMaps.spreadsheetExpressionReference();
+        final Map<SpreadsheetValidationReference, SpreadsheetCellReference> cellOrLabelToCell = SpreadsheetSelectionMaps.spreadsheetValidationReference();
         final Map<SpreadsheetCellReference, SpreadsheetCell> loadedCellToSpreadsheetCell = SpreadsheetSelectionMaps.cell();
 
-        for (final FormField<SpreadsheetExpressionReference> field : fields) {
-            SpreadsheetExpressionReference cellOrLabel = field.reference();
+        for (final FormField<SpreadsheetValidationReference> field : fields) {
+            SpreadsheetValidationReference cellOrLabel = field.reference();
 
             SpreadsheetCellReference cell;
             if (cellOrLabel.isLabelName()) {
@@ -161,11 +158,6 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
                 } else {
                     continue;
                 }
-            }
-
-            // complain if CELLRANGE only allow CELL or LABEL to a CELL
-            if (cellOrLabel.isCellRange()) {
-                throw new IllegalArgumentException("Field with cell-range " + CharSequences.quote(cellOrLabel.toString()) + " expected only cell or label");
             }
 
             final SpreadsheetCellReference duplicate = cellOrLabelToCell.put(
@@ -185,7 +177,7 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
 
         // try and merge $loadedCellToSpreadsheetCell with *NEW* values from fields.
         final Set<SpreadsheetCell> saving = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
-        for (final FormField<SpreadsheetExpressionReference> field : fields) {
+        for (final FormField<SpreadsheetValidationReference> field : fields) {
             final SpreadsheetCellReference cell = cellOrLabelToCell.get(
                 field.reference()
             ).toCell();
@@ -210,12 +202,13 @@ final class BasicSpreadsheetFormHandlerContext implements SpreadsheetFormHandler
     /**
      * Attempts to load single cell for the given {@link SpreadsheetExpressionReference}, which includes resolving labels.
      */
-    private Optional<SpreadsheetCell> loadCell(final SpreadsheetExpressionReference reference) {
+    private Optional<SpreadsheetCell> loadCell(final SpreadsheetValidationReference reference) {
         final SpreadsheetExpressionReferenceLoader loader = this.loader;
         final SpreadsheetEngineContext context = this.context;
 
-        final SpreadsheetCellReference cellReference = context.resolveIfLabel(reference)
-            .map(SpreadsheetSelection::toCell)
+        final SpreadsheetCellReference cellReference = context.resolveIfLabel(
+                reference.toSpreadsheetSelection()
+            ).map(SpreadsheetSelection::toCell)
             .orElse(null);
 
         return null == cellReference ?

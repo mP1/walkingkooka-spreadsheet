@@ -91,8 +91,8 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContexts;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
@@ -1042,7 +1042,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      * Returns a {@link SpreadsheetConverterContext}
      */
     public final SpreadsheetConverterContext spreadsheetConverterContext(final Optional<SpreadsheetCell> cell,
-                                                                         final Optional<SpreadsheetExpressionReference> validationReference,
+                                                                         final Optional<SpreadsheetValidationReference> validationReference,
                                                                          final SpreadsheetMetadataPropertyName<ConverterSelector> converterSelectorPropertyName,
                                                                          final HasUserDirectories hasUserDirectories,
                                                                          final Indentation indentation,
@@ -1154,7 +1154,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
         );
     }
 
-    public final static Optional<SpreadsheetExpressionReference> NO_VALIDATION_REFERENCE = SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE;
+    public final static Optional<SpreadsheetValidationReference> NO_VALIDATION_REFERENCE = SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE;
 
     // SpreadsheetEnvironmentContext....................................................................................
 
@@ -1392,9 +1392,9 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     /**
      * Creates a {@link SpreadsheetValidatorContext} with the given {@link SpreadsheetCellReference}.
      */
-    public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetExpressionReference cellOrLabel,
-                                                                         final Function<ValidatorSelector, Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
-                                                                         final BiFunction<Object, SpreadsheetExpressionReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
+    public final SpreadsheetValidatorContext spreadsheetValidatorContext(final SpreadsheetValidationReference cellOrLabel,
+                                                                         final Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> validatorSelectorToValidator,
+                                                                         final BiFunction<Object, SpreadsheetValidationReference, SpreadsheetExpressionEvaluationContext> referenceToExpressionEvaluationContext,
                                                                          final HasUserDirectories hasUserDirectories,
                                                                          final Indentation indentation,
                                                                          final SpreadsheetLabelNameResolver labelNameResolver,

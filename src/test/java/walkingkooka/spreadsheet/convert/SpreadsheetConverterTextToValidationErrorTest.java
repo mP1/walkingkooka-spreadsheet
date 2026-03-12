@@ -22,9 +22,9 @@ import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
@@ -52,7 +52,7 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage(
             "Message123"
         );
-        final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(cell);
+        final ValidationError<SpreadsheetValidationReference> validationError = spreadsheetError.toValidationError(cell);
 
         this.convertAndCheck(
             validationError.text(),
@@ -68,7 +68,7 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage(
             "Message123"
         );
-        final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(cell);
+        final ValidationError<SpreadsheetValidationReference> validationError = spreadsheetError.toValidationError(cell);
 
         this.convertAndCheck(
             new StringBuilder(
@@ -84,7 +84,7 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
     public void testConvertStringWithValueMessageLabel() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("Label123");
         final SpreadsheetError spreadsheetError = SpreadsheetErrorKind.VALUE.setMessage("Message123");
-        final ValidationError<SpreadsheetExpressionReference> validationError = spreadsheetError.toValidationError(label);
+        final ValidationError<SpreadsheetValidationReference> validationError = spreadsheetError.toValidationError(label);
 
         this.convertAndCheck(
             validationError.text(),
@@ -118,7 +118,7 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
         return SpreadsheetConverterContexts.fake();
     }
 
-    private SpreadsheetConverterContext createContext(final SpreadsheetExpressionReference cellOrLabel) {
+    private SpreadsheetConverterContext createContext(final SpreadsheetValidationReference cellOrLabel) {
         return new FakeSpreadsheetConverterContext() {
 
             @Override
@@ -144,7 +144,7 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
             private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.textToText();
 
             @Override
-            public SpreadsheetExpressionReference validationReference() {
+            public SpreadsheetValidationReference validationReference() {
                 return cellOrLabel;
             }
         };

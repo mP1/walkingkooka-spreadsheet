@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -100,7 +101,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
     public final static SpreadsheetCellSet NO_CELLS = SpreadsheetCellSet.EMPTY;
     public final static Set<SpreadsheetColumn> NO_COLUMNS = Sets.empty();
-    public final static Set<Form<SpreadsheetExpressionReference>> NO_FORMS = Sets.empty();
+    public final static Set<Form<SpreadsheetValidationReference>> NO_FORMS = Sets.empty();
     public final static Set<SpreadsheetLabelMapping> NO_LABELS = Sets.empty();
     public final static Set<SpreadsheetRow> NO_ROWS = Sets.empty();
 
@@ -149,7 +150,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     SpreadsheetDelta(final Optional<SpreadsheetViewport> viewport,
                      final SpreadsheetCellSet cells,
                      final Set<SpreadsheetColumn> columns,
-                     final Set<Form<SpreadsheetExpressionReference>> forms,
+                     final Set<Form<SpreadsheetValidationReference>> forms,
                      final Set<SpreadsheetLabelMapping> labels,
                      final Set<SpreadsheetRow> rows,
                      final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
@@ -382,39 +383,39 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
     /**
      * Returns any forms.
      */
-    public final Set<Form<SpreadsheetExpressionReference>> forms() {
+    public final Set<Form<SpreadsheetValidationReference>> forms() {
         return this.forms;
     }
 
-    final Set<Form<SpreadsheetExpressionReference>> forms;
+    final Set<Form<SpreadsheetValidationReference>> forms;
 
     /**
      * Would be setter that returns a {@link SpreadsheetDelta} holding the given forms after they are possibly filtered
      * using the {@link #window()}
      */
-    public final SpreadsheetDelta setForms(final Set<Form<SpreadsheetExpressionReference>> forms) {
+    public final SpreadsheetDelta setForms(final Set<Form<SpreadsheetValidationReference>> forms) {
         Objects.requireNonNull(forms, "forms");
 
-        SortedSet<Form<SpreadsheetExpressionReference>> copy;
+        SortedSet<Form<SpreadsheetValidationReference>> copy;
         if (forms instanceof SortedSet) {
-            copy = (SortedSet<Form<SpreadsheetExpressionReference>>) forms;
+            copy = (SortedSet<Form<SpreadsheetValidationReference>>) forms;
         } else {
             copy = SortedSets.tree(Form.nameComparator());
             copy.addAll(forms);
         }
 
-        final Set<Form<SpreadsheetExpressionReference>> copy2 = SortedSets.immutable(copy);
+        final Set<Form<SpreadsheetValidationReference>> copy2 = SortedSets.immutable(copy);
         return setElementEquals(this.forms, copy2) ?
             this :
             this.replaceForms(copy2);
     }
 
-    abstract SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetExpressionReference>> forms);
+    abstract SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetValidationReference>> forms);
 
     /**
      * Finds a {@link Form} with the given {@link FormName}.
      */
-    public final Optional<Form<SpreadsheetExpressionReference>> form(final FormName form) {
+    public final Optional<Form<SpreadsheetValidationReference>> form(final FormName form) {
         Objects.requireNonNull(form, "form");
 
         return this.forms()
@@ -943,7 +944,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
 
         final SpreadsheetCellSet cells = this.cells;
         final Set<SpreadsheetColumn> columns = this.columns;
-        final Set<Form<SpreadsheetExpressionReference>> forms = this.forms;
+        final Set<Form<SpreadsheetValidationReference>> forms = this.forms;
         final Set<SpreadsheetLabelMapping> labels = this.labels;
         final Set<SpreadsheetRow> rows = this.rows;
 
@@ -2763,7 +2764,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         return cells;
     }
 
-    private final static Class<Form<SpreadsheetExpressionReference>> FORM_SPREADSHEET_EXPRESSION_REFERENCE_CLASS = Cast.to(Form.class);
+    private final static Class<Form<SpreadsheetValidationReference>> FORM_SPREADSHEET_EXPRESSION_REFERENCE_CLASS = Cast.to(Form.class);
 
     /**
      * <pre>
@@ -2836,7 +2837,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
         }
 
         {
-            final Set<Form<SpreadsheetExpressionReference>> forms = this.forms;
+            final Set<Form<SpreadsheetValidationReference>> forms = this.forms;
             if (false == forms.isEmpty()) {
                 children.add(
                     context.marshallCollection(forms)

@@ -17,11 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterName;
-import walkingkooka.validation.ValidationError;
-import walkingkooka.validation.ValidationReference;
 
 import java.util.Iterator;
 
@@ -30,8 +27,7 @@ import java.util.Iterator;
  * Either a {@link SpreadsheetCellReference} or {@link SpreadsheetLabelName} with the later can be used for untargeted
  * form fields.
  */
-abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference,
-    ValidationReference {
+abstract public class SpreadsheetExpressionReference extends SpreadsheetSelection implements ExpressionReference {
 
     /**
      * Package private to limit subclassing.
@@ -83,12 +79,5 @@ abstract public class SpreadsheetExpressionReference extends SpreadsheetSelectio
     @Override
     public final Iterator<SpreadsheetColumnOrRowReference> columnOrRowsIterator() {
         throw new UnsupportedOperationException();
-    }
-
-    // ValidationError..................................................................................................
-
-    @Override
-    public final ValidationError<SpreadsheetExpressionReference> setValidationErrorMessage(final String message) {
-        return SpreadsheetError.parse(message).toValidationError(this);
     }
 }

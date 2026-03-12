@@ -72,12 +72,12 @@ import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
@@ -995,7 +995,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testFormAndValidationConvertStringToValidationError() {
-        final ValidationError<SpreadsheetExpressionReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
+        final ValidationError<SpreadsheetValidationReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
             .toValidationError(SpreadsheetSelection.A1);
 
         this.formAndValidationConvertAndCheck(
@@ -1006,12 +1006,12 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testFormAndValidationConvertStringToTextFormAndValidationPropertyName() {
-        final ValidationError<SpreadsheetExpressionReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
+        final ValidationError<SpreadsheetValidationReference> error = SpreadsheetErrorKind.DIV0.setMessage("Divide by zero 123")
             .toValidationError(SpreadsheetSelection.A1);
 
         this.formAndValidationConvertAndCheck(
             error,
-            ValidationErrorList.<SpreadsheetExpressionReference>empty()
+            ValidationErrorList.<SpreadsheetValidationReference>empty()
                 .concat(error)
         );
     }
@@ -1069,7 +1069,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
 
         @Override
-        public SpreadsheetExpressionReference validationReference() {
+        public SpreadsheetValidationReference validationReference() {
             return SpreadsheetSelection.A1;
         }
 

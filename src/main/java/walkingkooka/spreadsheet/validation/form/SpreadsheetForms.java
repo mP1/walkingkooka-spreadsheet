@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.validation.form;
 import walkingkooka.Cast;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationErrorList;
 import walkingkooka.validation.form.Form;
@@ -34,33 +35,33 @@ public final class SpreadsheetForms implements PublicStaticHelper {
     /**
      * A {@link Form} with a type parameter of {@link SpreadsheetExpressionReference}.
      */
-    public final static Class<Form<SpreadsheetExpressionReference>> FORM_CLASS = Cast.to(Form.class);
+    public final static Class<Form<SpreadsheetValidationReference>> FORM_CLASS = Cast.to(Form.class);
 
     /**
      * {@see ValidationError}
      */
-    public static ValidationError<SpreadsheetExpressionReference> error(final SpreadsheetExpressionReference reference) {
+    public static ValidationError<SpreadsheetValidationReference> error(final SpreadsheetValidationReference reference) {
         return ValidationError.with(reference);
     }
 
     /**
      * {@see ValidationErrorList}
      */
-    public static ValidationErrorList<SpreadsheetExpressionReference> errorList() {
+    public static ValidationErrorList<SpreadsheetValidationReference> errorList() {
         return ValidationErrorList.empty();
     }
 
     /**
      * {@see FormField}.
      */
-    public static FormField<SpreadsheetExpressionReference> field(final SpreadsheetExpressionReference reference) {
+    public static FormField<SpreadsheetValidationReference> field(final SpreadsheetValidationReference reference) {
         return FormField.with(reference);
     }
 
     /**
      * {@see Form}.
      */
-    public static Form<SpreadsheetExpressionReference> form(final FormName name) {
+    public static Form<SpreadsheetValidationReference> form(final FormName name) {
         return Form.with(name);
     }
 

@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -190,7 +191,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
+    public SpreadsheetDelta saveForm(final Form<SpreadsheetValidationReference> form,
                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
@@ -216,7 +217,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+    public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                        final SpreadsheetExpressionReference selection,
                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
