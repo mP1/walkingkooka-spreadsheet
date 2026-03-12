@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
@@ -1080,68 +1081,6 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         );
     }
 
-    // parseCellOrLabel.................................................................................................
-
-    @Test
-    public void testParseCellOrLabelNullFails() {
-        parseCellOrLabelFails(
-            null,
-            NullPointerException.class
-        );
-    }
-
-    @Test
-    public void testParseCellOrLabelEmptyFails() {
-        parseCellOrLabelFails(
-            "",
-            IllegalArgumentException.class
-        );
-    }
-
-    @Test
-    public void testParseCellOrLabelStarFails() {
-        parseCellOrLabelFails(
-            "*",
-            InvalidCharacterException.class
-        );
-    }
-
-    @Test
-    public void testParseCellOrLabelRangeFails() {
-        parseCellOrLabelFails(
-            SpreadsheetSelection.parseCellRange("A1:B2").toString(),
-            InvalidCharacterException.class
-        );
-    }
-
-    private void parseCellOrLabelFails(final String text,
-                                       final Class<? extends RuntimeException> thrown) {
-        assertThrows(thrown, () -> SpreadsheetSelection.parseCellOrLabel(text));
-    }
-
-    @Test
-    public void testParseCellOrLabelCell() {
-        final String text = "A1";
-        this.parseCellOrLabelAndCheck(text, SpreadsheetSelection.parseCell(text));
-    }
-
-    @Test
-    public void testParseCellOrLabelLabel() {
-        final String text = "Label123";
-        this.parseCellOrLabelAndCheck(text, SpreadsheetCellReference.labelName(text));
-    }
-
-    private void parseCellOrLabelAndCheck(final String text,
-                                          final SpreadsheetExpressionReference expected) {
-        final SpreadsheetExpressionReference parsed = SpreadsheetSelection.parseCellOrLabel(text);
-
-        this.checkEquals(
-            expected,
-            parsed,
-            () -> "Parsing of " + CharSequences.quoteAndEscape(text) + " failed"
-        );
-    }
-
     // parseCellOrCellRange.............................................................................................
 
     @Test
@@ -1426,6 +1365,77 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
         this.checkEquals(
             SpreadsheetSelection.parseRow("5"),
             SpreadsheetSelection.parseRowOrRowRange("5:5")
+        );
+    }
+
+    // parseValidationReference.........................................................................................
+
+    @Test
+    public void testParseValidationReferenceNullFails() {
+        parseValidationReferenceFails(
+            null,
+            NullPointerException.class
+        );
+    }
+
+    @Test
+    public void testParseValidationReferenceEmptyFails() {
+        parseValidationReferenceFails(
+            "",
+            IllegalArgumentException.class
+        );
+    }
+
+    @Test
+    public void testParseValidationReferenceStarFails() {
+        parseValidationReferenceFails(
+            "*",
+            InvalidCharacterException.class
+        );
+    }
+
+    @Test
+    public void testParseValidationReferenceRangeFails() {
+        parseValidationReferenceFails(
+            SpreadsheetSelection.parseCellRange("A1:B2").toString(),
+            InvalidCharacterException.class
+        );
+    }
+
+    private void parseValidationReferenceFails(final String text,
+                                               final Class<? extends RuntimeException> thrown) {
+        assertThrows(
+            thrown,
+            () -> SpreadsheetSelection.parseValidationReference(text)
+        );
+    }
+
+    @Test
+    public void testParseCellOrLabelCell() {
+        final String text = "A1";
+        this.parseValidationReferenceAndCheck(
+            text,
+            SpreadsheetSelection.parseCell(text)
+        );
+    }
+
+    @Test
+    public void testParseValidationReference() {
+        final String text = "Label123";
+        this.parseValidationReferenceAndCheck(
+            text,
+            SpreadsheetCellReference.labelName(text)
+        );
+    }
+
+    private void parseValidationReferenceAndCheck(final String text,
+                                                  final SpreadsheetValidationReference expected) {
+        final SpreadsheetValidationReference parsed = SpreadsheetSelection.parseValidationReference(text);
+
+        this.checkEquals(
+            expected,
+            parsed,
+            () -> "Parsing of " + CharSequences.quoteAndEscape(text) + " failed"
         );
     }
 
