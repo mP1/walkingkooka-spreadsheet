@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.StoragePath;
@@ -76,7 +76,7 @@ public interface SpreadsheetConverterContextDelegator extends SpreadsheetConvert
     }
 
     @Override
-    default SpreadsheetExpressionReference validationReference() {
+    default SpreadsheetValidationReference validationReference() {
         return this.spreadsheetConverterContext()
             .validationReference();
     }

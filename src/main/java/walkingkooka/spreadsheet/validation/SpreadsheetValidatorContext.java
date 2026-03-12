@@ -19,13 +19,12 @@ package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 
-public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetExpressionReference> {
+public interface SpreadsheetValidatorContext extends ValidatorContext<SpreadsheetValidationReference> {
 
     @Override
     SpreadsheetValidatorContext cloneEnvironment();
@@ -39,7 +38,7 @@ public interface SpreadsheetValidatorContext extends ValidatorContext<Spreadshee
     SpreadsheetLabelName VALUE = SpreadsheetSelection.labelName(ValidatorContext.VALIDATION_EXPRESSION_VALUE_REFERENCE_STRING);
 
     @Override
-    SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel);
+    SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel);
 
     /**
      * Creates a {@link SpreadsheetExpressionEvaluationContext} with the current {@link #validationReference()}

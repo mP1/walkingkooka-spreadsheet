@@ -19,17 +19,20 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.FormField;
 
 final class BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor extends SpreadsheetSelectionVisitor {
 
-    static void acceptFormField(final FormField<SpreadsheetExpressionReference> field,
+    static void acceptFormField(final FormField<SpreadsheetValidationReference> field,
                                 final BasicSpreadsheetEngineChanges changes) {
         final BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor visitor = new BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor(changes);
-        visitor.accept(field.reference());
+        visitor.accept(
+            field.reference()
+                .toSpreadsheetSelection()
+        );
     }
 
 

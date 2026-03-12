@@ -50,6 +50,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContext;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetFormHandlerContexts;
@@ -1062,7 +1063,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context
         );
         try {
-            Form<SpreadsheetExpressionReference> form = context.storeRepository()
+            Form<SpreadsheetValidationReference> form = context.storeRepository()
                 .forms()
                 .load(name)
                 .orElse(null);
@@ -1086,7 +1087,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
+    public SpreadsheetDelta saveForm(final Form<SpreadsheetValidationReference> form,
                                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(form, "form");
         Objects.requireNonNull(context, "context");
@@ -1096,21 +1097,21 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context
         );
         try {
-            final Form<SpreadsheetExpressionReference> savedForm = context.storeRepository()
+            final Form<SpreadsheetValidationReference> savedForm = context.storeRepository()
                 .forms()
                 .save(form);
 
-            for (final FormField<SpreadsheetExpressionReference> field : savedForm.fields()) {
+            for (final FormField<SpreadsheetValidationReference> field : savedForm.fields()) {
                 BasicSpreadsheetEngineLoadFormSpreadsheetSelectionVisitor.acceptFormField(
                     field,
                     changes
                 );
             }
 
-            final Map<SpreadsheetExpressionReference, Integer> cellOrLabelToCount = SpreadsheetSelectionMaps.spreadsheetExpressionReference();
+            final Map<SpreadsheetValidationReference, Integer> cellOrLabelToCount = SpreadsheetSelectionMaps.spreadsheetValidationReference();
 
-            for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
-                final SpreadsheetExpressionReference cellOrLabel = field.reference();
+            for (final FormField<SpreadsheetValidationReference> field : form.fields()) {
+                final SpreadsheetValidationReference cellOrLabel = field.reference();
 
                 Integer count = cellOrLabelToCount.get(cellOrLabel);
                 if (null == count) {
@@ -1124,10 +1125,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 );
             }
 
-            final Set<SpreadsheetExpressionReference> duplicates = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+            final Set<SpreadsheetValidationReference> duplicates = SortedSets.tree(SpreadsheetValidationReference.IGNORES_REFERENCE_KIND_COMPARATOR);
 
-            for (final Map.Entry<SpreadsheetExpressionReference, Integer> cellOrLabelAndCount : cellOrLabelToCount.entrySet()) {
-                final SpreadsheetExpressionReference cellOrLabel = cellOrLabelAndCount.getKey();
+            for (final Map.Entry<SpreadsheetValidationReference, Integer> cellOrLabelAndCount : cellOrLabelToCount.entrySet()) {
+                final SpreadsheetValidationReference cellOrLabel = cellOrLabelAndCount.getKey();
                 int count = cellOrLabelAndCount.getValue();
 
                 if (cellOrLabel.isLabelName()) {
@@ -1141,7 +1142,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
                             if (count > 1) {
                                 duplicates.add(
-                                    labelNameTarget.toExpressionReference()
+                                    labelNameTarget.toValidationReference()
                                 );
                             }
                         }
@@ -1207,7 +1208,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context
         );
         try {
-            final List<Form<SpreadsheetExpressionReference>> forms = context.storeRepository()
+            final List<Form<SpreadsheetValidationReference>> forms = context.storeRepository()
                 .forms()
                 .values(
                     offset,
@@ -1238,7 +1239,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context
         );
         try {
-            Form<SpreadsheetExpressionReference> form = context.storeRepository()
+            Form<SpreadsheetValidationReference> form = context.storeRepository()
                 .forms()
                 .load(name)
                 .orElseThrow(() -> new IllegalArgumentException("Form not found"));
@@ -1263,9 +1264,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             {
                 // fix the reference for each field.
-                final List<FormField<SpreadsheetExpressionReference>> fields = Lists.array();
+                final List<FormField<SpreadsheetValidationReference>> fields = Lists.array();
 
-                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
+                for (final FormField<SpreadsheetValidationReference> field : form.fields()) {
                     fields.add(
                         field.setReference(cell)
                     );
@@ -1280,7 +1281,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             // Create FormHandlerContext and prepare fields.
-            final FormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
+            final FormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
                 form.handler()
                     .orElseGet(
                         () -> context.spreadsheetMetadata()
@@ -1318,7 +1319,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+    public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                        final SpreadsheetExpressionReference selection,
                                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(form, "form");
@@ -1330,7 +1331,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             context
         );
         try {
-            Form<SpreadsheetExpressionReference> loaded = context.storeRepository()
+            Form<SpreadsheetValidationReference> loaded = context.storeRepository()
                 .forms()
                 .load(form.name())
                 .orElseThrow(() -> new IllegalArgumentException("Form not found"));
@@ -1355,9 +1356,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     1;
 
                 // build a map of submitted form fields.
-                final Map<SpreadsheetExpressionReference, FormField<SpreadsheetExpressionReference>> referenceToFields = SpreadsheetSelectionMaps.spreadsheetExpressionReference();
+                final Map<SpreadsheetValidationReference, FormField<SpreadsheetValidationReference>> referenceToFields = SpreadsheetSelectionMaps.spreadsheetValidationReference();
 
-                for (final FormField<SpreadsheetExpressionReference> field : form.fields()) {
+                for (final FormField<SpreadsheetValidationReference> field : form.fields()) {
                     referenceToFields.put(
                         field.reference(),
                         field
@@ -1365,12 +1366,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
 
                 // fix the reference for each field & copy the values from the submitted form.
-                final List<FormField<SpreadsheetExpressionReference>> fields = Lists.array();
+                final List<FormField<SpreadsheetValidationReference>> fields = Lists.array();
 
-                for (FormField<SpreadsheetExpressionReference> field : loaded.fields()) {
+                for (FormField<SpreadsheetValidationReference> field : loaded.fields()) {
                     field = field.setReference(cell);
 
-                    final FormField<SpreadsheetExpressionReference> submittedField = referenceToFields.get(cell);
+                    final FormField<SpreadsheetValidationReference> submittedField = referenceToFields.get(cell);
                     if (null != submittedField) {
                         field = field.setValue(
                             submittedField.value()
@@ -1389,7 +1390,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             }
 
             // Create FormHandlerContext and prepare fields.
-            final FormHandler<SpreadsheetExpressionReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
+            final FormHandler<SpreadsheetValidationReference, SpreadsheetDelta, SpreadsheetFormHandlerContext> handler = context.formHandler(
                 form.handler()
                     .orElseGet(
                         () -> context.spreadsheetMetadata()
@@ -1403,7 +1404,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context
             );
 
-            final List<ValidationError<SpreadsheetExpressionReference>> errors = handler.validateForm(
+            final List<ValidationError<SpreadsheetValidationReference>> errors = handler.validateForm(
                 form,
                 formHandlerContext
             );
@@ -1418,7 +1419,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
-    private SpreadsheetFormHandlerContext formHandlerContext(final Form<SpreadsheetExpressionReference> form,
+    private SpreadsheetFormHandlerContext formHandlerContext(final Form<SpreadsheetValidationReference> form,
                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetFormHandlerContexts.basic(
             form,
@@ -1842,7 +1843,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                          final SpreadsheetExpressionReferenceLoader loader,
                                                          final SpreadsheetEngineContext context) {
         final ProviderContext providerContext = context.providerContext();
-        final Validator<SpreadsheetExpressionReference, SpreadsheetValidatorContext> validator = context.validator(
+        final Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext> validator = context.validator(
             validatorSelector,
             providerContext
         );
@@ -1863,7 +1864,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                     providerContext
                                 ),
                                 (final Object v,
-                                 final SpreadsheetExpressionReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
+                                 final SpreadsheetValidationReference cellOrLabel) -> context.spreadsheetExpressionEvaluationContext(
                                     Optional.of(cell),
                                     loader
                                 ).addLocalVariable(

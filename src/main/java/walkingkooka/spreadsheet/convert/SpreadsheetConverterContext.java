@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.meta.HasSpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.HasMissingCellNumberValue;
 import walkingkooka.storage.convert.StorageConverterContext;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -47,10 +47,10 @@ public interface SpreadsheetConverterContext extends ExpressionNumberConverterCo
     }
 
     /**
-     * Returns the {@link SpreadsheetExpressionReference} being validated. This is useful for converters within a
+     * Returns the {@link SpreadsheetValidationReference} being validated. This is useful for converters within a
      * validation.
      */
-    SpreadsheetExpressionReference validationReference();
+    SpreadsheetValidationReference validationReference();
 
     // JsonNodeConverterContext.........................................................................................
 

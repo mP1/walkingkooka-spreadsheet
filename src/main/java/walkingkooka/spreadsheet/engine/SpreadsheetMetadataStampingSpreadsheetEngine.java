@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -297,7 +298,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta saveForm(final Form<SpreadsheetExpressionReference> form,
+    public SpreadsheetDelta saveForm(final Form<SpreadsheetValidationReference> form,
                                      final SpreadsheetEngineContext context) {
         return this.engine.saveForm(
             form,
@@ -337,7 +338,7 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
-    public SpreadsheetDelta submitForm(final Form<SpreadsheetExpressionReference> form,
+    public SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
                                        final SpreadsheetExpressionReference selection,
                                        final SpreadsheetEngineContext context) {
         return this.engine.submitForm(

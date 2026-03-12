@@ -22,7 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCell;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -77,10 +77,10 @@ public interface SpreadsheetFormatterContext extends SpreadsheetConverterContext
     SpreadsheetFormatter spreadsheetFormatter(final SpreadsheetFormatterSelector selector);
 
     /**
-     * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetExpressionReference} being validated.
+     * A {@link SpreadsheetFormatterContext} will never need the {@link SpreadsheetValidationReference} being validated.
      */
     @Override
-    default SpreadsheetExpressionReference validationReference() {
+    default SpreadsheetValidationReference validationReference() {
         throw new UnsupportedOperationException();
     }
 

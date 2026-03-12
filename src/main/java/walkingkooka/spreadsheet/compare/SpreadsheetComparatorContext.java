@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -42,7 +42,7 @@ public interface SpreadsheetComparatorContext extends SpreadsheetConverterContex
      * A {@link SpreadsheetComparatorContext} is not executed within validation and will never need the validation reference.
      */
     @Override
-    default SpreadsheetExpressionReference validationReference() {
+    default SpreadsheetValidationReference validationReference() {
         throw new UnsupportedOperationException();
     }
 

@@ -19,10 +19,9 @@ package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.FakeValidatorContext;
 
-public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<SpreadsheetExpressionReference> implements SpreadsheetValidatorContext {
+public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<SpreadsheetValidationReference> implements SpreadsheetValidatorContext {
 
     public FakeSpreadsheetValidatorContext() {
         super();
@@ -39,7 +38,7 @@ public class FakeSpreadsheetValidatorContext extends FakeValidatorContext<Spread
     }
 
     @Override
-    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
+    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel) {
         throw new UnsupportedOperationException();
     }
 

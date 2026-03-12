@@ -20,14 +20,13 @@ package walkingkooka.spreadsheet.validation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.validation.ValidatorContextTesting;
 
-public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting<C, SpreadsheetExpressionReference>,
+public interface SpreadsheetValidatorContextTesting<C extends SpreadsheetValidatorContext> extends ValidatorContextTesting<C, SpreadsheetValidationReference>,
     SpreadsheetProviderContextTesting<C> {
 
     @Test

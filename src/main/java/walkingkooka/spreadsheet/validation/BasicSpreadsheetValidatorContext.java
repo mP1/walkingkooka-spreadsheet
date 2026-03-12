@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.validation;
 import walkingkooka.Cast;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.ValidatorContextDelegator;
 
@@ -28,9 +27,9 @@ import java.util.Locale;
 import java.util.Objects;
 
 final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorContext,
-    ValidatorContextDelegator<SpreadsheetExpressionReference> {
+    ValidatorContextDelegator<SpreadsheetValidationReference> {
 
-    static SpreadsheetValidatorContext with(final ValidatorContext<SpreadsheetExpressionReference> context) {
+    static SpreadsheetValidatorContext with(final ValidatorContext<SpreadsheetValidationReference> context) {
         Objects.requireNonNull(context, "context");
 
         return context instanceof SpreadsheetValidatorContext ?
@@ -38,7 +37,7 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
             new BasicSpreadsheetValidatorContext(context);
     }
 
-    private BasicSpreadsheetValidatorContext(final ValidatorContext<SpreadsheetExpressionReference> context) {
+    private BasicSpreadsheetValidatorContext(final ValidatorContext<SpreadsheetValidationReference> context) {
         super();
 
         this.context = context;
@@ -46,8 +45,8 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
 
     @Override
     public SpreadsheetValidatorContext cloneEnvironment() {
-        final ValidatorContext<SpreadsheetExpressionReference> context = this.context;
-        final ValidatorContext<SpreadsheetExpressionReference> clone = context.cloneEnvironment();
+        final ValidatorContext<SpreadsheetValidationReference> context = this.context;
+        final ValidatorContext<SpreadsheetValidationReference> clone = context.cloneEnvironment();
 
         // Recreate only if different cloned EnvironmentContext, cloned environment should be equals
         return context == clone ?
@@ -57,8 +56,8 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
 
     @Override
     public SpreadsheetValidatorContext setEnvironmentContext(final EnvironmentContext environmentContext) {
-        final ValidatorContext<SpreadsheetExpressionReference> before = this.context;
-        final ValidatorContext<SpreadsheetExpressionReference> after = before.setEnvironmentContext(environmentContext);
+        final ValidatorContext<SpreadsheetValidationReference> before = this.context;
+        final ValidatorContext<SpreadsheetValidationReference> after = before.setEnvironmentContext(environmentContext);
 
         return before == after ?
             this :
@@ -71,16 +70,17 @@ final class BasicSpreadsheetValidatorContext implements SpreadsheetValidatorCont
     }
 
     @Override
-    public ValidatorContext<SpreadsheetExpressionReference> validatorContext() {
+    public ValidatorContext<SpreadsheetValidationReference> validatorContext() {
         return this.context;
     }
 
-    private final ValidatorContext<SpreadsheetExpressionReference> context;
+    private final ValidatorContext<SpreadsheetValidationReference> context;
 
     @Override
-    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
+    public SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel) {
         return this.validatorContext()
             .validationReference()
+            .toSpreadsheetSelection()
             .equalsIgnoreReferenceKind(cellOrLabel) ?
             this :
             new BasicSpreadsheetValidatorContext(

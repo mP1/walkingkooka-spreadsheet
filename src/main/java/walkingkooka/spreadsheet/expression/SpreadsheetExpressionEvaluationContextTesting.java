@@ -30,11 +30,11 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderContextTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.HasSpreadsheetCellTesting;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
@@ -51,13 +51,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetExpressionReference, SpreadsheetDelta, C>,
+public interface SpreadsheetExpressionEvaluationContextTesting<C extends SpreadsheetExpressionEvaluationContext> extends FormHandlerExpressionEvaluationContextTesting<SpreadsheetValidationReference, SpreadsheetDelta, C>,
     HasSpreadsheetCellTesting<C>,
     JsonNodeExpressionEvaluationContextTesting<C>,
     SpreadsheetEnvironmentContextTesting2<C>,
     SpreadsheetLabelNameResolverTesting<C>,
     StorageExpressionEvaluationContextTesting2<C>,
-    ValidatorExpressionEvaluationContextTesting<SpreadsheetExpressionReference, C>,
+    ValidatorExpressionEvaluationContextTesting<SpreadsheetValidationReference, C>,
     SpreadsheetProviderContextTesting<C> {
 
     // stringEqualsCaseSensitivity......................................................................................

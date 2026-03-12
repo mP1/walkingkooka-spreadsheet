@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
@@ -546,7 +547,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testFormsReadOnly() {
         final D delta = this.createSpreadsheetDelta();
-        final Set<Form<SpreadsheetExpressionReference>> forms = delta.forms();
+        final Set<Form<SpreadsheetValidationReference>> forms = delta.forms();
 
         assertThrows(
             UnsupportedOperationException.class,
@@ -577,7 +578,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public void testSetFormsEmpty() {
         final D before = this.createSpreadsheetDelta();
-        final Set<Form<SpreadsheetExpressionReference>> different = SpreadsheetDelta.NO_FORMS;
+        final Set<Form<SpreadsheetValidationReference>> different = SpreadsheetDelta.NO_FORMS;
 
         final SpreadsheetDelta after = before.setForms(different);
         assertNotSame(before, after);
@@ -608,7 +609,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     @Test
     public final void testSetFormsWithDifferent() {
         final D before = this.createSpreadsheetDelta();
-        final Set<Form<SpreadsheetExpressionReference>> different = this.differentForms();
+        final Set<Form<SpreadsheetValidationReference>> different = this.differentForms();
 
         final SpreadsheetDelta after = before.setForms(different);
         assertNotSame(
@@ -635,13 +636,13 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.rowHeightsAndCheck(after);
     }
 
-    final Set<Form<SpreadsheetExpressionReference>> forms() {
+    final Set<Form<SpreadsheetValidationReference>> forms() {
         return Sets.of(
             this.form1()
         );
     }
 
-    final Set<Form<SpreadsheetExpressionReference>> differentForms() {
+    final Set<Form<SpreadsheetValidationReference>> differentForms() {
         return Sets.of(
             this.form2()
         );
@@ -655,7 +656,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final void formsAndCheck(final SpreadsheetDelta delta,
-                             final Set<Form<SpreadsheetExpressionReference>> forms) {
+                             final Set<Form<SpreadsheetValidationReference>> forms) {
         this.checkEquals(
             forms,
             delta.forms(),
@@ -672,8 +673,8 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final Form<SpreadsheetExpressionReference> form1() {
-        return Form.<SpreadsheetExpressionReference>with(
+    final Form<SpreadsheetValidationReference> form1() {
+        return Form.<SpreadsheetValidationReference>with(
             FormName.with("Form111")
         ).setFields(
             Lists.of(
@@ -686,7 +687,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         );
     }
 
-    final Form<SpreadsheetExpressionReference> form2() {
+    final Form<SpreadsheetValidationReference> form2() {
         return Form.with(FormName.with("Form222"));
     }
 

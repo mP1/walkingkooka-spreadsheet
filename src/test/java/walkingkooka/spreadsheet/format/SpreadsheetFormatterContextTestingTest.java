@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContex
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContextTestingTest.TestSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
@@ -183,7 +183,7 @@ public final class SpreadsheetFormatterContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public SpreadsheetExpressionReference validationReference() {
+        public SpreadsheetValidationReference validationReference() {
             throw new UnsupportedOperationException();
         }
 

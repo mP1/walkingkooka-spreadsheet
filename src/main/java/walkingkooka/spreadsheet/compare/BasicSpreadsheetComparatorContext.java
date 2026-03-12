@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContextDelegator;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
@@ -67,7 +67,7 @@ final class BasicSpreadsheetComparatorContext implements SpreadsheetComparatorCo
     }
 
     @Override
-    public SpreadsheetExpressionReference validationReference() {
+    public SpreadsheetValidationReference validationReference() {
         return SpreadsheetComparatorContext.super.validationReference();
     }
 

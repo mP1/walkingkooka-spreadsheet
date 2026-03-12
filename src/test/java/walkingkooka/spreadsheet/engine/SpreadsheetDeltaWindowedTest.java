@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -199,7 +200,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
             c
         );
 
-        final Set<Form<SpreadsheetExpressionReference>> forms = this.forms();
+        final Set<Form<SpreadsheetValidationReference>> forms = this.forms();
 
         final SpreadsheetLabelMapping labelA1a = this.label1a().setLabelMappingReference(a1.reference());
         final SpreadsheetLabelMapping label2b = SpreadsheetSelection.labelName("label2b").setLabelMappingReference(b2.reference());

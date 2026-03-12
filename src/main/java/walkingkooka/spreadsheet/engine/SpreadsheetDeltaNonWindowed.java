@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReferenceSet;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
@@ -52,7 +53,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     static SpreadsheetDeltaNonWindowed withNonWindowed(final Optional<SpreadsheetViewport> viewport,
                                                        final Set<SpreadsheetCell> cells,
                                                        final Set<SpreadsheetColumn> columns,
-                                                       final Set<Form<SpreadsheetExpressionReference>> forms,
+                                                       final Set<Form<SpreadsheetValidationReference>> forms,
                                                        final Set<SpreadsheetLabelMapping> labels,
                                                        final Set<SpreadsheetRow> rows,
                                                        final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
@@ -88,7 +89,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     private SpreadsheetDeltaNonWindowed(final Optional<SpreadsheetViewport> viewport,
                                         final SpreadsheetCellSet cells,
                                         final Set<SpreadsheetColumn> columns,
-                                        final Set<Form<SpreadsheetExpressionReference>> forms,
+                                        final Set<Form<SpreadsheetValidationReference>> forms,
                                         final Set<SpreadsheetLabelMapping> labels,
                                         final Set<SpreadsheetRow> rows,
                                         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> references,
@@ -194,7 +195,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetExpressionReference>> forms) {
+    SpreadsheetDelta replaceForms(final Set<Form<SpreadsheetValidationReference>> forms) {
         return new SpreadsheetDeltaNonWindowed(
             this.viewport,
             this.cells,

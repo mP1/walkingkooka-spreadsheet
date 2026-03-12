@@ -40,12 +40,12 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
@@ -86,7 +86,7 @@ import java.util.function.Function;
  */
 final class SpreadsheetExpressionEvaluationContextLocalReferences implements SpreadsheetExpressionEvaluationContext,
     ConverterContextDelegator,
-    FormHandlerContextDelegator<SpreadsheetExpressionReference, SpreadsheetDelta>,
+    FormHandlerContextDelegator<SpreadsheetValidationReference, SpreadsheetDelta>,
     JsonNodeMarshallUnmarshallContextDelegator,
     LocaleContextDelegator,
     TerminalContextDelegator,
@@ -195,7 +195,7 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
-    public SpreadsheetExpressionReference validationReference() {
+    public SpreadsheetValidationReference validationReference() {
         return this.context.validationReference();
     }
 
@@ -358,12 +358,12 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     // FormHandlerContextDelegator......................................................................................
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         return this.context.validatorContext(reference);
     }
 
     @Override
-    public FormHandlerContext<SpreadsheetExpressionReference, SpreadsheetDelta> formHandlerContext() {
+    public FormHandlerContext<SpreadsheetValidationReference, SpreadsheetDelta> formHandlerContext() {
         return this.context;
     }
 

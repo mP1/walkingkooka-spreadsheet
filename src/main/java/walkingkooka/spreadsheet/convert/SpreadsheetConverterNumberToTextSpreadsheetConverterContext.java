@@ -28,10 +28,10 @@ import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolverDelegator;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -156,7 +156,7 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
-    public SpreadsheetExpressionReference validationReference() {
+    public SpreadsheetValidationReference validationReference() {
         throw new UnsupportedOperationException();
     }
 

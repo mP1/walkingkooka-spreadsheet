@@ -26,7 +26,6 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataTesting;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -110,7 +109,7 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             this(SpreadsheetSelection.A1);
         }
 
-        TestSpreadsheetValidatorContext(final SpreadsheetExpressionReference reference) {
+        TestSpreadsheetValidatorContext(final SpreadsheetValidationReference reference) {
             this.reference = reference;
         }
 
@@ -198,27 +197,27 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
         }
 
         @Override
-        public SpreadsheetValidatorContext setValidationReference(final SpreadsheetExpressionReference cellOrLabel) {
+        public SpreadsheetValidatorContext setValidationReference(final SpreadsheetValidationReference cellOrLabel) {
             Objects.requireNonNull(cellOrLabel, "cellOrLabel");
 
             return new TestSpreadsheetValidatorContext() {
 
                 @Override
-                public SpreadsheetExpressionReference validationReference() {
+                public SpreadsheetValidationReference validationReference() {
                     return cellOrLabel;
                 }
             };
         }
 
         @Override
-        public SpreadsheetExpressionReference validationReference() {
+        public SpreadsheetValidationReference validationReference() {
             return this.reference;
         }
 
-        private final SpreadsheetExpressionReference reference;
+        private final SpreadsheetValidationReference reference;
 
         @Override
-        public Validator<SpreadsheetExpressionReference, ? super ValidatorContext<SpreadsheetExpressionReference>> validator(final ValidatorSelector validatorSelector) {
+        public Validator<SpreadsheetValidationReference, ? super ValidatorContext<SpreadsheetValidationReference>> validator(final ValidatorSelector validatorSelector) {
             Objects.requireNonNull(validatorSelector, "validatorSelector");
 
             throw new UnsupportedOperationException();

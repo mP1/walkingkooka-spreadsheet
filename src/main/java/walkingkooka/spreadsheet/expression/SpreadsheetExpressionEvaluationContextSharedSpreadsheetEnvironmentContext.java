@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.terminal.TerminalContext;
@@ -270,29 +271,29 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     // FormHandlerContext...............................................................................................
 
     @Override
-    public Form<SpreadsheetExpressionReference> form() {
+    public Form<SpreadsheetValidationReference> form() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Comparator<SpreadsheetExpressionReference> formFieldReferenceComparator() {
+    public Comparator<SpreadsheetValidationReference> formFieldReferenceComparator() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<Object> loadFormFieldValue(final SpreadsheetExpressionReference reference) {
+    public Optional<Object> loadFormFieldValue(final SpreadsheetValidationReference reference) {
         Objects.requireNonNull(reference, "reference");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetExpressionReference>> formFields) {
+    public SpreadsheetDelta saveFormFieldValues(final List<FormField<SpreadsheetValidationReference>> formFields) {
         Objects.requireNonNull(formFields, "formFields");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetValidatorContext validatorContext(final SpreadsheetExpressionReference reference) {
+    public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
         Objects.requireNonNull(reference, "reference");
         throw new UnsupportedOperationException();
     }

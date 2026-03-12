@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 
 import java.util.SortedMap;
 
@@ -45,6 +46,10 @@ public final class SpreadsheetSelectionMaps implements PublicStaticHelper {
 
     public static <V> SortedMap<SpreadsheetExpressionReference, V> spreadsheetExpressionReference() {
         return Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+    }
+
+    public static <V> SortedMap<SpreadsheetValidationReference, V> spreadsheetValidationReference() {
+        return Maps.sorted(SpreadsheetValidationReference.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
     /**

@@ -41,11 +41,11 @@ import walkingkooka.spreadsheet.reference.FakeSpreadsheetExpressionReferenceLoad
 import walkingkooka.spreadsheet.reference.LabelNotFoundException;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoaders;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidatorContext;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.Indentation;
@@ -72,7 +72,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetFormHandlerContextTest implements SpreadsheetFormHandlerContextTesting<BasicSpreadsheetFormHandlerContext>,
     HashCodeEqualsDefinedTesting2<BasicSpreadsheetFormHandlerContext> {
 
-    private final static Form<SpreadsheetExpressionReference> FORM = Form.with(
+    private final static Form<SpreadsheetValidationReference> FORM = Form.with(
         FormName.with("Form123")
     );
 

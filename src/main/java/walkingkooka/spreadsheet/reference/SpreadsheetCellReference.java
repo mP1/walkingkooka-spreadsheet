@@ -23,6 +23,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.parser.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
@@ -44,7 +45,8 @@ import java.util.function.Predicate;
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRange
-    implements Comparable<SpreadsheetCellReference>,
+    implements SpreadsheetValidationReference,
+    Comparable<SpreadsheetCellReference>,
     CanReplaceReferences<SpreadsheetCellReference>,
     HateosResource<String> {
 

@@ -18,18 +18,18 @@
 package walkingkooka.spreadsheet.validation.form.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.store.FormStoreTesting;
 
-public final class TreeSpreadsheetFormStoreTest implements FormStoreTesting<TreeSpreadsheetFormStore, SpreadsheetExpressionReference> {
+public final class TreeSpreadsheetFormStoreTest implements FormStoreTesting<TreeSpreadsheetFormStore, SpreadsheetValidationReference > {
 
     @Test
     public void testSaveAndLoad() {
         final TreeSpreadsheetFormStore store = this.createStore();
 
-        final Form<SpreadsheetExpressionReference> form = this.value();
+        final Form<SpreadsheetValidationReference> form = this.value();
         store.save(form);
 
         this.loadAndCheck(
@@ -50,7 +50,7 @@ public final class TreeSpreadsheetFormStoreTest implements FormStoreTesting<Tree
     }
 
     @Override
-    public Form<SpreadsheetExpressionReference> value() {
+    public Form<SpreadsheetValidationReference> value() {
         return Form.with(this.id());
     }
 

@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.validation.form.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.store.FormStore;
@@ -39,17 +39,17 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     }
 
     @Override
-    public Optional<Form<SpreadsheetExpressionReference>> load(final FormName formName) {
+    public Optional<Form<SpreadsheetValidationReference>> load(final FormName formName) {
         return this.store.load(formName);
     }
 
     @Override
-    public Form<SpreadsheetExpressionReference> save(final Form<SpreadsheetExpressionReference> reference) {
+    public Form<SpreadsheetValidationReference> save(final Form<SpreadsheetValidationReference> reference) {
         return this.store.save(reference);
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<Form<SpreadsheetExpressionReference>> watcher) {
+    public Runnable addSaveWatcher(final Consumer<Form<SpreadsheetValidationReference>> watcher) {
         return this.store.addSaveWatcher(watcher);
     }
 
@@ -83,7 +83,7 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     }
 
     @Override
-    public List<Form<SpreadsheetExpressionReference>> values(final int offset,
+    public List<Form<SpreadsheetValidationReference>> values(final int offset,
                                                              final int count) {
         return this.store.values(
             offset,
@@ -92,12 +92,12 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     }
 
     @Override
-    public List<Form<SpreadsheetExpressionReference>> all() {
+    public List<Form<SpreadsheetValidationReference>> all() {
         return this.store.all();
     }
 
     @Override
-    public List<Form<SpreadsheetExpressionReference>> between(final FormName from,
+    public List<Form<SpreadsheetValidationReference>> between(final FormName from,
                                                               final FormName to) {
         return this.store.between(
             from,
@@ -106,11 +106,11 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     }
 
     @Override
-    public Optional<Form<SpreadsheetExpressionReference>> firstValue() {
+    public Optional<Form<SpreadsheetValidationReference>> firstValue() {
         return this.store.firstValue();
     }
 
-    private final FormStore<SpreadsheetExpressionReference> store;
+    private final FormStore<SpreadsheetValidationReference> store;
 
     @Override
     public String toString() {

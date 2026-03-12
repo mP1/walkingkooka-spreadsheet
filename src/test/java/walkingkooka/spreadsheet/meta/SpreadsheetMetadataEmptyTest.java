@@ -26,8 +26,8 @@ import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
@@ -258,7 +258,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                     throw new UnsupportedOperationException();
                 },
                 (final Object value,
-                 final SpreadsheetExpressionReference cellOrLabel) -> {
+                 final SpreadsheetValidationReference cellOrLabel) -> {
                     throw new UnsupportedOperationException();
                 },
                 HAS_USER_DIRECTORIES,

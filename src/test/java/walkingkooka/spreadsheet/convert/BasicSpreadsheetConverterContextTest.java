@@ -29,9 +29,9 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
@@ -60,7 +60,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
 
-    private final static Optional<SpreadsheetExpressionReference> VALIDATION_REFERENCE = Optional.empty();
+    private final static Optional<SpreadsheetValidationReference> VALIDATION_REFERENCE = Optional.empty();
 
     private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberToNumber();
 

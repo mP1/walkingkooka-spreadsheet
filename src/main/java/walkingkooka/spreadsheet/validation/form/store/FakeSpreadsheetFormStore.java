@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.validation.form.store;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.store.FakeFormStore;
 
-public class FakeSpreadsheetFormStore extends FakeFormStore<SpreadsheetExpressionReference> implements SpreadsheetFormStore {
+public class FakeSpreadsheetFormStore extends FakeFormStore<SpreadsheetValidationReference> implements SpreadsheetFormStore {
 
     public FakeSpreadsheetFormStore() {
         super();
