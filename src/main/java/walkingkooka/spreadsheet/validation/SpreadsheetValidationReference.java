@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
+import walkingkooka.text.HasText;
 import walkingkooka.validation.ValidationError;
 import walkingkooka.validation.ValidationReference;
 
@@ -31,6 +32,7 @@ import java.util.Comparator;
  * Base class for {@link SpreadsheetSelection} that is also a {@link ValidationReference}.
  */
 public interface SpreadsheetValidationReference extends ValidationReference,
+    HasText,
     HasUrlFragment {
 
     Comparator<SpreadsheetValidationReference> IGNORES_REFERENCE_KIND_COMPARATOR = (final SpreadsheetValidationReference left,
