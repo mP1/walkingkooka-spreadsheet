@@ -100,7 +100,7 @@ public final class SpreadsheetViewportHomeNavigationList implements HasUrlFragme
 
     // @VisibleForTesting
     static SpreadsheetViewportHomeNavigationList with(final SpreadsheetCellReference home,
-                                                       final SpreadsheetViewportNavigationList navigations) {
+                                                      final SpreadsheetViewportNavigationList navigations) {
         return new SpreadsheetViewportHomeNavigationList(
             home,
             navigations
@@ -108,7 +108,7 @@ public final class SpreadsheetViewportHomeNavigationList implements HasUrlFragme
     }
 
     private SpreadsheetViewportHomeNavigationList(final SpreadsheetCellReference home,
-                                                   final SpreadsheetViewportNavigationList navigations) {
+                                                  final SpreadsheetViewportNavigationList navigations) {
         super();
         this.home = home;
         this.navigations = navigations;
@@ -153,7 +153,7 @@ public final class SpreadsheetViewportHomeNavigationList implements HasUrlFragme
     private final SpreadsheetViewportNavigationList navigations;
 
     // TreePrintable....................................................................................................
-    
+
     @Override
     public void printTree(final IndentingPrinter printer) {
         printer.println(this.getClass().getSimpleName());
