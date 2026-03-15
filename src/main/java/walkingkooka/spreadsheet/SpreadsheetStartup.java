@@ -69,6 +69,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportHomeNavigationList;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.storage.StorageStartup;
 import walkingkooka.template.TemplateStartup;
@@ -120,6 +121,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
                 2
             )
         );
+        SpreadsheetViewportHomeNavigationList.with(SpreadsheetSelection.A1);
 
         SpreadsheetCellFindQuery.empty();
 
