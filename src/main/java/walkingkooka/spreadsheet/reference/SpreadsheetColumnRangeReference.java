@@ -279,7 +279,9 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
 
     @Override
     public Set<SpreadsheetViewportAnchor> anchors() {
-        return ANCHORS;
+        return this.isUnit() ?
+            NONE_ANCHORS :
+            ANCHORS;
     }
 
     private final static Set<SpreadsheetViewportAnchor> ANCHORS = Sets.readOnly(
@@ -291,7 +293,9 @@ public final class SpreadsheetColumnRangeReference extends SpreadsheetColumnRefe
 
     @Override
     public SpreadsheetViewportAnchor defaultAnchor() {
-        return SpreadsheetViewportAnchor.COLUMN_RANGE;
+        return this.isUnit() ?
+            SpreadsheetViewportAnchor.NONE :
+            SpreadsheetViewportAnchor.COLUMN_RANGE;
     }
 
     /**

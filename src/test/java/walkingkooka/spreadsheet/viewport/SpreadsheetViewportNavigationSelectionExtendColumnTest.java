@@ -175,7 +175,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
         this.updateColumnRangeAndCheck(
             "E",
             "C",
-            SpreadsheetViewportAnchor.LEFT,
+            SpreadsheetViewportAnchor.NONE,
             "C:E",
             SpreadsheetViewportAnchor.LEFT
         );
@@ -329,7 +329,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendColumnTest extend
         this.updateColumnRangeAndCheck(
             "B",
             "C",
-            SpreadsheetViewportAnchor.LEFT,
+            SpreadsheetViewportAnchor.NONE,
             "B:C",
             SpreadsheetViewportAnchor.RIGHT
         );
