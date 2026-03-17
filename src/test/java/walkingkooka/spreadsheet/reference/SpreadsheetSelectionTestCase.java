@@ -816,6 +816,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         this.checkEquals(selection, anchored.selection(), "selection");
     }
 
+    final void defaultAnchorAndCheck(final SpreadsheetSelection selection,
+                                     final SpreadsheetViewportAnchor expected) {
+        this.checkEquals(
+            expected,
+            selection.defaultAnchor(),
+            selection::toString
+        );
+    }
+
     // setAnchor........................................................................................................
 
     @Test

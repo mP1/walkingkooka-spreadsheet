@@ -385,8 +385,16 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     @Override
     public Set<SpreadsheetViewportAnchor> anchors() {
-        return ANCHORS;
+        return this.isUnit() ?
+            NONE :
+            ANCHORS;
     }
+
+    private final static Set<SpreadsheetViewportAnchor> NONE = Sets.readOnly(
+        EnumSet.of(
+            SpreadsheetViewportAnchor.NONE
+        )
+    );
 
     private final static Set<SpreadsheetViewportAnchor> ANCHORS = Sets.readOnly(
         EnumSet.of(
@@ -399,7 +407,10 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
 
     @Override
     public SpreadsheetViewportAnchor defaultAnchor() {
-        return SpreadsheetViewportAnchor.CELL_RANGE;
+        // a range with only a single cell shouldnt really have an anchor.
+        return this.isUnit() ?
+            SpreadsheetViewportAnchor.NONE :
+            SpreadsheetViewportAnchor.CELL_RANGE;
     }
 
     @Override
