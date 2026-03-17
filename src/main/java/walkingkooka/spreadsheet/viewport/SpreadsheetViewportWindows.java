@@ -284,7 +284,7 @@ public final class SpreadsheetViewportWindows implements CanBeEmpty,
     @Override
     public boolean test(final SpreadsheetSelection selection) {
         return null != selection &&
-            this.testNonNull(selection);
+            this.testNonNull(selection.toScalarIfUnit());
     }
 
     private boolean testNonNull(final SpreadsheetSelection selection) {

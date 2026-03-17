@@ -1367,6 +1367,24 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    // defaultAnchor....................................................................................................
+
+    @Test
+    public void testDefaultAnchorWhenUnit() {
+        this.defaultAnchorAndCheck(
+            this.parseString("A"),
+            SpreadsheetViewportAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testDefaultAnchorWhenNotUnit() {
+        this.defaultAnchorAndCheck(
+            this.parseString("B:C"),
+            SpreadsheetViewportAnchor.RIGHT
+        );
+    }
+
     // IterableTesting..................................................................................................
 
     @Test
