@@ -192,7 +192,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         this.updateRowRangeAndCheck(
             "5",
             "3",
-            SpreadsheetViewportAnchor.TOP,
+            SpreadsheetViewportAnchor.NONE,
             "3:5",
             SpreadsheetViewportAnchor.TOP
         );
@@ -346,7 +346,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendRowTest extends S
         this.updateRowRangeAndCheck(
             "2",
             "3",
-            SpreadsheetViewportAnchor.TOP,
+            SpreadsheetViewportAnchor.NONE,
             "2:3",
             SpreadsheetViewportAnchor.BOTTOM
         );

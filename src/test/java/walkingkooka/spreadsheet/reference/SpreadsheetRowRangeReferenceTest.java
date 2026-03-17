@@ -1442,6 +1442,24 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
         );
     }
 
+    // defaultAnchor....................................................................................................
+
+    @Test
+    public void testDefaultAnchorWhenUnit() {
+        this.defaultAnchorAndCheck(
+            this.parseString("1"),
+            SpreadsheetViewportAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testDefaultAnchorWhenNotUnit() {
+        this.defaultAnchorAndCheck(
+            this.parseString("2:3"),
+            SpreadsheetViewportAnchor.BOTTOM
+        );
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
