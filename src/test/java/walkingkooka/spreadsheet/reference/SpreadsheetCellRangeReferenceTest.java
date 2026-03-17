@@ -566,6 +566,24 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         );
     }
 
+    // defaultAnchor....................................................................................................
+
+    @Test
+    public void testDefaultAnchorWhenOneCell() {
+        this.defaultAnchorAndCheck(
+            SpreadsheetSelection.parseCellRange("A1"),
+            SpreadsheetViewportAnchor.NONE
+        );
+    }
+
+    @Test
+    public void testDefaultAnchorWhenManyCells() {
+        this.defaultAnchorAndCheck(
+            SpreadsheetSelection.parseCellRange("B2:C3"),
+            SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
     // replaceReferencesMapper..........................................................................................
 
     @Test
