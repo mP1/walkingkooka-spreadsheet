@@ -282,11 +282,13 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
         visitor.visit(this);
     }
 
-    // SpreadsheetViewportNavigation...........................................................................
+    // SpreadsheetViewportNavigation....................................................................................
 
     @Override
     public Set<SpreadsheetViewportAnchor> anchors() {
-        return ANCHORS;
+        return this.isUnit() ?
+            NONE_ANCHORS :
+            ANCHORS;
     }
 
     private final static Set<SpreadsheetViewportAnchor> ANCHORS = Sets.readOnly(
@@ -298,7 +300,9 @@ public final class SpreadsheetRowRangeReference extends SpreadsheetRowReferenceO
 
     @Override
     public SpreadsheetViewportAnchor defaultAnchor() {
-        return SpreadsheetViewportAnchor.ROW_RANGE;
+        return this.isUnit() ?
+            SpreadsheetViewportAnchor.NONE :
+            SpreadsheetViewportAnchor.ROW_RANGE;
     }
 
     /**
