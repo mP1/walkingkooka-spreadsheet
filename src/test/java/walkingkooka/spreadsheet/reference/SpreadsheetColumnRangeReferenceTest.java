@@ -199,6 +199,11 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    @Override
+    public SpreadsheetColumnRangeReference parseString(final String text) {
+        return SpreadsheetSelection.parseColumnRange(text);
+    }
+
     // add..............................................................................................................
 
     @Test
@@ -1397,6 +1402,11 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    @Override
+    public SpreadsheetColumnRangeReference createIterable() {
+        return SpreadsheetSelection.parseColumnRange("$B:$D");
+    }
+
     // TreePrintable....................................................................................................
 
     @Test
@@ -1533,6 +1543,14 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         );
     }
 
+    @Override
+    public SpreadsheetColumnRangeReference unmarshall(final JsonNode node,
+                                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetSelection.unmarshallColumnRange(node, context);
+    }
+
+    // equals...........................................................................................................
+
     @Test
     public void testEqualsDifferentColumn() {
         this.checkNotEquals(SpreadsheetSelection.parseColumnRange("Y:Z"));
@@ -1668,26 +1686,10 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
         return SpreadsheetColumnRangeReference.with(range);
     }
 
-    @Override
-    public SpreadsheetColumnRangeReference parseString(final String text) {
-        return SpreadsheetSelection.parseColumnRange(text);
-    }
-
-    @Override
-    public SpreadsheetColumnRangeReference unmarshall(final JsonNode node,
-                                                      final JsonNodeUnmarshallContext context) {
-        return SpreadsheetSelection.unmarshallColumnRange(node, context);
-    }
+    // class............................................................................................................
 
     @Override
     public Class<SpreadsheetColumnRangeReference> type() {
         return SpreadsheetColumnRangeReference.class;
-    }
-
-    // IterableTesting..................................................................................................
-
-    @Override
-    public SpreadsheetColumnRangeReference createIterable() {
-        return SpreadsheetSelection.parseColumnRange("$B:$D");
     }
 }
