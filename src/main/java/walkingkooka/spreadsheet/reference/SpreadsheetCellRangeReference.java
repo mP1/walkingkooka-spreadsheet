@@ -386,15 +386,9 @@ public final class SpreadsheetCellRangeReference extends SpreadsheetCellReferenc
     @Override
     public Set<SpreadsheetViewportAnchor> anchors() {
         return this.isUnit() ?
-            NONE :
+            NONE_ANCHORS :
             ANCHORS;
     }
-
-    private final static Set<SpreadsheetViewportAnchor> NONE = Sets.readOnly(
-        EnumSet.of(
-            SpreadsheetViewportAnchor.NONE
-        )
-    );
 
     private final static Set<SpreadsheetViewportAnchor> ANCHORS = Sets.readOnly(
         EnumSet.of(
