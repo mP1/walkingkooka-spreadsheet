@@ -20,19 +20,30 @@ package walkingkooka.spreadsheet.viewport;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends SpreadsheetViewportNavigationSelectionExtendTestCase<SpreadsheetViewportNavigationSelectionExtendCell, SpreadsheetCellReference> {
+public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends SpreadsheetViewportNavigationSelectionExtendTestCase<SpreadsheetViewportNavigationSelectionExtendCell, SpreadsheetCellReferenceOrRange> {
 
     // HasText..........................................................................................................
 
     @Test
-    public void testHasText() {
+    public void testHasTextWithCell() {
         this.textAndCheck(
             SpreadsheetViewportNavigationSelectionExtendCell.with(SpreadsheetSelection.parseCell("ABC123")),
             "extend cell ABC123"
+        );
+    }
+
+    @Test
+    public void testHasTextWithAllCells() {
+        this.textAndCheck(
+            SpreadsheetViewportNavigationSelectionExtendCell.with(
+                SpreadsheetSelection.ALL_CELLS
+            ),
+            "extend cell *"
         );
     }
 
@@ -99,6 +110,17 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
             "B2",
             "B2:C3",
             SpreadsheetViewportAnchor.BOTTOM_RIGHT
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenAllCells() {
+        final SpreadsheetCellReferenceOrRange all = SpreadsheetSelection.ALL_CELLS;
+
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation(all),
+            all.setDefaultAnchor(),
+            all.setDefaultAnchor()
         );
     }
 
@@ -585,7 +607,7 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
     }
 
     @Override
-    SpreadsheetViewportNavigationSelectionExtendCell createSpreadsheetViewportNavigation(final SpreadsheetCellReference selection) {
+    SpreadsheetViewportNavigationSelectionExtendCell createSpreadsheetViewportNavigation(final SpreadsheetCellReferenceOrRange selection) {
         return SpreadsheetViewportNavigationSelectionExtendCell.with(selection);
     }
 

@@ -49,7 +49,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationSelectionExtendCell}
      */
-    public static SpreadsheetViewportNavigation extendCell(final SpreadsheetCellReference selection) {
+    public static SpreadsheetViewportNavigation extendCell(final SpreadsheetCellReferenceOrRange selection) {
         return SpreadsheetViewportNavigationSelectionExtendCell.with(selection);
     }
 
