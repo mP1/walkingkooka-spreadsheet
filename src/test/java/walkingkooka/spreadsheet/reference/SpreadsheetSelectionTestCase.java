@@ -662,7 +662,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    @Test final void testTestCellWithNullFails() {
+    @Test //
+    final void testTestCellWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSelection().testCell(null)
@@ -689,7 +690,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    @Test final void testTestCellRangeWithNullFails() {
+    @Test //
+    final void testTestCellRangeWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSelection().testCellRange(null)
@@ -722,7 +724,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    @Test final void testTestColumnWithNullFails() {
+    @Test //
+    final void testTestColumnWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSelection().testColumn(null)
@@ -749,7 +752,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
         );
     }
 
-    @Test final void testTestRowWithNullFails() {
+    @Test //
+    final void testTestRowWithNullFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createSelection().testRow(null)
@@ -801,13 +805,15 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
 
     // defaultAnchor....................................................................................................
 
-    @Test final public void testDefaultAnchor() {
+    @Test
+    public final void testDefaultAnchor() {
         final S selection = this.createSelection();
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
     }
 
-    @Test final public void testDefaultAnchorThenSetAnchor() {
+    @Test
+    public final void testDefaultAnchorThenSetAnchor() {
         final S selection = this.createSelection();
         final SpreadsheetViewportAnchor anchor = selection.defaultAnchor();
         this.checkNotEquals(null, anchor, "anchor");
