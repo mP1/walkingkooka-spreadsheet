@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContexts;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.test.ParseStringTesting;
@@ -1266,6 +1267,18 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 )
             ),
             () -> selection + " anchor=" + anchor + " navigate " + count + " downPixels"
+        );
+    }
+
+    // toSpreadsheetViewportNavigation..................................................................................
+
+    final void toSpreadsheetViewportNavigationAndCheck(final S selection,
+                                                       final boolean extend,
+                                                       final SpreadsheetViewportNavigation expected) {
+        this.checkEquals(
+            expected,
+            selection.toSpreadsheetViewportNavigation(extend),
+            () -> selection + " extend=" + extend
         );
     }
 

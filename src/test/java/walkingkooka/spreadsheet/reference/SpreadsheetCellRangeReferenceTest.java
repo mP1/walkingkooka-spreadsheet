@@ -2358,6 +2358,26 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
         );
     }
 
+    // toSpreadsheetViewportNavigation..................................................................................
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendFalseFails() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> this.createSelection()
+                .toSpreadsheetViewportNavigation(false)
+        );
+    }
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendTrueFails() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> this.createSelection()
+                .toSpreadsheetViewportNavigation(true)
+        );
+    }
+
     // extendRange......................................................................................................
 
     @Test

@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.json.JsonNode;
@@ -360,6 +361,30 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     public void testToScalar() {
         this.toScalarAndCheck(
             this.createSelection()
+        );
+    }
+
+    // toSpreadsheetViewportNavigation..................................................................................
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendFalse() {
+        final SpreadsheetCellReference reference = this.createSelection();
+
+        this.toSpreadsheetViewportNavigationAndCheck(
+            reference,
+            false,
+            SpreadsheetViewportNavigation.cell(reference)
+        );
+    }
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendTrue() {
+        final SpreadsheetCellReference reference = this.createSelection();
+
+        this.toSpreadsheetViewportNavigationAndCheck(
+            reference,
+            true,
+            SpreadsheetViewportNavigation.extendCell(reference)
         );
     }
 
