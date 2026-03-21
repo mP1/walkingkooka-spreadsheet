@@ -365,6 +365,26 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.toRowOrRowRangeFails();
     }
 
+    // toSpreadsheetViewportNavigation..................................................................................
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendFalseFails() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> this.createSelection()
+                .toSpreadsheetViewportNavigation(false)
+        );
+    }
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendTrueFails() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> this.createSelection()
+                .toSpreadsheetViewportNavigation(true)
+        );
+    }
+
     // containsAll......................................................................................................
 
     @Test

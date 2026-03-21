@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.viewport.AnchoredSpreadsheetSelection;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigationContext;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.text.CaseKind;
@@ -1464,6 +1465,45 @@ public abstract class SpreadsheetSelection implements HasText,
     public abstract Optional<SpreadsheetSelection> moveDownPixels(final SpreadsheetViewportAnchor anchor,
                                                                   final int count,
                                                                   final SpreadsheetViewportNavigationContext context);
+
+    /**
+     * Helper that exists to support clicking on a cell, column or row within a viewport to determine the equivalent
+     * {@link SpreadsheetViewportNavigation}.
+     */
+    public final SpreadsheetViewportNavigation toSpreadsheetViewportNavigation(final boolean extend) {
+        final SpreadsheetViewportNavigation spreadsheetViewportNavigation;
+
+        if (this.isCell()) {
+            final SpreadsheetCellReference cell = this.toCell();
+
+            spreadsheetViewportNavigation = extend ?
+                SpreadsheetViewportNavigation.extendCell(cell) :
+                SpreadsheetViewportNavigation.cell(cell);
+        } else {
+            if (this.isColumn()) {
+                final SpreadsheetColumnReference column = this.toColumn();
+
+                spreadsheetViewportNavigation = extend ?
+                    SpreadsheetViewportNavigation.extendColumn(column) :
+                    SpreadsheetViewportNavigation.column(column);
+            } else {
+                if (this.isRow()) {
+                    final SpreadsheetRowReference row = this.toRow();
+                    spreadsheetViewportNavigation = extend ?
+                        SpreadsheetViewportNavigation.extendRow(
+                            row
+                        ) :
+                        SpreadsheetViewportNavigation.row(
+                            row
+                        );
+                } else {
+                    throw new IllegalStateException("Expected cell, column or row got " + this);
+                }
+            }
+        }
+
+        return spreadsheetViewportNavigation;
+    }
 
     public abstract Optional<AnchoredSpreadsheetSelection> extendLeftColumn(final SpreadsheetViewportAnchor anchor,
                                                                             final SpreadsheetViewportNavigationContext context);

@@ -95,6 +95,26 @@ public abstract class SpreadsheetColumnOrRowRangeReferenceTestCase<S extends Spr
         );
     }
 
+    // toSpreadsheetViewportNavigation..................................................................................
+
+    @Test
+    public final void testToSpreadsheetViewportNavigationExtendFalseFails() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> this.createSelection()
+                .toSpreadsheetViewportNavigation(false)
+        );
+    }
+
+    @Test
+    public final void testToSpreadsheetViewportNavigationExtendTrueFails() {
+        assertThrows(
+            IllegalStateException.class,
+            () -> this.createSelection()
+                .toSpreadsheetViewportNavigation(true)
+        );
+    }
+
     // SpreadsheetColumnOrRowReferenceOrRange...........................................................................
 
     final void columnOrRowsIterateAndCheck(final S selection,

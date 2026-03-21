@@ -24,6 +24,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
+import walkingkooka.spreadsheet.viewport.SpreadsheetViewportNavigation;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -1318,6 +1319,30 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         );
     }
 
+    // toSpreadsheetViewportNavigation..................................................................................
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendFalse() {
+        final SpreadsheetRowReference reference = this.createSelection();
+
+        this.toSpreadsheetViewportNavigationAndCheck(
+            reference,
+            false,
+            SpreadsheetViewportNavigation.row(reference)
+        );
+    }
+
+    @Test
+    public void testToSpreadsheetViewportNavigationExtendTrue() {
+        final SpreadsheetRowReference reference = this.createSelection();
+
+        this.toSpreadsheetViewportNavigationAndCheck(
+            reference,
+            true,
+            SpreadsheetViewportNavigation.extendRow(reference)
+        );
+    }
+    
     // extendRange......................................................................................................
 
     @Test
