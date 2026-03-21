@@ -1473,31 +1473,39 @@ public abstract class SpreadsheetSelection implements HasText,
     public final SpreadsheetViewportNavigation toSpreadsheetViewportNavigation(final boolean extend) {
         final SpreadsheetViewportNavigation spreadsheetViewportNavigation;
 
-        if (this.isCell()) {
-            final SpreadsheetCellReference cell = this.toCell();
+        if(this.isAll()) {
+            final SpreadsheetCellReferenceOrRange all = this.toCellRange();
 
             spreadsheetViewportNavigation = extend ?
-                SpreadsheetViewportNavigation.extendCell(cell) :
-                SpreadsheetViewportNavigation.cell(cell);
+                SpreadsheetViewportNavigation.extendCell(all) :
+                SpreadsheetViewportNavigation.cell(all);
         } else {
-            if (this.isColumn()) {
-                final SpreadsheetColumnReference column = this.toColumn();
+            if (this.isCell()) {
+                final SpreadsheetCellReference cell = this.toCell();
 
                 spreadsheetViewportNavigation = extend ?
-                    SpreadsheetViewportNavigation.extendColumn(column) :
-                    SpreadsheetViewportNavigation.column(column);
+                    SpreadsheetViewportNavigation.extendCell(cell) :
+                    SpreadsheetViewportNavigation.cell(cell);
             } else {
-                if (this.isRow()) {
-                    final SpreadsheetRowReference row = this.toRow();
+                if (this.isColumn()) {
+                    final SpreadsheetColumnReference column = this.toColumn();
+
                     spreadsheetViewportNavigation = extend ?
-                        SpreadsheetViewportNavigation.extendRow(
-                            row
-                        ) :
-                        SpreadsheetViewportNavigation.row(
-                            row
-                        );
+                        SpreadsheetViewportNavigation.extendColumn(column) :
+                        SpreadsheetViewportNavigation.column(column);
                 } else {
-                    throw new IllegalStateException("Expected cell, column or row got " + this);
+                    if (this.isRow()) {
+                        final SpreadsheetRowReference row = this.toRow();
+                        spreadsheetViewportNavigation = extend ?
+                            SpreadsheetViewportNavigation.extendRow(
+                                row
+                            ) :
+                            SpreadsheetViewportNavigation.row(
+                                row
+                            );
+                    } else {
+                        throw new IllegalStateException("Expected cell, column or row got " + this);
+                    }
                 }
             }
         }
