@@ -1268,7 +1268,9 @@ public abstract class SpreadsheetSelection implements HasText,
     }
 
     /**
-     * Returns true if this selection matches everything. Non range selections will always return false.
+     * Returns true if this selection matches everything, eg all cells if a {@link SpreadsheetCellReferenceOrRange},
+     * all columns if a {@link SpreadsheetColumnRangeReference}, all rows if a {@link SpreadsheetRowRangeReference}.
+     * Non range selections will always return false.
      */
     public final boolean isAll() {
         final boolean all;
