@@ -1271,22 +1271,20 @@ public abstract class SpreadsheetSelection implements HasText,
      * Returns true if this selection matches everything. Non range selections will always return false.
      */
     public final boolean isAll() {
-        boolean all = false;
+        final boolean all;
 
-        switch (this.getClass().getSimpleName()) {
-            case "SpreadsheetCellRangeReference":
-                all = SpreadsheetSelection.ALL_CELLS.equalsIgnoreReferenceKind(this);
-                break;
-            case "SpreadsheetColumnRangeReference":
+        if (this.isCellRange()) {
+            all = SpreadsheetSelection.ALL_CELLS.equalsIgnoreReferenceKind(this);
+        } else {
+            if (this.isColumnRange()) {
                 all = SpreadsheetSelection.ALL_COLUMNS.equalsIgnoreReferenceKind(this);
-                break;
-            case "SpreadsheetRowRangeReference":
-                all = SpreadsheetSelection.ALL_ROWS.equalsIgnoreReferenceKind(this);
-                break;
-            case "SpreadsheetLabelName":
-                throw new UnsupportedOperationException();
-            default:
-                break;
+            } else {
+                if (this.isRowRange()) {
+                    all = SpreadsheetSelection.ALL_ROWS.equalsIgnoreReferenceKind(this);
+                } else {
+                    all = false;
+                }
+            }
         }
 
         return all;
