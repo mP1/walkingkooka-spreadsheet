@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.NeverError;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
@@ -31,13 +32,13 @@ import java.util.Optional;
  * extend cell *
  * </pre>
  */
-final class SpreadsheetViewportNavigationSelectionExtendCell extends SpreadsheetViewportNavigationSelectionExtend<SpreadsheetCellReference> {
+final class SpreadsheetViewportNavigationSelectionExtendCell extends SpreadsheetViewportNavigationSelectionExtend<SpreadsheetCellReferenceOrRange> {
 
-    static SpreadsheetViewportNavigationSelectionExtendCell with(final SpreadsheetCellReference selection) {
+    static SpreadsheetViewportNavigationSelectionExtendCell with(final SpreadsheetCellReferenceOrRange selection) {
         return new SpreadsheetViewportNavigationSelectionExtendCell(selection);
     }
 
-    private SpreadsheetViewportNavigationSelectionExtendCell(final SpreadsheetCellReference selection) {
+    private SpreadsheetViewportNavigationSelectionExtendCell(final SpreadsheetCellReferenceOrRange selection) {
         super(selection);
     }
 
@@ -58,7 +59,7 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
 
     private Optional<AnchoredSpreadsheetSelection> updateCellOrCellRange(final SpreadsheetSelection selection,
                                                                          final SpreadsheetViewportAnchor anchor) {
-        final SpreadsheetCellReference newCell = this.selection;
+        final SpreadsheetCellReferenceOrRange newCell = this.selection;
 
         final SpreadsheetViewportAnchor columnAnchor;
         final SpreadsheetViewportAnchor rowAnchor;
