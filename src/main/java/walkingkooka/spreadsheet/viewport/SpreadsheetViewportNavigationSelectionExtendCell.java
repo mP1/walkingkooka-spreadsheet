@@ -24,10 +24,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import java.util.Optional;
 
 /**
- * Represents a cell being SHIFT CLICKED in the viewport.
+ * Represents a cell or {@link SpreadsheetSelection#ALL_CELLS} being SHIFT CLICKED in the viewport.
  * <br>
  * <pre>
  * extend cell A1
+ * extend cell *
  * </pre>
  */
 final class SpreadsheetViewportNavigationSelectionExtendCell extends SpreadsheetViewportNavigationSelectionExtend<SpreadsheetCellReference> {
