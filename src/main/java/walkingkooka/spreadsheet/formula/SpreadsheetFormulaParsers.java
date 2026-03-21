@@ -116,7 +116,6 @@ public final class SpreadsheetFormulaParsers implements PublicStaticHelper {
             labelName()
                 .or(cellRange)
                 .or(cell),
-            //.setToString("CELL_OR_CELL_RANGE_OR_LABEL")
             Optional.of(SpreadsheetValueType.CELL)
         );
     }
