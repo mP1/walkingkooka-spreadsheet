@@ -212,6 +212,13 @@ public final class SpreadsheetViewportNavigationListTest implements ImmutableLis
     }
 
     @Test
+    public void testParseSelectAllCells() {
+        this.parseStringAndCheck0(
+            SpreadsheetViewportNavigation.cell(SpreadsheetSelection.ALL_CELLS)
+        );
+    }
+
+    @Test
     public void testParseSelectCell() {
         this.parseStringAndCheck0(
             SpreadsheetViewportNavigation.cell(SpreadsheetSelection.A1)

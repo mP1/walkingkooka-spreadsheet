@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -34,7 +35,7 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     /**
      * {@see SpreadsheetViewportNavigationSelectionSelectCell}
      */
-    public static SpreadsheetViewportNavigation cell(final SpreadsheetCellReference selection) {
+    public static SpreadsheetViewportNavigation cell(final SpreadsheetCellReferenceOrRange selection) {
         return SpreadsheetViewportNavigationSelectionSelectCell.with(selection);
     }
 

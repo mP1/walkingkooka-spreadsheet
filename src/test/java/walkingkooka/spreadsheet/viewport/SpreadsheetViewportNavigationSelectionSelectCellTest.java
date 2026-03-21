@@ -19,17 +19,28 @@ package walkingkooka.spreadsheet.viewport;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-public final class SpreadsheetViewportNavigationSelectionSelectCellTest extends SpreadsheetViewportNavigationSelectionSelectTestCase<SpreadsheetViewportNavigationSelectionSelectCell, SpreadsheetCellReference> {
+public final class SpreadsheetViewportNavigationSelectionSelectCellTest extends SpreadsheetViewportNavigationSelectionSelectTestCase<SpreadsheetViewportNavigationSelectionSelectCell, SpreadsheetCellReferenceOrRange> {
 
     // HasText..........................................................................................................
 
     @Test
-    public void testHasText() {
+    public void testHasTextWithCell() {
         this.textAndCheck(
             SpreadsheetViewportNavigationSelectionSelectCell.with(SpreadsheetSelection.parseCell("ABC123")),
             "select cell ABC123"
+        );
+    }
+
+    @Test
+    public void testHasTextWithAllCells() {
+        this.textAndCheck(
+            SpreadsheetViewportNavigationSelectionSelectCell.with(
+                SpreadsheetSelection.ALL_CELLS
+            ),
+            "select cell *"
         );
     }
 
@@ -60,7 +71,7 @@ public final class SpreadsheetViewportNavigationSelectionSelectCellTest extends 
     }
 
     @Override
-    SpreadsheetViewportNavigationSelectionSelectCell createSpreadsheetViewportNavigation(final SpreadsheetCellReference selection) {
+    SpreadsheetViewportNavigationSelectionSelectCell createSpreadsheetViewportNavigation(final SpreadsheetCellReferenceOrRange selection) {
         return SpreadsheetViewportNavigationSelectionSelectCell.with(selection);
     }
 

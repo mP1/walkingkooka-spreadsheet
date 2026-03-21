@@ -17,22 +17,24 @@
 
 package walkingkooka.spreadsheet.viewport;
 
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 /**
- * Represents a cell being CLICKED in the viewport.
+ * Represents a cell or {@link SpreadsheetSelection#ALL_CELLS} being CLICKED in the viewport.
  * <br>
  * <pre>
  * select cell A1
+ * select cell *
  * </pre>
  */
-final class SpreadsheetViewportNavigationSelectionSelectCell extends SpreadsheetViewportNavigationSelectionSelect<SpreadsheetCellReference> {
+final class SpreadsheetViewportNavigationSelectionSelectCell extends SpreadsheetViewportNavigationSelectionSelect<SpreadsheetCellReferenceOrRange> {
 
-    static SpreadsheetViewportNavigationSelectionSelectCell with(final SpreadsheetCellReference selection) {
+    static SpreadsheetViewportNavigationSelectionSelectCell with(final SpreadsheetCellReferenceOrRange selection) {
         return new SpreadsheetViewportNavigationSelectionSelectCell(selection);
     }
 
-    private SpreadsheetViewportNavigationSelectionSelectCell(final SpreadsheetCellReference selection) {
+    private SpreadsheetViewportNavigationSelectionSelectCell(final SpreadsheetCellReferenceOrRange selection) {
         super(selection);
     }
 }

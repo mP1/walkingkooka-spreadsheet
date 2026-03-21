@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.HasText;
@@ -261,9 +262,11 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     }
 
     // select cell A1
+    // select cell *
     // select column AB
     // select row 23
     // extend cell A1
+    // extend cell *
     // extend column A
     // extend row B
     private static SpreadsheetViewportNavigation parseCellColumnOrRow(final TextCursor cursor,
@@ -278,13 +281,17 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
         if (isMatch(CELL_LITERAL, cursor)) {
             parseSpace(cursor);
 
-            navigation = cell.apply(
-                parseSelection(
-                    CELL_REFERENCE,
-                    cursor,
-                    CellSpreadsheetFormulaParserToken.class
-                ).reference()
-            );
+            if(isMatch(ALL_CELLS_LITERAL, cursor)) {
+                navigation = SpreadsheetViewportNavigation.cell(SpreadsheetSelection.ALL_CELLS);
+            } else {
+                navigation = cell.apply(
+                    parseSelection(
+                        CELL_REFERENCE,
+                        cursor,
+                        CellSpreadsheetFormulaParserToken.class
+                    ).reference()
+                );
+            }
         } else {
             if (isMatch(COLUMN_LITERAL, cursor)) {
                 parseSpace(cursor);
@@ -321,6 +328,8 @@ public final class SpreadsheetViewportNavigationList extends AbstractList<Spread
     private final static Parser<ParserContext> COLUMN_LITERAL = stringParser("column");
 
     private final static Parser<ParserContext> ROW_LITERAL = stringParser("row");
+
+    private final static Parser<ParserContext> ALL_CELLS_LITERAL = stringParser("*");
 
     private final static Parser<ParserContext> CELL_REFERENCE = SpreadsheetFormulaParsers.cell()
         .orReport(ParserReporters.basic())
