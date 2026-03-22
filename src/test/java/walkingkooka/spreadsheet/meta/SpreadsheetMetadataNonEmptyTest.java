@@ -2729,7 +2729,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             false
         );
         properties.put(
-            SpreadsheetMetadataPropertyName.FIND_QUERY,
+            SpreadsheetMetadataPropertyName.QUERY,
             SpreadsheetCellQuery.parse("help()")
         );
         properties.put(

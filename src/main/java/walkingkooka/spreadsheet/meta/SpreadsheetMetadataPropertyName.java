@@ -240,11 +240,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findQuery</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> FIND_QUERY = registerConstant(SpreadsheetMetadataPropertyNameFindQuery.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>formatters</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
@@ -329,6 +324,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision</code>
      */
     public static final SpreadsheetMetadataPropertyName<Integer> PRECISION = registerConstant(SpreadsheetMetadataPropertyNameIntegerPrecision.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>query</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> QUERY = registerConstant(SpreadsheetMetadataPropertyNameQuery.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>roundingMode</code>

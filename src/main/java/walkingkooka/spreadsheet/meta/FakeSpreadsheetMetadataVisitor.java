@@ -191,11 +191,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFindQuery(final SpreadsheetCellQuery query) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitFindHighlighting(final boolean value) {
         throw new UnsupportedOperationException();
     }
@@ -293,6 +288,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitPrecision(final int precision) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitQuery(final SpreadsheetCellQuery query) {
         throw new UnsupportedOperationException();
     }
 

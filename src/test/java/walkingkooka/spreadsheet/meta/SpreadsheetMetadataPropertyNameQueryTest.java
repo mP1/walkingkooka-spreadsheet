@@ -21,15 +21,15 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.engine.SpreadsheetCellQuery;
 
 
-public final class SpreadsheetMetadataPropertyNameFindQueryTest extends SpreadsheetMetadataPropertyNameTestCase<
-    SpreadsheetMetadataPropertyNameFindQuery,
+public final class SpreadsheetMetadataPropertyNameQueryTest extends SpreadsheetMetadataPropertyNameTestCase<
+    SpreadsheetMetadataPropertyNameQuery,
     SpreadsheetCellQuery> {
 
     @Test
     public void testCheckValueWithInvalidFails3() {
         this.checkValueFails(
             "invalid",
-            "Metadata findQuery=\"invalid\", Expected SpreadsheetCellQuery"
+            "Metadata query=\"invalid\", Expected SpreadsheetCellQuery"
         );
     }
 
@@ -46,7 +46,7 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
 
         this.checkEquals(
             query,
-            SpreadsheetMetadataPropertyName.FIND_QUERY
+            SpreadsheetMetadataPropertyName.QUERY
                 .parseValueText(
                     query.text(),
                     CURRENCY_CONTEXT.setLocaleContext(LOCALE_CONTEXT)
@@ -59,14 +59,14 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameFindQuery.instance(),
-            "findQuery"
+            SpreadsheetMetadataPropertyNameQuery.instance(),
+            "query"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameFindQuery createName() {
-        return SpreadsheetMetadataPropertyNameFindQuery.instance();
+    SpreadsheetMetadataPropertyNameQuery createName() {
+        return SpreadsheetMetadataPropertyNameQuery.instance();
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class SpreadsheetMetadataPropertyNameFindQueryTest extends Spreadsh
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameFindQuery> type() {
-        return SpreadsheetMetadataPropertyNameFindQuery.class;
+    public Class<SpreadsheetMetadataPropertyNameQuery> type() {
+        return SpreadsheetMetadataPropertyNameQuery.class;
     }
 }
