@@ -286,8 +286,8 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testToConverterSelectorWithFindFunctions() {
         this.checkEquals(
-            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS.toConverterSelector()
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS.toConverterSelector()
         );
     }
 

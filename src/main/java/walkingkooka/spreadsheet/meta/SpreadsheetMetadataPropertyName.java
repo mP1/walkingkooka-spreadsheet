@@ -225,21 +225,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
     public static final SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findConverter</code>.
-     */
-    public static final SpreadsheetMetadataPropertyName<ConverterSelector> FIND_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorFind.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findFunctions</code>.
-     */
-    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> FIND_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>findHighlighting</code>
-     */
-    public static final SpreadsheetMetadataPropertyName<Boolean> FIND_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance());
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>formatters</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetFormatterAliasSet> FORMATTERS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetFormatterAliasSetFormatters.instance());
@@ -329,6 +314,21 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>query</code>
      */
     public static final SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> QUERY = registerConstant(SpreadsheetMetadataPropertyNameQuery.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>queryConverter</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<ConverterSelector> QUERY_CONVERTER = registerConstant(SpreadsheetMetadataPropertyNameConverterSelectorQuery.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>queryFunctions</code>.
+     */
+    public static final SpreadsheetMetadataPropertyName<ExpressionFunctionAliasSet> QUERY_FUNCTIONS = registerConstant(SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>queryHighlighting</code>
+     */
+    public static final SpreadsheetMetadataPropertyName<Boolean> QUERY_HIGHLIGHTING = registerConstant(SpreadsheetMetadataPropertyNameBooleanQueryHighlighting.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>roundingMode</code>
@@ -789,7 +789,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name,
                 throw new IllegalStateException("Property " + this + ": invalid type " + type.getSimpleName() + " expected " + ExpressionFunctionAliasSet.class.getSimpleName());
             }
 
-            // findFunctions -> findConverter
+            // queryFunctions -> queryConverter
             final String propertyName = this.name.replace(
                 "Functions",
                 "Converter"

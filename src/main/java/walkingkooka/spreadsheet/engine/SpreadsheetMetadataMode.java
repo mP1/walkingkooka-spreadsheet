@@ -28,7 +28,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 public enum SpreadsheetMetadataMode {
 
     FIND(
-        SpreadsheetMetadataPropertyName.FIND_FUNCTIONS
+        SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS
     ),
     FORMATTING(
         SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS

@@ -296,12 +296,6 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND,
             EXPRESSION_NUMBER_KIND
         ).set(
-            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)")
-        ).set(
-            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-        ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
             ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, style, text-node, template, net)")
         ).set(
@@ -343,6 +337,12 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         ).set(
             SpreadsheetMetadataPropertyName.PRECISION,
             7
+        ).set(
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)")
+        ).set(
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
+            SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
             SpreadsheetMetadataPropertyName.ROUNDING_MODE,
             RoundingMode.HALF_UP

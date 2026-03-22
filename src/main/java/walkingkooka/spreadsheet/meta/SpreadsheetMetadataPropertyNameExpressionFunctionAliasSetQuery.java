@@ -22,29 +22,29 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet
 
 /**
  * This {@link SpreadsheetMetadataPropertyName} holds a {@link ExpressionFunctionAliasSet} used during
- * expression evaluation.
+ * query expression evaluation.
  */
-final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
+final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSet {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind instance() {
-        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind();
+    static SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery instance() {
+        return new SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind() {
+    private SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery() {
         super(
-            "findFunctions"
+            "queryFunctions"
         );
     }
 
     @Override
     void accept(final ExpressionFunctionAliasSet aliases,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFindFunctions(aliases);
+        visitor.visitQueryFunctions(aliases);
     }
 }

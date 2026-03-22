@@ -181,21 +181,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitFindConverter(final ConverterSelector selector) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitFindFunctions(final ExpressionFunctionAliasSet aliases) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitFindHighlighting(final boolean value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitFormattingConverter(final ConverterSelector selector) {
         throw new UnsupportedOperationException();
     }
@@ -293,6 +278,21 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitQuery(final SpreadsheetCellQuery query) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitQueryConverter(final ConverterSelector selector) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitQueryFunctions(final ExpressionFunctionAliasSet aliases) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitQueryHighlighting(final boolean value) {
         throw new UnsupportedOperationException();
     }
 

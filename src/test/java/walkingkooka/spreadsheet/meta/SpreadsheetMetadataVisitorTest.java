@@ -371,42 +371,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitFindConverter() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitFindConverter(final ConverterSelector s) {
-                this.visited = s;
-            }
-        }.accept(
-            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-            ConverterSelector.parse("basic")
-        );
-    }
-
-    @Test
-    public void testVisitFindFunctions() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitFindFunctions(final ExpressionFunctionAliasSet a) {
-                this.visited = a;
-            }
-        }.accept(
-            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-            SpreadsheetExpressionFunctions.parseAliasSet("abs")
-        );
-    }
-
-    @Test
-    public void testVisitFindHighlighting() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitFindHighlighting(final boolean b) {
-                this.visited = b;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING, true);
-    }
-
-    @Test
     public void testVisitFormatterFunctions() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -625,6 +589,42 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             SpreadsheetMetadataPropertyName.QUERY,
             SpreadsheetCellQuery.parse("1+2")
         );
+    }
+
+    @Test
+    public void testVisitQueryConverter() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitQueryConverter(final ConverterSelector s) {
+                this.visited = s;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+            ConverterSelector.parse("basic")
+        );
+    }
+
+    @Test
+    public void testVisitQueryFunctions() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitQueryFunctions(final ExpressionFunctionAliasSet a) {
+                this.visited = a;
+            }
+        }.accept(
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
+            SpreadsheetExpressionFunctions.parseAliasSet("abs")
+        );
+    }
+
+    @Test
+    public void testVisitQueryHighlighting() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitQueryHighlighting(final boolean b) {
+                this.visited = b;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.QUERY_HIGHLIGHTING, true);
     }
 
     @Test

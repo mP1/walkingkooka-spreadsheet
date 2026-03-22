@@ -562,50 +562,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testFindConverterWithNullConverterProviderFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createObject()
-                .converter(
-                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                    null,
-                    PROVIDER_CONTEXT
-                )
-        );
-    }
-
-    @Test
-    public final void testFindConverterWithNullProviderContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createObject()
-                .converter(
-                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                    ConverterProviders.fake(),
-                    null
-                )
-        );
-    }
-
-
-    @Test
-    public final void testFindConverterRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(
-            IllegalStateException.class,
-            () -> this.createObject()
-                .converter(
-                    SpreadsheetMetadataPropertyName.FIND_CONVERTER,
-                    ConverterProviders.fake(),
-                    PROVIDER_CONTEXT
-                )
-        );
-        checkMessage(
-            thrown,
-            "Metadata missing: findConverter"
-        );
-    }
-
-    @Test
     public final void testFormulaConverterWithNullConverterProviderFails() {
         assertThrows(
             NullPointerException.class,
@@ -646,6 +602,49 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         checkMessage(
             thrown,
             "Metadata missing: formulaConverter"
+        );
+    }
+
+    @Test
+    public final void testQueryConverterRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(
+            IllegalStateException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                    ConverterProviders.fake(),
+                    PROVIDER_CONTEXT
+                )
+        );
+        checkMessage(
+            thrown,
+            "Metadata missing: queryConverter"
+        );
+    }
+
+    @Test
+    public final void testQueryConverterWithNullConverterProviderFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                    null,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testQueryConverterWithNullProviderContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .converter(
+                    SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                    ConverterProviders.fake(),
+                    null
+                )
         );
     }
 
