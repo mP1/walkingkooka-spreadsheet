@@ -1135,7 +1135,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 TERMINAL_CONTEXT
             ),
             SpreadsheetEngineContextSharedSpreadsheetContext.with(
-                SpreadsheetMetadataMode.FIND,
+                SpreadsheetMetadataMode.QUERY,
                 SPREADSHEET_CONTEXT,
                 TERMINAL_CONTEXT
             )

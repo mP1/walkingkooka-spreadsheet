@@ -477,7 +477,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     BasicSpreadsheetEngineFilterCellsPredicate.with(
                         valueType,
                         expression,
-                        context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.FIND),
+                        context.setSpreadsheetMetadataMode(SpreadsheetMetadataMode.QUERY),
                         changes
                     )
                 ).collect(Collectors.toCollection(Sets::ordered));
@@ -521,7 +521,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 valueType,
                 expression,
                 context.setSpreadsheetMetadataMode(
-                    SpreadsheetMetadataMode.FIND
+                    SpreadsheetMetadataMode.QUERY
                 ),
                 changes
             );
