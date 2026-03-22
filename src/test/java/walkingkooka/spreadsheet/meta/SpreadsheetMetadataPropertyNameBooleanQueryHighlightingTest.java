@@ -20,25 +20,25 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameBooleanFindHighlightingTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanFindHighlighting> {
+public final class SpreadsheetMetadataPropertyNameBooleanQueryHighlightingTest extends SpreadsheetMetadataPropertyNameBooleanTestCase<SpreadsheetMetadataPropertyNameBooleanQueryHighlighting> {
 
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance(),
-            "findHighlighting"
+            SpreadsheetMetadataPropertyNameBooleanQueryHighlighting.instance(),
+            "queryHighlighting"
         );
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameBooleanFindHighlighting createName() {
-        return SpreadsheetMetadataPropertyNameBooleanFindHighlighting.instance();
+    SpreadsheetMetadataPropertyNameBooleanQueryHighlighting createName() {
+        return SpreadsheetMetadataPropertyNameBooleanQueryHighlighting.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameBooleanFindHighlighting> type() {
-        return SpreadsheetMetadataPropertyNameBooleanFindHighlighting.class;
+    public Class<SpreadsheetMetadataPropertyNameBooleanQueryHighlighting> type() {
+        return SpreadsheetMetadataPropertyNameBooleanQueryHighlighting.class;
     }
 }

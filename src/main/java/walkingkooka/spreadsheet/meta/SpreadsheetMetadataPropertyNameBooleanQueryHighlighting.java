@@ -18,24 +18,24 @@
 package walkingkooka.spreadsheet.meta;
 
 /**
- * When true the UI will highlight cells within the viewport that are matched by a find/query.
+ * When true the UI will highlight cells within the viewport that are matched by a query.
  */
-final class SpreadsheetMetadataPropertyNameBooleanFindHighlighting extends SpreadsheetMetadataPropertyNameBoolean {
+final class SpreadsheetMetadataPropertyNameBooleanQueryHighlighting extends SpreadsheetMetadataPropertyNameBoolean {
 
     /**
      * Getter rather than field to allow lazily creation.
      */
-    static SpreadsheetMetadataPropertyNameBooleanFindHighlighting instance() {
-        return new SpreadsheetMetadataPropertyNameBooleanFindHighlighting();
+    static SpreadsheetMetadataPropertyNameBooleanQueryHighlighting instance() {
+        return new SpreadsheetMetadataPropertyNameBooleanQueryHighlighting();
     }
 
-    private SpreadsheetMetadataPropertyNameBooleanFindHighlighting() {
-        super("findHighlighting");
+    private SpreadsheetMetadataPropertyNameBooleanQueryHighlighting() {
+        super("queryHighlighting");
     }
 
     @Override
     void accept(final Boolean value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFindHighlighting(value);
+        visitor.visitQueryHighlighting(value);
     }
 }

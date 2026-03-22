@@ -2717,15 +2717,15 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             SpreadsheetExporterAliasSet.EMPTY
         );
         properties.put(
-            SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
             ConverterSelector.parse("basic")
         );
         properties.put(
-            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet("find-something-something")
         );
         properties.put(
-            SpreadsheetMetadataPropertyName.FIND_HIGHLIGHTING,
+            SpreadsheetMetadataPropertyName.QUERY_HIGHLIGHTING,
             false
         );
         properties.put(

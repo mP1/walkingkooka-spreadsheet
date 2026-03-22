@@ -21,11 +21,11 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 
-public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFindTest extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind> {
+public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQueryTest extends SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetTestCase<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery> {
 
     @Override
-    SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind createName() {
-        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind.instance();
+    SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery createName() {
+        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery.instance();
     }
 
     @Override
@@ -36,7 +36,7 @@ public final class SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind
     // class............................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind> type() {
-        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetFind.class;
+    public Class<SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery> type() {
+        return SpreadsheetMetadataPropertyNameExpressionFunctionAliasSetQuery.class;
     }
 }

@@ -861,7 +861,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 null,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -880,7 +880,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 null,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -899,7 +899,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 null,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -937,7 +937,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 null,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -956,7 +956,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 null,
@@ -975,7 +975,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -994,7 +994,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -1013,7 +1013,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -1032,7 +1032,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -1051,7 +1051,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
                 INDENTATION,
                 SpreadsheetLabelNameResolvers.fake(),
@@ -1063,7 +1063,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         );
 
         this.checkEquals(
-            "Metadata missing: dateTimeOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, findConverter, locale, precision, roundingMode, twoDigitYear, valueSeparator",
+            "Metadata missing: dateTimeOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, queryConverter, roundingMode, twoDigitYear, valueSeparator",
             thrown.getMessage(),
             "message"
         );
@@ -1676,8 +1676,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "errorFormatter=badge-error text @\n" +
                 "exporters=collection, empty, json\n" +
                 "expressionNumberKind=BIG_DECIMAL\n" +
-                "findConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\n" +
-                "findFunctions=\n" +
                 "formHandlers=\n" +
                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
                 "formattingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, style, text-node, template, net)\n" +
@@ -1692,6 +1690,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
                 "plugins=\n" +
                 "precision=7\n" +
+                "queryConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\n" +
+                "queryFunctions=\n" +
                 "roundingMode=HALF_UP\n" +
                 "scriptingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\n" +
                 "scriptingFunctions=\n" +
@@ -1854,8 +1854,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "errorFormatter=badge-error text @\n" +
                 "exporters=collection, empty, json\n" +
                 "expressionNumberKind=BIG_DECIMAL\n" +
-                "findConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\n" +
-                "findFunctions=\n" +
                 "formHandlers=\n" +
                 "formatters=accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\n" +
                 "formattingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, style, text-node, template, net)\n" +
@@ -1870,6 +1868,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 "parsers=date, date-time, full-date, full-date-time, full-time, general, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, short-date, short-date-time, short-time, time, whole-number\n" +
                 "plugins=\n" +
                 "precision=7\n" +
+                "queryConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\n" +
+                "queryFunctions=\n" +
                 "roundingMode=HALF_UP\n" +
                 "scriptingConverter=collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\n" +
                 "scriptingFunctions=\n" +

@@ -186,18 +186,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFindConverter(final ConverterSelector selector) {
-        // nop
-    }
-
-    protected void visitFindFunctions(final ExpressionFunctionAliasSet aliases) {
-        // nop
-    }
-
-    protected void visitFindHighlighting(final boolean value) {
-        // nop
-    }
-
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
         // nop
     }
@@ -280,6 +268,18 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitQuery(final SpreadsheetCellQuery query) {
+        // nop
+    }
+
+    protected void visitQueryConverter(final ConverterSelector selector) {
+        // nop
+    }
+
+    protected void visitQueryFunctions(final ExpressionFunctionAliasSet aliases) {
+        // nop
+    }
+
+    protected void visitQueryHighlighting(final boolean value) {
         // nop
     }
 

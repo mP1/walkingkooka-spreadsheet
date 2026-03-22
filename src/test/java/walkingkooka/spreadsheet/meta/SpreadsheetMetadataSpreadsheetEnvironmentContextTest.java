@@ -837,10 +837,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    json\n" +
                 "  expressionNumberKind\n" +
                 "    BIG_DECIMAL\n" +
-                "  findConverter\n" +
-                "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\"\n" +
-                "  findFunctions\n" +
                 "  formatters\n" +
                 "    accounting\n" +
                 "    automatic\n" +
@@ -920,6 +916,10 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  plugins\n" +
                 "  precision\n" +
                 "    7\n" +
+                "  queryConverter\n" +
+                "    collection\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, spreadsheet-metadata, style, text-node, template, net)\"\n" +
+                "  queryFunctions\n" +
                 "  roundingMode\n" +
                 "    HALF_UP\n" +
                 "  scriptingConverter\n" +

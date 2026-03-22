@@ -549,9 +549,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             .set(SpreadsheetMetadataPropertyName.PRECISION, 7)
             .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, TWO_DIGIT_YEAR)
             .set(
-                SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
-                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
-            ).set(
                 SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
                 SpreadsheetExpressionFunctions.parseAliasSet(
                     TEST_NUMBER_PARAMETER +
@@ -562,6 +559,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         "," +
                         TEST_VALUE
                 )
+            ).set(
+                SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
+                SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
             ).set(SpreadsheetMetadataPropertyName.DATE_FORMATTER, SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).spreadsheetFormatterSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_PARSER, SpreadsheetPattern.parseDateParsePattern(DATE_PATTERN + ";dd/mm").spreadsheetParserSelector())
             .set(SpreadsheetMetadataPropertyName.DATE_TIME_FORMATTER, SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).spreadsheetFormatterSelector())
@@ -18112,7 +18112,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
-            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet(functionName)
         );
 
@@ -19224,7 +19224,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
         ).set(
-            SpreadsheetMetadataPropertyName.FIND_FUNCTIONS,
+            SpreadsheetMetadataPropertyName.QUERY_FUNCTIONS,
             SpreadsheetExpressionFunctions.parseAliasSet(functionName)
         );
 

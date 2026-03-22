@@ -223,9 +223,9 @@ final class MissingConverterVerifier {
         Objects.requireNonNull(propertyName, "propertyName");
         Objects.requireNonNull(context, "context");
 
-        final boolean find = SpreadsheetMetadataPropertyName.FIND_CONVERTER.equals(propertyName);
         final boolean formatting = SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER.equals(propertyName);
         final boolean formula = SpreadsheetMetadataPropertyName.FORMULA_CONVERTER.equals(propertyName);
+        final boolean query = SpreadsheetMetadataPropertyName.QUERY_CONVERTER.equals(propertyName);
         final boolean scripting = SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER.equals(propertyName);
         final boolean sort = SpreadsheetMetadataPropertyName.SORT_CONVERTER.equals(propertyName);
         final boolean validation = SpreadsheetMetadataPropertyName.VALIDATION_CONVERTER.equals(propertyName);
@@ -651,7 +651,7 @@ final class MissingConverterVerifier {
 
         // expression...................................................................................................
         {
-            if (find || formatting || formula || scripting || validation) {
+            if (query || formatting || formula || scripting || validation) {
                 verifier.addIfConversionFail(
                     "1+sum(2)",
                     Expression.class,
@@ -692,7 +692,7 @@ final class MissingConverterVerifier {
 
         // locale.......................................................................................................
         {
-            if (formula || find || formatting || scripting) {
+            if (formula || query || formatting || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         locale.toLanguageTag(),
@@ -703,7 +703,7 @@ final class MissingConverterVerifier {
                 );
             }
 
-            if (formula || find || formatting || scripting) {
+            if (formula || query || formatting || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         locale.toLanguageTag(),
@@ -715,7 +715,7 @@ final class MissingConverterVerifier {
             }
 
             // text-to-locale...............................................................................................
-            if (formula || find || scripting) {
+            if (formula || query || scripting) {
                 verifier.addIfConversionFail(
                     locale.toLanguageTag(),
                     Locale.class,
@@ -723,7 +723,7 @@ final class MissingConverterVerifier {
                 );
             }
 
-            if (formula || find || scripting) {
+            if (formula || query || scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         locale,
@@ -737,7 +737,7 @@ final class MissingConverterVerifier {
 
         // net..........................................................................................................
         {
-            if (find | formula | scripting) {
+            if (query | formula | scripting) {
                 verifier.addIfConversionFail(
                     Lists.of(
                         absoluteUrl.text(),
@@ -869,7 +869,7 @@ final class MissingConverterVerifier {
         }
 
         // properties...................................................................................................
-        if (find || formatting || formula || scripting || validation) {
+        if (query || formatting || formula || scripting || validation) {
             final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY.set(
                 SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
                 SpreadsheetId.with(1)

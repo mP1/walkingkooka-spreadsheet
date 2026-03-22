@@ -73,7 +73,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             NullPointerException.class,
             () -> MissingConverterVerifier.verify(
                 null,
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 SpreadsheetConverterContexts.fake()
             )
         );
@@ -97,7 +97,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             NullPointerException.class,
             () -> MissingConverterVerifier.verify(
                 Converters.fake(),
-                SpreadsheetMetadataPropertyName.FIND_CONVERTER,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 null
             )
         );
@@ -106,7 +106,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     @Test
     public void testVerifyAndCheckWithWithFindConverterAndSpreadsheetMetadataTestingMetadataEnAu() {
         this.verifyAndCheck(
-            SpreadsheetMetadataPropertyName.FIND_CONVERTER
+            SpreadsheetMetadataPropertyName.QUERY_CONVERTER
         );
     }
 

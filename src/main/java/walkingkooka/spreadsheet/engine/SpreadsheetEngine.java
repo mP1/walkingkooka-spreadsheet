@@ -129,7 +129,7 @@ public interface SpreadsheetEngine {
      * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
      * <br>
      * Note that the {@link Expression} can only execute {@link walkingkooka.tree.expression.function.ExpressionFunction}
-     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#FIND_FUNCTIONS}.
+     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#QUERY_FUNCTIONS}.
      * <br>
      */
     Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
@@ -142,7 +142,7 @@ public interface SpreadsheetEngine {
      * the given {@link Expression}.
      * <br>
      * Note that the {@link Expression} can only execute {@link walkingkooka.tree.expression.function.ExpressionFunction}
-     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#FIND_FUNCTIONS}.
+     * defined in {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName#QUERY_FUNCTIONS}.
      * <br>
      * This is often used to highlight cells, and ignores the {@link walkingkooka.spreadsheet.meta.SpreadsheetMetadata} flags and query.
      */
