@@ -47,19 +47,19 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 /**
- * Captures the parameter values of a cell find.
+ * Captures the parameter values of a cell query.
  */
-public final class SpreadsheetCellFindQuery implements HasUrlFragment,
+public final class SpreadsheetCellQueryRequest implements HasUrlFragment,
     CanBeEmpty,
     HasText {
 
     /**
-     * Parses the given text into a {@link SpreadsheetCellFindQuery}.
+     * Parses the given text into a {@link SpreadsheetCellQueryRequest}.
      */
-    public static SpreadsheetCellFindQuery parse(final String text) {
+    public static SpreadsheetCellQueryRequest parse(final String text) {
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        SpreadsheetCellFindQuery query = SpreadsheetCellFindQuery.empty();
+        SpreadsheetCellQueryRequest query = SpreadsheetCellQueryRequest.empty();
 
         String component = parseComponentOrNull(cursor);
         if (null != component) {
@@ -173,9 +173,9 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     private final static ParserContext CONTEXT = ParserContexts.fake();
 
     /**
-     * Reads or extracts a {@link SpreadsheetCellFindQuery} from the parameters probably a {@link UrlQueryString}.
+     * Reads or extracts a {@link SpreadsheetCellQueryRequest} from the parameters probably a {@link UrlQueryString}.
      */
-    public static SpreadsheetCellFindQuery extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
+    public static SpreadsheetCellQueryRequest extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
         Objects.requireNonNull(parameters, "parameters");
 
         return empty()
@@ -241,11 +241,11 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return "Invalid " + parameter + "=" + CharSequences.quoteAndEscape(text);
     }
 
-    public static SpreadsheetCellFindQuery empty() {
+    public static SpreadsheetCellQueryRequest empty() {
         return EMPTY;
     }
 
-    private final static SpreadsheetCellFindQuery EMPTY = new SpreadsheetCellFindQuery(
+    private final static SpreadsheetCellQueryRequest EMPTY = new SpreadsheetCellQueryRequest(
         Optional.empty(), // path
         OptionalInt.empty(), // offset
         OptionalInt.empty(), // count
@@ -254,11 +254,11 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
     );
 
     // VisibleForTesting
-    SpreadsheetCellFindQuery(final Optional<SpreadsheetCellRangeReferencePath> path,
-                             final OptionalInt offset,
-                             final OptionalInt count,
-                             final Optional<ValueType> valueType,
-                             final Optional<SpreadsheetCellQuery> query) {
+    SpreadsheetCellQueryRequest(final Optional<SpreadsheetCellRangeReferencePath> path,
+                                final OptionalInt offset,
+                                final OptionalInt count,
+                                final Optional<ValueType> valueType,
+                                final Optional<SpreadsheetCellQuery> query) {
         this.path = path;
         this.offset = offset;
         this.count = count;
@@ -270,7 +270,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return this.path;
     }
 
-    public SpreadsheetCellFindQuery setPath(final Optional<SpreadsheetCellRangeReferencePath> path) {
+    public SpreadsheetCellQueryRequest setPath(final Optional<SpreadsheetCellRangeReferencePath> path) {
         Objects.requireNonNull(path, PATH_STRING);
 
         return this.path.equals(path) ?
@@ -290,7 +290,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return this.offset;
     }
 
-    public SpreadsheetCellFindQuery setOffset(final OptionalInt offset) {
+    public SpreadsheetCellQueryRequest setOffset(final OptionalInt offset) {
         Objects.requireNonNull(offset, OFFSET_STRING);
 
         if (offset.isPresent()) {
@@ -317,7 +317,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return this.count;
     }
 
-    public SpreadsheetCellFindQuery setCount(final OptionalInt count) {
+    public SpreadsheetCellQueryRequest setCount(final OptionalInt count) {
         Objects.requireNonNull(count, COUNT_STRING);
 
         if (count.isPresent()) {
@@ -344,7 +344,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return this.valueType;
     }
 
-    public SpreadsheetCellFindQuery setValueType(final Optional<ValueType> valueType) {
+    public SpreadsheetCellQueryRequest setValueType(final Optional<ValueType> valueType) {
         Objects.requireNonNull(valueType, VALUE_TYPE_STRING);
 
         return this.valueType.equals(valueType) ?
@@ -364,7 +364,7 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return this.query;
     }
 
-    public SpreadsheetCellFindQuery setQuery(final Optional<SpreadsheetCellQuery> query) {
+    public SpreadsheetCellQueryRequest setQuery(final Optional<SpreadsheetCellQuery> query) {
         Objects.requireNonNull(query, QUERY_STRING);
 
         return this.query.equals(query) ?
@@ -380,17 +380,17 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     private final Optional<SpreadsheetCellQuery> query;
 
-    private SpreadsheetCellFindQuery replace(final Optional<SpreadsheetCellRangeReferencePath> path,
-                                             final OptionalInt offset,
-                                             final OptionalInt count,
-                                             final Optional<ValueType> valueType,
-                                             final Optional<SpreadsheetCellQuery> query) {
+    private SpreadsheetCellQueryRequest replace(final Optional<SpreadsheetCellRangeReferencePath> path,
+                                                final OptionalInt offset,
+                                                final OptionalInt count,
+                                                final Optional<ValueType> valueType,
+                                                final Optional<SpreadsheetCellQuery> query) {
         return path.isPresent() ||
             offset.isPresent() ||
             count.isPresent() ||
             valueType.isPresent() ||
             query.isPresent() ?
-            new SpreadsheetCellFindQuery(
+            new SpreadsheetCellQueryRequest(
                 path,
                 offset,
                 count,
@@ -579,10 +579,10 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     public boolean equals(final Object other) {
         return this == other ||
-            other instanceof SpreadsheetCellFindQuery && this.equals0((SpreadsheetCellFindQuery) other);
+            other instanceof SpreadsheetCellQueryRequest && this.equals0((SpreadsheetCellQueryRequest) other);
     }
 
-    private boolean equals0(final SpreadsheetCellFindQuery other) {
+    private boolean equals0(final SpreadsheetCellQueryRequest other) {
         return this.path.equals(other.path) &&
             this.offset.equals(other.offset) &&
             this.count.equals(other.count) &&
@@ -600,10 +600,10 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
 
     static {
         JsonNodeContext.register(
-            JsonNodeContext.computeTypeName(SpreadsheetCellFindQuery.class),
-            SpreadsheetCellFindQuery::unmarshall,
-            SpreadsheetCellFindQuery::marshall,
-            SpreadsheetCellFindQuery.class
+            JsonNodeContext.computeTypeName(SpreadsheetCellQueryRequest.class),
+            SpreadsheetCellQueryRequest::unmarshall,
+            SpreadsheetCellQueryRequest::marshall,
+            SpreadsheetCellQueryRequest.class
         );
     }
 
@@ -611,8 +611,8 @@ public final class SpreadsheetCellFindQuery implements HasUrlFragment,
         return context.marshall(this.text());
     }
 
-    static SpreadsheetCellFindQuery unmarshall(final JsonNode node,
-                                               final JsonNodeUnmarshallContext context) {
+    static SpreadsheetCellQueryRequest unmarshall(final JsonNode node,
+                                                  final JsonNodeUnmarshallContext context) {
         return parse(node.stringOrFail());
     }
 }

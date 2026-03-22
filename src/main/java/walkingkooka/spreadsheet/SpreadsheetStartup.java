@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector;
 import walkingkooka.spreadsheet.convert.provider.MissingConverter;
 import walkingkooka.spreadsheet.convert.provider.MissingConverterSet;
 import walkingkooka.spreadsheet.convert.provider.MissingConverterValue;
-import walkingkooka.spreadsheet.engine.SpreadsheetCellFindQuery;
+import walkingkooka.spreadsheet.engine.SpreadsheetCellQueryRequest;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.collection.SpreadsheetCellSet;
 import walkingkooka.spreadsheet.export.provider.SpreadsheetExporterAliasSet;
@@ -123,7 +123,7 @@ public final class SpreadsheetStartup implements PublicStaticHelper {
         );
         SpreadsheetViewportHomeNavigationList.with(SpreadsheetSelection.A1);
 
-        SpreadsheetCellFindQuery.empty();
+        SpreadsheetCellQueryRequest.empty();
 
         final AbsoluteUrl url = Url.parseAbsolute("https://example.com");
 
