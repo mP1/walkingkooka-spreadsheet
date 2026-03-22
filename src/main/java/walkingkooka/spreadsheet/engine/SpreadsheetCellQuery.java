@@ -54,7 +54,7 @@ public final class SpreadsheetCellQuery implements HasUrlFragment,
     TreePrintable {
 
     /**
-     * Reads or extracts a {@link SpreadsheetCellFindQuery} from the parameters probably a {@link UrlQueryString}.
+     * Reads or extracts a {@link SpreadsheetCellQueryRequest} from the parameters probably a {@link UrlQueryString}.
      */
     public static Optional<SpreadsheetCellQuery> extract(final Map<HttpRequestAttribute<?>, ?> parameters) {
         Objects.requireNonNull(parameters, "parameters");
