@@ -198,10 +198,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitFindQuery(final SpreadsheetCellQuery query) {
-        // nop
-    }
-
     protected void visitFormatters(final SpreadsheetFormatterAliasSet aliases) {
         // nop
     }
@@ -280,6 +276,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitPrecision(final int precision) {
+        // nop
+    }
+
+    protected void visitQuery(final SpreadsheetCellQuery query) {
         // nop
     }
 

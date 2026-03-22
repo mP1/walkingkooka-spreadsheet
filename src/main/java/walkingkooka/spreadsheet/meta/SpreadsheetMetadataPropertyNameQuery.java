@@ -27,19 +27,19 @@ import java.util.Optional;
 /**
  * Holds the {@link SpreadsheetCellQuery}
  */
-final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> {
+final class SpreadsheetMetadataPropertyNameQuery extends SpreadsheetMetadataPropertyName<SpreadsheetCellQuery> {
 
     /**
      * Singleton
      */
-    static SpreadsheetMetadataPropertyNameFindQuery instance() {
-        return new SpreadsheetMetadataPropertyNameFindQuery();
+    static SpreadsheetMetadataPropertyNameQuery instance() {
+        return new SpreadsheetMetadataPropertyNameQuery();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameFindQuery() {
+    private SpreadsheetMetadataPropertyNameQuery() {
         super();
     }
 
@@ -70,7 +70,7 @@ final class SpreadsheetMetadataPropertyNameFindQuery extends SpreadsheetMetadata
     @Override
     void accept(final SpreadsheetCellQuery value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitFindQuery(value);
+        visitor.visitQuery(value);
     }
 
     // parseValueText...................................................................................................
