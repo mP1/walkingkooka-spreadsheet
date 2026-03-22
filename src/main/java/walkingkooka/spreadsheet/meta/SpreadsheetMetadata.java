@@ -40,6 +40,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -187,9 +188,13 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     public static final SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
-     * Suggested prefix that should be used by wrapped {@link EnvironmentContext} for {@link #spreadsheetEnvironmentContext(SpreadsheetEnvironmentContext)}.
+     * Suggested prefix that should be used by wrapped {@link EnvironmentContext} for
+     * {@link #spreadsheetEnvironmentContext(SpreadsheetEnvironmentContext)}.
      */
-    public static final String ENVIRONMENT_VALUE_NAME_PREFIX = "spreadsheet.";
+    public static final EnvironmentValueName<?> ENVIRONMENT_VALUE_NAME_PREFIX = EnvironmentValueName.with(
+        "spreadsheet",
+        Void.class
+    );
 
     /**
      * Private ctor to limit subclasses.
