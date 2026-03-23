@@ -463,6 +463,33 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
         );
     }
 
+    // isValidation.....................................................................................................
+
+    @Test
+    public void testIsValidationWithDiv0() {
+        this.isValidationAndCheck(
+            SpreadsheetErrorKind.DIV0.toError(),
+            false
+        );
+    }
+
+    @Test
+    public void testIsValidationWithValidationError() {
+        this.isValidationAndCheck(
+            SpreadsheetErrorKind.VALIDATION.toError(),
+            true
+        );
+    }
+
+    private void isValidationAndCheck(final SpreadsheetError error,
+                                      final boolean expected) {
+        this.checkEquals(
+            expected,
+            error.isValidation(),
+            () -> error + ".isValidation()"
+        );
+    }
+
     // setNameString....................................................................................................
 
     @Test
