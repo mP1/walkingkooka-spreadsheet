@@ -391,6 +391,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.error.flatMap(SpreadsheetError::validationPromptValue);
     }
 
+    // validationError..................................................................................................
+
+    /**
+     * If any present error is a {@link SpreadsheetError#isValidation()} it will be returned.
+     */
+    public Optional<SpreadsheetError> validationError() {
+        return this.error.filter(SpreadsheetError::isValidation);
+    }
+
     // errorOrValue ....................................................................................................
 
     /**

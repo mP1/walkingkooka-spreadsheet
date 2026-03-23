@@ -943,6 +943,73 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         );
     }
 
+    // validationError..................................................................................................
+
+    @Test
+    public void testValidationErrorWhenNone() {
+        this.validationErrorAndCheck(
+            SpreadsheetFormula.EMPTY
+        );
+    }
+
+    @Test
+    public void testValidationErrorWhenDivideByZeroError() {
+        this.validationErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.DIV0.toError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValidationErrorWhenError() {
+        this.validationErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(
+                    SpreadsheetErrorKind.ERROR.toError()
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testValidationErrorWhenValidationError() {
+        final SpreadsheetError error = SpreadsheetErrorKind.VALIDATION.setMessage("validationError123");
+
+        this.validationErrorAndCheck(
+            SpreadsheetFormula.EMPTY.setError(
+                Optional.of(error)
+            ),
+            error
+        );
+    }
+
+    private void validationErrorAndCheck(final SpreadsheetFormula formula) {
+        this.validationErrorAndCheck(
+            formula,
+            SpreadsheetFormula.NO_ERROR
+        );
+    }
+
+    private void validationErrorAndCheck(final SpreadsheetFormula formula,
+                                         final SpreadsheetError expected) {
+        this.validationErrorAndCheck(
+            formula,
+            Optional.of(expected)
+        );
+    }
+
+    private void validationErrorAndCheck(final SpreadsheetFormula formula,
+                                         final Optional<SpreadsheetError> expected) {
+        this.checkEquals(
+            expected,
+            formula.validationError(),
+            () -> "validationError: " + formula
+        );
+    }
+
     // replaceErrorWithValueIfPossible..................................................................................
 
     @Test
