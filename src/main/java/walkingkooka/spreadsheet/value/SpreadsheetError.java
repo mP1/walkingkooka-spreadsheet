@@ -377,11 +377,18 @@ public final class SpreadsheetError implements Value<Optional<Object>>,
     }
 
     /**
+     * Returns true if this error is a validation error.
+     */
+    public boolean isValidation() {
+        return this.kind() == SpreadsheetErrorKind.VALIDATION;
+    }
+
+    /**
      * Returns true only if this error has {@link ValidationPromptValue} but no error message, meaning the value will
      * supply a {@link ValidationChoiceList} and others.
      */
     public boolean isValidationPromptValue() {
-        return SpreadsheetErrorKind.VALIDATION == this.kind &&
+        return this.isValidation() &&
             this.message.isEmpty() &&
             this.value.orElse(null) instanceof ValidationPromptValue;
     }
