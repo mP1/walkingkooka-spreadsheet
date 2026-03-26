@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.naming.HasName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Whitespace;
 
 import java.util.Objects;
 
-public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentException {
+public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentException
+    implements HasName<SpreadsheetMetadataPropertyName<?>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,6 +73,7 @@ public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentEx
             super.getMessage();
     }
 
+    @Override
     public SpreadsheetMetadataPropertyName<?> name() {
         return this.name;
     }
