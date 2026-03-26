@@ -926,6 +926,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link TreeTextConverters#textToPadding()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToPadding() {
+        return TreeTextConverters.textToPadding();
+    }
+    
+    /**
      * {@link Converters#textToProperties}
      */
     public static Converter<SpreadsheetConverterContext> textToProperties() {
