@@ -388,6 +388,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToBooleanList();
                 break;
+            case TEXT_TO_BORDER_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToBorder();
+                break;
             case TEXT_TO_COLOR_STRING:
                 noParameterCheck(copy);
 
@@ -928,7 +933,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String TEXT_TO_BOOLEAN_LIST_STRING = "text-to-boolean-list";
 
     final static ConverterName TEXT_TO_BOOLEAN_LIST = ConverterName.with(TEXT_TO_BOOLEAN_LIST_STRING);
-    
+
+    private final static String TEXT_TO_BORDER_STRING = "text-to-border";
+
+    final static ConverterName TEXT_TO_BORDER = ConverterName.with(TEXT_TO_BORDER_STRING);
+
     private final static String TEXT_TO_COLOR_STRING = "text-to-color";
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
@@ -1217,6 +1226,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),
             converterInfo(TEXT_TO_BOOLEAN_LIST),
+            converterInfo(TEXT_TO_BORDER),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_CSV_STRING_LIST),
             converterInfo(TEXT_TO_DATE_LIST),

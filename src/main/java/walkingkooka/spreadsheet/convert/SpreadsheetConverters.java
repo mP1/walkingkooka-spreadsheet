@@ -761,6 +761,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link TreeTextConverters#textToBorder()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToBorder() {
+        return TreeTextConverters.textToBorder();
+    }
+
+    /**
      * {@see ColorConverters#textToColor}
      */
     public static Converter<SpreadsheetConverterContext> textToColor() {
