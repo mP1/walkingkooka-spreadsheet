@@ -329,7 +329,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
      */
     public final <V> V getEffectiveStylePropertyOrFail(final TextStylePropertyName<V> propertyName) {
         return this.getEffectiveStyleProperty(propertyName)
-            .orElseThrow(() -> new IllegalArgumentException("Missing " + propertyName));
+            .orElseThrow(propertyName::missingTextStylePropertyNameException);
     }
 
     /**
