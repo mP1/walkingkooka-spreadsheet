@@ -678,6 +678,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text\n" +
                 "    text-node\n" +
                 "    text-to-boolean-list\n" +
+                "    text-to-border\n" +
                 "    text-to-color\n" +
                 "    text-to-csv-string-list\n" +
                 "    text-to-date-list\n" +

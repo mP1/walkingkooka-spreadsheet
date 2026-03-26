@@ -656,7 +656,16 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
             SpreadsheetConverters.textNode()
         );
     }
-
+    
+    @Test
+    public void testConverterSelectorWithTextToBorder() {
+        this.converterAndCheck(
+            SpreadsheetConvertersConverterProvider.TEXT_TO_BORDER + "",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToBorder()
+        );
+    }
+    
     @Test
     public void testConverterSelectorWithTextToColor() {
         this.converterAndCheck(
