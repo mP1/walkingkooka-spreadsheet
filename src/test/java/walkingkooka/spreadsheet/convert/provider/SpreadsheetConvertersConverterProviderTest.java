@@ -775,6 +775,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToMargin() {
+        this.converterAndCheck(
+            "text-to-margin",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToMargin()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToObject() {
         this.converterAndCheck(
             "text-to-object",

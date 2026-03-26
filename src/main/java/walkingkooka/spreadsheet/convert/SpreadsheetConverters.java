@@ -890,6 +890,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link TreeTextConverters#textToMargin()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToMargin() {
+        return TreeTextConverters.textToMargin();
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetFormulaParserToken} and converting
      * that into a {@link Number}.
      */
