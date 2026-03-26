@@ -694,6 +694,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-json\n" +
                 "    text-to-line-ending\n" +
                 "    text-to-locale\n" +
+                "    text-to-margin\n" +
                 "    text-to-number-list\n" +
                 "    text-to-object\n" +
                 "    text-to-properties\n" +
