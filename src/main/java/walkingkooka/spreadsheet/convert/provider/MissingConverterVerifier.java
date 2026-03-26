@@ -85,9 +85,15 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonString;
+import walkingkooka.tree.text.Border;
+import walkingkooka.tree.text.BorderStyle;
+import walkingkooka.tree.text.BoxEdge;
 import walkingkooka.tree.text.Flag;
 import walkingkooka.tree.text.Hyperlink;
 import walkingkooka.tree.text.Image;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.Margin;
+import walkingkooka.tree.text.Padding;
 import walkingkooka.tree.text.Styleable;
 import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextNode;
@@ -1312,6 +1318,47 @@ final class MissingConverterVerifier {
                 );
             }
 
+            // text-to-border.................................................................................
+            if (formatting || scripting) {
+                final Border border = TextStyle.EMPTY.setBorder(
+                    Color.BLACK,
+                    BorderStyle.DASHED,
+                    Length.pixel(1.0)
+                ).border(BoxEdge.ALL);
+                
+                verifier.addIfConversionFail(
+                    border.text(),
+                    Border.class,
+                    SpreadsheetConvertersConverterProvider.STYLE // text-to-border
+                );
+            }
+
+            // text-to-margin.................................................................................
+            if (formatting || scripting) {
+                final Margin margin = TextStyle.EMPTY.setMargin(
+                    Length.pixel(1.0)
+                ).margin(BoxEdge.ALL);
+
+                verifier.addIfConversionFail(
+                    margin.text(),
+                    Margin.class,
+                    SpreadsheetConvertersConverterProvider.STYLE // text-to-margin
+                );
+            }
+
+            // text-to-padding.................................................................................
+            if (formatting || scripting) {
+                final Padding padding = TextStyle.EMPTY.setPadding(
+                    Length.pixel(1.0)
+                ).padding(BoxEdge.ALL);
+
+                verifier.addIfConversionFail(
+                    padding.text(),
+                    Padding.class,
+                    SpreadsheetConvertersConverterProvider.STYLE // text-to-padding
+                );
+            }
+            
             // text-to-spreadsheet-text.................................................................................
             final SpreadsheetText spreadsheetText = SpreadsheetText.with("Text123");
 

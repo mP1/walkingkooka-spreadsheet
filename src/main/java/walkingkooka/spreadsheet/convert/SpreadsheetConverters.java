@@ -664,6 +664,9 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> STYLE = namedCollection(
         "style",
         hasStyle(),
+        textToBorder(),
+        textToMargin(),
+        textToPadding(),
         textToTextStyle(),
         textToTextStylePropertyName(),
         SpreadsheetConverters.toStyleable(),
