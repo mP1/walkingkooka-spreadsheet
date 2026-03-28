@@ -2902,8 +2902,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          user@example.com -999999999-01-01T00:00\n" +
                 "    autoHideScrollbars: false\n" +
                 "    cellCharacterWidth: 1\n" +
-                "    color1: black (walkingkooka.color.OpaqueRgbColor)\n" +
-                "    color2: white (walkingkooka.color.OpaqueRgbColor)\n" +
+                "    color1: black\n" +
+                "    color2: white\n" +
                 "    colorBlack: 1\n" +
                 "    colorWhite: 2\n" +
                 "    comparators: \n" +
@@ -3141,8 +3141,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "          user@example.com -999999999-01-01T00:00\n" +
                 "    autoHideScrollbars: false\n" +
                 "    cellCharacterWidth: 1\n" +
-                "    color1: black (walkingkooka.color.OpaqueRgbColor)\n" +
-                "    color2: white (walkingkooka.color.OpaqueRgbColor)\n" +
+                "    color1: black\n" +
+                "    color2: white\n" +
                 "    colorBlack: 1\n" +
                 "    colorWhite: 2\n" +
                 "    comparators: \n" +
@@ -3378,8 +3378,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "        user@example.com -999999999-01-01T00:00\n" +
                 "  autoHideScrollbars: false\n" +
                 "  cellCharacterWidth: 1\n" +
-                "  color1: black (walkingkooka.color.OpaqueRgbColor)\n" +
-                "  color2: white (walkingkooka.color.OpaqueRgbColor)\n" +
+                "  color1: black\n" +
+                "  color2: white\n" +
                 "  colorBlack: 1\n" +
                 "  colorWhite: 2\n" +
                 "  comparators: \n" +
