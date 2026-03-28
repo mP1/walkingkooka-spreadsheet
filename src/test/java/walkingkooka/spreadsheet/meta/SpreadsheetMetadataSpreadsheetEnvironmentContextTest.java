@@ -594,9 +594,9 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "  cellCharacterWidth\n" +
                 "    1\n" +
                 "  color1\n" +
-                "    black (walkingkooka.color.OpaqueRgbColor)\n" +
+                "    black\n" +
                 "  color2\n" +
-                "    white (walkingkooka.color.OpaqueRgbColor)\n" +
+                "    white\n" +
                 "  colorBlack\n" +
                 "    1\n" +
                 "  colorWhite\n" +
