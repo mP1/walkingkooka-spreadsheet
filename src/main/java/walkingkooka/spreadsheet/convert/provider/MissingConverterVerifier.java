@@ -1337,7 +1337,7 @@ final class MissingConverterVerifier {
             if (formatting || scripting) {
                 final Margin margin = TextStyle.EMPTY.setMargin(
                     Optional.of(
-                        Length.pixel(1.0)
+                        Margin.parse("1px")
                     )
                 ).margin(BoxEdge.ALL);
 
@@ -1352,7 +1352,7 @@ final class MissingConverterVerifier {
             if (formatting || scripting) {
                 final Padding padding = TextStyle.EMPTY.setPadding(
                     Optional.of(
-                        Length.pixel(1.0)
+                        Padding.parse("1px")
                     )
                 ).padding(BoxEdge.ALL);
 
