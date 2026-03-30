@@ -86,12 +86,10 @@ import walkingkooka.tree.json.JsonNumber;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.text.Border;
-import walkingkooka.tree.text.BorderStyle;
 import walkingkooka.tree.text.BoxEdge;
 import walkingkooka.tree.text.Flag;
 import walkingkooka.tree.text.Hyperlink;
 import walkingkooka.tree.text.Image;
-import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.Margin;
 import walkingkooka.tree.text.Padding;
 import walkingkooka.tree.text.Styleable;
@@ -1320,11 +1318,7 @@ final class MissingConverterVerifier {
 
             // text-to-border.................................................................................
             if (formatting || scripting) {
-                final Border border = TextStyle.EMPTY.setBorder(
-                    Color.BLACK,
-                    BorderStyle.DASHED,
-                    Length.pixel(1.0)
-                ).border(BoxEdge.ALL);
+                final Border border = Border.parse("BLACK SOLID 1.0px");
                 
                 verifier.addIfConversionFail(
                     border.text(),
