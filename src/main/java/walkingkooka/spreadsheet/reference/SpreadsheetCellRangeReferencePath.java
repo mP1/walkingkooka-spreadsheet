@@ -325,10 +325,10 @@ public enum SpreadsheetCellRangeReferencePath {
         final String nameLower = name.toLowerCase();
 
         this.labelText = (nameLower.substring(0, 2) + " " + nameLower.substring(2))
-            .replace("lr", "left-right")
-            .replace("rl", "right-left")
-            .replace("td", "top-down")
-            .replace("bu", "bottom-up");
+            .replace("lr", "Left-Right")
+            .replace("rl", "Right-Left")
+            .replace("td", "Top-Down")
+            .replace("bu", "Bottom-Up");
     }
 
     /**
