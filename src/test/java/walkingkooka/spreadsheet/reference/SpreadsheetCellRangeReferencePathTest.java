@@ -379,7 +379,7 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     public void testLRTDLabelText() {
         this.labelTextAndCheck(
             SpreadsheetCellRangeReferencePath.LRTD,
-            "left-right top-down"
+            "Left-Right Top-Down"
         );
     }
 
@@ -387,7 +387,7 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     public void testRLTDLabelText() {
         this.labelTextAndCheck(
             SpreadsheetCellRangeReferencePath.RLTD,
-            "right-left top-down"
+            "Right-Left Top-Down"
         );
     }
 
@@ -395,7 +395,7 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
     public void testLRBULabelText() {
         this.labelTextAndCheck(
             SpreadsheetCellRangeReferencePath.LRBU,
-            "left-right bottom-up"
+            "Left-Right Bottom-Up"
         );
     }
 
