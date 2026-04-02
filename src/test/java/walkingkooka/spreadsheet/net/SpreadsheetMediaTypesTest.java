@@ -142,10 +142,10 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
         );
     }
 
-    // object...........................................................................................................
+    // memory...........................................................................................................
 
     @Test
-    public void testObjectCell() {
+    public void testMemoryCell() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_CELL,
             "application/memory+walkingkooka.spreadsheet.value.SpreadsheetCell"
@@ -161,7 +161,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
-    public void testObjectLabel() {
+    public void testMemoryLabel() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_LABEL,
             "application/memory+walkingkooka.spreadsheet.reference.SpreadsheetLabelName"
@@ -169,7 +169,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
-    public void testObjectMetadata() {
+    public void testMemoryMetadata() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA,
             "application/memory+walkingkooka.spreadsheet.meta.SpreadsheetMetadata"
@@ -177,7 +177,7 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
-    public void testObjectWithNullClassFails() {
+    public void testMemoryWithNullClassFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetMediaTypes.object(null)
