@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.ValueType;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.util.Currency;
@@ -51,6 +52,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     public static final MediaType JSON_DATE_TIME_SYMBOLS = json(DateTimeSymbols.class);
 
     public static final MediaType JSON_DECIMAL_NUMBER_SYMBOLS = json(DecimalNumberSymbols.class);
+
+    public static final MediaType JSON_FORM = json(Form.class);
 
     public static final MediaType JSON_FORMATTED_VALUE = json(TextNode.class);
 
@@ -87,6 +90,8 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
     public static final MediaType MEMORY_DATE_TIME_SYMBOLS = object(DateTimeSymbols.class);
 
     public static final MediaType MEMORY_DECIMAL_NUMBER_SYMBOLS = object(DecimalNumberSymbols.class);
+
+    public static final MediaType MEMORY_FORM = object(Form.class);
 
     public static final MediaType MEMORY_FORMATTED_VALUE = object(TextNode.class);
 

@@ -63,6 +63,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
     }
 
     @Test
+    public void testJsonForm() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.JSON_FORM,
+            "application/json+walkingkooka.validation.form.Form"
+        );
+    }
+
+    @Test
     public void testJsonFormula() {
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.JSON_FORMULA,
@@ -141,6 +149,14 @@ public final class SpreadsheetMediaTypesTest implements PublicStaticHelperTestin
         this.mediaTypeAndCheck(
             SpreadsheetMediaTypes.MEMORY_CELL,
             "application/memory+walkingkooka.spreadsheet.value.SpreadsheetCell"
+        );
+    }
+
+    @Test
+    public void testMemoryForm() {
+        this.mediaTypeAndCheck(
+            SpreadsheetMediaTypes.MEMORY_FORM,
+            "application/memory+walkingkooka.validation.form.Form"
         );
     }
 
