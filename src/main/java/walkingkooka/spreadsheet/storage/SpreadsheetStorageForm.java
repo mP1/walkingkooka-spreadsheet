@@ -72,7 +72,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid extra path after FormName");
+                throw path.invalidStoragePathException("Invalid extra path after FormName");
         }
 
         StorageValue value = null;
@@ -93,15 +93,16 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
     @Override
     StorageValue saveNonNull(final StorageValue value,
                              final SpreadsheetStorageContext context) {
-        switch (value.path()
-            .namesList()
+        final StoragePath path = value.path();
+
+        switch (path.namesList()
             .size()) {
             case 0:
             case 1:
             case 2:
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after FormName");
+                throw path.invalidStoragePathException("Invalid path after FormName");
         }
 
         final Form<SpreadsheetValidationReference> form = context.convertOrFail(
@@ -128,7 +129,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
         switch (storageNames.size()) {
             case 0:
             case 1:
-                throw new IllegalArgumentException("Missing FormName");
+                throw path.invalidStoragePathException("Missing FormName");
             case 2:
                 context.deleteForm(
                     parseFormName(
@@ -137,7 +138,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid extra path after FormName");
+                throw path.invalidStoragePathException("Invalid path after FormName");
         }
     }
 
@@ -160,7 +161,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
                     .value();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after form");
+                throw path.invalidStoragePathException("Invalid path after FormName");
         }
 
         return context.findFormsByName(
