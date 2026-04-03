@@ -41,6 +41,13 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetStorageForm}
+     */
+    public static Storage<SpreadsheetStorageContext> form() {
+        return SpreadsheetStorageForm.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetStorageSpreadsheetLabel}
      */
     public static Storage<SpreadsheetStorageContext> label() {
