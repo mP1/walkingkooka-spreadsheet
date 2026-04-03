@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviders;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
+import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
@@ -102,8 +103,8 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
     @Test
     public void testLoadWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .load(
                     StoragePath.parse("/" + FORM_NAME1 + "/extra"),
@@ -112,7 +113,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         );
 
         this.checkEquals(
-            "Invalid extra path after FormName",
+            "Invalid extra path after FormName \"/Form111/extra\"",
             thrown.getMessage()
         );
     }
@@ -182,8 +183,8 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
     @Test
     public void testSaveWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -195,7 +196,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         );
 
         this.checkEquals(
-            "Invalid path after FormName",
+            "Invalid path after FormName \"/Form111/extra\"",
             thrown.getMessage()
         );
     }
@@ -242,8 +243,8 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
     @Test
     public void testDeleteMissingFormFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .delete(
                     StoragePath.ROOT,
@@ -252,15 +253,15 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         );
 
         this.checkEquals(
-            "Missing FormName",
+            "Missing FormName \"/\"",
             thrown.getMessage()
         );
     }
 
     @Test
     public void testDeleteWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .delete(
                     StoragePath.parse("/" + FORM_NAME1 + "/extra"),
@@ -269,7 +270,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         );
 
         this.checkEquals(
-            "Invalid extra path after FormName",
+            "Invalid path after FormName \"/Form111/extra\"",
             thrown.getMessage()
         );
     }
@@ -297,8 +298,8 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
     @Test
     public void testListWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .list(
                     StoragePath.parse("/" + FORM_NAME1 + "/extra"),
@@ -309,7 +310,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         );
 
         this.checkEquals(
-            "Invalid path after form",
+            "Invalid path after FormName \"/Form111/extra\"",
             thrown.getMessage()
         );
     }
