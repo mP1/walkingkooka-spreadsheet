@@ -84,7 +84,7 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
                     );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path");
+                throw path.invalidStoragePathException("Invalid path");
         }
 
         return loaded;
@@ -100,15 +100,15 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
             case 1:
                 break;
             case 2:
-                throw new IllegalArgumentException("Invalid path, SpreadsheetId should not be present");
+                throw path.invalidStoragePathException("Invalid path, contains SpreadsheetId");
             default:
-                throw new IllegalArgumentException("Invalid path");
+                throw path.invalidStoragePathException("Invalid path");
         }
 
         final SpreadsheetMetadata saved = context.saveMetadata(
             context.convertOrFail(
                 value.value()
-                    .orElseThrow(() -> new IllegalArgumentException("Missing " + SpreadsheetMetadata.class.getSimpleName())),
+                    .orElseThrow(() -> path.invalidStoragePathException("Invalid path missing " + SpreadsheetMetadata.class.getSimpleName())),
                 SpreadsheetMetadata.class
             )
         );
@@ -134,7 +134,7 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
         switch (names.size()) {
             case 0:
             case 1:
-                throw new IllegalArgumentException("Missing " + SpreadsheetId.class.getSimpleName());
+                throw path.invalidStoragePathException("Invalid path missing " + SpreadsheetId.class.getSimpleName());
             case 2:
                 context.deleteMetadata(
                     parseSpreadsheetId(
@@ -143,7 +143,7 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path");
+                throw path.invalidStoragePathException("Invalid path");
         }
     }
 
@@ -169,7 +169,7 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
                     .value();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path");
+                throw path.invalidStoragePathException("Invalid path");
         }
 
         return context.findMetadataBySpreadsheetName(

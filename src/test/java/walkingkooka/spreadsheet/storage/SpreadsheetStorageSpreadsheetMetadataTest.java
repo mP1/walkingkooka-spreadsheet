@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.net.SpreadsheetMediaTypes;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -114,8 +115,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
     public void testSaveWithStoragePathIncludingSpreadsheetIdFails() {
         final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
 
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -127,15 +128,15 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
         );
 
         this.checkEquals(
-            "Invalid path, SpreadsheetId should not be present",
+            "Invalid path, contains SpreadsheetId \"/1\"",
             thrown.getMessage()
         );
     }
 
     @Test
     public void testSavePathIncludesSpreadsheetId() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -149,7 +150,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
         );
 
         this.checkEquals(
-            "Invalid path, SpreadsheetId should not be present",
+            "Invalid path, contains SpreadsheetId \"/1\"",
             thrown.getMessage()
         );
     }
@@ -158,8 +159,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
     public void testSaveWithStorageValueMissingSpreadsheetMetadataFails() {
         final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
 
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -171,7 +172,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
         );
 
         this.checkEquals(
-            "Missing SpreadsheetMetadata",
+            "Invalid path missing SpreadsheetMetadata \"/\"",
             thrown.getMessage()
         );
     }
