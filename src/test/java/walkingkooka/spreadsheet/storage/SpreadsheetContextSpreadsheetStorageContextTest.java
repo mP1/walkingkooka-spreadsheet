@@ -60,6 +60,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
@@ -67,6 +69,8 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
@@ -185,6 +189,111 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
         );
     }
 
+    // forms............................................................................................................
+
+    @Test
+    public void testLoadForm() {
+        this.loadFormAndCheck(
+            this.createContext(),
+            FormName.with("Form123")
+        );
+    }
+
+    @Test
+    public void testSaveForm() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final FormName formName = FormName.with("Form123");
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
+
+        this.saveFormAndCheck(
+            context,
+            form,
+            form
+        );
+
+        this.loadFormAndCheck(
+            context,
+            formName,
+            form
+        );
+    }
+
+    @Test
+    public void testDeleteForm() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final FormName formName = FormName.with("Form123");
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(formName);
+
+        context.saveForm(form);
+        context.deleteForm(formName);
+
+        this.loadFormAndCheck(
+            context,
+            formName
+        );
+    }
+
+    @Test
+    public void testFindFormByName() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
+            FormName.with("Form111")
+        );
+        context.saveForm(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = SpreadsheetForms.form(
+            FormName.with("Form222")
+        );
+        context.saveForm(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = SpreadsheetForms.form(
+            FormName.with("DifferentForm")
+        );
+
+        context.saveForm(form3);
+
+        this.findFormsByNameAndCheck(
+            context,
+            "Form",
+            0,
+            3,
+            form1,
+            form2,
+            form3
+        );
+    }
+
+    @Test
+    public void testFindFormByNameWithOffsetAndCount() {
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
+            FormName.with("Form222")
+        );
+        context.saveForm(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = SpreadsheetForms.form(
+            FormName.with("Form333")
+        );
+        context.saveForm(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = SpreadsheetForms.form(
+            FormName.with("Different111")
+        );
+        context.saveForm(form3);
+
+        this.findFormsByNameAndCheck(
+            context,
+            "Form",
+            1,
+            1,
+            form2
+        );
+    }
+    
     // labels...........................................................................................................
 
     @Test
