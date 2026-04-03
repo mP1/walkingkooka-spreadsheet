@@ -349,6 +349,19 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
     }
 
     @Override
+    public SpreadsheetDelta findFormsByName(final String text,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context) {
+        return this.engine.findFormsByName(
+            text,
+            offset,
+            count,
+            context
+        );
+    }
+
+    @Override
     public SpreadsheetDelta loadLabel(final SpreadsheetLabelName name,
                                       final SpreadsheetEngineContext context) {
         return this.engine.loadLabel(name, context);

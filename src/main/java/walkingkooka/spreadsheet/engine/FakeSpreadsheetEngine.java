@@ -224,6 +224,14 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public SpreadsheetDelta findFormsByName(final String text,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

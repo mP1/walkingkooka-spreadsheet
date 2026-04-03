@@ -27236,6 +27236,60 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    // findFormsByName..................................................................................................
+
+    @Test
+    public void testFindFormsByName() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        final SpreadsheetEngineContext context = this.createContext();
+
+        final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
+            FormName.with("Different1")
+        );
+
+        engine.saveForm(
+            form1,
+            context
+        );
+
+        final Form<SpreadsheetValidationReference> form2 = SpreadsheetForms.form(
+            FormName.with("Form2")
+        );
+
+        engine.saveForm(
+            form2,
+            context
+        );
+
+        final Form<SpreadsheetValidationReference> form3 = SpreadsheetForms.form(
+            FormName.with("Form3")
+        );
+
+        engine.saveForm(
+            form3,
+            context
+        );
+
+        final Form<SpreadsheetValidationReference> form4 = SpreadsheetForms.form(
+            FormName.with("Form4")
+        );
+
+        engine.saveForm(
+            form4,
+            context
+        );
+
+
+        this.findFormsByNameAndCheck(
+            engine,
+            "Form",
+            1, // offset
+            1, // count
+            context,
+            form3
+        );
+    }
+
     //  helpers.........................................................................................................
 
     @Override

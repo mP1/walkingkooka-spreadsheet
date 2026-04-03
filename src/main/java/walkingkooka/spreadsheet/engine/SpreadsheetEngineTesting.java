@@ -2118,6 +2118,114 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         );
     }
 
+    // findFormsByName..................................................................................................
+
+    @Test
+    default void testFindFormsByNameWithNullTextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .findFormsByName(
+                    null,
+                    0, // offset
+                    0, // count,
+                    SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testFindFormsByNameWithNegativeOffsetFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createSpreadsheetEngine()
+                .findFormsByName(
+                    "",
+                    -1, // offset
+                    0, // count,
+                    SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testFindFormsByNameWithNegativeCountFails() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createSpreadsheetEngine()
+                .findFormsByName(
+                    "",
+                    0, // offset
+                    -1, // count,
+                    SpreadsheetEngineContexts.fake()
+                )
+        );
+    }
+
+    @Test
+    default void testFindFormsByNameWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSpreadsheetEngine()
+                .findFormsByName(
+                    "",
+                    0, // offset
+                    0, // count,
+                    null
+                )
+        );
+    }
+
+    default void findFormsByNameAndCheck(final SpreadsheetEngine engine,
+                                         final String text,
+                                         final int offset,
+                                         final int count,
+                                         final SpreadsheetEngineContext context,
+                                         final Form<SpreadsheetValidationReference>... expected) {
+        this.findFormsByNameAndCheck(
+            engine,
+            text,
+            offset,
+            count,
+            context,
+            Sets.of(expected)
+        );
+    }
+
+    default void findFormsByNameAndCheck(final SpreadsheetEngine engine,
+                                         final String text,
+                                         final int offset,
+                                         final int count,
+                                         final SpreadsheetEngineContext context,
+                                         final Set<Form<SpreadsheetValidationReference>> expected) {
+        this.findFormsByNameAndCheck(
+            engine,
+            text,
+            offset,
+            count,
+            context,
+            SpreadsheetDelta.EMPTY.setForms(expected)
+        );
+    }
+
+    default void findFormsByNameAndCheck(final SpreadsheetEngine engine,
+                                         final String text,
+                                         final int offset,
+                                         final int count,
+                                         final SpreadsheetEngineContext context,
+                                         final SpreadsheetDelta expected) {
+        this.checkEquals(
+            expected,
+            engine.findFormsByName(
+                text,
+                offset,
+                count,
+                context
+            ),
+            () -> "findFormsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
+        );
+    }
+    
     // saveLabel........................................................................................................
 
     @Test
