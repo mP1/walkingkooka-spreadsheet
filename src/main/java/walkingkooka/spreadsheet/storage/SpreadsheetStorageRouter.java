@@ -44,6 +44,9 @@ import java.util.function.BiFunction;
  * /spreadsheet/{@link SpreadsheetId}/cell/SpreadsheetExpressionReference
  * /spreadsheet/1/cell/A1
  *
+ * /spreadsheet/{@link SpreadsheetId}/form/{@link walkingkooka.validation.form.FormName}
+ * /spreadsheet/1/form/Form123
+ *
  * /label/{@link SpreadsheetLabelName}
  * /label/Label123
  *
@@ -58,12 +61,14 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     static SpreadsheetStorageRouter with(final Storage<SpreadsheetStorageContext> cells,
                                          final Storage<SpreadsheetStorageContext> environment,
+                                         final Storage<SpreadsheetStorageContext> forms,
                                          final Storage<SpreadsheetStorageContext> labels,
                                          final Storage<SpreadsheetStorageContext> metadatas,
                                          final Storage<SpreadsheetStorageContext> other) {
         return new SpreadsheetStorageRouter(
             Objects.requireNonNull(cells, "cells"),
             Objects.requireNonNull(environment, "environment"),
+            Objects.requireNonNull(forms, "forms"),
             Objects.requireNonNull(labels, "labels"),
             Objects.requireNonNull(metadatas, "metadatas"),
             Objects.requireNonNull(other, "other")
@@ -72,6 +77,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     private SpreadsheetStorageRouter(final Storage<SpreadsheetStorageContext> cells,
                                      final Storage<SpreadsheetStorageContext> environment,
+                                     final Storage<SpreadsheetStorageContext> forms,
                                      final Storage<SpreadsheetStorageContext> labels,
                                      final Storage<SpreadsheetStorageContext> metadatas,
                                      final Storage<SpreadsheetStorageContext> other) {
@@ -79,6 +85,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
         this.cells = cells.setPrefix(CELL);
         this.environment = environment.setPrefix(ENVIRONMENT);
+        this.forms = forms.setPrefix(FORM);
         this.labels = labels.setPrefix(LABEL);
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
 
@@ -183,11 +190,15 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                                 break;
                             default:
                                 // /spreadsheet/1/cell
+                                // /spreadsheet/1/form
                                 // /spreadsheet/1/label
 
                                 switch (names.get(3).value()) {
                                     case CELL_STRING:
                                         storage = this.cells;
+                                        break;
+                                    case FORM_STRING:
+                                        storage = this.forms;
                                         break;
                                     case LABEL_STRING:
                                         storage = this.labels;
@@ -227,6 +238,10 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                         storage = this.environment;
                         executeContext = context;
                         break;
+                    case FORM_STRING:
+                        storage = this.forms;
+                        executeContext = context;
+                        break;
                     case LABEL_STRING:
                         storage = this.labels;
                         executeContext = context;
@@ -264,6 +279,12 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         StorageName.with(ENVIRONMENT_STRING)
     );
 
+    private final static String FORM_STRING = "form";
+
+    private final static StoragePath FORM = StoragePath.ROOT.append(
+        StorageName.with(FORM_STRING)
+    );
+
     private final static String LABEL_STRING = "label";
 
     private final static StoragePath LABEL = StoragePath.ROOT.append(
@@ -273,6 +294,8 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     private final Storage<SpreadsheetStorageContext> cells;
 
     private final Storage<SpreadsheetStorageContext> environment;
+
+    private final Storage<SpreadsheetStorageContext> forms;
 
     private final Storage<SpreadsheetStorageContext> labels;
 
@@ -287,6 +310,6 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     @Override
     public String toString() {
-        return this.cells + ", " + this.environment + ", " + this.labels + ", " + this.metadatas + ", /* " + this.other;
+        return this.cells + ", " + this.environment + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", /* " + this.other;
     }
 }

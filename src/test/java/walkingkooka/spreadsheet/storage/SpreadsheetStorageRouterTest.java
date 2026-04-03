@@ -56,6 +56,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
@@ -64,6 +66,8 @@ import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.Storages;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
@@ -128,6 +132,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
     private final Storage<SpreadsheetStorageContext> CELLS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> ENVIRONMENT = Storages.fake();
+    private final Storage<SpreadsheetStorageContext> FORMS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> LABELS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> METADATAS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> OTHER = Storages.fake();
@@ -144,6 +149,14 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 Optional.of(222)
             )
         );
+    
+    private final static FormName FORM_NAME1 = FormName.with("FormName111");
+    
+    private final static Form<SpreadsheetValidationReference> FORM1 = SpreadsheetForms.form(FORM_NAME1);
+
+    private final static FormName FORM_NAME2 = FormName.with("FormName222");
+
+    private final static Form<SpreadsheetValidationReference> FORM2 = SpreadsheetForms.form(FORM_NAME2);
 
     private final static SpreadsheetLabelName LABEL1 = SpreadsheetSelection.labelName("Label111");
 
@@ -183,6 +196,10 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         )
     );
 
+    private static final Form<SpreadsheetValidationReference> DIFFERENT_FORM = SpreadsheetForms.form(
+        FormName.with("DifferentForm")
+    );
+    
     private static final SpreadsheetLabelMapping DIFFERENT_MAPPING = SpreadsheetSelection.labelName("DifferentLabel")
         .setLabelMappingReference(DIFFERENT_CELL_REFERENCE);
 
@@ -195,6 +212,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             () -> SpreadsheetStorageRouter.with(
                 null,
                 ENVIRONMENT,
+                FORMS,
                 LABELS,
                 METADATAS,
                 OTHER
@@ -209,6 +227,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
                 null,
+                FORMS,
                 LABELS,
                 METADATAS,
                 OTHER
@@ -217,12 +236,28 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testWithNullFormsFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetStorageRouter.with(
+                CELLS,
+                ENVIRONMENT,
+                null,
+                LABELS,
+                METADATAS,
+                OTHER
+            )
+        );
+    }
+    
+    @Test
     public void testWithNullLabelsFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
                 ENVIRONMENT,
+                FORMS,
                 null,
                 METADATAS,
                 OTHER
@@ -237,6 +272,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
                 ENVIRONMENT,
+                FORMS,
                 LABELS,
                 null,
                 OTHER
@@ -251,6 +287,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             () -> SpreadsheetStorageRouter.with(
                 CELLS,
                 ENVIRONMENT,
+                FORMS,
                 LABELS,
                 METADATAS,
                 null
@@ -511,6 +548,29 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testLoadWithForm() {
+        final StoragePath path = StoragePath.parse("/form/FormName111");
+
+        final SpreadsheetStorageContext context = this.createContext();
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            context,
+            StorageValue.with(
+                path,
+                Optional.of(FORM1)
+            ).setContentType(
+                SpreadsheetMediaTypes.MEMORY_FORM
+            )
+        );
+    }
+    
+    @Test
     public void testLoadWithLabel() {
         final StoragePath path = StoragePath.parse("/label/Label111");
 
@@ -677,6 +737,23 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         );
     }
 
+    @Test
+    public void testLoadWithSpreadsheetAndForm() {
+        final StoragePath path = StoragePath.parse("/spreadsheet/111/form/FormName111");
+
+        this.loadAndCheck(
+            this.createStorage(),
+            path,
+            this.createContext(),
+            StorageValue.with(
+                path,
+                Optional.of(FORM1)
+            ).setContentType(
+                SpreadsheetMediaTypes.MEMORY_FORM
+            )
+        );
+    }
+    
     @Test
     public void testLoadWithSpreadsheetAndLabel() {
         final StoragePath path = StoragePath.parse("/spreadsheet/111/label/Label111");
@@ -853,6 +930,42 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             context,
             DIFFERENT_CELL_REFERENCE,
             DIFFERENT_FORMATTED_CELL
+        );
+    }
+
+    @Test
+    public void testSaveWithForm() {
+        final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
+        final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
+
+        storageContext.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final StoragePath path = StoragePath.parse("/form/DifferentForm");
+
+        this.saveAndCheck(
+            this.createStorage(),
+            StorageValue.with(
+                path,
+                Optional.of(DIFFERENT_FORM)
+            ),
+            storageContext,
+            StorageValue.with(
+                path,
+                Optional.of(DIFFERENT_FORM)
+            ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+        );
+
+        spreadsheetContext.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID1)
+        );
+        this.checkEquals(
+            Optional.of(DIFFERENT_FORM),
+            spreadsheetContext.storeRepository()
+                .forms()
+                .load(DIFFERENT_FORM.name())
         );
     }
 
@@ -1207,6 +1320,30 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testDeleteWithForm() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        final StoragePath path = StoragePath.parse("/form/FormName111");
+
+        storage.delete(
+            path,
+            context
+        );
+
+        this.loadAndCheck(
+            storage,
+            path,
+            context
+        );
+    }
+    
+    @Test
     public void testDeleteWithLabel() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
@@ -1295,6 +1432,25 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         );
     }
 
+    @Test
+    public void testDeleteWithSpreadsheetIdAndForm() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        final StoragePath path = StoragePath.parse("/spreadsheet/111/form/FormName111");
+
+        storage.delete(
+            path,
+            context
+        );
+
+        this.loadAndCheck(
+            storage,
+            path,
+            context
+        );
+    }
+    
     @Test
     public void testDeleteWithSpreadsheetIdAndLabel() {
         final SpreadsheetStorageRouter storage = this.createStorage();
@@ -1460,6 +1616,29 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
+    public void testListWithForm() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        context.setEnvironmentValue(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            SPREADSHEET_ID1
+        );
+
+        this.listAndCheck(
+            storage,
+            StoragePath.parse("/form"),
+            0, // offset
+            2, // count
+            context,
+            StorageValueInfo.with(
+                StoragePath.parse("/form/FormName111"),
+                AUDIT_INFO
+            )
+        );
+    }
+    
+    @Test
     public void testListWithLabel() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
@@ -1518,6 +1697,24 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         );
     }
 
+    @Test
+    public void testListWithSpreadsheetIdForm1() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        this.listAndCheck(
+            storage,
+            StoragePath.parse("/spreadsheet/111/form/"),
+            0, // offset
+            2, // count
+            context,
+            StorageValueInfo.with(
+                StoragePath.parse("/spreadsheet/111/form/FormName111"),
+                AUDIT_INFO
+            )
+        );
+    }
+    
     @Test
     public void testListWithSpreadsheetIdLabel1() {
         final SpreadsheetStorageRouter storage = this.createStorage();
@@ -1625,6 +1822,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         return SpreadsheetStorageRouter.with(
             SpreadsheetStorages.cell(),
             SpreadsheetStorages.env(),
+            SpreadsheetStorages.form(),
             SpreadsheetStorages.label(),
             SpreadsheetStorages.metadata(),
             Storages.treeMapStore()
@@ -1654,6 +1852,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
             repo1.cells()
                 .save(CELL1);
+            repo1.forms()
+                .save(FORM1);
             repo1.labels()
                 .save(MAPPING1);
 
@@ -1668,6 +1868,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
             repo2.cells()
                 .save(CELL2);
+            repo2.forms()
+                .save(FORM2);
             repo2.labels()
                 .save(MAPPING2);
 
@@ -1788,11 +1990,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             SpreadsheetStorageRouter.with(
                 CELLS,
                 ENVIRONMENT,
+                FORMS,
                 LABELS,
                 METADATAS,
                 OTHER
             ),
-            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + OTHER
+            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + OTHER
         );
     }
 

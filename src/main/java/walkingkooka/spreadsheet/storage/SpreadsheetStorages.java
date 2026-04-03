@@ -66,12 +66,14 @@ public final class SpreadsheetStorages implements PublicStaticHelper {
      */
     public static Storage<SpreadsheetStorageContext> router(final Storage<SpreadsheetStorageContext> cells,
                                                             final Storage<SpreadsheetStorageContext> environment,
+                                                            final Storage<SpreadsheetStorageContext> forms,
                                                             final Storage<SpreadsheetStorageContext> labels,
                                                             final Storage<SpreadsheetStorageContext> metadatas,
                                                             final Storage<SpreadsheetStorageContext> other) {
         return SpreadsheetStorageRouter.with(
             cells,
             environment,
+            forms,
             labels,
             metadatas,
             other
