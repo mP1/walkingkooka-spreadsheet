@@ -1419,6 +1419,29 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    @Override
+    public SpreadsheetDelta findFormsByName(final String text,
+                                            final int offset,
+                                            final int count,
+                                            final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(text, "text");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetDelta.EMPTY.setForms(
+            context.storeRepository()
+                .forms()
+                .findFormsByName(
+                    text,
+                    offset,
+                    count
+                )
+        );
+    }
+
     private SpreadsheetFormHandlerContext formHandlerContext(final Form<SpreadsheetValidationReference> form,
                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetFormHandlerContexts.basic(

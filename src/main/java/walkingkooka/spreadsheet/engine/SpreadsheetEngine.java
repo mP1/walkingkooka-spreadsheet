@@ -274,6 +274,14 @@ public interface SpreadsheetEngine {
                                  final SpreadsheetEngineContext context);
 
     /**
+     * Finds {@link Form} containing the given text in the {@link FormName}.
+     */
+    SpreadsheetDelta findFormsByName(final String text,
+                                     final int offset,
+                                     final int count,
+                                     final SpreadsheetEngineContext context);
+
+    /**
      * Submits a form for validation and then saving using the selected or default {@link walkingkooka.validation.form.FormHandler}.
      */
     SpreadsheetDelta submitForm(final Form<SpreadsheetValidationReference> form,
