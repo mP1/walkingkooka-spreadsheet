@@ -21,9 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
-import walkingkooka.validation.form.store.FormStoreTesting;
 
-public final class TreeSpreadsheetFormStoreTest implements FormStoreTesting<TreeSpreadsheetFormStore, SpreadsheetValidationReference > {
+public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreTesting<TreeSpreadsheetFormStore> {
 
     @Test
     public void testSaveAndLoad() {
