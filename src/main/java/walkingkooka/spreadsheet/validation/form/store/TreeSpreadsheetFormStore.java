@@ -17,13 +17,17 @@
 
 package walkingkooka.spreadsheet.validation.form.store;
 
+import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.store.Store;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.store.FormStore;
 import walkingkooka.validation.form.store.FormStores;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -108,6 +112,30 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     @Override
     public Optional<Form<SpreadsheetValidationReference>> firstValue() {
         return this.store.firstValue();
+    }
+
+    @Override
+    public Set<Form<SpreadsheetValidationReference>> findFormsByName(final String text,
+                                                                     final int offset,
+                                                                     final int count) {
+        Objects.requireNonNull(text, "text");
+        Store.checkOffsetAndCount(
+            offset,
+            count
+        );
+
+
+        return this.all()
+            .stream()
+            .filter(f -> text.isEmpty() ||
+                CaseSensitivity.INSENSITIVE.contains(
+                    f.name()
+                        .value(),
+                    text
+                )
+            ).skip(offset)
+            .limit(count)
+            .collect(ImmutableSet.collector());
     }
 
     private final FormStore<SpreadsheetValidationReference> store;

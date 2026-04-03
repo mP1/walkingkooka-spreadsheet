@@ -18,11 +18,21 @@
 package walkingkooka.spreadsheet.validation.form.store;
 
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.store.FakeFormStore;
+
+import java.util.Set;
 
 public class FakeSpreadsheetFormStore extends FakeFormStore<SpreadsheetValidationReference> implements SpreadsheetFormStore {
 
     public FakeSpreadsheetFormStore() {
         super();
+    }
+
+    @Override
+    public Set<Form<SpreadsheetValidationReference>> findFormsByName(final String text,
+                                                                     final int offset,
+                                                                     final int count) {
+        throw new UnsupportedOperationException();
     }
 }
