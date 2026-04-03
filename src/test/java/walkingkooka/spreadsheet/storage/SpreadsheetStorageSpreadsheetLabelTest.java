@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
@@ -104,8 +105,8 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
 
     @Test
     public void testLoadWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .load(
                     StoragePath.parse("/" + LABEL1 + "/extra"),
@@ -114,7 +115,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         );
 
         this.checkEquals(
-            "Invalid path after label name",
+            "Invalid path after label name \"/Label111/extra\"",
             thrown.getMessage()
         );
     }
@@ -184,8 +185,8 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
 
     @Test
     public void testSaveWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -197,15 +198,15 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         );
 
         this.checkEquals(
-            "Invalid path after label",
+            "Invalid path after label \"/Label111/extra\"",
             thrown.getMessage()
         );
     }
 
     @Test
     public void testSaveWithStorageValueMissingSpreadsheetLabelMapping() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -217,7 +218,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         );
 
         this.checkEquals(
-            "Missing SpreadsheetLabelMapping",
+            "Invalid path missing label \"/Label111\"",
             thrown.getMessage()
         );
     }
@@ -244,8 +245,8 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
 
     @Test
     public void testDeleteMissingLabelFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .delete(
                     StoragePath.ROOT,
@@ -254,15 +255,15 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         );
 
         this.checkEquals(
-            "Missing label",
+            "Invalid path missing label \"/\"",
             thrown.getMessage()
         );
     }
 
     @Test
     public void testDeleteWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .delete(
                     StoragePath.parse("/" + LABEL1 + "/extra"),
@@ -271,7 +272,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         );
 
         this.checkEquals(
-            "Invalid path after label",
+            "Invalid path after label \"/Label111/extra\"",
             thrown.getMessage()
         );
     }
@@ -299,8 +300,8 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
 
     @Test
     public void testListWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .list(
                     StoragePath.parse("/" + LABEL1 + "/extra"),
@@ -311,7 +312,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         );
 
         this.checkEquals(
-            "Invalid path after label",
+            "Invalid path after label \"/Label111/extra\"",
             thrown.getMessage()
         );
     }

@@ -69,7 +69,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after label name");
+                throw path.invalidStoragePathException("Invalid path after label name");
         }
 
         if (null != labelName) {
@@ -92,16 +92,18 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
     @Override
     StorageValue saveNonNull(final StorageValue value,
                              final SpreadsheetStorageContext context) {
-        final List<StorageName> names = value.path()
-            .namesList();
+        final StoragePath path = value.path();
+        final List<StorageName> names = path.namesList();
         switch (names.size()) {
             case 0:
             case 1:
-                throw new IllegalArgumentException("Missing label");
+                throw path.invalidStoragePathException("Invalid path missing label");
             case 2:
                 SpreadsheetLabelMapping labelMapping = context.convertOrFail(
                     value.value()
-                        .orElseThrow(() -> new IllegalArgumentException("Missing " + SpreadsheetLabelMapping.class.getSimpleName())),
+                        .orElseThrow(
+                            () -> path.invalidStoragePathException("Invalid path missing label")
+                        ),
                     SpreadsheetLabelMapping.class
                 );
 
@@ -111,7 +113,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
                     Optional.of(saved)
                 ).setContentType(MEDIA_TYPE);
             default:
-                throw new IllegalArgumentException("Invalid path after label");
+                throw path.invalidStoragePathException("Invalid path after label");
         }
     }
 
@@ -122,7 +124,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
         switch (names.size()) {
             case 0:
             case 1:
-                throw new IllegalArgumentException("Missing label");
+                throw path.invalidStoragePathException("Invalid path missing label");
             case 2:
                 context.deleteLabel(
                     parseLabel(
@@ -131,7 +133,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after label");
+                throw path.invalidStoragePathException("Invalid path after label");
         }
     }
 
@@ -154,7 +156,7 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
                     .value();
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after label");
+                throw path.invalidStoragePathException("Invalid path after label");
         }
 
         return context.findLabelsByName(
