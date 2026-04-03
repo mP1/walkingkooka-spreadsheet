@@ -62,6 +62,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
+import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -247,8 +248,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     @Test
     public void testSaveWithInvalidCellReferenceFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
@@ -262,7 +263,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         this.checkEquals(
-            "Invalid path, must not contain selection",
+            "Invalid path, must not contain selection \"/999\"",
             thrown.getMessage()
         );
     }
@@ -326,8 +327,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     @Test
     public void testDeleteMissingReferenceFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .delete(
                     StoragePath.ROOT,
@@ -336,7 +337,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         this.checkEquals(
-            "Missing selection",
+            "Invalid path missing selection \"/\"",
             thrown.getMessage()
         );
     }
@@ -373,8 +374,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
     @Test
     public void testListWithExtraPathFails() {
-        final IllegalArgumentException thrown = assertThrows(
-            IllegalArgumentException.class,
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
             () -> this.createStorage()
                 .list(
                     StoragePath.parse("/A1/extra"),
@@ -385,7 +386,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         this.checkEquals(
-            "Invalid path after selection",
+            "Invalid path after selection \"/A1/extra\"",
             thrown.getMessage()
         );
     }

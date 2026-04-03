@@ -93,14 +93,15 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     @Override
     StorageValue saveNonNull(final StorageValue value,
                              final SpreadsheetStorageContext context) {
-        switch (value.path()
-            .namesList()
+        final StoragePath path = value.path();
+
+        switch (path.namesList()
             .size()) {
             case 0:
             case 1:
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path, must not contain selection");
+                throw path.invalidStoragePathException("Invalid path, must not contain selection");
         }
 
         final SpreadsheetCellSet cells = context.convertOrFail(
@@ -127,7 +128,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
         switch (names.size()) {
             case 0:
             case 1:
-                throw new IllegalArgumentException("Missing selection");
+                throw path.invalidStoragePathException("Invalid path missing selection");
             case 2:
                 context.deleteCells(
                     parseExpressionReference(
@@ -136,7 +137,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path");
+                throw path.invalidStoragePathException("Invalid path");
         }
     }
 
@@ -160,7 +161,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
                 );
                 break;
             default:
-                throw new IllegalArgumentException("Invalid path after selection");
+                throw path.invalidStoragePathException("Invalid path after selection");
         }
 
         return context.loadCells(cellOrLabels)
