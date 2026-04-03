@@ -38,6 +38,180 @@ public final class TreeSpreadsheetFormStoreTest implements SpreadsheetFormStoreT
         );
     }
 
+    @Test
+    public void testFindFormsByName() {
+        final TreeSpreadsheetFormStore store = this.createStore();
+
+        final Form<SpreadsheetValidationReference> form1 = Form.with(
+            FormName.with("Form1")
+        );
+        store.save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = Form.with(
+            FormName.with("Form2")
+        );
+        store.save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = Form.with(
+            FormName.with("Form3")
+        );
+        store.save(form3);
+
+        final Form<SpreadsheetValidationReference> form4 = Form.with(
+            FormName.with("Form4")
+        );
+        store.save(form4);
+
+        this.findFormsByNameAndCheck(
+            store,
+            "Form",
+            0,
+            4,
+            form1,
+            form2,
+            form3,
+            form4
+        );
+    }
+
+    @Test
+    public void testFindFormsByNameSkip() {
+        final TreeSpreadsheetFormStore store = this.createStore();
+
+        final Form<SpreadsheetValidationReference> form1 = Form.with(
+            FormName.with("Form1")
+        );
+        store.save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = Form.with(
+            FormName.with("Form2")
+        );
+        store.save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = Form.with(
+            FormName.with("Form3")
+        );
+        store.save(form3);
+
+        final Form<SpreadsheetValidationReference> form4 = Form.with(
+            FormName.with("Form4")
+        );
+        store.save(form4);
+
+        this.findFormsByNameAndCheck(
+            store,
+            "Form",
+            1,
+            4,
+            form2,
+            form3,
+            form4
+        );
+    }
+
+    @Test
+    public void testFindFormsByNameCount() {
+        final TreeSpreadsheetFormStore store = this.createStore();
+
+        final Form<SpreadsheetValidationReference> form1 = Form.with(
+            FormName.with("Form1")
+        );
+        store.save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = Form.with(
+            FormName.with("Form2")
+        );
+        store.save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = Form.with(
+            FormName.with("Form3")
+        );
+        store.save(form3);
+
+        final Form<SpreadsheetValidationReference> form4 = Form.with(
+            FormName.with("Form4")
+        );
+        store.save(form4);
+
+        this.findFormsByNameAndCheck(
+            store,
+            "Form",
+            0,
+            3,
+            form1,
+            form2,
+            form3
+        );
+    }
+
+    @Test
+    public void testFindFormsByNameOffsetAndCount() {
+        final TreeSpreadsheetFormStore store = this.createStore();
+
+        final Form<SpreadsheetValidationReference> form1 = Form.with(
+            FormName.with("Form1")
+        );
+        store.save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = Form.with(
+            FormName.with("Form2")
+        );
+        store.save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = Form.with(
+            FormName.with("Form3")
+        );
+        store.save(form3);
+
+        final Form<SpreadsheetValidationReference> form4 = Form.with(
+            FormName.with("Form4")
+        );
+        store.save(form4);
+
+        this.findFormsByNameAndCheck(
+            store,
+            "Form",
+            1,
+            2,
+            form2,
+            form3
+        );
+    }
+
+    @Test
+    public void testFindFormsByNameFiltered() {
+        final TreeSpreadsheetFormStore store = this.createStore();
+
+        final Form<SpreadsheetValidationReference> form1 = Form.with(
+            FormName.with("Different1")
+        );
+        store.save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = Form.with(
+            FormName.with("Form2")
+        );
+        store.save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = Form.with(
+            FormName.with("Form3")
+        );
+        store.save(form3);
+
+        final Form<SpreadsheetValidationReference> form4 = Form.with(
+            FormName.with("Form4")
+        );
+        store.save(form4);
+
+        this.findFormsByNameAndCheck(
+            store,
+            "Form",
+            0,
+            2,
+            form2,
+            form3
+        );
+    }
+
     @Override
     public TreeSpreadsheetFormStore createStore() {
         return TreeSpreadsheetFormStore.empty();

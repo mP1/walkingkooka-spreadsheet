@@ -18,7 +18,17 @@
 package walkingkooka.spreadsheet.validation.form.store;
 
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.store.FormStore;
 
+import java.util.Set;
+
 public interface SpreadsheetFormStore extends FormStore<SpreadsheetValidationReference> {
+
+    /**
+     * Finds all {@link Form} for the given text.
+     */
+    Set<Form<SpreadsheetValidationReference>> findFormsByName(final String text,
+                                                              final int offset,
+                                                              final int count);
 }
