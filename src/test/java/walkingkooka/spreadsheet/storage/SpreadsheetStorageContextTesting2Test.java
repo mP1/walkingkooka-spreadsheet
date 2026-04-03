@@ -38,12 +38,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2Test.TestSpreadsheetStorageContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -275,6 +278,42 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         @Override
         public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
             Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
+
+            throw new UnsupportedOperationException();
+        }
+
+        // forms............................................................................................................
+
+        @Override
+        public Optional<Form<SpreadsheetValidationReference>> loadForm(final FormName formName) {
+            Objects.requireNonNull(formName, "formName");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Form<SpreadsheetValidationReference> saveForm(final Form<SpreadsheetValidationReference> form) {
+            Objects.requireNonNull(form, "form");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void deleteForm(final FormName formName) {
+            Objects.requireNonNull(formName, "formName");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Set<Form<SpreadsheetValidationReference>> findFormsByName(final String formName,
+                                                                         final int offset,
+                                                                         final int count) {
+            Objects.requireNonNull(formName, "formName");
+            Store.checkOffsetAndCount(
+                offset,
+                count
+            );
 
             throw new UnsupportedOperationException();
         }

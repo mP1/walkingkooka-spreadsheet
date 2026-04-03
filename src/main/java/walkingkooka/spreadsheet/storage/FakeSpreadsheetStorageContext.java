@@ -26,8 +26,11 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +57,32 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
         throw new UnsupportedOperationException();
     }
+
+    // forms............................................................................................................
+
+    @Override
+    public Optional<Form<SpreadsheetValidationReference>> loadForm(final FormName formName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Form<SpreadsheetValidationReference> saveForm(final Form<SpreadsheetValidationReference> form) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteForm(final FormName formName) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<Form<SpreadsheetValidationReference>> findFormsByName(final String formName,
+                                                                     final int offset,
+                                                                     final int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    // labels...........................................................................................................
 
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {

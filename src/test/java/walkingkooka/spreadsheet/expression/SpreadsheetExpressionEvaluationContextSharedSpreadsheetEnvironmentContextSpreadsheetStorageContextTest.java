@@ -56,6 +56,8 @@ import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContextTesting2;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
+import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.storage.Storage;
@@ -64,6 +66,8 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
@@ -79,6 +83,8 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     private final static StoragePath CURRENT_WORKING_DIRECTORY = StoragePath.parse("/current1/working2/directory3");
 
     private final static SpreadsheetId SPREADSHEET_ID = SpreadsheetId.with(1);
+
+    private final static FormName FORM_NAME = FormName.with("Form111");
 
     private final static SpreadsheetLabelName LABEL_NAME = SpreadsheetSelection.labelName("Label123");
 
@@ -265,6 +271,228 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         this.loadCellsAndCheck(
             context,
             cell.reference()
+        );
+    }
+
+    // loadForm........................................................................................................
+
+    @Test
+    public void testLoadFormAndEnvironmentMissingSpreadsheetId() {
+        this.loadFormAndCheck(
+            this.createContext(),
+            FORM_NAME
+        );
+    }
+
+    @Test
+    public void testLoadFormMissingForm() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.loadFormAndCheck(
+            context,
+            FORM_NAME
+        );
+    }
+
+    @Test
+    public void testLoadForm() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
+
+        repo.forms()
+            .save(form);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.loadFormAndCheck(
+            context,
+            FORM_NAME,
+            form
+        );
+    }
+
+    // saveForm.........................................................................................................
+
+    @Test
+    public void testSaveFormAndEnvironmentMissingSpreadsheetIdFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> context.saveForm(
+                SpreadsheetForms.form(FORM_NAME)
+            )
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName()
+        );
+    }
+
+    @Test
+    public void testSaveForm() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        final Form<SpreadsheetValidationReference> form = SpreadsheetForms.form(FORM_NAME);
+
+        this.saveFormAndCheck(
+            context,
+            form,
+            form
+        );
+    }
+
+    // deleteForm.......................................................................................................
+
+    @Test
+    public void testDeleteFormAndEnvironmentMissingSpreadsheetIdFails() {
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext();
+
+        final MissingEnvironmentValueException thrown = assertThrows(
+            MissingEnvironmentValueException.class,
+            () -> context.deleteForm(FORM_NAME)
+        );
+
+        this.checkEquals(
+            SpreadsheetEnvironmentContext.SPREADSHEET_ID,
+            thrown.environmentValueName()
+        );
+    }
+
+    @Test
+    public void testDeleteForm() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        repo.forms()
+            .save(
+                SpreadsheetForms.form(FORM_NAME)
+            );
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        context.deleteForm(FORM_NAME);
+
+        this.loadFormAndCheck(
+            context,
+            FORM_NAME
+        );
+    }
+
+    // findFormsByNameForm..............................................................................................
+
+    @Test
+    public void testFindFormsByNameFormAndEnvironmentMissingSpreadsheetId() {
+        this.findFormsByNameAndCheck(
+            this.createContext(),
+            "",
+            0,
+            3
+        );
+    }
+
+    @Test
+    public void testFindFormsByName() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
+            FormName.with("Form111")
+        );
+
+        repo.forms()
+            .save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = SpreadsheetForms.form(
+            FormName.with("Form222")
+        );
+
+        repo.forms()
+            .save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = SpreadsheetForms.form(
+            FormName.with("Form333")
+        );
+
+        repo.forms()
+            .save(form3);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.findFormsByNameAndCheck(
+            context,
+            "",
+            0,
+            3,
+            form1,
+            form2,
+            form3
+        );
+    }
+
+    @Test
+    public void testFindFormsByNameWithOffsetAndCount() {
+        final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(
+            SpreadsheetMetadataStores.treeMap()
+        );
+
+        final Form<SpreadsheetValidationReference> form1 = SpreadsheetForms.form(
+            FormName.with("Form111")
+        );
+
+        repo.forms()
+            .save(form1);
+
+        final Form<SpreadsheetValidationReference> form2 = SpreadsheetForms.form(
+            FormName.with("Form222")
+        );
+
+        repo.forms()
+            .save(form2);
+
+        final Form<SpreadsheetValidationReference> form3 = SpreadsheetForms.form(
+            FormName.with("Form333")
+        );
+
+        repo.forms()
+            .save(form3);
+
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext context = this.createContext(repo);
+        context.setSpreadsheetId(
+            Optional.of(SPREADSHEET_ID)
+        );
+
+        this.findFormsByNameAndCheck(
+            context,
+            "",
+            1,
+            1,
+            form2
         );
     }
     

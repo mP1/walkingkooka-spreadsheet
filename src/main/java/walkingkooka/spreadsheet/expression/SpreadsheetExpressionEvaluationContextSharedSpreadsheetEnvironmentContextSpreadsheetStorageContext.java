@@ -36,8 +36,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameSet;
 import walkingkooka.spreadsheet.storage.SpreadsheetStorageContext;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -101,6 +104,78 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                 ).cells()
         );
     }
+
+    // forms............................................................................................................
+
+    @Override
+    public Optional<Form<SpreadsheetValidationReference>> loadForm(final FormName formName) {
+        Objects.requireNonNull(formName, "formName");
+
+        return this.executeWithSpreadsheetEngineContextOrElse(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+                engine.loadForm(
+                    formName,
+                    context
+                ).form(formName),
+            NO_FORM
+        );
+    }
+
+    @Override
+    public Form<SpreadsheetValidationReference> saveForm(final Form<SpreadsheetValidationReference> form) {
+        Objects.requireNonNull(form, "form");
+
+        return this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) ->
+            {
+                final SpreadsheetDelta response = engine.saveForm(
+                    form,
+                    context
+                );
+                final FormName formName = form.name();
+                return response.form(formName)
+                    .orElseThrow(() -> new IllegalStateException("Missing saved form " + formName));
+            }
+        );
+    }
+
+    @Override
+    public void deleteForm(final FormName formName) {
+        Objects.requireNonNull(formName, "formName");
+
+        this.executeWithSpreadsheetEngineContextOrFail(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) -> {
+                engine.deleteForm(
+                    formName,
+                    context
+                );
+                return null; // do nothing if SpreadsheetId "missing".
+            }
+        );
+    }
+
+    @Override
+    public Set<Form<SpreadsheetValidationReference>> findFormsByName(final String formName,
+                                                                     final int offset,
+                                                                     final int count) {
+        Objects.requireNonNull(formName, "formName");
+        SpreadsheetEngine.checkOffsetAndCount(
+            offset,
+            count
+        );
+
+        return this.executeWithSpreadsheetEngineContextOrElse(
+            (final SpreadsheetEngine engine, final SpreadsheetEngineContext context) -> engine.findFormsByName(
+                    formName,
+                    offset,
+                    count,
+                    context
+                ).forms(),
+            Sets.empty()
+        );
+    }
+
+    // labels...........................................................................................................
 
     @Override
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName labelName) {

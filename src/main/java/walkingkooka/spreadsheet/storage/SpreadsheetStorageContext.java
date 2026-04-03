@@ -24,8 +24,11 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StorageContext;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.util.Optional;
 import java.util.Set;
@@ -40,6 +43,20 @@ public interface SpreadsheetStorageContext extends StorageContext,
     Set<SpreadsheetCell> saveCells(final Set<SpreadsheetCell> cells);
 
     void deleteCells(final SpreadsheetExpressionReference cellsOrLabel);
+
+    // forms............................................................................................................
+
+    Optional<Form<SpreadsheetValidationReference>> NO_FORM = Optional.empty();
+
+    Optional<Form<SpreadsheetValidationReference>> loadForm(final FormName formName);
+
+    Form<SpreadsheetValidationReference> saveForm(final Form<SpreadsheetValidationReference> form);
+
+    void deleteForm(final FormName formName);
+
+    Set<Form<SpreadsheetValidationReference>> findFormsByName(final String formName,
+                                                              final int offset,
+                                                              final int count);
 
     // labels...........................................................................................................
 

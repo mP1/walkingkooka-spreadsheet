@@ -21,9 +21,12 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.validation.form.Form;
+import walkingkooka.validation.form.FormName;
 
 import java.util.Optional;
 import java.util.Set;
@@ -74,6 +77,81 @@ public interface SpreadsheetStorageContextTesting extends TreePrintableTesting {
         );
     }
 
+    // loadForm.........................................................................................................
+
+    default void loadFormAndCheck(final SpreadsheetStorageContext context,
+                                  final FormName formName) {
+        this.loadFormAndCheck(
+            context,
+            formName,
+            Optional.empty()
+        );
+    }
+
+    default void loadFormAndCheck(final SpreadsheetStorageContext context,
+                                  final FormName formName,
+                                  final Form<SpreadsheetValidationReference> expected) {
+        this.loadFormAndCheck(
+            context,
+            formName,
+            Optional.of(expected)
+        );
+    }
+
+    default void loadFormAndCheck(final SpreadsheetStorageContext context,
+                                  final FormName formName,
+                                  final Optional<Form<SpreadsheetValidationReference>> expected) {
+        this.checkEquals(
+            expected,
+            context.loadForm(formName),
+            () -> "loadForm " + formName
+        );
+    }
+
+    // saveForm........................................................................................................
+
+    default void saveFormAndCheck(final SpreadsheetStorageContext context,
+                                  final Form<SpreadsheetValidationReference> form,
+                                  final Form<SpreadsheetValidationReference> expected) {
+        this.checkEquals(
+            expected,
+            context.saveForm(form),
+            () -> "saveForm " + form
+        );
+    }
+
+    // findFormsByName.................................................................................................
+
+    default void findFormsByNameAndCheck(final SpreadsheetStorageContext context,
+                                         final String text,
+                                         final int offset,
+                                         final int count,
+                                         final Form<SpreadsheetValidationReference>... expected) {
+        this.findFormsByNameAndCheck(
+            context,
+            text,
+            offset,
+            count,
+            Sets.of(expected)
+        );
+    }
+
+    default void findFormsByNameAndCheck(final SpreadsheetStorageContext context,
+                                         final String text,
+                                         final int offset,
+                                         final int count,
+                                         final Set<Form<SpreadsheetValidationReference>> expected) {
+        this.checkEquals(
+            expected,
+            context.findFormsByName(
+                text,
+                offset,
+                count
+            ),
+            () -> "findFormsByName " + CharSequences.quoteAndEscape(text) + " offset=" + offset + " count=" + count
+        );
+    }
+    
     // loadLabel........................................................................................................
 
     default void loadLabelAndCheck(final SpreadsheetStorageContext context,
