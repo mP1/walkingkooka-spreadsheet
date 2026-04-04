@@ -46,6 +46,7 @@ import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -578,9 +579,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
 
         @Override
-        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
             return Optional.of(
-                Locale.forLanguageTag(languageTag)
+                Locale.forLanguageTag(
+                    languageTag.value()
+                )
             );
         }
     };
@@ -640,9 +643,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
 
         @Override
-        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
             return Optional.of(
-                Locale.forLanguageTag(languageTag)
+                Locale.forLanguageTag(
+                    languageTag.value()
+                )
             );
         }
     };
@@ -1114,9 +1119,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 }
 
                 @Override
-                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                     return Optional.of(
-                        Locale.forLanguageTag(languageTag)
+                        Locale.forLanguageTag(
+                            languageTag.value()
+                        )
                     );
                 }
             },
@@ -1495,9 +1502,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         }
 
         @Override
-        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
             return Optional.of(
-                Locale.forLanguageTag(languageTag)
+                Locale.forLanguageTag(
+                    languageTag.value()
+                )
             );
         }
 
@@ -3373,9 +3382,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         }
 
                         @Override
-                        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                             return Optional.of(
-                                Locale.forLanguageTag(languageTag)
+                                Locale.forLanguageTag(
+                                    languageTag.value()
+                                )
                             );
                         }
                     },

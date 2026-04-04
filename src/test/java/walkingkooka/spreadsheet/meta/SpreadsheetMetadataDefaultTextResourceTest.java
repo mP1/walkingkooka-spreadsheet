@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -54,9 +55,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
                     }
 
                     @Override
-                    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                         return Optional.of(
-                            Locale.forLanguageTag(languageTag)
+                            Locale.forLanguageTag(
+                                languageTag.value()
+                            )
                         );
                     }
                 },

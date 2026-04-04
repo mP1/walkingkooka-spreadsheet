@@ -26,6 +26,7 @@ import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
@@ -162,9 +163,11 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                         }
 
                         @Override
-                        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                             return Optional.of(
-                                Locale.forLanguageTag(languageTag)
+                                Locale.forLanguageTag(
+                                    languageTag.value()
+                                )
                             );
                         }
                     },

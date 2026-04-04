@@ -26,6 +26,7 @@ import walkingkooka.color.Color;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -5499,9 +5500,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             }
 
             @Override
-            public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                 return Optional.of(
-                    Locale.forLanguageTag(languageTag)
+                    Locale.forLanguageTag(
+                        languageTag.value()
+                    )
                 );
             }
         },
@@ -5533,9 +5536,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 }
 
                 @Override
-                public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                     return Optional.of(
-                        Locale.forLanguageTag(languageTag)
+                        Locale.forLanguageTag(
+                            languageTag.value()
+                        )
                     );
                 }
             },

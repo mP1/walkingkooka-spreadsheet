@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -124,7 +125,7 @@ final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext imple
     }
 
     @Override
-    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
         return this.context.localeForLanguageTag(languageTag);
     }
 
