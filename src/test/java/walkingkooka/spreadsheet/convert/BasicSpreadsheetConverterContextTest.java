@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -218,9 +219,11 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     new FakeCurrencyContext() {
 
                         @Override
-                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                             return Optional.of(
-                                Currency.getInstance(currencyCode)
+                                Currency.getInstance(
+                                    currencyCode.value()
+                                )
                             );
                         }
                         
@@ -253,9 +256,11 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     KIND,
                     new CurrencyCodeLanguageTagContext() {
                         @Override
-                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                             return Optional.ofNullable(
-                                Currency.getInstance(currencyCode)
+                                Currency.getInstance(
+                                    currencyCode.value()
+                                )
                             );
                         }
 

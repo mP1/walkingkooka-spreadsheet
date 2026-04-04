@@ -32,6 +32,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContext;
@@ -1104,9 +1105,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             EXPRESSION_NUMBER_KIND,
             new CurrencyCodeLanguageTagContext() {
                 @Override
-                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                     return Optional.ofNullable(
-                        Currency.getInstance(currencyCode)
+                        Currency.getInstance(
+                            currencyCode.value()
+                        )
                     );
                 }
 
@@ -3361,9 +3364,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     ExpressionNumberKind.BIG_DECIMAL,
                     new CurrencyCodeLanguageTagContext() {
                         @Override
-                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                             return Optional.ofNullable(
-                                Currency.getInstance(currencyCode)
+                                Currency.getInstance(
+                                    currencyCode.value()
+                                )
                             );
                         }
 

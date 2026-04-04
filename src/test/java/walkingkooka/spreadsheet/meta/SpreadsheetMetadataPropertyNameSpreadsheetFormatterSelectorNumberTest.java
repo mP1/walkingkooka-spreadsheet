@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -82,9 +83,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                 new FakeCurrencyContext() {
 
                     @Override
-                    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                         return Optional.of(
-                            Currency.getInstance(currencyCode)
+                            Currency.getInstance(
+                                currencyCode.value()
+                            )
                         );
                     }
                 }.setLocaleContext(

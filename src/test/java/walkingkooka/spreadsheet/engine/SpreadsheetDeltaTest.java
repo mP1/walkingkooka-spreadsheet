@@ -23,6 +23,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -5489,9 +5490,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
         ExpressionNumberKind.BIG_DECIMAL,
         new CurrencyCodeLanguageTagContext() {
             @Override
-            public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                 return Optional.ofNullable(
-                    Currency.getInstance(currencyCode)
+                    Currency.getInstance(
+                        currencyCode.value()
+                    )
                 );
             }
 
@@ -5521,9 +5524,11 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
             ExpressionNumberKind.BIG_DECIMAL,
             new CurrencyCodeLanguageTagContext() {
                 @Override
-                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                     return Optional.ofNullable(
-                        Currency.getInstance(currencyCode)
+                        Currency.getInstance(
+                            currencyCode.value()
+                        )
                     );
                 }
 

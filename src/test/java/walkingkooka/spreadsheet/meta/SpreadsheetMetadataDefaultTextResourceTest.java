@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -44,9 +45,11 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
                 ExpressionNumberKind.DEFAULT,
                 new CurrencyCodeLanguageTagContext() {
                     @Override
-                    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                         return Optional.ofNullable(
-                            Currency.getInstance(currencyCode)
+                            Currency.getInstance(
+                                currencyCode.value()
+                            )
                         );
                     }
 

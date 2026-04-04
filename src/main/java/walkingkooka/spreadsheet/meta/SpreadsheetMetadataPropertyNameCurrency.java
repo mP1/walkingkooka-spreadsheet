@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 
@@ -78,6 +79,8 @@ final class SpreadsheetMetadataPropertyNameCurrency extends SpreadsheetMetadataP
     @Override
     Currency parseValueTextNonNull(final String value,
                                    final CurrencyCodeLanguageTagContext context) {
-        return context.currencyForCurrencyCodeOrFail(value);
+        return context.currencyForCurrencyCodeOrFail(
+            CurrencyCode.parse(value)
+        );
     }
 }

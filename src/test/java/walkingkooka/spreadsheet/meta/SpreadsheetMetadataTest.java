@@ -29,6 +29,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterAliasSet;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyLocaleContext;
@@ -169,9 +170,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     private final static CurrencyContext CURRENCY_CONTEXT = new FakeCurrencyContext() {
 
         @Override
-        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
             return Optional.of(
-                Currency.getInstance(currencyCode)
+                Currency.getInstance(
+                    currencyCode.value()
+                )
             );
         }
 
@@ -1480,9 +1483,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             ExpressionNumberKind.BIG_DECIMAL,
             new CurrencyCodeLanguageTagContext() {
                 @Override
-                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                     return Optional.ofNullable(
-                        Currency.getInstance(currencyCode)
+                        Currency.getInstance(
+                            currencyCode.value()
+                        )
                     );
                 }
 
