@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
@@ -63,9 +64,11 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
             ExpressionNumberKind.BIG_DECIMAL,
             new CurrencyCodeLanguageTagContext() {
                 @Override
-                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                     return Optional.ofNullable(
-                        Currency.getInstance(currencyCode)
+                        Currency.getInstance(
+                            currencyCode.value()
+                        )
                     );
                 }
 

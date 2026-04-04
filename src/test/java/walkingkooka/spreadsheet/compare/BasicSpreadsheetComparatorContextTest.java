@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.compare;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -117,9 +118,11 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     new FakeCurrencyContext() {
 
                         @Override
-                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                             return Optional.of(
-                                Currency.getInstance(currencyCode)
+                                Currency.getInstance(
+                                    currencyCode.value()
+                                )
                             );
                         }
 
@@ -150,9 +153,11 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     ExpressionNumberKind.BIG_DECIMAL,
                     new CurrencyCodeLanguageTagContext() {
                         @Override
-                        public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                             return Optional.ofNullable(
-                                Currency.getInstance(currencyCode)
+                                Currency.getInstance(
+                                    currencyCode.value()
+                                )
                             );
                         }
 

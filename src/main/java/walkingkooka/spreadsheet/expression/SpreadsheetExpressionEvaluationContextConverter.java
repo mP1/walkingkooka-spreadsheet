@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.environment.EnvironmentContext;
@@ -190,7 +191,7 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     final Converter<SpreadsheetExpressionEvaluationContext> converter;
 
     @Override
-    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
         return this.context.currencyForCurrencyCode(currencyCode);
     }
 

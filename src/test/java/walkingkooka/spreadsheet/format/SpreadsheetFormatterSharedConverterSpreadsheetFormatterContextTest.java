@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -195,9 +196,11 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                         new FakeCurrencyContext() {
 
                             @Override
-                            public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                                 return Optional.of(
-                                    Currency.getInstance(currencyCode)
+                                    Currency.getInstance(
+                                        currencyCode.value()
+                                    )
                                 );
                             }
 

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
@@ -107,9 +108,11 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                 ExpressionNumberKind.DOUBLE,
                 new CurrencyCodeLanguageTagContext() {
                     @Override
-                    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                         return Optional.ofNullable(
-                            Currency.getInstance(currencyCode)
+                            Currency.getInstance(
+                                currencyCode.value()
+                            )
                         );
                     }
 

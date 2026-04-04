@@ -23,6 +23,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.HasOptionalCurrency;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -1106,9 +1107,10 @@ public final class SpreadsheetCell implements CanBeEmpty,
         ExpressionNumberKind.BIG_DECIMAL,
         new CurrencyCodeLanguageTagContext() {
             @Override
-            public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                 return Optional.ofNullable(
-                    Currency.getInstance(currencyCode)
+                    Currency.getInstance(
+                        currencyCode.value())
                 );
             }
 

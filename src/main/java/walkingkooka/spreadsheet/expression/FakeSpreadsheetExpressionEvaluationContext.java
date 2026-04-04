@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.io.TextReader;
@@ -145,7 +146,7 @@ public class FakeSpreadsheetExpressionEvaluationContext extends FakeStorageExpre
     }
 
     @Override
-    public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+    public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
         throw new UnsupportedOperationException();
     }
 

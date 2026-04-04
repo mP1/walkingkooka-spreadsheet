@@ -22,6 +22,7 @@ import walkingkooka.CanBeEmptyTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -3018,9 +3019,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
             ExpressionNumberKind.BIG_DECIMAL,
             new CurrencyCodeLanguageTagContext() {
                 @Override
-                public Optional<Currency> currencyForCurrencyCode(final String currencyCode) {
+                public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
                     return Optional.ofNullable(
-                        Currency.getInstance(currencyCode)
+                        Currency.getInstance(
+                            currencyCode.value()
+                        )
                     );
                 }
 
