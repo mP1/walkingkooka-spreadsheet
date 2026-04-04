@@ -30,6 +30,7 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ConstantsTesting;
@@ -458,9 +459,11 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                         }
 
                         @Override
-                        public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                             return Optional.of(
-                                Locale.forLanguageTag(languageTag)
+                                Locale.forLanguageTag(
+                                    languageTag.value()
+                                )
                             );
                         }
                     },

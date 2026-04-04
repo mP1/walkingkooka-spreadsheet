@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetName;
@@ -154,9 +155,11 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataTest extends Spr
                     }
 
                     @Override
-                    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                         return Optional.of(
-                            Locale.forLanguageTag(languageTag)
+                            Locale.forLanguageTag(
+                                languageTag.value()
+                            )
                         );
                     }
                 },

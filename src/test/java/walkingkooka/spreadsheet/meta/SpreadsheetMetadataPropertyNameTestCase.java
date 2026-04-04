@@ -28,6 +28,7 @@ import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.FakeCanCurrencyExchangeRate;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
@@ -117,9 +118,11 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                     }
 
                     @Override
-                    public Optional<Locale> localeForLanguageTag(final String languageTag) {
+                    public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                         return Optional.of(
-                            Locale.forLanguageTag(languageTag)
+                            Locale.forLanguageTag(
+                                languageTag.value()
+                            )
                         );
                     }
                 },

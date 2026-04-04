@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -48,9 +49,11 @@ public final class BasicSpreadsheetImporterContextTest implements SpreadsheetImp
             }
 
             @Override
-            public Optional<Locale> localeForLanguageTag(final String languageTag) {
+            public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
                 return Optional.of(
-                    Locale.forLanguageTag(languageTag)
+                    Locale.forLanguageTag(
+                        languageTag.value()
+                    )
                 );
             }
         },

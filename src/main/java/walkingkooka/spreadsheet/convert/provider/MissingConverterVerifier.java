@@ -35,6 +35,7 @@ import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
 import walkingkooka.datetime.LocalTimeList;
 import walkingkooka.environment.AuditInfo;
+import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.NumberList;
 import walkingkooka.net.AbsoluteUrl;
@@ -260,7 +261,9 @@ final class MissingConverterVerifier {
             Color.BLACK
         );
 
-        final Locale locale = context.localeForLanguageTagOrFail("en-AU");
+        final LocaleLanguageTag languageTag = LocaleLanguageTag.parse("en-AU");
+
+        final Locale locale = context.localeForLanguageTagOrFail(languageTag);
 
         final SpreadsheetCell spreadsheetCell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1+2+3")
