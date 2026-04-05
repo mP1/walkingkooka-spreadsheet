@@ -297,7 +297,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             EXPRESSION_NUMBER_KIND
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, style, text-node, template, net)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMATTING_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -310,7 +310,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             FormHandlerAliasSet.EMPTY
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, template, net, json)")
+            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json)")
         ).set(
             SpreadsheetMetadataPropertyName.FORMULA_FUNCTIONS,
             SpreadsheetExpressionFunctions.EMPTY_ALIAS_SET
@@ -348,7 +348,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             RoundingMode.HALF_UP
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)"
+            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)"
             )
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,

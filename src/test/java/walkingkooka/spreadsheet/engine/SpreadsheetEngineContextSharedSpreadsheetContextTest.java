@@ -1348,8 +1348,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                 "  \"formHandlers\": \"basic\",\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
-                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
-                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, properties, template, net)\",\n" +
+                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, properties, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"hideZeroValues\": false,\n" +
@@ -1364,7 +1364,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"queryFunctions\": \"@\",\n" +
                 "  \"queryHighlighting\": false,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +
@@ -1574,8 +1574,8 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"expressionNumberKind\": \"BIG_DECIMAL\",\n" +
                 "  \"formHandlers\": \"basic\",\n" +
                 "  \"formatters\": \"accounting, automatic, badge-error, collection, currency, date, date-time, default-text, expression, full-date, full-date-time, full-time, general, hyperlinking, long-date, long-date-time, long-time, medium-date, medium-date-time, medium-time, number, percent, scientific, short-date, short-date-time, short-time, text, time\",\n" +
-                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
-                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, properties, template, net)\",\n" +
+                "  \"formattingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, spreadsheet-metadata, style, text-node, template, net)\",\n" +
+                "  \"formulaConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, properties, template, net)\",\n" +
                 "  \"formulaFunctions\": \"@test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz\",\n" +
                 "  \"functions\": \"@\",\n" +
                 "  \"hideZeroValues\": false,\n" +
@@ -1590,7 +1590,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 "  \"queryFunctions\": \"@\",\n" +
                 "  \"queryHighlighting\": false,\n" +
                 "  \"roundingMode\": \"HALF_UP\",\n" +
-                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
+                "  \"scriptingConverter\": \"collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\",\n" +
                 "  \"showFormulaEditor\": true,\n" +
                 "  \"showFormulas\": false,\n" +
                 "  \"showGridLines\": true,\n" +

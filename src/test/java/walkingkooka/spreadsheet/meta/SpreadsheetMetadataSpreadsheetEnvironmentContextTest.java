@@ -874,12 +874,12 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    time\n" +
                 "  formattingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, plugins, properties, style, text-node, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, plugins, properties, style, text-node, template, net)\"\n" +
                 "  formattingFunctions\n" +
                 "  formHandlers\n" +
                 "  formulaConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, properties, template, net, json)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, locale, currency, properties, template, net, json)\"\n" +
                 "  formulaFunctions\n" +
                 "  functions\n" +
                 "  importers\n" +
@@ -930,7 +930,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    HALF_UP\n" +
                 "  scriptingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\"\n" +
                 "  scriptingFunctions\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +

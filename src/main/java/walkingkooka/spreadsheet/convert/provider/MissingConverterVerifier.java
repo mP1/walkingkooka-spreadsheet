@@ -30,6 +30,7 @@ import walkingkooka.color.RgbColor;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
@@ -538,6 +539,17 @@ final class MissingConverterVerifier {
                     SpreadsheetColorName.BLACK.value(),
                     SpreadsheetColorName.class,
                     SpreadsheetConvertersConverterProvider.TEXT_TO_SPREADSHEET_COLOR_NAME
+                );
+            }
+        }
+
+        // currency.....................................................................................................
+        {
+            if (formula || formatting || scripting) {
+                verifier.addIfConversionFail(
+                    "AUD",
+                    CurrencyCode.class,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-code
                 );
             }
         }
