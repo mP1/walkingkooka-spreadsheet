@@ -740,6 +740,26 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.LOCALE // TEXT_TO_LOCALE
                 );
             }
+
+            // text-to-locale-language-tag..............................................................................
+            if (formula || query || scripting) {
+                verifier.addIfConversionFail(
+                    locale.toLanguageTag(),
+                    LocaleLanguageTag.class,
+                    SpreadsheetConvertersConverterProvider.LOCALE // text-to-locale-language-tag
+                );
+            }
+
+            if (formula || query || scripting) {
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        locale,
+                        spreadsheetCell
+                    ),
+                    LocaleLanguageTag.class,
+                    SpreadsheetConvertersConverterProvider.LOCALE // text-to-locale-language-tag
+                );
+            }
         }
 
         // net..........................................................................................................
