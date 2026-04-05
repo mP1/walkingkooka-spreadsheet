@@ -785,6 +785,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#textToCurrencyCode()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToCurrencyCode() {
+        return Converters.textToCurrencyCode();
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link DateSpreadsheetFormulaParserToken} and converting
      * that into a {@link LocalDate}.
      */
