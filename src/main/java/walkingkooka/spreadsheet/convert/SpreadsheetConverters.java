@@ -900,6 +900,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#textToLocaleLanguageTag()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToLocaleLanguageTag() {
+        return Converters.textToLocaleLanguageTag();
+    }
+
+    /**
      * {@link TreeTextConverters#textToMargin()}
      */
     public static Converter<SpreadsheetConverterContext> textToMargin() {
