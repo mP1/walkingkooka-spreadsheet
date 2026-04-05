@@ -192,6 +192,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * A collection of currency {@link Converter}.
+     */
+    public static Converter<SpreadsheetConverterContext> currency() {
+        return CURRENCY;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> CURRENCY = namedCollection(
+        "currency",
+        textToCurrencyCode()
+    );
+
+    /**
      * {@link SpreadsheetConverterDateTime()}
      */
     public static Converter<SpreadsheetConverterContext> dateTime(final Converter<SpreadsheetConverterContext> dateToString,

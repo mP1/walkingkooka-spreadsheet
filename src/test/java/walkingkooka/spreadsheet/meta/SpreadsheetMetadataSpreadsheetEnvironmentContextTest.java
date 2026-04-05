@@ -627,6 +627,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    color\n" +
                 "    color-to-color\n" +
                 "    color-to-number\n" +
+                "    currency\n" +
                 "    date-time\n" +
                 "    date-time-symbols\n" +
                 "    decimal-number-symbols\n" +
