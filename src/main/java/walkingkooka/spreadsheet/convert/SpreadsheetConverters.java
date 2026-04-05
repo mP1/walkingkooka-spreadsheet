@@ -384,7 +384,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * A converter that involves {@link Locale} as a source or destination
+     * A converter that involves {@link Locale}, {@link walkingkooka.locale.LocaleLanguageTag} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> locale() {
         return LOCALE;
@@ -395,7 +395,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         localeToText(),
         Converters.toLocale(),
         dateTimeSymbols(),
-        decimalNumberSymbols()
+        decimalNumberSymbols(),
+        textToLocaleLanguageTag()
     );
 
     /**
