@@ -784,6 +784,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToLocaleLanguageTag() {
+        this.converterAndCheck(
+            "text-to-locale-language-tag",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToLocaleLanguageTag()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToMargin() {
         this.converterAndCheck(
             "text-to-margin",

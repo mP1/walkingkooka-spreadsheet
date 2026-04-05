@@ -473,6 +473,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToLocale();
                 break;
+            case TEXT_TO_LOCALE_LANGUAGE_TAG_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToLocaleLanguageTag();
+                break;
             case TEXT_TO_MARGIN_STRING:
                 noParameterCheck(copy);
 
@@ -1017,6 +1022,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_LOCALE = ConverterName.with(TEXT_TO_LOCALE_STRING);
 
+    private final static String TEXT_TO_LOCALE_LANGUAGE_TAG_STRING = "text-to-locale-language-tag";
+
+    final static ConverterName TEXT_TO_LOCALE_LANGUAGE_TAG = ConverterName.with(TEXT_TO_LOCALE_LANGUAGE_TAG_STRING);
+
     private final static String TEXT_TO_MARGIN_STRING = "text-to-margin";
 
     final static ConverterName TEXT_TO_MARGIN = ConverterName.with(TEXT_TO_MARGIN_STRING);
@@ -1270,6 +1279,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_JSON),
             converterInfo(TEXT_TO_LINE_ENDING),
             converterInfo(TEXT_TO_LOCALE),
+            converterInfo(TEXT_TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TEXT_TO_MARGIN),
             converterInfo(TEXT_TO_NUMBER_LIST),
             converterInfo(TEXT_TO_OBJECT),
