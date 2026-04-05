@@ -159,6 +159,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithCurrency() {
+        this.converterAndCheck(
+            "currency",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.currency()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithDateTime() {
         final ConverterProvider provider = this.createConverterProvider();
 
