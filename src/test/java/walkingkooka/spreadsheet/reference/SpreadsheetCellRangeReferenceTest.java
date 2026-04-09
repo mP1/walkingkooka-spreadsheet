@@ -1072,7 +1072,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testtestEqualsDifferentColumn() {
+    public void testTestWithDifferentColumn() {
         this.testFalse(
             SpreadsheetSelection.parseCellRange("A1:B2"),
             SpreadsheetSelection.parseColumn("C")
@@ -1080,7 +1080,7 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     }
 
     @Test
-    public void testtestEqualsDifferentRow() {
+    public void testTestWithDifferentRow() {
         this.testFalse(
             SpreadsheetSelection.parseCellRange("A1:B2"),
             SpreadsheetSelection.parseRow("3")

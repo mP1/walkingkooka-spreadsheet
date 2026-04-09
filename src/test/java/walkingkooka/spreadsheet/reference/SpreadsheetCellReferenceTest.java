@@ -456,7 +456,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testtestEqualsDifferentCell() {
+    public void testTestWithDifferentCell() {
         this.testFalse(
             SpreadsheetSelection.A1,
             SpreadsheetSelection.parseCell("B2")
@@ -464,7 +464,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testtestEqualsDifferentColumn() {
+    public void testTestWithDifferentColumn() {
         this.testFalse(
             SpreadsheetSelection.A1,
             SpreadsheetSelection.parseColumn("B")
@@ -472,7 +472,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     }
 
     @Test
-    public void testtestEqualsDifferentRow() {
+    public void testTestWithDifferentRow() {
         this.testFalse(
             SpreadsheetSelection.A1,
             SpreadsheetSelection.parseRow("2")
