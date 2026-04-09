@@ -171,12 +171,12 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // test.............................................................................................................
 
     @Test
-    public void testTestSameRown() {
+    public void testTestSameRow() {
         this.testTrue(this.createSelection());
     }
 
     @Test
-    public void testtestEqualsDifferentRow() {
+    public void testTestWithDifferentRow() {
         this.testFalse(
             SpreadsheetSelection.parseRow("1"),
             SpreadsheetSelection.parseRow("2")
