@@ -3466,6 +3466,22 @@ public final class SpreadsheetCellRangeReferenceTest extends SpreadsheetCellRefe
     @Test
     public void testParseInvalidEndFails() {
         this.parseStringFails(
+            "A1:",
+            new IllegalArgumentException("Empty upper range in \"A1:\"")
+        );
+    }
+
+    @Test
+    public void testParseInvalidEndFails2() {
+        this.parseStringFails(
+            "A1:B",
+            new IllegalArgumentException("Missing upper range in \"A1:B\"")
+        );
+    }
+
+    @Test
+    public void testParseInvalidEndFails3() {
+        this.parseStringFails(
             "A1:##",
             new IllegalArgumentException("Invalid character '#' at 3")
         );
