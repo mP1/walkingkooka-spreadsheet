@@ -695,10 +695,15 @@ public abstract class SpreadsheetSelection implements HasText,
                 upper = parser.parse(cursor, context)
                     .orElse(null);
                 if (null == upper) {
-                    throw new InvalidCharacterException(
-                        text,
-                        cursor.max()
-                    );
+                    final int max = cursor.max();
+                    if(max == text.length()) {
+                        throw new IllegalArgumentException("Missing upper range in " + CharSequences.quote(text));
+                    } else {
+                        throw new InvalidCharacterException(
+                            text,
+                            max
+                        );
+                    }
                 }
                 upperSelection = parserTokenToSelection.apply(upper);
 
