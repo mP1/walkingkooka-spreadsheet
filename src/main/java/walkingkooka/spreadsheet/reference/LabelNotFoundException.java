@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * This exception is used to report that a label was required but not found.
  */
-public class LabelNotFoundException extends RuntimeException implements HasSpreadsheetError {
+public class LabelNotFoundException extends IllegalArgumentException implements HasSpreadsheetError {
 
     private static final long serialVersionUID = 0L;
 
