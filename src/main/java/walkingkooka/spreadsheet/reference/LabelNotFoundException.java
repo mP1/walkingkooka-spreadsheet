@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.naming.HasName;
 import walkingkooka.spreadsheet.value.HasSpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.text.CharSequences;
@@ -26,7 +27,8 @@ import java.util.Objects;
 /**
  * This exception is used to report that a label was required but not found.
  */
-public class LabelNotFoundException extends IllegalArgumentException implements HasSpreadsheetError {
+public class LabelNotFoundException extends IllegalArgumentException implements HasName<SpreadsheetLabelName>,
+    HasSpreadsheetError {
 
     private static final long serialVersionUID = 0L;
 
@@ -42,8 +44,11 @@ public class LabelNotFoundException extends IllegalArgumentException implements 
 
         this.label = label;
     }
+    
+    // HasName..........................................................................................................
 
-    public SpreadsheetLabelName label() {
+    @Override
+    public SpreadsheetLabelName name() {
         return this.label;
     }
 
