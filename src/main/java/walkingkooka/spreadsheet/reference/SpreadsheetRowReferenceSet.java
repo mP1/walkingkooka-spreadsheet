@@ -47,13 +47,6 @@ public final class SpreadsheetRowReferenceSet extends SpreadsheetSelectionSet<Sp
      */
     public final static CharacterConstant SEPARATOR = SpreadsheetSelectionSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetRowReferenceSet} with the given rows.
-     */
-    public static SpreadsheetRowReferenceSet with(final Collection<SpreadsheetRowReference> rows) {
-        return EMPTY.setElements(rows);
-    }
-
     private static SpreadsheetRowReferenceSet withCopy(final SortedSet<SpreadsheetRowReference> rows) {
         return rows.isEmpty() ?
             EMPTY :

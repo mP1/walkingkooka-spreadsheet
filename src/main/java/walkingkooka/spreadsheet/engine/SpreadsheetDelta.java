@@ -711,7 +711,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             deletedRows,
             window::test,
             SpreadsheetRowReference::toRelative,
-            SpreadsheetRowReferenceSet::with
+            SpreadsheetRowReferenceSet.EMPTY::setElements
         );
     }
 
