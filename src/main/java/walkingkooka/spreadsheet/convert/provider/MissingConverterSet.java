@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert.provider;
 
 import walkingkooka.collect.iterator.Iterators;
-import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.ImmutableSortedSetDefaults;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -46,25 +45,6 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     public final static MissingConverterSet EMPTY = new MissingConverterSet(
         SortedSets.empty()
     );
-
-    public static MissingConverterSet with(final Collection<MissingConverter> missing) {
-        MissingConverterSet with;
-
-        if (missing instanceof MissingConverterSet) {
-            with = (MissingConverterSet) missing;
-        } else {
-            Objects.requireNonNull(missing, "missing");
-
-            final ImmutableSortedSet<MissingConverter> copy = SortedSets.immutable(
-                new TreeSet<>(missing)
-            );
-            with = copy.isEmpty() ?
-                EMPTY :
-                new MissingConverterSet(copy);
-        }
-
-        return with;
-    }
 
     private MissingConverterSet(final SortedSet<MissingConverter> missings) {
         this.missings = missings;
@@ -182,7 +162,7 @@ public final class MissingConverterSet extends AbstractSet<MissingConverter> imp
     // @VisibleForTesting
     static MissingConverterSet unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallSet(
                 node,
                 MissingConverter.class
