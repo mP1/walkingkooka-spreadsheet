@@ -27,7 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTesting<SpreadsheetLabelNameSet, SpreadsheetLabelName>,
     HasTextTesting,
@@ -36,22 +35,13 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
     JsonNodeMarshallingTesting<SpreadsheetLabelNameSet> {
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetLabelNameSet.with(null)
-        );
-    }
-
-    @Test
     public void testDeleteBecomesEmpty() {
         final SpreadsheetLabelName label = SpreadsheetSelection.labelName("UnknownLabel");
 
         assertSame(
             SpreadsheetLabelNameSet.EMPTY,
-            SpreadsheetLabelNameSet.with(
-                SortedSets.of(label)
-            ).delete(label)
+            SpreadsheetLabelNameSet.EMPTY.concat(label)
+                .delete(label)
         );
     }
 
@@ -69,7 +59,7 @@ public final class SpreadsheetLabelNameSetTest implements ImmutableSortedSetTest
 
     @Override
     public SpreadsheetLabelNameSet createSet() {
-        return SpreadsheetLabelNameSet.with(
+        return SpreadsheetLabelNameSet.EMPTY.setElements(
             SortedSets.of(
                 SpreadsheetSelection.labelName("Label1"),
                 SpreadsheetSelection.labelName("Label2"),

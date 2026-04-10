@@ -48,7 +48,7 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
     public static Collector<SpreadsheetLabelName, ?, SpreadsheetLabelNameSet> collector() {
         return Collectors.collectingAndThen(
             Collectors.toSet(),
-            SpreadsheetLabelNameSet::with
+            SpreadsheetLabelNameSet.EMPTY::setElements
         );
     }
 
@@ -76,13 +76,6 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
         );
     }
 
-    /**
-     * Factory that creates {@link SpreadsheetLabelNameSet} with the given labels.
-     */
-    public static SpreadsheetLabelNameSet with(final Collection<SpreadsheetLabelName> labels) {
-        return EMPTY.setElements(labels);
-    }
-
     private static SpreadsheetLabelNameSet withCopy(final SortedSet<SpreadsheetLabelName> labels) {
         return labels.isEmpty() ?
             EMPTY :
@@ -102,9 +95,14 @@ public final class SpreadsheetLabelNameSet extends SpreadsheetSelectionSet<Sprea
         if (labels instanceof SpreadsheetLabelNameSet) {
             spreadsheetLabelNameSet = (SpreadsheetLabelNameSet) labels;
         } else {
-            final TreeSet<SpreadsheetLabelName> copy = new TreeSet<>(
-                Objects.requireNonNull(labels, "labels")
-            );
+            Objects.requireNonNull(labels, "labels");
+            final TreeSet<SpreadsheetLabelName> copy = new TreeSet<>();
+
+            for (final SpreadsheetLabelName label : labels) {
+                this.elementCheck(label);
+                copy.add(label);
+            }
+
             spreadsheetLabelNameSet = this.references.equals(copy) ?
                 this :
                 withCopy(copy);
