@@ -28,7 +28,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSetTesting<SpreadsheetCellReferenceSet, SpreadsheetCellReference>,
     HasTextTesting,
@@ -37,22 +36,13 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
     JsonNodeMarshallingTesting<SpreadsheetCellReferenceSet> {
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetCellReferenceSet.with(null)
-        );
-    }
-
-    @Test
     public void testDeleteBecomesEmpty() {
         final SpreadsheetCellReference reference = SpreadsheetSelection.A1;
 
         assertSame(
             SpreadsheetCellReferenceSet.EMPTY,
-            SpreadsheetCellReferenceSet.with(
-                SortedSets.of(reference)
-            ).delete(reference)
+            SpreadsheetCellReferenceSet.EMPTY.concat(reference)
+                .delete(reference)
         );
     }
 
@@ -69,7 +59,7 @@ public final class SpreadsheetCellReferenceSetTest implements ImmutableSortedSet
 
     @Override
     public SpreadsheetCellReferenceSet createSet() {
-        return SpreadsheetCellReferenceSet.with(
+        return SpreadsheetCellReferenceSet.EMPTY.setElements(
             SortedSets.of(
                 SpreadsheetSelection.A1,
                 SpreadsheetSelection.parseCell("$A$2")
