@@ -19,14 +19,19 @@ package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.Optional;
 
 /**
- * The {@link Context} that accompanies a {@link SpreadsheetViewportNavigation#update(SpreadsheetViewport, SpreadsheetViewportNavigationContext)}
+ * The {@link Context} that accompanies a {@link SpreadsheetViewportNavigation#update(SpreadsheetViewport, SpreadsheetViewportNavigationContext)}.
+ * Note that {@link #resolveLabel(SpreadsheetLabelName)} and similar methods do not test if the matching selection
+ * is hidden.
  */
-public interface SpreadsheetViewportNavigationContext extends Context {
+public interface SpreadsheetViewportNavigationContext extends Context,
+    SpreadsheetLabelNameResolver {
 
     /**
      * Returns true if the {@link SpreadsheetColumnReference} is hidden.

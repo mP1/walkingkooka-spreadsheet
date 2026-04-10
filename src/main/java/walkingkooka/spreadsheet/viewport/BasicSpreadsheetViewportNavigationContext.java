@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
@@ -28,12 +30,14 @@ import java.util.function.Predicate;
 
 final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
 
-    static BasicSpreadsheetViewportNavigationContext with(final Predicate<SpreadsheetColumnReference> columnHidden,
+    static BasicSpreadsheetViewportNavigationContext with(final SpreadsheetLabelNameResolver labelNameResolver,
+                                                          final Predicate<SpreadsheetColumnReference> columnHidden,
                                                           final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                           final Predicate<SpreadsheetRowReference> rowHidden,
                                                           final Function<SpreadsheetRowReference, Double> rowHeights,
                                                           final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
         return new BasicSpreadsheetViewportNavigationContext(
+            Objects.requireNonNull(labelNameResolver, "labelNameResolver"),
             Objects.requireNonNull(columnHidden, "columnHidden"),
             Objects.requireNonNull(columnWidths, "columnWidths"),
             Objects.requireNonNull(rowHidden, "rowHidden"),
@@ -42,17 +46,26 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         );
     }
 
-    private BasicSpreadsheetViewportNavigationContext(final Predicate<SpreadsheetColumnReference> columnHidden,
+    private BasicSpreadsheetViewportNavigationContext(final SpreadsheetLabelNameResolver labelNameResolver,
+                                                      final Predicate<SpreadsheetColumnReference> columnHidden,
                                                       final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                       final Predicate<SpreadsheetRowReference> rowHidden,
                                                       final Function<SpreadsheetRowReference, Double> rowHeights,
                                                       final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
+        this.labelNameResolver = labelNameResolver;
         this.columnHidden = columnHidden;
         this.columnWidths = columnWidths;
         this.rowHidden = rowHidden;
         this.rowHeights = rowHeights;
         this.windows = windows;
     }
+
+    @Override
+    public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+        return this.labelNameResolver.resolveLabel(labelName);
+    }
+
+    private final SpreadsheetLabelNameResolver labelNameResolver;
 
     @Override
     public boolean isColumnHidden(final SpreadsheetColumnReference column) {
@@ -260,6 +273,6 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public String toString() {
-        return this.columnHidden + " " + this.columnWidths + " " + this.rowHidden + " " + this.rowHeights + " " + this.windows;
+        return this.labelNameResolver + " " + this.columnHidden + " " + this.columnWidths + " " + this.rowHidden + " " + this.rowHeights + " " + this.windows;
     }
 }

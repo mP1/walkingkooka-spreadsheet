@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.function.Function;
@@ -29,12 +30,14 @@ public final class SpreadsheetViewportNavigationContexts implements PublicStatic
     /**
      * {@see BasicSpreadsheetViewportNavigationContext}
      */
-    public static SpreadsheetViewportNavigationContext basic(final Predicate<SpreadsheetColumnReference> columnHidden,
+    public static SpreadsheetViewportNavigationContext basic(final SpreadsheetLabelNameResolver labelNameResolver,
+                                                             final Predicate<SpreadsheetColumnReference> columnHidden,
                                                              final Function<SpreadsheetColumnReference, Double> columnWidths,
                                                              final Predicate<SpreadsheetRowReference> rowHidden,
                                                              final Function<SpreadsheetRowReference, Double> rowHeights,
                                                              final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
         return BasicSpreadsheetViewportNavigationContext.with(
+            labelNameResolver,
             columnHidden,
             columnWidths,
             rowHidden,

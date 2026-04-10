@@ -24,6 +24,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -222,6 +223,7 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
             navigation.update(
                 viewport,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SpreadsheetLabelNameResolvers.fake(),
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,

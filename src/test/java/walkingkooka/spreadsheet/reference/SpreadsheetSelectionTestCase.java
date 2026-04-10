@@ -73,6 +73,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     ToStringTesting<S>,
     TreePrintableTesting {
 
+    private final static SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
     private final static Function<SpreadsheetViewport, SpreadsheetViewportWindows> WINDOWS_FUNCTION = (SpreadsheetViewport v) -> {
         throw new UnsupportedOperationException();
     };
@@ -966,6 +968,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.moveLeftColumn(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1013,6 +1016,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnWidths,
                     hiddenRows,
@@ -1050,6 +1054,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.moveUpRow(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1097,6 +1102,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnWidths,
                     hiddenRows,
@@ -1134,6 +1140,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.moveRightColumn(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1181,6 +1188,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnWidths,
                     hiddenRows,
@@ -1218,6 +1226,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.moveDownRow(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1265,6 +1274,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnWidths,
                     hiddenRows,
@@ -1398,6 +1408,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.extendLeftColumn(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1448,6 +1459,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnToWidths,
                     hiddenRows,
@@ -1489,6 +1501,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.extendUpRow(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1539,6 +1552,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnToWidths,
                     hiddenRows,
@@ -1579,6 +1593,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.extendRightColumn(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1629,6 +1644,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnToWidths,
                     hiddenRows,
@@ -1669,6 +1685,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             selection.extendDownRow(
                 anchor,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,
@@ -1719,6 +1736,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 anchor,
                 count,
                 SpreadsheetViewportNavigationContexts.basic(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     hiddenColumns,
                     columnToWidths,
                     hiddenRows,

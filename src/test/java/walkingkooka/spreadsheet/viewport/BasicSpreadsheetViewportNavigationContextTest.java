@@ -24,6 +24,8 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -40,6 +42,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetViewportNavigationContextTest implements ClassTesting<BasicSpreadsheetViewportNavigationContext>,
     SpreadsheetViewportNavigationContextTesting<BasicSpreadsheetViewportNavigationContext>,
     ToStringTesting<BasicSpreadsheetViewportNavigationContext> {
+
+    private final static SpreadsheetLabelNameResolver SPREADSHEET_LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static Function<SpreadsheetColumnReference, Double> COLUMN_TO_WIDTH = (c) -> {
         throw new UnsupportedOperationException();
@@ -59,6 +63,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext
                 .with(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     null,
                     COLUMN_TO_WIDTH,
                     Predicates.fake(),
@@ -74,6 +79,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext
                 .with(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     Predicates.fake(),
                     null,
                     Predicates.fake(),
@@ -88,6 +94,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 null,
@@ -103,6 +110,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext
                 .with(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     Predicates.fake(),
                     COLUMN_TO_WIDTH,
                     Predicates.fake(),
@@ -118,6 +126,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext
                 .with(
+                    SPREADSHEET_LABEL_NAME_RESOLVER,
                     Predicates.fake(),
                     COLUMN_TO_WIDTH,
                     Predicates.fake(),
@@ -132,6 +141,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetColumnReference column = SpreadsheetSelection.parseColumn("B");
 
         final BasicSpreadsheetViewportNavigationContext context = BasicSpreadsheetViewportNavigationContext.with(
+            SPREADSHEET_LABEL_NAME_RESOLVER,
             Predicates.is(column),
             COLUMN_TO_WIDTH,
             Predicates.fake(),
@@ -156,6 +166,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         final SpreadsheetRowReference row = SpreadsheetSelection.parseRow("123");
 
         final BasicSpreadsheetViewportNavigationContext context = BasicSpreadsheetViewportNavigationContext.with(
+            SPREADSHEET_LABEL_NAME_RESOLVER,
             Predicates.fake(),
             COLUMN_TO_WIDTH,
             Predicates.is(row),
@@ -261,6 +272,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final String column) {
         this.moveLeftColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
@@ -276,6 +288,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                   final String expected) {
         this.moveLeftColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
@@ -362,6 +375,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                    final String column) {
         this.moveRightColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
@@ -377,6 +391,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                    final String expected) {
         this.moveRightColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns(columnHidden),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
@@ -473,6 +488,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                 final String row) {
         this.moveUpRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 this.hiddenRows(rowHidden),
@@ -488,6 +504,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                 final String expected) {
         this.moveUpRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 this.hiddenRows(rowHidden),
@@ -574,6 +591,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                  final String row) {
         this.moveDownRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 hiddenRows(rowHidden),
@@ -713,6 +731,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 columnsHidden,
                 columnWidths::apply,
                 Predicates.fake(), // rows hidden
@@ -860,6 +879,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 columnsHidden,
                 columnWidths::apply,
                 Predicates.fake(), // rows hidden
@@ -999,6 +1019,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(), // columns hidden
                 COLUMN_TO_WIDTH,
                 rowsHidden,
@@ -1101,6 +1122,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                                  final String expected) {
         this.moveDownRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
                 hiddenRows(rowHidden),
@@ -1162,6 +1184,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(), // hidden columns
                 COLUMN_TO_WIDTH,
                 rowsHidden,
@@ -1240,19 +1263,21 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
         this.toStringAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
                 column,
                 COLUMN_TO_WIDTH,
                 row,
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
             ),
-            column + " " + COLUMN_TO_WIDTH + " " + row + " " + ROW_TO_HEIGHT + " " + WINDOWS_FUNCTION
+            SPREADSHEET_LABEL_NAME_RESOLVER + " " + column + " " + COLUMN_TO_WIDTH + " " + row + " " + ROW_TO_HEIGHT + " " + WINDOWS_FUNCTION
         );
     }
 
     @Override
     public BasicSpreadsheetViewportNavigationContext createContext() {
         return BasicSpreadsheetViewportNavigationContext.with(
+            SPREADSHEET_LABEL_NAME_RESOLVER,
             Predicates.fake(),
             COLUMN_TO_WIDTH,
             Predicates.fake(),
