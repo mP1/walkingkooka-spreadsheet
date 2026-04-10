@@ -123,7 +123,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Helper that may be used to validate a submitted {@link Converter} is able to convert required types.
@@ -1721,10 +1720,8 @@ final class MissingConverterVerifier {
             }
         }
 
-        return MissingConverterSet.with(
-            new TreeSet<>(
-                verifier.missing.values()
-            )
+        return MissingConverterSet.EMPTY.setElements(
+            verifier.missing.values()
         );
     }
 

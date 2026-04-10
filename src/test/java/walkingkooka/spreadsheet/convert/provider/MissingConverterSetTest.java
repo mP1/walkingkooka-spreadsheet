@@ -30,29 +30,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MissingConverterSetTest implements ImmutableSortedSetTesting<MissingConverterSet, MissingConverter>,
     TreePrintableTesting,
     JsonNodeMarshallingTesting<MissingConverterSet> {
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> MissingConverterSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithMissingConverterSetDoesntWrap() {
-        final MissingConverterSet set = this.createSet();
-
-        assertSame(
-            set,
-            MissingConverterSet.with(set)
-        );
-    }
 
     @Test
     public void testDeleteBecomesEmpty() {
@@ -68,7 +49,7 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
 
         assertSame(
             MissingConverterSet.EMPTY,
-            MissingConverterSet.with(
+            MissingConverterSet.EMPTY.setElements(
                 SortedSets.of(missing)
             ).delete(missing)
         );
@@ -88,7 +69,7 @@ public final class MissingConverterSetTest implements ImmutableSortedSetTesting<
 
     @Override
     public MissingConverterSet createSet() {
-        return MissingConverterSet.with(
+        return MissingConverterSet.EMPTY.setElements(
             SortedSets.of(
                 MissingConverter.with(
                     ConverterName.with("converter1"),
