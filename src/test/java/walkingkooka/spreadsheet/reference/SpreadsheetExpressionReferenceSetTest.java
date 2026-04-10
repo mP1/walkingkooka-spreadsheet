@@ -30,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.SortedSet;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSortedSetTesting<SpreadsheetExpressionReferenceSet, SpreadsheetExpressionReference>,
     HasTextTesting,
@@ -39,22 +38,13 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
     JsonNodeMarshallingTesting<SpreadsheetExpressionReferenceSet> {
 
     @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetExpressionReferenceSet.with(null)
-        );
-    }
-
-    @Test
     public void testDeleteBecomesEmpty() {
         final SpreadsheetExpressionReference reference = SpreadsheetSelection.A1;
 
         assertSame(
             SpreadsheetExpressionReferenceSet.EMPTY,
-            SpreadsheetExpressionReferenceSet.with(
-                SortedSets.of(reference)
-            ).delete(reference)
+            SpreadsheetExpressionReferenceSet.EMPTY.concat(reference)
+                .delete(reference)
         );
     }
 
@@ -77,7 +67,7 @@ public final class SpreadsheetExpressionReferenceSetTest implements ImmutableSor
         sortedSet.add(SpreadsheetSelection.parseCell("$B$2"));
         sortedSet.add(SpreadsheetSelection.labelName("Label3"));
 
-        return SpreadsheetExpressionReferenceSet.with(sortedSet);
+        return SpreadsheetExpressionReferenceSet.EMPTY.setElements(sortedSet);
     }
 
     // parseString......................................................................................................
