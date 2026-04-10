@@ -68,7 +68,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
                                                        final OptionalInt rowCount) {
         return new SpreadsheetDeltaNonWindowed(
             viewport,
-            SpreadsheetCellSet.with(cells),
+            SpreadsheetCellSet.EMPTY.setElements(cells),
             columns,
             forms,
             labels,

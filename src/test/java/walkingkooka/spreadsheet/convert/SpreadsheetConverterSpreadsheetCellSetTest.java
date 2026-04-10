@@ -36,9 +36,7 @@ public final class SpreadsheetConverterSpreadsheetCellSetTest extends Spreadshee
 
         this.convertAndCheck(
             cell,
-            SpreadsheetCellSet.with(
-                Sets.of(cell)
-            )
+            SpreadsheetCellSet.EMPTY.concat(cell)
         );
     }
 
@@ -51,9 +49,7 @@ public final class SpreadsheetConverterSpreadsheetCellSetTest extends Spreadshee
         this.convertAndCheck(
             cell,
             Set.class,
-            SpreadsheetCellSet.with(
-                Sets.of(cell)
-            )
+            SpreadsheetCellSet.EMPTY.concat(cell)
         );
     }
 
@@ -65,19 +61,15 @@ public final class SpreadsheetConverterSpreadsheetCellSetTest extends Spreadshee
 
         this.convertAndCheck(
             Sets.of(cell),
-            SpreadsheetCellSet.with(
-                Sets.of(cell)
-            )
+            SpreadsheetCellSet.EMPTY.concat(cell)
         );
     }
 
     @Test
     public void testConvertSpreadsheetCellSetToSpreadsheetCellSet() {
-        final SpreadsheetCellSet cells = SpreadsheetCellSet.with(
-            Sets.of(
-                SpreadsheetSelection.A1.setFormula(
-                    SpreadsheetFormula.EMPTY.setText("=1")
-                )
+        final SpreadsheetCellSet cells = SpreadsheetCellSet.EMPTY.concat(
+            SpreadsheetSelection.A1.setFormula(
+                SpreadsheetFormula.EMPTY.setText("=1")
             )
         );
 

@@ -302,7 +302,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
                 windowPredicate;
         }
 
-        return SpreadsheetCellSet.with(
+        return SpreadsheetCellSet.EMPTY.setElements(
             null != predicate ?
                 filter(
                     cells,

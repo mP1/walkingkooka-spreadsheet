@@ -57,7 +57,7 @@ final class SpreadsheetConverterSpreadsheetCellSet extends SpreadsheetConverter 
                                            final Class<T> type,
                                            final SpreadsheetConverterContext context) {
         return this.successfulConversion(
-            SpreadsheetCellSet.with(
+            SpreadsheetCellSet.EMPTY.setElements(
                 value instanceof SpreadsheetCell ?
                     Sets.of(
                         (SpreadsheetCell) value

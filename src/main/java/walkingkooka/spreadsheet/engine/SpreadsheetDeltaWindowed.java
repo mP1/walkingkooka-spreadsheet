@@ -72,7 +72,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
                                                  final SpreadsheetViewportWindows window) {
         return new SpreadsheetDeltaWindowed(
             viewport,
-            SpreadsheetCellSet.with(cells),
+            SpreadsheetCellSet.EMPTY.setElements(cells),
             columns,
             forms,
             labels,
