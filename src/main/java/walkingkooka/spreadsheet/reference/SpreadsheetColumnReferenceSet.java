@@ -47,13 +47,6 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
      */
     public final static CharacterConstant SEPARATOR = SpreadsheetSelectionSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetColumnReferenceSet} with the given columns.
-     */
-    public static SpreadsheetColumnReferenceSet with(final Collection<SpreadsheetColumnReference> columns) {
-        return EMPTY.setElements(columns);
-    }
-
     private static SpreadsheetColumnReferenceSet withCopy(final SortedSet<SpreadsheetColumnReference> columns) {
         return columns.isEmpty() ?
             EMPTY :
@@ -87,9 +80,13 @@ public final class SpreadsheetColumnReferenceSet extends SpreadsheetSelectionSet
         if (columns instanceof SpreadsheetColumnReferenceSet) {
             spreadsheetColumnReferenceSet = (SpreadsheetColumnReferenceSet) columns;
         } else {
-            final TreeSet<SpreadsheetColumnReference> copy = new TreeSet<>(
-                Objects.requireNonNull(columns, "columns")
-            );
+            Objects.requireNonNull(columns, "columns");
+
+            final TreeSet<SpreadsheetColumnReference> copy = new TreeSet<>();
+            for (final SpreadsheetColumnReference column : columns) {
+                this.elementCheck(column);
+                copy.add(column);
+            }
             spreadsheetColumnReferenceSet = this.references.equals(copy) ?
                 this :
                 withCopy(copy);
