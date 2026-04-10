@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine.collection;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.ImmutableSortedSetTesting;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -32,7 +31,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
-import java.util.Set;
 import java.util.SortedSet;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -42,50 +40,6 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
     TreePrintableTesting,
     JsonNodeMarshallingTesting<SpreadsheetCellSet>,
     HasUrlFragmentTesting {
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetCellSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithIncludesNonSpreadsheetCellFails() {
-        assertThrows(
-            ClassCastException.class,
-            () -> SpreadsheetCellSet.with(
-                Sets.of(
-                    Cast.to("Invalid!")
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testWithSet() {
-        final Set<SpreadsheetCell> set = Sets.of(
-            SpreadsheetSelection.A1.setFormula(
-                SpreadsheetFormula.EMPTY.setText("=1")
-            )
-        );
-
-        this.checkEquals(
-            set,
-            SpreadsheetCellSet.with(set)
-        );
-    }
-
-    @Test
-    public void testWithSpreadsheetCellSetDoesntWrap() {
-        final SpreadsheetCellSet set = this.createSet();
-
-        assertSame(
-            set,
-            SpreadsheetCellSet.with(set)
-        );
-    }
 
     @Test
     public void testDeleteBecomesEmpty() {
@@ -98,7 +52,7 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
 
         assertSame(
             SpreadsheetCellSet.EMPTY,
-            SpreadsheetCellSet.with(set)
+            SpreadsheetCellSet.EMPTY.setElements(set)
                 .delete(cell)
         );
     }
@@ -142,7 +96,7 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
                 )
         );
 
-        return SpreadsheetCellSet.with(set);
+        return SpreadsheetCellSet.EMPTY.setElements(set);
     }
 
 // TreePrintable....................................................................................................

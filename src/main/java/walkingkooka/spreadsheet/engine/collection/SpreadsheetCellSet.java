@@ -57,13 +57,6 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
      */
     public final static SpreadsheetCellSet EMPTY = new SpreadsheetCellSet(SortedSets.empty());
 
-    /**
-     * Factory that creates a {@link SpreadsheetCellSet} after taking a copy.
-     */
-    public static SpreadsheetCellSet with(final Collection<SpreadsheetCell> cells) {
-        return EMPTY.setElements(cells);
-    }
-
     private static SpreadsheetCellSet withCopy(final SortedSet<SpreadsheetCell> cells) {
         return cells.isEmpty() ?
             EMPTY :
