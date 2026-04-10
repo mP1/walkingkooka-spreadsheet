@@ -61,27 +61,7 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
      * Factory that creates a {@link SpreadsheetCellSet} after taking a copy.
      */
     public static SpreadsheetCellSet with(final Collection<SpreadsheetCell> cells) {
-        SpreadsheetCellSet with;
-
-        if (cells instanceof SpreadsheetCellSet) {
-            with = (SpreadsheetCellSet) cells;
-        } else {
-            Objects.requireNonNull(cells, "cells");
-
-            SortedSet<SpreadsheetCell> sortedSet;
-            if (cells instanceof SortedSet) {
-                sortedSet = (SortedSet<SpreadsheetCell>) cells;
-            } else {
-                sortedSet = SortedSets.tree(COMPARATOR);
-                sortedSet.addAll(cells);
-            }
-
-            with = withCopy(
-                SortedSets.immutable(sortedSet)
-            );
-        }
-
-        return with;
+        return EMPTY.setElements(cells);
     }
 
     private static SpreadsheetCellSet withCopy(final SortedSet<SpreadsheetCell> cells) {
@@ -150,12 +130,27 @@ public final class SpreadsheetCellSet extends AbstractSet<SpreadsheetCell> imple
 
     @Override
     public SpreadsheetCellSet setElements(final Collection<SpreadsheetCell> cells) {
-        final TreeSet<SpreadsheetCell> copy = new TreeSet<>(COMPARATOR);
-        copy.addAll(cells);
+        final SpreadsheetCellSet spreadsheetCellSet;
 
-        return this.cells.equals(copy) ?
-            this :
-            withCopy(copy);
+        if (cells.isEmpty()) {
+            spreadsheetCellSet = EMPTY;
+        } else {
+            if (cells instanceof SpreadsheetCellSet) {
+                spreadsheetCellSet = (SpreadsheetCellSet) cells;
+            } else {
+                final TreeSet<SpreadsheetCell> copy = new TreeSet<>(COMPARATOR);
+                for (final SpreadsheetCell cell : cells) {
+                    this.elementCheck(cell);
+                    copy.add(cell);
+                }
+
+                spreadsheetCellSet = this.cells.equals(copy) ?
+                    this :
+                    withCopy(copy);
+            }
+        }
+
+        return spreadsheetCellSet;
     }
 
     @Override
