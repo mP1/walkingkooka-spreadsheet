@@ -673,7 +673,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             deletedColumns,
             window::test,
             SpreadsheetColumnReference::toRelative,
-            SpreadsheetColumnReferenceSet::with
+            SpreadsheetColumnReferenceSet.EMPTY::setElements
         );
     }
 
