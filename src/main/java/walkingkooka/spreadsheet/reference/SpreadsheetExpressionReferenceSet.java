@@ -66,13 +66,6 @@ public final class SpreadsheetExpressionReferenceSet extends SpreadsheetSelectio
             SpreadsheetFormulaParsers.cell()
         );
 
-    /**
-     * Factory that creates {@link SpreadsheetExpressionReferenceSet} with the given references.
-     */
-    public static SpreadsheetExpressionReferenceSet with(final Collection<SpreadsheetExpressionReference> references) {
-        return EMPTY.setElements(references);
-    }
-
     private static SpreadsheetExpressionReferenceSet withCopy(final SortedSet<SpreadsheetExpressionReference> references) {
         return references.isEmpty() ?
             EMPTY :
