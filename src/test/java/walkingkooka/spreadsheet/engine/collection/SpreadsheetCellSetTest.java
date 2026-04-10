@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine.collection;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.set.ImmutableSortedSetTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
@@ -30,6 +31,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -46,6 +48,18 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetCellSet.with(null)
+        );
+    }
+
+    @Test
+    public void testWithIncludesNonSpreadsheetCellFails() {
+        assertThrows(
+            ClassCastException.class,
+            () -> SpreadsheetCellSet.with(
+                Sets.of(
+                    Cast.to("Invalid!")
+                )
+            )
         );
     }
 
@@ -86,6 +100,30 @@ public final class SpreadsheetCellSetTest implements ImmutableSortedSetTesting<S
             SpreadsheetCellSet.EMPTY,
             SpreadsheetCellSet.with(set)
                 .delete(cell)
+        );
+    }
+
+    @Test
+    public void testSetElementsWithNullFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createSet()
+                .setElements(
+                    Arrays.asList(null)
+                )
+        );
+    }
+
+    @Test
+    public void testSetElementsWithInvalidElementTypeFails() {
+        assertThrows(
+            ClassCastException.class,
+            () -> this.createSet()
+                .setElements(
+                    Cast.to(
+                        Arrays.asList("Invalid")
+                    )
+                )
         );
     }
 
