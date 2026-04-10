@@ -48,13 +48,6 @@ public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<S
      */
     public final static CharacterConstant SEPARATOR = SpreadsheetSelectionSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link SpreadsheetCellReferenceSet} with the given cells.
-     */
-    public static SpreadsheetCellReferenceSet with(final Collection<SpreadsheetCellReference> cells) {
-        return EMPTY.setElements(cells);
-    }
-
     private static SpreadsheetCellReferenceSet withCopy(final SortedSet<SpreadsheetCellReference> cells) {
         return cells.isEmpty() ?
             EMPTY :
@@ -88,9 +81,15 @@ public final class SpreadsheetCellReferenceSet extends SpreadsheetSelectionSet<S
         if (cells instanceof SpreadsheetCellReferenceSet) {
             spreadsheetCellReferenceSet = (SpreadsheetCellReferenceSet) cells;
         } else {
-            final TreeSet<SpreadsheetCellReference> copy = new TreeSet<>(
-                Objects.requireNonNull(cells, "cells")
-            );
+            Objects.requireNonNull(cells, "cells");
+
+            final TreeSet<SpreadsheetCellReference> copy = new TreeSet<>();
+
+            for(final SpreadsheetCellReference cell : cells) {
+                this.elementCheck(cell);
+                copy.add(cell);
+            }
+
             spreadsheetCellReferenceSet = this.references.equals(copy) ?
                 this :
                 withCopy(copy);

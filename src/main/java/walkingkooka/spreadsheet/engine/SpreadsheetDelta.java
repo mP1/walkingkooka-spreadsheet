@@ -637,7 +637,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             deletedCells,
             window::test,
             SpreadsheetCellReference::toRelative,
-            SpreadsheetCellReferenceSet::with
+            SpreadsheetCellReferenceSet.EMPTY::setElements
         );
     }
 
@@ -785,7 +785,7 @@ public abstract class SpreadsheetDelta implements Patchable<SpreadsheetDelta>,
             matchedCells,
             window::test,
             SpreadsheetCellReference::toRelative,
-            SpreadsheetCellReferenceSet::with
+            SpreadsheetCellReferenceSet.EMPTY::setElements
         );
     }
 
