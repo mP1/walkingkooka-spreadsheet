@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ abstract class SpreadsheetViewportNavigationScroll extends SpreadsheetViewportNa
 
     // update...........................................................................................................
 
-    @Override
+    @Override //
     final SpreadsheetViewport update0(final SpreadsheetViewport viewport,
                                       final SpreadsheetViewportNavigationContext context) {
         SpreadsheetViewport result = viewport;
@@ -69,15 +70,32 @@ abstract class SpreadsheetViewportNavigationScroll extends SpreadsheetViewportNa
 
             result = result.setRectangle(movedRectangle);
 
-            final Optional<AnchoredSpreadsheetSelection> maybeAnchoredSelection = viewport.anchoredSelection();
-            if (maybeAnchoredSelection.isPresent()) {
-                result = result.setAnchoredSelection(
-                    updateViewportSelection(
-                        maybeAnchoredSelection.get(),
+            final AnchoredSpreadsheetSelection anchoredSelectionOrNull = viewport.anchoredSelection()
+                .orElse(null);
+            if (null != anchoredSelectionOrNull) {
+                final SpreadsheetSelection selection = anchoredSelectionOrNull.selection();
+                final SpreadsheetSelection notLabelSelectionOrNull = context.resolveIfLabel(selection)
+                    .orElse(null);
+
+                if (null != notLabelSelectionOrNull) {
+                    Optional<AnchoredSpreadsheetSelection> updatedSelection = this.updateViewportSelection(
+                        notLabelSelectionOrNull.setAnchorOrDefault(
+                            anchoredSelectionOrNull.anchor()
+                        ),
                         rectangle,
                         context
-                    )
-                );
+                    );
+                    // selection might not have moved, restore label if it was originally a label
+                    if (false == notLabelSelectionOrNull.equalsIgnoreReferenceKind(
+                        updatedSelection.map(AnchoredSpreadsheetSelection::selection)
+                            .orElse(null))
+                    ) {
+                        result = result.setAnchoredSelection(updatedSelection);
+                    }
+
+                } else {
+                    result = result.clearAnchoredSelection();
+                }
             }
 
         } else {

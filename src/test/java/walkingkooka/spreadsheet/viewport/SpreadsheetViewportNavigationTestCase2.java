@@ -22,9 +22,11 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolvers;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -41,6 +43,16 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
     SpreadsheetViewportNavigationTestCase<T> implements ParseStringTesting<List<T>>,
     HasTextTesting,
     TreePrintableTesting {
+
+    final static SpreadsheetLabelName UNKNOWN_LABEL = SpreadsheetSelection.labelName("UnknownLabel404");
+
+    final static SpreadsheetLabelName LABEL_C3 = SpreadsheetSelection.labelName("LabelC3");
+    
+    final static SpreadsheetCellReference LABEL_C3_SELECTION = SpreadsheetSelection.parseCell("C3");
+
+    final static SpreadsheetLabelName LABEL_C3D4 = SpreadsheetSelection.labelName("LabelC3D4");
+
+    final static SpreadsheetCellRangeReference LABEL_C3D4_SELECTION = SpreadsheetSelection.parseCellRange("C3:D4");
 
     SpreadsheetViewportNavigationTestCase2() {
         super();
@@ -145,6 +157,15 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
         );
     }
 
+    final void updateAndCheck(final SpreadsheetViewportNavigation navigation,
+                              final AnchoredSpreadsheetSelection selection) {
+        this.updateAndCheck(
+            navigation,
+            Optional.of(selection),
+            Optional.empty()
+        );
+    }
+
     final void updateAndCheck(final Optional<AnchoredSpreadsheetSelection> anchoredSelection,
                               final Optional<AnchoredSpreadsheetSelection> expected) {
         this.updateAndCheck(
@@ -223,7 +244,33 @@ public abstract class SpreadsheetViewportNavigationTestCase2<T extends Spreadshe
             navigation.update(
                 viewport,
                 SpreadsheetViewportNavigationContexts.basic(
-                    SpreadsheetLabelNameResolvers.fake(),
+                    new FakeSpreadsheetLabelNameResolver() {
+
+                        @Override
+                        public Optional<SpreadsheetSelection> resolveLabel(final SpreadsheetLabelName labelName) {
+                            SpreadsheetSelection notLabel;
+
+                            if (UNKNOWN_LABEL.equals(labelName)) {
+                                notLabel = null;
+                            } else {
+                                final String labelNameString = labelName.value();
+
+                                // the cell or cell range appears after the "Label" prefix
+                                final String labelPrefix = "Label";
+                                if (labelNameString.startsWith(labelPrefix)) {
+                                    notLabel = SpreadsheetSelection.parseCellOrCellRange(
+                                        labelNameString.substring(
+                                            labelPrefix.length()
+                                        )
+                                    );
+                                } else {
+                                    throw new UnsupportedOperationException("Unknown label " + labelName);
+                                }
+                            }
+
+                            return Optional.ofNullable(notLabel);
+                        }
+                    },
                     hiddenColumns,
                     COLUMN_TO_WIDTH,
                     hiddenRows,

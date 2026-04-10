@@ -64,6 +64,8 @@ abstract class SpreadsheetViewportNavigationSelectionExtend<T extends Spreadshee
                         viewport,
                         context
                     );
+                } else {
+                    result = viewport.clearAnchoredSelection();
                 }
             } else {
                 result = this.updateViewport(

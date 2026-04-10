@@ -46,15 +46,20 @@ final class SpreadsheetViewportNavigationSelectionExtendCell extends Spreadsheet
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.isCell() ||
-            selection.isCellRange() ?
-            this.updateCellOrCellRange(
-                selection,
-                anchor
-            ) :
-            Optional.of(
-                this.selection.setDefaultAnchor()
-            );
+        // selection could a label, if the label is unknown extending will fail.
+        final SpreadsheetSelection notLabelSelection = context.resolveIfLabel(selection)
+            .orElse(null);
+
+        return null == notLabelSelection ?
+            Optional.empty() :
+            notLabelSelection.isCellOrCellRange() ?
+                this.updateCellOrCellRange(
+                    notLabelSelection,
+                    anchor
+                ) :
+                Optional.of(
+                    this.selection.setDefaultAnchor()
+                );
     }
 
     private Optional<AnchoredSpreadsheetSelection> updateCellOrCellRange(final SpreadsheetSelection selection,

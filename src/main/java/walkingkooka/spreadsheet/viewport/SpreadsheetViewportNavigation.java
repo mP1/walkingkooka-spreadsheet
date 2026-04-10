@@ -191,6 +191,8 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
 
     /**
      * Executes this navigation on the given selection and anchor returning the updated result.
+     * If the current selection is an unknown {@link walkingkooka.spreadsheet.reference.SpreadsheetLabelName},
+     * new selects will ignore, while extends will fail because how can it extend an unknown cell ?
      */
     public final SpreadsheetViewport update(final SpreadsheetViewport viewport,
                                             final SpreadsheetViewportNavigationContext context) {
