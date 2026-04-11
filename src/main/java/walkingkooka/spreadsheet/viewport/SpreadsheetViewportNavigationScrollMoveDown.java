@@ -24,13 +24,13 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationScroll2Down extends SpreadsheetViewportNavigationScroll2 {
+final class SpreadsheetViewportNavigationScrollMoveDown extends SpreadsheetViewportNavigationScrollMove {
 
-    static SpreadsheetViewportNavigationScroll2Down with(final int value) {
-        return new SpreadsheetViewportNavigationScroll2Down(value);
+    static SpreadsheetViewportNavigationScrollMoveDown with(final int value) {
+        return new SpreadsheetViewportNavigationScrollMoveDown(value);
     }
 
-    private SpreadsheetViewportNavigationScroll2Down(final int value) {
+    private SpreadsheetViewportNavigationScrollMoveDown(final int value) {
         super(value);
     }
 

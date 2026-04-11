@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.viewport;
 
 import java.util.Optional;
 
-abstract class SpreadsheetViewportNavigationScroll2 extends SpreadsheetViewportNavigationScroll {
+abstract class SpreadsheetViewportNavigationScrollMove extends SpreadsheetViewportNavigationScroll {
 
-    SpreadsheetViewportNavigationScroll2(final int value) {
+    SpreadsheetViewportNavigationScrollMove(final int value) {
         super(value);
     }
 

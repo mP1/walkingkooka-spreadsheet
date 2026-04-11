@@ -159,31 +159,31 @@ public abstract class SpreadsheetViewportNavigation implements HasText {
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationScroll2Down}
+     * {@see SpreadsheetViewportNavigationScrollMoveDown}
      */
     public static SpreadsheetViewportNavigation scrollDown(final int value) {
-        return SpreadsheetViewportNavigationScroll2Down.with(value);
+        return SpreadsheetViewportNavigationScrollMoveDown.with(value);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationScroll2Left}
+     * {@see SpreadsheetViewportNavigationScrollMoveLeft}
      */
     public static SpreadsheetViewportNavigation scrollLeft(final int value) {
-        return SpreadsheetViewportNavigationScroll2Left.with(value);
+        return SpreadsheetViewportNavigationScrollMoveLeft.with(value);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationScroll2Right}
+     * {@see SpreadsheetViewportNavigationScrollMoveRight}
      */
     public static SpreadsheetViewportNavigation scrollRight(final int value) {
-        return SpreadsheetViewportNavigationScroll2Right.with(value);
+        return SpreadsheetViewportNavigationScrollMoveRight.with(value);
     }
 
     /**
-     * {@see SpreadsheetViewportNavigationScroll2Up}
+     * {@see SpreadsheetViewportNavigationScrollMoveUp}
      */
     public static SpreadsheetViewportNavigation scrollUp(final int value) {
-        return SpreadsheetViewportNavigationScroll2Up.with(value);
+        return SpreadsheetViewportNavigationScrollMoveUp.with(value);
     }
 
     SpreadsheetViewportNavigation() {

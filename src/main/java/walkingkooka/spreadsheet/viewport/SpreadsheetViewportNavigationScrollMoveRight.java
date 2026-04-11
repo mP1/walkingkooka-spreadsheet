@@ -1,4 +1,5 @@
 
+
 /*
  * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
@@ -23,20 +24,20 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-final class SpreadsheetViewportNavigationScroll2Left extends SpreadsheetViewportNavigationScroll2 {
+final class SpreadsheetViewportNavigationScrollMoveRight extends SpreadsheetViewportNavigationScrollMove {
 
-    static SpreadsheetViewportNavigationScroll2Left with(final int value) {
-        return new SpreadsheetViewportNavigationScroll2Left(value);
+    static SpreadsheetViewportNavigationScrollMoveRight with(final int value) {
+        return new SpreadsheetViewportNavigationScrollMoveRight(value);
     }
 
-    private SpreadsheetViewportNavigationScroll2Left(final int value) {
+    private SpreadsheetViewportNavigationScrollMoveRight(final int value) {
         super(value);
     }
 
     @Override
     Optional<SpreadsheetCellReference> updateHome(final SpreadsheetCellReference home,
                                                   final SpreadsheetViewportNavigationContext context) {
-        return home.moveLeftPixels(
+        return home.moveRightPixels(
             SpreadsheetViewportAnchor.CELL,
             this.value,
             context
@@ -47,7 +48,7 @@ final class SpreadsheetViewportNavigationScroll2Left extends SpreadsheetViewport
     Optional<AnchoredSpreadsheetSelection> updateSelection(final SpreadsheetSelection selection,
                                                            final SpreadsheetViewportAnchor anchor,
                                                            final SpreadsheetViewportNavigationContext context) {
-        return selection.moveLeftPixels(
+        return selection.moveRightPixels(
             anchor,
             this.value,
             context
@@ -58,6 +59,6 @@ final class SpreadsheetViewportNavigationScroll2Left extends SpreadsheetViewport
 
     @Override
     String textToken() {
-        return "left";
+        return "right";
     }
 }
