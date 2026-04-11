@@ -61,15 +61,14 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullColumnHiddenFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext
-                .with(
-                    SPREADSHEET_LABEL_NAME_RESOLVER,
-                    null,
-                    COLUMN_TO_WIDTH,
-                    Predicates.fake(),
-                    ROW_TO_HEIGHT,
-                    WINDOWS_FUNCTION
-                )
+            () -> BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                null,
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            )
         );
     }
 
@@ -77,15 +76,14 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullColumnWidthFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext
-                .with(
-                    SPREADSHEET_LABEL_NAME_RESOLVER,
-                    Predicates.fake(),
-                    null,
-                    Predicates.fake(),
-                    ROW_TO_HEIGHT,
-                    WINDOWS_FUNCTION
-                )
+            () -> BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                Predicates.fake(),
+                null,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                WINDOWS_FUNCTION
+            )
         );
     }
 
@@ -108,15 +106,14 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullRowHeightsFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext
-                .with(
-                    SPREADSHEET_LABEL_NAME_RESOLVER,
-                    Predicates.fake(),
-                    COLUMN_TO_WIDTH,
-                    Predicates.fake(),
-                    null,
-                    WINDOWS_FUNCTION
-                )
+            () -> BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                null,
+                WINDOWS_FUNCTION
+            )
         );
     }
 
@@ -124,15 +121,14 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     public void testWithNullWindowsFunctionFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicSpreadsheetViewportNavigationContext
-                .with(
-                    SPREADSHEET_LABEL_NAME_RESOLVER,
-                    Predicates.fake(),
-                    COLUMN_TO_WIDTH,
-                    Predicates.fake(),
-                    ROW_TO_HEIGHT,
-                    null
-                )
+            () -> BasicSpreadsheetViewportNavigationContext.with(
+                SPREADSHEET_LABEL_NAME_RESOLVER,
+                Predicates.fake(),
+                COLUMN_TO_WIDTH,
+                Predicates.fake(),
+                ROW_TO_HEIGHT,
+                null
+            )
         );
     }
 
