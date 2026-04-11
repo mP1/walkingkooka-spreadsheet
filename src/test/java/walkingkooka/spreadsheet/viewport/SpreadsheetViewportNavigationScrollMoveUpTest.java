@@ -60,6 +60,42 @@ public final class SpreadsheetViewportNavigationScrollMoveUpTest extends Spreads
     }
 
     @Test
+    public void testUpdateCellWithLabel() {
+        final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
+            SpreadsheetSelection.labelName("LabelE5")
+                .setDefaultAnchor()
+        );
+        this.updateAndCheck(
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(selection),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(selection)
+        );
+    }
+
+    @Test
+    public void testUpdateCellWithUnknownLabel() {
+        this.updateAndCheck(
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        UNKNOWN_LABEL.setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .clearAnchoredSelection()
+        );
+    }
+
+    @Test
     public void testUpdateColumn() {
         final Optional<AnchoredSpreadsheetSelection> selection = Optional.of(
             SpreadsheetSelection.parseColumn("E")

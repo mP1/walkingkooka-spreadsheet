@@ -62,6 +62,19 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
         );
     }
 
+    @Test
+    public void testUpdateCellUnknownLabel() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
+
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation(cell),
+            Optional.of(
+                UNKNOWN_LABEL.setDefaultAnchor()
+            ),
+            Optional.empty() // expected
+        );
+    }
+
     // cell.............................................................................................................
 
     @Test
@@ -133,6 +146,62 @@ public final class SpreadsheetViewportNavigationSelectionExtendCellTest extends 
                 .setDefaultAnchor(),
             SpreadsheetSelection.parseCellRange(expectedCellRange)
                 .setAnchor(expectedAnchor)
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenLabelWhenTopLeft() {
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation("D4"),
+            Optional.of(
+                LABEL_C3.setDefaultAnchor()
+            ), // selection
+            Optional.of(
+                SpreadsheetSelection.parseCellRange("C3:D4")
+                    .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+            ) // expected selection
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenLabelWhenTopRight() {
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation("B4"),
+            Optional.of(
+                LABEL_C3.setDefaultAnchor()
+            ), // selection
+            Optional.of(
+                SpreadsheetSelection.parseCellRange("B3:C4")
+                    .setAnchor(SpreadsheetViewportAnchor.TOP_RIGHT)
+            ) // expected selection
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenLabelWhenBottomLeft() {
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation("D2"),
+            Optional.of(
+                LABEL_C3.setDefaultAnchor()
+            ), // selection
+            Optional.of(
+                SpreadsheetSelection.parseCellRange("C2:D3")
+                    .setAnchor(SpreadsheetViewportAnchor.BOTTOM_LEFT)
+            ) // expected selection
+        );
+    }
+
+    @Test
+    public void testUpdateCellWhenLabelWhenBottomRight() {
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation("B2"),
+            Optional.of(
+                LABEL_C3.setDefaultAnchor()
+            ), // selection
+            Optional.of(
+                SpreadsheetSelection.parseCellRange("B2:C3")
+                    .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+            ) // expected selection
         );
     }
 

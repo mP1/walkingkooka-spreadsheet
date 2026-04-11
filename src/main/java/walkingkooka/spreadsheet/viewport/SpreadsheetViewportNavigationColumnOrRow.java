@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.viewport;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
@@ -39,21 +40,29 @@ abstract class SpreadsheetViewportNavigationColumnOrRow extends SpreadsheetViewp
         if (maybeAnchored.isPresent()) {
             // selection present try and move it.
             final AnchoredSpreadsheetSelection anchoredSelection = maybeAnchored.get();
-            final Optional<AnchoredSpreadsheetSelection> maybeMovedSelection = this.updateSelection(
-                anchoredSelection.selection(),
-                anchoredSelection.anchor(),
-                context
-            );
+            final SpreadsheetSelection selectionOrNull = context.resolveIfLabel(
+                anchoredSelection.selection()
+            ).orElse(null);
 
-            if (maybeMovedSelection.isPresent()) {
-                final AnchoredSpreadsheetSelection movedSelection = maybeMovedSelection.get();
-                result = updateViewport(
-                    movedSelection,
-                    viewport,
+            if(null == selectionOrNull) {
+                result = viewport.clearAnchoredSelection();
+            } else {
+                final Optional<AnchoredSpreadsheetSelection> maybeMovedSelection = this.updateSelection(
+                    selectionOrNull,
+                    anchoredSelection.anchor(),
                     context
                 );
-            } else {
-                result = viewport.clearAnchoredSelection();
+
+                if (maybeMovedSelection.isPresent()) {
+                    final AnchoredSpreadsheetSelection movedSelection = maybeMovedSelection.get();
+                    result = updateViewport(
+                        movedSelection,
+                        viewport,
+                        context
+                    );
+                } else {
+                    result = viewport.clearAnchoredSelection();
+                }
             }
         }
 

@@ -68,6 +68,47 @@ public final class SpreadsheetViewportNavigationScrollExtendUpTest extends Sprea
     }
 
     @Test
+    public void testUpdateCellWithLabel() {
+        this.updateAndCheck(
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.labelName("LabelE5")
+                            .setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCellRange("E3:E5")
+                            .setAnchor(SpreadsheetViewportAnchor.BOTTOM_RIGHT)
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateCellWithUnknownLabel() {
+        this.updateAndCheck(
+            SpreadsheetSelection.parseCell("E5")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        UNKNOWN_LABEL.setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+        );
+    }
+
+    @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("E5")

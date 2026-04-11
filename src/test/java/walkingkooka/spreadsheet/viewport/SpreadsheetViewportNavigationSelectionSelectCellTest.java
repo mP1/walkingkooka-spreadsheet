@@ -58,6 +58,28 @@ public final class SpreadsheetViewportNavigationSelectionSelectCellTest extends 
     }
 
     @Test
+    public void testUpdateCellWithLabel() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
+
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation(cell),
+            LABEL_C3.setDefaultAnchor(),
+            cell.setDefaultAnchor()
+        );
+    }
+
+    @Test
+    public void testUpdateCellWithUnknownLabel() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("C3");
+
+        this.updateAndCheck(
+            this.createSpreadsheetViewportNavigation(cell),
+            UNKNOWN_LABEL.setDefaultAnchor(),
+            cell.setDefaultAnchor()
+        );
+    }
+
+    @Test
     public void testUpdateCellMovesHome() {
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 

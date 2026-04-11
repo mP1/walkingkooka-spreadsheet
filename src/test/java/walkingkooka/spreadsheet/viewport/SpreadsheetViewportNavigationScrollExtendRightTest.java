@@ -68,6 +68,46 @@ public final class SpreadsheetViewportNavigationScrollExtendRightTest extends Sp
     }
 
     @Test
+    public void testUpdateCellWithLabel() {
+        this.updateAndCheck(
+            SpreadsheetSelection.parseCell("C3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        LABEL_C3.setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        SpreadsheetSelection.parseCellRange("C3:E3")
+                            .setAnchor(SpreadsheetViewportAnchor.TOP_LEFT)
+                    )
+                )
+        );
+    }
+
+    @Test
+    public void testUpdateCellWithUnknownLabel() {
+        this.updateAndCheck(
+            SpreadsheetSelection.parseCell("C3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+                .setAnchoredSelection(
+                    Optional.of(
+                        UNKNOWN_LABEL.setDefaultAnchor()
+                    )
+                ),
+            SpreadsheetSelection.parseCell("E3")
+                .viewportRectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .viewport()
+        );
+    }
+
+    @Test
     public void testUpdateColumn() {
         this.updateAndCheck(
             SpreadsheetSelection.parseCell("C3")

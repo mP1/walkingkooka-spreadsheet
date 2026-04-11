@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+
 import java.util.Optional;
 
 abstract class SpreadsheetViewportNavigationScrollExtend extends SpreadsheetViewportNavigationScroll {
@@ -29,11 +31,18 @@ abstract class SpreadsheetViewportNavigationScrollExtend extends SpreadsheetView
     final Optional<AnchoredSpreadsheetSelection> updateViewportSelection(final AnchoredSpreadsheetSelection anchoredSelection,
                                                                          final SpreadsheetViewportRectangle rectangle,
                                                                          final SpreadsheetViewportNavigationContext context) {
-        return this.updateSelection(
-            anchoredSelection.selection(),
-            anchoredSelection.anchor(),
-            context
-        );
+        final SpreadsheetSelection selectionOrNull = context.resolveIfLabel(
+            anchoredSelection.selection()
+        ).orElse(null);
+
+        // if selection is an unknown label, clear the selection and ignore the extend.
+        return null == selectionOrNull ?
+            Optional.empty() :
+            this.updateSelection(
+                selectionOrNull,
+                anchoredSelection.anchor(),
+                context
+            );
     }
 
     // text.............................................................................................................
