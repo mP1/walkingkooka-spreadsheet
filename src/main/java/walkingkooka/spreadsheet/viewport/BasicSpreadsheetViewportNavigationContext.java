@@ -31,33 +31,33 @@ import java.util.function.Predicate;
 final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
 
     static BasicSpreadsheetViewportNavigationContext with(final SpreadsheetLabelNameResolver labelNameResolver,
-                                                          final Predicate<SpreadsheetColumnReference> columnHidden,
-                                                          final Function<SpreadsheetColumnReference, Double> columnWidths,
-                                                          final Predicate<SpreadsheetRowReference> rowHidden,
-                                                          final Function<SpreadsheetRowReference, Double> rowHeights,
-                                                          final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
+                                                          final Predicate<SpreadsheetColumnReference> isColumnHidden,
+                                                          final Function<SpreadsheetColumnReference, Double> columnToWidth,
+                                                          final Predicate<SpreadsheetRowReference> isRowHidden,
+                                                          final Function<SpreadsheetRowReference, Double> rowToHeight,
+                                                          final Function<SpreadsheetViewport, SpreadsheetViewportWindows> viewportToWindows) {
         return new BasicSpreadsheetViewportNavigationContext(
             Objects.requireNonNull(labelNameResolver, "labelNameResolver"),
-            Objects.requireNonNull(columnHidden, "columnHidden"),
-            Objects.requireNonNull(columnWidths, "columnWidths"),
-            Objects.requireNonNull(rowHidden, "rowHidden"),
-            Objects.requireNonNull(rowHeights, "rowHeights"),
-            Objects.requireNonNull(windows, "windows")
+            Objects.requireNonNull(isColumnHidden, "isColumnHidden"),
+            Objects.requireNonNull(columnToWidth, "columnToWidth"),
+            Objects.requireNonNull(isRowHidden, "isRowHidden"),
+            Objects.requireNonNull(rowToHeight, "rowHeights"),
+            Objects.requireNonNull(viewportToWindows, "viewportToWindows")
         );
     }
 
     private BasicSpreadsheetViewportNavigationContext(final SpreadsheetLabelNameResolver labelNameResolver,
-                                                      final Predicate<SpreadsheetColumnReference> columnHidden,
-                                                      final Function<SpreadsheetColumnReference, Double> columnWidths,
-                                                      final Predicate<SpreadsheetRowReference> rowHidden,
-                                                      final Function<SpreadsheetRowReference, Double> rowHeights,
-                                                      final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
+                                                      final Predicate<SpreadsheetColumnReference> isColumnHidden,
+                                                      final Function<SpreadsheetColumnReference, Double> columnToWidth,
+                                                      final Predicate<SpreadsheetRowReference> isRowHidden,
+                                                      final Function<SpreadsheetRowReference, Double> rowToHeight,
+                                                      final Function<SpreadsheetViewport, SpreadsheetViewportWindows> viewportToWindows) {
         this.labelNameResolver = labelNameResolver;
-        this.columnHidden = columnHidden;
-        this.columnWidths = columnWidths;
-        this.rowHidden = rowHidden;
-        this.rowHeights = rowHeights;
-        this.windows = windows;
+        this.isColumnHidden = isColumnHidden;
+        this.columnToWidth = columnToWidth;
+        this.isRowHidden = isRowHidden;
+        this.rowToHeight = rowToHeight;
+        this.viewportToWindows = viewportToWindows;
     }
 
     @Override
@@ -71,19 +71,19 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
     public boolean isColumnHidden(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
 
-        return this.columnHidden.test(column);
+        return this.isColumnHidden.test(column);
     }
 
-    private final Predicate<SpreadsheetColumnReference> columnHidden;
+    private final Predicate<SpreadsheetColumnReference> isColumnHidden;
 
     @Override
     public boolean isRowHidden(final SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
 
-        return this.rowHidden.test(row);
+        return this.isRowHidden.test(row);
     }
 
-    private final Predicate<SpreadsheetRowReference> rowHidden;
+    private final Predicate<SpreadsheetRowReference> isRowHidden;
 
     @Override
     public Optional<SpreadsheetColumnReference> moveLeft(final SpreadsheetColumnReference column) {
@@ -92,7 +92,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return move(
             column,
             SpreadsheetColumnReference::isFirst,
-            this.columnHidden,
+            this.isColumnHidden,
             -1
         );
     }
@@ -104,7 +104,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return move(
             column,
             SpreadsheetColumnReference::isLast,
-            this.columnHidden,
+            this.isColumnHidden,
             +1
         );
     }
@@ -116,7 +116,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return move(
             row,
             SpreadsheetRowReference::isFirst,
-            this.rowHidden,
+            this.isRowHidden,
             -1
         );
     }
@@ -128,7 +128,7 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return move(
             row,
             SpreadsheetRowReference::isLast,
-            this.rowHidden,
+            this.isRowHidden,
             +1
         );
     }
@@ -162,9 +162,9 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return movePixels(
             column,
             SpreadsheetColumnReference::isFirst,
-            this.columnHidden,
+            this.isColumnHidden,
             -1,
-            this.columnWidths,
+            this.columnToWidth,
             pixels
         );
     }
@@ -177,14 +177,14 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return movePixels(
             column,
             SpreadsheetColumnReference::isLast,
-            this.columnHidden,
+            this.isColumnHidden,
             +1,
-            this.columnWidths,
+            this.columnToWidth,
             pixels
         );
     }
 
-    private final Function<SpreadsheetColumnReference, Double> columnWidths;
+    private final Function<SpreadsheetColumnReference, Double> columnToWidth;
 
     @Override
     public Optional<SpreadsheetRowReference> upPixels(final SpreadsheetRowReference row,
@@ -194,9 +194,9 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return movePixels(
             row,
             SpreadsheetRowReference::isFirst,
-            this.rowHidden,
+            this.isRowHidden,
             -1,
-            this.rowHeights,
+            this.rowToHeight,
             pixels
         );
     }
@@ -209,14 +209,14 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
         return movePixels(
             row,
             SpreadsheetRowReference::isLast,
-            this.rowHidden,
+            this.isRowHidden,
             +1,
-            this.rowHeights,
+            this.rowToHeight,
             pixels
         );
     }
 
-    private final Function<SpreadsheetRowReference, Double> rowHeights;
+    private final Function<SpreadsheetRowReference, Double> rowToHeight;
 
 
     private static <T extends SpreadsheetSelection> Optional<T> movePixels(final T start,
@@ -266,13 +266,13 @@ final class BasicSpreadsheetViewportNavigationContext implements SpreadsheetView
 
     @Override
     public SpreadsheetViewportWindows windows(final SpreadsheetViewport viewport) {
-        return this.windows.apply(viewport);
+        return this.viewportToWindows.apply(viewport);
     }
 
-    private final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows;
+    private final Function<SpreadsheetViewport, SpreadsheetViewportWindows> viewportToWindows;
 
     @Override
     public String toString() {
-        return this.labelNameResolver + " " + this.columnHidden + " " + this.columnWidths + " " + this.rowHidden + " " + this.rowHeights + " " + this.windows;
+        return this.labelNameResolver + " " + this.isColumnHidden + " " + this.columnToWidth + " " + this.isRowHidden + " " + this.rowToHeight + " " + this.viewportToWindows;
     }
 }

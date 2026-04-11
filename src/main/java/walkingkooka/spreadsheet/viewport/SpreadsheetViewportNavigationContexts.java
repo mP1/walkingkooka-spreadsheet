@@ -31,17 +31,17 @@ public final class SpreadsheetViewportNavigationContexts implements PublicStatic
      * {@see BasicSpreadsheetViewportNavigationContext}
      */
     public static SpreadsheetViewportNavigationContext basic(final SpreadsheetLabelNameResolver labelNameResolver,
-                                                             final Predicate<SpreadsheetColumnReference> columnHidden,
-                                                             final Function<SpreadsheetColumnReference, Double> columnWidths,
-                                                             final Predicate<SpreadsheetRowReference> rowHidden,
-                                                             final Function<SpreadsheetRowReference, Double> rowHeights,
+                                                             final Predicate<SpreadsheetColumnReference> isColumnHidden,
+                                                             final Function<SpreadsheetColumnReference, Double> columnToWidth,
+                                                             final Predicate<SpreadsheetRowReference> isRowHidden,
+                                                             final Function<SpreadsheetRowReference, Double> rowToHeight,
                                                              final Function<SpreadsheetViewport, SpreadsheetViewportWindows> windows) {
         return BasicSpreadsheetViewportNavigationContext.with(
             labelNameResolver,
-            columnHidden,
-            columnWidths,
-            rowHidden,
-            rowHeights,
+            isColumnHidden,
+            columnToWidth,
+            isRowHidden,
+            rowToHeight,
             windows
         );
     }

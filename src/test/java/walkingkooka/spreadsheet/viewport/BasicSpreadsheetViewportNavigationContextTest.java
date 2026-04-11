@@ -58,7 +58,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     };
 
     @Test
-    public void testWithNullColumnHiddenFails() {
+    public void testWithNullIsColumnHiddenFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext.with(
@@ -73,7 +73,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testWithNullColumnWidthFails() {
+    public void testWithNullColumnToWidthFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext.with(
@@ -88,7 +88,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testWithNullRowHiddenFails() {
+    public void testWithNullisRowHiddenFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext.with(
@@ -103,7 +103,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testWithNullRowHeightsFails() {
+    public void testWithNullRowToHeightFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext.with(
@@ -118,7 +118,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
     }
 
     @Test
-    public void testWithNullWindowsFunctionFails() {
+    public void testWithNullViewportToWindowFails() {
         assertThrows(
             NullPointerException.class,
             () -> BasicSpreadsheetViewportNavigationContext.with(
@@ -264,12 +264,12 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void moveLeftAndCheck(final String columnHidden,
+    private void moveLeftAndCheck(final String hiddenColumns,
                                   final String column) {
         this.moveLeftColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                hiddenColumns(columnHidden),
+                hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
                 ROW_TO_HEIGHT,
@@ -279,13 +279,13 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void moveLeftAndCheck(final String columnHidden,
+    private void moveLeftAndCheck(final String hiddenColumns,
                                   final String column,
                                   final String expected) {
         this.moveLeftColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                hiddenColumns(columnHidden),
+                hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
                 ROW_TO_HEIGHT,
@@ -367,12 +367,12 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void moveRightAndCheck(final String columnHidden,
+    private void moveRightAndCheck(final String hiddenColumns,
                                    final String column) {
         this.moveRightColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                hiddenColumns(columnHidden),
+                hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
                 ROW_TO_HEIGHT,
@@ -382,13 +382,13 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void moveRightAndCheck(final String columnHidden,
+    private void moveRightAndCheck(final String hiddenColumns,
                                    final String column,
                                    final String expected) {
         this.moveRightColumnAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                hiddenColumns(columnHidden),
+                hiddenColumns(hiddenColumns),
                 COLUMN_TO_WIDTH,
                 Predicates.fake(),
                 ROW_TO_HEIGHT,
@@ -480,14 +480,14 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void moveUpAndCheck(final String rowHidden,
+    private void moveUpAndCheck(final String hiddenRows,
                                 final String row) {
         this.moveUpRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
-                this.hiddenRows(rowHidden),
+                this.hiddenRows(hiddenRows),
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
             ),
@@ -495,7 +495,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void moveUpAndCheck(final String rowHidden,
+    private void moveUpAndCheck(final String hiddenRows,
                                 final String row,
                                 final String expected) {
         this.moveUpRowAndCheck(
@@ -503,7 +503,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
-                this.hiddenRows(rowHidden),
+                this.hiddenRows(hiddenRows),
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
             ),
@@ -583,14 +583,14 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void downRowAndCheck(final String rowHidden,
+    private void downRowAndCheck(final String hiddenRows,
                                  final String row) {
         this.moveDownRowAndCheck(
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
-                hiddenRows(rowHidden),
+                hiddenRows(hiddenRows),
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
             ),
@@ -679,57 +679,57 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void leftPixelsAndCheck(final String start,
                                     final int pixels,
-                                    final String columnsHidden,
-                                    final Map<String, Double> columnWidths) {
+                                    final String hiddenColumns,
+                                    final Map<String, Double> columnToWidth) {
         this.leftPixelsAndCheck(
             start,
             pixels,
-            columnsHidden,
-            columnWidths,
+            hiddenColumns,
+            columnToWidth,
             Optional.empty()
         );
     }
 
     private void leftPixelsAndCheck(final String start,
                                     final int pixels,
-                                    final String columnsHidden,
-                                    final Map<String, Double> columnWidths,
+                                    final String hiddenColumns,
+                                    final Map<String, Double> columnToWidth,
                                     final String expected) {
         this.leftPixelsAndCheck(
             start,
             pixels,
-            columnsHidden,
-            columnWidths,
+            hiddenColumns,
+            columnToWidth,
             Optional.of(expected)
         );
     }
 
     private void leftPixelsAndCheck(final String start,
                                     final int pixels,
-                                    final String columnsHidden,
-                                    final Map<String, Double> columnWidths,
+                                    final String hiddenColumns,
+                                    final Map<String, Double> columnToWidth,
                                     final Optional<String> expected) {
         this.leftPixelsAndCheck(
             SpreadsheetSelection.parseColumn(start),
             pixels,
-            this.hiddenColumns(columnsHidden),
-            this.columnToWidth(columnWidths),
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnToWidth),
             expected.map(SpreadsheetSelection::parseColumn)
         );
     }
 
     private void leftPixelsAndCheck(final SpreadsheetColumnReference start,
                                     final int pixels,
-                                    final Predicate<SpreadsheetColumnReference> columnsHidden,
-                                    final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                    final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                    final Function<SpreadsheetColumnReference, Double> columnToWidth,
                                     final Optional<SpreadsheetColumnReference> expected) {
         this.moveLeftPixelsAndCheck(
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                columnsHidden,
-                columnWidths::apply,
+                hiddenColumns,
+                columnToWidth::apply,
                 Predicates.fake(), // rows hidden
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
@@ -827,57 +827,57 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void rightPixelsAndCheck(final String start,
                                      final int pixels,
-                                     final String columnsHidden,
-                                     final Map<String, Double> columnWidths) {
+                                     final String hiddenColumns,
+                                     final Map<String, Double> columnToWidth) {
         this.rightPixelsAndCheck(
             start,
             pixels,
-            columnsHidden,
-            columnWidths,
+            hiddenColumns,
+            columnToWidth,
             Optional.empty()
         );
     }
 
     private void rightPixelsAndCheck(final String start,
                                      final int pixels,
-                                     final String columnsHidden,
-                                     final Map<String, Double> columnWidths,
+                                     final String hiddenColumns,
+                                     final Map<String, Double> columnToWidth,
                                      final String expected) {
         this.rightPixelsAndCheck(
             start,
             pixels,
-            columnsHidden,
-            columnWidths,
+            hiddenColumns,
+            columnToWidth,
             Optional.of(expected)
         );
     }
 
     private void rightPixelsAndCheck(final String start,
                                      final int pixels,
-                                     final String columnsHidden,
-                                     final Map<String, Double> columnWidths,
+                                     final String hiddenColumns,
+                                     final Map<String, Double> columnToWidth,
                                      final Optional<String> expected) {
         this.rightPixelsAndCheck(
             SpreadsheetSelection.parseColumn(start),
             pixels,
-            this.hiddenColumns(columnsHidden),
-            this.columnToWidth(columnWidths),
+            this.hiddenColumns(hiddenColumns),
+            this.columnToWidth(columnToWidth),
             expected.map(SpreadsheetSelection::parseColumn)
         );
     }
 
     private void rightPixelsAndCheck(final SpreadsheetColumnReference start,
                                      final int pixels,
-                                     final Predicate<SpreadsheetColumnReference> columnsHidden,
-                                     final Function<SpreadsheetColumnReference, Double> columnWidths,
+                                     final Predicate<SpreadsheetColumnReference> hiddenColumns,
+                                     final Function<SpreadsheetColumnReference, Double> columnToWidth,
                                      final Optional<SpreadsheetColumnReference> expected) {
         this.moveRightPixelsAndCheck(
             start,
             pixels,
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
-                columnsHidden,
-                columnWidths::apply,
+                hiddenColumns,
+                columnToWidth::apply,
                 Predicates.fake(), // rows hidden
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
@@ -967,49 +967,49 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void upPixelsAndCheck(final String start,
                                   final int pixels,
-                                  final String rowsHidden,
-                                  final Map<String, Double> rowHeights) {
+                                  final String hiddenRows,
+                                  final Map<String, Double> rowToHeight) {
         this.upPixelsAndCheck(
             start,
             pixels,
-            rowsHidden,
-            rowHeights,
+            hiddenRows,
+            rowToHeight,
             Optional.empty()
         );
     }
 
     private void upPixelsAndCheck(final String start,
                                   final int pixels,
-                                  final String rowsHidden,
-                                  final Map<String, Double> rowHeights,
+                                  final String hiddenRows,
+                                  final Map<String, Double> rowToHeight,
                                   final String expected) {
         this.upPixelsAndCheck(
             start,
             pixels,
-            rowsHidden,
-            rowHeights,
+            hiddenRows,
+            rowToHeight,
             Optional.of(expected)
         );
     }
 
     private void upPixelsAndCheck(final String start,
                                   final int pixels,
-                                  final String rowsHidden,
-                                  final Map<String, Double> rowHeights,
+                                  final String hiddenRows,
+                                  final Map<String, Double> rowToHeight,
                                   final Optional<String> expected) {
         this.upPixelsAndCheck(
             SpreadsheetSelection.parseRow(start),
             pixels,
-            this.hiddenRows(rowsHidden),
-            this.rowToHeight(rowHeights),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowToHeight),
             expected.map(SpreadsheetSelection::parseRow)
         );
     }
 
     private void upPixelsAndCheck(final SpreadsheetRowReference start,
                                   final int pixels,
-                                  final Predicate<SpreadsheetRowReference> rowsHidden,
-                                  final Function<SpreadsheetRowReference, Double> rowHeights,
+                                  final Predicate<SpreadsheetRowReference> hiddenRows,
+                                  final Function<SpreadsheetRowReference, Double> rowToHeight,
                                   final Optional<SpreadsheetRowReference> expected) {
         this.moveUpPixelsAndCheck(
             start,
@@ -1018,8 +1018,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(), // columns hidden
                 COLUMN_TO_WIDTH,
-                rowsHidden,
-                rowHeights::apply,
+                hiddenRows,
+                rowToHeight::apply,
                 WINDOWS_FUNCTION
             ),
             expected
@@ -1113,7 +1113,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
         );
     }
 
-    private void downRowAndCheck(final String rowHidden,
+    private void downRowAndCheck(final String hiddenRows,
                                  final String row,
                                  final String expected) {
         this.moveDownRowAndCheck(
@@ -1121,7 +1121,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(),
                 COLUMN_TO_WIDTH,
-                hiddenRows(rowHidden),
+                hiddenRows(hiddenRows),
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
             ),
@@ -1132,12 +1132,12 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void downPixelsAndCheck(final String start,
                                     final int pixels,
-                                    final String rowsHidden,
+                                    final String hiddenRows,
                                     final Map<String, Double> rowWidths) {
         this.downPixelsAndCheck(
             start,
             pixels,
-            rowsHidden,
+            hiddenRows,
             rowWidths,
             Optional.empty()
         );
@@ -1145,13 +1145,13 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void downPixelsAndCheck(final String start,
                                     final int pixels,
-                                    final String rowsHidden,
+                                    final String hiddenRows,
                                     final Map<String, Double> rowWidths,
                                     final String expected) {
         this.downPixelsAndCheck(
             start,
             pixels,
-            rowsHidden,
+            hiddenRows,
             rowWidths,
             Optional.of(expected)
         );
@@ -1159,22 +1159,22 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
 
     private void downPixelsAndCheck(final String start,
                                     final int pixels,
-                                    final String rowsHidden,
-                                    final Map<String, Double> rowHeights,
+                                    final String hiddenRows,
+                                    final Map<String, Double> rowToHeight,
                                     final Optional<String> expected) {
         this.downPixelsAndCheck(
             SpreadsheetSelection.parseRow(start),
             pixels,
-            this.hiddenRows(rowsHidden),
-            this.rowToHeight(rowHeights),
+            this.hiddenRows(hiddenRows),
+            this.rowToHeight(rowToHeight),
             expected.map(SpreadsheetSelection::parseRow)
         );
     }
 
     private void downPixelsAndCheck(final SpreadsheetRowReference start,
                                     final int pixels,
-                                    final Predicate<SpreadsheetRowReference> rowsHidden,
-                                    final Function<SpreadsheetRowReference, Double> rowHeights,
+                                    final Predicate<SpreadsheetRowReference> hiddenRows,
+                                    final Function<SpreadsheetRowReference, Double> rowToHeight,
                                     final Optional<SpreadsheetRowReference> expected) {
         this.moveDownPixelsAndCheck(
             start,
@@ -1183,8 +1183,8 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 Predicates.fake(), // hidden columns
                 COLUMN_TO_WIDTH,
-                rowsHidden,
-                rowHeights::apply,
+                hiddenRows,
+                rowToHeight::apply,
                 WINDOWS_FUNCTION
             ),
             expected
