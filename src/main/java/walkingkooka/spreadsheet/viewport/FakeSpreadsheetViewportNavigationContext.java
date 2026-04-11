@@ -17,12 +17,19 @@
 
 package walkingkooka.spreadsheet.viewport;
 
+import walkingkooka.spreadsheet.reference.FakeSpreadsheetLabelNameResolver;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.Optional;
 
-public class FakeSpreadsheetViewportNavigationContext implements SpreadsheetViewportNavigationContext {
+public class FakeSpreadsheetViewportNavigationContext extends FakeSpreadsheetLabelNameResolver
+    implements SpreadsheetViewportNavigationContext {
+
+    public FakeSpreadsheetViewportNavigationContext() {
+        super();
+    }
+
     @Override
     public boolean isColumnHidden(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();

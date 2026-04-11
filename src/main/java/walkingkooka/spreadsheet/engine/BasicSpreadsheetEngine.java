@@ -2479,6 +2479,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return this.navigateNonLabelSelection0(
             viewport,
             SpreadsheetViewportNavigationContexts.basic(
+                context, // SpreadsheetLabelNameResolver
                 repository.columns()::isHidden,
                 (c) -> this.columnWidth(c, context),
                 repository.rows()::isHidden,
