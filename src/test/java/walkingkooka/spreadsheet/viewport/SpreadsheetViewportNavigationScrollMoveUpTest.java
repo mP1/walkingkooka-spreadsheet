@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import java.util.Optional;
 
-public final class SpreadsheetViewportNavigationScrollMoveUpTest extends SpreadsheetViewportNavigationScrollTestCase<SpreadsheetViewportNavigationScrollMoveUp> {
+public final class SpreadsheetViewportNavigationScrollMoveUpTest extends SpreadsheetViewportNavigationScrollMoveTestCase<SpreadsheetViewportNavigationScrollMoveUp> {
 
     @Test
     public void testUpdateHome() {
