@@ -2262,7 +2262,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "    \"parser\": \"date-time dd/mm/yyyy\",\n" +
                 "    \"style\": {\n" +
                 "      \"fontStyle\": \"ITALIC\",\n" +
-                "      \"fontWeight\": \"bold\"\n" +
+                "      \"fontWeight\": \"BOLD\"\n" +
                 "    },\n" +
                 "    \"formattedValue\": {\n" +
                 "      \"type\": \"text\",\n" +
@@ -3142,7 +3142,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "  style:\n" +
                 "    TextStyle\n" +
                 "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -3317,7 +3317,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "  style:\n" +
                 "    TextStyle\n" +
                 "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -3360,7 +3360,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "  style:\n" +
                 "    TextStyle\n" +
                 "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -3397,7 +3397,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "  style:\n" +
                 "    TextStyle\n" +
                 "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n"
+                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
         );
     }
 
@@ -3435,7 +3435,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "  style:\n" +
                 "    TextStyle\n" +
                 "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=bold (walkingkooka.tree.text.FontWeight)\n" +
+                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n" +
                 "  formattedValue:\n" +
                 "    Text \"formattedValue-text\"\n"
         );
@@ -3718,7 +3718,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 REFERENCE,
                 this.formula()
             ).setStyle(BOLD_ITALICS),
-            "A1 \"=1+2\" style={font-style=ITALIC, font-weight=bold}"
+            "A1 \"=1+2\" style={font-style=ITALIC, font-weight=BOLD}"
         );
     }
 
