@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
@@ -207,16 +208,20 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.readOnly(
         CurrencyContexts.jre(
             CURRENCY,
-            (final Currency from,
-             final Currency to,
+            (final CurrencyCode from,
+             final CurrencyCode to,
              final Optional<LocalDateTime> dateTime) -> {
                 Objects.requireNonNull(from, "from");
-                Objects.requireNonNull(from, "to");
+                Objects.requireNonNull(to, "to");
                 Objects.requireNonNull(dateTime, "dateTime");
 
                 return 1.0 *
-                    from.getDisplayName().length() /
-                    to.getDisplayName().length();
+                    Currency.getInstance(
+                        from.value()
+                    ).getDisplayName().length() /
+                    Currency.getInstance(
+                        to.value()
+                    ).getDisplayName().length();
             },
             LOCALE_CONTEXT
         )

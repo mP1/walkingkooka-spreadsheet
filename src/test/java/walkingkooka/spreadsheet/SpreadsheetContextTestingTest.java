@@ -347,8 +347,8 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         }
 
         @Override
-        public Number exchangeRate(final Currency from,
-                                   final Currency to,
+        public Number exchangeRate(final CurrencyCode from,
+                                   final CurrencyCode to,
                                    final Optional<LocalDateTime> dateTime) {
             Objects.requireNonNull(from, "from");
             Objects.requireNonNull(to, "to");
