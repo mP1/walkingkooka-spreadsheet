@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
@@ -113,6 +114,11 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
 
     @Override
     public boolean canNumbersHaveGroupSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CurrencyCode currencyCode() {
         throw new UnsupportedOperationException();
     }
 

@@ -465,6 +465,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     }
 
     @Override
+    public CurrencyCode currencyCode() {
+        return this.context.currencyCode();
+    }
+
+    @Override
     public Indentation indentation() {
         return this.context.indentation();
     }

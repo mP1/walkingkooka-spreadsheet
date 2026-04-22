@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
@@ -234,6 +235,12 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     final TerminalContext terminalContext;
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................
+
+    @Override
+    public final CurrencyCode currencyCode() {
+        return this.spreadsheetEnvironmentContext()
+            .currencyCode();
+    }
 
     @Override
     public final Optional<StoragePath> currentWorkingDirectory() {
