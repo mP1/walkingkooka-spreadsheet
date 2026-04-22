@@ -30,7 +30,7 @@ import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyLocaleContext;
-import walkingkooka.currency.FakeCanCurrencyExchangeRate;
+import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
@@ -130,7 +130,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     final static CurrencyContext CURRENCY_CONTEXT = CurrencyContexts.jre(
         Currency.getInstance("AUD"),
-        new FakeCanCurrencyExchangeRate(),
+        new FakeCurrencyExchangeRater(),
         LOCALE_CONTEXT
     );
 
