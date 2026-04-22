@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.environment.EnvironmentContext;
@@ -187,6 +188,11 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
     // EnvironmentContextDelegator......................................................................................
+
+    @Override
+    public CurrencyCode currencyCode() {
+        return this.environmentContext.currencyCode();
+    }
 
     @Override
     public LocalDateTime now() {

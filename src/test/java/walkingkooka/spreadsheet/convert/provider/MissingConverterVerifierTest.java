@@ -24,6 +24,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.locale.LocaleContext;
@@ -288,6 +289,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public boolean canNumbersHaveGroupSeparator() {
             return false;
+        }
+
+        @Override
+        public CurrencyCode currencyCode() {
+            return CURRENCY_CONTEXT.currencyCode();
         }
 
         @Override

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.validation;
 
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextDelegator;
 import walkingkooka.environment.EnvironmentValueName;
@@ -111,6 +112,11 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
 
         TestSpreadsheetValidatorContext(final SpreadsheetValidationReference reference) {
             this.reference = reference;
+        }
+
+        @Override
+        public CurrencyCode currencyCode() {
+            throw new UnsupportedOperationException();
         }
 
         @Override
