@@ -201,6 +201,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> CURRENCY = namedCollection(
         "currency",
         currencyCodeToCurrency(),
+        numberToCurrencyValue(),
         textToCurrencyCode()
     );
 
