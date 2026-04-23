@@ -462,6 +462,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#numberToCurrencyValue}
+     */
+    public static Converter<SpreadsheetConverterContext> numberToCurrencyValue() {
+        return Converters.numberToCurrencyValue();
+    }
+
+    /**
      * {@see ExpressionNumberConverters#numberToNumber}
      */
     public static Converter<SpreadsheetConverterContext> numberToNumber() {
