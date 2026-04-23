@@ -561,14 +561,12 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
         );
     }
 
-    // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/9042
-    // SpreadsheetConverters.number String to Number should give ExpressionNumber not BigDecimal
     @Test
     public void testConvertStringToNumber() {
         this.convertAndCheck(
             STRING_HALF,
             Number.class,
-            new BigDecimal(BYTE_STRING_HALF)
+            EXPRESSION_NUMBER_KIND.create(BYTE_STRING_HALF)
         );
     }
 
@@ -623,8 +621,8 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
 
             private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
                 Lists.of(
-                SpreadsheetConverters.text(),
-                SpreadsheetConverters.numberToNumber()
+                    SpreadsheetConverters.text(),
+                    SpreadsheetConverters.numberToNumber()
                 )
             );
 

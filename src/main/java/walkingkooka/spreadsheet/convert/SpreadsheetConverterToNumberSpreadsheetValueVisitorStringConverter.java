@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -27,6 +28,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
 import java.util.function.BiFunction;
@@ -79,9 +81,12 @@ final class SpreadsheetConverterToNumberSpreadsheetValueVisitorStringConverter e
         final Either<T, String> result;
 
         if(parsed.isLeft()) {
+            // if type is Number actually want ExpressionNumber
             result = context.convert(
                 parsed.leftValue(),
-                type
+                Number.class == type ?
+                    Cast.to(ExpressionNumber.class) :
+                    type
             );
 
         } else {
