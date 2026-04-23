@@ -712,6 +712,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToCurrency() {
+        this.converterAndCheck(
+            "text-to-currency",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToCurrency()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToCurrencyCode() {
         this.converterAndCheck(
             "text-to-currency-code",

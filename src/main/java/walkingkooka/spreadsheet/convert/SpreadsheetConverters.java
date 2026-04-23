@@ -812,6 +812,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#textToCurrency()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToCurrency() {
+        return Converters.textToCurrency();
+    }
+
+    /**
      * {@see Converters#textToCurrencyCode()}
      */
     public static Converter<SpreadsheetConverterContext> textToCurrencyCode() {
