@@ -3523,7 +3523,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     };
 
-    // date.............................................................................................................
+    // textToDate.......................................................................................................
 
     @Test
     public void testTextToDateConvertInvalidStringToDateFails() {
@@ -3552,7 +3552,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    // dateTime.............................................................................................................
+    // textToDateTime...................................................................................................
 
     @Test
     public void testTextToDateTimeConvertFails() {
@@ -3581,7 +3581,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
-    // time.............................................................................................................
+    // textToTime.......................................................................................................
 
     @Test
     public void testTextToTimeConvertInvalidStringToTimeFails() {
