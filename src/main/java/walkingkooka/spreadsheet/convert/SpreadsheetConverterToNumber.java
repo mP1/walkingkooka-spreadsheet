@@ -32,11 +32,7 @@ import java.time.LocalDateTime;
 final class SpreadsheetConverterToNumber extends SpreadsheetConverter {
 
     /**
-     * Gets an instance of {@link SpreadsheetConverterToNumber}.
-     * Note the boolean flag is used to control whether {@link walkingkooka.math.DecimalNumberContext} symbols are ignored.
-     * The default text to number behaviour requires the decimal point etc from the context to be ignored and "defaults"
-     * used instead, so formulas will always only accept "." as the decimal point.
-     * The function numberValue however must be able to pass custom decimal-point and group-separator.
+     * Singleton getter
      */
     final static SpreadsheetConverterToNumber INSTANCE = new SpreadsheetConverterToNumber();
 
