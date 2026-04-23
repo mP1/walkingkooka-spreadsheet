@@ -3720,8 +3720,38 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // textToNumber.....................................................................................................
+
     @Test
-    public void testTextToNumberConvertStringToInteger() {
+    public void testTextToNumberConvertWithStringToByte() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000")
+                    .parser()
+            ),
+            "123",
+            Byte.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            (byte) 123
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToShort() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000")
+                    .parser()
+            ),
+            "123",
+            Short.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            (short) 123
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToInteger() {
         this.convertAndCheck(
             SpreadsheetConverters.textToNumber(
                 SpreadsheetPattern.parseNumberParsePattern("000")
@@ -3731,6 +3761,104 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             Integer.class,
             this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
             123
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToLong() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000")
+                    .parser()
+            ),
+            "123",
+            Long.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            123L
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToFloat() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000.0")
+                    .parser()
+            ),
+            "123.5",
+            Float.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            123.5f
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToDouble() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000.0")
+                    .parser()
+            ),
+            "123.5",
+            Double.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            123.5
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToBigInteger() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000")
+                    .parser()
+            ),
+            "123",
+            BigInteger.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            BigInteger.valueOf(123)
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToBigDecimal() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000.0")
+                    .parser()
+            ),
+            "123.5",
+            BigDecimal.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            BigDecimal.valueOf(123.5)
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToNumber() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000.0")
+                    .parser()
+            ),
+            "123.5",
+            Number.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            EXPRESSION_NUMBER_KIND.create(123.5)
+        );
+    }
+
+    @Test
+    public void testTextToNumberConvertWithStringToExpressionNumber() {
+        this.convertAndCheck(
+            SpreadsheetConverters.textToNumber(
+                SpreadsheetPattern.parseNumberParsePattern("000.0")
+                    .parser()
+            ),
+            "123.5",
+            ExpressionNumber.class,
+            this.spreadsheetConverterContext(ExpressionNumberKind.BIG_DECIMAL),
+            EXPRESSION_NUMBER_KIND.create(123.5)
         );
     }
 
