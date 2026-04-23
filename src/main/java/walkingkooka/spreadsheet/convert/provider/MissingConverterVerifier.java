@@ -31,6 +31,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.datetime.LocalDateList;
 import walkingkooka.datetime.LocalDateTimeList;
@@ -556,6 +557,16 @@ final class MissingConverterVerifier {
                     CurrencyCode.parse("AUD"),
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // currency-code-to-currency
+                );
+
+                verifier.addIfConversionFail(
+                    Lists.of(
+                        1,
+                        1.5,
+                        ExpressionNumberKind.DEFAULT.create(2.75)
+                    ),
+                    CurrencyValue.class,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // number-to-currency-value
                 );
             }
         }
