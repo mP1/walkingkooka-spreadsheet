@@ -117,6 +117,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -549,6 +550,12 @@ final class MissingConverterVerifier {
                     "AUD",
                     CurrencyCode.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-code
+                );
+
+                verifier.addIfConversionFail(
+                    CurrencyCode.parse("AUD"),
+                    Currency.class,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-code-to-currency
                 );
             }
         }
