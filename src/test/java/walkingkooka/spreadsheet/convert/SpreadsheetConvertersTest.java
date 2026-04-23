@@ -1734,6 +1734,17 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // TODO https://github.com/mP1/walkingkooka-spreadsheet/issues/9042
+    // SpreadsheetConverters.number String to Number should give ExpressionNumber not BigDecimal
+    @Test
+    public void testNumberConvertStringToNumber() {
+        this.numberConvertAndCheck(
+            "123.5",
+            Number.class,
+            BigDecimal.valueOf(123.5)
+        );
+    }
+
     private void numberConvertAndCheckFails(final Object value,
                                             final Class<?> type) {
         this.convertFails(
