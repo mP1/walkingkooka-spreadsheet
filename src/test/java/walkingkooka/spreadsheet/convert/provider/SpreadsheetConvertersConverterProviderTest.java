@@ -730,6 +730,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToCurrencyValue() {
+        this.converterAndCheck(
+            "text-to-currency-value",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToCurrencyValue()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToDateList() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.TEXT_TO_DATE_LIST + "",

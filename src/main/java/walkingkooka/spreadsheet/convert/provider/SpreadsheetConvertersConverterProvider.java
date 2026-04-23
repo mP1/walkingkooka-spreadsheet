@@ -428,6 +428,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToCurrencyCode();
                 break;
+            case TEXT_TO_CURRENCY_VALUE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToCurrencyValue();
+                break;
             case TEXT_TO_DATE_LIST_STRING:
                 noParameterCheck(copy);
 
@@ -1006,6 +1011,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_CURRENCY_CODE = ConverterName.with(TEXT_TO_CURRENCY_CODE_STRING);
 
+    private final static String TEXT_TO_CURRENCY_VALUE_STRING = "text-to-currency-value";
+
+    final static ConverterName TEXT_TO_CURRENCY_VALUE = ConverterName.with(TEXT_TO_CURRENCY_VALUE_STRING);
+
     private final static String TEXT_TO_DATE_LIST_STRING = "text-to-date-list";
 
     final static ConverterName TEXT_TO_DATE_LIST = ConverterName.with(TEXT_TO_DATE_LIST_STRING);
@@ -1306,6 +1315,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_CSV_STRING_LIST),
             converterInfo(TEXT_TO_CURRENCY),
             converterInfo(TEXT_TO_CURRENCY_CODE),
+            converterInfo(TEXT_TO_CURRENCY_VALUE),
             converterInfo(TEXT_TO_DATE_LIST),
             converterInfo(TEXT_TO_DATE_TIME_LIST),
             converterInfo(TEXT_TO_EMAIL_ADDRESS),
