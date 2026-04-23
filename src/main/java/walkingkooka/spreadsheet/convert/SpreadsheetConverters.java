@@ -204,6 +204,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     );
 
     /**
+     * {@see Converters.currencyCodeToCurrency}
+     */
+    public static Converter<SpreadsheetConverterContext> currencyCodeToCurrency() {
+        return Converters.currencyCodeToCurrency();
+    }
+
+    /**
      * {@link SpreadsheetConverterDateTime()}
      */
     public static Converter<SpreadsheetConverterContext> dateTime(final Converter<SpreadsheetConverterContext> dateToString,
