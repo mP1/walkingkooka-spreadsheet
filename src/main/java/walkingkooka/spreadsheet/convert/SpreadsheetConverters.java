@@ -203,7 +203,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         currencyCodeToCurrency(),
         numberToCurrencyValue(),
         textToCurrency(),
-        textToCurrencyCode()
+        textToCurrencyCode(),
+        textToCurrencyValue()
     );
 
     /**
