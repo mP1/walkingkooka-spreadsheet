@@ -202,6 +202,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         "currency",
         currencyCodeToCurrency(),
         numberToCurrencyValue(),
+        textToCurrency(),
         textToCurrencyCode()
     );
 

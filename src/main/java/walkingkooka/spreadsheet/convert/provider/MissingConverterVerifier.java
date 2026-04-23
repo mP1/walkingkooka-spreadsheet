@@ -549,6 +549,12 @@ final class MissingConverterVerifier {
             if (formula || formatting || scripting) {
                 verifier.addIfConversionFail(
                     "AUD",
+                    Currency.class,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency
+                );
+
+                verifier.addIfConversionFail(
+                    "AUD",
                     CurrencyCode.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-code
                 );
