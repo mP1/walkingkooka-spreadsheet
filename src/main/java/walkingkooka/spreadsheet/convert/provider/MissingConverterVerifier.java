@@ -560,6 +560,16 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
+                    Lists.of(
+                        "AUD 1.5",
+                        "1.5 AUD",
+                        "1.5"
+                    ),
+                    CurrencyValue.class,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-value
+                );
+
+                verifier.addIfConversionFail(
                     CurrencyCode.parse("AUD"),
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // currency-code-to-currency
