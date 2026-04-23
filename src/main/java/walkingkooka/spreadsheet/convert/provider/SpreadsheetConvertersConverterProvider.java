@@ -268,6 +268,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.numberToColor();
                 break;
+            case NUMBER_TO_CURRENCY_VALUE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.numberToCurrencyValue();
+                break;
             case NUMBER_TO_NUMBER_STRING:
                 noParameterCheck(copy);
 
@@ -872,6 +877,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName NUMBER_TO_COLOR = ConverterName.with(NUMBER_TO_COLOR_STRING);
 
+    private final static String NUMBER_TO_CURRENCY_VALUE_STRING = "number-to-currency-value";
+
+    final static ConverterName NUMBER_TO_CURRENCY_VALUE = ConverterName.with(NUMBER_TO_CURRENCY_VALUE_STRING);
+
     private final static String NUMBER_TO_NUMBER_STRING = "number-to-number";
 
     final static ConverterName NUMBER_TO_NUMBER = ConverterName.with(NUMBER_TO_NUMBER_STRING);
@@ -1257,6 +1266,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(NULL_TO_NUMBER),
             converterInfo(NUMBER),
             converterInfo(NUMBER_TO_COLOR),
+            converterInfo(NUMBER_TO_CURRENCY_VALUE),
             converterInfo(NUMBER_TO_NUMBER),
             converterInfo(NUMBER_TO_TEXT),
             converterInfo(OPTIONAL_TO),

@@ -655,6 +655,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    null-to-number\n" +
                 "    number\n" +
                 "    number-to-color\n" +
+                "    number-to-currency-value\n" +
                 "    number-to-number\n" +
                 "    number-to-text\n" +
                 "    optional-to\n" +
