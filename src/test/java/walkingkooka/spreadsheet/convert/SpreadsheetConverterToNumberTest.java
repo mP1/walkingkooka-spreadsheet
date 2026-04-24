@@ -23,6 +23,8 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyValue;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -41,6 +43,21 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
     public void testConvertNullToNumberFails() {
         this.convertFails(
             null,
+            Number.class
+        );
+    }
+
+    // CurrencyValue....................................................................................................
+
+    // TODO https://github.com/mP1/walkingkooka-convert/issues/487
+    // Converter: ConverterValue to Number
+    @Test
+    public void testConvertCurrencyValueToNumberFails() {
+        this.convertFails(
+            CurrencyValue.with(
+                1,
+                CurrencyCode.parse("AUD")
+            ),
             Number.class
         );
     }
