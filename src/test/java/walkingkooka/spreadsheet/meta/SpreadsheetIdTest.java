@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HasNotFoundTextTesting;
 import walkingkooka.ToStringTesting;
+import walkingkooka.ValueTesting;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -39,17 +40,17 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     JsonNodeMarshallingTesting<SpreadsheetId>,
     ParseStringTesting<SpreadsheetId>,
     TreePrintableTesting,
-    ToStringTesting<SpreadsheetId> {
+    ToStringTesting<SpreadsheetId>,
+    ValueTesting {
 
     private final static Long VALUE = 123L;
 
     @Test
     public void testWith() {
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
-        this.checkEquals(
-            VALUE,
-            id.value(),
-            "value"
+        this.valueAndCheck(
+            id,
+            VALUE
         );
         this.checkEquals(
             VALUE,

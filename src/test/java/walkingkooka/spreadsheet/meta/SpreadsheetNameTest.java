@@ -39,7 +39,10 @@ public final class SpreadsheetNameTest implements NameTesting2<SpreadsheetName, 
     @Override
     public void testWith() {
         final SpreadsheetName name = SpreadsheetName.with(VALUE);
-        this.checkEquals(VALUE, name.value(), "value");
+        this.valueAndCheck(
+            name,
+            VALUE
+        );
         this.checkEquals(VALUE, name.id(), "id");
     }
 

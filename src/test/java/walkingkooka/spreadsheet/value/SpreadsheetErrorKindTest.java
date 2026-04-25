@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.ValueTesting;
 import walkingkooka.convert.ConverterException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -43,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
+    ValueTesting,
     ClassTesting<SpreadsheetErrorKind> {
 
     // translate.......................................................................................................
@@ -406,7 +408,10 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
 
             this.checkEquals(kind, error.kind(), "kind");
             this.checkEquals(message, error.message(), "message");
-            this.checkEquals(Optional.empty(), error.value(), "value");
+            this.valueAndCheck(
+                error,
+                Optional.empty()
+            );
         }
     }
 

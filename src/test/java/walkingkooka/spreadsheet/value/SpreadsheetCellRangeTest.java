@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ValueTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -53,7 +54,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetCellRange>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
     SpreadsheetMetadataTesting,
-    TreePrintableTesting {
+    TreePrintableTesting,
+    ValueTesting {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("A1:b2");
 
@@ -140,7 +142,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
             VALUE
         );
         this.checkRange(spreadsheetCellRange);
-        this.checkValue(spreadsheetCellRange);
+        this.valueAndCheck(spreadsheetCellRange);
     }
 
 
@@ -191,10 +193,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkRange(different, differentRange);
-        this.checkValue(different);
+        this.valueAndCheck(different);
 
         this.checkRange(spreadsheetCellRange);
-        this.checkValue(spreadsheetCellRange);
+        this.valueAndCheck(spreadsheetCellRange);
     }
 
     @Test
@@ -211,10 +213,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkRange(different);
-        this.checkValue(different);
+        this.valueAndCheck(different);
 
         this.checkRange(spreadsheetCellRange);
-        this.checkValue(spreadsheetCellRange);
+        this.valueAndCheck(spreadsheetCellRange);
     }
 
     // setValue.........................................................................................................
@@ -276,10 +278,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
 
         this.checkRange(different);
-        this.checkValue(different, differentValue);
+        this.valueAndCheck(different, differentValue);
 
         this.checkRange(spreadsheetCellRange);
-        this.checkValue(spreadsheetCellRange);
+        this.valueAndCheck(spreadsheetCellRange);
     }
 
     // helpers..........................................................................................................
@@ -299,18 +301,10 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
         );
     }
 
-    private void checkValue(final SpreadsheetCellRange spreadsheetCellRange) {
-        this.checkValue(
+    private void valueAndCheck(final SpreadsheetCellRange spreadsheetCellRange) {
+        this.valueAndCheck(
             spreadsheetCellRange,
             VALUE
-        );
-    }
-
-    private void checkValue(final SpreadsheetCellRange spreadsheetCellRange,
-                            final Set<SpreadsheetCell> value) {
-        this.checkEquals(
-            value,
-            spreadsheetCellRange.value()
         );
     }
 
