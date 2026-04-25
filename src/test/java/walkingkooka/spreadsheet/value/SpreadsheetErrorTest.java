@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.value;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.ValueTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -64,7 +65,8 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     HasValidationPromptValueTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError>,
-    HasTerminalErrorTextTesting<SpreadsheetError> {
+    HasTerminalErrorTextTesting<SpreadsheetError>,
+    ValueTesting {
 
     private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
     private final static String MESSAGE = "message #1";
@@ -713,15 +715,6 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
             message,
             error.message(),
             "message"
-        );
-    }
-
-    private void valueAndCheck(final SpreadsheetError error,
-                               final Optional<?> value) {
-        this.checkEquals(
-            value,
-            error.value(),
-            "value"
         );
     }
 
