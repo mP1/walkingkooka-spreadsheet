@@ -39,7 +39,7 @@ public final class MissingSpreadsheetExceptionTest implements ThrowableTesting2<
     public void testNewWithSpreadsheetId() {
         final SpreadsheetId spreadsheetId = SpreadsheetId.with(0x123);
         final MissingSpreadsheetException missingSpreadsheetException = new MissingSpreadsheetException(spreadsheetId);
-        this.checkMessage(
+        this.getMessageAndCheck(
             missingSpreadsheetException,
             "Spreadsheet \"123\" not found"
         );

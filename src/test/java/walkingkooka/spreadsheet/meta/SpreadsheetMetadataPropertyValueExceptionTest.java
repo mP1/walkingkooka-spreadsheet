@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
         final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(MESSAGE,
             this.name(),
             this.value());
-        this.checkMessage(
+        this.getMessageAndCheck(
             throwable,
             "Metadata auditInfo=\"abc123\", message"
         );
@@ -53,7 +53,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
             this.value(),
             CAUSE
         );
-        this.checkMessage(
+        this.getMessageAndCheck(
             throwable,
             "Metadata auditInfo=\"abc123\", message"
         );
@@ -84,12 +84,6 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     @SuppressWarnings("SameReturnValue")
     private Object value() {
         return "abc123";
-    }
-
-    @Override
-    public void checkMessage(final Throwable throwable,
-                             final String message) {
-        this.checkEquals(message, throwable.getMessage(), "message");
     }
 
     @Override

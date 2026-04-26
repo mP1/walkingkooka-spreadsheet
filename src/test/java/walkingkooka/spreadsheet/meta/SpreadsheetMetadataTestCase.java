@@ -238,7 +238,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 .getOrFail(propertyName)
         );
 
-        this.checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata: Missing property value \"decimalNumberSymbols\""
         );
@@ -599,7 +599,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     PROVIDER_CONTEXT
                 )
         );
-        checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata missing: formulaConverter"
         );
@@ -616,7 +616,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     PROVIDER_CONTEXT
                 )
         );
-        checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata missing: queryConverter"
         );
@@ -700,7 +700,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LOCALE_CONTEXT
                 )
         );
-        checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata missing: defaultYear, locale, twoDigitYear"
         );
@@ -742,7 +742,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     LOCALE_CONTEXT
                 )
         );
-        checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata missing: decimalNumberDigitCount, locale, precision, roundingMode"
         );
@@ -760,7 +760,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     PROVIDER_CONTEXT
                 )
         );
-        checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata missing: dateFormatter, dateTimeFormatter, errorFormatter, numberFormatter, textFormatter, timeFormatter"
         );
@@ -774,7 +774,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             IllegalStateException.class,
             () -> this.createObject().mathContext()
         );
-        checkMessage(
+        this.getMessageAndCheck(
             thrown,
             "Metadata missing: precision, roundingMode");
     }
