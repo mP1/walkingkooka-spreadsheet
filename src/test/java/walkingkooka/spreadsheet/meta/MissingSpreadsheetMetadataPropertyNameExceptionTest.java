@@ -47,7 +47,7 @@ public final class MissingSpreadsheetMetadataPropertyNameExceptionTest implement
             exception.propertyName()
         );
 
-        this.checkMessage(
+        this.getMessageAndCheck(
             exception,
             "Metadata: Missing property value \"spreadsheetId\""
         );

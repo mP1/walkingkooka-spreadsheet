@@ -2196,7 +2196,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetMetadata.EMPTY
             ).mathContext()
         );
-        this.checkMessage(thrown, "Metadata missing: roundingMode");
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: roundingMode"
+        );
     }
 
     @Test
