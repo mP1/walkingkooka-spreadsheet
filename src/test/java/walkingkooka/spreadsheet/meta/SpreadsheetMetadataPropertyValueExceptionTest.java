@@ -58,7 +58,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
             "Metadata auditInfo=\"abc123\", message"
         );
         this.checkPropertyNameAndValue(throwable);
-        this.checkCause(throwable, CAUSE);
+        this.getCauseAndCheck(throwable, CAUSE);
     }
 
     private void checkPropertyNameAndValue(final SpreadsheetMetadataPropertyValueException throwable) {
