@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ValueTesting;
+import walkingkooka.naming.HasNameTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;
 
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException>,
+    HasNameTesting<SpreadsheetMetadataPropertyName<?>>,
     ValueTesting {
 
     @Override
@@ -42,7 +44,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
             throwable,
             "Metadata auditInfo=\"abc123\", message"
         );
-        this.checkPropertyNameAndValue(throwable);
+        this.nameValueAndCheck(throwable);
     }
 
     @Test
@@ -57,13 +59,19 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
             throwable,
             "Metadata auditInfo=\"abc123\", message"
         );
-        this.checkPropertyNameAndValue(throwable);
+        this.nameValueAndCheck(throwable);
         this.getCauseAndCheck(throwable, CAUSE);
     }
 
-    private void checkPropertyNameAndValue(final SpreadsheetMetadataPropertyValueException throwable) {
-        this.checkEquals(this.name(), throwable.name(), "name");
-        this.checkEquals(this.value(), throwable.value(), "value");
+    private void nameValueAndCheck(final SpreadsheetMetadataPropertyValueException throwable) {
+        this.nameAndCheck(
+            throwable,
+            this.name()
+        );
+        this.valueAndCheck(
+            throwable,
+            this.value()
+        );
     }
 
     @Override
