@@ -3098,8 +3098,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    showHeadings: true\n" +
                 "    style: \n" +
                 "      TextStyle\n" +
-                "        height=50px (walkingkooka.tree.text.PixelLength)\n" +
-                "        width=100px (walkingkooka.tree.text.PixelLength)\n" +
+                "        height=50px\n" +
+                "        width=100px\n" +
                 "    textFormatter: \n" +
                 "      text\n" +
                 "        \"@\"\n" +
@@ -3337,8 +3337,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "    showHeadings: true\n" +
                 "    style: \n" +
                 "      TextStyle\n" +
-                "        height=50px (walkingkooka.tree.text.PixelLength)\n" +
-                "        width=100px (walkingkooka.tree.text.PixelLength)\n" +
+                "        height=50px\n" +
+                "        width=100px\n" +
                 "    textFormatter: \n" +
                 "      text\n" +
                 "        \"@\"\n" +
@@ -3574,8 +3574,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  showHeadings: true\n" +
                 "  style: \n" +
                 "    TextStyle\n" +
-                "      height=50px (walkingkooka.tree.text.PixelLength)\n" +
-                "      width=100px (walkingkooka.tree.text.PixelLength)\n" +
+                "      height=50px\n" +
+                "      width=100px\n" +
                 "  textFormatter: \n" +
                 "    text\n" +
                 "      \"@\"\n" +

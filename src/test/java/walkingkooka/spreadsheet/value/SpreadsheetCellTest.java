@@ -3141,8 +3141,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      3\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
+                "      font-style=ITALIC\n" +
+                "      font-weight=BOLD\n"
         );
     }
 
@@ -3316,8 +3316,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      \"dd/mm/yyyy\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
+                "      font-style=ITALIC\n" +
+                "      font-weight=BOLD\n"
         );
     }
 
@@ -3359,8 +3359,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      \"dd/mm/yyyy\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
+                "      font-style=ITALIC\n" +
+                "      font-weight=BOLD\n"
         );
     }
 
@@ -3396,8 +3396,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      \"@@\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n"
+                "      font-style=ITALIC\n" +
+                "      font-weight=BOLD\n"
         );
     }
 
@@ -3434,8 +3434,8 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 "      \"@@\"\n" +
                 "  style:\n" +
                 "    TextStyle\n" +
-                "      font-style=ITALIC (walkingkooka.tree.text.FontStyle)\n" +
-                "      font-weight=BOLD (walkingkooka.tree.text.FontWeight)\n" +
+                "      font-style=ITALIC\n" +
+                "      font-weight=BOLD\n" +
                 "  formattedValue:\n" +
                 "    Text \"formattedValue-text\"\n"
         );

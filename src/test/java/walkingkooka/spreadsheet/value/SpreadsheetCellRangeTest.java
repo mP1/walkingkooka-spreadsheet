@@ -1159,7 +1159,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 "        \"#.##\"\n" +
                 "    style:\n" +
                 "      TextStyle\n" +
-                "        text-align=LEFT (walkingkooka.tree.text.TextAlign)\n"
+                "        text-align=LEFT\n"
         );
     }
 
