@@ -931,6 +931,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters#textToIndentation}
+     */
+    public static Converter<SpreadsheetConverterContext> textToIndentation() {
+        return Converters.textToIndentation();
+    }
+
+    /**
      * {@see SpreadsheetConverterTextToLocale}
      */
     public static Converter<SpreadsheetConverterContext> textToLineEnding() {
