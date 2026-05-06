@@ -802,6 +802,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToIndentation() {
+        this.converterAndCheck(
+            "text-to-indentation",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToIndentation()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToJson() {
         this.converterAndCheck(
             "text-to-json",
