@@ -483,6 +483,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToHostAddress();
                 break;
+            case TEXT_TO_INDENTATION_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToIndentation();
+                break;
             case TEXT_TO_JSON_NODE_STRING:
                 noParameterCheck(copy);
 
@@ -1055,6 +1060,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_HOST_ADDRESS = ConverterName.with(TEXT_TO_HOST_ADDRESS_STRING);
 
+    private final static String TEXT_TO_INDENTATION_STRING = "text-to-indentation";
+
+    final static ConverterName TEXT_TO_INDENTATION = ConverterName.with(TEXT_TO_INDENTATION_STRING);
+
     private final static String TEXT_TO_JSON_NODE_STRING = "text-to-json";
 
     final static ConverterName TEXT_TO_JSON = ConverterName.with(TEXT_TO_JSON_NODE_STRING);
@@ -1326,6 +1335,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_FORM_NAME),
             converterInfo(TEXT_TO_HAS_HOST_ADDRESS),
             converterInfo(TEXT_TO_HOST_ADDRESS),
+            converterInfo(TEXT_TO_INDENTATION),
             converterInfo(TEXT_TO_JSON),
             converterInfo(TEXT_TO_LINE_ENDING),
             converterInfo(TEXT_TO_LOCALE),
