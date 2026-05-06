@@ -938,7 +938,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetConverterTextToLocale}
+     * {@see Converters#textToLineEnding}
      */
     public static Converter<SpreadsheetConverterContext> textToLineEnding() {
         return Converters.textToLineEnding();
