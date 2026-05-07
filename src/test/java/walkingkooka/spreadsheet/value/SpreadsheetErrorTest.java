@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HasValueTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.ValueTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.reflect.ClassTesting2;
@@ -66,7 +66,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError>,
     HasTerminalErrorTextTesting<SpreadsheetError>,
-    ValueTesting {
+    HasValueTesting {
 
     private final static SpreadsheetErrorKind KIND = SpreadsheetErrorKind.NA;
     private final static String MESSAGE = "message #1";

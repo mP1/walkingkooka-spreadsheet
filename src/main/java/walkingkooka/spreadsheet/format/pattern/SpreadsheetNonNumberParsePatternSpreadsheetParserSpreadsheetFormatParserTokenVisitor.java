@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.spreadsheet.format.parser.AmPmSpreadsheetFormatParserToken;
@@ -529,7 +529,7 @@ final class SpreadsheetNonNumberParsePatternSpreadsheetParserSpreadsheetFormatPa
         );
     }
 
-    private void literal(final Value<String> value) {
+    private void literal(final HasValue<String> value) {
         this.literal(value.value()); // text may have quotes etc.
     }
 

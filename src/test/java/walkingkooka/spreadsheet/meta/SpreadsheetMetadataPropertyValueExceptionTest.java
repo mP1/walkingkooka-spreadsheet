@@ -18,14 +18,14 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ValueTesting;
+import walkingkooka.HasValueTesting;
 import walkingkooka.naming.HasNameTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;
 
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException>,
     HasNameTesting<SpreadsheetMetadataPropertyName<?>>,
-    ValueTesting {
+    HasValueTesting {
 
     @Override
     public void testWithMessage() {

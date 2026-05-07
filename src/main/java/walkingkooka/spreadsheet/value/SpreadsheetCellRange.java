@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.value;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.SortedSets;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 /**
  * A container for cells within a {@link SpreadsheetCellRangeReference}.
  */
-public final class SpreadsheetCellRange implements Value<Set<SpreadsheetCell>>,
+public final class SpreadsheetCellRange implements HasValue<Set<SpreadsheetCell>>,
     TreePrintable {
 
     public static SpreadsheetCellRange with(final SpreadsheetCellRangeReference range,

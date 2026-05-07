@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.provider;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -34,7 +34,8 @@ import java.util.Objects;
 /**
  * A sample that provides a label, {@link SpreadsheetFormatterSelector} and formatted {@link TextNode example} using the selector.
  */
-public final class SpreadsheetFormatterSample implements TreePrintable, Value<TextNode> {
+public final class SpreadsheetFormatterSample implements TreePrintable,
+    HasValue<TextNode> {
 
     public static SpreadsheetFormatterSample with(final String label,
                                                   final SpreadsheetFormatterSelector selector,

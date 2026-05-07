@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.value;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -32,7 +32,7 @@ import java.util.Optional;
  * A typed {@link Optional} necessary because generic types are lost in java.
  * This class is intended to be a target when converting a cell to a value to patch cells in a CLIPBOARD PASTE.
  */
-public final class OptionalSpreadsheetValue<T> implements Value<Optional<T>> {
+public final class OptionalSpreadsheetValue<T> implements HasValue<Optional<T>> {
 
     public final static OptionalSpreadsheetValue<?> EMPTY = new OptionalSpreadsheetValue<>(Optional.empty());
 

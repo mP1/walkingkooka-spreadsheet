@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.Cast;
 import walkingkooka.HasId;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonPropertyName;
 
@@ -29,7 +29,7 @@ import java.util.Optional;
 /**
  * Base class for all security related identifies
  */
-public abstract class Identity<I extends IdentityId> implements Value<Optional<I>>,
+public abstract class Identity<I extends IdentityId> implements HasValue<Optional<I>>,
     HasId<Optional<I>> {
 
     /**

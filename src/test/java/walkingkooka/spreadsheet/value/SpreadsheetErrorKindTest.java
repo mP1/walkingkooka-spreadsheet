@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HasValueTesting;
 import walkingkooka.InvalidCharacterException;
-import walkingkooka.ValueTesting;
 import walkingkooka.convert.ConverterException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
-    ValueTesting,
+    HasValueTesting,
     ClassTesting<SpreadsheetErrorKind> {
 
     // translate.......................................................................................................

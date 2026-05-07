@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ValueTesting;
+import walkingkooka.HasValueTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
@@ -45,7 +45,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
-    ValueTesting,
+    HasValueTesting,
     ClassTesting<SpreadsheetCellValueKind> {
 
     @Test

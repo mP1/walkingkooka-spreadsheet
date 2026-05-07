@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -31,7 +31,7 @@ import java.util.Optional;
  * A typed {@link Optional} necessary because generic types are lost in java.
  * This class is intended to be a target when converting a cell to a formatter to patch cells.
  */
-public final class OptionalSpreadsheetFormatterSelector implements Value<Optional<SpreadsheetFormatterSelector>> {
+public final class OptionalSpreadsheetFormatterSelector implements HasValue<Optional<SpreadsheetFormatterSelector>> {
 
     public final static OptionalSpreadsheetFormatterSelector EMPTY = new OptionalSpreadsheetFormatterSelector(Optional.empty());
 

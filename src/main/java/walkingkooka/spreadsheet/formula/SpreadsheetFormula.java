@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.formula;
 
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
+import walkingkooka.HasValue;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.Value;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -77,7 +77,7 @@ import java.util.function.Function;
 public final class SpreadsheetFormula implements CanBeEmpty,
     CanReplaceReferences<SpreadsheetFormula>,
     HasText,
-    Value<Optional<Object>>,
+    HasValue<Optional<Object>>,
     Patchable<SpreadsheetFormula>,
     TreePrintable,
     UsesToStringBuilder,

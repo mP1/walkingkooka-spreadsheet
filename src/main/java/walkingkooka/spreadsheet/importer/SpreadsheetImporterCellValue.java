@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.importer;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.currency.OptionalCurrency;
 import walkingkooka.datetime.OptionalDateTimeSymbols;
 import walkingkooka.math.OptionalDecimalNumberSymbols;
@@ -45,7 +45,7 @@ import java.util.Objects;
  * of only formulas as well as PASTING a cell range of entire cells.
  */
 public final class SpreadsheetImporterCellValue implements HasSpreadsheetReference<SpreadsheetCellReference>,
-    Value<Object>,
+    HasValue<Object>,
     TreePrintable {
 
     public static SpreadsheetImporterCellValue cell(final SpreadsheetCell cell) {

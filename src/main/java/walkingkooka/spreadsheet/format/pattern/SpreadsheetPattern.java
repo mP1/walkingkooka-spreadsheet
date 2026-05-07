@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.net.HasUrlFragment;
@@ -62,7 +62,7 @@ import java.util.function.Predicate;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPattern implements Value<ParserToken>,
+abstract public class SpreadsheetPattern implements HasValue<ParserToken>,
     HasText,
     TreePrintable,
     HasUrlFragment {
