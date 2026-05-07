@@ -215,7 +215,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public boolean canConvert(final Object value,
                                   final Class<?> type) {
-            return converter.canConvert(
+            return this.converter.canConvert(
                 value,
                 type,
                 this
@@ -225,7 +225,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public <T> Either<T, String> convert(final Object value,
                                              final Class<T> target) {
-            return converter.convert(
+            return this.converter.convert(
                 value,
                 target,
                 this
