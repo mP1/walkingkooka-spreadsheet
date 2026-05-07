@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.value;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HasValueTesting;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.ValueTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -55,7 +55,7 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
     HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
     SpreadsheetMetadataTesting,
     TreePrintableTesting,
-    ValueTesting {
+    HasValueTesting {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("A1:b2");
 

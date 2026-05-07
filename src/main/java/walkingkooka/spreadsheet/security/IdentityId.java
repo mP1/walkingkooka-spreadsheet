@@ -18,14 +18,14 @@
 package walkingkooka.spreadsheet.security;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 /**
  * Base class for all ids.
  */
-public abstract class IdentityId implements Value<Long> {
+public abstract class IdentityId implements HasValue<Long> {
 
     /**
      * Package private to limit subclassing.

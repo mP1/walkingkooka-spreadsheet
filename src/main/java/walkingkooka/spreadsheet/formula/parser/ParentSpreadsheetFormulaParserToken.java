@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.formula.parser;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
  * Base class for a parent token that contain one more child {@link SpreadsheetFormulaParserToken tokens}.
  */
 abstract public class ParentSpreadsheetFormulaParserToken extends SpreadsheetFormulaParserToken
-    implements Value<List<ParserToken>> {
+    implements HasValue<List<ParserToken>> {
 
     ParentSpreadsheetFormulaParserToken(final List<ParserToken> value, final String text) {
         super(text);

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.parser.provider;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -31,7 +31,7 @@ import java.util.Optional;
  * A typed {@link Optional} necessary because generic types are lost in java.
  * This class is intended to be a target when converting a cell to a parser to patch cells.
  */
-public final class OptionalSpreadsheetParserSelector implements Value<Optional<SpreadsheetParserSelector>> {
+public final class OptionalSpreadsheetParserSelector implements HasValue<Optional<SpreadsheetParserSelector>> {
 
     public final static OptionalSpreadsheetParserSelector EMPTY = new OptionalSpreadsheetParserSelector(Optional.empty());
 

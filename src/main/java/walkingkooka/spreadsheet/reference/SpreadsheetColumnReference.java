@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.spreadsheet.formula.parser.ColumnSpreadsheetFormulaParserToken;
@@ -40,7 +40,7 @@ import java.util.function.Predicate;
  * only comparing the value.
  */
 public final class SpreadsheetColumnReference extends SpreadsheetColumnReferenceOrRange
-    implements Value<Integer>,
+    implements HasValue<Integer>,
     Comparable<SpreadsheetColumnReference>,
     SpreadsheetColumnOrRowReference {
 

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.CanBeEmpty;
 import walkingkooka.Cast;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -176,7 +176,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
     HateosResource<SpreadsheetId>,
     Patchable<SpreadsheetMetadata>,
     TreePrintable,
-    Value<Map<SpreadsheetMetadataPropertyName<?>, Object>>,
+    HasValue<Map<SpreadsheetMetadataPropertyName<?>, Object>>,
     HasMissingCellNumberValue {
 
     public static final String HATEOS_RESOURCE_NAME_STRING = "spreadsheet";

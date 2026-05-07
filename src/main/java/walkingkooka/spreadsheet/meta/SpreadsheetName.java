@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.HasId;
+import walkingkooka.HasValue;
 import walkingkooka.InvalidTextLengthException;
-import walkingkooka.Value;
 import walkingkooka.naming.Name;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
@@ -37,7 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 public final class SpreadsheetName implements Comparable<SpreadsheetName>,
     Name,
     HasId<String>,
-    Value<String>,
+    HasValue<String>,
     HasUrlFragment {
 
     /**

@@ -25,8 +25,8 @@ package walkingkooka.spreadsheet.value;
 // #NULL
 // #NUM
 
+import walkingkooka.HasValue;
 import walkingkooka.TextException;
-import walkingkooka.Value;
 import walkingkooka.collect.list.ImmutableList;
 import walkingkooka.convert.ConverterException;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -282,8 +282,8 @@ public enum SpreadsheetErrorKind implements HasText {
             }
 
 
-            if (cause instanceof Value) {
-                final Value<?> hasValue = (Value<?>) cause;
+            if (cause instanceof HasValue) {
+                final HasValue<?> hasValue = (HasValue<?>) cause;
                 value = hasValue.value();
 
                 if (value instanceof Optional) {

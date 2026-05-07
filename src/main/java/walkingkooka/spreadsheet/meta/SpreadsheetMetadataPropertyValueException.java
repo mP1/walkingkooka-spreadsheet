@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.naming.HasName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Whitespace;
@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class SpreadsheetMetadataPropertyValueException extends IllegalArgumentException
     implements HasName<SpreadsheetMetadataPropertyName<?>>,
-    Value<Object> {
+    HasValue<Object> {
 
     private static final long serialVersionUID = 1L;
 
