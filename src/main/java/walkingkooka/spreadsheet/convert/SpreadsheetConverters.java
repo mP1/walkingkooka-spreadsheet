@@ -384,6 +384,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#hasValueTo}
+     */
+    public static Converter<SpreadsheetConverterContext> hasValueTo() {
+        return Converters.hasValueTo();
+    }
+
+    /**
      * A converter that involves {@link JsonNode} as a source or destination
      */
     public static Converter<SpreadsheetConverterContext> json() {
