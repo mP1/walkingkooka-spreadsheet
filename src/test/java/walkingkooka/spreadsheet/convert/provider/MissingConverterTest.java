@@ -186,7 +186,9 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
             "MissingConverter\n" +
                 "  boolean-to-number\n" +
                 "    MissingConverterValue\n" +
-                "      \"Hello\"\n" +
+                "      value\n" +
+                "        \"Hello\"\n" +
+                "      type\n" +
                 "        java.lang.String\n"
         );
     }
@@ -218,13 +220,19 @@ public final class MissingConverterTest implements ClassTesting2<MissingConverte
             "MissingConverter\n" +
                 "  boolean-to-number\n" +
                 "    MissingConverterValue\n" +
-                "      true\n" +
+                "      value\n" +
+                "        true\n" +
+                "      type\n" +
                 "        java.lang.Boolean\n" +
                 "    MissingConverterValue\n" +
-                "      1\n" +
+                "      value\n" +
+                "        1\n" +
+                "      type\n" +
                 "        java.lang.Integer\n" +
                 "    MissingConverterValue\n" +
-                "      1999-12-31 (java.time.LocalDate)\n" +
+                "      value\n" +
+                "        1999-12-31 (java.time.LocalDate)\n" +
+                "      type\n" +
                 "        java.time.LocalDate\n"
         );
     }

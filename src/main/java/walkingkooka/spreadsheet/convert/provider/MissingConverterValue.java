@@ -102,10 +102,17 @@ public final class MissingConverterValue implements HasValue<Object>, TreePrinta
         printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            TreePrintable.printTreeOrToString(
-                this.value,
-                printer
-            );
+            printer.println("value");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.value,
+                    printer
+                );
+            }
+            printer.outdent();
+
+            printer.println("type");
             printer.indent();
             {
                 printer.println(this.type);
