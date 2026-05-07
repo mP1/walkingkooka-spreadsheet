@@ -394,6 +394,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasValueTo() {
+        this.converterAndCheck(
+            "has-value-to",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasValueTo()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithJson() {
         this.converterAndCheck(
             "json",
