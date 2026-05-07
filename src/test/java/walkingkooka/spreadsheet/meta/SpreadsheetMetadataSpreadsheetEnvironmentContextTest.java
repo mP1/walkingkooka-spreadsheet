@@ -647,6 +647,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    has-style\n" +
                 "    has-text-node\n" +
                 "    has-validator-selector\n" +
+                "    has-value-to\n" +
                 "    json\n" +
                 "    json-to\n" +
                 "    locale\n" +

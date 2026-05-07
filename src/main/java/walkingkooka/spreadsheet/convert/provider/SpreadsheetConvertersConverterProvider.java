@@ -233,6 +233,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasValidatorSelector();
                 break;
+            case HAS_VALUE_TO_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasValueTo();
+                break;    
             case JSON_STRING:
                 noParameterCheck(copy);
 
@@ -860,6 +865,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName HAS_VALIDATOR_SELECTOR = ConverterName.with(HAS_VALIDATOR_SELECTOR_STRING);
 
+    private final static String HAS_VALUE_TO_STRING = "has-value-to";
+
+    final static ConverterName HAS_VALUE_TO = ConverterName.with(HAS_VALUE_TO_STRING);
+
     private final static String JSON_STRING = "json";
 
     final static ConverterName JSON = ConverterName.with(JSON_STRING);
@@ -1285,6 +1294,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(HAS_STYLE),
             converterInfo(HAS_TEXT_NODE),
             converterInfo(HAS_VALIDATOR_SELECTOR),
+            converterInfo(HAS_VALUE_TO),
             converterInfo(JSON),
             converterInfo(JSON_TO),
             converterInfo(LOCALE),
