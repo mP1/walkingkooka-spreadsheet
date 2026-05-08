@@ -157,6 +157,9 @@ final class MissingConverterVerifier {
 
     private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
 
+    // TODO replace hardcoded with first available currency code from context
+    private final static CurrencyCode CURRENCY_CODE = CurrencyCode.parse("AUD");
+
     private final static LocalDate DATE = LocalDate.of(
         1999,
         12,
@@ -561,6 +564,29 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     Lists.of(
+                        CurrencyValue.with(
+                            1,
+                            CURRENCY_CODE
+                        ),
+                        CurrencyValue.with(
+                            2L,
+                            CURRENCY_CODE
+                        ),
+                        CurrencyValue.with(
+                            3.0f,
+                            CURRENCY_CODE
+                        ),
+                        CurrencyValue.with(
+                            4.0f,
+                            CURRENCY_CODE
+                        )
+                    ),
+                    NUMBER_TYPES,
+                    SpreadsheetConvertersConverterProvider.CURRENCY // currency-value-to-number
+                );
+
+                verifier.addIfConversionFail(
+                    Lists.of(
                         "AUD 1.5",
                         "1.5 AUD",
                         "1.5"
@@ -570,7 +596,7 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    CurrencyCode.parse("AUD"),
+                    CURRENCY_CODE,
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // currency-code-to-currency
                 );
