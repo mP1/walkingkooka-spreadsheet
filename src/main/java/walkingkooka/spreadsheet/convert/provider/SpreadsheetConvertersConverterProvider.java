@@ -141,6 +141,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.currencyCodeToCurrency();
                 break;
+            case CURRENCY_VALUE_TO_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.currencyValueTo();
+                break;
             case DATE_TIME_STRING:
                 noParameterCheck(copy);
 
@@ -792,6 +797,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     private final static String CURRENCY_CODE_TO_CURRENCY_STRING = "currency-code-to-currency";
 
     final static ConverterName CURRENCY_CODE_TO_CURRENCY = ConverterName.with(CURRENCY_CODE_TO_CURRENCY_STRING);
+    
+    private final static String CURRENCY_VALUE_TO_STRING = "currency-value-to";
+
+    final static ConverterName CURRENCY_VALUE_TO = ConverterName.with(CURRENCY_VALUE_TO_STRING);
 
     private final static String DATE_TIME_STRING = "date-time";
 
@@ -1276,6 +1285,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(COLOR_TO_NUMBER),
             converterInfo(CURRENCY),
             converterInfo(CURRENCY_CODE_TO_CURRENCY),
+            converterInfo(CURRENCY_VALUE_TO),
             converterInfo(DATE_TIME),
             converterInfo(DATE_TIME_SYMBOLS),
             converterInfo(DECIMAL_NUMBER_SYMBOLS),
