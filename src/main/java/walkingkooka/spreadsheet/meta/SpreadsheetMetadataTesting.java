@@ -215,13 +215,15 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
                 Objects.requireNonNull(to, "to");
                 Objects.requireNonNull(dateTime, "dateTime");
 
-                return 1.0 *
-                    Currency.getInstance(
-                        from.value()
-                    ).getDisplayName().length() /
-                    Currency.getInstance(
-                        to.value()
-                    ).getDisplayName().length();
+                return Optional.of(
+                    1.0 *
+                        Currency.getInstance(
+                            from.value()
+                        ).getDisplayName().length() /
+                        Currency.getInstance(
+                            to.value()
+                        ).getDisplayName().length()
+                );
             },
             LOCALE_CONTEXT
         )
