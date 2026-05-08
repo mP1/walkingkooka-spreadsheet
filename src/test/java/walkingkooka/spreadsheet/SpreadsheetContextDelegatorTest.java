@@ -408,9 +408,9 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             }
 
             @Override
-            public Number exchangeRate(final CurrencyCode from,
-                                       final CurrencyCode to,
-                                       final Optional<LocalDateTime> dateTime) {
+            public Optional<Number> exchangeRate(final CurrencyCode from,
+                                                 final CurrencyCode to,
+                                                 final Optional<LocalDateTime> dateTime) {
                 Objects.requireNonNull(from, "from");
                 Objects.requireNonNull(to, "to");
                 Objects.requireNonNull(dateTime, "dateTime");
