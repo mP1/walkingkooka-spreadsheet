@@ -320,8 +320,8 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         }
 
         @Override
-        public Optional<String> currencyText(final Currency currency) {
-            Objects.requireNonNull(currency, "currency");
+        public Optional<String> currencyText(final CurrencyCode currencyCode) {
+            Objects.requireNonNull(currencyCode, "currencyCode");
             throw new UnsupportedOperationException();
         }
 
