@@ -157,9 +157,6 @@ final class MissingConverterVerifier {
 
     private static final List<Class<?>> NUMBER_TYPES_WITHOUT_BYTE_SHORT;
 
-    // TODO replace hardcoded with first available currency code from context
-    private final static CurrencyCode CURRENCY_CODE = CurrencyCode.parse("AUD");
-
     private final static LocalDate DATE = LocalDate.of(
         1999,
         12,
@@ -550,6 +547,8 @@ final class MissingConverterVerifier {
         // currency.....................................................................................................
         {
             if (formula || formatting || scripting) {
+                final CurrencyCode currencyCode = context.currencyCode();
+
                 verifier.addIfConversionFail(
                     "AUD",
                     Currency.class,
@@ -566,19 +565,19 @@ final class MissingConverterVerifier {
                     Lists.of(
                         CurrencyValue.with(
                             1,
-                            CURRENCY_CODE
+                            currencyCode
                         ),
                         CurrencyValue.with(
                             2L,
-                            CURRENCY_CODE
+                            currencyCode
                         ),
                         CurrencyValue.with(
                             3.0f,
-                            CURRENCY_CODE
+                            currencyCode
                         ),
                         CurrencyValue.with(
                             4.0f,
-                            CURRENCY_CODE
+                            currencyCode
                         )
                     ),
                     NUMBER_TYPES,
@@ -596,7 +595,7 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    CURRENCY_CODE,
+                    currencyCode,
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // currency-code-to-currency
                 );
