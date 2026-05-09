@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
@@ -347,11 +348,9 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
         }
 
         @Override
-        public Optional<Number> exchangeRate(final CurrencyCode from,
-                                             final CurrencyCode to,
+        public Optional<Number> exchangeRate(final CurrencyExchange currencyExchange,
                                              final Optional<LocalDateTime> dateTime) {
-            Objects.requireNonNull(from, "from");
-            Objects.requireNonNull(to, "to");
+            Objects.requireNonNull(currencyExchange, "currencyExchange");
             Objects.requireNonNull(dateTime, "dateTime");
 
             throw new UnsupportedOperationException();
