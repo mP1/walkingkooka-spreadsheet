@@ -263,6 +263,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
+    public Set<CurrencyExchange> currencyExchanges() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Number> exchangeRate(final CurrencyExchange currencyExchange,
                                          final Optional<LocalDateTime> dateTime) {
         throw new UnsupportedOperationException();

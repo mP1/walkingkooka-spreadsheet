@@ -25,6 +25,7 @@ import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContexts;
+import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.datetime.HasNow;
 import walkingkooka.environment.AuditInfo;
 import walkingkooka.environment.EnvironmentContext;
@@ -139,12 +140,16 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
         final CurrencyContext currencyContext = CurrencyContexts.jre(
             Currency.getInstance("AUD"),
-            (final CurrencyExchange currencyExchange,
-             final Optional<LocalDateTime> dateTime) -> {
-                Objects.requireNonNull(currencyExchange, "currencyExchange");
-                Objects.requireNonNull(dateTime, "dateTime");
+            new FakeCurrencyExchangeRater() {
 
-                throw new UnsupportedOperationException();
+                @Override
+                public Optional<Number> exchangeRate(CurrencyExchange currencyExchange,
+                                                     final Optional<LocalDateTime> dateTime) {
+                    Objects.requireNonNull(currencyExchange, "currencyExchange");
+                    Objects.requireNonNull(dateTime, "dateTime");
+
+                    throw new UnsupportedOperationException();
+                }
             },
             localeContext
         );
