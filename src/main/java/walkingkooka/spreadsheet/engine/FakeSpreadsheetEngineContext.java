@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
@@ -255,8 +256,7 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
-    public Optional<Number> exchangeRate(final CurrencyCode from,
-                                         final CurrencyCode to,
+    public Optional<Number> exchangeRate(final CurrencyExchange currencyExchange,
                                          final Optional<LocalDateTime> dateTime) {
         throw new UnsupportedOperationException();
     }

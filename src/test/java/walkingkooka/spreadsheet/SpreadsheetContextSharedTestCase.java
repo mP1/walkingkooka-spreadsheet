@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.provider.ConverterProviders;
-import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.HasNow;
@@ -139,11 +139,9 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
 
         final CurrencyContext currencyContext = CurrencyContexts.jre(
             Currency.getInstance("AUD"),
-            (final CurrencyCode from,
-             final CurrencyCode to,
+            (final CurrencyExchange currencyExchange,
              final Optional<LocalDateTime> dateTime) -> {
-                Objects.requireNonNull(from, "from");
-                Objects.requireNonNull(to, "to");
+                Objects.requireNonNull(currencyExchange, "currencyExchange");
                 Objects.requireNonNull(dateTime, "dateTime");
 
                 throw new UnsupportedOperationException();
