@@ -306,6 +306,8 @@ public final class SpreadsheetViewport implements HasUrlFragment,
                 for (final SpreadsheetViewportNavigation navigation : navigations) {
                     printer.println(navigation.text());
                 }
+
+                printer.outdent();
             }
         }
         printer.outdent();
