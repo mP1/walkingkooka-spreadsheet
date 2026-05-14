@@ -228,5 +228,6 @@ final class BasicSpreadsheetEnvironmentContext implements SpreadsheetEnvironment
             }
             printer.outdent();
         }
+        printer.outdent();
     }
 }
