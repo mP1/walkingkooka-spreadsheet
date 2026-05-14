@@ -172,10 +172,13 @@ public final class SpreadsheetViewportHomeNavigationList implements HasUrlFragme
             if (navigations.isNotEmpty()) {
                 printer.println("navigations:");
                 printer.indent();
-
-                for (final SpreadsheetViewportNavigation navigation : navigations) {
-                    printer.println(navigation.text());
+                {
+                    for (final SpreadsheetViewportNavigation navigation : navigations) {
+                        printer.println(navigation.text());
+                    }
                 }
+
+                printer.outdent();
             }
         }
         printer.outdent();
