@@ -366,7 +366,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         return cells.stream()
             .mapToDouble(c -> c.style()
                 .get(widthOrHeight)
-                .map(Length::pixelValue)
+                .map(Length::value)
                 .orElse(0.0)
             ).max()
             .orElse(0.0);

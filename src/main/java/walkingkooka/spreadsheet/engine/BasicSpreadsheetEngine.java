@@ -2110,7 +2110,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                           final SpreadsheetEngineContext context) {
         return context.spreadsheetMetadata()
             .getEffectiveStylePropertyOrFail(propertyName)
-            .pixelValue();
+            .value();
     }
 
     @Override
