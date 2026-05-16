@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Either;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -32,6 +33,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -107,6 +109,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
         throw new UnsupportedOperationException();
     }
 

@@ -24,6 +24,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviders;
@@ -42,6 +43,7 @@ import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -57,6 +59,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -123,6 +126,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     final static LineEnding LINE_ENDING = LineEnding.NL;
+
+    final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     final static LocaleContext LOCALE_CONTEXT = LocaleContexts.jre(
         Locale.forLanguageTag("EN-AU")
@@ -794,6 +799,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -814,6 +820,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -834,6 +841,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -854,6 +862,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -874,6 +883,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     null,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -894,6 +904,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     null,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -913,6 +924,28 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     HAS_USER_DIRECTORIES,
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
+                    null,
+                    MULTIPLIER,
+                    CONVERTER_PROVIDER,
+                    CURRENCY_LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    HAS_USER_DIRECTORIES,
+                    INDENTATION,
+                    LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
                     null,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
@@ -934,6 +967,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     null,
                     CURRENCY_LOCALE_CONTEXT,
                     PROVIDER_CONTEXT
@@ -954,6 +988,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     null,
                     PROVIDER_CONTEXT
@@ -974,6 +1009,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                     INDENTATION,
                     LABEL_NAME_RESOLVER,
                     LINE_ENDING,
+                    MULTIPLIER,
                     CONVERTER_PROVIDER,
                     CURRENCY_LOCALE_CONTEXT,
                     null

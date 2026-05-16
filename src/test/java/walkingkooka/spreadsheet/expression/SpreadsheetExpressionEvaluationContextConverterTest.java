@@ -554,6 +554,7 @@ public final class SpreadsheetExpressionEvaluationContextConverterTest implement
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SpreadsheetLabelNameResolvers.fake(),
                 SpreadsheetContexts.fixedSpreadsheetId(
+                    MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     new FakeSpreadsheetStoreRepository() {
                         @Override

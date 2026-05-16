@@ -7,6 +7,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -362,6 +363,7 @@ public class TestGwtTest extends GWTTestCase {
                             Indentation.SPACES2,
                             LABEL_NAME_RESOLVER,
                             lineEnding,
+                            BinaryNumberConverterFunctions.fake(),
                             converterProvider,
                             currencyContext.setLocaleContext(this.localeContext),
                             providerContext
@@ -418,6 +420,7 @@ public class TestGwtTest extends GWTTestCase {
                         Indentation.SPACES2,
                         LABEL_NAME_RESOLVER,
                         lineEnding,
+                        BinaryNumberConverterFunctions.fake(),
                         currencyContext.setLocaleContext(this.localeContext),
                         SpreadsheetProviders.basic(
                             converterProvider,

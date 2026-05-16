@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import javaemul.internal.annotations.GwtIncompatible;
 import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunction;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
@@ -527,8 +529,11 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         return spreadsheeEnvironmentContext;
     }
 
+    BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.multiply();
+
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.spreadsheet(
+            MULTIPLIER,
             PluginStores.fake(),
             CURRENCY_LOCALE_CONTEXT,
             SpreadsheetMetadata.EMPTY.set(
@@ -631,6 +636,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
+        MULTIPLIER,
         CONVERTER_PROVIDER,
         CURRENCY_LOCALE_CONTEXT,
         PROVIDER_CONTEXT
@@ -667,6 +673,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
+        MULTIPLIER,
         CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT
@@ -679,6 +686,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
         INDENTATION,
         SPREADSHEET_LABEL_NAME_RESOLVER,
         LINE_ENDING,
+        MULTIPLIER,
         CURRENCY_LOCALE_CONTEXT,
         SPREADSHEET_PROVIDER,
         PROVIDER_CONTEXT

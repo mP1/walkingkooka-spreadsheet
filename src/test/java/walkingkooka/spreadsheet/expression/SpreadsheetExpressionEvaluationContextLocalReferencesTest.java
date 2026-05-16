@@ -1034,6 +1034,21 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testMultiplyWithNullLeftFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testMultiplyWithNullRightFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testMultiplyWithNullTypeFails() {
+        throw new UnsupportedOperationException();
+    }
+
     // hashEquals/Object................................................................................................
 
     @Test

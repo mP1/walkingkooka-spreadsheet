@@ -594,6 +594,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            MULTIPLIER,
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(
                 metadataStore

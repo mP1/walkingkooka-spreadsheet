@@ -18,12 +18,14 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetMetadataMode;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
@@ -122,7 +124,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                                       final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -130,6 +133,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                        final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            multiplier,
             spreadsheetContextSupplier,
             currencyLocaleContext,
             spreadsheetEnvironmentContext,

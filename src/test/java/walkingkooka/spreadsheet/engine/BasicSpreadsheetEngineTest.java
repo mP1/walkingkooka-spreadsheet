@@ -25,6 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
@@ -157,6 +158,7 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionPurityContext;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
@@ -607,6 +609,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             this.spreadsheetStoreRepository = spreadsheetStoreRepository;
             this.spreadsheetEnvironmentContext = spreadsheetEnvironmentContext;
             this.spreadsheetProvider = spreadsheetProvider;
+        }
+
+        @Override
+        public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
+            return ExpressionNumberBinaryNumberConverterFunctions.multiply();
         }
 
         @Override
@@ -1311,12 +1318,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
 
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            MULTIPLIER,
             new SpreadsheetContextSupplier() {
                 @Override
                 public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                     return Optional.ofNullable(
                         spreadsheetId.equals(id) ?
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                MULTIPLIER,
                                 SpreadsheetEngines.fake(),
                                 this.repo, // SpreadsheetStoreRepository
                                 (c) -> {

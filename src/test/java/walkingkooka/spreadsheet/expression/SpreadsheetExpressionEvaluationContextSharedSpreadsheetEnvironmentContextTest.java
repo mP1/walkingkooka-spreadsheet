@@ -149,10 +149,28 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // with.............................................................................................................
 
     @Test
+    public void testWithNullMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                null,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullSpreadsheetContextSupplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -169,6 +187,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -185,6 +204,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 null,
@@ -201,6 +221,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -217,6 +238,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -233,6 +255,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -249,6 +272,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
@@ -1216,6 +1240,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                                                     final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            MULTIPLIER,
             spreadsheetContextSupplier,
             CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,

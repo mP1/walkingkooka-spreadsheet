@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.provider;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 
 public final class SpreadsheetProviderContexts implements PublicStaticHelper {
@@ -29,11 +31,13 @@ public final class SpreadsheetProviderContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetProviderContext}
      */
-    public static ProviderContext spreadsheet(final PluginStore pluginStore,
+    public static ProviderContext spreadsheet(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                              final PluginStore pluginStore,
                                               final CurrencyLocaleContext currencyLocaleContext,
                                               final EnvironmentContext environmentContext,
                                               final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return SpreadsheetProviderContext.with(
+            multiplier,
             pluginStore,
             currencyLocaleContext,
             environmentContext,

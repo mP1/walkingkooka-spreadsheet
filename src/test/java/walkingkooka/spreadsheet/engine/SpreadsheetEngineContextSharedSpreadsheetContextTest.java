@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
@@ -44,6 +45,7 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -84,6 +86,7 @@ import walkingkooka.terminal.TerminalContexts;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
@@ -844,6 +847,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             this.environmentContext = environmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
+        }
+
+        @Override
+        public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
+            return ExpressionNumberBinaryNumberConverterFunctions.multiply();
         }
 
         @Override

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextDelegator;
 import walkingkooka.currency.CurrencyLocaleContexts;
@@ -24,6 +25,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -49,13 +51,16 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     CurrencyLocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    SpreadsheetContextShared(final SpreadsheetEngine spreadsheetEngine,
+    SpreadsheetContextShared(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                             final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final CurrencyLocaleContext currencyLocaleContext,
                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext) {
         super();
+
+        this.multiplier = multiplier;
 
         this.spreadsheetEngine = spreadsheetEngine;
 
@@ -67,6 +72,13 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
     }
+
+    @Override
+    public final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
+        return this.multiplier;
+    }
+
+    final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
     // spreadsheetEngine................................................................................................
 

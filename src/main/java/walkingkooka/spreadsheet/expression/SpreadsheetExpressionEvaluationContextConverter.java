@@ -252,6 +252,17 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
     }
 
     @Override
+    public <N extends Number> N multiply(final Number left,
+                                         final Number right,
+                                         final Class<N> type) {
+        return this.context.multiply(
+            left,
+            right,
+            type
+        );
+    }
+
+    @Override
     public StoragePath parseStoragePath(final String text) {
         return this.context.parseStoragePath(text);
     }

@@ -312,6 +312,18 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         }
 
         @Override
+        public <N extends Number> N multiply(final Number left,
+                                             final Number right,
+                                             final Class<N> type) {
+            return MULTIPLIER.apply(
+                left,
+                right,
+                type,
+                this
+            );
+        }
+
+        @Override
         public char valueSeparator() {
             return ',';
         }

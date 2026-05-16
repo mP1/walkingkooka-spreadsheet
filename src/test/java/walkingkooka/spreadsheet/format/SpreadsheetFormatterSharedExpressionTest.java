@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -189,6 +190,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
+                    BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -196,6 +198,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                         LINE_ENDING,
                         ',', // valueSeparator
                         Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
                         CurrencyLocaleContexts.fake()
                             .setLocaleContext(
                                 LocaleContexts.jre(locale)
@@ -243,6 +246,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SpreadsheetLabelNameResolvers.fake(),
                     SpreadsheetContexts.fixedSpreadsheetId(
+                        MULTIPLIER,
                         SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {
                             @Override

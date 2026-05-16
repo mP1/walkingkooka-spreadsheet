@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.compare;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
@@ -36,6 +37,7 @@ import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
@@ -109,6 +111,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
+                ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -116,6 +119,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.objectToString(),
+                    BinaryNumberConverterFunctions.fake(), // multiplier
                     new FakeCurrencyContext() {
 
                         @Override

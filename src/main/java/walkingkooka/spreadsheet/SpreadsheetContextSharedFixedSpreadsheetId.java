@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -42,13 +44,15 @@ import java.util.function.Function;
  */
 final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedFixedSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
+    static SpreadsheetContextSharedFixedSpreadsheetId with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                           final SpreadsheetEngine spreadsheetEngine,
                                                            final SpreadsheetStoreRepository storeRepository,
                                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                                            final CurrencyLocaleContext currencyLocaleContext,
                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                            final SpreadsheetProvider spreadsheetProvider,
                                                            final ProviderContext providerContext) {
+        Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(storeRepository, "storeRepository");
         Objects.requireNonNull(httpRouterFactory, "httpRouterFactory");
@@ -58,6 +62,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedFixedSpreadsheetId(
+            multiplier,
             spreadsheetEngine,
             storeRepository,
             null, // SpreadsheetStoreRepository
@@ -71,7 +76,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         );
     }
 
-    private SpreadsheetContextSharedFixedSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+    private SpreadsheetContextSharedFixedSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                       final SpreadsheetEngine spreadsheetEngine,
                                                        final SpreadsheetStoreRepository storeRepository,
                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                        final SpreadsheetEngineContext spreadsheetEngineContext,
@@ -82,6 +88,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final SpreadsheetProvider spreadsheetProvider,
                                                        final ProviderContext providerContext) {
         super(
+            multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
             currencyLocaleContext,
@@ -159,6 +166,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedFixedSpreadsheetId(
+            this.multiplier,
             this.spreadsheetEngine,
             this.storeRepository, // keep
             this.spreadsheetMetadataContext, // keep

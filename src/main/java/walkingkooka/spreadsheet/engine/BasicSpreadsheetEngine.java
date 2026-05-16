@@ -827,6 +827,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context.indentation(),
                 context, // ConverterProvider
                 context.lineEnding(),
+                context.multiplier(), // multiplier
                 context, // SpreadsheetLabelNameResolver
                 context, // CurrencyLocaleContext
                 providerContext// ProviderContext
@@ -1898,6 +1899,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                 context.indentation(),
                                 context, // SpreadsheetLabelNameResolver
                                 context.lineEnding(),
+                                context.multiplier(), // multiplier
                                 context, // ConverterProvider
                                 context, // CurrencyLocaleContext
                                 providerContext // ProviderContext

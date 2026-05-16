@@ -17,7 +17,9 @@
 
 package walkingkooka.spreadsheet.provider;
 
+import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContextDelegator;
@@ -57,11 +59,13 @@ final class SpreadsheetProviderContext implements ProviderContext,
     EnvironmentContextDelegator,
     ConverterContextDelegator {
 
-    static SpreadsheetProviderContext with(final PluginStore pluginStore,
+    static SpreadsheetProviderContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                           final PluginStore pluginStore,
                                            final CurrencyLocaleContext currencyLocaleContext,
                                            final EnvironmentContext environmentContext,
                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return new SpreadsheetProviderContext(
+            Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
@@ -70,11 +74,14 @@ final class SpreadsheetProviderContext implements ProviderContext,
         );
     }
 
-    private SpreadsheetProviderContext(final PluginStore pluginStore,
+    private SpreadsheetProviderContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                       final PluginStore pluginStore,
                                        final ConverterContext converterContext,
                                        final CurrencyLocaleContext currencyLocaleContext,
                                        final EnvironmentContext environmentContext,
                                        final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
+        this.multiplier = multiplier;
+        
         this.pluginStore = pluginStore;
 
         this.converterContext = converterContext;
@@ -115,6 +122,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
     private void setConverterContext(final Locale locale) {
         final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.system();
 
+        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier = this.multiplier;
+
         final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
         final EnvironmentContext environmentContext = this.environmentContext;
 
@@ -127,6 +136,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     converter.cast(ExpressionNumberConverterContext.class),
+                    Cast.to(multiplier), // ExpressionNumberConverterContext
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
@@ -134,6 +144,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                         environmentContext.lineEnding(),
                         ',', // valueSeparator
                         converter.cast(ConverterContext.class),
+                        Cast.to(multiplier),
                         this.currencyLocaleContext,
                         DateTimeContexts.basic(
                             currencyLocaleContext.dateTimeSymbolsForLocale(locale)
@@ -159,6 +170,8 @@ final class SpreadsheetProviderContext implements ProviderContext,
         );
     }
 
+    private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
+
     // EnvironmentContext...............................................................................................
 
     @Override
@@ -175,6 +188,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
         return before == environmentContext ?
             this :
             new SpreadsheetProviderContext(
+                this.multiplier,
                 this.pluginStore,
                 null, // recreate because environmentContext changed.
                 this.currencyLocaleContext,
@@ -251,13 +265,16 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     private boolean equals0(final SpreadsheetProviderContext other) {
-        return this.pluginStore.equals(other.pluginStore) &&
+        return this.multiplier.equals(other.multiplier) &&
+            this.pluginStore.equals(other.pluginStore) &&
             this.environmentContext.equals(other.environmentContext);
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.empty()
+            .label("multiplier")
+            .value(this.multiplier)
             .label("pluginStore")
             .value(this.pluginStore)
             .label("converterContext")

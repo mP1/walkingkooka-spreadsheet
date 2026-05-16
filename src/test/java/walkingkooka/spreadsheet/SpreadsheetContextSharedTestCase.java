@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.provider.ConverterProviders;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContexts;
@@ -39,6 +40,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -57,6 +59,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
@@ -73,6 +76,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetContextShared> implements SpreadsheetContextTesting<C>,
     ToStringTesting<C> {
+
+    final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 
     final static SpreadsheetEngine SPREADSHEET_ENGINE = SpreadsheetEngines.fake();
 

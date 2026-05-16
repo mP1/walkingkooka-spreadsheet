@@ -68,10 +68,28 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     @Test
+    public void testWithNullMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                null,
+                SPREADSHEET_ENGINE,
+                REPO,
+                HTTP_ROUTER_FACTORY,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullSpreadsheetEngineFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MULTIPLIER,
                 null,
                 REPO,
                 HTTP_ROUTER_FACTORY,
@@ -88,6 +106,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
                 HTTP_ROUTER_FACTORY,
@@ -104,6 +123,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 REPO,
                 null,
@@ -403,6 +423,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         store.save(metadata);
 
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
+            MULTIPLIER,
             SPREADSHEET_ENGINE,
             new FakeSpreadsheetStoreRepository() {
 

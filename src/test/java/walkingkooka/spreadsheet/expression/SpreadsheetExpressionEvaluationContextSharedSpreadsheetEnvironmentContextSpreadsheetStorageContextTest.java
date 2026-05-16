@@ -64,6 +64,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.validation.form.Form;
@@ -753,11 +754,13 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext.with(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 new SpreadsheetContextSupplier() {
                     @Override
                     public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                         return Optional.of(
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                                 SpreadsheetEngines.basic(),
                                 repo,
                                 (c) -> {

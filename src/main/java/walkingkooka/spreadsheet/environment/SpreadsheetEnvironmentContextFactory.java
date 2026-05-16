@@ -17,8 +17,10 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -51,6 +53,7 @@ import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -163,12 +166,14 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
 
-    public static SpreadsheetEnvironmentContextFactory with(final CurrencyLocaleContext currencyLocaleContext,
+    public static SpreadsheetEnvironmentContextFactory with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                            final CurrencyLocaleContext currencyLocaleContext,
                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                             final SpreadsheetProvider spreadsheetProvider,
                                                             final ProviderContext providerContext) {
         return new SpreadsheetEnvironmentContextFactory(
             null, // Converter
+            Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
             null, // SpreadsheetConverterContext
             null, // DateTimeContext
@@ -186,6 +191,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
     private SpreadsheetEnvironmentContextFactory(final Converter<SpreadsheetConverterContext> converter,
+                                                 final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final CurrencyLocaleContext currencyLocaleContext,
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
                                                  final DateTimeContext dateTimeContext,
@@ -202,6 +208,9 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         super();
 
         this.converter = converter;
+
+        this.multiplier = multiplier;
+
         this.spreadsheetConverterContext = spreadsheetConverterContext;
 
         this.currencyLocaleContext = currencyLocaleContext;
@@ -305,6 +314,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             missing.reportIfMissing();
 
+            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier = this.multiplier;
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
@@ -317,6 +327,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        Cast.<BinaryNumberConverterFunction<ExpressionNumberConverterContext>>to(multiplier), // ,
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
@@ -324,6 +335,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                             spreadsheetEnvironmentContext.lineEnding(),
                             valueSeparator, // valueSeparator
                             Converters.fake(),
+                            Cast.to(multiplier),
                             currencyLocaleContext,
                             dateTimeContext,
                             decimalNumberContext
@@ -340,6 +352,8 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         }
         return this.spreadsheetConverterContext;
     }
+
+    private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
     private transient SpreadsheetConverterContext spreadsheetConverterContext;
 
@@ -593,6 +607,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                                                 final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetEnvironmentContextFactory(
             this.converter,
+            this.multiplier,
             this.currencyLocaleContext,
             spreadsheetConverterContext,
             this.dateTimeContext, //
@@ -747,6 +762,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return before == after ?
             this :
             with(
+                this.multiplier,
                 this.currencyLocaleContext,
                 after,
                 this.spreadsheetProvider,
@@ -778,6 +794,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     private boolean equals0(final SpreadsheetEnvironmentContextFactory other) {
         return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
             Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
+            this.multiplier.equals(other.multiplier) &&
             this.currencyLocaleContext.equals(other.currencyLocaleContext) &&
             this.spreadsheetEnvironmentContext.equals(other.spreadsheetEnvironmentContext) &&
             this.spreadsheetProvider.equals(other.spreadsheetProvider) &&

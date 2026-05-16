@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -38,6 +39,7 @@ import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
@@ -210,6 +212,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         return JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
+                ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -217,6 +220,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                     LineEnding.NL,
                     ',', // valueSeparator
                     Converters.fake(),
+                    BinaryNumberConverterFunctions.fake(), // multiplier
                     new FakeCurrencyContext() {
 
                         @Override

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.email.EmailAddress;
@@ -25,6 +26,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.HasProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -83,6 +85,11 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
      * Returns the {@link Router} for this spreadsheet.
      */
     Router<HttpRequestAttribute<?>, HttpHandler> httpRouter();
+
+    /**
+     * Getter that returns the {@link SpreadsheetConverterContext} multiplier.
+     */
+    BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier();
 
     // EnvironmentContext...............................................................................................
 
