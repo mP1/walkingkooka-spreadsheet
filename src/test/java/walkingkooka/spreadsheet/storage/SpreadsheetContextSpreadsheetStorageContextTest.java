@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.currency.FakeCurrencyExchangeRater;
@@ -606,6 +607,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(
+                BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(metadataStore),
                 (c) -> {

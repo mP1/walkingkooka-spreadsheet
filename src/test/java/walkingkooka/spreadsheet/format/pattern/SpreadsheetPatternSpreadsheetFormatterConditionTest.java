@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -40,6 +41,7 @@ import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 
@@ -331,6 +333,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                     target,
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -338,6 +341,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.fake(),
                             this

@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
@@ -53,7 +55,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                         final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                          final CurrencyContext currencyContext,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                          final LocaleContext localeContext,
@@ -62,6 +65,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            multiplier,
             spreadsheetContextSupplier,
             currencyContext,
             spreadsheetEnvironmentContext,

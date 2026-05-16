@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.AuditInfo;
@@ -458,6 +459,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(metadataStore),
             (c) -> {

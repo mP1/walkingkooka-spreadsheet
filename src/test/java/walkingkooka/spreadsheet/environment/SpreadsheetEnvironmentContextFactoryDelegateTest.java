@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.environment;
 
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -102,6 +103,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
+                BinaryNumberConverterFunctions.fake(), // multiplier
                 CurrencyContexts.fake()
                     .setLocaleContext(
                         LocaleContexts.jre(SpreadsheetEnvironmentContextFactoryDelegateTest.LOCALE)

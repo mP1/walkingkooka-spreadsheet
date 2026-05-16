@@ -849,6 +849,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
                                                          final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                          final ProviderContext providerContext) {
         return SpreadsheetContexts.fixedSpreadsheetId(
+            MULTIPLIER,
             SpreadsheetEngines.fake(),
             storeRepository,
             (c) -> {

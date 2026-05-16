@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
+import walkingkooka.convert.BinaryNumberConverterFunction;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
 import walkingkooka.currency.CurrencyContexts;
@@ -36,6 +38,7 @@ import walkingkooka.plugin.ProviderContextTesting;
 import walkingkooka.plugin.store.PluginStore;
 import walkingkooka.plugin.store.PluginStores;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -56,6 +59,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext> {
+
+    private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
     private final static PluginStore PLUGIN_STORE = PluginStores.fake();
 
@@ -123,10 +128,25 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     // with.............................................................................................................
 
     @Test
+    public void testWithNullMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetProviderContext.with(
+                null,
+                PLUGIN_STORE,
+                CURRENCY_LOCALE_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullPluginStoreFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
@@ -140,6 +160,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PLUGIN_STORE,
                 null,
                 ENVIRONMENT_CONTEXT,
@@ -153,6 +174,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
                 null,
@@ -166,6 +188,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
@@ -302,6 +325,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
         return SpreadsheetProviderContext.with(
+            MULTIPLIER,
             PLUGIN_STORE,
             CURRENCY_LOCALE_CONTEXT,
             environmentContext,
@@ -334,9 +358,23 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentBinaryNumberConverterFunction() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                BinaryNumberConverterFunctions.fake(),
+                PLUGIN_STORE,
+                CURRENCY_LOCALE_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentPluginStore() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PluginStores.fake(),
                 CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,
@@ -349,6 +387,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PLUGIN_STORE,
                 CurrencyContexts.fake()
                     .setLocaleContext(
@@ -367,6 +406,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
                 environmentContext,
@@ -379,6 +419,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentJsonNodeMarshallUnmarshallContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
                 ENVIRONMENT_CONTEXT,

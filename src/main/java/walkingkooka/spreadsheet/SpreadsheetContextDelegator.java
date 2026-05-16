@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.locale.LocaleContext;
@@ -26,6 +27,7 @@ import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextDelegator;
@@ -59,6 +61,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default Router<HttpRequestAttribute<?>, HttpHandler> httpRouter() {
         return this.spreadsheetContext()
             .httpRouter();
+    }
+
+    @Override
+    default BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
+        return this.spreadsheetContext()
+            .multiplier();
     }
 
     // CurrencyContext..................................................................................................

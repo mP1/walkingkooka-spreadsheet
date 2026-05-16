@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -42,13 +44,15 @@ import java.util.Objects;
  */
 final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedMutableSpreadsheetId with(final SpreadsheetEngine spreadsheetEngine,
+    static SpreadsheetContextSharedMutableSpreadsheetId with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                             final SpreadsheetEngine spreadsheetEngine,
                                                              final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                              final CurrencyLocaleContext currencyLocaleContext,
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
+        Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
@@ -58,6 +62,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedMutableSpreadsheetId(
+            multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,
@@ -69,7 +74,8 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         );
     }
 
-    private SpreadsheetContextSharedMutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+    private SpreadsheetContextSharedMutableSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                         final SpreadsheetEngine spreadsheetEngine,
                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                          final SpreadsheetEngineContext spreadsheetEngineContext,
@@ -78,6 +84,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                          final SpreadsheetProvider spreadsheetProvider,
                                                          final ProviderContext providerContext) {
         super(
+            multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
             currencyLocaleContext,
@@ -117,6 +124,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     @Override
     SpreadsheetEngineContext createSpreadsheetEngineContext() {
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            this.multiplier,
             this.spreadsheetContextSupplier,
             this.currencyContext(),
             this.spreadsheetEnvironmentContext(),
@@ -144,6 +152,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedMutableSpreadsheetId(
+            this.multiplier,
             this.spreadsheetEngine,
             this.spreadsheetContextSupplier,
             this.spreadsheetMetadataContext,

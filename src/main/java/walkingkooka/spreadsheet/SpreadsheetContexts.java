@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.route.Router;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
@@ -37,7 +39,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedFixedSpreadsheetId}
      */
-    public static SpreadsheetContext fixedSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+    public static SpreadsheetContext fixedSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                        final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
                                                         final CurrencyLocaleContext currencyLocaleContext,
@@ -45,6 +48,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final SpreadsheetProvider spreadsheetProvider,
                                                         final ProviderContext providerContext) {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
+            multiplier,
             spreadsheetEngine,
             storeRepository,
             httpRouterFactory,
@@ -65,7 +69,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
-    public static SpreadsheetContext mutableSpreadsheetId(final SpreadsheetEngine spreadsheetEngine,
+    public static SpreadsheetContext mutableSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                          final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                           final CurrencyLocaleContext currencyLocaleContext,
@@ -73,6 +78,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final SpreadsheetProvider spreadsheetProvider,
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,
             spreadsheetMetadataContext,

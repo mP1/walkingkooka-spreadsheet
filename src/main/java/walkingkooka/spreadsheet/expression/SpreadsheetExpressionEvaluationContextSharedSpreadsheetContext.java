@@ -266,6 +266,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                     this.indentation(),
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
+                    spreadsheetContext.multiplier(),
                     spreadsheetContext, // SpreadsheetProvider, // SpreadsheetConverterProvider
                     spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext.providerContext()
@@ -344,6 +345,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
                 this.indentation(),
                 this.spreadsheetLabelNameResolver,
                 this.lineEnding(),
+                spreadsheetContext.multiplier(),
                 spreadsheetContext, // CurrencyLocaleContext
                 spreadsheetContext, // SpreadsheetProvider
                 spreadsheetContext.providerContext() // ProviderContext

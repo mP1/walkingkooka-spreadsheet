@@ -119,6 +119,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SPREADSHEET_LABEL_NAME_RESOLVER,
                     SpreadsheetContexts.fixedSpreadsheetId(
+                        MULTIPLIER,
                         SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {
                             @Override
@@ -152,6 +153,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                 Indentation.SPACES2,
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_PROVIDER,
                 PROVIDER_CONTEXT
@@ -4753,6 +4755,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
             Indentation.SPACES2,
             SPREADSHEET_LABEL_NAME_RESOLVER,
             LINE_ENDING,
+            MULTIPLIER,
             CURRENCY_LOCALE_CONTEXT,
             SPREADSHEET_PROVIDER,
             PROVIDER_CONTEXT

@@ -28,6 +28,7 @@ import walkingkooka.collect.list.StringList;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.color.RgbColor;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
@@ -3631,6 +3632,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
+                    BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -3638,6 +3640,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.basic(
                             DateTimeSymbols.fromDateFormatSymbols(
@@ -3991,6 +3994,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(), // not used
+                    BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -3998,6 +4002,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                         LineEnding.NL,
                         ',', // valueSeparator
                         Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
                         CurrencyLocaleContexts.fake(),
                         DateTimeContexts.fake(), // unused only doing numbers
                         DecimalNumberContexts.american(MathContext.DECIMAL32)

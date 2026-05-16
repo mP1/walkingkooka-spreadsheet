@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert.provider;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
@@ -208,6 +209,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -215,6 +217,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)

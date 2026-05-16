@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.environment.EnvironmentContext;
@@ -210,10 +211,25 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // with.............................................................................................................
 
     @Test
+    public void testWithNullMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEnvironmentContextFactory.with(
+                null,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullCurrencyLocaleContextFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 null,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -227,6 +243,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 null,
                 SPREADSHEET_PROVIDER,
@@ -241,6 +258,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 null,
@@ -254,6 +272,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -697,6 +716,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     private SpreadsheetEnvironmentContextFactory createContext(final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                final ProviderContext providerContext) {
         return SpreadsheetEnvironmentContextFactory.with(
+            MULTIPLIER,
             CURRENCY_LOCALE_CONTEXT,
             spreadsheetEnvironmentContext,
             SPREADSHEET_PROVIDER,
@@ -783,9 +803,23 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentMultiplier() {
+        this.checkNotEquals(
+            SpreadsheetEnvironmentContextFactory.with(
+                BinaryNumberConverterFunctions.fake(),
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CurrencyLocaleContexts.fake(),
                 SPREADSHEET_ENVIRONMENT_CONTEXT,
                 SPREADSHEET_PROVIDER,
@@ -807,6 +841,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
 
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 spreadsheetEnvironmentContext,
                 SPREADSHEET_PROVIDER,
@@ -819,6 +854,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 SpreadsheetProviders.fake(),
@@ -831,6 +867,7 @@ public final class SpreadsheetEnvironmentContextFactoryTest implements Spreadshe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEnvironmentContextFactory.with(
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
                 SPREADSHEET_PROVIDER,

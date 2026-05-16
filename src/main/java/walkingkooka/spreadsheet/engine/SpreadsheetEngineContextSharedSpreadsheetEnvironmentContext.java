@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.environment.EnvironmentContext;
@@ -24,6 +25,7 @@ import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactory;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextFactoryDelegate;
@@ -57,7 +59,8 @@ import java.util.Optional;
 final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends SpreadsheetEngineContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                            final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                             final CurrencyContext currencyContext,
                                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                             final LocaleContext localeContext,
@@ -65,6 +68,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                                                                             final TerminalContext terminalContext,
                                                                             final SpreadsheetProvider spreadsheetProvider,
                                                                             final ProviderContext providerContext) {
+        Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(currencyContext, "currencyContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
@@ -75,9 +79,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
+            multiplier,
             spreadsheetContextSupplier,
             currencyContext,
             SpreadsheetEnvironmentContextFactory.with(
+                multiplier,
                 currencyContext.setLocaleContext(localeContext),
                 spreadsheetEnvironmentContext,
                 spreadsheetProvider,
@@ -88,12 +94,15 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         );
     }
 
-    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                        final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                         final CurrencyContext currencyContext,
                                                                         final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                         final TerminalContext terminalContext) {
         super();
+
+        this.multiplier = multiplier;
 
         this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
@@ -195,6 +204,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory = this.spreadsheetEnvironmentContextFactory;
 
             spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
+                this.multiplier,
                 this.spreadsheetContextSupplier,
                 spreadsheetEnvironmentContextFactory.currencyLocaleContext(),
                 spreadsheetEnvironmentContextFactory.spreadsheetEnvironmentContext(),
@@ -270,6 +280,14 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return this.spreadsheetEnvironmentContextFactory.currencyLocaleContext();
     }
 
+
+    @Override
+    public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
+        return this.multiplier;
+    }
+
+    private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
+
     // SpreadsheetContextDelegator......................................................................................
 
     @Override
@@ -343,6 +361,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return before == after ?
             this :
             new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
+                this.multiplier,
                 this.spreadsheetContextSupplier,
                 this.currencyContext,
                 after,
@@ -383,6 +402,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     @Override
     public int hashCode() {
         return Objects.hash(
+            this.multiplier,
             this.spreadsheetContextSupplier,
             this.spreadsheetEnvironmentContextFactory,
             this.spreadsheetMetadataContext,
@@ -399,6 +419,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     private boolean equals0(final SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext other) {
         return
+            this.multiplier.equals(other.multiplier) &&
             this.spreadsheetContextSupplier.equals(other.spreadsheetContextSupplier) &&
             this.spreadsheetEnvironmentContextFactory.equals(other.spreadsheetEnvironmentContextFactory) &&
             this.spreadsheetMetadataContext.equals(other.spreadsheetMetadataContext) &&

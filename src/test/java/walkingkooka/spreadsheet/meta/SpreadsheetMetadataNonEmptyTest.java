@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
@@ -94,6 +95,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.expression.convert.FakeExpressionNumberConverterContext;
@@ -1418,6 +1420,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
+                        ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -1425,6 +1428,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             LINE_ENDING,
                             ',', // valueSeparator
                             Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
                             CurrencyLocaleContexts.fake(),
                             DateTimeContexts.basic(
                                 DateTimeSymbols.fromDateFormatSymbols(
@@ -2050,6 +2054,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2097,6 +2102,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MULTIPLIER,
                 CURRENCY_LOCALE_CONTEXT,
                 SpreadsheetProviders.basic(
                     SpreadsheetConvertersConverterProviders.spreadsheetConverters(
@@ -2436,6 +2442,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 INDENTATION,
                 LABEL_NAME_RESOLVER,
                 LINE_ENDING,
+                MULTIPLIER,
                 ConverterProviders.converters(),
                 CURRENCY_LOCALE_CONTEXT,
                 PROVIDER_CONTEXT

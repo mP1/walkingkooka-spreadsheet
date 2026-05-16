@@ -18,12 +18,14 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContexts;
@@ -131,6 +133,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                     this.indentation(),
                     this.spreadsheetLabelNameResolver,
                     this.lineEnding(),
+                    spreadsheetContext.multiplier(),
                     spreadsheetContext, // CurrencyLocaleContext
                     spreadsheetContext, // SpreadsheetProvider
                     spreadsheetContext.providerContext()
@@ -311,6 +314,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
                 this.indentation(),
                 this, // SpreadsheetLabelNameResolver,
                 this.lineEnding(),
+                context.multiplier(),
                 context, // CurrencyLocaleContext
                 context, // spreadsheetProvider,
                 context.providerContext() // ProviderContext
@@ -319,6 +323,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
 
     // SpreadsheetContextDelegator......................................................................................
 
+    @Override
+    public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {
+        return this.spreadsheetContext.multiplier();
+    }
+    
     @Override
     public SpreadsheetStoreRepository storeRepository() {
         return this.spreadsheetContext.storeRepository();

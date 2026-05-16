@@ -71,10 +71,28 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     private final static Locale OTHER_SPREADSHEET_LOCALE = Locale.FRANCE;
 
     @Test
+    public void testWithNullMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                null,
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                SPREADSHEET_METADATA_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullSpreadsheetEngineFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MULTIPLIER,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -91,6 +109,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
                 SPREADSHEET_METADATA_CONTEXT,
@@ -107,6 +126,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
@@ -481,6 +501,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         );
 
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            MULTIPLIER,
             SPREADSHEET_ENGINE,
             (SpreadsheetId id) -> {
                 final SpreadsheetStoreRepository repo = spreadsheetIdToSpreadsheetStoreRepository.get(id);

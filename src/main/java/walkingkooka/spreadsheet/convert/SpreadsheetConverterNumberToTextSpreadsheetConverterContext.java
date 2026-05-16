@@ -148,6 +148,17 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     @Override
+    public <N extends Number> N multiply(final Number left,
+                                         final Number right,
+                                         final Class<N> type) {
+        return this.spreadsheetConverterContext.multiply(
+            left,
+            right,
+            type
+        );
+    }
+
+    @Override
     public Optional<StoragePath> currentWorkingDirectory() {
         throw new UnsupportedOperationException();
     }

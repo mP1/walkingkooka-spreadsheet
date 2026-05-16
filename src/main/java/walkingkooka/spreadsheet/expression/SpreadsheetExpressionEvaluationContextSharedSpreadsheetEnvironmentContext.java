@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyLocaleContext;
@@ -85,13 +86,15 @@ import java.util.Set;
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+                                                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                           final CurrencyLocaleContext currencyLocaleContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                                           final TerminalContext terminalContext,
                                                                                           final SpreadsheetProvider spreadsheetProvider,
                                                                                           final ProviderContext providerContext) {
+        Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
@@ -103,6 +106,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
+                multiplier,
                 currencyLocaleContext,
                 spreadsheetEnvironmentContext,
                 spreadsheetProvider,

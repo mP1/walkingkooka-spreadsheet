@@ -24,6 +24,7 @@ import org.junit.jupiter.api.TestInfo;
 import walkingkooka.Either;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
@@ -4261,6 +4262,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                     target,
                     ExpressionNumberConverterContexts.basic(
                         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
@@ -4268,6 +4270,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                             LineEnding.NL,
                             ',', // valueSeparator
                             Converters.fake(),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
                             CurrencyLocaleContexts.fake(),
                             dateTimeContext(),
                             decimalNumberContext()
