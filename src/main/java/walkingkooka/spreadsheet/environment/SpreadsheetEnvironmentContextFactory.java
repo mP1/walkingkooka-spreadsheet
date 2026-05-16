@@ -781,7 +781,13 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
     @Override
     public int hashCode() {
-        return this.spreadsheetEnvironmentContext.hashCode();
+        return Objects.hash(
+            this.multiplier,
+            this.currencyLocaleContext,
+            this.spreadsheetEnvironmentContext,
+            this.spreadsheetProvider,
+            this.providerContext
+        );
     }
 
     @Override
