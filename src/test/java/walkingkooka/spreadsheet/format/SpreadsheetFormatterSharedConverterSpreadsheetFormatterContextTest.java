@@ -58,44 +58,149 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
 
     private final static Locale LOCALE = Locale.FRANCE;
 
+    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.basic(
+        DateTimeSymbols.fromDateFormatSymbols(
+            new DateFormatSymbols(LOCALE)
+        ),
+        LOCALE,
+        1900,
+        19,
+        LocalDateTime::now
+    );
+
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(
+        DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
+        DecimalNumberSymbols.fromDecimalFormatSymbols(
+            '+',
+            DecimalFormatSymbols.getInstance(LOCALE)
+        ),
+        LOCALE,
+        MathContext.UNLIMITED
+    );
+
+    static {
+        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
+
+        CONVERTER_CONTEXT = SpreadsheetConverterContexts.basic(
+            HasUserDirectorieses.fake(),
+            SpreadsheetConverterContexts.NO_METADATA,
+            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
+            SpreadsheetConverters.system(),
+            (s) -> {
+                throw new UnsupportedOperationException();
+            },
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
+                    Converters.fake(),
+                    BinaryNumberConverterFunctions.multiply(), // multiplier
+                    ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
+                        LineEnding.NL,
+                        ',', // valueSeparator
+                        Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
+                        new FakeCurrencyContext() {
+
+                            @Override
+                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+                                return Optional.of(
+                                    Currency.getInstance(
+                                        currencyCode.value()
+                                    )
+                                );
+                            }
+
+                            @Override
+                            public Optional<Currency> currencyForLocale(final Locale locale) {
+                                return Optional.of(
+                                    Currency.getInstance(locale)
+                                );
+                            }
+                        }.setLocaleContext(localeContext),
+                        DATE_TIME_CONTEXT,
+                        DECIMAL_NUMBER_CONTEXT
+                    ),
+                    ExpressionNumberKind.DEFAULT
+                ),
+                JsonNodeMarshallUnmarshallContexts.fake()
+            ),
+            localeContext
+        );
+    }
+
+    private final static SpreadsheetConverterContext CONVERTER_CONTEXT;
+
     @Test
     public void testConvertSameType() {
-        this.convertAndCheck(this.createContext(), "value123", String.class, "value123");
+        this.convertAndCheck(
+            this.createContext(),
+            "value123",
+            String.class,
+            "value123"
+        );
     }
 
     @Test
     public void testConvertSubClass() {
         final BigDecimal value = BigDecimal.ONE;
-        this.convertAndCheck(value, Number.class, value);
+        this.convertAndCheck(
+            value,
+            Number.class,
+            value
+        );
     }
 
     @Test
     public void testConvertByteToBigDecimal() {
-        this.convertAndCheck(Byte.MAX_VALUE, BigDecimal.class, BigDecimal.valueOf(Byte.MAX_VALUE));
+        this.convertAndCheck(
+            Byte.MAX_VALUE,
+            BigDecimal.class,
+            BigDecimal.valueOf(
+                Byte.MAX_VALUE
+            )
+        );
     }
 
     @Test
     public void testConvertBigDecimalToByte() {
-        this.convertAndCheck(BigDecimal.valueOf(Byte.MAX_VALUE), Byte.class, Byte.MAX_VALUE);
+        this.convertAndCheck(
+            BigDecimal.valueOf(
+                Byte.MAX_VALUE
+            ),
+            Byte.class,
+            Byte.MAX_VALUE
+        );
     }
 
     @Test
     public void testConvertDate() {
-        final LocalDate date = LocalDate.of(2000, 1, 31);
-        this.convertAndCheck(date,
+        final LocalDate date = LocalDate.of(
+            2000,
+            1,
+            31
+        );
+
+        this.convertAndCheck(
+            date,
             LocalDateTime.class,
             Converters.localDateToLocalDateTime()
                 .convertOrFail(
                     date,
                     LocalDateTime.class,
-                    this.converterContext()
+                    CONVERTER_CONTEXT
                 )
         );
     }
 
     @Test
     public void testConvertTime() {
-        final LocalTime time = LocalTime.of(12, 58, 59);
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
         this.convertAndCheck(
             time,
             LocalDateTime.class,
@@ -103,14 +208,14 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                 .convertOrFail(
                     time,
                     LocalDateTime.class,
-                    this.converterContext()
+                    CONVERTER_CONTEXT
                 )
         );
     }
 
     @Test
     public void testToString() {
-        final SpreadsheetConverterContext converterContext = this.converterContext();
+        final SpreadsheetConverterContext converterContext = CONVERTER_CONTEXT;
         this.toStringAndCheck(
             SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(converterContext),
             converterContext.toString()
@@ -124,7 +229,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
 
     @Override
     public SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext createContext() {
-        return SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(this.converterContext());
+        return SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext.with(CONVERTER_CONTEXT);
     }
 
     @Override
@@ -173,83 +278,11 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
         return this.decimalNumberContext().positiveSign();
     }
 
-    private SpreadsheetConverterContext converterContext() {
-        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
-
-        return SpreadsheetConverterContexts.basic(
-            HasUserDirectorieses.fake(),
-            SpreadsheetConverterContexts.NO_METADATA,
-            SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
-            SpreadsheetConverters.system(),
-            (s) -> {
-                throw new UnsupportedOperationException();
-            },
-            JsonNodeConverterContexts.basic(
-                ExpressionNumberConverterContexts.basic(
-                    Converters.fake(),
-                    BinaryNumberConverterFunctions.multiply(), // multiplier
-                    ConverterContexts.basic(
-                        false, // canNumbersHaveGroupSeparator
-                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                        INDENTATION,
-                        LineEnding.NL,
-                        ',', // valueSeparator
-                        Converters.fake(),
-                        BinaryNumberConverterFunctions.fake(), // multiplier
-                        new FakeCurrencyContext() {
-
-                            @Override
-                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                                return Optional.of(
-                                    Currency.getInstance(
-                                        currencyCode.value()
-                                    )
-                                );
-                            }
-
-                            @Override
-                            public Optional<Currency> currencyForLocale(final Locale locale) {
-                                return Optional.of(
-                                    Currency.getInstance(locale)
-                                );
-                            }
-                        }.setLocaleContext(localeContext),
-                        dateTimeContext(),
-                        decimalNumberContext()
-                    ),
-                    ExpressionNumberKind.DEFAULT
-                ),
-                JsonNodeMarshallUnmarshallContexts.fake()
-            ),
-            localeContext
-        );
-    }
-
-    private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.basic(
-            DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(LOCALE)
-            ),
-            LOCALE,
-            1900,
-            19,
-            LocalDateTime::now
-        );
-    }
-
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic(
-            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
-            DecimalNumberSymbols.fromDecimalFormatSymbols(
-                '+',
-                DecimalFormatSymbols.getInstance(LOCALE)
-            ),
-            LOCALE,
-            MathContext.UNLIMITED
-        );
+        return DECIMAL_NUMBER_CONTEXT;
     }
 
     // class............................................................................................................
