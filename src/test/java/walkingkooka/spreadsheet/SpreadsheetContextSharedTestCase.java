@@ -148,8 +148,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
             new FakeCurrencyExchangeRater() {
 
                 @Override
-                public Optional<Number> exchangeRate(CurrencyExchange currencyExchange,
-                                                     final Optional<LocalDateTime> dateTime) {
+                public Optional<Number> currencyExchangeRate(CurrencyExchange currencyExchange,
+                                                             final Optional<LocalDateTime> dateTime) {
                     Objects.requireNonNull(currencyExchange, "currencyExchange");
                     Objects.requireNonNull(dateTime, "dateTime");
 
