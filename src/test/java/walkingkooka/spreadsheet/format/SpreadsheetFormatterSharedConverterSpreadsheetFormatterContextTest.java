@@ -22,6 +22,7 @@ import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -51,6 +52,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting2<SpreadsheetFormatterSharedConverterSpreadsheetFormatterContext>,
@@ -102,6 +104,15 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
                         Converters.fake(),
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         new FakeCurrencyContext() {
+
+                            @Override
+                            public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                                         final Optional<LocalDateTime> dateTime) {
+                                Objects.requireNonNull(currencyExchange, "currencyExchange");
+                                Objects.requireNonNull(dateTime, "dateTime");
+
+                                throw new UnsupportedOperationException();
+                            }
 
                             @Override
                             public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {

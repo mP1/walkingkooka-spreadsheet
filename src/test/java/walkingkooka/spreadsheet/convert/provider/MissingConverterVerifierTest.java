@@ -25,6 +25,8 @@ import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyExchangeRaterDelegator;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.locale.LocaleContext;
@@ -195,6 +197,7 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
     }
 
     static class TestSpreadsheetConverterContext implements SpreadsheetConverterContext,
+        CurrencyExchangeRaterDelegator,
         DateTimeContextDelegator,
         DecimalNumberContextDelegator,
         JsonNodeMarshallUnmarshallContextDelegator,
@@ -280,6 +283,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
             JSON_NODE_MARSHALL_CONTEXT,
             JSON_NODE_UNMARSHALL_CONTEXT
         );
+
+        @Override
+        public CurrencyExchangeRater currencyExchangeRater() {
+            return CURRENCY_CONTEXT;
+        }
 
         @Override
         public Optional<Currency> currencyForLocale(final Locale locale) {

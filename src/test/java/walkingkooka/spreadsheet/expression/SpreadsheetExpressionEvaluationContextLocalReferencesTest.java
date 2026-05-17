@@ -24,6 +24,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -782,6 +783,15 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         @Override
         public SpreadsheetValidatorContext validatorContext(final SpreadsheetValidationReference reference) {
             Objects.requireNonNull(reference, "reference");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                     final Optional<LocalDateTime> dateTime) {
+            Objects.requireNonNull(currencyExchange, "currencyExchange");
+            Objects.requireNonNull(dateTime, "dateTime");
 
             throw new UnsupportedOperationException();
         }
