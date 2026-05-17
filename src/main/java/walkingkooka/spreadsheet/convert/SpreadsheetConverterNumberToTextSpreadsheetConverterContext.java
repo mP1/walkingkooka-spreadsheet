@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyCode;
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyExchangeRaterDelegator;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.datetime.DateTimeContexts;
@@ -49,6 +51,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implements SpreadsheetConverterContext,
+    CurrencyExchangeRaterDelegator,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator,
     JsonNodeMarshallUnmarshallContextDelegator,
@@ -194,6 +197,13 @@ final class SpreadsheetConverterNumberToTextSpreadsheetConverterContext implemen
     }
 
     private final SpreadsheetConverterContext spreadsheetConverterContext;
+
+    // CurrencyExchangeRaterDelegator...................................................................................
+
+    @Override
+    public CurrencyExchangeRater currencyExchangeRater() {
+        return this.spreadsheetConverterContext;
+    }
 
     // DateTimeContextDelegator.........................................................................................
 

@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
+import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.FakeCurrencyContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
@@ -121,6 +122,15 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                     Converters.objectToString(),
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     new FakeCurrencyContext() {
+
+                        @Override
+                        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                                     final Optional<LocalDateTime> dateTime) {
+                            Objects.requireNonNull(currencyExchange, "currencyExchange");
+                            Objects.requireNonNull(dateTime, "dateTime");
+
+                            throw new UnsupportedOperationException();
+                        }
 
                         @Override
                         public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
