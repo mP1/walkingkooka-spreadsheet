@@ -268,8 +268,8 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
     }
 
     @Override
-    public Optional<Number> exchangeRate(final CurrencyExchange currencyExchange,
-                                         final Optional<LocalDateTime> dateTime) {
+    public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                 final Optional<LocalDateTime> dateTime) {
         throw new UnsupportedOperationException();
     }
 
