@@ -630,6 +630,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    currency\n" +
                 "    currency-code-to-currency\n" +
                 "    currency-value-to\n" +
+                "    currency-value-to-number\n" +
                 "    date-time\n" +
                 "    date-time-symbols\n" +
                 "    decimal-number-symbols\n" +

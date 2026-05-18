@@ -187,6 +187,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithCurrencyValueToNumber() {
+        this.converterAndCheck(
+            "currency-value-to-number",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.currencyValueToNumber()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithDateTime() {
         final ConverterProvider provider = this.createConverterProvider();
 
