@@ -70,6 +70,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberToNumber();
 
+    private final DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL32);
+
     private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
     private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
@@ -295,21 +297,19 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     @Override
     public int decimalNumberDigitCount() {
-        return this.decimalNumberContext()
-            .decimalNumberDigitCount();
+        return DECIMAL_NUMBER_CONTEXT.decimalNumberDigitCount();
     }
 
     @Override
     public MathContext mathContext() {
-        return this.decimalNumberContext()
-            .mathContext();
+        return DECIMAL_NUMBER_CONTEXT.mathContext();
     }
 
     // DecimalNumberContextDelegator....................................................................................
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.american(MathContext.DECIMAL32);
+        return DECIMAL_NUMBER_CONTEXT;
     }
 
     // toString.........................................................................................................
