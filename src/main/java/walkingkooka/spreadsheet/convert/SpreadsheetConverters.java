@@ -223,6 +223,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters.currencyValueToNumber}
+     */
+    public static Converter<SpreadsheetConverterContext> currencyValueToNumber() {
+        return Converters.currencyValueToNumber();
+    }
+
+    /**
      * {@link SpreadsheetConverterDateTime()}
      */
     public static Converter<SpreadsheetConverterContext> dateTime(final Converter<SpreadsheetConverterContext> dateToString,
