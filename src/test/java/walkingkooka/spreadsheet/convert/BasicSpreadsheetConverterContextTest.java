@@ -205,95 +205,91 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             VALIDATION_REFERENCE,
             CONVERTER,
             LABEL_RESOLVER,
-            this.jsonNodeConverterContext(),
-            LOCALE_CONTEXT
-        );
-    }
-
-    private JsonNodeConverterContext jsonNodeConverterContext() {
-        return JsonNodeConverterContexts.basic(
-            ExpressionNumberConverterContexts.basic(
-                Converters.fake(),
-                ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
-                ConverterContexts.basic(
-                    false, // canNumbersHaveGroupSeparator
-                    Converters.JAVA_EPOCH_OFFSET, // dateOffset
-                    INDENTATION,
-                    LineEnding.NL,
-                    ',', // valueSeparator
+            JsonNodeConverterContexts.basic(
+                ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
-                    BinaryNumberConverterFunctions.fake(), // multiplier
-                    new FakeCurrencyContext() {
+                    ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
+                    ConverterContexts.basic(
+                        false, // canNumbersHaveGroupSeparator
+                        Converters.JAVA_EPOCH_OFFSET, // dateOffset
+                        INDENTATION,
+                        LineEnding.NL,
+                        ',', // valueSeparator
+                        Converters.fake(),
+                        BinaryNumberConverterFunctions.fake(), // multiplier
+                        new FakeCurrencyContext() {
 
-                        @Override
-                        public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                                     final Optional<LocalDateTime> dateTime) {
-                            Objects.requireNonNull(currencyExchange, "currencyExchange");
-                            Objects.requireNonNull(dateTime, "dateTime");
+                            @Override
+                            public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
+                                                                         final Optional<LocalDateTime> dateTime) {
+                                Objects.requireNonNull(currencyExchange, "currencyExchange");
+                                Objects.requireNonNull(dateTime, "dateTime");
 
-                            throw new UnsupportedOperationException();
-                        }
+                                throw new UnsupportedOperationException();
+                            }
 
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            return Optional.of(
-                                Currency.getInstance(
-                                    currencyCode.value()
-                                )
-                            );
-                        }
-                        
-                        @Override
-                        public Optional<Currency> currencyForLocale(final Locale locale) {
-                            return Optional.of(
-                                Currency.getInstance(locale)
-                            );
-                        }
-                    }.setLocaleContext(
-                        LocaleContexts.jre(
-                            this.locale()
-                        )
+                            @Override
+                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+                                return Optional.of(
+                                    Currency.getInstance(
+                                        currencyCode.value()
+                                    )
+                                );
+                            }
+
+                            @Override
+                            public Optional<Currency> currencyForLocale(final Locale locale) {
+                                return Optional.of(
+                                    Currency.getInstance(locale)
+                                );
+                            }
+                        }.setLocaleContext(
+                            LocaleContexts.jre(
+                                this.locale()
+                            )
+                        ),
+                        DateTimeContexts.basic(
+                            LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
+                                .get(),
+                            LOCALE_CONTEXT.locale(),
+                            1900,
+                            20,
+                            LocalDateTime::now
+                        ),
+                        this.decimalNumberContext()
                     ),
-                    DateTimeContexts.basic(
-                        LOCALE_CONTEXT.dateTimeSymbolsForLocale(LOCALE)
-                            .get(),
-                        LOCALE_CONTEXT.locale(),
-                        1900,
-                        20,
-                        LocalDateTime::now
-                    ),
-                    this.decimalNumberContext()
+                    KIND
                 ),
-                KIND
-            ),
-            JsonNodeMarshallUnmarshallContexts.basic(
-                JsonNodeMarshallContexts.basic(),
-                JsonNodeUnmarshallContexts.basic(
-                    KIND,
-                    new CurrencyCodeLanguageTagContext() {
+                JsonNodeMarshallUnmarshallContexts.basic(
+                    JsonNodeMarshallContexts.basic(),
+                    JsonNodeUnmarshallContexts.basic(
+                        KIND,
+                        new CurrencyCodeLanguageTagContext() {
 
-                        @Override
-                        public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
-                            return Optional.ofNullable(
-                                Currency.getInstance(
-                                    currencyCode.value()
-                                )
-                            );
-                        }
+                            @Override
+                            public Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+                                return Optional.ofNullable(
+                                    Currency.getInstance(
+                                        currencyCode.value()
+                                    )
+                                );
+                            }
 
-                        @Override
-                        public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
-                            return Optional.of(
-                                Locale.forLanguageTag(
-                                    languageTag.value()
-                                )
-                            );
-                        }
-                    },
-                    this.decimalNumberContext()
-                        .mathContext()
+                            @Override
+                            public Optional<Locale> localeForLanguageTag(final LocaleLanguageTag languageTag) {
+                                return Optional.of(
+                                    Locale.forLanguageTag(
+                                        languageTag.value()
+                                    )
+                                );
+                            }
+                        },
+                        this.decimalNumberContext()
+                            .mathContext()
+                    )
                 )
-            )
+            ),
+            LOCALE_CONTEXT
         );
     }
 
