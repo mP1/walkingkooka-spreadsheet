@@ -26,6 +26,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.BinaryNumberConverterFunction;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -1154,7 +1155,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
                         lineEnding,
                         valueSeparator, // valueSeparator
                         Converters.fake(),
-                        Cast.to(multiplier), // BinaryNumberConverterFunction<ConverterContext>
+                        BinaryNumberConverterFunctions.fake(),
                         currencyLocaleContext,
                         dateTimeContext,
                         decimalNumberContext
