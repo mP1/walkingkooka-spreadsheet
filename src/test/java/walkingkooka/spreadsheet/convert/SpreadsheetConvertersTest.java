@@ -35,9 +35,7 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
-import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.currency.CurrencyLocaleContexts;
-import walkingkooka.currency.CurrencyValue;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -94,9 +92,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.JsonString;
@@ -522,100 +518,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                                 10
                             ),
                             COLOR10
-                        );
-                }
-            },
-            expected
-        );
-    }
-
-    // currency.........................................................................................................
-
-    private final static CurrencyCode FROM_CURRENCY_CODE = CurrencyCode.parse("AUD");
-    private final static CurrencyCode TO_CURRENCY_CODE = CurrencyCode.parse("NZD");
-
-    @Test
-    public void testCurrencyConvertCurrencyValueToExpressionNumber() {
-        this.currencyConvertAndCheck(
-            CurrencyValue.with(
-                1.5,
-                FROM_CURRENCY_CODE
-            ),
-            ExpressionNumber.class,
-            EXPRESSION_NUMBER_KIND.create(
-                1.5 * 2
-            )
-        );
-    }
-
-    private <T extends Number> void currencyConvertAndCheck(final Object value,
-                                                            final Class<T> type,
-                                                            final T expected) {
-        this.convertAndCheck(
-            SpreadsheetConverters.currency(),
-            value,
-            type,
-            new FakeSpreadsheetConverterContext() {
-                @Override
-                public boolean canConvert(final Object value,
-                                          final Class<?> type) {
-                    return this.converter.canConvert(
-                        value,
-                        type,
-                        this
-                    );
-                }
-
-                @Override
-                public <T> Either<T, String> convert(final Object value,
-                                                     final Class<T> type) {
-                    return this.converter.convert(
-                        value,
-                        type,
-                        this
-                    );
-                }
-
-                private final Converter<SpreadsheetConverterContext> converter = ExpressionNumberConverters.numberToNumber();
-
-                @Override
-                public CurrencyCode currencyCode() {
-                    return TO_CURRENCY_CODE;
-                }
-
-                @Override
-                public Optional<Number> currencyExchangeRate(final CurrencyExchange currencyExchange,
-                                                             final Optional<LocalDateTime> dateTime) {
-                    return Optional.ofNullable(
-                        CurrencyExchange.with(
-                            FROM_CURRENCY_CODE,
-                            TO_CURRENCY_CODE
-                        ).equals(currencyExchange) ?
-                            2.0 :
-                            null
-                    );
-                }
-
-                @Override
-                public ExpressionNumberKind expressionNumberKind() {
-                    return EXPRESSION_NUMBER_KIND;
-                }
-
-                @Override
-                public MathContext mathContext() {
-                    return MathContext.DECIMAL32;
-                }
-
-                @Override
-                public <N extends Number> N multiply(final Number left,
-                                                     final Number right,
-                                                     final Class<N> type) {
-                    return ExpressionNumberBinaryNumberConverterFunctions.multiply()
-                        .apply(
-                            left,
-                            right,
-                            type,
-                            this
                         );
                 }
             },
