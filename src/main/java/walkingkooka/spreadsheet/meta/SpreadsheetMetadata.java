@@ -1148,7 +1148,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(
                     Converters.fake(),
-                    Cast.to(multiplier),
+                    BinaryNumberConverterFunctions.fake(),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
                         dateOffset,
