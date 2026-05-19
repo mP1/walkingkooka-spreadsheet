@@ -550,13 +550,13 @@ final class MissingConverterVerifier {
                 final CurrencyCode currencyCode = context.currencyCode();
 
                 verifier.addIfConversionFail(
-                    "AUD",
+                    currencyCode.value(),
                     Currency.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency
                 );
 
                 verifier.addIfConversionFail(
-                    "AUD",
+                    currencyCode.value(),
                     CurrencyCode.class,
                     SpreadsheetConvertersConverterProvider.CURRENCY // text-to-currency-code
                 );
