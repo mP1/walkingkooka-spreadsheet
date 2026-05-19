@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectorieses;
 import walkingkooka.text.LineEnding;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
@@ -68,7 +69,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static Optional<SpreadsheetValidationReference> VALIDATION_REFERENCE = Optional.empty();
 
-    private final static Converter<SpreadsheetConverterContext> CONVERTER = Converters.numberToNumber();
+    private final static Converter<SpreadsheetConverterContext> CONVERTER = SpreadsheetConverters.numberToNumber();
 
     private final DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL32);
 
@@ -181,7 +182,18 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
     // convert..........................................................................................................
 
     @Test
-    public void testConvert() {
+    public void testConvertIntegerToExpressionNumber() {
+        final int number = 123;
+
+        this.convertAndCheck(
+            number,
+            ExpressionNumber.class,
+            KIND.create(number)
+        );
+    }
+
+    @Test
+    public void testConvertIntegerToFloat() {
         this.convertAndCheck(
             123,
             Float.class,
