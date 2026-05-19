@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.StoragePath;
+import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -181,6 +182,23 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     private final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver;
 
     // JsonNodeConverterContext.........................................................................................
+
+    /**
+     * If this was delegated to the wrapped {@link JsonNodeConverterContext}, this will fail with a {@link ClassCastException}
+     * when the values are converted by a {@link SpreadsheetConverter}.
+     */
+    @Override
+    public <N extends Number> N multiply(final Number left,
+                                         final Number right,
+                                         final Class<N> type) {
+        return ExpressionNumberBinaryNumberConverterFunctions.multiply()
+            .apply(
+                left,
+                right,
+                type,
+                this // ExpressionNumberConverterContext
+            );
+    }
 
     @Override
     public JsonNodeConverterContext jsonNodeConverterContext() {
