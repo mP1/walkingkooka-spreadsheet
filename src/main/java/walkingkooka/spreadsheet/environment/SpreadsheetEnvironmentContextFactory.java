@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.environment;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.BinaryNumberConverterFunction;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -53,7 +53,6 @@ import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.convert.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionAliasSet;
 import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
@@ -314,7 +313,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
 
             missing.reportIfMissing();
 
-            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier = this.multiplier;
             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = this.spreadsheetEnvironmentContext;
             final CurrencyLocaleContext currencyLocaleContext = this.currencyLocaleContext;
 
@@ -323,12 +321,12 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,
-                multiplier,
+                this.multiplier,
                 SpreadsheetLabelNameResolvers.empty(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
                         Converters.fake(),
-                        Cast.<BinaryNumberConverterFunction<ExpressionNumberConverterContext>>to(multiplier), // ,
+                        BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
                             dateOffset,
@@ -336,7 +334,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                             spreadsheetEnvironmentContext.lineEnding(),
                             valueSeparator, // valueSeparator
                             Converters.fake(),
-                            Cast.to(multiplier),
+                            BinaryNumberConverterFunctions.fake(), // multiplier
                             currencyLocaleContext,
                             dateTimeContext,
                             decimalNumberContext
