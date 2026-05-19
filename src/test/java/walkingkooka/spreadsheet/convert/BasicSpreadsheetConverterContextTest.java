@@ -65,7 +65,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static HasUserDirectories HAS_USER_DIRECTORIES = HasUserDirectorieses.fake();
 
-    private final static ExpressionNumberKind KIND = ExpressionNumberKind.DEFAULT;
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static Optional<SpreadsheetValidationReference> VALIDATION_REFERENCE = Optional.empty();
 
@@ -188,7 +188,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         this.convertAndCheck(
             number,
             ExpressionNumber.class,
-            KIND.create(number)
+            EXPRESSION_NUMBER_KIND.create(number)
         );
     }
 
@@ -272,12 +272,12 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                         ),
                         this.decimalNumberContext()
                     ),
-                    KIND
+                    EXPRESSION_NUMBER_KIND
                 ),
                 JsonNodeMarshallUnmarshallContexts.basic(
                     JsonNodeMarshallContexts.basic(),
                     JsonNodeUnmarshallContexts.basic(
-                        KIND,
+                        EXPRESSION_NUMBER_KIND,
                         new CurrencyCodeLanguageTagContext() {
 
                             @Override
