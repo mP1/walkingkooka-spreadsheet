@@ -19,10 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -3045,11 +3043,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default ExpressionNumberConverterContext converterContext() {
-        final BinaryNumberConverterFunction<ExpressionNumberConverterContext> multiplier = BinaryNumberConverterFunctions.multiply();
-
         return ExpressionNumberConverterContexts.basic(
             this.converter(),
-            multiplier,
+            BinaryNumberConverterFunctions.multiply(),
             ConverterContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 Converters.JAVA_EPOCH_OFFSET,
@@ -3057,7 +3053,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 LineEnding.NL,
                 ',', // valueSeparator
                 Converters.fake(),
-                Cast.to(multiplier), // BinaryNumberConverterFunction<ConverterContext>
+                BinaryNumberConverterFunctions.fake(), // multiplier
                 new FakeCurrencyContext() {
                     @Override
                     public Optional<Currency> currencyForLocale(final Locale locale) {
