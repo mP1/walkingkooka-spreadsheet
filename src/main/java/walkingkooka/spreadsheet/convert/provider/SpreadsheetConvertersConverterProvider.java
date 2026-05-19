@@ -22,7 +22,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.Converters;
 import walkingkooka.convert.provider.ConverterInfo;
 import walkingkooka.convert.provider.ConverterInfoSet;
 import walkingkooka.convert.provider.ConverterName;
@@ -104,7 +103,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 converter = SpreadsheetConverters.booleanToText();
                 break;
             case COLLECTION_STRING:
-                converter = Converters.collection(
+                converter = SpreadsheetConverters.collection(
                     values.stream()
                         .map(c -> (Converter<C>) c)
                         .collect(Collectors.toList())
