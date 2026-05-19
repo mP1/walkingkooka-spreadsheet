@@ -132,6 +132,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
+            multiplier,
             SpreadsheetLabelNameResolvers.empty(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(

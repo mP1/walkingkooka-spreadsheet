@@ -1143,6 +1143,7 @@ public abstract class SpreadsheetMetadata implements CanBeEmpty,
             Optional.of(this),
             validationReference,
             converter,
+            multiplier,
             labelNameResolver,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(

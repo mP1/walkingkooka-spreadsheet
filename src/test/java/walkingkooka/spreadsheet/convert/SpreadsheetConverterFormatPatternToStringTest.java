@@ -304,6 +304,7 @@ public final class SpreadsheetConverterFormatPatternToStringTest extends Spreads
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             converter,
+            BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetLabelNameResolvers.fake(),
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(

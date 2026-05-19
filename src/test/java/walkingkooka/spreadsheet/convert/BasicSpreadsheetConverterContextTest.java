@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -82,6 +83,8 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
 
     private final static SpreadsheetLabelNameResolver LABEL_RESOLVER = SpreadsheetLabelNameResolvers.fake();
 
+    private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
+
     private final static JsonNodeConverterContext JSON_NODE_CONVERTER_CONTEXT = JsonNodeConverterContexts.fake();
 
     private final static Locale LOCALE = Locale.forLanguageTag("EN-AU");
@@ -99,6 +102,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MULTIPLIER,
                 LABEL_RESOLVER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
@@ -115,6 +119,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 null,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MULTIPLIER,
                 LABEL_RESOLVER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
@@ -130,6 +135,24 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 HAS_USER_DIRECTORIES,
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
+                null,
+                MULTIPLIER,
+                LABEL_RESOLVER,
+                JSON_NODE_CONVERTER_CONTEXT,
+                LOCALE_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testWithNullMultiplierFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> BasicSpreadsheetConverterContext.with(
+                HAS_USER_DIRECTORIES,
+                SpreadsheetConverterContexts.NO_METADATA,
+                VALIDATION_REFERENCE,
+                CONVERTER,
                 null,
                 LABEL_RESOLVER,
                 JSON_NODE_CONVERTER_CONTEXT,
@@ -147,6 +170,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MULTIPLIER,
                 null,
                 JSON_NODE_CONVERTER_CONTEXT,
                 LOCALE_CONTEXT
@@ -163,6 +187,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MULTIPLIER,
                 LABEL_RESOLVER,
                 null,
                 LOCALE_CONTEXT
@@ -179,6 +204,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
                 SpreadsheetConverterContexts.NO_METADATA,
                 VALIDATION_REFERENCE,
                 CONVERTER,
+                MULTIPLIER,
                 LABEL_RESOLVER,
                 JSON_NODE_CONVERTER_CONTEXT,
                 null
@@ -267,6 +293,7 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
             SpreadsheetConverterContexts.NO_METADATA,
             VALIDATION_REFERENCE,
             CONVERTER,
+            MULTIPLIER,
             LABEL_RESOLVER,
             JsonNodeConverterContexts.basic(
                 ExpressionNumberConverterContexts.basic(

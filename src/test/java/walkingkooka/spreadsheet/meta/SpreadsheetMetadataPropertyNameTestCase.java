@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
+import walkingkooka.convert.BinaryNumberConverterFunction;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyCodeLanguageTagContext;
@@ -34,6 +36,7 @@ import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelNameResolver;
@@ -68,6 +71,8 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
     );
 
     final static SpreadsheetLabelNameResolver LABEL_NAME_RESOLVER = SpreadsheetLabelNameResolvers.fake();
+
+    final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
     SpreadsheetMetadataPropertyNameTestCase() {
         super();

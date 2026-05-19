@@ -1416,6 +1416,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 Optional.of(metadata),
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 converter,
+                MULTIPLIER,
                 LABEL_NAME_RESOLVER,
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(

@@ -153,6 +153,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         );
                     }
                 },
+                MULTIPLIER,
                 LABEL_NAME_RESOLVER,
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(

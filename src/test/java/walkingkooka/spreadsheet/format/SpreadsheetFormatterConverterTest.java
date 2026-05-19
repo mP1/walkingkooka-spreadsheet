@@ -138,6 +138,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.system(),
+            ExpressionNumberBinaryNumberConverterFunctions.multiply(),
             (s) -> {
                 throw new UnsupportedOperationException();
             },
