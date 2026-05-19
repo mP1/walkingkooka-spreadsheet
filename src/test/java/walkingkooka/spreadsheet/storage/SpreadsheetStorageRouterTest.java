@@ -1492,6 +1492,20 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     // Storage.list.....................................................................................................
 
     @Test
+    public void testListWithRoot() {
+        final SpreadsheetStorageRouter storage = this.createStorage();
+        final SpreadsheetStorageContext context = this.createContext();
+
+        this.listAndCheck(
+            storage,
+            StoragePath.ROOT,
+            0, // offset
+            4, // count
+            context
+        );
+    }
+
+    @Test
     public void testListWithSpreadsheet() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
@@ -1795,7 +1809,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             2,
             context,
             StorageValueInfo.with(
-                StoragePath.parse("/other"),
+                StoragePath.parse("/other/"),
                 AUDIT_INFO
             )
         );
