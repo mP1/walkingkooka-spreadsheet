@@ -105,6 +105,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
         SpreadsheetConverterContexts.NO_METADATA,
         SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
         Converters.objectToString(),
+        BinaryNumberConverterFunctions.multiply(), // multiplier
         (label) -> {
             Objects.requireNonNull(label, "label");
             throw new UnsupportedOperationException();

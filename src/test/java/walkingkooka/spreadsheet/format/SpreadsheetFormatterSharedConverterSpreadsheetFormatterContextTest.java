@@ -88,6 +88,7 @@ public final class SpreadsheetFormatterSharedConverterSpreadsheetFormatterContex
             SpreadsheetConverterContexts.NO_METADATA,
             SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
             SpreadsheetConverters.system(),
+            BinaryNumberConverterFunctions.multiply(), // multiplier
             (s) -> {
                 throw new UnsupportedOperationException();
             },

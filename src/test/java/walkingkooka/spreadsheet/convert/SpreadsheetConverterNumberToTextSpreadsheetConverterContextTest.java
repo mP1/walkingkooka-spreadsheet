@@ -209,6 +209,7 @@ public final class SpreadsheetConverterNumberToTextSpreadsheetConverterContextTe
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 Converters.fake(),
+                BinaryNumberConverterFunctions.multiply(), // multiplier
                 SpreadsheetLabelNameResolvers.empty(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(

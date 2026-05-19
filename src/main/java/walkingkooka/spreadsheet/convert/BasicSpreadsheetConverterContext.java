@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.locale.LocaleContext;
@@ -32,7 +33,6 @@ import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.storage.HasUserDirectories;
 import walkingkooka.storage.HasUserDirectoriesDelegator;
 import walkingkooka.storage.StoragePath;
-import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverterFunctions;
 import walkingkooka.tree.json.convert.JsonNodeConverterContext;
 import walkingkooka.tree.json.convert.JsonNodeConverterContextDelegator;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
@@ -51,6 +51,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                                  final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                                  final Optional<SpreadsheetValidationReference > validationReference,
                                                  final Converter<SpreadsheetConverterContext> converter,
+                                                 final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                                  final JsonNodeConverterContext jsonNodeConverterContext,
                                                  final LocaleContext localeContext) {
@@ -58,6 +59,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
         Objects.requireNonNull(validationReference, "validationReference");
         Objects.requireNonNull(converter, "converter");
+        Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetLabelNameResolver, "spreadsheetLabelNameResolver");
         Objects.requireNonNull(jsonNodeConverterContext, "jsonNodeConverterContext");
         Objects.requireNonNull(localeContext, "localeContext");
@@ -67,6 +69,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
             spreadsheetMetadata,
             validationReference,
             converter,
+            multiplier,
             spreadsheetLabelNameResolver,
             jsonNodeConverterContext,
             localeContext
@@ -77,6 +80,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                                              final Optional<SpreadsheetMetadata> spreadsheetMetadata,
                                              final Optional<SpreadsheetValidationReference > validationReference,
                                              final Converter<SpreadsheetConverterContext> converter,
+                                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                              final SpreadsheetLabelNameResolver spreadsheetLabelNameResolver,
                                              final JsonNodeConverterContext jsonNodeConverterContext,
                                              final LocaleContext localeContext) {
@@ -84,6 +88,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
         this.spreadsheetMetadata = spreadsheetMetadata;
         this.validationReference = validationReference;
         this.converter = converter;
+        this.multiplier = multiplier;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
         this.jsonNodeConverterContext = jsonNodeConverterContext;
         this.localeContext = localeContext;
@@ -100,6 +105,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
+                this.multiplier,
                 this.spreadsheetLabelNameResolver,
                 after,
                 this.localeContext
@@ -117,6 +123,7 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
                 this.spreadsheetMetadata,
                 this.validationReference,
                 this.converter,
+                this.multiplier,
                 this.spreadsheetLabelNameResolver,
                 after,
                 this.localeContext
@@ -191,14 +198,15 @@ final class BasicSpreadsheetConverterContext implements SpreadsheetConverterCont
     public <N extends Number> N multiply(final Number left,
                                          final Number right,
                                          final Class<N> type) {
-        return ExpressionNumberBinaryNumberConverterFunctions.multiply()
-            .apply(
+        return this.multiplier.apply(
                 left,
                 right,
                 type,
                 this // ExpressionNumberConverterContext
             );
     }
+
+    private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
     @Override
     public JsonNodeConverterContext jsonNodeConverterContext() {

@@ -243,6 +243,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 )
             )
         ),
+        BinaryNumberConverterFunctions.multiply(), // multiplier
         LABEL_NAME_RESOLVER,
         JsonNodeConverterContexts.basic(
             ExpressionNumberConverterContexts.basic(

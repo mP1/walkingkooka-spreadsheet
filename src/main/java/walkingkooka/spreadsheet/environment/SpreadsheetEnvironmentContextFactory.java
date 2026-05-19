@@ -323,6 +323,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                 SpreadsheetConverterContexts.NO_METADATA,
                 SpreadsheetConverterContexts.NO_VALIDATION_REFERENCE,
                 converter,
+                multiplier,
                 SpreadsheetLabelNameResolvers.empty(),
                 JsonNodeConverterContexts.basic(
                     ExpressionNumberConverterContexts.basic(
