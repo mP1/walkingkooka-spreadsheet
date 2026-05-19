@@ -201,6 +201,15 @@ public final class BasicSpreadsheetConverterContextTest implements SpreadsheetCo
         );
     }
 
+    @Test
+    public void testConvertIntegerToNumber() {
+        this.convertAndCheck(
+            123,
+            Float.class,
+            123f
+        );
+    }
+
     // locale...........................................................................................................
 
     @Test
