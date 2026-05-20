@@ -80,10 +80,10 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
         if (null != cellOrLabels) {
             final Set<SpreadsheetCell> cells = context.loadCells(cellOrLabels);
             if (false == cells.isEmpty()) {
-                value = StorageValue.with(
-                    path,
-                    Optional.of(cells)
-                ).setContentType(MEDIA_TYPE);
+                value = StorageValue.with(path)
+                    .setValue(
+                        Optional.of(cells)
+                    ).setContentType(MEDIA_TYPE);
             }
         }
 

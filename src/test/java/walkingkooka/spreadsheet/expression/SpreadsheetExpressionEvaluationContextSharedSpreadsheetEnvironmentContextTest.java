@@ -1100,10 +1100,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         final StoragePath path = StoragePath.parse("/path1/file2");
 
-        final StorageValue value = StorageValue.with(
-            path,
-            Optional.of(111)
-        );
+        final StorageValue value = StorageValue.with(path)
+            .setValue(
+                Optional.of(111)
+            );
 
         this.saveStorageAndCheck(
             context,
@@ -1124,10 +1124,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         final StoragePath path = StoragePath.parse("/path1/file2");
 
-        final StorageValue value = StorageValue.with(
-            path,
-            Optional.of(111)
-        );
+        final StorageValue value = StorageValue.with(path)
+            .setValue(
+                Optional.of(111)
+            );
 
         this.saveStorageAndCheck(
             context,
@@ -1149,21 +1149,24 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         context.saveStorage(
             StorageValue.with(
-                StoragePath.parse("/file1"),
+                StoragePath.parse("/file1")
+            ).setValue(
                 Optional.of(111)
             )
         );
 
         context.saveStorage(
             StorageValue.with(
-                StoragePath.parse("/file2"),
+                StoragePath.parse("/file2")
+            ).setValue(
                 Optional.of(222)
             )
         );
 
         context.saveStorage(
             StorageValue.with(
-                StoragePath.parse("/file3"),
+                StoragePath.parse("/file3")
+            ).setValue(
                 Optional.of(333)
             )
         );

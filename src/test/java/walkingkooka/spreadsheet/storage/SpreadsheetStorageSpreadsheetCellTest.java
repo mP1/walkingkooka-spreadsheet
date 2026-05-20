@@ -153,16 +153,16 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             this.createStorage(),
             path,
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    SpreadsheetCellSet.EMPTY.concat(
-                        spreadsheetContext.storeRepository()
-                            .cells()
-                            .loadOrFail(cell.reference())
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        SpreadsheetCellSet.EMPTY.concat(
+                            spreadsheetContext.storeRepository()
+                                .cells()
+                                .loadOrFail(cell.reference())
+                        )
                     )
-                )
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
     }
 
@@ -188,16 +188,16 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             this.createStorage(),
             path,
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    SpreadsheetCellSet.EMPTY.concat(
-                        spreadsheetContext.storeRepository()
-                            .cells()
-                            .loadOrFail(cell.reference())
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        SpreadsheetCellSet.EMPTY.concat(
+                            spreadsheetContext.storeRepository()
+                                .cells()
+                                .loadOrFail(cell.reference())
+                        )
                     )
-                )
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
     }
 
@@ -233,16 +233,16 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             this.createStorage(),
             path,
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    SpreadsheetCellSet.EMPTY.concat(
-                        cellStore.loadOrFail(a1.reference())
-                    ).concat(
-                        cellStore.loadOrFail(a2.reference())
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        SpreadsheetCellSet.EMPTY.concat(
+                            cellStore.loadOrFail(a1.reference())
+                        ).concat(
+                            cellStore.loadOrFail(a2.reference())
+                        )
                     )
-                )
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
     }
 
@@ -253,7 +253,8 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/999"),
+                        StoragePath.parse("/999")
+                    ).setValue(
                         Optional.of(
                             SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                         )
@@ -276,15 +277,10 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.empty()
-            ),
+            StorageValue.with(path),
             context,
-            StorageValue.with(
-                path,
-                Optional.empty()
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+            StorageValue.with(path)
+                .setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
     }
 
@@ -307,21 +303,21 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(cell)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(cell)
+                ),
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    SpreadsheetCellSet.EMPTY.concat(
-                        spreadsheetContext.storeRepository()
-                            .cells()
-                            .loadOrFail(cell.reference())
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        SpreadsheetCellSet.EMPTY.concat(
+                            spreadsheetContext.storeRepository()
+                                .cells()
+                                .loadOrFail(cell.reference())
+                        )
                     )
-                )
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
     }
 

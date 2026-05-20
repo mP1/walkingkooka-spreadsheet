@@ -1189,7 +1189,8 @@ final class MissingConverterVerifier {
                         SpreadsheetId.with(1),
                         storagePath,
                         StorageValue.with(
-                            storagePath,
+                            storagePath
+                        ).setValue(
                             Optional.of("StorageValue123")
                         ),
                         StorageValueInfo.with(

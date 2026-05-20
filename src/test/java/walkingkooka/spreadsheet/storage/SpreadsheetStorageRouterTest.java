@@ -336,10 +336,10 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             this.createContext(),
-            StorageValue.with(
-                path,
-                Optional.of(METADATA1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(METADATA1)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
         );
     }
 
@@ -351,12 +351,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             this.createContext(),
-            StorageValue.with(
-                path,
-                Optional.of(METADATA2)
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(METADATA2)
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA
+                )
         );
     }
 
@@ -396,18 +396,18 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    CELL1.setFormattedValue(
-                        Optional.of(
-                            TextNode.text("111.")
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        CELL1.setFormattedValue(
+                            Optional.of(
+                                TextNode.text("111.")
+                            )
                         )
                     )
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_CELL
                 )
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_CELL
-            )
         );
     }
 
@@ -425,18 +425,18 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    CELL1.setFormattedValue(
-                        Optional.of(
-                            TextNode.text("111.")
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        CELL1.setFormattedValue(
+                            Optional.of(
+                                TextNode.text("111.")
+                            )
                         )
                     )
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_CELL
                 )
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_CELL
-            )
         );
     }
 
@@ -454,18 +454,18 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(
-                    CELL1.setFormattedValue(
-                        Optional.of(
-                            TextNode.text("111.")
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        CELL1.setFormattedValue(
+                            Optional.of(
+                                TextNode.text("111.")
+                            )
                         )
                     )
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_CELL
                 )
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_CELL
-            )
         );
     }
 
@@ -498,10 +498,10 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(ENVIRONMENT_CONTEXT.currency())
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(ENVIRONMENT_CONTEXT.currency())
+                )
         );
     }
 
@@ -519,10 +519,10 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(ENVIRONMENT_CONTEXT.lineEnding())
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(ENVIRONMENT_CONTEXT.lineEnding())
+                )
         );
     }
 
@@ -540,10 +540,10 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(ENVIRONMENT_CONTEXT.lineEnding())
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(ENVIRONMENT_CONTEXT.lineEnding())
+                )
         );
     }
 
@@ -561,12 +561,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(FORM1)
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_FORM
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_FORM
+                )
         );
     }
     
@@ -584,12 +584,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(MAPPING1)
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_LABEL
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_LABEL
+                )
         );
     }
 
@@ -607,12 +607,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(MAPPING1)
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_LABEL
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_LABEL
+                )
         );
     }
 
@@ -676,18 +676,18 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             this.createContext(),
-            StorageValue.with(
-                path,
-                Optional.of(
-                    CELL1.setFormattedValue(
-                        Optional.of(
-                            TextNode.text("111.")
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        CELL1.setFormattedValue(
+                            Optional.of(
+                                TextNode.text("111.")
+                            )
                         )
                     )
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_CELL
                 )
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_CELL
-            )
         );
     }
 
@@ -699,18 +699,18 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             this.createStorage(),
             path,
             this.createContext(),
-            StorageValue.with(
-                path,
-                Optional.of(
-                    CELL2.setFormattedValue(
-                        Optional.of(
-                            TextNode.text("222.")
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(
+                        CELL2.setFormattedValue(
+                            Optional.of(
+                                TextNode.text("222.")
+                            )
                         )
                     )
+                ).setContentType(
+                    SpreadsheetMediaTypes.MEMORY_CELL
                 )
-            ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_CELL
-            )
         );
     }
 
@@ -723,7 +723,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             path,
             this.createContext(),
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(
                     CELL2.setFormattedValue(
                         Optional.of(
@@ -746,7 +747,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             path,
             this.createContext(),
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(FORM1)
             ).setContentType(
                 SpreadsheetMediaTypes.MEMORY_FORM
@@ -763,7 +765,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             path,
             this.createContext(),
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(MAPPING1)
             ).setContentType(
                 SpreadsheetMediaTypes.MEMORY_LABEL
@@ -780,7 +783,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             path,
             this.createContext(),
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(MAPPING2)
             ).setContentType(
                 SpreadsheetMediaTypes.MEMORY_LABEL
@@ -797,7 +801,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             path,
             this.createContext(),
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(MAPPING2)
             ).setContentType(
                 SpreadsheetMediaTypes.MEMORY_LABEL
@@ -826,7 +831,8 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/spreadsheet"),
+                        StoragePath.parse("/spreadsheet")
+                    ).setValue(
                         Optional.of(metadata)
                     ),
                     context
@@ -860,12 +866,14 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         this.saveAndCheck(
             this.createStorage(),
             StorageValue.with(
-                StoragePath.parse("/spreadsheet"),
+                StoragePath.parse("/spreadsheet")
+            ).setValue(
                 Optional.of(metadata)
             ),
             context,
             StorageValue.with(
-                StoragePath.parse("/spreadsheet/333"),
+                StoragePath.parse("/spreadsheet/333")
+            ).setValue(
                 Optional.of(
                     metadata
                 )
@@ -888,10 +896,10 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             MissingEnvironmentValueException.class,
             () -> this.createStorage()
                 .save(
-                    StorageValue.with(
-                        path,
-                        Optional.of(DIFFERENT_UNFORMATTED_CELL)
-                    ),
+                    StorageValue.with(path)
+                        .setValue(
+                            Optional.of(DIFFERENT_UNFORMATTED_CELL)
+                        ),
                     context
                 )
         );
@@ -915,15 +923,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_UNFORMATTED_CELL)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_UNFORMATTED_CELL)
+                ),
             context,
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_FORMATTED_CELL)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_FORMATTED_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
         this.loadCellsAndCheck(
@@ -947,15 +955,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_FORM)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_FORM)
+                ),
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_FORM)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_FORM)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -984,12 +992,14 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         this.saveAndCheck(
             this.createStorage(),
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(DIFFERENT_MAPPING)
             ),
             storageContext,
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(DIFFERENT_MAPPING)
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
@@ -1014,15 +1024,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_UNFORMATTED_CELL)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_UNFORMATTED_CELL)
+                ),
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_FORMATTED_CELL)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_FORMATTED_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1046,15 +1056,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_UNFORMATTED_CELL)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_UNFORMATTED_CELL)
+                ),
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_FORMATTED_CELL)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_FORMATTED_CELL)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1089,13 +1099,12 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_MAPPING)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_MAPPING)
+                ),
             storageContext,
-            StorageValue.with(
-                path,
+            StorageValue.with(path).setValue(
                 Optional.of(DIFFERENT_MAPPING)
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
@@ -1132,15 +1141,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_MAPPING)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_MAPPING)
+                ),
             storageContext,
-            StorageValue.with(
-                path,
-                Optional.of(DIFFERENT_MAPPING)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(DIFFERENT_MAPPING)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1178,15 +1187,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             storage,
-            StorageValue.with(
-                path,
-                Optional.of(value)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(value)
+                ),
             context,
-            StorageValue.with(
-                path,
-                Optional.of(value)
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(value)
+                )
         );
     }
 
@@ -1201,24 +1210,25 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
         this.saveAndCheck(
             storage,
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(value)
             ),
             context,
-            StorageValue.with(
-                path,
-                Optional.of(value)
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(value)
+                )
         );
 
         this.loadAndCheck(
             storage,
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(value)
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(value)
+                )
         );
     }
 
@@ -1232,15 +1242,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             storage,
-            StorageValue.with(
-                path,
-                Optional.of(value)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(value)
+                ),
             context,
-            StorageValue.with(
-                path,
-                Optional.of(value)
-            )
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(value)
+                )
         );
 
         storage.delete(
@@ -1775,13 +1785,13 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             storage,
-            StorageValue.with(
-                path1,
-                Optional.of(value1)
-            ),
+            StorageValue.with(path1)
+                .setValue(
+                    Optional.of(value1)
+                ),
             context,
             StorageValue.with(
-                path1,
+                path1).setValue(
                 Optional.of(value1)
             )
         );
@@ -1791,15 +1801,15 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
         this.saveAndCheck(
             storage,
-            StorageValue.with(
-                path2,
-                Optional.of(value2)
-            ),
+            StorageValue.with(path2)
+                .setValue(
+                    Optional.of(value2)
+                ),
             context,
-            StorageValue.with(
-                path2,
-                Optional.of(value2)
-            )
+            StorageValue.with(path2)
+                .setValue(
+                    Optional.of(value2)
+                )
         );
 
         this.listAndCheck(

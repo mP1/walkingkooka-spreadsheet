@@ -152,10 +152,10 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(MAPPING1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
     }
 
@@ -177,10 +177,10 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(MAPPING1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );
     }
 
@@ -191,7 +191,8 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/" + LABEL1 + "/extra"),
+                        StoragePath.parse("/" + LABEL1 + "/extra")
+                    ).setValue(
                         Optional.of(MAPPING1)
                     ),
                     this.createContext()
@@ -211,8 +212,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/" + LABEL1),
-                        Optional.empty()
+                        StoragePath.parse("/" + LABEL1)
                     ),
                     this.createContext()
                 )
@@ -232,13 +232,14 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(MAPPING1)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(MAPPING1)
+                ),
             context,
             StorageValue.with(
-                path,
+                path
+            ).setValue(
                 Optional.of(MAPPING1)
             ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
         );

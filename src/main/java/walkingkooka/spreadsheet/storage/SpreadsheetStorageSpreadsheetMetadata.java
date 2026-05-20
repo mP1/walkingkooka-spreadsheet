@@ -76,9 +76,8 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
                         parseSpreadsheetId(
                             storageNames.get(1)
                         )
-                    )
-                    .map(m -> StorageValue.with(
-                            path,
+                    ).map(m -> StorageValue.with(path)
+                        .setValue(
                             Optional.of(m)
                         ).setContentType(MEDIA_TYPE)
                     );

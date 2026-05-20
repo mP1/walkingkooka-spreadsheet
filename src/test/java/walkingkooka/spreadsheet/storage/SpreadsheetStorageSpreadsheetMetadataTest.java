@@ -83,10 +83,10 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(metadata)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(metadata)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
         );
     }
 
@@ -104,10 +104,10 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(metadata)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(metadata)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
         );
     }
 
@@ -120,7 +120,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/1"),
+                        StoragePath.parse("/1")
+                    ).setValue(
                         Optional.of(METADATA_EN_AU)
                     ),
                     context
@@ -140,7 +141,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/1"),
+                        StoragePath.parse("/1")
+                    ).setValue(
                         Optional.of(
                             SpreadsheetMetadata.EMPTY
                         )
@@ -163,10 +165,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             InvalidStoragePathException.class,
             () -> this.createStorage()
                 .save(
-                    StorageValue.with(
-                        StoragePath.ROOT,
-                        Optional.empty()
-                    ),
+                    StorageValue.with(StoragePath.ROOT),
                     context
                 )
         );
@@ -186,12 +185,16 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
         this.saveAndCheck(
             this.createStorage(),
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(metadata)
             ),
             context,
             StorageValue.with(
-                StoragePath.parse("/" + metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)),
+                StoragePath.parse(
+                    "/" + metadata.getOrFail(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                )
+            ).setValue(
                 Optional.of(metadata)
             ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
         );
@@ -226,7 +229,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         final StorageValue value1 = storage.save(
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(
                     METADATA_EN_AU.set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -239,7 +243,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         final StorageValue value2 = storage.save(
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(
                     METADATA_EN_AU.set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -252,7 +257,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         final StorageValue value3 = storage.save(
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(
                     METADATA_EN_AU.set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -300,7 +306,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         final StorageValue value1 = storage.save(
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(
                     METADATA_EN_AU.set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -313,7 +320,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         final StorageValue value2 = storage.save(
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(
                     METADATA_EN_AU.set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
@@ -326,7 +334,8 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
 
         final StorageValue value3 = storage.save(
             StorageValue.with(
-                StoragePath.ROOT,
+                StoragePath.ROOT
+            ).setValue(
                 Optional.of(
                     METADATA_EN_AU.set(
                         SpreadsheetMetadataPropertyName.SPREADSHEET_NAME,
