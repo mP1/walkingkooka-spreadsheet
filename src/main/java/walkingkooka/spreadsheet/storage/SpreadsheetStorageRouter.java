@@ -89,7 +89,10 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         this.labels = labels.setPrefix(LABEL);
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
 
-        this.root = root;
+        this.root = SpreadsheetStorageRouterRootStorage.with(
+            root,
+            this
+        );
     }
 
     // SpreadsheetStorage.......................................................................................
@@ -263,43 +266,43 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
 
     private final static String SPREADSHEET_STRING = "spreadsheet";
 
-    private final static StoragePath SPREADSHEET = StoragePath.ROOT.append(
+    final static StoragePath SPREADSHEET = StoragePath.ROOT.append(
         StorageName.with(SPREADSHEET_STRING)
     );
 
     private final static String CELL_STRING = "cell";
 
-    private final static StoragePath CELL = StoragePath.ROOT.append(
+    final static StoragePath CELL = StoragePath.ROOT.append(
         StorageName.with(CELL_STRING)
     );
 
     private final static String ENVIRONMENT_STRING = "env";
 
-    private final static StoragePath ENVIRONMENT = StoragePath.ROOT.append(
+    final static StoragePath ENVIRONMENT = StoragePath.ROOT.append(
         StorageName.with(ENVIRONMENT_STRING)
     );
 
     private final static String FORM_STRING = "form";
 
-    private final static StoragePath FORM = StoragePath.ROOT.append(
+    final static StoragePath FORM = StoragePath.ROOT.append(
         StorageName.with(FORM_STRING)
     );
 
     private final static String LABEL_STRING = "label";
 
-    private final static StoragePath LABEL = StoragePath.ROOT.append(
+    final static StoragePath LABEL = StoragePath.ROOT.append(
         StorageName.with(LABEL_STRING)
     );
 
-    private final Storage<SpreadsheetStorageContext> cells;
+    final Storage<SpreadsheetStorageContext> cells;
 
-    private final Storage<SpreadsheetStorageContext> environment;
+    final Storage<SpreadsheetStorageContext> environment;
 
-    private final Storage<SpreadsheetStorageContext> forms;
+    final Storage<SpreadsheetStorageContext> forms;
 
-    private final Storage<SpreadsheetStorageContext> labels;
+    final Storage<SpreadsheetStorageContext> labels;
 
-    private final Storage<SpreadsheetStorageContext> metadatas;
+    final Storage<SpreadsheetStorageContext> metadatas;
 
     /**
      * This storage will provide storage for paths that dont match the cells, labels or metadata.

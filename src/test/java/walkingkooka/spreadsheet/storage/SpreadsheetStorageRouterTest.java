@@ -1510,8 +1510,28 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             storage,
             StoragePath.ROOT,
             0, // offset
-            4, // count
-            context
+            5, // count
+            context,
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.CELL,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.ENVIRONMENT,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.FORM,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.LABEL,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.SPREADSHEET,
+                AUDIT_INFO
+            )
         );
     }
 
@@ -1816,8 +1836,28 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             storage,
             StoragePath.ROOT,
             0,
-            2,
+            6,
             context,
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.CELL,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.ENVIRONMENT,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.FORM,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.LABEL,
+                AUDIT_INFO
+            ),
+            StorageValueInfo.with(
+                SpreadsheetStorageRouter.SPREADSHEET,
+                AUDIT_INFO
+            ),
             StorageValueInfo.with(
                 StoragePath.parse("/root/"),
                 AUDIT_INFO
