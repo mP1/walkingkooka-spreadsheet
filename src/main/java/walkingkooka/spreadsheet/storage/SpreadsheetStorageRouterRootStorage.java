@@ -148,31 +148,6 @@ final class SpreadsheetStorageRouterRootStorage implements Storage<SpreadsheetSt
         );
     }
 
-//    private StorageValueInfo addMount(final Storage<SpreadsheetStorageContext> mount,
-//                                      final StoragePath path,
-//                                      final SpreadsheetStorageContext context) {
-//        final List<StorageValueInfo> infos = mount.list(
-//            path,
-//            0,
-//            1,
-//            context
-//        );
-//
-//        StorageValueInfo info;
-//
-//        if (infos.size() == 1) {
-//            info = infos.get(0)
-//                .setPath(path);
-//        } else {
-//            info = StorageValueInfo.with(
-//                path,
-//                context.createdAuditInfo()
-//            );
-//        }
-//
-//        return info;
-//    }
-
     // StorageDelegator.................................................................................................
 
     @Override
