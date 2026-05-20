@@ -64,14 +64,14 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                                          final Storage<SpreadsheetStorageContext> forms,
                                          final Storage<SpreadsheetStorageContext> labels,
                                          final Storage<SpreadsheetStorageContext> metadatas,
-                                         final Storage<SpreadsheetStorageContext> other) {
+                                         final Storage<SpreadsheetStorageContext> root) {
         return new SpreadsheetStorageRouter(
             Objects.requireNonNull(cells, "cells"),
             Objects.requireNonNull(environment, "environment"),
             Objects.requireNonNull(forms, "forms"),
             Objects.requireNonNull(labels, "labels"),
             Objects.requireNonNull(metadatas, "metadatas"),
-            Objects.requireNonNull(other, "other")
+            Objects.requireNonNull(root, "root")
         );
     }
 
@@ -80,7 +80,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                                      final Storage<SpreadsheetStorageContext> forms,
                                      final Storage<SpreadsheetStorageContext> labels,
                                      final Storage<SpreadsheetStorageContext> metadatas,
-                                     final Storage<SpreadsheetStorageContext> other) {
+                                     final Storage<SpreadsheetStorageContext> root) {
         super();
 
         this.cells = cells.setPrefix(CELL);
@@ -89,7 +89,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         this.labels = labels.setPrefix(LABEL);
         this.metadatas = metadatas.setPrefix(SPREADSHEET);
 
-        this.other = other;
+        this.root = root;
     }
 
     // SpreadsheetStorage.......................................................................................
@@ -168,7 +168,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
         switch (nameCount) {
             case 0:
             case 1:
-                storage = this.other;
+                storage = this.root;
                 executeContext = context;
                 break;
             default:
@@ -204,7 +204,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                                         storage = this.labels;
                                         break;
                                     default:
-                                        storage = this.other;
+                                        storage = this.root;
                                         break;
                                 }
 
@@ -247,7 +247,7 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
                         executeContext = context;
                         break;
                     default:
-                        storage = this.other;
+                        storage = this.root;
                         executeContext = context;
                         break;
                 }
@@ -304,12 +304,12 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     /**
      * This storage will provide storage for paths that dont match the cells, labels or metadata.
      */
-    private final Storage<SpreadsheetStorageContext> other;
+    private final Storage<SpreadsheetStorageContext> root;
 
     // Object...........................................................................................................
 
     @Override
     public String toString() {
-        return this.cells + ", " + this.environment + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", /* " + this.other;
+        return this.cells + ", " + this.environment + ", " + this.forms + ", " + this.labels + ", " + this.metadatas + ", /* " + this.root;
     }
 }
