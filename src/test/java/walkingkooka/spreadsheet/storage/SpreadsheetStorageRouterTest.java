@@ -1178,11 +1178,11 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
-    public void testSaveOther() {
+    public void testSaveRoot() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
-        final StoragePath path = StoragePath.parse("/other");
+        final StoragePath path = StoragePath.parse("/root");
         final String value = "value123";
 
         this.saveAndCheck(
@@ -1200,11 +1200,11 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
-    public void testSaveOtherAndLoad() {
+    public void testSaveRootAndLoad() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
-        final StoragePath path = StoragePath.parse("/other");
+        final StoragePath path = StoragePath.parse("/root");
         final String value = "value123";
 
         this.saveAndCheck(
@@ -1233,11 +1233,11 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
-    public void testSaveOtherDeleteAndLoad() {
+    public void testSaveRootDeleteAndLoad() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
-        final StoragePath path = StoragePath.parse("/other");
+        final StoragePath path = StoragePath.parse("/root");
         final String value = "value123";
 
         this.saveAndCheck(
@@ -1776,11 +1776,11 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     }
 
     @Test
-    public void testListWithOther() {
+    public void testListWithRootFolder() {
         final SpreadsheetStorageRouter storage = this.createStorage();
         final SpreadsheetStorageContext context = this.createContext();
 
-        final StoragePath path1 = StoragePath.parse("/other/1.txt");
+        final StoragePath path1 = StoragePath.parse("/root/1.txt");
         final String value1 = "value123";
 
         this.saveAndCheck(
@@ -1796,7 +1796,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             )
         );
 
-        final StoragePath path2 = StoragePath.parse("/other/2.txt");
+        final StoragePath path2 = StoragePath.parse("/root/2.txt");
         final String value2 = "value223";
 
         this.saveAndCheck(
@@ -1819,14 +1819,14 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             2,
             context,
             StorageValueInfo.with(
-                StoragePath.parse("/other/"),
+                StoragePath.parse("/root/"),
                 AUDIT_INFO
             )
         );
 
         this.listAndCheck(
             storage,
-            StoragePath.parse("/other/"),
+            StoragePath.parse("/root/"),
             0,
             3,
             context,
