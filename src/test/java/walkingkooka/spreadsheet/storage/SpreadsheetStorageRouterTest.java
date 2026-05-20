@@ -135,7 +135,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
     private final Storage<SpreadsheetStorageContext> FORMS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> LABELS = Storages.fake();
     private final Storage<SpreadsheetStorageContext> METADATAS = Storages.fake();
-    private final Storage<SpreadsheetStorageContext> OTHER = Storages.fake();
+    private final Storage<SpreadsheetStorageContext> ROOT = Storages.fake();
 
     private final static SpreadsheetCell CELL1 = SpreadsheetSelection.A1.setFormula(
         SpreadsheetFormula.EMPTY.setValue(
@@ -215,7 +215,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 FORMS,
                 LABELS,
                 METADATAS,
-                OTHER
+                ROOT
             )
         );
     }
@@ -230,7 +230,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 FORMS,
                 LABELS,
                 METADATAS,
-                OTHER
+                ROOT
             )
         );
     }
@@ -245,7 +245,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 null,
                 LABELS,
                 METADATAS,
-                OTHER
+                ROOT
             )
         );
     }
@@ -260,7 +260,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 FORMS,
                 null,
                 METADATAS,
-                OTHER
+                ROOT
             )
         );
     }
@@ -275,13 +275,13 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 FORMS,
                 LABELS,
                 null,
-                OTHER
+                ROOT
             )
         );
     }
 
     @Test
-    public void testWithNullOtherFails() {
+    public void testWithNullRootFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetStorageRouter.with(
@@ -2019,9 +2019,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 FORMS,
                 LABELS,
                 METADATAS,
-                OTHER
+                ROOT
             ),
-            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + OTHER
+            "/cell " + CELLS + ", /env " + ENVIRONMENT + ", /form " + FORMS + ", /label " + LABELS + ", /spreadsheet " + METADATAS + ", /* " + ROOT
         );
     }
 
