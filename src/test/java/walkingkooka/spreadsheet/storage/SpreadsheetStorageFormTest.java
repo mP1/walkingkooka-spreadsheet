@@ -150,10 +150,10 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(FORM1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
         );
     }
 
@@ -175,10 +175,10 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             this.createStorage(),
             path,
             context,
-            StorageValue.with(
-                path,
-                Optional.of(FORM1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
         );
     }
 
@@ -189,7 +189,8 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/" + FORM_NAME1 + "/extra"),
+                        StoragePath.parse("/" + FORM_NAME1 + "/extra")
+                    ).setValue(
                         Optional.of(FORM1)
                     ),
                     this.createContext()
@@ -209,8 +210,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             () -> this.createStorage()
                 .save(
                     StorageValue.with(
-                        StoragePath.parse("/" + FORM_NAME1),
-                        Optional.empty()
+                        StoragePath.parse("/" + FORM_NAME1)
                     ),
                     this.createContext()
                 )
@@ -230,15 +230,15 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
         this.saveAndCheck(
             this.createStorage(),
-            StorageValue.with(
-                path,
-                Optional.of(FORM1)
-            ),
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ),
             context,
-            StorageValue.with(
-                path,
-                Optional.of(FORM1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+            StorageValue.with(path)
+                .setValue(
+                    Optional.of(FORM1)
+                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
         );
     }
 

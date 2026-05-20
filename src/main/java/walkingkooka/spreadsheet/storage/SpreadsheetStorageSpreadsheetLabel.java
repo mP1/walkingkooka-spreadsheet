@@ -77,12 +77,12 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
                 .orElse(null);
 
             if (null != mapping) {
-                value = StorageValue.with(
-                    path,
-                    Optional.of(
-                        mapping
-                    )
-                ).setContentType(MEDIA_TYPE);
+                value = StorageValue.with(path)
+                    .setValue(
+                        Optional.of(
+                            mapping
+                        )
+                    ).setContentType(MEDIA_TYPE);
             }
         }
 

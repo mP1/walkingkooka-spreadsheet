@@ -80,10 +80,10 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
         if (null != formName) {
             final Optional<Form<SpreadsheetValidationReference>> form = context.loadForm(formName);
             if (false == form.isEmpty()) {
-                value = StorageValue.with(
-                    path,
-                    Cast.to(form)
-                ).setContentType(MEDIA_TYPE);
+                value = StorageValue.with(path)
+                    .setValue(
+                        Cast.to(form)
+                    ).setContentType(MEDIA_TYPE);
             }
         }
 
