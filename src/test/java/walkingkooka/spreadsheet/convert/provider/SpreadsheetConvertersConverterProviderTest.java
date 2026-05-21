@@ -887,6 +887,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToMediaType() {
+        this.converterAndCheck(
+            "text-to-media-type",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToMediaType()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToObject() {
         this.converterAndCheck(
             "text-to-object",
