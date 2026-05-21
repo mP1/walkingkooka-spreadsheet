@@ -706,6 +706,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    text-to-locale\n" +
                 "    text-to-locale-language-tag\n" +
                 "    text-to-margin\n" +
+                "    text-to-media-type\n" +
                 "    text-to-number-list\n" +
                 "    text-to-object\n" +
                 "    text-to-padding\n" +

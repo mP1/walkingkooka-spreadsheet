@@ -527,6 +527,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToMargin();
                 break;
+            case TEXT_TO_MEDIA_TYPE_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToMediaType();
+                break;
             case TEXT_TO_NUMBER_LIST_STRING:
                 noParameterCheck(copy);
 
@@ -1110,6 +1115,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_MARGIN = ConverterName.with(TEXT_TO_MARGIN_STRING);
 
+    private final static String TEXT_TO_MEDIA_TYPE_STRING = "text-to-media-type";
+
+    final static ConverterName TEXT_TO_MEDIA_TYPE = ConverterName.with(TEXT_TO_MEDIA_TYPE_STRING);
+
     private final static String TEXT_TO_NUMBER_LIST_STRING = "text-to-number-list";
 
     final static ConverterName TEXT_TO_NUMBER_LIST = ConverterName.with(TEXT_TO_NUMBER_LIST_STRING);
@@ -1370,6 +1379,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_TO_LOCALE),
             converterInfo(TEXT_TO_LOCALE_LANGUAGE_TAG),
             converterInfo(TEXT_TO_MARGIN),
+            converterInfo(TEXT_TO_MEDIA_TYPE),
             converterInfo(TEXT_TO_NUMBER_LIST),
             converterInfo(TEXT_TO_OBJECT),
             converterInfo(TEXT_TO_PADDING),
