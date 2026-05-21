@@ -46,6 +46,8 @@ import walkingkooka.net.MailToUrl;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.CharsetName;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.props.Properties;
 import walkingkooka.spreadsheet.SpreadsheetStrings;
 import walkingkooka.spreadsheet.convert.FakeSpreadsheetConverterContext;
@@ -282,6 +284,7 @@ final class MissingConverterVerifier {
         final AbsoluteUrl absoluteUrl = Url.parseAbsolute("https://example.com/123");
         final EmailAddress emailAddress = EmailAddress.parse("user@example.com");
         final MailToUrl mailToUrl = Url.parseMailTo("mailto:user@example.com");
+        final MediaType mediaType = MediaType.TEXT_PLAIN.setCharset(CharsetName.UTF_8);
         final RelativeUrl relativeUrl = Url.parseRelative("/path1/path2?k1=v1#fragment111");
 
         // basic........................................................................................................
@@ -848,6 +851,12 @@ final class MissingConverterVerifier {
                 verifier.addIfConversionFail(
                     emailAddress.text(),
                     EmailAddress.class,
+                    SpreadsheetConvertersConverterProvider.NET
+                );
+
+                verifier.addIfConversionFail(
+                    mediaType.toString(),
+                    MediaType.class,
                     SpreadsheetConvertersConverterProvider.NET
                 );
 
