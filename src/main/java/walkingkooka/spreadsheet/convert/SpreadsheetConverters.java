@@ -989,6 +989,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see NetConverters#textToMediaType()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToMediaType() {
+        return NetConverters.textToMediaType();
+    }
+
+    /**
      * A {@link Converter} that uses the given {@link Parser} to parse text into a {@link NumberSpreadsheetFormulaParserToken} and converting
      * that into a {@link Number}.
      */
