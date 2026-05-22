@@ -86,7 +86,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             StorageValue.with(path)
                 .setValue(
                     Optional.of(metadata)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                )
         );
     }
 
@@ -107,7 +109,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             StorageValue.with(path)
                 .setValue(
                     Optional.of(metadata)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                )
         );
     }
 
@@ -196,7 +200,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 )
             ).setValue(
                 Optional.of(metadata)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            )
         );
     }
 

@@ -155,7 +155,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             StorageValue.with(path)
                 .setValue(
                     Optional.of(MAPPING1)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                )
         );
     }
 
@@ -180,7 +182,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
             StorageValue.with(path)
                 .setValue(
                     Optional.of(MAPPING1)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                )
         );
     }
 
@@ -241,7 +245,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 path
             ).setValue(
                 Optional.of(MAPPING1)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+            )
         );
     }
 

@@ -339,7 +339,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(path)
                 .setValue(
                     Optional.of(METADATA1)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+                )
         );
     }
 
@@ -355,7 +357,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 .setValue(
                     Optional.of(METADATA2)
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
                 )
         );
     }
@@ -406,7 +408,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                         )
                     )
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_CELL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
         );
     }
@@ -435,7 +437,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                         )
                     )
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_CELL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
         );
     }
@@ -464,7 +466,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                         )
                     )
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_CELL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
         );
     }
@@ -565,7 +567,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 .setValue(
                     Optional.of(FORM1)
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_FORM
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
                 )
         );
     }
@@ -588,7 +590,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 .setValue(
                     Optional.of(MAPPING1)
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_LABEL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
                 )
         );
     }
@@ -611,7 +613,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 .setValue(
                     Optional.of(MAPPING1)
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_LABEL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
                 )
         );
     }
@@ -686,7 +688,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                         )
                     )
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_CELL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
         );
     }
@@ -709,7 +711,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                         )
                     )
                 ).setContentType(
-                    SpreadsheetMediaTypes.MEMORY_CELL
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
                 )
         );
     }
@@ -733,7 +735,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                     )
                 )
             ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_CELL
+                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
             )
         );
     }
@@ -751,7 +753,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             ).setValue(
                 Optional.of(FORM1)
             ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_FORM
+                Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
             )
         );
     }
@@ -769,7 +771,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             ).setValue(
                 Optional.of(MAPPING1)
             ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_LABEL
+                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
             )
         );
     }
@@ -787,7 +789,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             ).setValue(
                 Optional.of(MAPPING2)
             ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_LABEL
+                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
             )
         );
     }
@@ -805,7 +807,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             ).setValue(
                 Optional.of(MAPPING2)
             ).setContentType(
-                SpreadsheetMediaTypes.MEMORY_LABEL
+                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
             )
         );
     }
@@ -877,7 +879,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 Optional.of(
                     metadata
                 )
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA)
+            )
         );
 
         this.checkEquals(
@@ -931,7 +935,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(path)
                 .setValue(
                     Optional.of(DIFFERENT_FORMATTED_CELL)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
 
         this.loadCellsAndCheck(
@@ -963,7 +969,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(path)
                 .setValue(
                     Optional.of(DIFFERENT_FORM)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                )
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1001,7 +1009,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                 path
             ).setValue(
                 Optional.of(DIFFERENT_MAPPING)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+            )
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1032,7 +1042,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(path)
                 .setValue(
                     Optional.of(DIFFERENT_FORMATTED_CELL)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1064,7 +1076,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(path)
                 .setValue(
                     Optional.of(DIFFERENT_FORMATTED_CELL)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1106,7 +1120,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             storageContext,
             StorageValue.with(path).setValue(
                 Optional.of(DIFFERENT_MAPPING)
-            ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+            )
         );
 
         spreadsheetContext.setSpreadsheetId(
@@ -1149,7 +1165,9 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             StorageValue.with(path)
                 .setValue(
                     Optional.of(DIFFERENT_MAPPING)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_LABEL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_LABEL)
+                )
         );
 
         spreadsheetContext.setSpreadsheetId(
