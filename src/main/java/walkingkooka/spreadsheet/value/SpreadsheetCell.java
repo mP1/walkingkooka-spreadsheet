@@ -31,6 +31,8 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbols;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbols;
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -84,6 +86,7 @@ import java.util.function.Function;
  */
 public final class SpreadsheetCell implements CanBeEmpty,
     CanReplaceReferences<SpreadsheetCell>,
+    HasContentType,
     HasSpreadsheetReference<SpreadsheetCellReference>,
     HateosResource<SpreadsheetCellReference>,
     Patchable<SpreadsheetCell>,
@@ -1578,4 +1581,13 @@ public final class SpreadsheetCell implements CanBeEmpty,
         return this.formattedValue()
             .orElse(null);
     }
+
+    // HasContentType...................................................................................................
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
+    }
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetCell.class);
 }
