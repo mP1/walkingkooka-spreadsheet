@@ -189,6 +189,16 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
         );
     }
 
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector"
+        );
+    }
+
     // type name........................................................................................................
 
     @Override

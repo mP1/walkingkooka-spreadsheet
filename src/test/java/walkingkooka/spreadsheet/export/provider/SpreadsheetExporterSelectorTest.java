@@ -106,6 +106,16 @@ public final class SpreadsheetExporterSelectorTest implements PluginSelectorLike
         );
     }
 
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.spreadsheet.export.provider.SpreadsheetExporterSelector"
+        );
+    }
+
     // type name........................................................................................................
 
     @Override

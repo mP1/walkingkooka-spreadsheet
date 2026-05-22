@@ -17,12 +17,61 @@
 
 package walkingkooka.spreadsheet.compare.provider;
 
-import walkingkooka.reflect.ClassTesting;
+import org.junit.jupiter.api.Test;
+import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-public final class SpreadsheetComparatorSelectorTest implements ClassTesting<SpreadsheetComparatorSelector> {
+public final class SpreadsheetComparatorSelectorTest implements PluginSelectorLikeTesting<SpreadsheetComparatorSelector, SpreadsheetComparatorName> {
 
-    // class............................................................................................................
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorSelector"
+        );
+    }
+
+    // PluginSelectorLike...............................................................................................
+
+    @Override
+    public SpreadsheetComparatorSelector createPluginSelectorLike(final SpreadsheetComparatorName name,
+                                                                  final String text) {
+        return SpreadsheetComparatorSelector.with(name, text);
+    }
+
+    @Override
+    public SpreadsheetComparatorName createName(final String name) {
+        return SpreadsheetComparatorName.with(name);
+    }
+
+    @Override
+    public SpreadsheetComparatorSelector parseString(final String text) {
+        return SpreadsheetComparatorSelector.parse(text);
+    }
+
+    @Override
+    public SpreadsheetComparatorSelector unmarshall(final JsonNode jsonNode,
+                                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetComparatorSelector.unmarshall(
+            jsonNode,
+            context
+        );
+    }
+
+    @Override
+    public SpreadsheetComparatorSelector createJsonNodeMarshallingValue() {
+        return SpreadsheetComparatorSelector.with(
+            SpreadsheetComparatorName.with("test123"),
+            "456"
+        );
+    }
+
+    // class.............................................................................................................
 
     @Override
     public Class<SpreadsheetComparatorSelector> type() {
@@ -32,5 +81,10 @@ public final class SpreadsheetComparatorSelectorTest implements ClassTesting<Spr
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    @Override
+    public String typeNamePrefix() {
+        return SpreadsheetComparator.class.getSimpleName();
     }
 }

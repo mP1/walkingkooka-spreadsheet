@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.compare.provider;
 
 import walkingkooka.Cast;
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
@@ -31,6 +33,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Contains the {@link SpreadsheetComparatorName} and some text which may contain an expression for a {@link SpreadsheetComparator}.
@@ -201,6 +204,15 @@ public final class SpreadsheetComparatorSelector implements PluginSelectorLike<S
             SpreadsheetComparatorSelector::marshall,
             SpreadsheetComparatorSelector.class
         );
+    }
+
+    // HasContentType...................................................................................................
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetComparatorSelector.class);
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
     }
 
     // TreePrintable....................................................................................................

@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format.provider;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
@@ -238,6 +240,15 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
             SpreadsheetFormatterSelector::marshall,
             SpreadsheetFormatterSelector.class
         );
+    }
+
+    // HasContentType...................................................................................................
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetFormatterSelector.class);
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
     }
 
     // TreePrintable....................................................................................................
