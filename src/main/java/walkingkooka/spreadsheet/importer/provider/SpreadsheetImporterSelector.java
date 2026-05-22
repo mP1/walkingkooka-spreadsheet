@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.importer.provider;
 
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.PluginSelector;
 import walkingkooka.plugin.PluginSelectorLike;
 import walkingkooka.plugin.ProviderContext;
@@ -32,6 +34,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Selects a {@link SpreadsheetImporter}.
@@ -194,6 +197,15 @@ public final class SpreadsheetImporterSelector implements PluginSelectorLike<Spr
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return this.selector.marshall(context);
+    }
+
+    // HasContentType...................................................................................................
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetImporterSelector.class);
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
     }
 
     // TreePrintable....................................................................................................

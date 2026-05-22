@@ -178,6 +178,16 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
         );
     }
 
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector"
+        );
+    }
+
     // type name........................................................................................................
 
     @Override
