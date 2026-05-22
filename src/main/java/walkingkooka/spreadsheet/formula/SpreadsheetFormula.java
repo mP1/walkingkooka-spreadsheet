@@ -24,6 +24,8 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.header.HasContentType;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.formula.parser.CellSpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -76,6 +78,7 @@ import java.util.function.Function;
  */
 public final class SpreadsheetFormula implements CanBeEmpty,
     CanReplaceReferences<SpreadsheetFormula>,
+    HasContentType,
     HasText,
     HasValue<Optional<Object>>,
     Patchable<SpreadsheetFormula>,
@@ -948,6 +951,15 @@ public final class SpreadsheetFormula implements CanBeEmpty,
         return this.value.isPresent() ||
             (null != expression && expression.isPure(context));
     }
+
+    // HasContentType...................................................................................................
+
+    @Override
+    public Optional<MediaType> contentType() {
+        return Optional.of(CONTENT_TYPE);
+    }
+
+    public final static MediaType CONTENT_TYPE = HasContentType.json(SpreadsheetFormula.class);
 }
 
 

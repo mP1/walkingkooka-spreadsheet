@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.UrlFragment;
+import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
@@ -102,6 +103,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
     CanBeEmptyTesting,
     CanReplaceReferencesTesting<SpreadsheetFormula>,
+    HasContentTypeTesting,
     HasValidationPromptValueTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
     JsonNodeMarshallingTesting<SpreadsheetFormula>,
@@ -3540,6 +3542,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         return SpreadsheetFormula.unmarshall(
             jsonNode,
             context
+        );
+    }
+
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.spreadsheet.formula.SpreadsheetFormula"
         );
     }
 
