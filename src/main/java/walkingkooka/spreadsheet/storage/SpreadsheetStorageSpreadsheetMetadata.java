@@ -47,7 +47,9 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
      */
     final static SpreadsheetStorageSpreadsheetMetadata INSTANCE = new SpreadsheetStorageSpreadsheetMetadata();
 
-    private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA;
+    private final static Optional<MediaType> MEDIA_TYPE = Optional.of(
+        SpreadsheetMediaTypes.MEMORY_SPREADSHEET_METADATA
+    );
 
     private SpreadsheetStorageSpreadsheetMetadata() {
         super();

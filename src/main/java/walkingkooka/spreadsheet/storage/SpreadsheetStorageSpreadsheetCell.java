@@ -49,7 +49,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
      */
     final static SpreadsheetStorageSpreadsheetCell INSTANCE = new SpreadsheetStorageSpreadsheetCell();
 
-    private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_CELL;
+    private final static Optional<MediaType> MEDIA_TYPE = Optional.of(SpreadsheetMediaTypes.MEMORY_CELL);
 
     private SpreadsheetStorageSpreadsheetCell() {
         super();

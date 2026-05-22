@@ -48,7 +48,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
      */
     final static SpreadsheetStorageForm INSTANCE = new SpreadsheetStorageForm();
 
-    private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_FORM;
+    private final static Optional<MediaType> MEDIA_TYPE = Optional.of(SpreadsheetMediaTypes.MEMORY_FORM);
 
     private SpreadsheetStorageForm() {
         super();

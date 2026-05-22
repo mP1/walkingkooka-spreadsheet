@@ -153,7 +153,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             StorageValue.with(path)
                 .setValue(
                     Optional.of(FORM1)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                )
         );
     }
 
@@ -178,7 +180,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             StorageValue.with(path)
                 .setValue(
                     Optional.of(FORM1)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                )
         );
     }
 
@@ -238,7 +242,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
             StorageValue.with(path)
                 .setValue(
                     Optional.of(FORM1)
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_FORM)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_FORM)
+                )
         );
     }
 

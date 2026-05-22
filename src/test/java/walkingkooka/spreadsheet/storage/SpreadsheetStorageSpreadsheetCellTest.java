@@ -162,7 +162,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                                 .loadOrFail(cell.reference())
                         )
                     )
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
     }
 
@@ -197,7 +199,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                                 .loadOrFail(cell.reference())
                         )
                     )
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
     }
 
@@ -242,7 +246,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                             cellStore.loadOrFail(a2.reference())
                         )
                     )
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
     }
 
@@ -280,7 +286,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
             StorageValue.with(path),
             context,
             StorageValue.with(path)
-                .setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                .setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
     }
 
@@ -317,7 +325,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                                 .loadOrFail(cell.reference())
                         )
                     )
-                ).setContentType(SpreadsheetMediaTypes.MEMORY_CELL)
+                ).setContentType(
+                    Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+                )
         );
     }
 

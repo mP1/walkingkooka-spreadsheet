@@ -47,7 +47,9 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
      */
     final static SpreadsheetStorageSpreadsheetLabel INSTANCE = new SpreadsheetStorageSpreadsheetLabel();
 
-    private final static MediaType MEDIA_TYPE = SpreadsheetMediaTypes.MEMORY_LABEL;
+    private final static Optional<MediaType> MEDIA_TYPE = Optional.of(
+        SpreadsheetMediaTypes.MEMORY_LABEL
+    );
 
     private SpreadsheetStorageSpreadsheetLabel() {
         super();
