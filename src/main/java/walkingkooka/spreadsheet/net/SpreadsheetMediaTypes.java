@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.net;
 
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.net.header.HasContentType;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -45,40 +46,34 @@ public final class SpreadsheetMediaTypes implements PublicStaticHelper {
 
     // json.............................................................................................................
 
-    public static final MediaType JSON_CELL = json(SpreadsheetCell.class);
+    public static final MediaType JSON_CELL = SpreadsheetCell.CONTENT_TYPE;
 
-    public static final MediaType JSON_CURRENCY = json(Currency.class);
+    public static final MediaType JSON_CURRENCY = HasContentType.CURRENCY;
 
-    public static final MediaType JSON_DATE_TIME_SYMBOLS = json(DateTimeSymbols.class);
+    public static final MediaType JSON_DATE_TIME_SYMBOLS = HasContentType.DATE_TIME_SYMBOLS;
 
-    public static final MediaType JSON_DECIMAL_NUMBER_SYMBOLS = json(DecimalNumberSymbols.class);
+    public static final MediaType JSON_DECIMAL_NUMBER_SYMBOLS = HasContentType.DECIMAL_NUMBER_SYMBOLS;
 
-    public static final MediaType JSON_FORM = json(Form.class);
+    public static final MediaType JSON_FORM = Form.CONTENT_TYPE;
 
-    public static final MediaType JSON_FORMATTED_VALUE = json(TextNode.class);
+    public static final MediaType JSON_FORMATTED_VALUE = TextNode.CONTENT_TYPE;
 
-    public static final MediaType JSON_FORMATTER = json(SpreadsheetFormatterSelector.class);
+    public static final MediaType JSON_FORMATTER = SpreadsheetFormatterSelector.CONTENT_TYPE;
 
-    public static final MediaType JSON_FORMULA = json(SpreadsheetFormula.class);
+    public static final MediaType JSON_FORMULA = SpreadsheetFormula.CONTENT_TYPE;
 
-    public static final MediaType JSON_LOCALE = json(Locale.class);
+    public static final MediaType JSON_LOCALE = HasContentType.LOCALE;
 
-    public static final MediaType JSON_PARSER = json(SpreadsheetParserSelector.class);
+    public static final MediaType JSON_PARSER = SpreadsheetParserSelector.CONTENT_TYPE;
 
-    public static final MediaType JSON_STYLE = json(TextStyle.class);
+    public static final MediaType JSON_STYLE = TextStyle.CONTENT_TYPE;
 
-    public static final MediaType JSON_VALUE = json(Object.class);
+    public static final MediaType JSON_VALUE = HasContentType.json(Object.class);
 
-    public static final MediaType JSON_VALIDATOR = json(ValidatorSelector.class);
+    public static final MediaType JSON_VALIDATOR = ValidatorSelector.CONTENT_TYPE;
 
-    public static final MediaType JSON_VALUE_TYPE = json(ValueType.class);
+    public static final MediaType JSON_VALUE_TYPE = ValueType.CONTENT_TYPE;
 
-    private static MediaType json(final Class<?> type) {
-        return MediaType.APPLICATION_JSON.setSuffix(
-            Optional.of(type.getName())
-        );
-    }
-    
     // object...........................................................................................................
 
     private final static MediaType MEMORY = MediaType.parse("application/memory");
