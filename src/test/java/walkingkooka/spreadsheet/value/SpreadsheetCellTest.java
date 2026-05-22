@@ -32,6 +32,7 @@ import walkingkooka.datetime.HasOptionalDateTimeSymbolsTesting;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasOptionalDecimalNumberSymbolsTesting;
+import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -98,6 +99,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     ClassTesting2<SpreadsheetCell>,
     CanReplaceReferencesTesting<SpreadsheetCell>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCell>,
+    HasContentTypeTesting,
     HasOptionalCurrencyTesting,
     HasOptionalDateTimeSymbolsTesting,
     HasOptionalDecimalNumberSymbolsTesting,
@@ -3845,6 +3847,16 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
                 Parsers.never()
             ),
             SPREADSHEET_PARSER_CONTEXT
+        );
+    }
+
+    // HasContentType...................................................................................................
+
+    @Test
+    public void testContentType() {
+        this.contentTypeAndCheck(
+            this.createObject(),
+            "application/json+walkingkooka.spreadsheet.value.SpreadsheetCell"
         );
     }
 
