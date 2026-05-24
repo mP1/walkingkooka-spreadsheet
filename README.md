@@ -140,7 +140,7 @@ eg
 - [json](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
 - [json-to](https://github.com/mP1/walkingkooka-tree-json/blob/master/src/main/java/walkingkooka/tree/json/convert/JsonNodeConverterJsonNodeTo.java)
 - [locale](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
-- [locale-to-text](https://github.com/mP1/walkingkooka/blob/master/src/main/java/walkingkooka/convert/ConverterLocaleToString.java)
+- [locale-to-text](https://github.com/mP1/walkingkooka-convert/blob/master/src/main/java/walkingkooka/convert/ConverterLocaleToString.java)
 - [net](https://github.com/mP1/walkingkooka-net/blob/master/src/main/java/walkingkooka/net/convert/NetConverters#net)
 - [null-to-number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverterNullToNumber.java) Handles converting null/missing cell values into 0, 10 + B2 when B2 is missing becomes 10 + 0. 
 - [number](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/convert/SpreadsheetConverters.java)
