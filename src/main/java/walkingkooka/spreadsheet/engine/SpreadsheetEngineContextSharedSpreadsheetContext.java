@@ -56,6 +56,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.text.TextNode;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -127,6 +128,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
             this.converterLike = this.spreadsheetMetadata()
                 .spreadsheetConverterContext(
                     SpreadsheetMetadata.NO_CELL,
+                    spreadsheetContext.charset(),
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this, // HasUserDirectories
@@ -301,6 +303,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
         return this.spreadsheetMetadata()
             .spreadsheetFormatterContext(
                 cell,
+                context.charset(),
                 (final Optional<Object> v) -> this.setSpreadsheetMetadataMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).spreadsheetExpressionEvaluationContext(
@@ -322,6 +325,11 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     }
 
     // SpreadsheetContextDelegator......................................................................................
+
+    @Override
+    public Charset charset() {
+        return this.spreadsheetContext.charset();
+    }
 
     @Override
     public BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {

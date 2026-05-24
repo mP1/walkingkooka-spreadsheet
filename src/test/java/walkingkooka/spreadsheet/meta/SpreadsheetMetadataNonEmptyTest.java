@@ -122,6 +122,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -145,6 +147,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     DateTimeContextTesting,
     DecimalNumberContextTesting,
     SpreadsheetFormatterTesting {
+
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
+
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     private final static int DEFAULT_YEAR = 1900;
@@ -1424,6 +1429,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
+                            CHARSET,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             LINE_ENDING,
@@ -2048,6 +2054,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             null,
             metadata.spreadsheetFormatterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 (final Optional<Object> value) -> {
                     throw new UnsupportedOperationException();
                 },
@@ -2096,6 +2103,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             null,
             metadata.spreadsheetFormatterProviderSamplesContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 (final Optional<Object> v) -> {
                     throw new UnsupportedOperationException();
                 },
@@ -2432,6 +2440,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 ','
             ).spreadsheetValidatorContext(
                 cellOrLabel,
+                CHARSET,
                 (final ValidatorSelector validatorSelector) -> {
                     throw new UnsupportedOperationException();
                 },

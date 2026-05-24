@@ -90,6 +90,7 @@ import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverte
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
@@ -847,6 +848,11 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             this.environmentContext = environmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
+        }
+
+        @Override
+        public Charset charset() {
+            return CHARSET;
         }
 
         @Override

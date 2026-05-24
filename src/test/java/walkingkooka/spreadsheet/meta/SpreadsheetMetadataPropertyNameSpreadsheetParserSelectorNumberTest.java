@@ -101,6 +101,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetParserSelectorNumbe
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
+                            SpreadsheetMetadataTesting.CHARSET,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             SpreadsheetMetadataTesting.LINE_ENDING,

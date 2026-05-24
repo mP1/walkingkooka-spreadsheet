@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionEvaluationReferenceException;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.nio.charset.Charset;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -124,7 +125,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final Charset charset,
+                                                                                       final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                        final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -133,6 +135,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                        final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            charset,
             multiplier,
             spreadsheetContextSupplier,
             currencyLocaleContext,

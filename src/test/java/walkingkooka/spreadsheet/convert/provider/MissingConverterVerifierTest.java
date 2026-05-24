@@ -60,6 +60,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
 
 import java.math.MathContext;
+import java.nio.charset.Charset;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -297,6 +298,11 @@ public final class MissingConverterVerifierTest implements TreePrintableTesting,
         @Override
         public boolean canNumbersHaveGroupSeparator() {
             return false;
+        }
+
+        @Override
+        public Charset charset() {
+            return CHARSET;
         }
 
         @Override

@@ -2030,6 +2030,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
             return Optional.of(
                 SpreadsheetContexts.fixedSpreadsheetId(
+                    CHARSET,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     repo,
@@ -2055,6 +2056,7 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetContexts.mutableSpreadsheetId(
+            CHARSET,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             spreadsheetContextSupplier,

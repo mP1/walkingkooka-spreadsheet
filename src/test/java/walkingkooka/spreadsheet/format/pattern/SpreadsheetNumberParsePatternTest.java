@@ -55,6 +55,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePatternTestCase<SpreadsheetNumberParsePattern,
@@ -1262,6 +1263,7 @@ public final class SpreadsheetNumberParsePatternTest extends SpreadsheetParsePat
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
+                        StandardCharsets.UTF_8,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,

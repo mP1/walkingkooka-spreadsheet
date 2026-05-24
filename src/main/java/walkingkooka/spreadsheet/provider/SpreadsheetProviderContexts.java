@@ -26,17 +26,21 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 
+import java.nio.charset.Charset;
+
 public final class SpreadsheetProviderContexts implements PublicStaticHelper {
 
     /**
      * {@see SpreadsheetProviderContext}
      */
-    public static ProviderContext spreadsheet(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static ProviderContext spreadsheet(final Charset charset,
+                                              final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                               final PluginStore pluginStore,
                                               final CurrencyLocaleContext currencyLocaleContext,
                                               final EnvironmentContext environmentContext,
                                               final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return SpreadsheetProviderContext.with(
+            charset,
             multiplier,
             pluginStore,
             currencyLocaleContext,

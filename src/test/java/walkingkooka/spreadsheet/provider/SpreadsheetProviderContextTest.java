@@ -48,6 +48,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -59,6 +61,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetProviderContextTest implements ProviderContextTesting<SpreadsheetProviderContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetProviderContext> {
+
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = BinaryNumberConverterFunctions.fake();
 
@@ -128,10 +132,26 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     // with.............................................................................................................
 
     @Test
+    public void testWithNullCharsetFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetProviderContext.with(
+                null,
+                MULTIPLIER,
+                PLUGIN_STORE,
+                CURRENCY_LOCALE_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                CHARSET,
                 null,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -146,6 +166,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
@@ -160,6 +181,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 null,
@@ -174,6 +196,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -188,6 +211,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -325,6 +349,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
     private SpreadsheetProviderContext createContext(final EnvironmentContext environmentContext) {
         return SpreadsheetProviderContext.with(
+            CHARSET,
             MULTIPLIER,
             PLUGIN_STORE,
             CURRENCY_LOCALE_CONTEXT,
@@ -358,9 +383,24 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentCharset() {
+        this.checkNotEquals(
+            SpreadsheetProviderContext.with(
+                StandardCharsets.ISO_8859_1,
+                MULTIPLIER,
+                PLUGIN_STORE,
+                CURRENCY_LOCALE_CONTEXT,
+                ENVIRONMENT_CONTEXT,
+                JSON_NODE_MARSHALL_UNMARSHALL_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentBinaryNumberConverterFunction() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                CHARSET,
                 BinaryNumberConverterFunctions.fake(),
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -374,6 +414,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentPluginStore() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PluginStores.fake(),
                 CURRENCY_LOCALE_CONTEXT,
@@ -387,6 +428,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CurrencyContexts.fake()
@@ -406,6 +448,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
 
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,
@@ -419,6 +462,7 @@ public final class SpreadsheetProviderContextTest implements ProviderContextTest
     public void testEqualsDifferentJsonNodeMarshallUnmarshallContext() {
         this.checkNotEquals(
             SpreadsheetProviderContext.with(
+                CHARSET,
                 MULTIPLIER,
                 PLUGIN_STORE,
                 CURRENCY_LOCALE_CONTEXT,

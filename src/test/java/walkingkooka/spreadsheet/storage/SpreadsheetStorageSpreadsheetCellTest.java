@@ -600,6 +600,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            CHARSET,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(

@@ -113,12 +113,14 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
         SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = SpreadsheetFormatterProviderSamplesContexts.basic(
             METADATA_EN_AU.spreadsheetFormatterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 (Optional<Object> value) -> SpreadsheetExpressionEvaluationContexts.spreadsheetContext(
                     SpreadsheetMetadataMode.FORMULA,
                     SpreadsheetMetadata.NO_CELL,
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SPREADSHEET_LABEL_NAME_RESOLVER,
                     SpreadsheetContexts.fixedSpreadsheetId(
+                        CHARSET,
                         MULTIPLIER,
                         SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {
@@ -4750,6 +4752,7 @@ public final class SpreadsheetFormattersSpreadsheetFormatterProviderTest impleme
                     SpreadsheetFormula.EMPTY.setValue(value)
                 )
             ),
+            CHARSET,
             FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
             HAS_USER_DIRECTORIES,
             Indentation.SPACES2,

@@ -56,6 +56,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 import walkingkooka.tree.text.TextNode;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -89,6 +90,11 @@ public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implem
 
     @Override
     public AbsoluteUrl serverUrl() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Charset charset() {
         throw new UnsupportedOperationException();
     }
 

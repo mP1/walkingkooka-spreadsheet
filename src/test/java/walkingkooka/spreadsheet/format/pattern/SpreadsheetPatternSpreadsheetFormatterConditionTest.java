@@ -47,6 +47,7 @@ import walkingkooka.tree.expression.convert.ExpressionNumberConverterContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -336,6 +337,7 @@ public final class SpreadsheetPatternSpreadsheetFormatterConditionTest extends S
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
+                            StandardCharsets.UTF_8,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             TreePrintableTesting.INDENTATION,
                             LineEnding.NL,

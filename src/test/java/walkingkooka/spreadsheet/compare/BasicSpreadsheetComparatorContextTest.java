@@ -46,6 +46,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -116,6 +117,7 @@ public final class BasicSpreadsheetComparatorContextTest implements SpreadsheetC
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
+                    StandardCharsets.UTF_8,
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     Indentation.SPACES2,
                     LineEnding.NL,

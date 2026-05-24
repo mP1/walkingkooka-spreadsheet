@@ -823,6 +823,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             comparators,
             movedFromTo, // moved cells
             metadata.sortSpreadsheetComparatorContext(
+                context.charset(),
                 context, // HasUserDirectories
                 context.indentation(),
                 context, // ConverterProvider
@@ -1883,6 +1884,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                         context.spreadsheetMetadata()
                             .spreadsheetValidatorContext(
                                 cell.reference(), // reference
+                                context.charset(),
                                 (final ValidatorSelector v) -> context.validator(
                                     v,
                                     providerContext

@@ -30,6 +30,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.terminal.TerminalContext;
 
+import java.nio.charset.Charset;
+
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
 
     /**
@@ -55,7 +57,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final Charset charset,
+                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                          final CurrencyContext currencyContext,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -65,6 +68,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            charset,
             multiplier,
             spreadsheetContextSupplier,
             currencyContext,

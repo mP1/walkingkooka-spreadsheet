@@ -77,6 +77,7 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -607,6 +608,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(
+                StandardCharsets.UTF_8,
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(metadataStore),

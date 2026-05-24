@@ -120,6 +120,7 @@ import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -4265,6 +4266,7 @@ public final class SpreadsheetFormulaParsersTest implements PublicStaticHelperTe
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
+                            StandardCharsets.UTF_8,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             LineEnding.NL,

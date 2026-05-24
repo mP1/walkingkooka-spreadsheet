@@ -84,6 +84,7 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -357,6 +358,7 @@ public class TestGwtTest extends GWTTestCase {
                         CaseSensitivity.INSENSITIVE,
                         metadata.spreadsheetConverterContext(
                             SpreadsheetMetadata.NO_CELL,
+                            StandardCharsets.UTF_8,
                             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
                             HasUserDirectorieses.empty(),
@@ -413,6 +415,7 @@ public class TestGwtTest extends GWTTestCase {
                     value,
                     metadata.spreadsheetFormatterContext(
                         Optional.of(cell),
+                        StandardCharsets.UTF_8,
                         (final Optional<Object> v) -> {
                             throw new UnsupportedOperationException();
                         },

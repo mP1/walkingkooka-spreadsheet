@@ -60,6 +60,7 @@ import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -251,6 +252,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 ConverterContexts.basic(
                     false, // canNumbersHaveGroupSeparator
+                    StandardCharsets.UTF_8,
                     Converters.JAVA_EPOCH_OFFSET, // dateOffset
                     INDENTATION,
                     LineEnding.NL,

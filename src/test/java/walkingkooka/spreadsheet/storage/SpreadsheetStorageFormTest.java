@@ -67,6 +67,7 @@ import walkingkooka.validation.form.FormName;
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Optional;
@@ -463,6 +464,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            StandardCharsets.UTF_8,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(metadataStore),
