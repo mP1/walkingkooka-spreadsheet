@@ -51,6 +51,7 @@ import walkingkooka.tree.json.convert.JsonNodeConverterContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -161,6 +162,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetFormatterSelectorNu
                         ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
+                            StandardCharsets.UTF_8,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             lineEnding,

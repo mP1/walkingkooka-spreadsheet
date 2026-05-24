@@ -31,6 +31,7 @@ import walkingkooka.storage.Storages;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -103,6 +104,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
+                StandardCharsets.UTF_8,
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 CurrencyContexts.fake()
                     .setLocaleContext(

@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.text.LineEnding;
 
+import java.nio.charset.Charset;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
@@ -50,6 +51,12 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     LocaleContextDelegator,
     SpreadsheetMetadataContextDelegator,
     SpreadsheetProviderDelegator {
+
+    @Override
+    default Charset charset() {
+        return this.spreadsheetContext()
+            .charset();
+    }
 
     @Override
     default SpreadsheetStoreRepository storeRepository() {

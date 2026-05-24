@@ -71,6 +71,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -3048,6 +3049,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
             BinaryNumberConverterFunctions.multiply(),
             ConverterContexts.basic(
                 false, // canNumbersHaveGroupSeparator
+                StandardCharsets.UTF_8,
                 Converters.JAVA_EPOCH_OFFSET,
                 INDENTATION,
                 LineEnding.NL,

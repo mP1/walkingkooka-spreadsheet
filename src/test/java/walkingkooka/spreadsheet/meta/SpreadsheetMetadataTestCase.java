@@ -69,6 +69,8 @@ import walkingkooka.tree.text.WordWrap;
 import walkingkooka.validation.Validator;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -90,6 +92,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     ToStringTesting<SpreadsheetMetadata>,
     TreePrintableTesting,
     SpreadsheetEnvironmentContextTesting {
+
+    final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Function<ValidatorSelector, Validator<SpreadsheetValidationReference, SpreadsheetValidatorContext>> VALIDATOR_SELECTOR_TO_VALIDATOR = (final ValidatorSelector selector) -> {
         throw new UnsupportedOperationException();
@@ -787,11 +791,34 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     // spreadsheetValidatorContext......................................................................................
 
     @Test
-    public final void testSpreadsheetValidatorContextWithCellFails() {
+    public final void testSpreadsheetValidatorContextWithNullCellFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createObject()
                 .spreadsheetValidatorContext(
+                    null,
+                    CHARSET,
+                    VALIDATOR_SELECTOR_TO_VALIDATOR,
+                    VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
+                    HAS_USER_DIRECTORIES,
+                    INDENTATION,
+                    LABEL_NAME_RESOLVER,
+                    LINE_ENDING,
+                    MULTIPLIER,
+                    CONVERTER_PROVIDER,
+                    CURRENCY_LOCALE_CONTEXT,
+                    PROVIDER_CONTEXT
+                )
+        );
+    }
+
+    @Test
+    public final void testSpreadsheetValidatorContextWithNullCharsetFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createObject()
+                .spreadsheetValidatorContext(
+                    SpreadsheetSelection.A1,
                     null,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
@@ -814,6 +841,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     null,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -835,6 +863,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     null,
                     HAS_USER_DIRECTORIES,
@@ -856,6 +885,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     null,
@@ -877,6 +907,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -898,6 +929,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -919,6 +951,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -940,6 +973,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -961,6 +995,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -982,6 +1017,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,
@@ -1003,6 +1039,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             () -> this.createObject()
                 .spreadsheetValidatorContext(
                     SpreadsheetSelection.A1,
+                    CHARSET,
                     VALIDATOR_SELECTOR_TO_VALIDATOR,
                     VALUE_N_REFERENCE_TO_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT,
                     HAS_USER_DIRECTORIES,

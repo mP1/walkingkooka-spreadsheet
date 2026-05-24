@@ -119,6 +119,8 @@ import walkingkooka.validation.provider.ValidatorProviders;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -140,6 +142,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     LocaleContextTesting,
     PatchableTesting<SpreadsheetMetadata>,
     ToStringTesting<SpreadsheetMetadata> {
+
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Optional<StoragePath> CURRENT_WORKING_DIRECTORY = Optional.of(
         StoragePath.parse("/current1/working2/directory3")
@@ -868,6 +872,28 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 null,
+                CHARSET,
+                SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
+                SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
+                HAS_USER_DIRECTORIES,
+                INDENTATION,
+                SpreadsheetLabelNameResolvers.fake(),
+                LINE_ENDING,
+                MULTIPLIER,
+                ConverterProviders.fake(),
+                CURRENCY_LOCALE_CONTEXT,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetConverterContextWithNullCharsetFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
+                SpreadsheetMetadata.NO_CELL,
+                null, // charset
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -888,6 +914,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -908,6 +935,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 null,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -928,6 +956,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 null,
                 HAS_USER_DIRECTORIES,
@@ -948,6 +977,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 null,
@@ -968,6 +998,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -988,6 +1019,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -1008,6 +1040,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -1028,6 +1061,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -1048,6 +1082,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -1068,6 +1103,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             NullPointerException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -1088,6 +1124,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
             IllegalStateException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetConverterContext(
                 SpreadsheetMetadata.NO_CELL,
+                CHARSET,
                 SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                 SpreadsheetMetadataPropertyName.QUERY_CONVERTER,
                 HAS_USER_DIRECTORIES,
@@ -1168,6 +1205,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         final SpreadsheetConverterContext context = metadata.spreadsheetConverterContext(
             Optional.of(cell),
+            CHARSET,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
             HAS_USER_DIRECTORIES,

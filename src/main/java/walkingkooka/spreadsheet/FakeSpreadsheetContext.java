@@ -45,6 +45,7 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -92,6 +93,11 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
 
     @Override
     public void setSpreadsheetId(final Optional<SpreadsheetId> id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Charset charset() {
         throw new UnsupportedOperationException();
     }
 

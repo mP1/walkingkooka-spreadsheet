@@ -254,6 +254,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             IllegalStateException.class,
             () -> SpreadsheetMetadata.EMPTY.spreadsheetValidatorContext(
                 SpreadsheetSelection.A1,
+                CHARSET,
                 (final ValidatorSelector validatorSelector) -> {
                     throw new UnsupportedOperationException();
                 },

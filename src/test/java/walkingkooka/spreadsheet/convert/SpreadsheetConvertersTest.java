@@ -126,6 +126,8 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -140,6 +142,8 @@ import java.util.Optional;
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
     PublicStaticHelperTesting<SpreadsheetConverters>,
     ConverterTesting {
+
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
@@ -3734,6 +3738,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
+                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,
@@ -4097,6 +4102,7 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
+                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,

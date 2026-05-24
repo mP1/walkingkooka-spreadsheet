@@ -437,6 +437,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             );
 
             spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(
+                CHARSET,
                 MULTIPLIER,
                 SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(

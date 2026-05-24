@@ -100,6 +100,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
 
         final SpreadsheetConverterContext converterContext = METADATA_EN_AU.spreadsheetConverterContext(
             SpreadsheetMetadata.NO_CELL,
+            CHARSET,
             SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
             HasUserDirectorieses.empty(), // no current working directory
@@ -291,6 +292,7 @@ public final class SpreadsheetMetadataTestingTest implements SpreadsheetMetadata
     public void testSpreadsheetFormatterContext() {
         METADATA_EN_AU.spreadsheetFormatterContext(
             SpreadsheetMetadata.NO_CELL,
+            CHARSET,
             (final Optional<Object> value) -> {
                 throw new UnsupportedOperationException();
             },

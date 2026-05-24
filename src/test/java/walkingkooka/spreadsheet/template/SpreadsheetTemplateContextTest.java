@@ -249,6 +249,7 @@ public final class SpreadsheetTemplateContextTest implements TemplateContextTest
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SpreadsheetContexts.fixedSpreadsheetId(
+                    CHARSET,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     new FakeSpreadsheetStoreRepository() {

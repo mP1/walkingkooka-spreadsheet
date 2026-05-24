@@ -117,6 +117,8 @@ import walkingkooka.validation.provider.ValidatorProvider;
 import walkingkooka.validation.provider.ValidatorProviders;
 
 import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
@@ -132,6 +134,8 @@ import java.util.function.Function;
  */
 @GwtIncompatible
 public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
+
+    Charset CHARSET = StandardCharsets.UTF_8;
 
     int DECIMAL_NUMBER_DIGIT_COUNT = 8;
 
@@ -533,6 +537,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.spreadsheet(
+            CHARSET,
             MULTIPLIER,
             PluginStores.fake(),
             CURRENCY_LOCALE_CONTEXT,
@@ -630,6 +635,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     SpreadsheetConverterContext SPREADSHEET_FORMULA_CONVERTER_CONTEXT = METADATA_EN_AU.spreadsheetConverterContext(
         SpreadsheetMetadata.NO_CELL,
+        CHARSET,
         SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
         SpreadsheetMetadataPropertyName.FORMULA_CONVERTER,
         HAS_USER_DIRECTORIES,
@@ -668,6 +674,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     SpreadsheetFormatterContext SPREADSHEET_FORMATTER_CONTEXT = METADATA_EN_AU.spreadsheetFormatterContext(
         SpreadsheetMetadata.NO_CELL,
+        CHARSET,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         HAS_USER_DIRECTORIES,
         INDENTATION,
@@ -681,6 +688,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     SpreadsheetFormatterProviderSamplesContext SPREADSHEET_FORMATTER_PROVIDER_SAMPLES_CONTEXT = METADATA_EN_AU.spreadsheetFormatterProviderSamplesContext(
         SpreadsheetMetadata.NO_CELL,
+        CHARSET,
         FORMATTER_CONTEXT_SPREADSHEET_EXPRESSION_EVALUATION_CONTEXT_BI_FUNCTION,
         HAS_USER_DIRECTORIES,
         INDENTATION,

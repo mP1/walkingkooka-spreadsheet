@@ -222,6 +222,7 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
+                            CHARSET,
                             Converters.JAVA_EPOCH_OFFSET, // dateOffset
                             Indentation.SPACES2,
                             LineEnding.NL,

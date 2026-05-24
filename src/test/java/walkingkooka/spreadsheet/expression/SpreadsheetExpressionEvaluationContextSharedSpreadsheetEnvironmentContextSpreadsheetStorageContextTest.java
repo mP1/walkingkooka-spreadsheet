@@ -754,12 +754,14 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
 
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext.with(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                CHARSET,
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 new SpreadsheetContextSupplier() {
                     @Override
                     public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                         return Optional.of(
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                CHARSET,
                                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                                 SpreadsheetEngines.basic(),
                                 repo,

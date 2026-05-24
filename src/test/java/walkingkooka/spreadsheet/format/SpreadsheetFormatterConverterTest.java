@@ -48,6 +48,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 
 public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, SpreadsheetConverterContext>,
     HashCodeEqualsDefinedTesting2<SpreadsheetFormatterConverter> {
@@ -148,6 +149,7 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
                     ExpressionNumberBinaryNumberConverterFunctions.multiply(),
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
+                        StandardCharsets.UTF_8,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         INDENTATION,
                         LineEnding.NL,

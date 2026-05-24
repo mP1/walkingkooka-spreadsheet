@@ -65,6 +65,7 @@ import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider
 import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorProviders;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Optional;
@@ -466,6 +467,7 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            StandardCharsets.UTF_8,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(metadataStore),

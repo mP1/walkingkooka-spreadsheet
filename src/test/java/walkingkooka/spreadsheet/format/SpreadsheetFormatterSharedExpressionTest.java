@@ -194,6 +194,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     BinaryNumberConverterFunctions.fake(), // multiplier
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
+                        CHARSET,
                         Converters.JAVA_EPOCH_OFFSET, // dateOffset
                         Indentation.SPACES2,
                         LINE_ENDING,
@@ -247,6 +248,7 @@ public final class SpreadsheetFormatterSharedExpressionTest extends SpreadsheetF
                     SpreadsheetExpressionReferenceLoaders.fake(),
                     SpreadsheetLabelNameResolvers.fake(),
                     SpreadsheetContexts.fixedSpreadsheetId(
+                        CHARSET,
                         MULTIPLIER,
                         SpreadsheetEngines.basic(),
                         new FakeSpreadsheetStoreRepository() {

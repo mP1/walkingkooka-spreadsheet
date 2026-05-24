@@ -116,6 +116,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         this.mode = mode;
 
         this.cell = cell;
+
         this.spreadsheetExpressionReferenceLoader = spreadsheetExpressionReferenceLoader;
         this.spreadsheetLabelNameResolver = spreadsheetLabelNameResolver;
 
@@ -260,6 +261,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
             this.spreadsheetConverterContext = this.spreadsheetMetadata()
                 .spreadsheetConverterContext(
                     this.cell,
+                    spreadsheetContext.charset(),
                     SpreadsheetMetadata.NO_VALIDATION_REFERENCE,
                     this.mode.converter(),
                     this, // HasUserDirectories
@@ -335,6 +337,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext exten
         return this.spreadsheetMetadata()
             .spreadsheetFormatterContext(
                 cell,
+                spreadsheetContext.charset(),
                 (final Optional<Object> v) -> this.setMode(
                     SpreadsheetMetadataMode.FORMATTING
                 ).addLocalVariable(
