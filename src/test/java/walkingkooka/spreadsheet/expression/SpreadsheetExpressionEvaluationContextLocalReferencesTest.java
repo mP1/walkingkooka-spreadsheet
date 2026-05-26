@@ -67,16 +67,26 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionFunctionName;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameterKind;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonString;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContextObjectPostProcessor;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContextPreProcessor;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -454,6 +464,16 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
 
     @Override
     public void testParseValueOrExpressionWithOnlyWhitespaceStringFails2() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetObjectPostProcessor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetPreProcessor() {
         throw new UnsupportedOperationException();
     }
 
@@ -887,6 +907,165 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         private final Storage<StorageContext> storage = Storages.treeMapStore();
+
+        @Override
+        public JsonNode marshall(final Object value) {
+            return this.jsonNodeMarshallUnmarshallContext.marshall(value);
+        }
+
+        @Override
+        public JsonNode marshallEnumSet(final Set<? extends Enum<?>> enumSet) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallEnumSet(enumSet);
+        }
+
+        @Override
+        public JsonNode marshallOptional(final Optional<?> optional) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallOptional(optional);
+        }
+
+        @Override
+        public JsonNode marshallOptionalWithType(final Optional<?> optional) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallOptionalWithType(optional);
+        }
+
+        @Override
+        public JsonNode marshallWithType(final Object value) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallWithType(value);
+        }
+
+        @Override
+        public JsonNode marshallCollection(final Collection<?> collection) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallCollection(collection);
+        }
+
+        @Override
+        public JsonNode marshallMap(final Map<?, ?> map) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallMap(map);
+        }
+
+        @Override
+        public JsonNode marshallCollectionWithType(final Collection<?> collection) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallCollectionWithType(collection);
+        }
+
+        @Override
+        public JsonNode marshallMapWithType(final Map<?, ?> map) {
+            return this.jsonNodeMarshallUnmarshallContext.marshallMapWithType(map);
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
+            Objects.requireNonNull(processor, "processor");
+            return this;
+        }
+
+        @Override
+        public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
+            Objects.requireNonNull(processor, "processor");
+            return this;
+        }
+
+        @Override
+        public Optional<Class<?>> registeredType(final JsonString string) {
+            return this.jsonNodeMarshallUnmarshallContext.registeredType(string);
+        }
+
+        @Override
+        public Optional<JsonString> typeName(final Class<?> type) {
+            return this.jsonNodeMarshallUnmarshallContext.typeName(type);
+        }
+
+        @Override
+        public <T> T unmarshall(final JsonNode node,
+                                final Class<T> type) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshall(
+                node,
+                type
+            );
+        }
+
+        @Override
+        public <T extends Enum<T>> Set<T> unmarshallEnumSet(final JsonNode node,
+                                                            final Class<T> enumClass,
+                                                            final Function<String, T> stringToEnum) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallEnumSet(
+                node,
+                enumClass,
+                stringToEnum
+            );
+        }
+
+        @Override
+        public <T> Optional<T> unmarshallOptional(final JsonNode node,
+                                                  final Class<T> type) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallOptional(
+                node,
+                type
+            );
+        }
+
+        @Override
+        public <T> Optional<T> unmarshallOptionalWithType(final JsonNode node) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallOptionalWithType(node);
+        }
+
+        @Override
+        public <T> List<T> unmarshallList(final JsonNode node,
+                                          final Class<T> elementType) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallList(
+                node,
+                elementType
+            );
+        }
+
+        @Override
+        public <T> Set<T> unmarshallSet(final JsonNode node,
+                                        final Class<T> elementType) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallSet(
+                node,
+                elementType
+            );
+        }
+
+        @Override
+        public <K, V> Map<K, V> unmarshallMap(final JsonNode node,
+                                              final Class<K> keyType,
+                                              final Class<V> valueType) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallMap(
+                node,
+                keyType,
+                valueType
+            );
+        }
+
+        @Override
+        public <T> T unmarshallWithType(final JsonNode node) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallWithType(node);
+        }
+
+        @Override
+        public <T> List<T> unmarshallListWithType(final JsonNode node) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallListWithType(node);
+        }
+
+        @Override
+        public <T> Set<T> unmarshallSetWithType(final JsonNode node) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallSetWithType(node);
+        }
+
+        @Override
+        public <K, V> Map<K, V> unmarshallMapWithType(final JsonNode node) {
+            return this.jsonNodeMarshallUnmarshallContext.unmarshallMapWithType(node);
+        }
+
+        private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext = JsonNodeMarshallUnmarshallContexts.basic(
+            JsonNodeMarshallContexts.basic(),
+            JsonNodeUnmarshallContexts.basic(
+                ExpressionNumberKind.DEFAULT,
+                this, // CurrencyCodeLanguageTagContext
+                this.mathContext()
+            )
+        );
     }
 
     @Override

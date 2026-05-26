@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.expression;
 
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.currency.CurrencyCode;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleLanguageTag;
@@ -49,10 +50,13 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.tree.expression.ExpressionEvaluationContextDelegator;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContext;
 import walkingkooka.validation.expression.ValidatorExpressionEvaluationContextDelegator;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.expression.FormHandlerExpressionEvaluationContextDelegator;
 
+import java.math.MathContext;
+import java.util.Currency;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
@@ -75,6 +79,12 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     TerminalContextDelegator {
 
     @Override
+    default Optional<Currency> currencyForCurrencyCode(final CurrencyCode currencyCode) {
+        return this.spreadsheetExpressionEvaluationContext()
+            .currencyForCurrencyCode(currencyCode);
+    }
+
+    @Override
     default LocaleContext localeContext() {
         return this.spreadsheetExpressionEvaluationContext();
     }
@@ -82,6 +92,17 @@ public interface SpreadsheetExpressionEvaluationContextDelegator extends Spreads
     @Override
     default CaseSensitivity stringEqualsCaseSensitivity() {
         return SpreadsheetExpressionEvaluationContext.super.stringEqualsCaseSensitivity();
+    }
+
+    @Override
+    default JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
+        return this.spreadsheetExpressionEvaluationContext();
+    }
+
+    @Override
+    default MathContext mathContext() {
+        return this.spreadsheetExpressionEvaluationContext()
+            .mathContext();
     }
 
     // SpreadsheetConverterContextDelegator.............................................................................
