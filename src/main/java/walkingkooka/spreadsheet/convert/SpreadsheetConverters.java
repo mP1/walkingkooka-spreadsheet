@@ -832,6 +832,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link Converters#textToBinary()}
+     */
+    public static Converter<SpreadsheetConverterContext> textToBinary() {
+        return Converters.textToBinary();
+    }
+
+    /**
      * {@see Converters.textToCharset}
      */
     public static Converter<SpreadsheetConverterContext> textToCharset() {
