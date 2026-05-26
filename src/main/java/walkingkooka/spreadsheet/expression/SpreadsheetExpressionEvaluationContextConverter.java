@@ -557,7 +557,7 @@ final class SpreadsheetExpressionEvaluationContextConverter implements Spreadshe
 
     @Override
     public JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext() {
-        return this;
+        return this.context;
     }
 
     // LocaleContextDelegator...........................................................................................

@@ -121,6 +121,16 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
     }
 
     @Override
+    public void testSetObjectPostProcessor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testSetPreProcessor() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testSpreadsheetFormatterContextWithNullFails() {
         throw new UnsupportedOperationException();
     }
@@ -268,12 +278,14 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
 
         @Override
         public SpreadsheetExpressionEvaluationContext setObjectPostProcessor(final JsonNodeMarshallContextObjectPostProcessor processor) {
-            throw new UnsupportedOperationException();
+            Objects.requireNonNull(processor, "processor");
+            return this;
         }
 
         @Override
         public SpreadsheetExpressionEvaluationContext setPreProcessor(final JsonNodeUnmarshallContextPreProcessor processor) {
-            throw new UnsupportedOperationException();
+            Objects.requireNonNull(processor, "processor");
+            return this;
         }
 
         @Override
