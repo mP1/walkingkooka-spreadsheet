@@ -90,7 +90,7 @@
   "queryFunctions": "@",
   "queryHighlighting": false,
   "roundingMode": "HALF_UP",
-  "scriptingConverter": "collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)",
+  "scriptingConverter": "collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net)",
   "showFormulaEditor": true,
   "showFormulas": false,
   "showGridLines": true,

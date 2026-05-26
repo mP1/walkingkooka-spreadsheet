@@ -942,7 +942,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    HALF_UP\n" +
                 "  scriptingConverter\n" +
                 "    collection\n" +
-                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)\"\n" +
+                "      \"(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net)\"\n" +
                 "  scriptingFunctions\n" +
                 "  serverUrl\n" +
                 "    https://example.com (walkingkooka.net.AbsoluteUrl)\n" +
