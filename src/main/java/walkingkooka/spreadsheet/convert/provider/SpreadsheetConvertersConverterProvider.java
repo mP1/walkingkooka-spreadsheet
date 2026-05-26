@@ -207,6 +207,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.hasSpreadsheetFormatterSelector();
                 break;
+            case HAS_BINARY_TO_STRING_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.hasBinaryToString();
+                break;
             case HAS_HOST_ADDRESS_STRING:
                 noParameterCheck(copy);
 
@@ -855,6 +860,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName FORM_AND_VALIDATION = ConverterName.with(FORM_AND_VALIDATION_STRING);
 
+    private final static String HAS_BINARY_TO_STRING_STRING = "has-binary-to-string";
+
+    final static ConverterName HAS_BINARY_TO_STRING = ConverterName.with(HAS_BINARY_TO_STRING_STRING);
+
     private final static String HAS_FORMATTER_SELECTOR_STRING = "has-formatter-selector";
 
     final static ConverterName HAS_FORMATTER_SELECTOR = ConverterName.with(HAS_FORMATTER_SELECTOR_STRING);
@@ -1314,6 +1323,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(EXPRESSION),
             converterInfo(FORMAT_PATTERN_TO_STRING),
             converterInfo(FORM_AND_VALIDATION),
+            converterInfo(HAS_BINARY_TO_STRING),
             converterInfo(HAS_FORMATTER_SELECTOR),
             converterInfo(HAS_HOST_ADDRESS),
             converterInfo(HAS_PARSER_SELECTOR),
