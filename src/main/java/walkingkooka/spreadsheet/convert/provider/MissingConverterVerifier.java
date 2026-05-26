@@ -80,6 +80,7 @@ import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
 import walkingkooka.storage.StorageValueInfoList;
 import walkingkooka.template.TemplateValueName;
+import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -1222,6 +1223,13 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.SPREADSHEET_VALUE // TEXT_TO_ERROR
                 );
             }
+
+            // text.....................................................................................................
+            verifier.addIfConversionFail(
+                "   ",
+                Indentation.class,
+                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+            );
 
             // text-to-lineEnding.......................................................................................
             verifier.addIfConversionFail(
