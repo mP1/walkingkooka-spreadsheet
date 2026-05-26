@@ -1249,6 +1249,15 @@ final class MissingConverterVerifier {
                 SpreadsheetConvertersConverterProvider.TEXT // TEXT
             );
 
+            verifier.addIfConversionFail(
+                Lists.of(
+                    "\r\n",
+                    "crnl"
+                ),
+                LineEnding.class,
+                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+            );
+
             // text-to-lineEnding.......................................................................................
             verifier.addIfConversionFail(
                 LineEnding.NL.text(),

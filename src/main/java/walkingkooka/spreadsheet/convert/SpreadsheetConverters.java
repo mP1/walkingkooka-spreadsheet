@@ -70,7 +70,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
         "TEXT",
         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
-        SpreadsheetConverters.textToIndentation()
+        SpreadsheetConverters.textToIndentation(),
+        SpreadsheetConverters.textToLineEnding()
     );
 
     private static final Function<SpreadsheetConverterContext, SpreadsheetParserContext> SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT = (final SpreadsheetConverterContext scc) ->
