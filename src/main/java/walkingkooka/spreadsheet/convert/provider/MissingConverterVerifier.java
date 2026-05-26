@@ -1235,6 +1235,15 @@ final class MissingConverterVerifier {
             );
 
             verifier.addIfConversionFail(
+                "A",
+                Lists.of(
+                    Character.class,
+                    String.class
+                ),
+                SpreadsheetConvertersConverterProvider.TEXT // TEXT
+            );
+
+            verifier.addIfConversionFail(
                 "   ",
                 Indentation.class,
                 SpreadsheetConvertersConverterProvider.TEXT // TEXT
