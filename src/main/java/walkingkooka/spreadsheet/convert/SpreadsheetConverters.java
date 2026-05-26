@@ -832,6 +832,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@see Converters.textToCharset}
+     */
+    public static Converter<SpreadsheetConverterContext> textToCharset() {
+        return Converters.textToCharset();
+    }
+
+    /**
      * {@see ColorConverters#textToColor}
      */
     public static Converter<SpreadsheetConverterContext> textToColor() {
