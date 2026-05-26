@@ -377,7 +377,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
             RoundingMode.HALF_UP
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_CONVERTER,
-            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, text-to-line-ending, template, net)"
+            ConverterSelector.parse("collection(text, boolean, number, date-time, basic, spreadsheet-value, error-throwing, color, expression, environment, json, locale, currency, plugins, properties, spreadsheet-metadata, storage, style, text-node, template, net)"
             )
         ).set(
             SpreadsheetMetadataPropertyName.SCRIPTING_FUNCTIONS,
