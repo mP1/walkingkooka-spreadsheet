@@ -344,6 +344,13 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     }
 
     /**
+     * {@link  Converters#hasBinaryToString()}
+     */
+    public static Converter<SpreadsheetConverterContext> hasBinaryToString() {
+        return Converters.hasBinaryToString();
+    }
+
+    /**
      * {@link  NetConverters#hasHostAddress()}
      */
     public static Converter<SpreadsheetConverterContext> hasHostAddress() {
