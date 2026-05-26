@@ -417,6 +417,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.text();
                 break;
+            case TEXT_TO_BINARY_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToBinary();
+                break;
             case TEXT_TO_BOOLEAN_LIST_STRING:
                 noParameterCheck(copy);
 
@@ -1037,6 +1042,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_NODE = ConverterName.with(TEXT_NODE_STRING);
 
+    private final static String TEXT_TO_BINARY_STRING = "text-to-binary";
+
+    final static ConverterName TEXT_TO_BINARY = ConverterName.with(TEXT_TO_BINARY_STRING);
+    
     private final static String TEXT_TO_BOOLEAN_LIST_STRING = "text-to-boolean-list";
 
     final static ConverterName TEXT_TO_BOOLEAN_LIST = ConverterName.with(TEXT_TO_BOOLEAN_LIST_STRING);
@@ -1375,6 +1384,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEMPLATE),
             converterInfo(TEXT),
             converterInfo(TEXT_NODE),
+            converterInfo(TEXT_TO_BINARY),
             converterInfo(TEXT_TO_BOOLEAN_LIST),
             converterInfo(TEXT_TO_BORDER),
             converterInfo(TEXT_TO_CHARSET),
