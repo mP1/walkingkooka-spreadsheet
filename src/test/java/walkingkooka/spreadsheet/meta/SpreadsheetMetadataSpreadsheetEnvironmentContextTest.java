@@ -684,6 +684,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    template\n" +
                 "    text\n" +
                 "    text-node\n" +
+                "    text-to-binary\n" +
                 "    text-to-boolean-list\n" +
                 "    text-to-border\n" +
                 "    text-to-charset\n" +
