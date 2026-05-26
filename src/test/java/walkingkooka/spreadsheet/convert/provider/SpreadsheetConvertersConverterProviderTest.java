@@ -753,6 +753,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithTextToCharset() {
+        this.converterAndCheck(
+            "text-to-charset",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.textToCharset()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithTextToCurrency() {
         this.converterAndCheck(
             "text-to-currency",

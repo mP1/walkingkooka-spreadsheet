@@ -427,6 +427,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.textToBorder();
                 break;
+            case TEXT_TO_CHARSET_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.textToCharset();
+                break;
             case TEXT_TO_COLOR_STRING:
                 noParameterCheck(copy);
 
@@ -1040,6 +1045,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName TEXT_TO_BORDER = ConverterName.with(TEXT_TO_BORDER_STRING);
 
+    private final static String TEXT_TO_CHARSET_STRING = "text-to-charset";
+
+    final static ConverterName TEXT_TO_CHARSET = ConverterName.with(TEXT_TO_CHARSET_STRING);
+
     private final static String TEXT_TO_COLOR_STRING = "text-to-color";
 
     final static ConverterName TEXT_TO_COLOR = ConverterName.with(TEXT_TO_COLOR_STRING);
@@ -1368,6 +1377,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(TEXT_NODE),
             converterInfo(TEXT_TO_BOOLEAN_LIST),
             converterInfo(TEXT_TO_BORDER),
+            converterInfo(TEXT_TO_CHARSET),
             converterInfo(TEXT_TO_COLOR),
             converterInfo(TEXT_TO_CSV_STRING_LIST),
             converterInfo(TEXT_TO_CURRENCY),
