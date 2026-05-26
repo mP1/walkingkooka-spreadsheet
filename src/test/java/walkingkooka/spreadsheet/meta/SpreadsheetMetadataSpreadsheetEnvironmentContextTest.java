@@ -641,6 +641,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    expression\n" +
                 "    form-and-validation\n" +
                 "    format-pattern-to-string\n" +
+                "    has-binary-to-string\n" +
                 "    has-formatter-selector\n" +
                 "    has-host-address\n" +
                 "    has-parser-selector\n" +

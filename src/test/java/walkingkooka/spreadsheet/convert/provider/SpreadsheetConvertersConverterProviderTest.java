@@ -345,6 +345,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithHasBinaryToString() {
+        this.converterAndCheck(
+            "has-binary-to-string",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.hasBinaryToString()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithHasFormatterSelector() {
         this.converterAndCheck(
             "has-formatter-selector",
