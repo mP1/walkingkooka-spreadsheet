@@ -92,6 +92,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.basic();
                 break;
+            case BINARY_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.binary();
+                break;
             case BOOLEAN_STRING:
                 noParameterCheck(copy);
 
@@ -782,6 +787,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName BASIC = ConverterName.with(BASIC_STRING);
 
+    private final static String BINARY_STRING = "binary";
+
+    final static ConverterName BINARY = ConverterName.with(BINARY_STRING);
+
     private final static String BOOLEAN_STRING = "boolean";
 
     final static ConverterName BOOLEAN = ConverterName.with(BOOLEAN_STRING);
@@ -1319,6 +1328,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
     final static ConverterInfoSet INFOS = ConverterInfoSet.with(
         Sets.of(
             converterInfo(BASIC),
+            converterInfo(BINARY),
             converterInfo(BOOLEAN),
             converterInfo(BOOLEAN_TO_TEXT),
             converterInfo(COLLECTION),
