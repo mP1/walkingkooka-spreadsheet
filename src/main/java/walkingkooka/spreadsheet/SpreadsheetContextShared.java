@@ -37,7 +37,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.provider.SpreadsheetProviderDelegator;
 import walkingkooka.store.MissingStoreException;
 
-import java.nio.charset.Charset;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
@@ -52,8 +51,7 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     CurrencyLocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    SpreadsheetContextShared(final Charset charset,
-                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    SpreadsheetContextShared(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                              final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final CurrencyLocaleContext currencyLocaleContext,
@@ -61,8 +59,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext) {
         super();
-
-        this.charset = charset;
 
         this.multiplier = multiplier;
 
@@ -76,13 +72,6 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
     }
-
-    @Override
-    public final Charset charset() {
-        return this.charset;
-    }
-
-    final Charset charset;
 
     @Override
     public final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier() {

@@ -580,6 +580,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 Currency.getInstance("AUD"),
                 Indentation.SPACES4,
                 LineEnding.NL,
@@ -600,7 +601,6 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         return SpreadsheetContexts.fixedSpreadsheetId(
-            CHARSET,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(

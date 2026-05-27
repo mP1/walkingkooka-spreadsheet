@@ -72,7 +72,6 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
-import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -87,8 +86,7 @@ import java.util.Set;
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final Charset charset,
-                                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                           final CurrencyLocaleContext currencyLocaleContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -96,7 +94,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                                                                                           final TerminalContext terminalContext,
                                                                                           final SpreadsheetProvider spreadsheetProvider,
                                                                                           final ProviderContext providerContext) {
-        Objects.requireNonNull(charset, "charset");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
@@ -109,7 +106,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
-                charset,
                 multiplier,
                 currencyLocaleContext,
                 spreadsheetEnvironmentContext,

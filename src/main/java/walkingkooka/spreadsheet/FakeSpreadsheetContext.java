@@ -97,11 +97,6 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public Charset charset() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public SpreadsheetStoreRepository storeRepository() {
         throw new UnsupportedOperationException();
     }
@@ -200,6 +195,18 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
         throw new UnsupportedOperationException();
     }
 
+    // HasCharset.......................................................................................................
+
+    @Override
+    public Charset charset() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setCharset(final Charset charset) {
+        throw new UnsupportedOperationException();
+    }
+    
     // HasCurrency......................................................................................................
 
     @Override

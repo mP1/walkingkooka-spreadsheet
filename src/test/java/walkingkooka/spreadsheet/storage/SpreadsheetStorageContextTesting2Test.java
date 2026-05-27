@@ -48,6 +48,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -212,6 +213,7 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         {
             final EnvironmentContext environmentContext = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    StandardCharsets.UTF_8,
                     Currency.getInstance("AUD"),
                     Indentation.SPACES4,
                     LineEnding.NL,

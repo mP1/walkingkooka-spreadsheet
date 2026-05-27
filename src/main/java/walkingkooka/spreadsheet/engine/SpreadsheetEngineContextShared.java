@@ -37,6 +37,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionFunctionName;
 
+import java.nio.charset.Charset;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
@@ -95,6 +96,12 @@ abstract class SpreadsheetEngineContextShared implements SpreadsheetEngineContex
     }
 
     // delegate to SpreadsheetEnvironmentContext.currency/setCurrency NOT CurrencyContextDelegator
+
+    @Override
+    public final Charset charset() {
+        return this.spreadsheetEnvironmentContext()
+            .charset();
+    }
 
     @Override
     public final Currency currency() {

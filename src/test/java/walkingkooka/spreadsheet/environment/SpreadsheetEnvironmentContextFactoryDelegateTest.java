@@ -78,6 +78,7 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
         {
             final EnvironmentContext context = EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    StandardCharsets.UTF_8,
                     Currency.getInstance("AUD"),
                     Indentation.SPACES4,
                     LineEnding.NL,
@@ -104,7 +105,6 @@ public final class SpreadsheetEnvironmentContextFactoryDelegateTest implements S
             );
 
             this.factory = SpreadsheetEnvironmentContextFactory.with(
-                StandardCharsets.UTF_8,
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 CurrencyContexts.fake()
                     .setLocaleContext(

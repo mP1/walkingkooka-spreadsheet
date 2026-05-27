@@ -84,6 +84,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.validation.form.FormField;
 
 import java.math.MathContext;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -483,6 +485,7 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
     public SpreadsheetExpressionEvaluationContextLocalReferences createContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                StandardCharsets.UTF_8,
                 Currency.getInstance("AUD"),
                 INDENTATION,
                 LineEnding.NL,
@@ -724,6 +727,11 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
         }
 
         private final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext;
+
+        @Override
+        public Charset charset() {
+            return this.spreadsheetEnvironmentContext.charset();
+        }
 
         @Override
         public Optional<StoragePath> currentWorkingDirectory() {

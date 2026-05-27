@@ -518,6 +518,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testIndentation() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -537,6 +538,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetIndentation() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -569,6 +571,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -588,6 +591,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetLineEnding() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -624,6 +628,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -643,6 +648,7 @@ public abstract class SpreadsheetEngineContextSharedTestCase<C extends Spreadshe
     public final void testSetLocale() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,

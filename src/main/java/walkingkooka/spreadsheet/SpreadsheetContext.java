@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.net.HasSpreadsheetServerUrl;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
-import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,8 +70,6 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
      * The {@link SpreadsheetStoreRepository} for the selected spreadsheet.
      */
     SpreadsheetStoreRepository storeRepository();
-
-    Charset charset();
 
     /**
      * Getter that returns the system {@link SpreadsheetEngine}.

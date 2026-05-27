@@ -64,7 +64,6 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.Expression;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -126,30 +125,10 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // with.............................................................................................................
 
     @Test
-    public void testWithNullCharsetFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                null,
-                MULTIPLIER,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LOCALE_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -168,7 +147,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 null,
                 CURRENCY_CONTEXT,
@@ -187,7 +165,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
@@ -206,7 +183,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -225,7 +201,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -244,7 +219,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -263,7 +237,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -282,7 +255,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -307,7 +279,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                       final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-            CHARSET,
             MULTIPLIER,
             spreadsheetContextSupplier,
             CURRENCY_CONTEXT,
@@ -534,7 +505,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
                                     @Override
                                     public Charset charset() {
-                                        return CHARSET;
+                                        return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTest.CHARSET;
                                     }
 
                                     @Override
@@ -613,28 +584,9 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // hashCode/equals..................................................................................................
 
     @Test
-    public void testEqualsDifferentCharset() {
-        this.checkNotEquals(
-            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                StandardCharsets.ISO_8859_1,
-                MULTIPLIER,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
-                LOCALE_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testEqualsDifferentMultiplier() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 BinaryNumberConverterFunctions.fake(),
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -652,7 +604,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetContextSupplier() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SpreadsheetContextSuppliers.fake(),
                 CURRENCY_CONTEXT,
@@ -670,7 +621,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentCurrencyContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CurrencyContexts.fake(),
@@ -697,7 +647,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -715,7 +664,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -733,7 +681,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetMetadataContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -751,7 +698,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentTerminalContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -769,7 +715,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -787,7 +732,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_CONTEXT,
@@ -812,7 +756,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{converter=collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json), currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, dateParser=date yyyy/mm/dd, dateTimeOffset=-25569, dateTimeParser=date-time yyyy/mm/dd hh:mm, dateTimeSymbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\", decimalNumberDigitCount=6, decimalNumberSymbols=negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰', defaultYear=2000, expressionNumberKind=BIG_DECIMAL, functions=[test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz], indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, numberParser=number 0.#;0.#;0, precision=7, roundingMode=HALF_UP, serverUrl=https://example.com, timeOffset=Z, timeParser=time hh:mm:ss, twoDigitYear=50, user=user@example.com, valueSeparator=,}"
+            "{charset=\"UTF-8\", converter=collection(text, boolean, number, date-time, basic, spreadsheet-value, environment, error-throwing, expression, form-and-validation, locale, plugins, properties, template, json), currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, dateParser=date yyyy/mm/dd, dateTimeOffset=-25569, dateTimeParser=date-time yyyy/mm/dd hh:mm, dateTimeSymbols=ampms=\"am\", \"pm\" monthNames=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthNameAbbreviations=\"Jan.\", \"Feb.\", \"Mar.\", \"Apr.\", \"May\", \"Jun.\", \"Jul.\", \"Aug.\", \"Sep.\", \"Oct.\", \"Nov.\", \"Dec.\" weekDayNames=\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weekDayNameAbbreviations=\"Sun.\", \"Mon.\", \"Tue.\", \"Wed.\", \"Thu.\", \"Fri.\", \"Sat.\", decimalNumberDigitCount=6, decimalNumberSymbols=negativeSign='-' positiveSign='+' zeroDigit='0' currencySymbol=\"$\" decimalSeparator='.' exponentSymbol=\"e\" groupSeparator=',' infinitySymbol=\"∞\" monetaryDecimalSeparator='.' nanSymbol=\"NaN\" percentSymbol='%' permillSymbol='‰', defaultYear=2000, expressionNumberKind=BIG_DECIMAL, functions=[test-context-loadCell, test-context-serverUrl, test-context-spreadsheet-metadata, xyz], indentation=\"  \", lineEnding=\"\\n\", locale=en_AU, numberParser=number 0.#;0.#;0, precision=7, roundingMode=HALF_UP, serverUrl=https://example.com, timeOffset=Z, timeParser=time hh:mm:ss, twoDigitYear=50, user=user@example.com, valueSeparator=,}"
         );
     }
 

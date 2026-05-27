@@ -36,7 +36,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
 
-import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -45,8 +44,7 @@ import java.util.function.Function;
  */
 final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedFixedSpreadsheetId with(final Charset charset,
-                                                           final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetContextSharedFixedSpreadsheetId with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                            final SpreadsheetEngine spreadsheetEngine,
                                                            final SpreadsheetStoreRepository storeRepository,
                                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -54,7 +52,6 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                            final SpreadsheetProvider spreadsheetProvider,
                                                            final ProviderContext providerContext) {
-        Objects.requireNonNull(charset, "charset");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -65,7 +62,6 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedFixedSpreadsheetId(
-            charset,
             multiplier,
             spreadsheetEngine,
             storeRepository,
@@ -80,8 +76,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         );
     }
 
-    private SpreadsheetContextSharedFixedSpreadsheetId(final Charset charset,
-                                                       BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetContextSharedFixedSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                        final SpreadsheetEngine spreadsheetEngine,
                                                        final SpreadsheetStoreRepository storeRepository,
                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -93,7 +88,6 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final SpreadsheetProvider spreadsheetProvider,
                                                        final ProviderContext providerContext) {
         super(
-            charset,
             multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
@@ -172,7 +166,6 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedFixedSpreadsheetId(
-            this.charset,
             this.multiplier,
             this.spreadsheetEngine,
             this.storeRepository, // keep

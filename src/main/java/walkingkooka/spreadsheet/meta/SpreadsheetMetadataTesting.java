@@ -483,6 +483,7 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
     private static EnvironmentContext environmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -537,7 +538,6 @@ public interface SpreadsheetMetadataTesting extends TreePrintableTesting {
 
     ProviderContext PROVIDER_CONTEXT = ProviderContexts.readOnly(
         SpreadsheetProviderContexts.spreadsheet(
-            CHARSET,
             MULTIPLIER,
             PluginStores.fake(),
             CURRENCY_LOCALE_CONTEXT,

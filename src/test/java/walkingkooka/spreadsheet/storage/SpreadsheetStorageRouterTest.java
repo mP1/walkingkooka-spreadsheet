@@ -1667,11 +1667,11 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
             2, // count
             context,
             StorageValueInfo.with(
-                StoragePath.parse("/env/converter"),
+                StoragePath.parse("/env/charset"),
                 AUDIT_INFO
             ),
             StorageValueInfo.with(
-                StoragePath.parse("/env/currency"),
+                StoragePath.parse("/env/converter"),
                 AUDIT_INFO
             )
         );
@@ -2030,7 +2030,6 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
 
             return Optional.of(
                 SpreadsheetContexts.fixedSpreadsheetId(
-                    CHARSET,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     repo,
@@ -2056,7 +2055,6 @@ public final class SpreadsheetStorageRouterTest extends SpreadsheetStorageTestCa
                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetContexts.mutableSpreadsheetId(
-            CHARSET,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             spreadsheetContextSupplier,

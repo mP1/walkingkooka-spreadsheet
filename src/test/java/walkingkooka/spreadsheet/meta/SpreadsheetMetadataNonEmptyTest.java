@@ -1907,6 +1907,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                         Storages.fake(),
                         EnvironmentContexts.map(
                             EnvironmentContexts.empty(
+                                CHARSET,
                                 Currency.getInstance("AUD"),
                                 Indentation.SPACES2,
                                 LineEnding.NL,

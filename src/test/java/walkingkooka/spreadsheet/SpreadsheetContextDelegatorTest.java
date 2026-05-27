@@ -39,6 +39,8 @@ import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
@@ -260,6 +262,11 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
             public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
                 Objects.requireNonNull(name, "name");
                 throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public Charset charset() {
+                return StandardCharsets.UTF_8;
             }
 
             @Override

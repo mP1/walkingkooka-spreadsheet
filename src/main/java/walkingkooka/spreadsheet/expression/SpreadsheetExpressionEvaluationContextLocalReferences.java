@@ -73,6 +73,7 @@ import walkingkooka.validation.form.FormHandlerContext;
 import walkingkooka.validation.form.FormHandlerContextDelegator;
 
 import java.math.MathContext;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
@@ -462,6 +463,11 @@ final class SpreadsheetExpressionEvaluationContextLocalReferences implements Spr
     @Override
     public void removeEnvironmentValue(final EnvironmentValueName<?> name) {
         this.context.removeEnvironmentValue(name);
+    }
+
+    @Override
+    public Charset charset() {
+        return this.context.charset();
     }
 
     @Override

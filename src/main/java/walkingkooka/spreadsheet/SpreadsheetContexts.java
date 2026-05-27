@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataContext;
 import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
-import java.nio.charset.Charset;
 import java.util.function.Function;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
@@ -40,8 +39,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedFixedSpreadsheetId}
      */
-    public static SpreadsheetContext fixedSpreadsheetId(final Charset charset,
-                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetContext fixedSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                         final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -50,7 +48,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final SpreadsheetProvider spreadsheetProvider,
                                                         final ProviderContext providerContext) {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
-            charset,
             multiplier,
             spreadsheetEngine,
             storeRepository,
@@ -72,8 +69,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
-    public static SpreadsheetContext mutableSpreadsheetId(final Charset charset,
-                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetContext mutableSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                           final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -82,7 +78,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final SpreadsheetProvider spreadsheetProvider,
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
-            charset,
             multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,

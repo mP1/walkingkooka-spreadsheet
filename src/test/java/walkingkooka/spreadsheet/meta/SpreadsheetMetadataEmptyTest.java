@@ -38,6 +38,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -160,6 +161,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetEnvironmentContexts.basic(
                     Storages.fake(),
                     EnvironmentContexts.empty(
+                        StandardCharsets.UTF_8,
                         Currency.getInstance("AUD"),
                         Indentation.SPACES4,
                         LineEnding.NL,
