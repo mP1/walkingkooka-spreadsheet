@@ -258,28 +258,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // binary..........................................................................................................
 
     @Test
-    public void testBinaryConvertStringToCharset() {
-        final Charset charset = StandardCharsets.UTF_8;
-
-        this.binaryConvertAndCheck(
-            charset.toString(),
-            Charset.class,
-            charset
-        );
-    }
-
-    @Test
-    public void testBinaryConvertStringToCharset2() {
-        final Charset charset = StandardCharsets.ISO_8859_1;
-
-        this.binaryConvertAndCheck(
-            charset.toString(),
-            Charset.class,
-            charset
-        );
-    }
-
-    @Test
     public void testBinaryConvertBinaryToString() {
         final String text = "HelloWorld123";
 
@@ -3611,6 +3589,126 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         );
     }
 
+    // text.............................................................................................................
+
+    @Test
+    public void testTextConvertCharacterToString() {
+        this.textConvertAndCheck(
+            'A',
+            String.class,
+            "A"
+        );
+    }
+
+    @Test
+    public void testTextConvertHasTextToString() {
+        final String string = "Hello123";
+
+        this.textConvertAndCheck(
+            new HasText() {
+                @Override
+                public String text() {
+                    return string;
+                }
+            },
+            String.class,
+            string
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToCharacter() {
+        this.textConvertAndCheck(
+            "Z",
+            Character.class,
+            'Z'
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToString() {
+        this.textConvertAndCheck(
+            "Hello",
+            String.class,
+            "Hello"
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToCharset() {
+        final Charset charset = StandardCharsets.UTF_8;
+
+        this.textConvertAndCheck(
+            charset.toString(),
+            Charset.class,
+            charset
+        );
+    }
+
+    @Test
+    public void testTextConvertStringToCharset2() {
+        final Charset charset = StandardCharsets.ISO_8859_1;
+
+        this.textConvertAndCheck(
+            charset.toString(),
+            Charset.class,
+            charset
+        );
+    }
+
+    private void textConvertAndCheck(final Object value,
+                                     final Object expected) {
+        this.textConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void textConvertAndCheck(final Object value,
+                                         final Class<T> type,
+                                         final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.text(),
+            value,
+            type,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <TT> Either<TT, String> convert(final Object value,
+                                                       final Class<TT> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                    Lists.of(
+                        SpreadsheetConverters.text(),
+                        SpreadsheetConverters.text()
+                    )
+                );
+
+                @Override
+                public Charset charset() {
+                    return CHARSET;
+                }
+            },
+            expected
+        );
+    }
+    
     // textNode.........................................................................................................
 
     private final static String TEXT = "Hello World 123!";
@@ -4285,64 +4383,6 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
             )
         );
     };
-
-    // text.............................................................................................................
-
-    @Test
-    public void testTextConvertCharacterToString() {
-        this.textConvertAndCheck(
-            'A',
-            String.class,
-            "A"
-        );
-    }
-
-    @Test
-    public void testTextConvertHasTextToString() {
-        final String string = "Hello123";
-
-        this.textConvertAndCheck(
-            new HasText() {
-                @Override
-                public String text() {
-                    return string;
-                }
-            },
-            String.class,
-            string
-        );
-    }
-
-    @Test
-    public void testTextConvertStringToCharacter() {
-        this.textConvertAndCheck(
-            "Z",
-            Character.class,
-            'Z'
-        );
-    }
-
-    @Test
-    public void testTextConvertStringToString() {
-        this.textConvertAndCheck(
-            "Hello",
-            String.class,
-            "Hello"
-        );
-    }
-
-    private <T> void textConvertAndCheck(final Object value,
-                                         final Class<T> type,
-                                         final T expected) {
-        this.convertAndCheck(
-            SpreadsheetConverters.text(),
-            value,
-            type,
-            SpreadsheetConverterContexts.fake(),
-            expected
-        );
-    }
-
 
     // PublicStaticHelperTesting........................................................................................
 
