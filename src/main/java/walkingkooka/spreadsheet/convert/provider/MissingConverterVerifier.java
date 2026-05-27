@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert.provider;
 
+import walkingkooka.Binary;
 import walkingkooka.collect.list.BooleanList;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.Lists;
@@ -114,6 +115,8 @@ import walkingkooka.validation.provider.ValidatorSelector;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -1368,6 +1371,30 @@ final class MissingConverterVerifier {
         // storage......................................................................................................
         {
             if (scripting) {
+                final Charset charset = StandardCharsets.UTF_8;
+
+                verifier.addIfConversionFail(
+                    charset.toString(),
+                    Charset.class,
+                    SpreadsheetConvertersConverterProvider.BINARY
+                );
+
+                final String text = "BinaryTextContent123";
+
+                verifier.addIfConversionFail(
+                    text,
+                    Binary.class,
+                    SpreadsheetConvertersConverterProvider.BINARY
+                );
+
+                verifier.addIfConversionFail(
+                    Binary.with(
+                        text.getBytes(charset)
+                    ),
+                    String.class,
+                    SpreadsheetConvertersConverterProvider.BINARY
+                );
+
                 final StoragePath storagePathWithout = StoragePath.parse("/path1/file2");
                 final StoragePath storagePathJson = StoragePath.parse("/path1/file2.json");
 
