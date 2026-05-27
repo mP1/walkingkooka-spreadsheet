@@ -71,6 +71,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
         "TEXT",
         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+        SpreadsheetConverters.textToCharset(),
         SpreadsheetConverters.textToIndentation(),
         SpreadsheetConverters.textToLineEnding()
     );
@@ -128,7 +129,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
 
     private final static Converter<SpreadsheetConverterContext> BINARY = namedCollection(
         "Binary",
-        SpreadsheetConverters.textToCharset(),
         SpreadsheetConverters.textToBinary(),
         SpreadsheetConverters.hasBinaryToString()
     );

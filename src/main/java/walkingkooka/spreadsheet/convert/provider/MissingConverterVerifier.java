@@ -116,7 +116,6 @@ import walkingkooka.validation.provider.ValidatorSelector;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
@@ -247,6 +246,8 @@ final class MissingConverterVerifier {
             converter,
             context
         );
+
+        final Charset charset = context.charset();
 
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCellRangeReference cellRange = SpreadsheetSelection.parseCellRange("B2:C3");
@@ -1247,6 +1248,12 @@ final class MissingConverterVerifier {
             );
 
             verifier.addIfConversionFail(
+                charset.toString(),
+                Charset.class,
+                SpreadsheetConvertersConverterProvider.TEXT
+            );
+
+            verifier.addIfConversionFail(
                 "   ",
                 Indentation.class,
                 SpreadsheetConvertersConverterProvider.TEXT // TEXT
@@ -1371,14 +1378,6 @@ final class MissingConverterVerifier {
         // storage......................................................................................................
         {
             if (scripting) {
-                final Charset charset = StandardCharsets.UTF_8;
-
-                verifier.addIfConversionFail(
-                    charset.toString(),
-                    Charset.class,
-                    SpreadsheetConvertersConverterProvider.BINARY
-                );
-
                 final String text = "BinaryTextContent123";
 
                 verifier.addIfConversionFail(
