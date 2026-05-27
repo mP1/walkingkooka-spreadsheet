@@ -34,7 +34,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.terminal.TerminalContexts;
 
-import java.nio.charset.Charset;
 import java.util.Objects;
 
 /**
@@ -45,8 +44,7 @@ import java.util.Objects;
  */
 final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedMutableSpreadsheetId with(final Charset charset,
-                                                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetContextSharedMutableSpreadsheetId with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                              final SpreadsheetEngine spreadsheetEngine,
                                                              final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -54,7 +52,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
-        Objects.requireNonNull(charset, "charset");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
@@ -65,7 +62,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedMutableSpreadsheetId(
-            charset,
             multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,
@@ -78,8 +74,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         );
     }
 
-    private SpreadsheetContextSharedMutableSpreadsheetId(final Charset charset,
-                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetContextSharedMutableSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                          final SpreadsheetEngine spreadsheetEngine,
                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -89,7 +84,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                          final SpreadsheetProvider spreadsheetProvider,
                                                          final ProviderContext providerContext) {
         super(
-            charset,
             multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
@@ -130,7 +124,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     @Override
     SpreadsheetEngineContext createSpreadsheetEngineContext() {
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
-            this.charset,
             this.multiplier,
             this.spreadsheetContextSupplier,
             this.currencyContext(),
@@ -159,7 +152,6 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedMutableSpreadsheetId(
-            this.charset,
             this.multiplier,
             this.spreadsheetEngine,
             this.spreadsheetContextSupplier,

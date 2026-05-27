@@ -90,7 +90,6 @@ import walkingkooka.tree.expression.convert.ExpressionNumberBinaryNumberConverte
 import walkingkooka.tree.text.TextNode;
 
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
@@ -784,6 +783,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
     private static EnvironmentContext environmentContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -848,11 +848,6 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             this.environmentContext = environmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
-        }
-
-        @Override
-        public Charset charset() {
-            return CHARSET;
         }
 
         @Override
@@ -1169,6 +1164,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
                 new TestSpreadsheetContext(
                     EnvironmentContexts.map(
                         EnvironmentContexts.empty(
+                            CHARSET,
                             CURRENCY,
                             INDENTATION,
                             LineEnding.CRNL,

@@ -109,6 +109,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     private static EnvironmentContext spreadsheetEnvironmentContextEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -285,6 +286,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testSetEnvironmentContextWithSame() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -313,6 +315,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testSetEnvironmentContext() {
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -512,7 +515,7 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     public final void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z}"
+            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"    \", lineEnding=\"\\n\", locale=en_AU, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z}"
         );
     }
 

@@ -29,6 +29,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.validation.ValidatorContexts;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -100,6 +101,7 @@ public final class BasicSpreadsheetValidatorContextTest implements SpreadsheetVa
         final BasicSpreadsheetValidatorContext context = this.createContext();
 
         final EnvironmentContext environmentContext = EnvironmentContexts.empty(
+            StandardCharsets.UTF_8,
             Currency.getInstance("AUD"),
             Indentation.SPACES4,
             LineEnding.CRNL,

@@ -35,6 +35,8 @@ import walkingkooka.store.Store;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -127,6 +129,11 @@ public final class SpreadsheetContextTestingTest implements SpreadsheetContextTe
             if (false == SPREADSHEET_ID.equals(id.orElse(null))) {
                 throw new UnsupportedOperationException();
             }
+        }
+
+        @Override
+        public Charset charset() {
+            return StandardCharsets.UTF_8;
         }
 
         @Override

@@ -1325,7 +1325,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
 
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
-            CHARSET,
             MULTIPLIER,
             new SpreadsheetContextSupplier() {
                 @Override
@@ -1333,7 +1332,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return Optional.ofNullable(
                         spreadsheetId.equals(id) ?
                             SpreadsheetContexts.fixedSpreadsheetId(
-                                CHARSET,
                                 MULTIPLIER,
                                 SpreadsheetEngines.fake(),
                                 this.repo, // SpreadsheetStoreRepository

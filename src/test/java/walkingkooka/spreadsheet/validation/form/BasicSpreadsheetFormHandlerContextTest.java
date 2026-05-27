@@ -59,6 +59,7 @@ import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
 import java.math.MathContext;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -592,6 +593,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
                 private final EnvironmentContext environmentContext = EnvironmentContexts.map(
                     EnvironmentContexts.empty(
+                        StandardCharsets.UTF_8,
                         Currency.getInstance("AUD"),
                         Indentation.SPACES4,
                         LineEnding.NL,

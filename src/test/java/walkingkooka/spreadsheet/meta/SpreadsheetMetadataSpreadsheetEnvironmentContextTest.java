@@ -36,6 +36,8 @@ import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 
 import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
@@ -47,6 +49,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<SpreadsheetMetadataSpreadsheetEnvironmentContext>,
     ToStringTesting<SpreadsheetMetadataSpreadsheetEnvironmentContext> {
+
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 
@@ -69,6 +73,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
     static {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -242,6 +247,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
                     EnvironmentContexts.empty(
+                        CHARSET,
                         CURRENCY,
                         INDENTATION,
                         LineEnding.NL,
@@ -251,6 +257,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     )
                 )
             ),
+            SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
@@ -272,6 +279,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 SpreadsheetEnvironmentContexts.basic(
                     STORAGE,
                     EnvironmentContexts.empty(
+                        CHARSET,
                         CURRENCY,
                         INDENTATION,
                         LineEnding.NL,
@@ -281,6 +289,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                     )
                 )
             ),
+            SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
@@ -319,6 +328,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ).spreadsheetEnvironmentContext(
                     CONTEXT.cloneEnvironment()
                 ),
+            SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.INDENTATION,
             SpreadsheetEnvironmentContext.LINE_ENDING,
@@ -572,7 +582,7 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 ),
                 CONTEXT
             ),
-            "{currency=AUD, indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
+            "{charset=UTF-8, currency=AUD, indentation=    , lineEnding=\\n, locale=fr, now=1999-12-31T12:58, serverUrl=https://example.com, spreadsheetId=1, timeOffset=Z, user=user@example.com}"
         );
     }
 
@@ -593,6 +603,8 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    false\n" +
                 "  cellCharacterWidth\n" +
                 "    1\n" +
+                "  charset\n" +
+                "    UTF-8 (sun.nio.cs.UTF_8)\n" +
                 "  color1\n" +
                 "    black\n" +
                 "  color2\n" +

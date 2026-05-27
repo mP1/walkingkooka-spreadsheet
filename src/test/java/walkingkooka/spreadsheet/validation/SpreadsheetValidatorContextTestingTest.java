@@ -34,6 +34,7 @@ import walkingkooka.validation.Validator;
 import walkingkooka.validation.ValidatorContext;
 import walkingkooka.validation.provider.ValidatorSelector;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
@@ -124,6 +125,18 @@ public final class SpreadsheetValidatorContextTestingTest implements Spreadsheet
             return SpreadsheetMetadataTesting.SPREADSHEET_FORMATTER_CONTEXT;
         }
 
+        @Override
+        public Charset charset() {
+            return this.environmentContext()
+                .charset();
+        }
+
+        @Override
+        public void setCharset(final Charset charset) {
+            Objects.requireNonNull(charset, "charset");
+            throw new UnsupportedOperationException();
+        }
+        
         @Override
         public Indentation indentation() {
             return this.environmentContext()

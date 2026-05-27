@@ -149,29 +149,10 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
     // with.............................................................................................................
 
     @Test
-    public void testWithNullCharsetFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                null,
-                MULTIPLIER,
-                SPREADSHEET_CONTEXT_SUPPLIER,
-                CURRENCY_LOCALE_CONTEXT,
-                SPREADSHEET_ENVIRONMENT_CONTEXT,
-                SPREADSHEET_METADATA_CONTEXT,
-                TERMINAL_CONTEXT,
-                SPREADSHEET_PROVIDER,
-                PROVIDER_CONTEXT
-            )
-        );
-    }
-
-    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -189,7 +170,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
@@ -207,7 +187,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
@@ -225,7 +204,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -243,7 +221,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -261,7 +238,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -279,7 +255,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -297,7 +272,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-                CHARSET,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -324,6 +298,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         );
 
         final EnvironmentContext differentEnvironmentContext = EnvironmentContexts.empty(
+            CHARSET,
             CURRENCY,
             INDENTATION,
             lineEnding,
@@ -346,6 +321,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -367,6 +343,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CHARSET,
                     CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
@@ -397,6 +374,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext context = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -418,6 +396,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             STORAGE,
             EnvironmentContexts.map(
                 EnvironmentContexts.empty(
+                    CHARSET,
                     CURRENCY,
                     INDENTATION,
                     LINE_ENDING,
@@ -526,6 +505,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
         final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SpreadsheetEnvironmentContexts.basic(
             STORAGE,
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -1269,7 +1249,6 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
                                                                                                     final ExpressionFunctionProvider<SpreadsheetExpressionEvaluationContext> expressionFunctionProvider,
                                                                                                     final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
-            CHARSET,
             MULTIPLIER,
             spreadsheetContextSupplier,
             CURRENCY_LOCALE_CONTEXT,

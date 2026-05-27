@@ -66,7 +66,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -166,14 +165,12 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     }
 
 
-    public static SpreadsheetEnvironmentContextFactory with(final Charset charset,
-                                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetEnvironmentContextFactory with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                             final CurrencyLocaleContext currencyLocaleContext,
                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                             final SpreadsheetProvider spreadsheetProvider,
                                                             final ProviderContext providerContext) {
         return new SpreadsheetEnvironmentContextFactory(
-            Objects.requireNonNull(charset, "charset"),
             null, // Converter
             Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext"),
@@ -192,8 +189,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         );
     }
 
-    private SpreadsheetEnvironmentContextFactory(final Charset charset,
-                                                 final Converter<SpreadsheetConverterContext> converter,
+    private SpreadsheetEnvironmentContextFactory(final Converter<SpreadsheetConverterContext> converter,
                                                  final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                  final CurrencyLocaleContext currencyLocaleContext,
                                                  final SpreadsheetConverterContext spreadsheetConverterContext,
@@ -209,8 +205,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         super();
-
-        this.charset = charset;
 
         this.converter = converter;
 
@@ -335,7 +329,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                         BinaryNumberConverterFunctions.fake(), // multiplier
                         ConverterContexts.basic(
                             false, // canNumbersHaveGroupSeparator
-                            this.charset,
+                            this.charset(),
                             dateOffset,
                             spreadsheetEnvironmentContext.indentation(),
                             spreadsheetEnvironmentContext.lineEnding(),
@@ -358,8 +352,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         }
         return this.spreadsheetConverterContext;
     }
-
-    private final Charset charset;
 
     private final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
 
@@ -614,7 +606,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
                                                                                 final JsonNodeMarshallContextObjectPostProcessor jsonNodeMarshallContextObjectPostProcessor,
                                                                                 final JsonNodeUnmarshallContextPreProcessor jsonNodeUnmarshallContextPreProcessor) {
         return new SpreadsheetEnvironmentContextFactory(
-            this.charset,
             this.converter,
             this.multiplier,
             this.currencyLocaleContext,
@@ -771,7 +762,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         return before == after ?
             this :
             with(
-                this.charset,
                 this.multiplier,
                 this.currencyLocaleContext,
                 after,
@@ -792,7 +782,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     @Override
     public int hashCode() {
         return Objects.hash(
-            this.charset,
             this.multiplier,
             this.currencyLocaleContext,
             this.spreadsheetEnvironmentContext,
@@ -811,7 +800,6 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     private boolean equals0(final SpreadsheetEnvironmentContextFactory other) {
         return Objects.equals(this.jsonNodeMarshallContextObjectPostProcessor, other.jsonNodeMarshallContextObjectPostProcessor) &&
             Objects.equals(this.jsonNodeUnmarshallContextPreProcessor, other.jsonNodeUnmarshallContextPreProcessor) &&
-            this.charset.equals(other.charset) &&
             this.multiplier.equals(other.multiplier) &&
             this.currencyLocaleContext.equals(other.currencyLocaleContext) &&
             this.spreadsheetEnvironmentContext.equals(other.spreadsheetEnvironmentContext) &&

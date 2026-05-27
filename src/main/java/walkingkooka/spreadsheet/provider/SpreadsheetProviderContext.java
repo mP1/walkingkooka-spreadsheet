@@ -60,14 +60,12 @@ final class SpreadsheetProviderContext implements ProviderContext,
     EnvironmentContextDelegator,
     ConverterContextDelegator {
 
-    static SpreadsheetProviderContext with(final Charset charset,
-                                           final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetProviderContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                            final PluginStore pluginStore,
                                            final CurrencyLocaleContext currencyLocaleContext,
                                            final EnvironmentContext environmentContext,
                                            final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         return new SpreadsheetProviderContext(
-            Objects.requireNonNull(charset, "charset"),
             Objects.requireNonNull(multiplier, "multiplier"),
             Objects.requireNonNull(pluginStore, "pluginStore"),
             null, // ConverterContext
@@ -77,16 +75,13 @@ final class SpreadsheetProviderContext implements ProviderContext,
         );
     }
 
-    private SpreadsheetProviderContext(final Charset charset,
-                                       final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetProviderContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                        final PluginStore pluginStore,
                                        final ConverterContext converterContext,
                                        final CurrencyLocaleContext currencyLocaleContext,
                                        final EnvironmentContext environmentContext,
                                        final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext) {
         super();
-
-        this.charset = charset;
 
         this.multiplier = multiplier;
         
@@ -148,7 +143,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
                     Cast.to(multiplier), // ExpressionNumberConverterContext
                     ConverterContexts.basic(
                         false, // canNumbersHaveGroupSeparator
-                        this.charset,
+                        this.charset(),
                         Converters.EXCEL_1904_DATE_SYSTEM_OFFSET, // dateTimeOffset
                         environmentContext.indentation(),
                         environmentContext.lineEnding(),
@@ -198,7 +193,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
         return before == environmentContext ?
             this :
             new SpreadsheetProviderContext(
-                this.charset,
                 this.multiplier,
                 this.pluginStore,
                 null, // recreate because environmentContext changed.
@@ -208,13 +202,16 @@ final class SpreadsheetProviderContext implements ProviderContext,
             );
     }
 
-    private final Charset charset;
-
     private final CurrencyLocaleContext currencyLocaleContext;
 
     private final JsonNodeMarshallUnmarshallContext jsonNodeMarshallUnmarshallContext;
 
     // EnvironmentContextDelegator......................................................................................
+
+    @Override
+    public Charset charset() {
+        return this.environmentContext.charset();
+    }
 
     @Override
     public CurrencyCode currencyCode() {
@@ -265,7 +262,6 @@ final class SpreadsheetProviderContext implements ProviderContext,
     @Override
     public int hashCode() {
         return Objects.hash(
-            this.charset,
             this.pluginStore,
             this.environmentContext
         );
@@ -279,8 +275,7 @@ final class SpreadsheetProviderContext implements ProviderContext,
     }
 
     private boolean equals0(final SpreadsheetProviderContext other) {
-        return this.charset.equals(other.charset) &&
-            this.multiplier.equals(other.multiplier) &&
+        return this.multiplier.equals(other.multiplier) &&
             this.pluginStore.equals(other.pluginStore) &&
             this.environmentContext.equals(other.environmentContext);
     }

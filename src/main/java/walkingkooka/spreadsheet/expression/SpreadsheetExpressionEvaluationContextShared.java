@@ -58,6 +58,7 @@ import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionParameter;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProvider;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -235,6 +236,12 @@ abstract class SpreadsheetExpressionEvaluationContextShared implements Spreadshe
     final TerminalContext terminalContext;
 
     // SpreadsheetEnvironmentContextDelegator...........................................................................
+
+    @Override
+    public final Charset charset() {
+        return this.spreadsheetEnvironmentContext()
+            .charset();
+    }
 
     @Override
     public final CurrencyCode currencyCode() {

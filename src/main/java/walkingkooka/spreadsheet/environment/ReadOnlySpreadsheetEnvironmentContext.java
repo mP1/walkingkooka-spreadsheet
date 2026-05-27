@@ -31,6 +31,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -110,6 +111,19 @@ final class ReadOnlySpreadsheetEnvironmentContext implements SpreadsheetEnvironm
         throw name.readOnlyEnvironmentValueException();
     }
 
+    @Override
+    public Charset charset() {
+        return this.context.charset();
+    }
+
+    @Override
+    public void setCharset(final Charset charset) {
+        this.setEnvironmentValue(
+            EnvironmentValueName.CHARSET,
+            charset
+        );
+    }
+    
     @Override
     public Currency currency() {
         return this.context.currency();

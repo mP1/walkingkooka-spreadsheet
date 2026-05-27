@@ -232,7 +232,6 @@ public final class SpreadsheetExpressionEvaluationContextDelegatorTest implement
                 SpreadsheetExpressionReferenceLoaders.fake(),
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 SpreadsheetContexts.fixedSpreadsheetId(
-                    CHARSET,
                     MULTIPLIER,
                     SpreadsheetEngines.basic(),
                     new FakeSpreadsheetStoreRepository() {

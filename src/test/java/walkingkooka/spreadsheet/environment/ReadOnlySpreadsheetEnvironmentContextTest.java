@@ -35,6 +35,8 @@ import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.text.LineEnding;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Currency;
@@ -48,6 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetEnvironmentContextTest implements SpreadsheetEnvironmentContextTesting2<ReadOnlySpreadsheetEnvironmentContext>,
     ToStringTesting<ReadOnlySpreadsheetEnvironmentContext> {
 
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
     private final static Currency CURRENCY = Currency.getInstance("AUD");
     private final static LineEnding LINE_ENDING = LineEnding.NL;
     private final static Locale LOCALE = Locale.GERMAN;
@@ -127,6 +130,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             Storages.fake(),
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -154,6 +158,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext empty = SpreadsheetEnvironmentContexts.basic(
             storage,
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -169,6 +174,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
         final SpreadsheetEnvironmentContext different = SpreadsheetEnvironmentContexts.basic(
             storage,
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.CRNL,
@@ -441,6 +447,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public ReadOnlySpreadsheetEnvironmentContext createContext() {
         final EnvironmentContext context = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LINE_ENDING,
@@ -476,6 +483,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     @Test
     public void testEnvironmentalValueNames() {
         this.environmentValueNamesAndCheck(
+            SpreadsheetEnvironmentContext.CHARSET,
             SpreadsheetEnvironmentContext.CURRENCY,
             SpreadsheetEnvironmentContext.CURRENT_WORKING_DIRECTORY,
             SpreadsheetEnvironmentContext.INDENTATION,
@@ -512,7 +520,7 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "{currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, timeOffset=Z, user=user123@example.com}"
+            "{charset=\"UTF-8\", currency=\"AUD\", currentWorkingDirectory=/current1/working2/directory3, indentation=\"  \", lineEnding=\"\\n\", locale=de, serverUrl=https://example.com, spreadsheetId=7b, timeOffset=Z, user=user123@example.com}"
         );
     }
 
@@ -526,6 +534,8 @@ public final class ReadOnlySpreadsheetEnvironmentContextTest implements Spreadsh
                 "  BasicSpreadsheetEnvironmentContext\n" +
                 "    environment\n" +
                 "      EnvironmentContextSharedMap\n" +
+                "        charset\n" +
+                "          UTF-8 (sun.nio.cs.UTF_8)\n" +
                 "        currency\n" +
                 "          AUD (java.util.Currency)\n" +
                 "        currentWorkingDirectory\n" +

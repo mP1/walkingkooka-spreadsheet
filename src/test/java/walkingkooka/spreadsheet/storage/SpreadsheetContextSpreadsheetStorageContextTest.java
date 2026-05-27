@@ -77,6 +77,7 @@ import walkingkooka.validation.form.provider.FormHandlerProviders;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 import walkingkooka.validation.provider.ValidatorProviders;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -86,6 +87,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetContextSpreadsheetStorageContextTest implements SpreadsheetStorageContextTesting2<SpreadsheetContextSpreadsheetStorageContext> {
+
+    private final static Charset CHARSET = StandardCharsets.UTF_8;
 
     private final static Currency CURRENCY = Currency.getInstance("AUD");
 
@@ -587,6 +590,7 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         final EnvironmentContext environmentContext = EnvironmentContexts.map(
             EnvironmentContexts.empty(
+                CHARSET,
                 CURRENCY,
                 INDENTATION,
                 LineEnding.NL,
@@ -608,7 +612,6 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
 
         return SpreadsheetContextSpreadsheetStorageContext.with(
             SpreadsheetContexts.fixedSpreadsheetId(
-                StandardCharsets.UTF_8,
                 BinaryNumberConverterFunctions.fake(), // multiplier
                 SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(metadataStore),
