@@ -70,6 +70,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithBinary() {
+        this.converterAndCheck(
+            "binary",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.binary()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithBoolean() {
         this.converterAndCheck(
             SpreadsheetConvertersConverterProvider.BOOLEAN + "",
