@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Binary;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.convert.ColorConverters;
 import walkingkooka.convert.Converter;
@@ -118,6 +119,20 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         SpreadsheetConverters.optionalTo()
     );
 
+    /**
+     * A {@link Converter} that handles converting from or to a {@link Binary} value
+     */
+    public static Converter<SpreadsheetConverterContext> binary() {
+        return BINARY;
+    }
+
+    private final static Converter<SpreadsheetConverterContext> BINARY = namedCollection(
+        "Binary",
+        SpreadsheetConverters.textToCharset(),
+        SpreadsheetConverters.textToBinary(),
+        SpreadsheetConverters.hasBinaryToString()
+    );
+    
     /**
      * A {@link Converter} that handles converting from or to a {@link Boolean} value
      */

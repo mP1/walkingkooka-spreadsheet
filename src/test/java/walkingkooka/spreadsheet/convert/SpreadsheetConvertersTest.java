@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.BooleanList;
@@ -248,6 +249,107 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                 @Override
                 public ExpressionNumberKind expressionNumberKind() {
                     return EXPRESSION_NUMBER_KIND;
+                }
+            },
+            expected
+        );
+    }
+
+    // binary..........................................................................................................
+
+    @Test
+    public void testBinaryConvertStringToCharset() {
+        final Charset charset = StandardCharsets.UTF_8;
+
+        this.binaryConvertAndCheck(
+            charset.toString(),
+            Charset.class,
+            charset
+        );
+    }
+
+    @Test
+    public void testBinaryConvertStringToCharset2() {
+        final Charset charset = StandardCharsets.ISO_8859_1;
+
+        this.binaryConvertAndCheck(
+            charset.toString(),
+            Charset.class,
+            charset
+        );
+    }
+
+    @Test
+    public void testBinaryConvertBinaryToString() {
+        final String text = "HelloWorld123";
+
+        this.binaryConvertAndCheck(
+            Binary.with(
+                text.getBytes(CHARSET)
+            ),
+            text
+        );
+    }
+
+    @Test
+    public void testBinaryConvertStringToBinary() {
+        final String text = "HelloWorld123";
+
+        this.binaryConvertAndCheck(
+            text,
+            Binary.with(
+                text.getBytes(CHARSET)
+            )
+        );
+    }
+
+    private void binaryConvertAndCheck(final Object value,
+                                       final Object expected) {
+        this.binaryConvertAndCheck(
+            value,
+            expected.getClass(),
+            Cast.to(expected)
+        );
+    }
+
+    private <T> void binaryConvertAndCheck(final Object value,
+                                           final Class<T> type,
+                                           final T expected) {
+        this.convertAndCheck(
+            SpreadsheetConverters.binary(),
+            value,
+            type,
+            new FakeSpreadsheetConverterContext() {
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    return this.converter.canConvert(
+                        value,
+                        type,
+                        this
+                    );
+                }
+
+                @Override
+                public <TT> Either<TT, String> convert(final Object value,
+                                                       final Class<TT> target) {
+                    return this.converter.convert(
+                        value,
+                        target,
+                        this
+                    );
+                }
+
+                private final Converter<SpreadsheetConverterContext> converter = SpreadsheetConverters.collection(
+                    Lists.of(
+                        SpreadsheetConverters.text(),
+                        SpreadsheetConverters.binary()
+                    )
+                );
+
+                @Override
+                public Charset charset() {
+                    return CHARSET;
                 }
             },
             expected
