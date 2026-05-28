@@ -126,9 +126,11 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             this.multiplier,
             this.spreadsheetContextSupplier,
-            this.currencyContext(),
+            this.currencyContext()
+                .setLocaleContext(
+                    this.localeContext()
+                ),
             this.spreadsheetEnvironmentContext(),
-            this.localeContext(),
             this.spreadsheetMetadataContext,
             TerminalContexts.fake(),
             this.spreadsheetProvider(),

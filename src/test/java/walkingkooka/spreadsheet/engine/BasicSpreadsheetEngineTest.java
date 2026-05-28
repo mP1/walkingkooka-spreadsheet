@@ -37,6 +37,7 @@ import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.convert.provider.FakeConverterProvider;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -1322,7 +1323,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             spreadsheetEnvironmentContext.removeEnvironmentValue(SpreadsheetEnvironmentContext.SPREADSHEET_ID);
         }
 
-        final LocaleContext localeContext = LocaleContexts.jre(LOCALE);
+        final CurrencyLocaleContext currencyLocaleContext = CURRENCY_CONTEXT.setLocaleContext(
+            LocaleContexts.jre(LOCALE)
+        );
 
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
             MULTIPLIER,
@@ -1338,7 +1341,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 (c) -> {
                                     throw new UnsupportedOperationException();
                                 }, // httpRouterFactory
-                                CURRENCY_CONTEXT.setLocaleContext(localeContext),
+                                currencyLocaleContext,
                                 spreadsheetEnvironmentContext,
                                 SPREADSHEET_PROVIDER,
                                 PROVIDER_CONTEXT
@@ -1349,9 +1352,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 private final SpreadsheetStoreRepository repo = SpreadsheetStoreRepositories.treeMap(metadataStore);
             },
-            CURRENCY_CONTEXT,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             SpreadsheetMetadataContexts.basic(
                 (EmailAddress user, Optional<Locale> defaultLocale) -> {
                     throw new UnsupportedOperationException();
