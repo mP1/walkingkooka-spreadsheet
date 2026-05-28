@@ -18,8 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.BinaryNumberConverterFunction;
-import walkingkooka.currency.CurrencyContext;
-import walkingkooka.locale.LocaleContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -57,9 +56,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      */
     public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
-                                                                         final CurrencyContext currencyContext,
+                                                                         final CurrencyLocaleContext currencyLocaleContext,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                         final LocaleContext localeContext,
                                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                          final TerminalContext terminalContext,
                                                                          final SpreadsheetProvider spreadsheetProvider,
@@ -67,9 +65,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
             multiplier,
             spreadsheetContextSupplier,
-            currencyContext,
+            currencyLocaleContext,
             spreadsheetEnvironmentContext,
-            localeContext,
             spreadsheetMetadataContext,
             terminalContext,
             spreadsheetProvider,

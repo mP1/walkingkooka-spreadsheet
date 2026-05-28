@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
+import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.plugin.ProviderContext;
@@ -61,18 +62,16 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
 
     static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                             final SpreadsheetContextSupplier spreadsheetContextSupplier,
-                                                                            final CurrencyContext currencyContext,
+                                                                            final CurrencyLocaleContext currencyLocaleContext,
                                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
-                                                                            final LocaleContext localeContext,
                                                                             final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                             final TerminalContext terminalContext,
                                                                             final SpreadsheetProvider spreadsheetProvider,
                                                                             final ProviderContext providerContext) {
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
-        Objects.requireNonNull(currencyContext, "currencyContext");
+        Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
         Objects.requireNonNull(spreadsheetEnvironmentContext, "spreadsheetEnvironmentContext");
-        Objects.requireNonNull(localeContext, "localeContext");
         Objects.requireNonNull(spreadsheetMetadataContext, "spreadsheetMetadataContext");
         Objects.requireNonNull(terminalContext, "terminalContext");
         Objects.requireNonNull(spreadsheetProvider, "spreadsheetProvider");
@@ -81,10 +80,10 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
             multiplier,
             spreadsheetContextSupplier,
-            currencyContext,
+            currencyLocaleContext, // CurrencyContext
             SpreadsheetEnvironmentContextFactory.with(
                 multiplier,
-                currencyContext.setLocaleContext(localeContext),
+                currencyLocaleContext,
                 spreadsheetEnvironmentContext,
                 spreadsheetProvider,
                 providerContext
