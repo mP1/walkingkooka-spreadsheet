@@ -17,8 +17,21 @@
 
 package walkingkooka.spreadsheet.value;
 
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.io.FileExtension;
+import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
+import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
 import walkingkooka.text.CaseKind;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.validation.ValueType;
+import walkingkooka.validation.provider.ValidatorSelector;
+
+import java.util.Currency;
+import java.util.Locale;
+import java.util.Optional;
 
 /**
  * Directive that controls what part of a cell to export or when importing what part of a cell to replace.
@@ -27,77 +40,77 @@ public enum SpreadsheetCellValueKind {
 
     CELL {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public SpreadsheetCell cellValue(final SpreadsheetCell cell) {
             return cell;
         }
     },
 
     CURRENCY {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<Currency> cellValue(final SpreadsheetCell cell) {
             return cell.currency();
         }
     },
 
     DATE_TIME_SYMBOLS {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<DateTimeSymbols> cellValue(final SpreadsheetCell cell) {
             return cell.dateTimeSymbols();
         }
     },
 
     DECIMAL_NUMBER_SYMBOLS {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<DecimalNumberSymbols> cellValue(final SpreadsheetCell cell) {
             return cell.decimalNumberSymbols();
         }
     },
 
     FORMULA {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public SpreadsheetFormula cellValue(final SpreadsheetCell cell) {
             return cell.formula();
         }
     },
 
     FORMATTER {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<SpreadsheetFormatterSelector> cellValue(final SpreadsheetCell cell) {
             return cell.formatter();
         }
     },
 
     LOCALE {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<Locale> cellValue(final SpreadsheetCell cell) {
             return cell.locale();
         }
     },
 
     PARSER {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<SpreadsheetParserSelector> cellValue(final SpreadsheetCell cell) {
             return cell.parser();
         }
     },
 
     STYLE {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public TextStyle cellValue(final SpreadsheetCell cell) {
             return cell.style();
         }
     },
 
     VALIDATOR {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<ValidatorSelector> cellValue(final SpreadsheetCell cell) {
             return cell.validator();
         }
     },
 
     VALUE {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<Object> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
                 .value();
         }
@@ -105,7 +118,7 @@ public enum SpreadsheetCellValueKind {
 
     VALUE_TYPE {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<ValueType> cellValue(final SpreadsheetCell cell) {
             return cell.formula()
                 .valueType();
         }
@@ -113,7 +126,7 @@ public enum SpreadsheetCellValueKind {
 
     FORMATTED_VALUE {
         @Override
-        public Object cellValue(final SpreadsheetCell cell) {
+        public Optional<TextNode> cellValue(final SpreadsheetCell cell) {
             return cell.formattedValue();
         }
     };
