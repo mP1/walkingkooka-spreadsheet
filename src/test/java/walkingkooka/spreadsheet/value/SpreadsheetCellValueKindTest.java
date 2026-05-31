@@ -309,10 +309,82 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     }
 
     @Test
+    public void testFileExtensionWithDateTimeSymbols() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
+            "date-time-symbols"
+        );
+    }
+
+    @Test
     public void testFileExtensionWithDecimalNumberSymbols() {
         this.fileExtensionAndCheck(
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
             "decimal-number-symbols"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithFormattedValue() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.FORMATTED_VALUE,
+            "formatted-value"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithFormatter() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.FORMATTER,
+            "formatter"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithFormula() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.FORMULA,
+            "formula"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithLocale() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.LOCALE,
+            "locale"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithParser() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.PARSER,
+            "parser"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithStyle() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.STYLE,
+            "style"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithValidator() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.VALIDATOR,
+            "validator"
+        );
+    }
+
+    @Test
+    public void testFileExtensionWithValue() {
+        this.fileExtensionAndCheck(
+            SpreadsheetCellValueKind.VALUE,
+            "value"
         );
     }
 
