@@ -142,6 +142,10 @@ public enum SpreadsheetCellValueKind {
 
     public abstract Object cellValue(final SpreadsheetCell cell);
 
+    /**
+     * Returns the preferred file extension for this {@link SpreadsheetCell} component. Note this does not include
+     * the actual type technology file extension such as <code>*.json</code>, which needs to be appended.
+     */
     public final FileExtension fileExtension() {
         return this.fileExtension;
     }
