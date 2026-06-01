@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
 import walkingkooka.currency.CurrencyCode;
 import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeSymbols;
@@ -29,6 +30,8 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.SpreadsheetContextDelegatorTest.TestSpreadsheetContextDelegator;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -422,6 +425,16 @@ public final class SpreadsheetContextDelegatorTest implements SpreadsheetContext
                 Objects.requireNonNull(dateTime, "dateTime");
 
                 throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public MediaType detect(final String filename,
+                                    final Binary content) {
+                return MediaTypeDetectors.binary()
+                    .detect(
+                        filename,
+                        content
+                    );
             }
         };
 

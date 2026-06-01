@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -39,7 +40,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedFixedSpreadsheetId}
      */
-    public static SpreadsheetContext fixedSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetContext fixedSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                         final SpreadsheetEngine spreadsheetEngine,
                                                         final SpreadsheetStoreRepository storeRepository,
                                                         final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -48,6 +50,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                         final SpreadsheetProvider spreadsheetProvider,
                                                         final ProviderContext providerContext) {
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
+            mediaTypeDetector,
             multiplier,
             spreadsheetEngine,
             storeRepository,
@@ -69,7 +72,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetContextSharedMutableSpreadsheetId}
      */
-    public static SpreadsheetContext mutableSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetContext mutableSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                           final SpreadsheetEngine spreadsheetEngine,
                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                           final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -78,6 +82,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                           final SpreadsheetProvider spreadsheetProvider,
                                                           final ProviderContext providerContext) {
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            mediaTypeDetector,
             multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,

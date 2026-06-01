@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.currency.CurrencyLocaleContextTesting2;
+import walkingkooka.net.header.MediaTypeDetectorTesting2;
 import walkingkooka.plugin.HasProviderContextTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContextTesting2;
@@ -35,6 +36,7 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     HasSpreadsheetMetadataTesting,
     HasSpreadsheetServerUrlTesting,
     CurrencyLocaleContextTesting2<C>,
+    MediaTypeDetectorTesting2<C>,
     SpreadsheetMetadataContextTesting<C> {
 
     // setCurrency......................................................................................................
@@ -74,6 +76,13 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
             engine,
             context.spreadsheetEngine()
         );
+    }
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    default C createMediaTypeDetector() {
+        return this.createContext();
     }
 
     // class............................................................................................................

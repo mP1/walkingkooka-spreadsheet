@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -44,7 +45,8 @@ import java.util.function.Function;
  */
 final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedFixedSpreadsheetId with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetContextSharedFixedSpreadsheetId with(final MediaTypeDetector mediaTypeDetector,
+                                                           final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                            final SpreadsheetEngine spreadsheetEngine,
                                                            final SpreadsheetStoreRepository storeRepository,
                                                            final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> httpRouterFactory,
@@ -52,6 +54,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                            final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                            final SpreadsheetProvider spreadsheetProvider,
                                                            final ProviderContext providerContext) {
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(storeRepository, "storeRepository");
@@ -62,6 +65,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedFixedSpreadsheetId(
+            mediaTypeDetector,
             multiplier,
             spreadsheetEngine,
             storeRepository,
@@ -76,7 +80,8 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
         );
     }
 
-    private SpreadsheetContextSharedFixedSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetContextSharedFixedSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                       final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                        final SpreadsheetEngine spreadsheetEngine,
                                                        final SpreadsheetStoreRepository storeRepository,
                                                        final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -88,6 +93,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                        final SpreadsheetProvider spreadsheetProvider,
                                                        final ProviderContext providerContext) {
         super(
+            mediaTypeDetector,
             multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
@@ -166,6 +172,7 @@ final class SpreadsheetContextSharedFixedSpreadsheetId extends SpreadsheetContex
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedFixedSpreadsheetId(
+            this.mediaTypeDetector,
             this.multiplier,
             this.spreadsheetEngine,
             this.storeRepository, // keep

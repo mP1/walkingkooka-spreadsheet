@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
@@ -25,6 +26,8 @@ import walkingkooka.environment.EnvironmentValueWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.spreadsheet.environment.FakeSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -76,6 +79,16 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
 
     final static class TestSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentContext implements SpreadsheetStorageContext,
         SpreadsheetMetadataContextDelegator {
+
+        @Override
+        public MediaType detect(final String filename,
+                                final Binary content) {
+            return MediaTypeDetectors.binary()
+                .detect(
+                    filename,
+                    content
+                );
+        }
 
         @Override
         public StoragePath parseStoragePath(final String text) {

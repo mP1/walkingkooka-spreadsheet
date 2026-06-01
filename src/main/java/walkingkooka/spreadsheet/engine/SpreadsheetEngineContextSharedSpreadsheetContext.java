@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Binary;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
@@ -425,6 +427,17 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public LocaleContext localeContext() {
         return this.spreadsheetContext;
+    }
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.spreadsheetContext.detect(
+            filename,
+            content
+        );
     }
 
     // HasProviderContext...............................................................................................

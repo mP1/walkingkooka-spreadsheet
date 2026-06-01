@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -54,7 +55,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetEngineContext spreadsheetEnvironmentContext(final MediaTypeDetector mediaTypeDetector,
+                                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                          final CurrencyLocaleContext currencyLocaleContext,
                                                                          final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -63,6 +65,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                                          final SpreadsheetProvider spreadsheetProvider,
                                                                          final ProviderContext providerContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            mediaTypeDetector,
             multiplier,
             spreadsheetContextSupplier,
             currencyLocaleContext,

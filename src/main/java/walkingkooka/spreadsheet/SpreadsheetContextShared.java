@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.Binary;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.currency.CurrencyLocaleContextDelegator;
@@ -24,6 +25,8 @@ import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -51,7 +54,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     CurrencyLocaleContextDelegator,
     SpreadsheetProviderDelegator {
 
-    SpreadsheetContextShared(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    SpreadsheetContextShared(final MediaTypeDetector mediaTypeDetector,
+                             BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                              final SpreadsheetEngine spreadsheetEngine,
                              final SpreadsheetEngineContext spreadsheetEngineContext,
                              final CurrencyLocaleContext currencyLocaleContext,
@@ -59,6 +63,8 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
                              final SpreadsheetProvider spreadsheetProvider,
                              final ProviderContext providerContext) {
         super();
+
+        this.mediaTypeDetector = mediaTypeDetector;
 
         this.multiplier = multiplier;
 
@@ -79,6 +85,19 @@ abstract class SpreadsheetContextShared implements SpreadsheetContext,
     }
 
     final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier;
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    public final MediaType detect(final String filename,
+                                  final Binary binary) {
+        return this.mediaTypeDetector.detect(
+            filename,
+            binary
+        );
+    }
+
+    final MediaTypeDetector mediaTypeDetector;
 
     // spreadsheetEngine................................................................................................
 

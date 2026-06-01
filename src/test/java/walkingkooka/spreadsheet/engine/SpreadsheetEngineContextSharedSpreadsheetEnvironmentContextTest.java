@@ -31,6 +31,7 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.FakeSpreadsheetContext;
@@ -127,10 +128,29 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // with.............................................................................................................
 
     @Test
+    public void testWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                null,
+                MULTIPLIER,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -148,6 +168,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 CURRENCY_LOCALE_CONTEXT,
@@ -165,6 +186,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 null,
@@ -182,6 +204,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -199,6 +222,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -216,6 +240,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -233,6 +258,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -256,6 +282,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext createContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                       final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext) {
         return SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             spreadsheetContextSupplier,
             CURRENCY_LOCALE_CONTEXT,
@@ -560,9 +587,27 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     // hashCode/equals..................................................................................................
 
     @Test
+    public void testEqualsDifferentMediaTypeDetector() {
+        this.checkNotEquals(
+            SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MediaTypeDetectors.fake(),
+                MULTIPLIER,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT.cloneEnvironment(),
+                SPREADSHEET_METADATA_CONTEXT,
+                TERMINAL_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentMultiplier() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 BinaryNumberConverterFunctions.fake(),
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -579,6 +624,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetContextSupplier() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SpreadsheetContextSuppliers.fake(),
                 CURRENCY_LOCALE_CONTEXT,
@@ -595,6 +641,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentCurrencyLocaleContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CurrencyLocaleContexts.fake(),
@@ -620,6 +667,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -636,6 +684,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetMetadataContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -652,6 +701,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentTerminalContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -668,6 +718,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentSpreadsheetProvider() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,
@@ -684,6 +735,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
     public void testEqualsDifferentProviderContext() {
         this.checkNotEquals(
             SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_CONTEXT_SUPPLIER,
                 CURRENCY_LOCALE_CONTEXT,

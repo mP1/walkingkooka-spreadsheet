@@ -26,6 +26,8 @@ import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.MissingEnvironmentValueException;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.plugin.store.PluginStores;
@@ -753,14 +755,18 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnviro
             ValidatorProviders.empty()
         );
 
+        final MediaTypeDetector mediaTypeDetector = MediaTypeDetectors.binary();
+
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext.with(
             SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+                mediaTypeDetector,
                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                 new SpreadsheetContextSupplier() {
                     @Override
                     public Optional<SpreadsheetContext> spreadsheetContext(final SpreadsheetId id) {
                         return Optional.of(
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                mediaTypeDetector,
                                 ExpressionNumberBinaryNumberConverterFunctions.multiply(), // multiplier
                                 SpreadsheetEngines.basic(),
                                 repo,

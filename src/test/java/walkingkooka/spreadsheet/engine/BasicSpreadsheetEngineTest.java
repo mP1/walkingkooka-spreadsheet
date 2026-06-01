@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
@@ -52,6 +53,8 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.MathTesting;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -617,6 +620,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         @Override
         public Charset charset() {
             return StandardCharsets.UTF_8;
+        }
+
+        @Override
+        public MediaType detect(final String filename,
+                                final Binary content) {
+            return MediaTypeDetectors.binary()
+                .detect(filename, content);
         }
 
         @Override
@@ -1328,6 +1338,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             new SpreadsheetContextSupplier() {
                 @Override
@@ -1335,6 +1346,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return Optional.ofNullable(
                         spreadsheetId.equals(id) ?
                             SpreadsheetContexts.fixedSpreadsheetId(
+                                MEDIA_TYPE_DETECTOR,
                                 MULTIPLIER,
                                 SpreadsheetEngines.fake(),
                                 this.repo, // SpreadsheetStoreRepository

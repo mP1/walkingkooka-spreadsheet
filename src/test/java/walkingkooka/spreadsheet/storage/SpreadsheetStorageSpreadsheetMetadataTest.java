@@ -437,6 +437,7 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
             );
 
             this.spreadsheetContext = SpreadsheetContexts.fixedSpreadsheetId(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SpreadsheetEngines.basic(),
                 SpreadsheetStoreRepositories.treeMap(

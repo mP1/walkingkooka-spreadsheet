@@ -24,6 +24,8 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -65,13 +67,34 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         throw new UnsupportedOperationException();
     };
 
+    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
+
     private final static LineEnding LINE_ENDING = LineEnding.NL;
+
+    @Test
+    public void testWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
+                null,
+                SPREADSHEET_ENGINE,
+                REPO,
+                HTTP_ROUTER_FACTORY,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
 
     @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_ENGINE,
                 REPO,
@@ -89,6 +112,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 REPO,
@@ -106,6 +130,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
@@ -123,6 +148,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 REPO,
@@ -424,6 +450,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         store.save(metadata);
 
         return SpreadsheetContextSharedFixedSpreadsheetId.with(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_ENGINE,
             new FakeSpreadsheetStoreRepository() {

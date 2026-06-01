@@ -29,6 +29,7 @@ import walkingkooka.environment.EnvironmentContextMissingValues;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
@@ -86,7 +87,8 @@ import java.util.Set;
 final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext extends SpreadsheetExpressionEvaluationContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext with(final MediaTypeDetector mediaTypeDetector,
+                                                                                          final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                           final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                           final CurrencyLocaleContext currencyLocaleContext,
                                                                                           final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -94,6 +96,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
                                                                                           final TerminalContext terminalContext,
                                                                                           final SpreadsheetProvider spreadsheetProvider,
                                                                                           final ProviderContext providerContext) {
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
@@ -104,6 +107,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+            mediaTypeDetector,
             spreadsheetContextSupplier,
             SpreadsheetEnvironmentContextFactory.with(
                 multiplier,
@@ -118,7 +122,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         );
     }
 
-    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final SpreadsheetContextSupplier spreadsheetContextSupplier,
+    private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(final MediaTypeDetector mediaTypeDetector,
+                                                                                      final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                       final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                                       final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                                       final TerminalContext terminalContext,
@@ -126,6 +131,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         super(
             terminalContext
         );
+
+        this.mediaTypeDetector = mediaTypeDetector;
 
         this.spreadsheetContextSupplier = spreadsheetContextSupplier;
 
@@ -326,6 +333,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     private SpreadsheetExpressionEvaluationContext setSpreadsheetEnvironmentContextFactory(final SpreadsheetEnvironmentContextFactory factory) {
         return new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+            this.mediaTypeDetector,
             this.spreadsheetContextSupplier,
             factory,
             this.spreadsheetMetadataContext,
@@ -379,6 +387,7 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return before == after ?
             this :
             new SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext(
+                this.mediaTypeDetector,
                 this.spreadsheetContextSupplier,
                 after,
                 this.spreadsheetMetadataContext,
@@ -453,6 +462,8 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
     }
 
     private final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory;
+
+    final MediaTypeDetector mediaTypeDetector;
 
     // SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext
     final SpreadsheetContextSupplier spreadsheetContextSupplier;

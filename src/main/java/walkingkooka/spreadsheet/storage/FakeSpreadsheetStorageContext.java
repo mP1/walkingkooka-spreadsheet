@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.environment.FakeSpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -42,6 +44,14 @@ public class FakeSpreadsheetStorageContext extends FakeSpreadsheetEnvironmentCon
     public FakeSpreadsheetStorageContext() {
         super();
     }
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        throw new UnsupportedOperationException();
+    }
+
+    // cells............................................................................................................
 
     @Override
     public Set<SpreadsheetCell> loadCells(final SpreadsheetExpressionReference cellsOrLabel) {
