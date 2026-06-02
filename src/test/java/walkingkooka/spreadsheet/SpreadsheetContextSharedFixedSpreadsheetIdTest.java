@@ -69,8 +69,8 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedFixedSpreadsheetId.with(
-                MEDIA_TYPE_DETECTOR,
                 null,
+                MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 REPO,
                 HTTP_ROUTER_FACTORY,
