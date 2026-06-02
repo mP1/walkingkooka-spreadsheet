@@ -24,8 +24,6 @@ import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
 import walkingkooka.locale.LocaleContexts;
-import walkingkooka.net.header.MediaTypeDetector;
-import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -48,7 +46,6 @@ import walkingkooka.spreadsheet.provider.SpreadsheetProvider;
 import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.provider.FormHandlerAliasSet;
 import walkingkooka.validation.provider.ValidatorAliasSet;
 
@@ -66,10 +63,6 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
     final Function<SpreadsheetEngineContext, Router<HttpRequestAttribute<?>, HttpHandler>> HTTP_ROUTER_FACTORY = (SpreadsheetEngineContext c) -> {
         throw new UnsupportedOperationException();
     };
-
-    private final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
-
-    private final static LineEnding LINE_ENDING = LineEnding.NL;
 
     @Test
     public void testWithNullMediaTypeDetectorFails() {
