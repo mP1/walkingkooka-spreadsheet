@@ -601,6 +601,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(

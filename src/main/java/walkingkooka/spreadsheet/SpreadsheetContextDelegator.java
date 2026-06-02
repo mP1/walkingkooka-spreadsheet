@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.Binary;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyContextDelegator;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -56,6 +58,16 @@ public interface SpreadsheetContextDelegator extends SpreadsheetContext,
     default Charset charset() {
         return this.spreadsheetContext()
             .charset();
+    }
+
+    @Override
+    default MediaType detect(final String filename,
+                             final Binary content) {
+        return this.spreadsheetContext()
+            .detect(
+                filename,
+                content
+            );
     }
 
     @Override

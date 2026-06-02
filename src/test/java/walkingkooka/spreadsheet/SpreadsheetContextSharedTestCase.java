@@ -37,6 +37,8 @@ import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorProviders;
@@ -80,6 +82,8 @@ public abstract class SpreadsheetContextSharedTestCase<C extends SpreadsheetCont
     ToStringTesting<C> {
 
     final static Charset CHARSET = StandardCharsets.UTF_8;
+
+    final static MediaTypeDetector MEDIA_TYPE_DETECTOR = MediaTypeDetectors.binary();
 
     final static BinaryNumberConverterFunction<SpreadsheetConverterContext> MULTIPLIER = ExpressionNumberBinaryNumberConverterFunctions.multiply();
 

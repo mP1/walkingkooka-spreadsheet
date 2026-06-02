@@ -464,6 +464,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
         final Storage<SpreadsheetStorageContext> storage = Storages.treeMapStore();
 
         return SpreadsheetContexts.fixedSpreadsheetId(
+            MEDIA_TYPE_DETECTOR,
             BinaryNumberConverterFunctions.fake(), // multiplier
             SpreadsheetEngines.basic(),
             SpreadsheetStoreRepositories.treeMap(metadataStore),

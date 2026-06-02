@@ -71,10 +71,29 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
     private final static Locale OTHER_SPREADSHEET_LOCALE = Locale.FRANCE;
 
     @Test
+    public void testWithNullMediaTypeDetectorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                null,
+                MULTIPLIER,
+                SPREADSHEET_ENGINE,
+                SPREADSHEET_CONTEXT_SUPPLIER,
+                SPREADSHEET_METADATA_CONTEXT,
+                CURRENCY_LOCALE_CONTEXT,
+                SPREADSHEET_ENVIRONMENT_CONTEXT,
+                SPREADSHEET_PROVIDER,
+                PROVIDER_CONTEXT
+            )
+        );
+    }
+
+    @Test
     public void testWithNullMultiplierFails() {
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 null,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -92,6 +111,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 null,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -109,6 +129,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 null,
@@ -126,6 +147,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         assertThrows(
             NullPointerException.class,
             () -> SpreadsheetContextSharedMutableSpreadsheetId.with(
+                MEDIA_TYPE_DETECTOR,
                 MULTIPLIER,
                 SPREADSHEET_ENGINE,
                 SPREADSHEET_CONTEXT_SUPPLIER,
@@ -502,6 +524,7 @@ public final class SpreadsheetContextSharedMutableSpreadsheetIdTest extends Spre
         );
 
         return SpreadsheetContextSharedMutableSpreadsheetId.with(
+            MEDIA_TYPE_DETECTOR,
             MULTIPLIER,
             SPREADSHEET_ENGINE,
             (SpreadsheetId id) -> {

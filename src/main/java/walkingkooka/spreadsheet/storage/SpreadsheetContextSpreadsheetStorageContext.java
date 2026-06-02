@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.storage;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
@@ -61,6 +63,15 @@ final class SpreadsheetContextSpreadsheetStorageContext implements SpreadsheetSt
     private SpreadsheetContextSpreadsheetStorageContext(final SpreadsheetContext spreadsheetContext) {
         super();
         this.spreadsheetContext = spreadsheetContext;
+    }
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.spreadsheetContext.detect(
+            filename,
+            content
+        );
     }
 
     @Override

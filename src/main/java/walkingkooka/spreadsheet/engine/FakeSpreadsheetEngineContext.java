@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyCode;
@@ -29,6 +30,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -67,6 +69,12 @@ import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetEngineContext extends FakeSpreadsheetProvider implements SpreadsheetEngineContext, Fake {
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public Optional<StoragePath> currentWorkingDirectory() {

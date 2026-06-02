@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -44,7 +45,8 @@ import java.util.Objects;
  */
 final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetContextShared {
 
-    static SpreadsheetContextSharedMutableSpreadsheetId with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetContextSharedMutableSpreadsheetId with(final MediaTypeDetector mediaTypeDetector,
+                                                             final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                              final SpreadsheetEngine spreadsheetEngine,
                                                              final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                              final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -52,6 +54,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                              final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
                                                              final SpreadsheetProvider spreadsheetProvider,
                                                              final ProviderContext providerContext) {
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetEngine, "spreadsheetEngine");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
@@ -62,6 +65,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetContextSharedMutableSpreadsheetId(
+            mediaTypeDetector,
             multiplier,
             spreadsheetEngine,
             spreadsheetContextSupplier,
@@ -74,7 +78,8 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
         );
     }
 
-    private SpreadsheetContextSharedMutableSpreadsheetId(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetContextSharedMutableSpreadsheetId(final MediaTypeDetector mediaTypeDetector,
+                                                         final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                          final SpreadsheetEngine spreadsheetEngine,
                                                          final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                          final SpreadsheetMetadataContext spreadsheetMetadataContext,
@@ -84,6 +89,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                          final SpreadsheetProvider spreadsheetProvider,
                                                          final ProviderContext providerContext) {
         super(
+            mediaTypeDetector,
             multiplier,
             spreadsheetEngine,
             spreadsheetEngineContext,
@@ -124,6 +130,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
     @Override
     SpreadsheetEngineContext createSpreadsheetEngineContext() {
         return SpreadsheetEngineContexts.spreadsheetEnvironmentContext(
+            this.mediaTypeDetector,
             this.multiplier,
             this.spreadsheetContextSupplier,
             this.currencyContext()
@@ -154,6 +161,7 @@ final class SpreadsheetContextSharedMutableSpreadsheetId extends SpreadsheetCont
                                                  final SpreadsheetProvider spreadsheetProvider,
                                                  final ProviderContext providerContext) {
         return new SpreadsheetContextSharedMutableSpreadsheetId(
+            this.mediaTypeDetector,
             this.multiplier,
             this.spreadsheetEngine,
             this.spreadsheetContextSupplier,

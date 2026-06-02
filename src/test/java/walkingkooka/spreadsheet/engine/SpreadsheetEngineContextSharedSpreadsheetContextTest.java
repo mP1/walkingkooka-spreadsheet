@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
@@ -36,6 +37,8 @@ import walkingkooka.locale.LocaleContextDelegator;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
@@ -848,6 +851,16 @@ public final class SpreadsheetEngineContextSharedSpreadsheetContextTest extends 
             this.environmentContext = environmentContext;
             this.localeContext = localeContext;
             this.providerContext = providerContext;
+        }
+
+        @Override
+        public MediaType detect(final String filename,
+                                final Binary content) {
+            return MediaTypeDetectors.binary()
+                .detect(
+                    filename,
+                    content
+                );
         }
 
         @Override

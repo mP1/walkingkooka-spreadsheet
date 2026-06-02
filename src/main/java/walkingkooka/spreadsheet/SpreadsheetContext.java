@@ -22,6 +22,7 @@ import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.HasProviderContext;
@@ -52,6 +53,7 @@ public interface SpreadsheetContext extends SpreadsheetProvider,
     HasSpreadsheetMetadata,
     HasSpreadsheetServerUrl,
     CurrencyLocaleContext,
+    MediaTypeDetector,
     SpreadsheetMetadataContext {
 
     // SpreadsheetMetadataContext.......................................................................................

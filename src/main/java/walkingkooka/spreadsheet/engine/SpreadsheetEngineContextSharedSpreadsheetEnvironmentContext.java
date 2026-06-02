@@ -17,12 +17,15 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Binary;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.ConverterLike;
 import walkingkooka.currency.CurrencyContext;
 import walkingkooka.currency.CurrencyLocaleContext;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.locale.LocaleContext;
+import walkingkooka.net.header.MediaType;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
@@ -60,7 +63,8 @@ import java.util.Optional;
 final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends SpreadsheetEngineContextShared
     implements SpreadsheetEnvironmentContextFactoryDelegate {
 
-    static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    static SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext with(final MediaTypeDetector mediaTypeDetector,
+                                                                            final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                             final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                             final CurrencyLocaleContext currencyLocaleContext,
                                                                             final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -68,6 +72,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
                                                                             final TerminalContext terminalContext,
                                                                             final SpreadsheetProvider spreadsheetProvider,
                                                                             final ProviderContext providerContext) {
+        Objects.requireNonNull(mediaTypeDetector, "mediaTypeDetector");
         Objects.requireNonNull(multiplier, "multiplier");
         Objects.requireNonNull(spreadsheetContextSupplier, "spreadsheetContextSupplier");
         Objects.requireNonNull(currencyLocaleContext, "currencyLocaleContext");
@@ -78,6 +83,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         Objects.requireNonNull(providerContext, "providerContext");
 
         return new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
+            mediaTypeDetector,
             multiplier,
             spreadsheetContextSupplier,
             currencyLocaleContext, // CurrencyContext
@@ -93,13 +99,16 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         );
     }
 
-    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    private SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(final MediaTypeDetector mediaTypeDetector,
+                                                                        final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                         final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                         final CurrencyContext currencyContext,
                                                                         final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory,
                                                                         final SpreadsheetMetadataContext spreadsheetMetadataContext,
                                                                         final TerminalContext terminalContext) {
         super();
+
+        this.mediaTypeDetector = mediaTypeDetector;
 
         this.multiplier = multiplier;
 
@@ -112,6 +121,19 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
     }
 
     private final TerminalContext terminalContext;
+
+    // MediaTypeDetector................................................................................................
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.mediaTypeDetector.detect(
+            filename,
+            content
+        );
+    }
+
+    private final MediaTypeDetector mediaTypeDetector;
 
     // ConverterLikeDelegator...........................................................................................
 
@@ -203,6 +225,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
             final SpreadsheetEnvironmentContextFactory spreadsheetEnvironmentContextFactory = this.spreadsheetEnvironmentContextFactory;
 
             spreadsheetExpressionEvaluationContext = SpreadsheetExpressionEvaluationContexts.spreadsheetEnvironmentContext(
+                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetContextSupplier,
                 spreadsheetEnvironmentContextFactory.currencyLocaleContext(),
@@ -360,6 +383,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext extends 
         return before == after ?
             this :
             new SpreadsheetEngineContextSharedSpreadsheetEnvironmentContext(
+                this.mediaTypeDetector,
                 this.multiplier,
                 this.spreadsheetContextSupplier,
                 this.currencyContext,

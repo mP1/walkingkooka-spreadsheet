@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.expression;
 
+import walkingkooka.Binary;
 import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.environment.EnvironmentContext;
+import walkingkooka.net.header.MediaType;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetDeltaProperties;
@@ -59,6 +61,15 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
 
     private SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContextSpreadsheetStorageContext(final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context) {
         this.context = context;
+    }
+
+    @Override
+    public MediaType detect(final String filename,
+                            final Binary content) {
+        return this.context.mediaTypeDetector.detect(
+            filename,
+            content
+        );
     }
 
     @Override

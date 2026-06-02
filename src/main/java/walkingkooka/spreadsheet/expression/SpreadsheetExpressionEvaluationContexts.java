@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet.expression;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.Converter;
 import walkingkooka.currency.CurrencyLocaleContext;
+import walkingkooka.net.header.MediaTypeDetector;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetContext;
@@ -124,7 +125,8 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
     /**
      * {@see SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext}
      */
-    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
+    public static SpreadsheetExpressionEvaluationContext spreadsheetEnvironmentContext(final MediaTypeDetector mediaTypeDetector,
+                                                                                       final BinaryNumberConverterFunction<SpreadsheetConverterContext> multiplier,
                                                                                        final SpreadsheetContextSupplier spreadsheetContextSupplier,
                                                                                        final CurrencyLocaleContext currencyLocaleContext,
                                                                                        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext,
@@ -133,6 +135,7 @@ public final class SpreadsheetExpressionEvaluationContexts implements PublicStat
                                                                                        final SpreadsheetProvider spreadsheetProvider,
                                                                                        final ProviderContext providerContext) {
         return SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext.with(
+            mediaTypeDetector,
             multiplier,
             spreadsheetContextSupplier,
             currencyLocaleContext,
