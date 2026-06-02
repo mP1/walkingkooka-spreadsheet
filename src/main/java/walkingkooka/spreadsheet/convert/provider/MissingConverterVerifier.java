@@ -1394,10 +1394,8 @@ final class MissingConverterVerifier {
                     SpreadsheetConvertersConverterProvider.BINARY
                 );
 
-                final StoragePath storagePathJson = StoragePath.parse("/path1/file2.json");
-
                 verifier.addIfConversionFail(
-                    storagePathJson,
+                    StoragePath.parse("/path1/file2.json"),
                     Class.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_PATH_JSON_TO_CLASS
                 );
