@@ -688,7 +688,6 @@ public final class SpreadsheetMetadataSpreadsheetEnvironmentContextTest implemen
                 "    spreadsheet-selection-to-text\n" +
                 "    spreadsheet-value\n" +
                 "    storage\n" +
-                "    storage-path-properties-to-class\n" +
                 "    storage-path-txt-to-class\n" +
                 "    storage-value-info-list-to-text\n" +
                 "    style\n" +
