@@ -377,11 +377,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.storage();
                 break;
-            case STORAGE_PATH_PROPERTIES_TO_CLASS_STRING:
-                noParameterCheck(copy);
-
-                converter = SpreadsheetConverters.storagePathPropertiesToClass();
-                break;
             case STORAGE_PATH_TXT_TO_CLASS_STRING:
                 noParameterCheck(copy);
 
@@ -1010,10 +1005,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STORAGE = ConverterName.with(STORAGE_STRING);
 
-    private final static String STORAGE_PATH_PROPERTIES_TO_CLASS_STRING = "storage-path-properties-to-class";
-
-    final static ConverterName STORAGE_PATH_PROPERTIES_TO_CLASS = ConverterName.with(STORAGE_PATH_PROPERTIES_TO_CLASS_STRING);
-
     private final static String STORAGE_PATH_TXT_TO_CLASS_STRING = "storage-path-txt-to-class";
 
     final static ConverterName STORAGE_PATH_TXT_TO_CLASS = ConverterName.with(STORAGE_PATH_TXT_TO_CLASS_STRING);
@@ -1376,7 +1367,6 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
             converterInfo(SPREADSHEET_VALUE),
             converterInfo(STORAGE),
-            converterInfo(STORAGE_PATH_PROPERTIES_TO_CLASS),
             converterInfo(STORAGE_PATH_TXT_TO_CLASS),
             converterInfo(STORAGE_VALUE_INFO_LIST_TO_TEXT),
             converterInfo(STYLE),
