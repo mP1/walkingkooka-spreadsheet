@@ -1395,12 +1395,6 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    StoragePath.parse("/path1/file2.txt"),
-                    Class.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_PATH_TXT_TO_CLASS
-                );
-
-                verifier.addIfConversionFail(
                     StorageValueInfoList.EMPTY.concat(
                         StorageValueInfo.with(
                             StoragePath.parse("/path1/file2.txt"),
