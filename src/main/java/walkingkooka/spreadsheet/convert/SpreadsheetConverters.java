@@ -698,19 +698,11 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> STORAGE = namedCollection(
         "storage",
         textToStoragePath(),
-        storagePathJsonToClass(),
         storagePathPropertiesToClass(),
         storagePathTxtToClass(),
         storageValueInfoListToText(),
         binary()
     );
-
-    /**
-     * {@see StorageConverters#storagePathJsonToClass}
-     */
-    public static Converter<SpreadsheetConverterContext> storagePathJsonToClass() {
-        return StorageConverters.storagePathJsonToClass();
-    }
 
     /**
      * {@see StorageConverters#storagePathPropertiesToClass}
