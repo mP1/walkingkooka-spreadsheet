@@ -1395,12 +1395,6 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
-                    StoragePath.parse("/path1/file2.json"),
-                    Class.class,
-                    SpreadsheetConvertersConverterProvider.STORAGE_PATH_JSON_TO_CLASS
-                );
-
-                verifier.addIfConversionFail(
                     StoragePath.parse("/path1/file2.properties"),
                     Class.class,
                     SpreadsheetConvertersConverterProvider.STORAGE_PATH_PROPERTIES_TO_CLASS

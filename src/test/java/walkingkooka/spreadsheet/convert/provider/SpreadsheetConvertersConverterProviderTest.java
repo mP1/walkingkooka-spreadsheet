@@ -653,15 +653,6 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
-    public void testConverterSelectorWithStoragePathJsonToClass() {
-        this.converterAndCheck(
-            "storage-path-json-to-class",
-            PROVIDER_CONTEXT,
-            SpreadsheetConverters.storagePathJsonToClass()
-        );
-    }
-
-    @Test
     public void testConverterSelectorWithStoragePathPropertiesToClass() {
         this.converterAndCheck(
             "storage-path-properties-to-class",
