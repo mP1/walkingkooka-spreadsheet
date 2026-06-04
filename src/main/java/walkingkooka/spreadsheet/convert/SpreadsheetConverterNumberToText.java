@@ -59,6 +59,6 @@ final class SpreadsheetConverterNumberToText extends SpreadsheetConverter {
 
     @Override
     public String toString() {
-        return Number.class.getSimpleName() + " to text";
+        return Number.class.getSimpleName() + " to " + TEXT;
     }
 }

@@ -156,7 +156,7 @@ public final class SpreadsheetConverterTextToValidationErrorTest extends Spreads
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterTextToValidationError.INSTANCE,
-            "String to ValidationError"
+            "TEXT to ValidationError"
         );
     }
 

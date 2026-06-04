@@ -74,6 +74,6 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyName extends Sp
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetMetadataPropertyName.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetMetadataPropertyName.class.getSimpleName();
     }
 }

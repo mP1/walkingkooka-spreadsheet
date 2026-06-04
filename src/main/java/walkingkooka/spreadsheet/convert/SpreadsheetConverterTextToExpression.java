@@ -73,6 +73,6 @@ final class SpreadsheetConverterTextToExpression extends SpreadsheetConverterTex
 
     @Override
     public String toString() {
-        return "String to " + Expression.class.getSimpleName();
+        return TEXT + " to " + Expression.class.getSimpleName();
     }
 }

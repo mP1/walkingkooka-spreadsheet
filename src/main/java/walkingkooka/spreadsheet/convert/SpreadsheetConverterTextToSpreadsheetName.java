@@ -50,6 +50,6 @@ final class SpreadsheetConverterTextToSpreadsheetName extends SpreadsheetConvert
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetName.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetName.class.getSimpleName();
     }
 }

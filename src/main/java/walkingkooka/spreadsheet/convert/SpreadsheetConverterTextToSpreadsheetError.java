@@ -51,6 +51,6 @@ final class SpreadsheetConverterTextToSpreadsheetError extends SpreadsheetConver
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetError.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetError.class.getSimpleName();
     }
 }

@@ -51,6 +51,6 @@ final class SpreadsheetConverterTextToSpreadsheetText extends SpreadsheetConvert
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetText.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetText.class.getSimpleName();
     }
 }

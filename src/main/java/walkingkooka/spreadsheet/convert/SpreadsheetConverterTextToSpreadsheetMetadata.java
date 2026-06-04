@@ -64,6 +64,6 @@ final class SpreadsheetConverterTextToSpreadsheetMetadata extends SpreadsheetCon
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetMetadata.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetMetadata.class.getSimpleName();
     }
 }

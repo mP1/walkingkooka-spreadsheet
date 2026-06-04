@@ -160,7 +160,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataColorTest extend
     public void testToString() {
         this.toStringAndCheck(
             this.createConverter(),
-            "Text to SpreadsheetMetadata Color"
+            "TEXT to SpreadsheetMetadata Color"
         );
     }
 

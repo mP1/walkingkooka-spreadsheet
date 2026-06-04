@@ -155,7 +155,7 @@ public final class SpreadsheetConverterTextToExpressionTest extends SpreadsheetC
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterTextToExpression.INSTANCE,
-            "String to Expression"
+            "TEXT to Expression"
         );
     }
 
