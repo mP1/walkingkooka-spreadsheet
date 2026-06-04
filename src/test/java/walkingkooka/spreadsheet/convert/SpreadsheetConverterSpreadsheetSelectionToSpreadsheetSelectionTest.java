@@ -743,7 +743,7 @@ public final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelectio
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection.INSTANCE,
-            "selection to selection"
+            "SELECTION to SELECTION"
         );
     }
 
