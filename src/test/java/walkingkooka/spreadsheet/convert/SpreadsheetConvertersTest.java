@@ -89,6 +89,8 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.storage.HasUserDirectorieses;
+import walkingkooka.storage.StorageBinary;
+import walkingkooka.storage.StoragePath;
 import walkingkooka.template.TemplateValueName;
 import walkingkooka.text.HasText;
 import walkingkooka.text.LineEnding;
@@ -2243,6 +2245,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testSpreadsheetValueConvertBinaryToString() {
+        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
+
+        this.spreadsheetValueConvertAndCheck(
+            jsonNode.binary(CHARSET),
+            jsonNode.toString()
+        );
+    }
+
+    @Test
     public void testSpreadsheetValueConvertByteToString() {
         final Byte byteValue = 123;
 
@@ -2870,6 +2882,21 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testSpreadsheetValueConvertStorageBinaryToString() {
+        final JsonNode jsonNode = JsonNode.parse("{\"hello\":\"world\"}");
+
+        final StorageBinary storageBinary = StorageBinary.with(
+            StoragePath.parse("/storage1/file2.txt"),
+            jsonNode.binary(CHARSET)
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            storageBinary,
+            jsonNode.toString()
+        );
+    }
+
+    @Test
     public void testSpreadsheetValueConvertTimeToString() {
         final LocalTime time = LocalTime.of(
             12,
@@ -2958,6 +2985,11 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         @Override
         public boolean canNumbersHaveGroupSeparator() {
             return false;
+        }
+
+        @Override
+        public Charset charset() {
+            return CHARSET;
         }
 
         @Override
