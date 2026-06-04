@@ -931,7 +931,7 @@ public final class SpreadsheetConverterDateTimeTest extends SpreadsheetConverter
 
             @Override
             public String toString() {
-                return "String to " + temporal.getSimpleName();
+                return "TEXT to " + temporal.getSimpleName();
             }
         };
     }

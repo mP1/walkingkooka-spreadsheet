@@ -50,6 +50,6 @@ final class SpreadsheetConverterTextToSpreadsheetFormatterSelector extends Sprea
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetFormatterSelector.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetFormatterSelector.class.getSimpleName();
     }
 }

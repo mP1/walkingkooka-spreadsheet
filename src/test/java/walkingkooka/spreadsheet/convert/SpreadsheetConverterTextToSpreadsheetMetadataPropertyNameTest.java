@@ -117,7 +117,7 @@ public final class SpreadsheetConverterTextToSpreadsheetMetadataPropertyNameTest
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterTextToSpreadsheetMetadataPropertyName.INSTANCE,
-            "String to SpreadsheetMetadataPropertyName"
+            "TEXT to SpreadsheetMetadataPropertyName"
         );
     }
 

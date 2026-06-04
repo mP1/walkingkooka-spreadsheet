@@ -69,6 +69,6 @@ final class SpreadsheetConverterBooleanToText extends SpreadsheetConverter {
 
     @Override
     public String toString() {
-        return "Boolean to Text";
+        return Boolean.class.getSimpleName() + " to " + TEXT;
     }
 }

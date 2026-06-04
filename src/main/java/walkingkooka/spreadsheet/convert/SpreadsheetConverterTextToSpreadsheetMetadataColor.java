@@ -72,6 +72,6 @@ final class SpreadsheetConverterTextToSpreadsheetMetadataColor extends Spreadshe
 
     @Override
     public String toString() {
-        return "Text to SpreadsheetMetadata " + Color.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetMetadata.class.getSimpleName() + " " + Color.class.getSimpleName();
     }
 }

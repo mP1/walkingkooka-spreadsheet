@@ -98,8 +98,8 @@ public final class SpreadsheetConverterNumberToTextTest extends SpreadsheetConve
     @Test
     public void testToString() {
         this.toStringAndCheck(
-            SpreadsheetConverterToNumber.INSTANCE,
-            "Number * text"
+            SpreadsheetConverterNumberToText.INSTANCE,
+            "Number to TEXT"
         );
     }
 

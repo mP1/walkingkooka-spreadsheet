@@ -51,6 +51,6 @@ final class SpreadsheetConverterTextToSpreadsheetColorName extends SpreadsheetCo
 
     @Override
     public String toString() {
-        return "String to " + SpreadsheetColorName.class.getSimpleName();
+        return TEXT + " to " + SpreadsheetColorName.class.getSimpleName();
     }
 }

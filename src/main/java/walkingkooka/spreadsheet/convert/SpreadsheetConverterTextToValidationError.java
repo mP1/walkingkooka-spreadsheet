@@ -53,6 +53,6 @@ final class SpreadsheetConverterTextToValidationError extends SpreadsheetConvert
 
     @Override
     public String toString() {
-        return "String to " + ValidationError.class.getSimpleName();
+        return TEXT + " to " + ValidationError.class.getSimpleName();
     }
 }
