@@ -377,6 +377,11 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
                 converter = SpreadsheetConverters.storage();
                 break;
+            case STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES_STRING:
+                noParameterCheck(copy);
+
+                converter = SpreadsheetConverters.storageBinaryToStorageValueProperties();
+                break;
             case STORAGE_BINARY_TO_STORAGE_VALUE_TXT_STRING:
                 noParameterCheck(copy);
 
@@ -1005,6 +1010,10 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
     final static ConverterName STORAGE = ConverterName.with(STORAGE_STRING);
 
+    private final static String STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES_STRING = "storage-binary-to-storage-value-properties";
+
+    final static ConverterName STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES = ConverterName.with(STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES_STRING);
+
     private final static String STORAGE_BINARY_TO_STORAGE_VALUE_TXT_STRING = "storage-binary-to-storage-value-txt";
 
     final static ConverterName STORAGE_BINARY_TO_STORAGE_VALUE_TXT = ConverterName.with(STORAGE_BINARY_TO_STORAGE_VALUE_TXT_STRING);
@@ -1367,6 +1376,7 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
             converterInfo(SPREADSHEET_SELECTION_TO_TEXT),
             converterInfo(SPREADSHEET_VALUE),
             converterInfo(STORAGE),
+            converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES),
             converterInfo(STORAGE_BINARY_TO_STORAGE_VALUE_TXT),
             converterInfo(STORAGE_VALUE_INFO_LIST_TO_TEXT),
             converterInfo(STYLE),

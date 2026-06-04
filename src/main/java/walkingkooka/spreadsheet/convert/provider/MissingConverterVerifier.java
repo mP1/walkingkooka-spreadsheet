@@ -1407,6 +1407,19 @@ final class MissingConverterVerifier {
                 );
 
                 verifier.addIfConversionFail(
+                    StorageBinary.with(
+                        StoragePath.parse("/file1/file2.properties"),
+                        Binary.with(
+                            Properties.parse("hello=world")
+                                .text()
+                                .getBytes(charset)
+                        )
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_PROPERTIES
+                );
+
+                verifier.addIfConversionFail(
                     StorageValueInfoList.EMPTY.concat(
                         StorageValueInfo.with(
                             StoragePath.parse("/path1/file2.txt"),
