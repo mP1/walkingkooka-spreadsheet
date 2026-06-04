@@ -653,6 +653,15 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     }
 
     @Test
+    public void testConverterSelectorWithStorageBinaryToStorageValueProperties() {
+        this.converterAndCheck(
+            "storage-binary-to-storage-value-properties",
+            PROVIDER_CONTEXT,
+            SpreadsheetConverters.storageBinaryToStorageValueProperties()
+        );
+    }
+
+    @Test
     public void testConverterSelectorWithStorageBinaryToStorageValueTxt() {
         this.converterAndCheck(
             "storage-binary-to-storage-value-txt",
