@@ -93,6 +93,16 @@ public final class SpreadsheetConverterNumberToTextTest extends SpreadsheetConve
         };
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            SpreadsheetConverterToNumber.INSTANCE,
+            "Number * text"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
