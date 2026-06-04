@@ -70,6 +70,6 @@ final class SpreadsheetConverterToNumber extends SpreadsheetConverter {
 
     @Override
     public String toString() {
-        return "to number";
+        return "to " + Number.class.getName();
     }
 }

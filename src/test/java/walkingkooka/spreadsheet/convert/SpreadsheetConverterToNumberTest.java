@@ -675,6 +675,16 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
         };
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            SpreadsheetConverterToNumber.INSTANCE,
+            "* Number"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
