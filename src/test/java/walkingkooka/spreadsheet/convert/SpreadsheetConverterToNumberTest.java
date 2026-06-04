@@ -681,7 +681,7 @@ public final class SpreadsheetConverterToNumberTest extends SpreadsheetConverter
     public void testToString() {
         this.toStringAndCheck(
             SpreadsheetConverterToNumber.INSTANCE,
-            "* Number"
+            "to Number"
         );
     }
 
