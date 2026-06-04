@@ -616,6 +616,16 @@ public final class SpreadsheetConverterToBooleanTest extends SpreadsheetConverte
         };
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+            SpreadsheetConverterToBoolean.INSTANCE,
+            "to Boolean"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

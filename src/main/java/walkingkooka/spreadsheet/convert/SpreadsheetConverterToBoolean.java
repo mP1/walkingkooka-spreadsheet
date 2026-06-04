@@ -112,6 +112,6 @@ final class SpreadsheetConverterToBoolean extends SpreadsheetConverter {
 
     @Override
     public String toString() {
-        return "to boolean";
+        return "to " + Boolean.class.getSimpleName();
     }
 }
