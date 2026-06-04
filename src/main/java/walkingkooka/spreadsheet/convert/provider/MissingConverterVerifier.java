@@ -76,6 +76,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorException;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
+import walkingkooka.storage.StorageBinary;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
@@ -1392,6 +1393,17 @@ final class MissingConverterVerifier {
                     ),
                     String.class,
                     SpreadsheetConvertersConverterProvider.BINARY
+                );
+
+                verifier.addIfConversionFail(
+                    StorageBinary.with(
+                        StoragePath.parse("/file1.file2.txt"),
+                        Binary.with(
+                            text.getBytes(charset)
+                        )
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_TXT
                 );
 
                 verifier.addIfConversionFail(
