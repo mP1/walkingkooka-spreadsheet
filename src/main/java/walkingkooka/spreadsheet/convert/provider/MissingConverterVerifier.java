@@ -1408,6 +1408,18 @@ final class MissingConverterVerifier {
 
                 verifier.addIfConversionFail(
                     StorageBinary.with(
+                        StoragePath.parse("/file1/file2.json"),
+                        Binary.with(
+                            "{ \"hello\": \"world\" }"
+                                .getBytes(charset)
+                        )
+                    ),
+                    StorageValue.class,
+                    SpreadsheetConvertersConverterProvider.STORAGE_BINARY_TO_STORAGE_VALUE_JSON
+                );
+
+                verifier.addIfConversionFail(
+                    StorageBinary.with(
                         StoragePath.parse("/file1/file2.properties"),
                         Binary.with(
                             Properties.parse("hello=world")

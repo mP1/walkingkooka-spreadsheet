@@ -699,10 +699,18 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     private final static Converter<SpreadsheetConverterContext> STORAGE = namedCollection(
         "storage",
         textToStoragePath(),
+        storageBinaryToStorageValueJson(),
         storageBinaryToStorageValueProperties(),
         storageBinaryToStorageValueTxt(),
         binary()
     );
+
+    /**
+     * {see StorageConverterStorageBinaryToStorageValueJson}
+     */
+    public static <C extends SpreadsheetConverterContext> Converter<C> storageBinaryToStorageValueJson() {
+        return StorageConverters.storageBinaryToStorageValueJson();
+    }
 
     /**
      * {see StorageConverterStorageBinaryToStorageValueProperties}
