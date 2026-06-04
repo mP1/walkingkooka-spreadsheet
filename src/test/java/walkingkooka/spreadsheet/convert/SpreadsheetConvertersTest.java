@@ -134,6 +134,7 @@ import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
@@ -2222,11 +2223,103 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     // spreadsheetValue.................................................................................................
 
     @Test
+    public void testSpreadsheetValueConvertSpreadsheetErrorToNumber() {
+        final SpreadsheetError spreadsheetError = SpreadsheetError.selectionNotFound(SpreadsheetSelection.A1);
+
+        this.spreadsheetValueConvertAndCheck(
+            spreadsheetError,
+            ExpressionNumber.class,
+            EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
     public void testSpreadsheetValueConvertNullToNumber() {
         this.spreadsheetValueConvertAndCheck(
             null,
             Number.class,
             EXPRESSION_NUMBER_KIND.zero()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertByteToString() {
+        final Byte byteValue = 123;
+
+        this.spreadsheetValueConvertAndCheck(
+            byteValue,
+            byteValue.toString()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertDateToString() {
+        final LocalDate date = LocalDate.of(
+            1999,
+            12,
+            31
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            date,
+            date.toString()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertDateTimeToString() {
+        final LocalDateTime dateTime = LocalDateTime.of(
+            1999,
+            12,
+            31,
+            12,
+            58,
+            59
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            dateTime,
+            dateTime.toString()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertExpressionNumberBigDecimalToString() {
+        final ExpressionNumber expressionNumber = ExpressionNumberKind.BIG_DECIMAL.create(123);
+
+        this.spreadsheetValueConvertAndCheck(
+            expressionNumber,
+            expressionNumber.toString()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertExpressionNumberDoubleToString() {
+        final ExpressionNumber expressionNumber = ExpressionNumberKind.DOUBLE.create(123);
+
+        this.spreadsheetValueConvertAndCheck(
+            expressionNumber,
+            expressionNumber.toString()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertIntegerToString() {
+        final Integer integer = 123;
+
+        this.spreadsheetValueConvertAndCheck(
+            integer,
+            integer.toString()
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertLongToString() {
+        final Long longValue = 456L;
+
+        this.spreadsheetValueConvertAndCheck(
+            longValue,
+            longValue.toString()
         );
     }
 
@@ -2450,6 +2543,19 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
     }
 
     @Test
+    public void testSpreadsheetValueConvertSpreadsheetCellToSpreadsheetSelection() {
+        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
+        final SpreadsheetCell spreadsheetCell = cell.setFormula(
+            SpreadsheetFormula.EMPTY.setText("=1+2")
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            spreadsheetCell,
+            cell
+        );
+    }
+
+    @Test
     public void testSpreadsheetValueConvertSpreadsheetCellToValidatorSelector() {
         final ValidatorSelector validator = ValidatorSelector.parse("hello-validator");
 
@@ -2495,6 +2601,16 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
         this.spreadsheetValueConvertAndCheck(
             type.toString(),
             type
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertStringToZoneOffset() {
+        final ZoneOffset zoneOffset = ZoneOffset.of("+11");
+
+        this.spreadsheetValueConvertAndCheck(
+            zoneOffset,
+            zoneOffset.toString()
         );
     }
 
@@ -2750,6 +2866,20 @@ public final class SpreadsheetConvertersTest implements ClassTesting2<Spreadshee
                     "Carrot"
                 )
             )
+        );
+    }
+
+    @Test
+    public void testSpreadsheetValueConvertTimeToString() {
+        final LocalTime time = LocalTime.of(
+            12,
+            58,
+            59
+        );
+
+        this.spreadsheetValueConvertAndCheck(
+            time,
+            time.toString()
         );
     }
 
