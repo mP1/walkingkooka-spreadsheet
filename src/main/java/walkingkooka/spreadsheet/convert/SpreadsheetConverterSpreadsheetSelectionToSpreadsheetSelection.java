@@ -42,6 +42,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection extends SpreadsheetConverter
     implements TryingShortCircuitingConverter<SpreadsheetConverterContext> {
 
+    final static String SELECTION = "SELECTION";
+
     /**
      * Singleton
      */
@@ -113,6 +115,6 @@ final class SpreadsheetConverterSpreadsheetSelectionToSpreadsheetSelection exten
 
     @Override
     public String toString() {
-        return "selection to selection";
+        return SELECTION + " to " + SELECTION;
     }
 }
