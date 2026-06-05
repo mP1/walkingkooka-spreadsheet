@@ -85,15 +85,55 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStorageTestCase<SpreadsheetStorageSpreadsheetCell> {
 
     @Test
-    public void testLoadMissingCellReference() {
+    public void testCanWriteRootPath() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createStorage()
+                .canWrite(
+                    StoragePath.ROOT,
+                    this.createContext()
+                )
+        );
+    }
+
+    @Test
+    public void testCanWriteInvalidCellOrLabel() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createStorage()
+                .canWrite(
+                    StoragePath.parse("!invalid"),
+                    this.createContext()
+                )
+        );
+    }
+
+    @Test
+    public void testCanWriteUnknownCellReference() {
         final SpreadsheetStorageContext context = this.createContext();
 
-        final StoragePath path = StoragePath.ROOT;
-
-        this.loadAndCheck(
+        this.canWriteAndCheck(
             this.createStorage(),
-            path,
-            context
+            StoragePath.parse("/A1"),
+            context,
+            true
+        );
+    }
+
+    @Test
+    public void testLoadMissingCellReference() {
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
+            () -> this.createStorage()
+                .load(
+                    StoragePath.ROOT,
+                    this.createContext()
+                )
+        );
+
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid cell or label \"/\""
         );
     }
 

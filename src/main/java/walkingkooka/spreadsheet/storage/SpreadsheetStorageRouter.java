@@ -98,6 +98,19 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
     // SpreadsheetStorage.......................................................................................
 
     @Override
+    boolean canWriteNonNull(final StoragePath path,
+                            final SpreadsheetStorageContext context) {
+        return this.route(
+            path,
+            context,
+            (s, c) -> s.canWrite(
+                path,
+                c
+            )
+        );
+    }
+
+    @Override
     Optional<StorageValue> loadNonNull(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
         return this.route(

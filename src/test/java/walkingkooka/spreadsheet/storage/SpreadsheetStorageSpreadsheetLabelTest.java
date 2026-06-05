@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.storage;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
 import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyContexts;
@@ -103,6 +104,40 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
         StoragePath.parse("/" + LABEL3),
         SPREADSHEET_ENVIRONMENT_CONTEXT.createdAuditInfo()
     );
+
+    @Test
+    public void testCanWriteInvalidLabel() {
+        assertThrows(
+            InvalidCharacterException.class,
+            () -> this.createStorage()
+                .canWrite(
+                    StoragePath.parse("/!Invalid"),
+                    this.createContext()
+                )
+        );
+    }
+
+    @Test
+    public void testCanWriteWithExtraPath() {
+        assertThrows(
+            InvalidStoragePathException.class,
+            () -> this.createStorage()
+                .canWrite(
+                    StoragePath.parse("/" + LABEL1 + "/extra"),
+                    this.createContext()
+                )
+        );
+    }
+
+    @Test
+    public void testCanWriteLabel() {
+        this.canWriteAndCheck(
+            this.createStorage(),
+            StoragePath.parse("/NewLabel"),
+            this.createContext(),
+            true
+        );
+    }
 
     @Test
     public void testLoadWithExtraPathFails() {

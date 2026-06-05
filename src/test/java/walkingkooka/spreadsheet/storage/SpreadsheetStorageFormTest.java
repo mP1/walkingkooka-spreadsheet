@@ -103,6 +103,33 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
     );
 
     @Test
+    public void testCanWriteWithExtraPath() {
+        this.canWriteAndCheck(
+            this.createStorage(),
+            StoragePath.parse("/" + FORM_NAME1 + "/extra"),
+            this.createContext(),
+            false
+        );
+    }
+
+    @Test
+    public void testCanWriteWithInvalidFormName() {
+        final InvalidStoragePathException thrown = assertThrows(
+            InvalidStoragePathException.class,
+            () -> this.createStorage()
+                .load(
+                    StoragePath.parse("/" + FORM_NAME1 + "/extra"),
+                    this.createContext()
+                )
+        );
+
+        this.checkEquals(
+            "Invalid extra path after FormName \"/Form111/extra\"",
+            thrown.getMessage()
+        );
+    }
+
+    @Test
     public void testLoadWithExtraPathFails() {
         final InvalidStoragePathException thrown = assertThrows(
             InvalidStoragePathException.class,

@@ -55,25 +55,23 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
     }
 
     @Override
+    boolean canWriteNonNull(final StoragePath path,
+                            final SpreadsheetStorageContext context) {
+        boolean writeable;
+
+        try {
+            writeable = null != this.toFormName(path);
+        } catch (final IllegalArgumentException ignore) {
+            writeable = false;
+        }
+
+        return writeable;
+    }
+
+    @Override
     Optional<StorageValue> loadNonNull(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
-        final List<StorageName> names = path.namesList();
-
-        final FormName formName;
-
-        switch (names.size()) {
-            case 0:
-            case 1:
-                formName = null;
-                break;
-            case 2:
-                formName = parseFormName(
-                    names.get(1)
-                );
-                break;
-            default:
-                throw path.invalidStoragePathException("Invalid extra path after FormName");
-        }
+        final FormName formName = toFormName(path);
 
         StorageValue value = null;
 
@@ -88,6 +86,28 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
         }
 
         return Optional.ofNullable(value);
+    }
+
+    private FormName toFormName(final StoragePath storagePath) {
+        final List<StorageName> names = storagePath.namesList();
+
+        final FormName formName;
+
+        switch (names.size()) {
+            case 0:
+            case 1:
+                formName = null;
+                break;
+            case 2:
+                formName = parseFormName(
+                    names.get(1)
+                );
+                break;
+            default:
+                throw storagePath.invalidStoragePathException("Invalid extra path after FormName");
+        }
+
+        return formName;
     }
 
     @Override

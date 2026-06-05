@@ -56,10 +56,32 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     }
 
     @Override
+    boolean canWriteNonNull(final StoragePath path,
+                            final SpreadsheetStorageContext context) {
+        return null != this.toSpreadsheetExpressionReference(path);
+    }
+
+    @Override
     Optional<StorageValue> loadNonNull(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
         StorageValue value = null;
 
+        final SpreadsheetExpressionReference cellOrLabels = this.toSpreadsheetExpressionReference(path);
+
+        if (null != cellOrLabels) {
+            final Set<SpreadsheetCell> cells = context.loadCells(cellOrLabels);
+            if (false == cells.isEmpty()) {
+                value = StorageValue.with(path)
+                    .setValue(
+                        Optional.of(cells)
+                    ).setContentType(MEDIA_TYPE);
+            }
+        }
+
+        return Optional.ofNullable(value);
+    }
+
+    private SpreadsheetExpressionReference toSpreadsheetExpressionReference(final StoragePath path) {
         final List<StorageName> names = path.namesList();
 
         final SpreadsheetExpressionReference cellOrLabels;
@@ -73,21 +95,10 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
                 );
                 break;
             default:
-                cellOrLabels = null;
-                break;
-        }
+                throw path.invalidStoragePathException("Invalid cell or label");
+        };
 
-        if (null != cellOrLabels) {
-            final Set<SpreadsheetCell> cells = context.loadCells(cellOrLabels);
-            if (false == cells.isEmpty()) {
-                value = StorageValue.with(path)
-                    .setValue(
-                        Optional.of(cells)
-                    ).setContentType(MEDIA_TYPE);
-            }
-        }
-
-        return Optional.ofNullable(value);
+        return cellOrLabels;
     }
 
     @Override
