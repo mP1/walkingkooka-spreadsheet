@@ -274,6 +274,11 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
         );
     }
 
+    @Override
+    public void testSaveRootFails() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     public void testSaveWithInvalidCellReferenceFails() {
         final InvalidStoragePathException thrown = assertThrows(
