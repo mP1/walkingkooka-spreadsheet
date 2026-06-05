@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.HasConvertErrorTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -63,6 +64,7 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
     HasTextTesting,
     HasConvertErrorTesting,
     HasValidationPromptValueTesting,
+    ThrowableTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetError>,
     HasTerminalErrorTextTesting<SpreadsheetError>,
@@ -502,10 +504,9 @@ public final class SpreadsheetErrorTest implements ParseStringTesting<Spreadshee
                 .setNameString()
         );
 
-        this.checkEquals(
-            "SpreadsheetError.kind is not #NAME? but is #DIV/0!",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "SpreadsheetError.kind is not #NAME? but is #DIV/0!"
         );
     }
 

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
@@ -33,7 +34,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor> {
+public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorTest implements SpreadsheetSelectionVisitorTesting<SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitor>,
+    ThrowableTesting {
 
     // resolveLabel.............................................................................................
 
@@ -104,9 +106,9 @@ public final class SpreadsheetLabelStoreResolveLabelSpreadsheetSelectionVisitorT
                 store
             )
         );
-        this.checkEquals(
-            "Cycle detected for \"Label111\" -> \"Label222\" -> \"Label333\" -> \"Label111\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cycle detected for \"Label111\" -> \"Label222\" -> \"Label333\" -> \"Label111\""
         );
     }
 

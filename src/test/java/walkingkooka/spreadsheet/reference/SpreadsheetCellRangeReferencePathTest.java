@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 
 import java.util.Arrays;
@@ -29,7 +30,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellRangeReferencePathTest implements ParseStringTesting<SpreadsheetCellRangeReferencePath>,
-    ClassTesting<SpreadsheetCellRangeReferencePath> {
+    ClassTesting<SpreadsheetCellRangeReferencePath>,
+    ThrowableTesting {
 
     @Test
     public void testParseWithUnknownFails() {
@@ -37,9 +39,9 @@ public final class SpreadsheetCellRangeReferencePathTest implements ParseStringT
             IllegalArgumentException.class,
             () -> SpreadsheetCellRangeReferencePath.parse("123?")
         );
-        this.checkEquals(
-            "Got \"123?\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Got \"123?\" expected one of LRTD, RLTD, LRBU, RLBU, TDLR, TDRL, BULR, BURL"
         );
     }
 

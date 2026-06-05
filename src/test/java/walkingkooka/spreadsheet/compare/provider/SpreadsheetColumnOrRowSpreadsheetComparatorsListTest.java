@@ -25,6 +25,7 @@ import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.HasTextTesting;
@@ -34,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implements ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList, SpreadsheetColumnOrRowSpreadsheetComparators>,
     ClassTesting<SpreadsheetColumnOrRowSpreadsheetComparatorsList>,
-    HasTextTesting {
+    HasTextTesting,
+    ThrowableTesting {
 
     private final static ProviderContext PROVIDER_CONTEXT = ProviderContexts.fake();
 
@@ -134,9 +136,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorsListTest implemen
                     )
                 )
         );
-        this.checkEquals(
-            "Includes null comparator",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Includes null comparator"
         );
     }
 

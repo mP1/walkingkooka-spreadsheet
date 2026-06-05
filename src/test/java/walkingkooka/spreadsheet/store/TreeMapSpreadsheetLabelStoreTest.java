@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -33,7 +34,8 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore>
-    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetLabelStore> {
+    implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetLabelStore>,
+    ThrowableTesting {
 
     // save.............................................................................................................
 
@@ -54,9 +56,9 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
             () -> store.save(mapping2)
         );
 
-        this.checkEquals(
-            "Cycle detected for \"Label222\" -> \"Label111\" -> \"Label222\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cycle detected for \"Label222\" -> \"Label111\" -> \"Label222\""
         );
 
         this.checkEquals(
@@ -87,9 +89,9 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
             () -> store.save(mapping3)
         );
 
-        this.checkEquals(
-            "Cycle detected for \"Label333\" -> \"Label111\" -> \"Label222\" -> \"Label333\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cycle detected for \"Label333\" -> \"Label111\" -> \"Label222\" -> \"Label333\""
         );
 
         // mapping3 must not have been saved

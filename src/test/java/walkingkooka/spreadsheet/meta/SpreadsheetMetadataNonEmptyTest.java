@@ -1688,10 +1688,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 LOCALE_CONTEXT
             )
         );
-        this.checkEquals(
-            "Metadata missing: decimalNumberDigitCount, locale, precision, roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: decimalNumberDigitCount, locale, precision, roundingMode"
         );
     }
 
@@ -1846,10 +1845,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     LOCALE_CONTEXT
                 )
         );
-        this.checkEquals(
-            "Metadata missing: decimalNumberDigitCount, locale, roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: decimalNumberDigitCount, locale, roundingMode"
         );
     }
 
@@ -1865,10 +1863,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     LOCALE_CONTEXT
                 )
         );
-        this.checkEquals(
-            "Metadata missing: decimalNumberDigitCount, locale, precision",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: decimalNumberDigitCount, locale, precision"
         );
     }
 
@@ -2147,10 +2144,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
                 .jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT)
         );
-        this.checkEquals(
-            "Metadata missing: roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: roundingMode"
         );
     }
 
@@ -2161,10 +2157,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
             .jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT)
         );
-        this.checkEquals(
-            "Metadata missing: precision",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: precision"
         );
     }
 
@@ -2264,10 +2259,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 PROVIDER_CONTEXT
             )
         );
-        this.checkEquals(
-            "Metadata missing: dateTimeParser, numberParser, timeParser",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: dateTimeParser, numberParser, timeParser"
         );
     }
 

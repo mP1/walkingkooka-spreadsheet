@@ -36,6 +36,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ConstantsTesting;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.color.SpreadsheetColors;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.HasSpreadsheetPatternKindTesting;
@@ -66,7 +67,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
     implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>>,
     ConstantsTesting<SpreadsheetMetadataPropertyName<?>>,
-    HasSpreadsheetPatternKindTesting {
+    HasSpreadsheetPatternKindTesting,
+    ThrowableTesting {
 
     private final static CurrencyLocaleContext CURRENCY_LOCALE_CONTEXT = CurrencyContexts.fake()
         .setLocaleContext(
@@ -191,9 +193,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             )
         );
 
-        this.checkEquals(
-            "Unknown metadata property name \"Unknown123\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Unknown metadata property name \"Unknown123\""
         );
     }
 
@@ -279,9 +281,9 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
             () -> SpreadsheetMetadataPropertyName.LOCALE.toConverterSelector()
         );
 
-        this.checkEquals(
-            "Property locale: invalid type Locale expected ExpressionFunctionAliasSet",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Property locale: invalid type Locale expected ExpressionFunctionAliasSet"
         );
     }
 

@@ -24,6 +24,7 @@ import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.json.JsonNode;
@@ -34,7 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumnOrRowRangeReferenceTestCase<SpreadsheetColumnRangeReference, SpreadsheetColumnReference>
-    implements IterableTesting<SpreadsheetColumnRangeReference, SpreadsheetColumnReference> {
+    implements IterableTesting<SpreadsheetColumnRangeReference, SpreadsheetColumnReference>,
+    ThrowableTesting {
 
     @Test
     public void testWith() {
@@ -632,9 +634,9 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
             () -> SpreadsheetSelection.parseColumnRange("B").frozenColumnsCheck()
         );
 
-        this.checkEquals(
-            "Range must begin at 'A' but was \"B\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Range must begin at 'A' but was \"B\""
         );
     }
 
@@ -645,9 +647,9 @@ public final class SpreadsheetColumnRangeReferenceTest extends SpreadsheetColumn
             () -> SpreadsheetSelection.parseColumnRange("C:E").frozenColumnsCheck()
         );
 
-        this.checkEquals(
-            "Range must begin at 'A' but was \"C:E\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Range must begin at 'A' but was \"C:E\""
         );
     }
 

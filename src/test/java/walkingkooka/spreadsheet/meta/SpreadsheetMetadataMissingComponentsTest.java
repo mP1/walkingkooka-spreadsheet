@@ -25,6 +25,7 @@ import walkingkooka.environment.AuditInfo;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 
 import java.time.LocalDateTime;
@@ -35,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataMissingComponentsTest implements ClassTesting2<SpreadsheetMetadataMissingComponents>,
     ToStringTesting<SpreadsheetMetadataMissingComponents>,
-    TypeNameTesting<SpreadsheetMetadataMissingComponents> {
+    TypeNameTesting<SpreadsheetMetadataMissingComponents>,
+    ThrowableTesting {
 
     // getOrNull........................................................................................................
 
@@ -72,10 +74,9 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
             IllegalStateException.class,
             components::reportIfMissing
         );
-        this.checkEquals(
-            "Metadata missing: auditInfo",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: auditInfo"
         );
     }
 
@@ -89,10 +90,9 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
             IllegalStateException.class,
             components::reportIfMissing
         );
-        this.checkEquals(
-            "Metadata missing: auditInfo, decimalNumberSymbols",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: auditInfo, decimalNumberSymbols"
         );
     }
 
@@ -109,10 +109,9 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
             IllegalStateException.class,
             components::reportIfMissing
         );
-        this.checkEquals(
-            "Metadata missing: auditInfo, decimalNumberSymbols, locale, roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: auditInfo, decimalNumberSymbols, locale, roundingMode"
         );
     }
 
@@ -127,10 +126,9 @@ public final class SpreadsheetMetadataMissingComponentsTest implements ClassTest
             IllegalStateException.class,
             components::reportIfMissing
         );
-        this.checkEquals(
-            "Metadata missing: auditInfo, roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: auditInfo, roundingMode"
         );
     }
 

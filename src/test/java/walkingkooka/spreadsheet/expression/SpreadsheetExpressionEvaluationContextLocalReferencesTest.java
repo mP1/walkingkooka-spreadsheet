@@ -40,6 +40,7 @@ import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContext;
 import walkingkooka.spreadsheet.environment.SpreadsheetEnvironmentContexts;
@@ -102,7 +103,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest implements SpreadsheetExpressionEvaluationContextTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
     HashCodeEqualsDefinedTesting2<SpreadsheetExpressionEvaluationContextLocalReferences>,
-    ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences> {
+    ToStringTesting<SpreadsheetExpressionEvaluationContextLocalReferences>,
+    ThrowableTesting {
 
     private final static String NAME = "Name1234";
 
@@ -316,9 +318,9 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                     SpreadsheetExpressionFunctions.name(NAME)
                 )
         );
-        this.checkEquals(
-            "Function name Name1234 is a parameter and not an actual function",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Function name Name1234 is a parameter and not an actual function"
         );
     }
 
@@ -330,9 +332,9 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
                 SpreadsheetExpressionFunctions.name(NAME)
             )
         );
-        this.checkEquals(
-            "Function name Name1234 is a parameter and not an actual function",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Function name Name1234 is a parameter and not an actual function"
         );
     }
 
@@ -405,9 +407,9 @@ public final class SpreadsheetExpressionEvaluationContextLocalReferencesTest imp
             () -> context.resolveIfLabelOrFail(SpreadsheetSelection.labelName(NAME))
         );
 
-        this.checkEquals(
-            "Label Name1234 has a value",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Label Name1234 has a value"
         );
     }
 

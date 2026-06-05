@@ -20,12 +20,14 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends IllegalColumnOrRowArgumentException> implements ClassTesting<T> {
+public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends IllegalColumnOrRowArgumentException> implements ClassTesting<T>,
+    ThrowableTesting {
 
     IllegalColumnOrRowArgumentExceptionTestCase() {
         super();
@@ -61,9 +63,9 @@ public abstract class IllegalColumnOrRowArgumentExceptionTestCase<T extends Ille
             different
         );
 
-        this.checkEquals(
-            differentMessage,
-            different.getMessage()
+        this.getMessageAndCheck(
+            different,
+            differentMessage
         );
     }
 

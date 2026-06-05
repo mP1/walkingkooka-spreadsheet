@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -32,7 +33,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetFormatterSelector, SpreadsheetFormatterName> {
+public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLikeTesting<SpreadsheetFormatterSelector, SpreadsheetFormatterName>,
+    ThrowableTesting {
 
     @Override
     public SpreadsheetFormatterSelector createPluginSelectorLike(final SpreadsheetFormatterName name,
@@ -90,10 +92,9 @@ public final class SpreadsheetFormatterSelectorTest implements PluginSelectorLik
                 .spreadsheetFormatPattern()
         );
 
-        this.checkEquals(
-            "Invalid character '!' at 10 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid character '!' at 10 expected {WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {COLOR | {\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}"
         );
 
         this.checkEquals(

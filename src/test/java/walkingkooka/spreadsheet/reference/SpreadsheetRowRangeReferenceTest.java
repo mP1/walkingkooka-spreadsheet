@@ -24,6 +24,7 @@ import walkingkooka.collect.iterable.IterableTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.tree.json.JsonNode;
@@ -36,7 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrRowRangeReferenceTestCase<SpreadsheetRowRangeReference, SpreadsheetRowReference>
-    implements IterableTesting<SpreadsheetRowRangeReference, SpreadsheetRowReference> {
+    implements IterableTesting<SpreadsheetRowRangeReference, SpreadsheetRowReference>,
+    ThrowableTesting {
 
     @Test
     public void testWith() {
@@ -660,9 +662,9 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
             () -> SpreadsheetSelection.parseRowRange("2").frozenRowsCheck()
         );
 
-        this.checkEquals(
-            "Range must begin at '1' but was \"2\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Range must begin at '1' but was \"2\""
         );
     }
 
@@ -673,9 +675,9 @@ public final class SpreadsheetRowRangeReferenceTest extends SpreadsheetColumnOrR
             () -> SpreadsheetSelection.parseRowRange("3:4").frozenRowsCheck()
         );
 
-        this.checkEquals(
-            "Range must begin at '1' but was \"3:4\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Range must begin at '1' but was \"3:4\""
         );
     }
 

@@ -26,6 +26,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
@@ -49,7 +50,8 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
     implements ComparableTesting2<SpreadsheetCellReference>,
     HateosResourceTesting<SpreadsheetCellReference, String>,
     CanReplaceReferencesTesting<SpreadsheetCellReference>,
-    ValidationReferenceTesting {
+    ValidationReferenceTesting,
+    ThrowableTesting {
 
     private final static int COLUMN = 123;
     private final static int ROW = 456;
@@ -904,9 +906,9 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetCellReference
             )
         );
 
-        this.checkEquals(
-            "Mapper must return a cell",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Mapper must return a cell"
         );
     }
 

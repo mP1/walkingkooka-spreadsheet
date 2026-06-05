@@ -50,10 +50,9 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
             IllegalArgumentException.class,
             () -> SpreadsheetMetadataPropertyName.numberedColor(value)
         );
-        this.checkEquals(
-            message,
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            message
         );
     }
 

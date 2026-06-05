@@ -25,6 +25,7 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -46,6 +47,7 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
     HasUrlFragmentTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewport>,
     JsonNodeMarshallingTesting<SpreadsheetViewport>,
+    ThrowableTesting,
     ToStringTesting<SpreadsheetViewport>,
     TreePrintableTesting {
 
@@ -977,9 +979,9 @@ public final class SpreadsheetViewportTest implements ClassTesting<SpreadsheetVi
             () -> SpreadsheetViewport.fromUrlFragment(urlFragment)
         );
 
-        this.checkEquals(
-            expected.getMessage(),
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            expected.getMessage()
         );
     }
 

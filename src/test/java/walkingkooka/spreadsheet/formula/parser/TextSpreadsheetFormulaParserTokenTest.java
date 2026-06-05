@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.formula.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
@@ -28,7 +29,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadsheetFormulaParserTokenTestCase<TextSpreadsheetFormulaParserToken> {
+public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadsheetFormulaParserTokenTestCase<TextSpreadsheetFormulaParserToken>
+    implements ThrowableTesting {
 
     @Test
     public void testWithZeroTokensFails() {
@@ -48,9 +50,9 @@ public final class TextSpreadsheetFormulaParserTokenTest extends ValueSpreadshee
             )
         );
 
-        this.checkEquals(
-            "Extra text literal in \"abc123abc123\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Extra text literal in \"abc123abc123\""
         );
     }
 

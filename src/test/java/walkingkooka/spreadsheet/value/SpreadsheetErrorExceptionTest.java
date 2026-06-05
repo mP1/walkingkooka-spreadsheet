@@ -20,10 +20,12 @@ package walkingkooka.spreadsheet.value;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetErrorExceptionTest implements ClassTesting<SpreadsheetErrorException> {
+public final class SpreadsheetErrorExceptionTest implements ClassTesting<SpreadsheetErrorException>,
+    ThrowableTesting {
 
     private final static SpreadsheetError ERROR = SpreadsheetErrorKind.DIV0.setMessage("Hello");
 
@@ -43,10 +45,9 @@ public final class SpreadsheetErrorExceptionTest implements ClassTesting<Spreads
             exception.spreadsheetError(),
             "spreadsheetError"
         );
-        this.checkEquals(
-            ERROR.message(),
-            exception.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            exception,
+            ERROR.message()
         );
     }
 

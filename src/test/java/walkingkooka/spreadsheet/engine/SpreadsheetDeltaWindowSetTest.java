@@ -20,12 +20,14 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.ImmutableSetTesting;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference> {
+public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<SpreadsheetDeltaWindowSet, SpreadsheetCellRangeReference>,
+    ThrowableTesting {
 
     @Test
     public void testWithOverlapFails() {
@@ -54,7 +56,10 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
             IllegalArgumentException.class,
             () -> SpreadsheetDeltaWindowSet.with(Sets.of(ranges))
         );
-        this.checkEquals(message, thrown.getMessage());
+        this.getMessageAndCheck(
+            thrown,
+            message
+        );
     }
 
     @Test
@@ -186,9 +191,9 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
             )
         );
 
-        this.checkEquals(
-            "Window includes null cell-range",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Window includes null cell-range"
         );
     }
 
@@ -205,9 +210,9 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
             )
         );
 
-        this.checkEquals(
-            "Window includes null cell-range",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Window includes null cell-range"
         );
     }
 
@@ -225,9 +230,9 @@ public final class SpreadsheetDeltaWindowSetTest implements ImmutableSetTesting<
             )
         );
 
-        this.checkEquals(
-            "Window includes null cell-range",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Window includes null cell-range"
         );
     }
 

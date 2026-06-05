@@ -26,6 +26,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -53,7 +54,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
     ToStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
-    TreePrintableTesting {
+    TreePrintableTesting,
+    ThrowableTesting {
 
     private final static SpreadsheetColumnOrRowReferenceOrRange COLUMN_OR_ROW = SpreadsheetSelection.parseColumnOrRow("A");
 
@@ -975,10 +977,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesTest implemen
             () -> this.parseList(text)
         );
 
-        this.checkEquals(
-            expected.getMessage(),
-            thrown.getMessage(),
-            () -> "Incorrect failure message for " + CharSequences.quoteAndEscape(text)
+        this.getMessageAndCheck(
+            thrown,
+            expected.getMessage()
         );
     }
 

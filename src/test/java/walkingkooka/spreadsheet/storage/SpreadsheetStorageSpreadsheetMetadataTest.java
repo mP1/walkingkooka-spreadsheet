@@ -154,9 +154,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 )
         );
 
-        this.checkEquals(
-            "Invalid path, contains SpreadsheetId \"/1\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path, contains SpreadsheetId \"/1\""
         );
     }
 
@@ -177,9 +177,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 )
         );
 
-        this.checkEquals(
-            "Invalid path, contains SpreadsheetId \"/1\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path, contains SpreadsheetId \"/1\""
         );
     }
 
@@ -196,9 +196,9 @@ public final class SpreadsheetStorageSpreadsheetMetadataTest extends Spreadsheet
                 )
         );
 
-        this.checkEquals(
-            "Invalid path missing SpreadsheetMetadata \"/\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path missing SpreadsheetMetadata \"/\""
         );
     }
 

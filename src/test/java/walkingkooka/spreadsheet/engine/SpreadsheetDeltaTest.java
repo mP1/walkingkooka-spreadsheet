@@ -30,6 +30,7 @@ import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -78,7 +79,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelta>,
     PatchableTesting<SpreadsheetDelta>,
-    TreePrintableTesting {
+    TreePrintableTesting,
+    ThrowableTesting {
 
     @Test
     public void testEmpty() {
@@ -3421,10 +3423,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 JsonNodeUnmarshallContexts.fake()
             )
         );
-        this.checkEquals(
-            "Patch includes cells A2 outside A1",
-            thrown.getMessage(),
-            "messages"
+        this.getMessageAndCheck(
+            thrown,
+            "Patch includes cells A2 outside A1"
         );
     }
 
@@ -3456,10 +3457,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 JsonNodeUnmarshallContexts.fake()
             )
         );
-        this.checkEquals(
-            "Patch includes cells A1, B1 outside A2",
-            thrown.getMessage(),
-            "messages"
+        this.getMessageAndCheck(
+            thrown,
+            "Patch includes cells A1, B1 outside A2"
         );
     }
 
@@ -3491,10 +3491,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 this.createPatchContext() // required to unmarshall A1
             )
         );
-        this.checkEquals(
-            "Patch includes cells B1, A2 outside A1",
-            thrown.getMessage(),
-            "messages"
+        this.getMessageAndCheck(
+            thrown,
+            "Patch includes cells B1, A2 outside A1"
         );
     }
 
@@ -3802,10 +3801,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 this.createPatchContext()
             )
         );
-        this.checkEquals(
-            "Invalid patch includes: cell, formatter",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid patch includes: cell, formatter"
         );
     }
 
@@ -3836,10 +3834,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 this.createPatchContext()
             )
         );
-        this.checkEquals(
-            "Invalid patch includes: cell, parser",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid patch includes: cell, parser"
         );
     }
 
@@ -4490,10 +4487,9 @@ public final class SpreadsheetDeltaTest implements ClassTesting2<SpreadsheetDelt
                 this.createPatchContext()
             )
         );
-        this.checkEquals(
-            "Invalid patch includes: cell, style",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid patch includes: cell, style"
         );
     }
 

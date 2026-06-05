@@ -35,6 +35,7 @@ import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.format.provider.SpreadsheetFormatterSelector;
@@ -58,7 +59,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
     TypeNameTesting<N>,
-    ToStringTesting<N> {
+    ToStringTesting<N>,
+    ThrowableTesting {
 
     final static Locale LOCALE = Locale.forLanguageTag("en-AU");
 
@@ -193,10 +195,9 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                                                                 final SpreadsheetMetadataPropertyName<?> propertyName,
                                                                 final Object value) {
         if (null != message) {
-            this.checkEquals(
-                message,
-                thrown.getMessage(),
-                "message"
+            this.getMessageAndCheck(
+                thrown,
+                message
             );
         }
         this.checkEquals(

@@ -25,6 +25,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
@@ -41,7 +42,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetSelectionTest implements ClassTesting2<SpreadsheetSelection>,
     HasTextTesting,
     HasNotFoundTextTesting,
-    ParseStringTesting<SpreadsheetExpressionReference> {
+    ParseStringTesting<SpreadsheetExpressionReference>,
+    ThrowableTesting {
 
     // isSelectionClass.................................................................................................
 
@@ -645,12 +647,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseCellRange(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 text.indexOf("!")
-            ).getMessage(),
-            thrown.getMessage()
+            ).getMessage()
         );
     }
 
@@ -698,9 +700,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseColumn(text)
         );
 
-        this.checkEquals(
-            new InvalidCharacterException(text, 2).getMessage(),
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            new InvalidCharacterException(text, 2).getMessage()
         );
     }
 
@@ -713,9 +715,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseColumn(text)
         );
 
-        this.checkEquals(
-            new InvalidCharacterException(text, 1).getMessage(),
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            new InvalidCharacterException(text, 1)
+                .getMessage()
         );
     }
 
@@ -832,12 +835,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseColumn(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 2
-            ).getMessage(),
-            thrown.getMessage()
+            ).getMessage()
         );
     }
 
@@ -850,12 +853,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseColumn(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 text.indexOf('!')
-            ).getMessage(),
-            thrown.getMessage()
+            ).getMessage()
         );
     }
 
@@ -884,12 +887,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseColumnRange(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 text.lastIndexOf(':')
-            ).getMessage(),
-            thrown.getMessage()
+            ).getMessage()
         );
     }
 
@@ -1049,12 +1052,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.labelName(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 text.indexOf(' ')
-            ).getMessage(),
-            thrown.getMessage()
+            ).getMessage()
         );
     }
 
@@ -1107,13 +1110,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             InvalidCharacterException.class,
             () -> SpreadsheetSelection.parseCellOrCellRange(text)
         );
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 text.indexOf('@')
-            ).getMessage(),
-            thrown.getMessage(),
-            "message"
+            ).getMessage()
         );
     }
 
@@ -1123,10 +1125,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             IllegalArgumentException.class,
             () -> SpreadsheetSelection.parseCellOrCellRange("A1:")
         );
-        this.checkEquals(
-            "Empty upper range in \"A1:\"",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Empty upper range in \"A1:\""
         );
     }
 
@@ -1182,10 +1183,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRow(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(text, 0)
-                .getMessage(),
-            thrown.getMessage()
+                .getMessage()
         );
     }
 
@@ -1198,10 +1199,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRow(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(text, 0)
-                .getMessage(),
-            thrown.getMessage()
+                .getMessage()
         );
     }
 
@@ -1214,10 +1215,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRow(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(text, 2)
-                .getMessage(),
-            thrown.getMessage()
+                .getMessage()
         );
     }
 
@@ -1248,10 +1249,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRow(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(text, 0)
-                .getMessage(),
-            thrown.getMessage()
+                .getMessage()
         );
     }
 
@@ -1264,10 +1265,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRow(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(text, 2)
-                .getMessage(),
-            thrown.getMessage()
+                .getMessage()
         );
     }
 
@@ -1280,10 +1281,10 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRow(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(text, 2)
-                .getMessage(),
-            thrown.getMessage()
+                .getMessage()
         );
     }
 
@@ -1296,12 +1297,12 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parseRowRange(text)
         );
 
-        this.checkEquals(
+        this.getMessageAndCheck(
+            thrown,
             new InvalidCharacterException(
                 text,
                 text.lastIndexOf(':')
-            ).getMessage(),
-            thrown.getMessage()
+            ).getMessage()
         );
     }
 
@@ -1547,10 +1548,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             IllegalArgumentException.class,
             () -> SpreadsheetSelection.parse("A1", "bad123")
         );
-        this.checkEquals(
-            "Invalid selectionType \"bad123\" value \"A1\"",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid selectionType \"bad123\" value \"A1\""
         );
     }
 
@@ -1563,10 +1563,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.parse(cell, "cell")
         );
 
-        this.checkEquals(
-            "Invalid column \"hello\" not between \"A\" and \"XFD\"",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid column \"hello\" not between \"A\" and \"XFD\""
         );
     }
 
@@ -1738,9 +1737,9 @@ public final class SpreadsheetSelectionTest implements ClassTesting2<Spreadsheet
             () -> SpreadsheetSelection.labelName("Label123").toCellRange()
         );
 
-        this.checkEquals(
-            "Selection is a label \"Label123\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Selection is a label \"Label123\""
         );
     }
 
