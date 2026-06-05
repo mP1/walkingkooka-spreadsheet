@@ -71,13 +71,15 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
         Objects.requireNonNull(path, "path");
         Objects.requireNonNull(context, "context");
 
-        return this.loadNonNull(
-            path,
-            context
-        );
+        return StoragePath.ROOT.equals(path) ?
+            Optional.empty() :
+            this.loadNonRoot(
+                path,
+                context
+            );
     }
 
-    abstract Optional<StorageValue> loadNonNull(final StoragePath path,
+    abstract Optional<StorageValue> loadNonRoot(final StoragePath path,
                                                 final SpreadsheetStorageContext context);
 
     @Override

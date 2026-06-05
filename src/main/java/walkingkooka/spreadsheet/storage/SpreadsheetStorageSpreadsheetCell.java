@@ -62,7 +62,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
     }
 
     @Override
-    Optional<StorageValue> loadNonNull(final StoragePath path,
+    Optional<StorageValue> loadNonRoot(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
         StorageValue value = null;
 
