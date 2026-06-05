@@ -127,7 +127,9 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
 
         final Form<SpreadsheetValidationReference> form = context.convertOrFail(
             value.value()
-                .orElseThrow(() -> new IllegalArgumentException("Missing Form")),
+                .orElseThrow(
+                    () -> value.path().invalidStoragePathException("Missing Form name")
+                ),
             Form.class
         );
 

@@ -235,7 +235,7 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
     }
 
     @Test
-    public void testSaveWithStorageValueMissingForm() {
+    public void testSaveWithStorageValueMissingFormName() {
         final IllegalArgumentException thrown = assertThrows(
             IllegalArgumentException.class,
             () -> this.createStorage()
@@ -249,8 +249,13 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
 
         this.getMessageAndCheck(
             thrown,
-            "Missing Form"
+            "Missing Form name \"/Form111\""
         );
+    }
+
+    @Override
+    public void testSaveRootFails() {
+        throw new UnsupportedOperationException();
     }
 
     @Test
