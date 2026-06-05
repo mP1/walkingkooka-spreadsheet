@@ -56,23 +56,18 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
     }
 
     @Override
+    boolean canWriteNonNull(final StoragePath path,
+                            final SpreadsheetStorageContext context) {
+        this.toLabel(path);
+        return true;
+    }
+
+    @Override
     Optional<StorageValue> loadNonNull(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
         StorageValue value = null;
 
-        final List<StorageName> names = path.namesList();
-
-        SpreadsheetLabelName labelName = null;
-
-        switch (names.size()) {
-            case 2:
-                labelName = parseLabel(
-                    names.get(1)
-                );
-                break;
-            default:
-                throw path.invalidStoragePathException("Invalid path after label name");
-        }
+        final SpreadsheetLabelName labelName = this.toLabel(path);
 
         if (null != labelName) {
             final SpreadsheetLabelMapping mapping = context.loadLabel(labelName)
@@ -89,6 +84,24 @@ final class SpreadsheetStorageSpreadsheetLabel extends SpreadsheetStorage {
         }
 
         return Optional.ofNullable(value);
+    }
+
+    private SpreadsheetLabelName toLabel(final StoragePath storagePath) {
+        final List<StorageName> storageNames = storagePath.namesList();
+
+        SpreadsheetLabelName labelName;
+
+        switch (storageNames.size()) {
+            case 2:
+                labelName = parseLabel(
+                    storageNames.get(1)
+                );
+                break;
+            default:
+                throw storagePath.invalidStoragePathException("Invalid path after label name");
+        }
+
+        return labelName;
     }
 
     @Override

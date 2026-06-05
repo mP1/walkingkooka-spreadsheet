@@ -55,6 +55,13 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
         super();
     }
 
+    @Override
+    boolean canWriteNonNull(final StoragePath path,
+                            final SpreadsheetStorageContext context) {
+        this.toSpreadsheetId(path);
+        return true;
+    }
+
     /**
      * Loads the {@link SpreadsheetMetadata} with the given {@link SpreadsheetId}.
      * <pre>
@@ -64,31 +71,41 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
     @Override
     Optional<StorageValue> loadNonNull(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
+        Optional<StorageValue> loaded = Optional.empty();
+
+        final SpreadsheetId spreadsheetId = this.toSpreadsheetId(path);
+        if (null != spreadsheetId) {
+            loaded = context.loadMetadata(spreadsheetId)
+                .map(m -> StorageValue.with(path)
+                    .setValue(
+                        Optional.of(m)
+                    ).setContentType(MEDIA_TYPE)
+                );
+        }
+
+        return loaded;
+    }
+
+    private SpreadsheetId toSpreadsheetId(final StoragePath path) {
         final List<StorageName> storageNames = path.namesList();
 
-        final Optional<StorageValue> loaded;
+        SpreadsheetId spreadsheetId = null;
 
         switch (storageNames.size()) {
             case 0:
             case 1:
-                loaded = Optional.empty();
+                spreadsheetId = null;
                 break;
             case 2:
-                loaded = context.loadMetadata(
-                        parseSpreadsheetId(
-                            storageNames.get(1)
-                        )
-                    ).map(m -> StorageValue.with(path)
-                        .setValue(
-                            Optional.of(m)
-                        ).setContentType(MEDIA_TYPE)
-                    );
+                spreadsheetId = parseSpreadsheetId(
+                    storageNames.get(1)
+                );
                 break;
             default:
                 throw path.invalidStoragePathException("Invalid path");
         }
 
-        return loaded;
+        return spreadsheetId;
     }
 
     @Override

@@ -50,6 +50,22 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
     }
 
     @Override
+    public final boolean canWrite(final StoragePath path,
+                                  final SpreadsheetStorageContext context) {
+        Objects.requireNonNull(path, "path");
+        Objects.requireNonNull(context, "context");
+
+        // if the StoragePath has a Form, Cell, Label or Metadata name then it can be written.
+        return this.canWriteNonNull(
+            path,
+            context
+        );
+    }
+
+    abstract boolean canWriteNonNull(final StoragePath path,
+                                     final SpreadsheetStorageContext context);
+
+    @Override
     public final Optional<StorageValue> load(final StoragePath path,
                                              final SpreadsheetStorageContext context) {
         Objects.requireNonNull(path, "path");

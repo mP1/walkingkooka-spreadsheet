@@ -46,6 +46,28 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetStorageSpreadsheetMetadataTest extends SpreadsheetStorageTestCase<SpreadsheetStorageSpreadsheetMetadata> {
 
     @Test
+    public void testCanWriteInvalidSpreadsheetId() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> this.createStorage()
+                .canWrite(
+                    StoragePath.parse("/!invalid"),
+                    new TestSpreadsheetStorageContext()
+                )
+        );
+    }
+
+    @Test
+    public void testCanWriteUnknownSpreadsheetId() {
+        this.canWriteAndCheck(
+            this.createStorage(),
+            StoragePath.parse("/404"),
+            new TestSpreadsheetStorageContext(),
+            true
+        );
+    }
+
+    @Test
     public void testLoadMissingSpreadsheetMetadata() {
         final TestSpreadsheetStorageContext context = new TestSpreadsheetStorageContext();
 
