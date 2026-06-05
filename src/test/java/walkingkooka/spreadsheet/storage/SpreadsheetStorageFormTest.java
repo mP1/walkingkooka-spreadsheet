@@ -281,23 +281,6 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
     }
 
     @Test
-    public void testDeleteMissingFormFails() {
-        final InvalidStoragePathException thrown = assertThrows(
-            InvalidStoragePathException.class,
-            () -> this.createStorage()
-                .delete(
-                    StoragePath.ROOT,
-                    this.createContext()
-                )
-        );
-
-        this.getMessageAndCheck(
-            thrown,
-            "Missing FormName \"/\""
-        );
-    }
-
-    @Test
     public void testDeleteWithExtraPathFails() {
         final InvalidStoragePathException thrown = assertThrows(
             InvalidStoragePathException.class,

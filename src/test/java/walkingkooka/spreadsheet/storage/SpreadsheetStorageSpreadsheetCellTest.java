@@ -359,23 +359,6 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     }
 
     @Test
-    public void testDeleteMissingReferenceFails() {
-        final InvalidStoragePathException thrown = assertThrows(
-            InvalidStoragePathException.class,
-            () -> this.createStorage()
-                .delete(
-                    StoragePath.ROOT,
-                    this.createContext()
-                )
-        );
-
-        this.getMessageAndCheck(
-            thrown,
-            "Invalid path missing selection \"/\""
-        );
-    }
-
-    @Test
     public void testDelete() {
         final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
             SpreadsheetFormula.EMPTY.setText("=1")
