@@ -69,7 +69,7 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
      * </pre>
      */
     @Override
-    Optional<StorageValue> loadNonNull(final StoragePath path,
+    Optional<StorageValue> loadNonRoot(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
         Optional<StorageValue> loaded = Optional.empty();
 

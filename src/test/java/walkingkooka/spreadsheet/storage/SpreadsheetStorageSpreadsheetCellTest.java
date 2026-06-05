@@ -121,23 +121,6 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     }
 
     @Test
-    public void testLoadMissingCellReference() {
-        final InvalidStoragePathException thrown = assertThrows(
-            InvalidStoragePathException.class,
-            () -> this.createStorage()
-                .load(
-                    StoragePath.ROOT,
-                    this.createContext()
-                )
-        );
-
-        this.getMessageAndCheck(
-            thrown,
-            "Invalid cell or label \"/\""
-        );
-    }
-
-    @Test
     public void testLoadInvalidCellReferenceFails() {
         final SpreadsheetStorageContext context = this.createContext();
 

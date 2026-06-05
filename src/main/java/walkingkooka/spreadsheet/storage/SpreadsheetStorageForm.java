@@ -69,7 +69,7 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
     }
 
     @Override
-    Optional<StorageValue> loadNonNull(final StoragePath path,
+    Optional<StorageValue> loadNonRoot(final StoragePath path,
                                        final SpreadsheetStorageContext context) {
         final FormName formName = toFormName(path);
 
