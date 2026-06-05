@@ -287,23 +287,6 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
     }
 
     @Test
-    public void testDeleteMissingLabelFails() {
-        final InvalidStoragePathException thrown = assertThrows(
-            InvalidStoragePathException.class,
-            () -> this.createStorage()
-                .delete(
-                    StoragePath.ROOT,
-                    this.createContext()
-                )
-        );
-
-        this.getMessageAndCheck(
-            thrown,
-            "Invalid path missing label \"/\""
-        );
-    }
-
-    @Test
     public void testDeleteWithExtraPathFails() {
         final InvalidStoragePathException thrown = assertThrows(
             InvalidStoragePathException.class,

@@ -103,6 +103,10 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
         Objects.requireNonNull(path, "path");
         Objects.requireNonNull(context, "context");
 
+        if(path.isParent()) {
+            throw path.invalidStoragePathException("Invalid parent path");
+        }
+
         this.deleteNonNull(
             path,
             context
