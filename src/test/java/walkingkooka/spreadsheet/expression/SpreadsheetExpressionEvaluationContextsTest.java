@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -33,7 +34,8 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetExpressionEvaluationContextsTest implements ClassTesting2<SpreadsheetExpressionEvaluationContexts>,
-    PublicStaticHelperTesting<SpreadsheetExpressionEvaluationContexts> {
+    PublicStaticHelperTesting<SpreadsheetExpressionEvaluationContexts>,
+    ThrowableTesting {
 
     @Test
     public void testPublicStaticMethodsWithoutMathContextParameter() {
@@ -87,10 +89,9 @@ public final class SpreadsheetExpressionEvaluationContextsTest implements ClassT
             SpreadsheetExpressionEvaluationContexts.referenceNotFound()
                 .apply(reference);
 
-        this.checkEquals(
-            expected,
-            created.getMessage(),
-            created::getMessage
+        this.getMessageAndCheck(
+            created,
+            expected
         );
 
         assertSame(

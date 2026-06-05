@@ -22,6 +22,7 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnRangeReference;
@@ -36,7 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetViewportAnchorTest implements ClassTesting<SpreadsheetViewportAnchor>,
     ParseStringTesting<SpreadsheetViewportAnchor>,
-    HasUrlFragmentTesting {
+    HasUrlFragmentTesting,
+    ThrowableTesting {
 
     // constants........................................................................................................
 
@@ -412,9 +414,9 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
             () -> SpreadsheetViewportAnchor.TOP.selection(SpreadsheetSelection.labelName("Label123"))
         );
 
-        this.checkEquals(
-            "Label not supported: Label123",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Label not supported: Label123"
         );
     }
 
@@ -743,9 +745,9 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
             IllegalArgumentException.class,
             anchor::toColumnOrColumnRangeAnchor
         );
-        this.checkEquals(
-            "Cannot convert " + anchor + " to a column range compatible anchor",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cannot convert " + anchor + " to a column range compatible anchor"
         );
     }
 
@@ -839,9 +841,9 @@ public final class SpreadsheetViewportAnchorTest implements ClassTesting<Spreads
             IllegalArgumentException.class,
             anchor::toRowOrRowRangeAnchor
         );
-        this.checkEquals(
-            "Cannot convert " + anchor + " to a row range compatible anchor",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cannot convert " + anchor + " to a row range compatible anchor"
         );
     }
 

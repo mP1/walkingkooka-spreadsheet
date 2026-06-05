@@ -23,6 +23,7 @@ import walkingkooka.collect.list.ListTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -35,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SpreadsheetFormatterSampleListTest implements ListTesting2<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
     ClassTesting<SpreadsheetFormatterSampleList>,
     ImmutableListTesting<SpreadsheetFormatterSampleList, SpreadsheetFormatterSample>,
-    JsonNodeMarshallingTesting<SpreadsheetFormatterSampleList> {
+    JsonNodeMarshallingTesting<SpreadsheetFormatterSampleList>,
+    ThrowableTesting {
 
     private final static SpreadsheetFormatterSample SAMPLE1 = SpreadsheetFormatterSample.with(
         "label1",
@@ -126,9 +128,9 @@ public class SpreadsheetFormatterSampleListTest implements ListTesting2<Spreadsh
                     )
                 )
         );
-        this.checkEquals(
-            "includes null sample",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "includes null sample"
         );
     }
 

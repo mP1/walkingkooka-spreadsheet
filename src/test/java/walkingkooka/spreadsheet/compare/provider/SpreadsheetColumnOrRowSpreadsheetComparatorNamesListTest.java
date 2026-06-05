@@ -28,6 +28,7 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.test.ParseStringTesting;
@@ -47,7 +48,8 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
     HasUrlFragmentTesting,
     ImmutableListTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList, SpreadsheetColumnOrRowSpreadsheetComparatorNames>,
     JsonNodeMarshallingTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
-    ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList> {
+    ParseStringTesting<SpreadsheetColumnOrRowSpreadsheetComparatorNamesList>,
+    ThrowableTesting {
 
     @Test
     public void testWithNullFails() {
@@ -84,10 +86,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
             )
         );
-        this.checkEquals(
-            "Got Row 12 expected Column",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Got Row 12 expected Column"
         );
     }
 
@@ -118,10 +119,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
             )
         );
-        this.checkEquals(
-            "Got Column AB expected Row",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Got Column AB expected Row"
         );
     }
 
@@ -152,10 +152,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
             )
         );
-        this.checkEquals(
-            "Duplicate column A",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Duplicate column A"
         );
     }
 
@@ -186,10 +185,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
             )
         );
-        this.checkEquals(
-            "Duplicate column $A",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Duplicate column $A"
         );
     }
 
@@ -220,10 +218,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
             )
         );
-        this.checkEquals(
-            "Duplicate row $1",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Duplicate row $1"
         );
     }
 
@@ -254,10 +251,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                 )
             )
         );
-        this.checkEquals(
-            "Duplicate row $1",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Duplicate row $1"
         );
     }
 
@@ -337,9 +333,9 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparatorNamesListTest impl
                     )
                 )
         );
-        this.checkEquals(
-            "Includes null names",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Includes null names"
         );
     }
 

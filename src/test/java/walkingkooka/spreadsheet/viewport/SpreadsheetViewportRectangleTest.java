@@ -24,6 +24,7 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -40,6 +41,7 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
     HashCodeEqualsDefinedTesting2<SpreadsheetViewportRectangle>,
     JsonNodeMarshallingTesting<SpreadsheetViewportRectangle>,
     ParseStringTesting<SpreadsheetViewportRectangle>,
+    ThrowableTesting,
     ToStringTesting<SpreadsheetViewportRectangle>,
     TreePrintableTesting,
     HasUrlFragmentTesting {
@@ -530,9 +532,9 @@ public final class SpreadsheetViewportRectangleTest implements ClassTesting2<Spr
             () -> SpreadsheetViewportRectangle.fromUrlFragment(urlFragment)
         );
 
-        this.checkEquals(
-            expected.getMessage(),
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            expected.getMessage()
         );
     }
 

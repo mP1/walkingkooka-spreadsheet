@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 
@@ -29,7 +30,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesting2<SpreadsheetColumnOrRowReferenceKind>,
-    ParseStringTesting<SpreadsheetSelection> {
+    ParseStringTesting<SpreadsheetSelection>,
+    ThrowableTesting {
 
     // firstAbsolute....................................................................................................
 
@@ -377,9 +379,9 @@ public final class SpreadsheetColumnOrRowReferenceKindTest implements ClassTesti
             IllegalArgumentException.class,
             () -> kind.parse(text)
         );
-        this.checkEquals(
-            expected,
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            expected
         );
     }
 

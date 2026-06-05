@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.expression;
 import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -32,7 +33,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext> {
+public final class SpreadsheetExpressionEvaluationContextTest implements ClassTesting<SpreadsheetExpressionEvaluationContext>,
+    ThrowableTesting {
 
     @Test
     public void testAddLocalVariableWithNullReferenceFails() {
@@ -70,9 +72,9 @@ public final class SpreadsheetExpressionEvaluationContextTest implements ClassTe
             }.cellOrFail()
         );
 
-        this.checkEquals(
-            "Missing cell",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Missing cell"
         );
     }
 

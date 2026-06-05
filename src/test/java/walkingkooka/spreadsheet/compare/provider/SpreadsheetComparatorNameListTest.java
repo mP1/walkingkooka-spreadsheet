@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -37,7 +38,8 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
     ImmutableListTesting<SpreadsheetComparatorNameList, SpreadsheetComparatorName>,
     HasUrlFragmentTesting,
     ParseStringTesting<SpreadsheetComparatorNameList>,
-    JsonNodeMarshallingTesting<SpreadsheetComparatorNameList> {
+    JsonNodeMarshallingTesting<SpreadsheetComparatorNameList>,
+    ThrowableTesting {
 
     private final static SpreadsheetComparatorName DATE1 = SpreadsheetComparatorName.DATE;
 
@@ -131,9 +133,9 @@ public class SpreadsheetComparatorNameListTest implements ListTesting2<Spreadshe
                     )
                 )
         );
-        this.checkEquals(
-            "includes null name",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "includes null name"
         );
     }
 

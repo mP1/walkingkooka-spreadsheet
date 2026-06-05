@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -84,7 +85,8 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
     ParserTesting,
     HasSpreadsheetPatternKindTesting,
     HasTextTesting,
-    SpreadsheetFormatterTesting {
+    SpreadsheetFormatterTesting,
+    ThrowableTesting {
 
     private final static Color COLOR = Color.BLACK;
 
@@ -2239,9 +2241,9 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             () -> SpreadsheetPattern.parseNumberFormatPattern("$0.00;#.##")
                 .colorName()
         );
-        this.checkEquals(
-            "Cannot get color name for multiple patterns=\"$0.00;#.##\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cannot get color name for multiple patterns=\"$0.00;#.##\""
         );
     }
 
@@ -2300,9 +2302,9 @@ public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPa
             () -> SpreadsheetPattern.parseNumberFormatPattern("#;#.##")
                 .colorNumber()
         );
-        this.checkEquals(
-            "Cannot get color name for multiple patterns=\"#;#.##\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cannot get color name for multiple patterns=\"#;#.##\""
         );
     }
 

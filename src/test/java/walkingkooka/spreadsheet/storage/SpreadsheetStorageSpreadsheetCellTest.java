@@ -151,10 +151,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                     context
                 )
         );
-        this.checkEquals(
-            "Invalid character '9' at 0",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid character '9' at 0"
         );
     }
 
@@ -309,9 +308,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 )
         );
 
-        this.checkEquals(
-            "Invalid path, must not contain selection \"/999\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path, must not contain selection \"/999\""
         );
     }
 
@@ -382,9 +381,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 )
         );
 
-        this.checkEquals(
-            "Invalid path missing selection \"/\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path missing selection \"/\""
         );
     }
 
@@ -431,9 +430,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after selection \"/A1/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after selection \"/A1/extra\""
         );
     }
 

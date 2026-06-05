@@ -23,6 +23,7 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -36,6 +37,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     ComparableTesting2<SpreadsheetLabelMapping>,
     JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
     HateosResourceTesting<SpreadsheetLabelMapping, SpreadsheetLabelName>,
+    ThrowableTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetLabelMapping> {
 
@@ -96,9 +98,9 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
             IllegalArgumentException.class,
             () -> mapping.setLabel(different)
         );
-        this.checkEquals(
-            "Label \"different\" and reference \"different\" must be different",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Label \"different\" and reference \"different\" must be different"
         );
     }
 
@@ -139,9 +141,9 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
             IllegalArgumentException.class,
             () -> mapping.setReference(LABEL)
         );
-        this.checkEquals(
-            "Reference \"label123\" must be different to label \"label123\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Reference \"label123\" must be different to label \"label123\""
         );
     }
 

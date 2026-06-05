@@ -39,9 +39,9 @@ public final class MissingMetadataPropertiesExceptionTest implements ThrowableTe
             )
         );
 
-        this.checkEquals(
-            "Metadata missing: auditInfo, hideZeroValues, roundingMode",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: auditInfo, hideZeroValues, roundingMode"
         );
     }
 

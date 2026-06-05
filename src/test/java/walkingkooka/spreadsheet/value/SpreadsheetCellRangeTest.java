@@ -25,6 +25,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContexts;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparators;
@@ -54,6 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetCellRange>,
     HashCodeEqualsDefinedTesting2<SpreadsheetCellRange>,
     SpreadsheetMetadataTesting,
+    ThrowableTesting,
     TreePrintableTesting,
     HasValueTesting {
 
@@ -128,10 +130,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
             )
         );
 
-        this.checkEquals(
-            "Found 2 cells out of range A1:B2 got C3, D4",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Found 2 cells out of range A1:B2 got C3, D4"
         );
     }
 
@@ -174,9 +175,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 .setRange(SpreadsheetSelection.parseCellRange("A1"))
         );
 
-        this.checkEquals(
-            "Found 1 cells out of range A1 got B2",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Found 1 cells out of range A1 got B2"
         );
     }
 
@@ -255,9 +256,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 )
         );
 
-        this.checkEquals(
-            "Found 1 cells out of range A1:B2 got C3",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Found 1 cells out of range A1:B2 got C3"
         );
     }
 
@@ -476,9 +477,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 )
         );
 
-        this.checkEquals(
-            "Invalid column(s) C, ZZ are not within A1:B2",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid column(s) C, ZZ are not within A1:B2"
         );
     }
 
@@ -513,9 +514,9 @@ public final class SpreadsheetCellRangeTest implements ClassTesting<SpreadsheetC
                 )
         );
 
-        this.checkEquals(
-            "Invalid row(s) 3, 99 are not within A1:B2",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid row(s) 3, 99 are not within A1:B2"
         );
     }
 

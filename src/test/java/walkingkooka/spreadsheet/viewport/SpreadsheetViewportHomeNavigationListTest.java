@@ -25,6 +25,7 @@ import walkingkooka.net.HasUrlFragmentTesting;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.text.printer.TreePrintableTesting;
@@ -38,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetViewportHomeNavigationListTest implements ClassTesting<SpreadsheetViewportHomeNavigationList>,
     HasUrlFragmentTesting,
     HashCodeEqualsDefinedTesting2<SpreadsheetViewportHomeNavigationList>,
+    ThrowableTesting,
     ToStringTesting<SpreadsheetViewportHomeNavigationList>,
     TreePrintableTesting {
 
@@ -249,9 +251,9 @@ public final class SpreadsheetViewportHomeNavigationListTest implements ClassTes
             () -> SpreadsheetViewportHomeNavigationList.fromUrlFragment(urlFragment)
         );
 
-        this.checkEquals(
-            expected.getMessage(),
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            expected.getMessage()
         );
     }
 

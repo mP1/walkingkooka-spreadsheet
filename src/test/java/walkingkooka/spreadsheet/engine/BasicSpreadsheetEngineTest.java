@@ -58,6 +58,7 @@ import walkingkooka.net.header.MediaTypeDetectors;
 import walkingkooka.net.http.server.HttpHandler;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetContextSupplier;
@@ -235,7 +236,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
     implements SpreadsheetEngineTesting<BasicSpreadsheetEngine>,
     SpreadsheetMetadataTesting,
-    MathTesting {
+    MathTesting,
+    ThrowableTesting {
 
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
 
@@ -20159,9 +20161,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
 
         // day-of-month is available others are absent
-        this.checkEquals(
-            "Unknown comparator unknown1",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Unknown comparator unknown1"
         );
     }
 
@@ -20916,9 +20918,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Cycle detected for \"Label222\" -> \"Label111\" -> \"Label222\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Cycle detected for \"Label222\" -> \"Label111\" -> \"Label222\""
         );
 
         // mapping2 should not have been saved
@@ -25642,10 +25644,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Form not found",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Form not found"
         );
     }
 
@@ -25690,10 +25691,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Form cell range must be either a column or row",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Form cell range must be either a column or row"
         );
     }
 
@@ -25776,9 +25776,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Unknown form handler unknown-form-handler",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Unknown form handler unknown-form-handler"
         );
     }
 
@@ -26501,10 +26501,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Form not found",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Form not found"
         );
     }
 
@@ -26549,10 +26548,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Form cell range must be either a column or row",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Form cell range must be either a column or row"
         );
     }
 
@@ -26625,9 +26623,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Unknown form handler unknown-default-form-handler",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Unknown form handler unknown-default-form-handler"
         );
     }
 
@@ -26704,9 +26702,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             )
         );
 
-        this.checkEquals(
-            "Unknown form handler unknown-form-handler",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Unknown form handler unknown-form-handler"
         );
     }
 

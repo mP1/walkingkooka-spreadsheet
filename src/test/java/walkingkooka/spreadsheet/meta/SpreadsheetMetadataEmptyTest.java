@@ -145,10 +145,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 LOCALE_CONTEXT
             )
         );
-        this.checkEquals(
-            "Metadata missing: decimalNumberDigitCount, expressionNumberKind, locale, precision, roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: decimalNumberDigitCount, expressionNumberKind, locale, precision, roundingMode"
         );
     }
 
@@ -186,10 +185,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
             IllegalStateException.class,
             () -> SpreadsheetMetadata.EMPTY.jsonNodeUnmarshallContext(CURRENCY_LOCALE_CONTEXT)
         );
-        this.checkEquals(
-            "Metadata missing: expressionNumberKind, precision, roundingMode",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: expressionNumberKind, precision, roundingMode"
         );
     }
 
@@ -204,10 +202,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 PROVIDER_CONTEXT
             )
         );
-        this.checkEquals(
-            "Metadata missing: dateParser, dateTimeParser, numberParser, timeParser",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: dateParser, dateTimeParser, numberParser, timeParser"
         );
     }
 
@@ -223,10 +220,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 LocalDateTime::now
             )
         );
-        this.checkEquals(
-            "Metadata missing: decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator"
         );
     }
 
@@ -241,10 +237,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                     LocalDateTime::now
                 )
         );
-        this.checkEquals(
-            "Metadata missing: decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, valueSeparator"
         );
     }
 
@@ -274,10 +269,9 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 PROVIDER_CONTEXT
             )
         );
-        this.checkEquals(
-            "Metadata missing: dateTimeOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter, valueSeparator",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Metadata missing: dateTimeOffset, decimalNumberDigitCount, defaultYear, expressionNumberKind, locale, precision, roundingMode, twoDigitYear, validationConverter, valueSeparator"
         );
     }
 

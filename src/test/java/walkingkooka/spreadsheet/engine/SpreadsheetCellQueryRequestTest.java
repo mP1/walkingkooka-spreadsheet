@@ -31,6 +31,7 @@ import walkingkooka.net.http.HttpProtocolVersion;
 import walkingkooka.net.http.HttpTransport;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequests;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReferencePath;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.test.ParseStringTesting;
@@ -53,7 +54,8 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
     HashCodeEqualsDefinedTesting2<SpreadsheetCellQueryRequest>,
     ToStringTesting<SpreadsheetCellQueryRequest>,
     ParseStringTesting<SpreadsheetCellQueryRequest>,
-    JsonNodeMarshallingTesting<SpreadsheetCellQueryRequest> {
+    JsonNodeMarshallingTesting<SpreadsheetCellQueryRequest>,
+    ThrowableTesting {
 
     private final static Optional<SpreadsheetCellRangeReferencePath> PATH = Optional.of(
         SpreadsheetCellRangeReferencePath.LRTD
@@ -144,9 +146,9 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                     OptionalInt.of(-456)
                 )
         );
-        this.checkEquals(
-            "Invalid offset -456 < 0",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid offset -456 < 0"
         );
     }
 
@@ -198,9 +200,9 @@ public final class SpreadsheetCellQueryRequestTest implements HasUrlFragmentTest
                     OptionalInt.of(-123)
                 )
         );
-        this.checkEquals(
-            "Invalid count -123 < 0",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid count -123 < 0"
         );
     }
 

@@ -342,9 +342,9 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
             () -> context.spreadsheetProvider()
         );
 
-        this.checkEquals(
-            "SpreadsheetMetadata 1 deleted",
-            expected.getMessage()
+        this.getMessageAndCheck(
+            expected,
+            "SpreadsheetMetadata 1 deleted"
         );
     }
 

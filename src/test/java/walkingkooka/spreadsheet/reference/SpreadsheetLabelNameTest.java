@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.naming.NameTesting2;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormulaParsers;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportAnchor;
@@ -38,7 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
     implements ComparableTesting2<SpreadsheetLabelName>,
-    NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
+    NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName>,
+    ThrowableTesting {
 
     @Test
     public void testWithTrueFails() {
@@ -139,10 +141,9 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         );
 
         if (null != message) {
-            this.checkEquals(
-                message,
-                thrown.getMessage(),
-                "message"
+            this.getMessageAndCheck(
+                thrown,
+                message
             );
         }
 

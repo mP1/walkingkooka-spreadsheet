@@ -40,11 +40,11 @@ public final class LabelNotFoundExceptionTest implements ThrowableTesting2<Label
 
     @Test
     public void testGetMessage() {
-        this.checkEquals(
-            "Label \"Label123\" not found",
+        this.getMessageAndCheck(
             new LabelNotFoundException(
                 SpreadsheetSelection.labelName("Label123")
-            ).getMessage()
+            ),
+            "Label \"Label123\" not found"
         );
     }
 

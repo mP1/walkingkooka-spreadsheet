@@ -123,9 +123,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Invalid extra path after FormName \"/Form111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid extra path after FormName \"/Form111/extra\""
         );
     }
 
@@ -140,9 +140,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Invalid extra path after FormName \"/Form111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid extra path after FormName \"/Form111/extra\""
         );
     }
 
@@ -228,9 +228,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after FormName \"/Form111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after FormName \"/Form111/extra\""
         );
     }
 
@@ -247,9 +247,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Missing Form",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Missing Form"
         );
     }
 
@@ -286,9 +286,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Missing FormName \"/\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Missing FormName \"/\""
         );
     }
 
@@ -303,9 +303,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after FormName \"/Form111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after FormName \"/Form111/extra\""
         );
     }
 
@@ -343,9 +343,9 @@ public final class SpreadsheetStorageFormTest extends SpreadsheetStorageTestCase
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after FormName \"/Form111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after FormName \"/Form111/extra\""
         );
     }
 

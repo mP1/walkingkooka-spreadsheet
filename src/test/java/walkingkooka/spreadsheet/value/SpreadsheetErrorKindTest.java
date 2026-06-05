@@ -23,6 +23,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.convert.ConverterException;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionFunctions;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
@@ -45,7 +46,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorKindTest implements ParseStringTesting<SpreadsheetErrorKind>,
     HasValueTesting,
-    ClassTesting<SpreadsheetErrorKind> {
+    ClassTesting<SpreadsheetErrorKind>,
+    ThrowableTesting {
 
     // translate.......................................................................................................
 
@@ -424,10 +426,9 @@ public final class SpreadsheetErrorKindTest implements ParseStringTesting<Spread
             () -> SpreadsheetErrorKind.withValue(9999)
         );
 
-        this.checkEquals(
-            "Unknown value=9999",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Unknown value=9999"
         );
     }
 

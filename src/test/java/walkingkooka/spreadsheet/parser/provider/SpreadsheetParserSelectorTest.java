@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
@@ -32,7 +33,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTesting<SpreadsheetParserSelector, SpreadsheetParserName> {
+public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTesting<SpreadsheetParserSelector, SpreadsheetParserName>,
+    ThrowableTesting {
 
     @Override
     public SpreadsheetParserSelector createPluginSelectorLike(final SpreadsheetParserName name,
@@ -79,10 +81,9 @@ public final class SpreadsheetParserSelectorTest implements PluginSelectorLikeTe
                 .spreadsheetParsePattern()
         );
 
-        this.checkEquals(
-            "Invalid character '!' at 10 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid character '!' at 10 expected ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED}), {\";\", ({WHITESPACE | COLOR}, GENERAL, {WHITESPACE | COLOR} | {{\"D\"} | {\"M\"} | {\"Y\"} | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED})}, [\";\"]"
         );
 
         this.checkEquals(

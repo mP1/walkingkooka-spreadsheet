@@ -150,9 +150,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after label name \"/Label111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after label name \"/Label111/extra\""
         );
     }
 
@@ -238,9 +238,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after label \"/Label111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after label \"/Label111/extra\""
         );
     }
 
@@ -257,9 +257,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 )
         );
 
-        this.checkEquals(
-            "Invalid path missing label \"/Label111\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path missing label \"/Label111\""
         );
     }
 
@@ -297,9 +297,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 )
         );
 
-        this.checkEquals(
-            "Invalid path missing label \"/\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path missing label \"/\""
         );
     }
 
@@ -314,9 +314,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after label \"/Label111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after label \"/Label111/extra\""
         );
     }
 
@@ -354,9 +354,9 @@ public final class SpreadsheetStorageSpreadsheetLabelTest extends SpreadsheetSto
                 )
         );
 
-        this.checkEquals(
-            "Invalid path after label \"/Label111/extra\"",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Invalid path after label \"/Label111/extra\""
         );
     }
 

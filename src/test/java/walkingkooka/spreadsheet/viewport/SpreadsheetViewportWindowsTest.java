@@ -26,6 +26,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -51,6 +52,7 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
     JsonNodeMarshallingTesting<SpreadsheetViewportWindows>,
     ParseStringTesting<SpreadsheetViewportWindows>,
     PredicateTesting,
+    ThrowableTesting,
     TreePrintableTesting,
     ToStringTesting<SpreadsheetViewportWindows> {
 
@@ -69,10 +71,9 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
             () -> SpreadsheetViewportWindows.parse("A1:B2,A1:C3")
         );
 
-        this.checkEquals(
-            "Window component cell-ranges overlap A1:B2 and A1:C3",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Window component cell-ranges overlap A1:B2 and A1:C3"
         );
     }
 
@@ -83,10 +84,9 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
             () -> SpreadsheetViewportWindows.parse("A1:B2,C4,B2:C3")
         );
 
-        this.checkEquals(
-            "Window component cell-ranges overlap A1:B2 and B2:C3",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Window component cell-ranges overlap A1:B2 and B2:C3"
         );
     }
 
@@ -97,10 +97,9 @@ public final class SpreadsheetViewportWindowsTest implements CanBeEmptyTesting,
             () -> SpreadsheetViewportWindows.parse("A1:B2,C3:D4,E5,C3:C4")
         );
 
-        this.checkEquals(
-            "Window component cell-ranges overlap C3:C4 and C3:D4",
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            "Window component cell-ranges overlap C3:C4 and C3:D4"
         );
     }
 

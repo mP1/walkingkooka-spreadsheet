@@ -30,6 +30,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNamesList;
 import walkingkooka.spreadsheet.formula.parser.SpreadsheetFormulaParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -70,6 +71,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
     IsMethodTesting<S>,
     ParseStringTesting<S>,
     PredicateTesting2<S, SpreadsheetSelection>,
+    ThrowableTesting,
     ToStringTesting<S>,
     TreePrintableTesting {
 
@@ -516,10 +518,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                 .replaceReferencesMapper(moveTo)
         );
 
-        this.checkEquals(
-            message,
-            thrown.getMessage(),
-            "message"
+        this.getMessageAndCheck(
+            thrown,
+            message
         );
     }
 
@@ -605,10 +606,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             () -> selection.comparatorNamesBoundsCheck(comparatorsNameList)
         );
 
-        this.checkEquals(
-            expected,
-            thrown.getMessage(),
-            () -> selection + " comparatorNamesBoundsCheck " + comparatorsNameList
+        this.getMessageAndCheck(
+            thrown,
+            expected
         );
     }
 
@@ -859,7 +859,8 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                     IllegalArgumentException.class,
                     () -> selection.setAnchor(anchor)
                 );
-                this.checkEquals(
+                this.getMessageAndCheck(
+                    thrown,
                     "Invalid anchor " +
                         anchor +
                         " for " +
@@ -868,8 +869,7 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
                         selection.anchors()
                             .stream()
                             .map(Enum::toString)
-                            .collect(Collectors.joining(", ")),
-                    thrown.getMessage()
+                            .collect(Collectors.joining(", "))
                 );
             }
         }
@@ -1959,10 +1959,9 @@ public abstract class SpreadsheetSelectionTestCase<S extends SpreadsheetSelectio
             IllegalArgumentException.class,
             () -> columnOrRow.ifDifferentColumnOrRowTypeFail(other)
         );
-        this.checkEquals(
-            expected,
-            thrown.getMessage(),
-            () -> columnOrRow + " ifDifferentColumnOrRowTypeFail " + other
+        this.getMessageAndCheck(
+            thrown,
+            expected
         );
     }
 

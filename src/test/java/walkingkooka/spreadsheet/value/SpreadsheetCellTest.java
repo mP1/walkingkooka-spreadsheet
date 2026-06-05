@@ -36,6 +36,7 @@ import walkingkooka.net.header.HasContentTypeTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.provider.HasOptionalSpreadsheetFormatterSelectorTesting;
@@ -116,6 +117,7 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
     HasSpreadsheetReferenceTesting,
     HateosResourceTesting<SpreadsheetCell, SpreadsheetCellReference>,
     PatchableTesting<SpreadsheetCell>,
+    ThrowableTesting,
     ToStringTesting<SpreadsheetCell>,
     TreePrintableTesting,
     SpreadsheetMetadataTesting {
@@ -1244,9 +1246,9 @@ public final class SpreadsheetCellTest implements CanBeEmptyTesting,
             () -> SpreadsheetSelection.A1.setFormula(SpreadsheetFormula.EMPTY)
                 .replaceReferences((cell) -> Optional.empty())
         );
-        this.checkEquals(
-            "Mapper returned nothing for A1",
-            thrown.getMessage()
+        this.getMessageAndCheck(
+            thrown,
+            "Mapper returned nothing for A1"
         );
     }
 
