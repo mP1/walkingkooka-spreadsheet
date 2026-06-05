@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HasValueTesting;
 import walkingkooka.ToStringTesting;
 import walkingkooka.convert.BinaryNumberConverterFunction;
 import walkingkooka.convert.BinaryNumberConverterFunctions;
@@ -31,6 +32,7 @@ import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.locale.LocaleContext;
 import walkingkooka.locale.LocaleContexts;
 import walkingkooka.locale.LocaleLanguageTag;
+import walkingkooka.naming.HasNameTesting;
 import walkingkooka.net.HasUrlFragment;
 import walkingkooka.net.UrlFragment;
 import walkingkooka.reflect.ClassTesting;
@@ -59,6 +61,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
     TypeNameTesting<N>,
+    HasNameTesting<N>,
+    HasValueTesting,
     ToStringTesting<N>,
     ThrowableTesting {
 
@@ -200,15 +204,13 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
                 message
             );
         }
-        this.checkEquals(
-            propertyName,
-            thrown.name(),
-            "propertyName"
+        this.nameAndCheck(
+            thrown,
+            propertyName
         );
-        this.checkEquals(
-            value,
-            thrown.value(),
-            "value"
+        this.valueAndCheck(
+            thrown,
+            value
         );
     }
 
