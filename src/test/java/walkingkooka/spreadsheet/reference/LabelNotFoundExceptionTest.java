@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetError;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class LabelNotFoundExceptionTest implements ThrowableTesting2<LabelNotFoundException>,
-    HasNameTesting<SpreadsheetLabelName> {
+    HasNameTesting {
 
     @Test
     public void testWithNullLabelFails() {
