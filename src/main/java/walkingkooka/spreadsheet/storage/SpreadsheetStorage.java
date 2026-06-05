@@ -37,6 +37,19 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
     }
 
     @Override
+    public final boolean canRead(final StoragePath path,
+                                 final SpreadsheetStorageContext context) {
+        Objects.requireNonNull(path, "path");
+        Objects.requireNonNull(context, "context");
+
+        // if the Form, Cell, Label or Metadata exists then it can be read.
+        return this.load(
+            path,
+            context
+        ).isPresent();
+    }
+
+    @Override
     public final Optional<StorageValue> load(final StoragePath path,
                                              final SpreadsheetStorageContext context) {
         Objects.requireNonNull(path, "path");
