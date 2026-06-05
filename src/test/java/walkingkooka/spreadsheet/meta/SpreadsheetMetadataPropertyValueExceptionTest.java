@@ -24,7 +24,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;
 
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException>,
-    HasNameTesting<SpreadsheetMetadataPropertyName<?>>,
+    HasNameTesting,
     HasValueTesting {
 
     @Override

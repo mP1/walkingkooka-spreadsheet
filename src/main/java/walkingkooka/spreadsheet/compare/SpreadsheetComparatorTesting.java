@@ -19,10 +19,9 @@ package walkingkooka.spreadsheet.compare;
 
 import walkingkooka.compare.ComparatorTesting2;
 import walkingkooka.naming.HasNameTesting;
-import walkingkooka.spreadsheet.compare.provider.SpreadsheetComparatorName;
 
 public interface SpreadsheetComparatorTesting<C extends SpreadsheetComparator<T>, T> extends ComparatorTesting2<C, T>,
-    HasNameTesting<SpreadsheetComparatorName> {
+    HasNameTesting {
 
     default <TT> void typeAndCheck(final SpreadsheetComparator<TT> comparator,
                                    final Class<TT> expected) {
