@@ -61,7 +61,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> implements ClassTesting<N>,
     TypeNameTesting<N>,
-    HasNameTesting<N>,
+    HasNameTesting,
     HasValueTesting,
     ToStringTesting<N>,
     ThrowableTesting {
