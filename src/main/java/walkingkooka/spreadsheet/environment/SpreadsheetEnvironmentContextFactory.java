@@ -230,7 +230,7 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
         this.spreadsheetProvider = spreadsheetProvider;
         this.providerContext = providerContext;
 
-        spreadsheetEnvironmentContext.addEnvironmentValueWatcher(this::onEnvironmentValueName);
+        spreadsheetEnvironmentContext.addEnvironmentWatcher(this::onEnvironmentValueName);
     }
 
     /**
