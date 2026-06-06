@@ -85,7 +85,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         return this.saveWatchers.add(saved);
     }
 
-    private final Watchers<SpreadsheetLabelMapping> saveWatchers = Watchers.create();
+    private final Watchers<SpreadsheetLabelMapping> saveWatchers = Watchers.empty();
 
     @Override
     public void delete(final SpreadsheetLabelName label) {
@@ -101,7 +101,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         return this.deleteWatchers.add(deleted);
     }
 
-    private final Watchers<SpreadsheetLabelName> deleteWatchers = Watchers.create();
+    private final Watchers<SpreadsheetLabelName> deleteWatchers = Watchers.empty();
 
     @Override
     public int count() {

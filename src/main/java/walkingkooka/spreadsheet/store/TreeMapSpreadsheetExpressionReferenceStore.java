@@ -101,7 +101,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         return this.deleteWatchers.add(deleted);
     }
 
-    private final Watchers<T> deleteWatchers = Watchers.create();
+    private final Watchers<T> deleteWatchers = Watchers.empty();
 
     @Override
     public int count() {
@@ -248,7 +248,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         return this.addCellWatchers.add(watcher);
     }
 
-    private final Watchers<ReferenceAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.create();
+    private final Watchers<ReferenceAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.empty();
 
     @Override
     public void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
@@ -289,7 +289,7 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
         return this.removeCellWatchers.add(watcher);
     }
 
-    private final Watchers<ReferenceAndSpreadsheetCellReference<T>> removeCellWatchers = Watchers.create();
+    private final Watchers<ReferenceAndSpreadsheetCellReference<T>> removeCellWatchers = Watchers.empty();
 
     @Override
     public Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
