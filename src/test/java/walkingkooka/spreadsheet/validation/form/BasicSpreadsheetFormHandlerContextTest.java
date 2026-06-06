@@ -27,7 +27,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.EnvironmentValueWatcher;
+import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -582,13 +582,13 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
                 }
 
                 @Override
-                public Runnable addEnvironmentValueWatcher(final EnvironmentValueWatcher watcher) {
-                    return this.environmentContext.addEnvironmentValueWatcher(watcher);
+                public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
+                    return this.environmentContext.addEnvironmentWatcher(watcher);
                 }
 
                 @Override
-                public Runnable addEnvironmentValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-                    return this.environmentContext.addEnvironmentValueWatcherOnce(watcher);
+                public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
+                    return this.environmentContext.addEnvironmentWatcherOnce(watcher);
                 }
 
                 private final EnvironmentContext environmentContext = EnvironmentContexts.map(

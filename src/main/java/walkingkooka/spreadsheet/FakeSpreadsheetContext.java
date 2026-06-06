@@ -24,7 +24,7 @@ import walkingkooka.currency.CurrencyExchange;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.EnvironmentValueWatcher;
+import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.locale.LocaleLanguageTag;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.net.AbsoluteUrl;
@@ -189,12 +189,12 @@ public class FakeSpreadsheetContext extends FakeSpreadsheetProvider implements S
     }
 
     @Override
-    public Runnable addEnvironmentValueWatcher(final EnvironmentValueWatcher watcher) {
+    public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Runnable addEnvironmentValueWatcherOnce(final EnvironmentValueWatcher watcher) {
+    public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
         throw new UnsupportedOperationException();
     }
 

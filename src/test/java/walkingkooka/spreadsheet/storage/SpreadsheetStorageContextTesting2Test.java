@@ -22,7 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContexts;
 import walkingkooka.environment.EnvironmentValueName;
-import walkingkooka.environment.EnvironmentValueWatcher;
+import walkingkooka.environment.EnvironmentWatcher;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
@@ -214,13 +214,13 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         }
 
         @Override
-        public Runnable addEnvironmentValueWatcher(final EnvironmentValueWatcher watcher) {
-            return this.environmentContext.addEnvironmentValueWatcher(watcher);
+        public Runnable addEnvironmentWatcher(final EnvironmentWatcher watcher) {
+            return this.environmentContext.addEnvironmentWatcher(watcher);
         }
 
         @Override
-        public Runnable addEnvironmentValueWatcherOnce(final EnvironmentValueWatcher watcher) {
-            return this.environmentContext.addEnvironmentValueWatcherOnce(watcher);
+        public Runnable addEnvironmentWatcherOnce(final EnvironmentWatcher watcher) {
+            return this.environmentContext.addEnvironmentWatcherOnce(watcher);
         }
 
         {
