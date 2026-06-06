@@ -354,7 +354,7 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
         return this.deleteWatchers.add(deleted);
     }
 
-    private final Watchers<SpreadsheetCellRangeReference> deleteWatchers = Watchers.create();
+    private final Watchers<SpreadsheetCellRangeReference> deleteWatchers = Watchers.empty();
 
     // count............................................................................................................
 
