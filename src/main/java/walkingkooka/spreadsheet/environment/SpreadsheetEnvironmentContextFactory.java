@@ -32,6 +32,7 @@ import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.environment.EnvironmentContext;
 import walkingkooka.environment.EnvironmentContextMissingValues;
 import walkingkooka.environment.EnvironmentValueName;
+import walkingkooka.environment.EnvironmentValueNameAndValue;
 import walkingkooka.environment.MissingEnvironmentValuesException;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
@@ -236,10 +237,10 @@ public final class SpreadsheetEnvironmentContextFactory implements SpreadsheetEn
     /**
      * If one of the core component {@link EnvironmentValueName} changes clear the cached properties so that component will be re-created.
      */
-    private void onEnvironmentValueName(final EnvironmentValueName<?> name,
-                                        final Optional<?> oldValue,
-                                        final Optional<?> newValue) {
-        if (isEnvironmentValueName(name)) {
+    private void onEnvironmentValueName(final Optional<EnvironmentValueNameAndValue<?>> oldValue,
+                                        final Optional<EnvironmentValueNameAndValue<?>> newValue) {
+        if (isEnvironmentValueName(oldValue.map(EnvironmentValueNameAndValue::name).orElse(null)) ||
+            isEnvironmentValueName(newValue.map(EnvironmentValueNameAndValue::name).orElse(null))) {
             this.clear();
         }
     }
