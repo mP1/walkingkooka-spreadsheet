@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.store.Stores;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -41,7 +42,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
@@ -95,11 +95,6 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
         // must be last so any SaveWatchers that try and loadCellRange after the #maps like #lrtd have already saved $cell
         return this.store.save(cell);
-    }
-
-    @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetCell> saved) {
-        return this.store.addSaveWatcher(saved);
     }
 
     @Override
@@ -255,11 +250,6 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
             .forEach(
                 c -> this.delete(c.reference())
             );
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> deleted) {
-        return this.store.addDeleteWatcher(deleted);
     }
 
     @Override
@@ -485,6 +475,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                     .map(filter)
                     .orElse(false)
             );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     // VisibleForTesting

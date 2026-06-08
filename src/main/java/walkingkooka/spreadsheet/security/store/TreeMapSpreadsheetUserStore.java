@@ -21,6 +21,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.store.Stores;
 
 import java.util.Comparator;
@@ -28,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 /**
  * A {@link SpreadsheetUserStore} backed by a {@link Stores#treeMap(Comparator, BiFunction)}.
@@ -61,18 +61,8 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<User> saved) {
-        return this.store.addSaveWatcher(saved);
-    }
-
-    @Override
     public void delete(final UserId id) {
         this.store.delete(id);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<UserId> deleted) {
-        return this.store.addDeleteWatcher(deleted);
     }
 
     @Override
@@ -113,6 +103,11 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
             .stream()
             .filter(u -> email.equals(u.email()))
             .findFirst();
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<User> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     final Store<UserId, User> store;

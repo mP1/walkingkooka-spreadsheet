@@ -21,12 +21,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Wraps another store and presents a readonly view.
@@ -54,20 +54,8 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetLabelMapping> saved) {
-        Objects.requireNonNull(saved, "saved");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void delete(final SpreadsheetLabelName id) {
         Objects.requireNonNull(id, "id");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> deleted) {
-        Objects.requireNonNull(deleted, "deleted");
         throw new UnsupportedOperationException();
     }
 
@@ -128,6 +116,11 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
             offset,
             count
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     private final SpreadsheetLabelStore store;

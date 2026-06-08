@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeStore<V> {
 
@@ -49,20 +49,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<List<V>> saved) {
-        Objects.requireNonNull(saved, "saved");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void delete(final SpreadsheetCellRangeReference id) {
         Objects.requireNonNull(id, "id");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellRangeReference> deleted) {
-        Objects.requireNonNull(deleted, "saved");
         throw new UnsupportedOperationException();
     }
 
@@ -96,6 +84,11 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
             from,
             to
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<List<V>> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     @Override

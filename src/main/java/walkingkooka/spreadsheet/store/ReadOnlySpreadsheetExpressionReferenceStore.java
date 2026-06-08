@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
@@ -60,12 +61,6 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Runnable addDeleteWatcher(final Consumer<T> deleted) {
-        Objects.requireNonNull(deleted, "deleted");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public int count() {
         return this.store.count();
     }
@@ -95,6 +90,16 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
             from,
             to
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
+        return this.store.addStoreWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<T> watcher) {
+        return this.store.addDeleteWatcher(watcher);
     }
 
     @Override

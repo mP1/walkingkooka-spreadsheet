@@ -67,10 +67,6 @@ public final class TreeMapSpreadsheetCellRangeStoreTest extends TreeMapSpreadshe
     private final static String VALUE5 = "value5";
     private final static String VALUE6 = "value6";
 
-    @Override
-    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
-    }
-
     // save and load range .............................................................................................
 
     @Test

@@ -37,11 +37,18 @@ public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetE
     implements HashCodeEqualsDefinedTesting2<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> {
 
     @Override
-    public void testAddSaveWatcherAndSave() {
+    public void testAddStoreWatcherAndSave() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    public void testAddStoreWatcherAndSaveTwiceFiresOnce() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddStoreWatcherAndDelete() {
+        throw new UnsupportedOperationException();
     }
 
     // save.............................................................................................................

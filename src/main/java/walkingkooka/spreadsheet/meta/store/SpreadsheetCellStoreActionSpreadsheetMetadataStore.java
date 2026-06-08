@@ -22,13 +22,13 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStoreAction;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -137,18 +137,8 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
     private final Function<SpreadsheetId, SpreadsheetCellStore> cellStore;
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetMetadata> watcher) {
-        return this.metadataStore.addSaveWatcher(watcher);
-    }
-
-    @Override
     public void delete(final SpreadsheetId spreadsheetId) {
         this.metadataStore.delete(spreadsheetId);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetId> watcher) {
-        return this.metadataStore.addDeleteWatcher(watcher);
     }
 
     @Override
@@ -192,6 +182,11 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
             offset,
             count
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.metadataStore.addStoreWatcher(watcher);
     }
 
     private final SpreadsheetMetadataStore metadataStore;

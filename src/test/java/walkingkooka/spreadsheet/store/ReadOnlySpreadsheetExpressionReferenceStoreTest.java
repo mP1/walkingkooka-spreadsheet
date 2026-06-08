@@ -63,24 +63,22 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     }
 
     @Override
-    public void testAddSaveWatcherAndSave() {
-    }
-
-    @Override
-    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
-    }
-
-    @Override
-    public void testAddSaveWatcherAndRemove() {
-    }
-
-    @Override
-    @SuppressWarnings("unused")
     public void testDeleteDoesntFireDeleteWatcher() {
     }
 
     @Override
-    public void testAddDeleteWatcherAndRemove() {
+    public void testAddStoreWatcherAndSave() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddStoreWatcherAndSaveTwiceFiresOnce() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddStoreWatcherAndDelete() {
+        throw new UnsupportedOperationException();
     }
 
     @Override

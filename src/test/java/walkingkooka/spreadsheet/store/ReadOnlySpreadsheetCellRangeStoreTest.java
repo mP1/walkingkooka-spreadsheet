@@ -47,23 +47,8 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Override
-    public void testAddSaveWatcherAndSave() {
-    }
-
-    @Override
-    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
-    }
-
-    @Override
-    public void testAddSaveWatcherAndRemove() {
-    }
-
-    @Override
-    public void testAddDeleteWatcherAndDelete() {
-    }
-
-    @Override
-    public void testAddDeleteWatcherAndRemove() {
+    public void testAddStoreWatcherAndDelete() {
+        throw new UnsupportedOperationException();
     }
 
     @Test

@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.validation.form.store;
 import walkingkooka.collect.set.ImmutableSet;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
@@ -30,7 +31,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
 
@@ -53,18 +53,8 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<Form<SpreadsheetValidationReference>> watcher) {
-        return this.store.addSaveWatcher(watcher);
-    }
-
-    @Override
     public void delete(final FormName formName) {
         store.delete(formName);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<FormName> watcher) {
-        return this.store.addDeleteWatcher(watcher);
     }
 
     @Override
@@ -136,6 +126,11 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
             ).skip(offset)
             .limit(count)
             .collect(ImmutableSet.collector());
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     private final FormStore<SpreadsheetValidationReference> store;

@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetValueType;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.Length;
@@ -540,13 +541,22 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         final TreeMapSpreadsheetCellStore store = this.createStore();
 
-        store.addSaveWatcher(
-            (s) -> loaded.addAll(
-                store.loadCellRange(
-                    SpreadsheetSelection.A1.toCellRange()
-                )
-            )
+        store.addStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                          final Optional<SpreadsheetCell> next) {
+                    if(next.isPresent()) {
+                        loaded.addAll(
+                            store.loadCellRange(
+                                SpreadsheetSelection.A1.toCellRange()
+                            )
+                        );
+                    }
+                }
+            }
         );
+
         store.save(a1);
 
         this.checkEquals(
@@ -605,12 +615,20 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
 
         final Set<SpreadsheetCell> loaded = SortedSets.tree(SpreadsheetCell.REFERENCE_COMPARATOR);
 
-        store.addDeleteWatcher(
-            (s) -> loaded.addAll(
-                store.loadCellRange(
-                    SpreadsheetSelection.A1.toCellRange()
-                )
-            )
+        store.addStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                          final Optional<SpreadsheetCell> next) {
+                    if (next.isEmpty()) {
+                        loaded.addAll(
+                            store.loadCellRange(
+                                SpreadsheetSelection.A1.toCellRange()
+                            )
+                        );
+                    }
+                }
+            }
         );
 
         store.delete(a1.reference());
@@ -686,7 +704,20 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
 
         final Set<SpreadsheetCellReference> cleared = Sets.ordered();
-        store.addSaveWatcher(s -> cleared.add(s.reference()));
+        store.addStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                          final Optional<SpreadsheetCell> next) {
+                    if(next.isPresent()) {
+                        cleared.add(
+                            next.get()
+                                .reference()
+                        );
+                    }
+                }
+            }
+        );
 
         store.clearParsedFormulaExpressions();
 
@@ -771,7 +802,20 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         );
 
         final Set<SpreadsheetCellReference> cleared = Sets.ordered();
-        store.addSaveWatcher(s -> cleared.add(s.reference()));
+        store.addStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                          final Optional<SpreadsheetCell> next) {
+                    if (next.isPresent()) {
+                        cleared.add(
+                            next.get()
+                                .reference()
+                        );
+                    }
+                }
+            }
+        );
 
         store.clearFormatted();
 

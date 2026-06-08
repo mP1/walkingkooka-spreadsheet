@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Wraps another {@link SpreadsheetMetadataStore} and presents a readonly view.
@@ -54,20 +54,8 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetMetadata> saved) {
-        Objects.requireNonNull(saved, "saved");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void delete(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetId> deleted) {
-        Objects.requireNonNull(deleted, "deleted");
         throw new UnsupportedOperationException();
     }
 
@@ -112,6 +100,11 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
             offset,
             count
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     private final SpreadsheetMetadataStore store;

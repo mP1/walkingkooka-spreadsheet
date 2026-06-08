@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.store.Stores;
 
 import java.util.Comparator;
@@ -28,7 +29,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.function.Consumer;
 
 /**
  * A {@link SpreadsheetColumnStore} that uses a {@link TreeMap}.
@@ -66,18 +66,8 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetColumn> saved) {
-        return this.store.addSaveWatcher(saved);
-    }
-
-    @Override
     public void delete(final SpreadsheetColumnReference id) {
         this.store.delete(id);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetColumnReference> deleted) {
-        return this.store.addDeleteWatcher(deleted);
     }
 
     @Override
@@ -112,7 +102,11 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
         );
     }
 
-    // VisibleForTesting
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetColumn> watcher) {
+        return this.store.addStoreWatcher(watcher);
+    }
+
     private final Store<SpreadsheetColumnReference, SpreadsheetColumn> store;
 
     // Object...........................................................................................................
