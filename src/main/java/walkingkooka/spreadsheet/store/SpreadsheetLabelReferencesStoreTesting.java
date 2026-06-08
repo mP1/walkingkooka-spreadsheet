@@ -30,17 +30,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public interface SpreadsheetLabelReferencesStoreTesting<S extends SpreadsheetLabelReferencesStore> extends SpreadsheetExpressionReferenceStoreTesting<S, SpreadsheetLabelName> {
 
     @Override
-    default void testAddSaveWatcherAndSave() {
+    default void testAddStoreWatcherAndSave() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    default void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    default void testAddStoreWatcherAndSaveTwiceFiresOnce() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    default void testAddDeleteWatcherAndDelete() {
+    default void testAddStoreWatcherAndDelete() {
         throw new UnsupportedOperationException();
     }
 

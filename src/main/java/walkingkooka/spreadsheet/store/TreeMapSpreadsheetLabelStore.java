@@ -26,8 +26,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
+import walkingkooka.store.StoreWatchers;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.watch.Watchers;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -73,35 +73,29 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         );
 
         final SpreadsheetLabelName key = mapping.label();
-        if (false == mapping.equals(this.mappings.put(key, mapping))) {
-            this.saveWatchers.accept(mapping);
+        final SpreadsheetLabelMapping previous = this.mappings.put(key, mapping);
+        if (false == mapping.equals(previous)) {
+            this.watchers.onValueChange(
+                Optional.ofNullable(previous),
+                Optional.of(mapping)
+            );
         }
 
         return mapping;
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetLabelMapping> saved) {
-        return this.saveWatchers.add(saved);
-    }
-
-    private final Watchers<SpreadsheetLabelMapping> saveWatchers = Watchers.empty();
-
-    @Override
     public void delete(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
 
-        if (null != this.mappings.remove(label)) {
-            this.deleteWatchers.accept(label);
+        final SpreadsheetLabelMapping removed = this.mappings.remove(label);
+        if (null != removed) {
+            this.watchers.onValueChange(
+                Optional.of(removed),
+                Optional.empty()
+            );
         }
     }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> deleted) {
-        return this.deleteWatchers.add(deleted);
-    }
-
-    private final Watchers<SpreadsheetLabelName> deleteWatchers = Watchers.empty();
 
     @Override
     public int count() {
@@ -211,6 +205,13 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
      * All mappings present in this spreadsheet
      */
     private final SortedMap<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings = SpreadsheetSelectionMaps.label();
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.watchers.add(watcher);
+    }
+
+    private final StoreWatchers<SpreadsheetLabelMapping> watchers = StoreWatchers.empty();
 
     // Object...........................................................................................................
 

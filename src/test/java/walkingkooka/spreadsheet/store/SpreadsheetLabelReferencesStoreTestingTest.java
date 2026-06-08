@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
@@ -37,17 +38,27 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     @Override
+    public void testDeleteDoesntFireDeleteWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testAddCellWithWatcher() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testAddDeleteWatcherAndRemove() {
+    public void testAddStoreWatcherAndSave() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testDeleteDoesntFireDeleteWatcher() {
+    public void testAddStoreWatcherAndSaveTwiceFiresOnce() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddStoreWatcherAndDelete() {
         throw new UnsupportedOperationException();
     }
 
@@ -117,6 +128,12 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     static class TestSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore {
+
+        @Override
+        public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            return () -> {};
+        }
 
         @Override
         public Set<SpreadsheetLabelName> findLabelsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,
@@ -206,12 +223,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public int count() {
             return 0;
         }
@@ -244,6 +255,12 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                 to
             );
             return List.of();
+        }
+
+        @Override
+        public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            throw new UnsupportedOperationException();
         }
 
         @Override

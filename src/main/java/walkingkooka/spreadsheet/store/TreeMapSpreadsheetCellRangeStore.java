@@ -23,7 +23,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.store.Store;
-import walkingkooka.watch.Watchers;
+import walkingkooka.store.StoreWatcher;
+import walkingkooka.store.StoreWatchers;
 
 import java.util.Iterator;
 import java.util.List;
@@ -326,17 +327,27 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
 
         if (null != this.topLeft.remove(range.begin())) {
             this.bottomRight.remove(range.end());
-            this.deleteRangeFromValueToRanges(range);
-            this.deleteWatchers.accept(range);
+            final List<V> deleted = this.deleteRangeFromValueToRanges(range);
+
+            this.watcher.onValueChange(
+                Optional.of(deleted),
+                Optional.empty()
+            );
         }
     }
 
     /**
      * Slowly visits and deletes all entries that contain a {@link SpreadsheetCellRangeReference}.
      */
-    private void deleteRangeFromValueToRanges(final SpreadsheetCellRangeReference range) {
+    private List<V> deleteRangeFromValueToRanges(final SpreadsheetCellRangeReference range) {
+        final List<V> deleted = Lists.array();
+
         for (final Iterator<Map.Entry<V, Set<SpreadsheetCellRangeReference>>> i = this.valueToRanges.entrySet().iterator(); i.hasNext(); ) {
-            Map.Entry<V, Set<SpreadsheetCellRangeReference>> valueToRange = i.next();
+            final Map.Entry<V, Set<SpreadsheetCellRangeReference>> valueToRange = i.next();
+
+            deleted.add(
+                valueToRange.getKey()
+            );
 
             final Set<SpreadsheetCellRangeReference> ranges = valueToRange.getValue();
             if (ranges.remove(range)) {
@@ -345,16 +356,9 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
                 }
             }
         }
+
+        return deleted;
     }
-
-    // addDeleteWatcher.................................................................................................
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellRangeReference> deleted) {
-        return this.deleteWatchers.add(deleted);
-    }
-
-    private final Watchers<SpreadsheetCellRangeReference> deleteWatchers = Watchers.empty();
 
     // count............................................................................................................
 
@@ -469,6 +473,13 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
      * Tracks all values to ranges.
      */
     private final Map<V, Set<SpreadsheetCellRangeReference>> valueToRanges = Maps.ordered();
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<List<V>> watcher) {
+        return this.watcher.add(watcher);
+    }
+
+    private final StoreWatchers<List<V>> watcher = StoreWatchers.empty();
 
     // Object...........................................................................................................
 

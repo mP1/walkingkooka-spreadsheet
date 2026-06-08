@@ -151,6 +151,7 @@ import walkingkooka.spreadsheet.viewport.SpreadsheetViewportRectangle;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
@@ -8812,7 +8813,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         final SpreadsheetColumnReference reference = SpreadsheetSelection.parseColumn("B");
 
@@ -8941,7 +8942,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(b2, "=99+0"), context);
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         this.deleteColumnsAndCheck(
             engine,
@@ -9966,7 +9967,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         final SpreadsheetEngineContext context = this.createContext();
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         final SpreadsheetRowReference row2 = SpreadsheetSelection.parseRow("2");
 
@@ -10105,7 +10106,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         this.deleteRowsAndCheck(
             engine,
@@ -11514,7 +11515,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         engine.deleteColumns(
             b1.column(),
@@ -12935,7 +12936,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             context
         );
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         this.insertColumnsAndCheck(
             engine,
@@ -14120,7 +14121,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(reference, "=99+0"), context);
 
-        this.addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(context);
+        this.addCellWatcherThrowsUOE(context);
 
         this.insertRowsAndCheck(
             engine,
@@ -27706,18 +27707,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             .setStyle(STYLE);
     }
 
-    private void addCellSaveWatcherAndDeleteWatcherThatThrowsUOE(final SpreadsheetEngineContext context) {
+    private void addCellWatcherThrowsUOE(final SpreadsheetEngineContext context) {
         final SpreadsheetCellStore store = context.storeRepository()
             .cells();
 
-        store.addSaveWatcher(
-            (ignored) -> {
-                throw new UnsupportedOperationException();
-            }
-        );
-        store.addDeleteWatcher(
-            (ignored) -> {
-                throw new UnsupportedOperationException();
+        store.addStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                          final Optional<SpreadsheetCell> next) {
+                    throw new UnsupportedOperationException();
+                }
             }
         );
     }

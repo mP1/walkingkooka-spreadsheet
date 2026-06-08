@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,11 +45,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     @Override
     public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
         return this.store.save(cells);
-    }
-
-    @Override
-    public Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
-        return this.store.addSaveWatcher(saved);
     }
 
     @Override
@@ -167,11 +163,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> consumer) {
-        return this.store.addDeleteWatcher(consumer);
-    }
-
-    @Override
     public int count() {
         return this.store.count();
     }
@@ -216,6 +207,16 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
             from,
             to
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
+        return this.store.addStoreWatcher(watcher);
+    }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> consumer) {
+        return this.store.addDeleteWatcher(consumer);
     }
 
     private final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store;

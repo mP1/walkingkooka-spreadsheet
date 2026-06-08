@@ -58,23 +58,18 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Override
-    public void testAddSaveWatcherAndSave() {
+    public void testAddStoreWatcherAndSave() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    public void testAddStoreWatcherAndSaveTwiceFiresOnce() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void testAddSaveWatcherAndRemove() {
-    }
-
-    @Override
-    public void testAddDeleteWatcherAndDelete() {
-    }
-
-    @Override
-    public void testAddDeleteWatcherAndRemove() {
+    public void testAddStoreWatcherAndDelete() {
+        throw new UnsupportedOperationException();
     }
 
     @Test

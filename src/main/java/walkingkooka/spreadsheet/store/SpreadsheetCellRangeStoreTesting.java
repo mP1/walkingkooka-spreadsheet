@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.store.StoreWatcher2;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,30 +47,21 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     // tests.............................................................................................................
 
+    @Override
+    default void testAddStoreWatcherAndSave() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default void testAddStoreWatcherAndSaveTwiceFiresOnce() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     default void testLoadUnknownFails() {
         this.loadAndCheck(
             this.createStore(),
             RANGE
-        );
-    }
-
-    @Override
-    default void testAddSaveWatcherAndRemove() {
-    }
-
-    @Override
-    default void testAddSaveWatcherAndSave() {
-    }
-
-    @Test
-    default void testAddSaveWatcherFails() {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> this.createStore()
-                .addSaveWatcher((a) -> {
-                    }
-                )
         );
     }
 
@@ -102,21 +94,40 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
 
     @Test
     @Override
-    default void testAddDeleteWatcherAndDelete() {
+    default void testAddStoreWatcherAndDelete() {
         final SpreadsheetCellRangeReference range = this.id();
         final V value = this.valueValue();
 
         final S store = this.createStore();
 
-        final List<SpreadsheetCellRangeReference> fired = Lists.array();
-        store.addDeleteWatcher(fired::add);
+        final List<V> fired = Lists.array();
+
+        store.addStoreWatcher(
+            new StoreWatcher2<>() {
+                @Override
+                public void onValueChangeAdd(final List<V> added) {
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public void onValueChangeRemove(final List<V> removed) {
+                    fired.addAll(removed);
+                }
+
+                @Override
+                public void onValueChangeReplace(final List<V> previous,
+                                                 final List<V> next) {
+                    throw new UnsupportedOperationException();
+                }
+            }
+        );
 
         store.addValue(range, value);
 
         store.delete(range);
 
         this.checkEquals(
-            Lists.of(range),
+            Lists.of(value),
             fired,
             "fired values"
         );

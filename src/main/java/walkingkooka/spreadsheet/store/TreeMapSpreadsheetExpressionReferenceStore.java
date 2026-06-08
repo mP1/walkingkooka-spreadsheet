@@ -29,6 +29,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
+import walkingkooka.store.StoreWatchers;
 import walkingkooka.watch.Watchers;
 
 import java.util.List;
@@ -102,7 +104,6 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     }
 
     private final Watchers<T> deleteWatchers = Watchers.empty();
-
     @Override
     public int count() {
         return this.referenceToCells.size();
@@ -148,6 +149,13 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
             ).map(Map.Entry::getValue)
             .collect(Collectors.toCollection(Lists::array));
     }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
+        return this.watchers.add(watcher);
+    }
+
+    private final StoreWatchers<Set<SpreadsheetCellReference>> watchers = StoreWatchers.empty();
 
     private Comparable<T> castToComparable(final T cellOrLabel) {
         return Cast.to(cellOrLabel);

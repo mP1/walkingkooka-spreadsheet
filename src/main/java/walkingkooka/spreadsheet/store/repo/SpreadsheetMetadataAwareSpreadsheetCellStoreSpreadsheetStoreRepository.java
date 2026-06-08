@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
 import walkingkooka.spreadsheet.validation.form.store.SpreadsheetFormStore;
+import walkingkooka.store.StoreWatcher2;
 
 import java.util.Objects;
 
@@ -75,7 +76,26 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
         this.localeContext = localeContext;
         this.providerContext = providerContext;
 
-        repository.metadatas().addSaveWatcher(this::onSaveMetadata);
+        repository.metadatas()
+            .addStoreWatcher(
+                new StoreWatcher2<>() {
+                    @Override
+                    public void onValueChangeAdd(final SpreadsheetMetadata spreadsheetMetadata) {
+                        SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.this.onSaveMetadata(spreadsheetMetadata);
+                    }
+
+                    @Override
+                    public void onValueChangeRemove(final SpreadsheetMetadata spreadsheetMetadata) {
+                        // ignore deletes
+                    }
+
+                    @Override
+                    public void onValueChangeReplace(final SpreadsheetMetadata previous,
+                                                     final SpreadsheetMetadata next) {
+                        SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreRepository.this.onSaveMetadata(next);
+                    }
+                }
+            );
     }
 
     /**

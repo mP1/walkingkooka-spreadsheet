@@ -55,23 +55,6 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    // addSaveWatcher...................................................................................................
-
-    @Test
-    default void testAddSaveWatcherFails() {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> this.createStore()
-                .addSaveWatcher((a) -> {
-                    }
-                )
-        );
-    }
-
-    @Override
-    default void testAddSaveWatcherAndRemove() {
-    }
-
     // delete...........................................................................................................
 
     @Test

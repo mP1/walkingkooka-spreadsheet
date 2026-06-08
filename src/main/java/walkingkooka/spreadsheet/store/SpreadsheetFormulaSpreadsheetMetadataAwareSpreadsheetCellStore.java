@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetErrorKind;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.validation.ValueType;
@@ -40,7 +41,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -215,21 +215,9 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
         this.store.deleteCells(range);
     }
 
-    // watchers.........................................................................................................
-
-    @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetCell> remover) {
-        return this.store.addSaveWatcher(remover);
-    }
-
     @Override
     public void delete(final SpreadsheetCellReference cellReference) {
         this.store.delete(cellReference);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> remover) {
-        return this.store.addDeleteWatcher(remover);
     }
 
     @Override
@@ -266,6 +254,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
                 to
             )
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     @Override

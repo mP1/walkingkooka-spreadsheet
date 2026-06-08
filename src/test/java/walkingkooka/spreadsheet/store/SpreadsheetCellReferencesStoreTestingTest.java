@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,17 +37,12 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     }
 
     @Override
-    public void testAddCellWithWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testAddDeleteWatcherAndRemove() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testDeleteDoesntFireDeleteWatcher() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddCellWithWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -116,6 +112,13 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     }
 
     static class TestSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore {
+
+        @Override
+        public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            return () -> {};
+        }
+
         @Override
         public void saveCells(final SpreadsheetCellReference reference,
                               final Set<SpreadsheetCellReference> cells) {
@@ -204,12 +207,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         }
 
         @Override
-        public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public int count() {
             return 0;
         }
@@ -242,6 +239,12 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                 to
             );
             return List.of();
+        }
+
+        @Override
+        public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            throw new UnsupportedOperationException();
         }
 
         @Override

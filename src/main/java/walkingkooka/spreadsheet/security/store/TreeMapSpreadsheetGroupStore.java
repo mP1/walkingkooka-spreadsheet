@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.store.Stores;
 
 import java.util.Comparator;
@@ -31,7 +32,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * A {@link SpreadsheetGroupStore} backed by a {@link java.util.TreeMap}.
@@ -63,19 +63,9 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<Group> saved) {
-        return this.store.addSaveWatcher(saved);
-    }
-
-    @Override
     public void delete(final GroupId id) {
         this.groupIdToUserIds.remove(id);
         this.store.delete(id);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<GroupId> deleted) {
-        return this.store.addDeleteWatcher(deleted);
     }
 
     @Override
@@ -108,6 +98,11 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
             from,
             to
         );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<Group> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     @Override

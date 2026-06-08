@@ -26,8 +26,4 @@ public abstract class SpreadsheetExpressionReferenceStoreTestCase<S extends Spre
     SpreadsheetExpressionReferenceStoreTestCase() {
         super();
     }
-
-    @Override
-    public final void testAddDeleteWatcherAndDelete() {
-    }
 }

@@ -41,11 +41,7 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    default Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
-        Objects.requireNonNull(saved, "saved");
-        throw new UnsupportedOperationException();
-    }
+    Runnable addDeleteWatcher(final Consumer<T> watcher);
 
     /**
      * Saves all the references for a cell or label.

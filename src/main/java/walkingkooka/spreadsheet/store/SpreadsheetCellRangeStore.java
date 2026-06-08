@@ -24,7 +24,6 @@ import walkingkooka.store.Store;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * A {@link Store} that holds one or more values for {@link SpreadsheetCellRangeReference}.
@@ -40,15 +39,6 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     @Override
     default List<V> save(final List<V> value) {
         Objects.requireNonNull(value, "value");
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Also throws {@link UnsupportedOperationException} to match {@link #save(List)}
-     */
-    @Override
-    default Runnable addSaveWatcher(final Consumer<List<V>> saved) {
-        Objects.requireNonNull(saved, "saved");
         throw new UnsupportedOperationException();
     }
 

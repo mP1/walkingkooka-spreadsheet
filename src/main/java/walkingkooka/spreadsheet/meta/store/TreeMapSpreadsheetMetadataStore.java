@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.store.Stores;
 import walkingkooka.text.CaseSensitivity;
 
@@ -32,7 +33,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -86,18 +86,8 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     }
 
     @Override
-    public Runnable addSaveWatcher(final Consumer<SpreadsheetMetadata> saved) {
-        return this.store.addSaveWatcher(saved);
-    }
-
-    @Override
     public void delete(final SpreadsheetId id) {
         this.store.delete(id);
-    }
-
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetId> deleted) {
-        return this.store.addDeleteWatcher(deleted);
     }
 
     @Override
@@ -153,6 +143,11 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
             ).skip(offset)
             .limit(count)
             .collect(ImmutableList.collector());
+    }
+
+    @Override
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.store.addStoreWatcher(watcher);
     }
 
     private final Store<SpreadsheetId, SpreadsheetMetadata> store;

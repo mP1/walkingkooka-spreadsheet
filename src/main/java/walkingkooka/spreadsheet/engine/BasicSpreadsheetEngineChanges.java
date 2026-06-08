@@ -44,6 +44,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetError;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.watch.Watchers;
 
 import java.util.Collection;
@@ -99,12 +100,37 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final List<Runnable> watchers = Lists.array();
         if (deltaProperties.contains(SpreadsheetDeltaProperties.CELLS)) {
             watchers.add(
-                cellStore.addSaveWatcher(this::onCellSaved)
+                cellStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                                  final Optional<SpreadsheetCell> next) {
+                            if (next.isPresent()) {
+                                BasicSpreadsheetEngineChanges.this.onCellSaved(
+                                    next.get()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
             watchers.add(
-                cellStore.addDeleteWatcher(this::onCellDeleted)
+                cellStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                                  final Optional<SpreadsheetCell> next) {
+                            if (next.isEmpty()) {
+                                BasicSpreadsheetEngineChanges.this.onCellDeleted(
+                                    previous.get()
+                                        .reference()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
 
@@ -112,36 +138,114 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         if (deltaProperties.contains(SpreadsheetDeltaProperties.COLUMNS)) {
             watchers.add(
-                columnStore.addSaveWatcher(this::onColumnSaved)
+                columnStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetColumn> previous,
+                                                  final Optional<SpreadsheetColumn> next) {
+                            if (next.isPresent()) {
+                                BasicSpreadsheetEngineChanges.this.onColumnSaved(
+                                    next.get()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
-        if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_CELLS)) {
+
+        if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_COLUMNS)) {
             watchers.add(
-                columnStore.addDeleteWatcher(this::onColumnDeleted)
+                columnStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetColumn> previous,
+                                                  final Optional<SpreadsheetColumn> next) {
+                            if (next.isEmpty()) {
+                                BasicSpreadsheetEngineChanges.this.onColumnDeleted(
+                                    previous.get()
+                                        .reference()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
 
         final SpreadsheetLabelStore labelStore = repository.labels();
         if (deltaProperties.contains(SpreadsheetDeltaProperties.LABELS)) {
             watchers.add(
-                labelStore.addSaveWatcher(this::onLabelSaved)
+                labelStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetLabelMapping> previous,
+                                                  final Optional<SpreadsheetLabelMapping> next) {
+                            if (next.isPresent()) {
+                                BasicSpreadsheetEngineChanges.this.onLabelSaved(
+                                    next.get()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
+
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_LABELS)) {
             watchers.add(
-                labelStore.addDeleteWatcher(this::onLabelDeleted)
+                labelStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetLabelMapping> previous,
+                                                  final Optional<SpreadsheetLabelMapping> next) {
+                            if (next.isEmpty()) {
+                                BasicSpreadsheetEngineChanges.this.onLabelDeleted(
+                                    previous.get()
+                                        .label()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
 
         final SpreadsheetRowStore rowStore = repository.rows();
         if (deltaProperties.contains(SpreadsheetDeltaProperties.ROWS)) {
             watchers.add(
-                rowStore.addSaveWatcher(this::onRowSaved)
+                rowStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetRow> previous,
+                                                  final Optional<SpreadsheetRow> next) {
+                            if (next.isPresent()) {
+                                BasicSpreadsheetEngineChanges.this.onRowSaved(
+                                    next.get()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
+
         if (deltaProperties.contains(SpreadsheetDeltaProperties.DELETED_ROWS)) {
             watchers.add(
-                rowStore.addDeleteWatcher(this::onRowDeleted)
+                rowStore.addStoreWatcher(
+                    new StoreWatcher<>() {
+                        @Override
+                        public void onValueChange(final Optional<SpreadsheetRow> previous,
+                                                  final Optional<SpreadsheetRow> next) {
+                            if (next.isEmpty()) {
+                                BasicSpreadsheetEngineChanges.this.onRowDeleted(
+                                    previous.get()
+                                        .reference()
+                                );
+                            }
+                        }
+                    }
+                )
             );
         }
 

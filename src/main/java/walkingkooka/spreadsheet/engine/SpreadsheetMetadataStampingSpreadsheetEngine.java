@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.Cast;
 import walkingkooka.spreadsheet.compare.provider.SpreadsheetColumnOrRowSpreadsheetComparatorNames;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
@@ -29,8 +28,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.validation.SpreadsheetValidationReference;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
@@ -38,6 +35,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetColumn;
 import walkingkooka.spreadsheet.value.SpreadsheetRow;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewport;
 import walkingkooka.spreadsheet.viewport.SpreadsheetViewportWindows;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.validation.ValueType;
 import walkingkooka.validation.form.Form;
@@ -48,6 +46,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -476,48 +475,48 @@ final class SpreadsheetMetadataStampingSpreadsheetEngine implements SpreadsheetE
                         final SpreadsheetEngineContext context) {
         final SpreadsheetStoreRepository repository = context.storeRepository();
 
-        final SpreadsheetMetadataStampingSpreadsheetEngineSaveWatcherDeleteWatcher watcher = SpreadsheetMetadataStampingSpreadsheetEngineSaveWatcherDeleteWatcher.create();
+        final AtomicLong savesOrDeletes = new AtomicLong();
 
-        final SpreadsheetCellStore cellStore = repository.cells();
-        final Runnable cellSaveWatcher = cellStore.addSaveWatcher(
-            Cast.to(watcher)
-        );
+        final Runnable cellWatcher = repository.cells()
+            .addStoreWatcher(
+                new StoreWatcher<>() {
+                    @Override
+                    public void onValueChange(final Optional<SpreadsheetCell> previous,
+                                              final Optional<SpreadsheetCell> next) {
+                        savesOrDeletes.incrementAndGet();
+                    }
+                }
+            );
+        final Runnable labelWatcher = repository.labels()
+            .addStoreWatcher(
+                new StoreWatcher<>() {
+                    @Override
+                    public void onValueChange(final Optional<SpreadsheetLabelMapping> previous,
+                                              final Optional<SpreadsheetLabelMapping> next) {
+                        savesOrDeletes.incrementAndGet();
+                    }
+                }
+            );
 
         try {
-            final Runnable cellDeleteWatcher = cellStore.addDeleteWatcher(
-                Cast.to(watcher)
-            );
             try {
-                final SpreadsheetLabelStore labelStore = repository.labels();
-                final Runnable saveWatcher2 = labelStore.addSaveWatcher(
-                    Cast.to(watcher)
-                );
                 try {
-                    final Runnable labelDeleteWatcher = labelStore.addDeleteWatcher(
-                        Cast.to(watcher)
-                    );
-
-                    try {
-                        return supplier.get();
-                    } finally {
-                        labelDeleteWatcher.run();
-                        if (watcher.saveOrDeletes > 0) {
-                            repository.metadatas()
-                                .save(
-                                    this.stamper.apply(
-                                        context.spreadsheetMetadata()
-                                    )
-                                );
-                        }
-                    }
+                    return supplier.get();
                 } finally {
-                    saveWatcher2.run();
+                    if (savesOrDeletes.get() > 0) {
+                        repository.metadatas()
+                            .save(
+                                this.stamper.apply(
+                                    context.spreadsheetMetadata()
+                                )
+                            );
+                    }
                 }
             } finally {
-                cellDeleteWatcher.run();
+                labelWatcher.run();
             }
         } finally {
-            cellSaveWatcher.run();
+            cellWatcher.run();
         }
     }
 
