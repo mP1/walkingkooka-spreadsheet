@@ -53,12 +53,20 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
 
     @Test
     public void testAddValueFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addValue(RANGE, VALUE));
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .addValue(RANGE, VALUE)
+        );
     }
 
     @Test
     public void testRemoveValueFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeValue(RANGE, VALUE));
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .removeValue(RANGE, VALUE)
+        );
     }
 
     @Test
@@ -66,7 +74,12 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     public void testFindCellRangesWithValue() {
         final SpreadsheetCellRangeStore<String> store = SpreadsheetCellRangeStores.treeMap();
         store.addValue(RANGE, VALUE);
-        this.findCellRangesWithValueAndCheck(ReadOnlySpreadsheetCellRangeStore.with(store), VALUE, RANGE);
+
+        this.findCellRangesWithValueAndCheck(
+            ReadOnlySpreadsheetCellRangeStore.with(store),
+            VALUE,
+            RANGE
+        );
     }
 
     @Test
