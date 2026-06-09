@@ -733,7 +733,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns,
-                columnToWidth::apply,
+                columnToWidth,
                 IS_ROW_HIDDEN,
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
@@ -881,7 +881,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
             BasicSpreadsheetViewportNavigationContext.with(
                 SPREADSHEET_LABEL_NAME_RESOLVER,
                 hiddenColumns,
-                columnToWidth::apply,
+                columnToWidth,
                 IS_ROW_HIDDEN,
                 ROW_TO_HEIGHT,
                 WINDOWS_FUNCTION
@@ -1023,7 +1023,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 IS_COLUMN_HIDDEN, // columns hidden
                 COLUMN_TO_WIDTH,
                 hiddenRows,
-                rowToHeight::apply,
+                rowToHeight,
                 WINDOWS_FUNCTION
             ),
             expected
@@ -1188,7 +1188,7 @@ public final class BasicSpreadsheetViewportNavigationContextTest implements Clas
                 IS_COLUMN_HIDDEN, // hidden columns
                 COLUMN_TO_WIDTH,
                 hiddenRows,
-                rowToHeight::apply,
+                rowToHeight,
                 WINDOWS_FUNCTION
             ),
             expected
