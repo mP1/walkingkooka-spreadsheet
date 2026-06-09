@@ -178,7 +178,7 @@ public final class TreeMapSpreadsheetMetadataStoreTest extends SpreadsheetMetada
     public void testEqualsDifferentStore() {
         final TreeMapSpreadsheetMetadataStore store = TreeMapSpreadsheetMetadataStore.empty();
         store.save(
-            this.createMetadata("Different")
+            createMetadata("Different")
         );
 
         this.checkNotEquals(store);
