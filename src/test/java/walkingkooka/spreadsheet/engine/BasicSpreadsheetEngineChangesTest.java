@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.expression.FakeSpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -106,7 +105,7 @@ public final class BasicSpreadsheetEngineChangesTest extends BasicSpreadsheetEng
                         }
 
                         @Override
-                        public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
+                        public SpreadsheetCellRangeStore rangeToCells() {
                             return SpreadsheetCellRangeStores.treeMap();
                         }
 

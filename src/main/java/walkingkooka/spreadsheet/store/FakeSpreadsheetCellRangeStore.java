@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellRangeReference, List<V>> implements SpreadsheetCellRangeStore<V>, Fake {
+public class FakeSpreadsheetCellRangeStore extends FakeStore<SpreadsheetCellRangeReference, List<SpreadsheetCellReference>> implements SpreadsheetCellRangeStore, Fake {
 
     @Override
     public Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell) {
@@ -36,7 +36,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public Set<V> findValuesWithCell(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();
@@ -44,7 +44,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
 
     @Override
     public void addValue(final SpreadsheetCellRangeReference range,
-                         final V value) {
+                         final SpreadsheetCellReference value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -53,7 +53,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
 
     @Override
     public void removeValue(final SpreadsheetCellRangeReference range,
-                            final V value) {
+                            final SpreadsheetCellReference value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -61,7 +61,7 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final SpreadsheetCellReference value) {
         Objects.requireNonNull(value, "value");
 
         throw new UnsupportedOperationException();

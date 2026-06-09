@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
@@ -64,7 +63,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private final static SpreadsheetMetadataStore METADATAS = SpreadsheetMetadataStores.fake();
 
-    private final static SpreadsheetCellRangeStore<SpreadsheetCellReference> RANGE_TO_CELLS = SpreadsheetCellRangeStores.fake();
+    private final static SpreadsheetCellRangeStore RANGE_TO_CELLS = SpreadsheetCellRangeStores.fake();
 
     private final static SpreadsheetRowStore ROWS = SpreadsheetRowStores.fake();
 
@@ -534,7 +533,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetGroupStore groups = GROUPS;
         final SpreadsheetLabelStore labels = LABELS;
         final SpreadsheetLabelReferencesStore labelReferences = LABEL_REFERENCES;
-        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = RANGE_TO_CELLS;
+        final SpreadsheetCellRangeStore rangeToCells = RANGE_TO_CELLS;
         final SpreadsheetMetadataStore metadatas = METADATAS;
         final SpreadsheetRowStore rows = ROWS;
         final SpreadsheetUserStore users = USERS;

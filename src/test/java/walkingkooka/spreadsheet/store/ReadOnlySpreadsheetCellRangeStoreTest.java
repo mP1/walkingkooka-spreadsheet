@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
@@ -28,16 +29,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetCellRangeStoreTesting<ReadOnlySpreadsheetCellRangeStore<String>, String>,
-    ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore<String>, SpreadsheetCellRangeReference, List<String>>,
-    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetCellRangeStore<String>> {
+public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetCellRangeStoreTesting<ReadOnlySpreadsheetCellRangeStore>,
+    ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore, SpreadsheetCellRangeReference, List<SpreadsheetCellReference>>,
+    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetCellRangeStore> {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("a1:b2");
-    private final static String VALUE = "value";
+    private final static SpreadsheetCellReference VALUE = SpreadsheetSelection.A1;
 
     @Test
     public void testSaveAndLoadRange() {
-        final SpreadsheetCellRangeStore<String> store = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetCellRangeStore store = SpreadsheetCellRangeStores.treeMap();
 
         store.addValue(RANGE, VALUE);
 
@@ -72,7 +73,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     @Test
     @Override
     public void testFindCellRangesWithValue() {
-        final SpreadsheetCellRangeStore<String> store = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetCellRangeStore store = SpreadsheetCellRangeStores.treeMap();
         store.addValue(RANGE, VALUE);
 
         this.findCellRangesWithValueAndCheck(
@@ -84,7 +85,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(ReadOnlySpreadsheetCellRangeStore.with(new FakeSpreadsheetCellRangeStore<String>() {
+        this.toStringAndCheck(ReadOnlySpreadsheetCellRangeStore.with(new FakeSpreadsheetCellRangeStore() {
             @Override
             public String toString() {
                 return "ABC";
@@ -93,12 +94,12 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Override
-    public String valueValue() {
-        return "hello";
+    public SpreadsheetCellReference valueValue() {
+        return SpreadsheetCellReference.A1;
     }
 
     @Override
-    public ReadOnlySpreadsheetCellRangeStore<String> createStore() {
+    public ReadOnlySpreadsheetCellRangeStore createStore() {
         return ReadOnlySpreadsheetCellRangeStore.with(SpreadsheetCellRangeStores.treeMap());
     }
 
@@ -106,11 +107,11 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
 
     @Test
     public void testEquals2() {
-        final SpreadsheetCellRangeStore<String> store1 = SpreadsheetCellRangeStores.treeMap();
-        final SpreadsheetCellRangeStore<String> store2 = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetCellRangeStore store1 = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetCellRangeStore store2 = SpreadsheetCellRangeStores.treeMap();
 
         final SpreadsheetCellRangeReference range = SpreadsheetSelection.parseCellRange("A1:B2");
-        final String value = "ValueA1B2";
+        final SpreadsheetCellReference value = SpreadsheetCellReference.A1;
 
         store1.addValue(
             range,
@@ -130,11 +131,11 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
 
     @Test
     public void testEqualsDifferent() {
-        final SpreadsheetCellRangeStore<String> different = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetCellRangeStore different = SpreadsheetCellRangeStores.treeMap();
 
         different.addValue(
             SpreadsheetSelection.parseCellRange("A1:B2"),
-            "ValueA1B2"
+            SpreadsheetSelection.parseCell("Z9")
         );
 
         this.checkNotEquals(
@@ -143,14 +144,14 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Override
-    public ReadOnlySpreadsheetCellRangeStore<String> createObject() {
+    public ReadOnlySpreadsheetCellRangeStore createObject() {
         return this.createStore();
     }
 
     // class............................................................................................................
 
     @Override
-    public Class<ReadOnlySpreadsheetCellRangeStore<String>> type() {
+    public Class<ReadOnlySpreadsheetCellRangeStore> type() {
         return Cast.to(ReadOnlySpreadsheetCellRangeStore.class);
     }
 }

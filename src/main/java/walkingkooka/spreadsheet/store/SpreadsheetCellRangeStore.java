@@ -31,13 +31,13 @@ import java.util.Set;
  * is ignored passing either variant must return the same results.
  * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetCellRangeReference} will be relative and never absolute.
  */
-public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<SpreadsheetCellRangeReference, List<V>> {
+public interface SpreadsheetCellRangeStore extends SpreadsheetStore<SpreadsheetCellRangeReference, List<SpreadsheetCellReference>> {
 
     /**
      * Values dont include the actual range, therefore this {@link Store} method is invalid and throws {@link UnsupportedOperationException}.
      */
     @Override
-    default List<V> save(final List<V> value) {
+    default List<SpreadsheetCellReference> save(final List<SpreadsheetCellReference> value) {
         Objects.requireNonNull(value, "value");
         throw new UnsupportedOperationException();
     }
@@ -50,22 +50,22 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
     /**
      * Load all the values for a single cell.
      */
-    Set<V> findValuesWithCell(final SpreadsheetCellReference cell);
+    Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell);
 
     /**
      * Add a single value to the given {@link SpreadsheetCellRangeReference}. If the mapping exists nothing happens.
      */
     void addValue(final SpreadsheetCellRangeReference range,
-                  final V value);
+                  final SpreadsheetCellReference value);
 
     /**
      * Removes a single value if it exists for the given {@link SpreadsheetCellRangeReference}
      */
     void removeValue(final SpreadsheetCellRangeReference range,
-                     final V value);
+                     final SpreadsheetCellReference value);
 
     /**
      * Returns all the {@link SpreadsheetCellRangeReference ranges} containing the given value.
      */
-    Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value);
+    Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final SpreadsheetCellReference value);
 }
