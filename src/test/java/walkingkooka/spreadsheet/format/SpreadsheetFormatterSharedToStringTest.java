@@ -51,9 +51,8 @@ public final class SpreadsheetFormatterSharedToStringTest extends SpreadsheetFor
 
             return Optional.of(
                 TextNode.text(
-                    value.orElse("***")
-                        .toString()
-                        + " World"
+                    value.orElse("***") +
+                        " World"
                 )
             );
         }
