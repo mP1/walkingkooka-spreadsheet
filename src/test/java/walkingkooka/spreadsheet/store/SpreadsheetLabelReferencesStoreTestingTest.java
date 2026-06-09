@@ -183,12 +183,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public int countCellsWithReference(final SpreadsheetLabelName label) {
-            Objects.requireNonNull(label, "label");
-            return 0;
-        }
-
-        @Override
         public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> watcher) {
             Objects.requireNonNull(watcher, "watcher");
             return null;

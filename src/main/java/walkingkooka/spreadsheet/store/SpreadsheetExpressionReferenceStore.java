@@ -79,11 +79,6 @@ public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpres
                                                          final int count);
 
     /**
-     * Counts the number of cells with the given reference.
-     */
-    int countCellsWithReference(final T reference);
-
-    /**
      * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference cell}.
      * <pre>
      * cell=references

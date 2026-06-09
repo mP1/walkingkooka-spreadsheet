@@ -167,12 +167,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         }
 
         @Override
-        public int countCellsWithReference(final SpreadsheetCellReference reference) {
-            Objects.requireNonNull(reference, "reference");
-            return 0;
-        }
-
-        @Override
         public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> watcher) {
             Objects.requireNonNull(watcher, "watcher");
             return null;
