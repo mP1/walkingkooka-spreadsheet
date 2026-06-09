@@ -211,7 +211,7 @@ public final class SpreadsheetFormatterSelector implements PluginSelectorLike<Sp
     }
 
     /**
-     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String)} and {@link #toString()}
+     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String)} and {@link Object#toString()}
      * are roundtrippable.
      */
     @Override

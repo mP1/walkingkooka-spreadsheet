@@ -201,7 +201,7 @@ public final class SpreadsheetParserSelector implements PluginSelectorLike<Sprea
     }
 
     /**
-     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String)} and {@link #toString()}
+     * Note it is intentional that the {@link #text()} is not quoted, to ensure {@link #parse(String)} and {@link Object#toString()}
      * are round-trippable.
      */
     @Override
