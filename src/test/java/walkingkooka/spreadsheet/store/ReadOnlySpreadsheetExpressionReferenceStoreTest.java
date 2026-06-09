@@ -86,7 +86,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     public void testRemoveLastCellAddDeleteWatcher() {
     }
 
-    // ids.................................................................................
+    // ids..............................................................................................................
 
     @Test
     public final void testIds() {
@@ -101,10 +101,15 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         store.saveCells(b, Sets.of(f));
         store.saveCells(c, Sets.of(f));
 
-        this.idsAndCheck(ReadOnlySpreadsheetExpressionReferenceStore.with(store), 0, 3, a, b, c);
+        this.idsAndCheck(
+            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            0,
+            3,
+            a, b, c
+        );
     }
 
-    // values.................................................................................
+    // values...........................................................................................................
 
     @Test
     public final void testValues() {
@@ -179,7 +184,16 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public void testAddCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addCell(ReferenceAndSpreadsheetCellReference.with(this.id(), this.b1())));
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .addCell(
+                    ReferenceAndSpreadsheetCellReference.with(
+                        this.id(),
+                        this.b1()
+                    )
+                )
+        );
     }
 
     @Override
@@ -189,7 +203,16 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public void testRemoveCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeCell(ReferenceAndSpreadsheetCellReference.with(this.id(), this.b1())));
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .removeCell(
+                    ReferenceAndSpreadsheetCellReference.with(
+                        this.id(),
+                        this.b1()
+                    )
+                )
+        );
     }
 
     @Override
@@ -217,24 +240,13 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         store.removeCell(and);
         store.addCell(and);
 
-        this.countAndCheck(ReadOnlySpreadsheetExpressionReferenceStore.with(store), 1);
+        this.countAndCheck(
+            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            1
+        );
     }
 
-    // ToStringTesting.............................................................
-
-    @Test
-    public void testToString() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
-
-        final SpreadsheetCellReference a1 = this.a1();
-        final SpreadsheetCellReference b1 = this.b1();
-        final SpreadsheetCellReference c1 = this.c1();
-        store.saveCells(a1, Sets.of(b1, c1));
-
-        this.toStringAndCheck(ReadOnlySpreadsheetExpressionReferenceStore.with(store), store.toString());
-    }
-
-    // SpreadsheetExpressionReferenceStoreTesting.............................................................
+    // SpreadsheetExpressionReferenceStoreTesting.......................................................................
 
     @Override
     public SpreadsheetCellReference id() {
@@ -329,7 +341,24 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     public ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createObject() {
         return this.createStore();
     }
-    
+
+    // ToString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+        store.saveCells(a1, Sets.of(b1, c1));
+
+        this.toStringAndCheck(
+            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            store.toString()
+        );
+    }
+
     // class............................................................................................................
     
     @Override
