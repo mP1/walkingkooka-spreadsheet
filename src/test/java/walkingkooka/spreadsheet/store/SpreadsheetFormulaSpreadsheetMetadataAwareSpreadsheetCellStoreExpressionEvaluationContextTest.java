@@ -22,13 +22,6 @@ import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContextTest implements ClassTesting<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext> {
 
-//    @Test
-//    public void testNumberToExpression() {
-//
-//    }
-//
-//    private void toExpressionAndCheck(final Object value, final Expression)
-
     @Override
     public Class<SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext> type() {
         return SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStoreExpressionEvaluationContext.class;
