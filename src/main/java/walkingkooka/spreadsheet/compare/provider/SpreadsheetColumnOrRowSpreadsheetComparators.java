@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
+import walkingkooka.naming.HasName;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparator;
 import walkingkooka.spreadsheet.compare.SpreadsheetComparatorContext;
@@ -168,7 +169,7 @@ public final class SpreadsheetColumnOrRowSpreadsheetComparators {
         return SpreadsheetColumnOrRowSpreadsheetComparatorNames.with(
             this.columnOrRow,
             this.comparators.stream()
-                .map(c -> c.name())
+                .map(HasName::name)
                 .collect(Collectors.toList())
         );
     }

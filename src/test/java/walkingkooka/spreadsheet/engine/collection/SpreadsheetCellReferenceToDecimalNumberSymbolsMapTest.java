@@ -184,7 +184,7 @@ public final class SpreadsheetCellReferenceToDecimalNumberSymbolsMapTest impleme
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

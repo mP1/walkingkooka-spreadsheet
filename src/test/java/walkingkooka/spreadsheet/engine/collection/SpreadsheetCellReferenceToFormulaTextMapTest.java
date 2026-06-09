@@ -175,7 +175,7 @@ public final class SpreadsheetCellReferenceToFormulaTextMapTest implements MapTe
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

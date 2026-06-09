@@ -182,7 +182,7 @@ public final class SpreadsheetCellReferenceToDateTimeSymbolsMapTest implements M
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

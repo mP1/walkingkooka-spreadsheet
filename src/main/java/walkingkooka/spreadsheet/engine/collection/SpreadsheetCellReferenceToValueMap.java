@@ -88,9 +88,7 @@ public final class SpreadsheetCellReferenceToValueMap extends SpreadsheetCellRef
         return withCopy(
             unmarshallMap(
                 node,
-                (JsonNode value) -> context.unmarshallOptionalWithType(
-                    value
-                ),
+                context::unmarshallOptionalWithType,
                 context
             )
         );

@@ -172,7 +172,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetCellMapTest implements M
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

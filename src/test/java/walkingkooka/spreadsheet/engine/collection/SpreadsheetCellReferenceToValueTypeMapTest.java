@@ -179,7 +179,7 @@ public final class SpreadsheetCellReferenceToValueTypeMapTest implements MapTest
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

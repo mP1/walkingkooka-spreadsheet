@@ -79,7 +79,7 @@ public final class BasicSpreadsheetFormHandlerContextTest implements Spreadsheet
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.BIG_DECIMAL;
 
-    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = (Set<SpreadsheetCell> cells) -> SpreadsheetDelta.EMPTY.setCells(cells);
+    private static final Function<Set<SpreadsheetCell>, SpreadsheetDelta> CELLS_SAVER = SpreadsheetDelta.EMPTY::setCells;
 
     // with.............................................................................................................
 

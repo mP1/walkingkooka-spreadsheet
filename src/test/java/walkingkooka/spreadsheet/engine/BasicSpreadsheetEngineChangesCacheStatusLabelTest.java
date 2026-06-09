@@ -170,7 +170,7 @@ public final class BasicSpreadsheetEngineChangesCacheStatusLabelTest extends Bas
     public void testIsLoading() {
         assertThrows(
             UnsupportedOperationException.class,
-            () -> BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED.isLoading()
+            BasicSpreadsheetEngineChangesCacheStatusLabel.UNLOADED::isLoading
         );
     }
 

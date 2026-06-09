@@ -179,7 +179,7 @@ public final class SpreadsheetCellReferenceToSpreadsheetFormatterSelectorMapTest
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

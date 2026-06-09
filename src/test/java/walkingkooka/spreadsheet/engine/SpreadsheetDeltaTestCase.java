@@ -551,7 +551,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> forms.clear()
+            forms::clear
         );
 
         this.formsAndCheck(delta);

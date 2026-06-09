@@ -178,7 +178,7 @@ public final class SpreadsheetCellReferenceToCurrencyMapTest implements MapTesti
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 
