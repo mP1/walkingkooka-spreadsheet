@@ -26,7 +26,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCellReferencesStore> extends SpreadsheetExpressionReferenceStoreTesting<S, SpreadsheetCellReference> {
+public interface SpreadsheetCellReferencesStoreTesting<S extends SpreadsheetCellReferencesStore> extends SpreadsheetExpressionReferencesStoreTesting<S, SpreadsheetCellReference> {
 
     @Override
     default void testAddStoreWatcherAndSave() {

@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("unchecked")
-public interface SpreadsheetExpressionReferenceStoreTesting<S extends SpreadsheetExpressionReferenceStore<T>,
+public interface SpreadsheetExpressionReferencesStoreTesting<S extends SpreadsheetExpressionReferencesStore<T>,
     T extends SpreadsheetExpressionReference & Comparable<T>>
     extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
     TypeNameTesting<S> {
@@ -113,7 +113,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     // load.............................................................................................................
 
-    default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                           final TT id,
                                                                           final SpreadsheetCellReference... expected) {
         this.loadAndCheck(
@@ -123,7 +123,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void loadAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                           final TT id,
                                                                           final Set<SpreadsheetCellReference> expected) {
         if (expected.isEmpty()) {
@@ -434,7 +434,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                                             final TT reference,
                                                                                             final int offset,
                                                                                             final int count,
@@ -448,7 +448,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void findCellsWithReferenceAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                                             final TT reference,
                                                                                             final int offset,
                                                                                             final int count,
@@ -507,7 +507,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
 
     @SuppressWarnings("unchecked")
-    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                                             final SpreadsheetCellReference cell,
                                                                                             final int offset,
                                                                                             final int count,
@@ -521,7 +521,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                                             final SpreadsheetCellReference cell,
                                                                                             final int offset,
                                                                                             final int count,
@@ -548,7 +548,7 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void removeReferencesWithCellAndCheck(final SpreadsheetExpressionReferenceStore<TT> store,
+    default <TT extends SpreadsheetExpressionReference> void removeReferencesWithCellAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
                                                                                               final SpreadsheetCellReference cell) {
         store.removeReferencesWithCell(cell);
 
@@ -573,6 +573,6 @@ public interface SpreadsheetExpressionReferenceStoreTesting<S extends Spreadshee
 
     @Override
     default String typeNameSuffix() {
-        return SpreadsheetExpressionReferenceStore.class.getSimpleName();
+        return SpreadsheetExpressionReferencesStore.class.getSimpleName();
     }
 }

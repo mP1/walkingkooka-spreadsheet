@@ -28,17 +28,17 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A read only wrapper around a {@link SpreadsheetExpressionReferenceStore}
+ * A read only wrapper around a {@link SpreadsheetExpressionReferencesStore}
  */
-final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference>
-    implements SpreadsheetExpressionReferenceStore<T> {
+final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference>
+    implements SpreadsheetExpressionReferencesStore<T> {
 
-    static <T extends SpreadsheetExpressionReference> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
+    static <T extends SpreadsheetExpressionReference> ReadOnlySpreadsheetExpressionReferencesStore<T> with(final SpreadsheetExpressionReferencesStore<T> store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetExpressionReferenceStore<>(store);
+        return new ReadOnlySpreadsheetExpressionReferencesStore<>(store);
     }
 
-    private ReadOnlySpreadsheetExpressionReferenceStore(final SpreadsheetExpressionReferenceStore<T> store) {
+    private ReadOnlySpreadsheetExpressionReferencesStore(final SpreadsheetExpressionReferencesStore<T> store) {
         this.store = store;
     }
 
@@ -168,7 +168,7 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
         throw new UnsupportedOperationException();
     }
 
-    private final SpreadsheetExpressionReferenceStore<T> store;
+    private final SpreadsheetExpressionReferencesStore<T> store;
 
     // Object...........................................................................................................
 
@@ -180,11 +180,11 @@ final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExp
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof ReadOnlySpreadsheetExpressionReferenceStore &&
-                this.equals0((ReadOnlySpreadsheetExpressionReferenceStore<?>) other));
+            (other instanceof ReadOnlySpreadsheetExpressionReferencesStore &&
+                this.equals0((ReadOnlySpreadsheetExpressionReferencesStore<?>) other));
     }
 
-    private boolean equals0(final ReadOnlySpreadsheetExpressionReferenceStore<?> other) {
+    private boolean equals0(final ReadOnlySpreadsheetExpressionReferencesStore<?> other) {
         return this.store.equals(other.store);
     }
 

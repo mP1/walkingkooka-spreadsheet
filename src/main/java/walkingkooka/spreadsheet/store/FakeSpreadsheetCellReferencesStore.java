@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 
 import java.util.Set;
 
-public class FakeSpreadsheetCellReferencesStore extends FakeSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> implements SpreadsheetCellReferencesStore {
+public class FakeSpreadsheetCellReferencesStore extends FakeSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> implements SpreadsheetCellReferencesStore {
 
     public FakeSpreadsheetCellReferencesStore() {
         super();

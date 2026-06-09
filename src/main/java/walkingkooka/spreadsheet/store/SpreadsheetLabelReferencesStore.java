@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 
 import java.util.Set;
 
-public interface SpreadsheetLabelReferencesStore extends SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> {
+public interface SpreadsheetLabelReferencesStore extends SpreadsheetExpressionReferencesStore<SpreadsheetLabelName> {
 
     /**
      * Finds any {@link SpreadsheetLabelName} with the provided {@link SpreadsheetCellReferenceOrRange}.

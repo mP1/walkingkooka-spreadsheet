@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.SpreadsheetRowStore;
@@ -42,7 +41,7 @@ public interface SpreadsheetStoreRepository {
     SpreadsheetCellStore cells();
 
     /**
-     * A {@link SpreadsheetExpressionReferenceStore} holding cell references.
+     * A {@link SpreadsheetCellReferencesStore} holding cell references.
      */
     SpreadsheetCellReferencesStore cellReferences();
 

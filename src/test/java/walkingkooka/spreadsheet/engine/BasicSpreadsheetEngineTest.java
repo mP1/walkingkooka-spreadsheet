@@ -121,7 +121,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStores;
-import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferenceStore;
+import walkingkooka.spreadsheet.store.SpreadsheetExpressionReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelReferencesStores;
 import walkingkooka.spreadsheet.store.SpreadsheetLabelStore;
@@ -27656,7 +27656,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
-    private <E extends SpreadsheetExpressionReference & Comparable<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferenceStore<E> store,
+    private <E extends SpreadsheetExpressionReference & Comparable<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferencesStore<E> store,
                                                                                                    final E cell,
                                                                                                    final SpreadsheetCellReference... out) {
         this.checkEquals(

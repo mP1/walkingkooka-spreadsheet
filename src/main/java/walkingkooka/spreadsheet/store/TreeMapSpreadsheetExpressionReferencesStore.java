@@ -44,17 +44,17 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * A {@link SpreadsheetExpressionReferenceStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetCellReference references}.
+ * A {@link SpreadsheetExpressionReferencesStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetCellReference references}.
  */
 // using a type parameter of T extends SpreadsheetExpressionReference & Comparable<T> causes a Transpiler ERROR.
-// Error:TreeMapSpreadsheetExpressionReferenceStore.java:39: This class must implement the inherited abstract method SpreadsheetExpressionReference.equalsIgnoreReferenceK
-final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference> implements SpreadsheetExpressionReferenceStore<T> {
+// Error:TreeMapSpreadsheetExpressionReferencesStore.java:39: This class must implement the inherited abstract method SpreadsheetExpressionReference.equalsIgnoreReferenceK
+final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> implements SpreadsheetExpressionReferencesStore<T> {
 
-    static <T extends SpreadsheetExpressionReference> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
-        return new TreeMapSpreadsheetExpressionReferenceStore<>();
+    static <T extends SpreadsheetExpressionReference> TreeMapSpreadsheetExpressionReferencesStore<T> create() {
+        return new TreeMapSpreadsheetExpressionReferencesStore<>();
     }
 
-    private TreeMapSpreadsheetExpressionReferenceStore() {
+    private TreeMapSpreadsheetExpressionReferencesStore() {
         super();
 
         this.cellToReferences = SpreadsheetSelectionMaps.cell();
@@ -375,11 +375,11 @@ final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpr
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-            (other instanceof TreeMapSpreadsheetExpressionReferenceStore &&
-                this.equals0((TreeMapSpreadsheetExpressionReferenceStore<?>) other));
+            (other instanceof TreeMapSpreadsheetExpressionReferencesStore &&
+                this.equals0((TreeMapSpreadsheetExpressionReferencesStore<?>) other));
     }
 
-    private boolean equals0(final TreeMapSpreadsheetExpressionReferenceStore<?> other) {
+    private boolean equals0(final TreeMapSpreadsheetExpressionReferencesStore<?> other) {
         return this.referenceToCells.equals(other.referenceToCells);
     }
 

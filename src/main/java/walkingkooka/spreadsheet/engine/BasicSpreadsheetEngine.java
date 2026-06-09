@@ -678,7 +678,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             int skipCount = 0;
             int loadedCount = 0;
 
-            // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferenceStore.loadReferences(SpreadsheetCellReference, int offset, int count)
+            // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferencesStore.loadReferences(SpreadsheetCellReference, int offset, int count)
             for (final SpreadsheetCellReference reference : cellReferencesStore.findCellsWithReference(
                 cell,
                 0, // offset
