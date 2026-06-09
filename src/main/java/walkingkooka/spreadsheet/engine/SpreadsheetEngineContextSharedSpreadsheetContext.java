@@ -381,7 +381,7 @@ final class SpreadsheetEngineContextSharedSpreadsheetContext extends Spreadsheet
     @Override
     public void deleteMetadata(final SpreadsheetId id) {
         this.spreadsheetContext.deleteMetadata(id);
-        if (this.spreadsheetId().equals(id)) {
+        if (id.equals(this.spreadsheetId().orElse(null))) {
             this.spreadsheetMetadata = null;
             this.converterLike = null;
         }
