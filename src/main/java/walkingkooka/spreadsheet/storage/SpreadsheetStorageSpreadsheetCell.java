@@ -96,7 +96,7 @@ final class SpreadsheetStorageSpreadsheetCell extends SpreadsheetStorage {
                 break;
             default:
                 throw path.invalidStoragePathException("Invalid cell or label");
-        };
+        }
 
         return cellOrLabels;
     }
