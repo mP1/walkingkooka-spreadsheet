@@ -39,7 +39,7 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     private TreeMapSpreadsheetCellReferencesStore() {
-        this.store = SpreadsheetExpressionReferenceStores.treeMap();
+        this.store = SpreadsheetExpressionReferencesStores.treeMap();
     }
 
     @Override
@@ -214,7 +214,7 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
         return this.store.addDeleteWatcher(consumer);
     }
 
-    private final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store;
+    private final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store;
 
     // Object...........................................................................................................
 

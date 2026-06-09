@@ -29,20 +29,20 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
-    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>>,
-    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> {
+public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends SpreadsheetExpressionReferencesStoreTestCase<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>, SpreadsheetCellReference>
+    implements ReadOnlyStoreTesting<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>>,
+    HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> {
 
     @Test
     public void testSaveAndLoad() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
 
         store.saveCells(a1, Sets.of(b1));
 
-        final ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetExpressionReferenceStore.with(store);
+        final ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetExpressionReferencesStore.with(store);
 
         this.loadAndCheck(readOnly, a1, b1); // a1 --> b1
         this.findReferencesWithCellAndCheck(
@@ -90,7 +90,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public final void testIds() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a = this.a1();
         final SpreadsheetCellReference b = this.b1();
@@ -102,7 +102,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         store.saveCells(c, Sets.of(f));
 
         this.idsAndCheck(
-            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
             0,
             3,
             a, b, c
@@ -113,7 +113,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public final void testValues() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a = this.a1();
         final SpreadsheetCellReference b = this.b1();
@@ -129,7 +129,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
         //noinspection unchecked
         this.valuesAndCheck(
-            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
             0,
             3,
             f,
@@ -229,7 +229,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public void testCountAfterSaveCellsAddCellRemoveCell() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -241,12 +241,12 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         store.addCell(and);
 
         this.countAndCheck(
-            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
             1
         );
     }
 
-    // SpreadsheetExpressionReferenceStoreTesting.......................................................................
+    // SpreadsheetExpressionReferencesStoreTesting.......................................................................
 
     @Override
     public SpreadsheetCellReference id() {
@@ -287,17 +287,17 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     }
     
     @Override
-    public ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createStore() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> s = SpreadsheetExpressionReferenceStores.treeMap();
-        return ReadOnlySpreadsheetExpressionReferenceStore.with(s);
+    public ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> createStore() {
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> s = SpreadsheetExpressionReferencesStores.treeMap();
+        return ReadOnlySpreadsheetExpressionReferencesStore.with(s);
     }
 
     // hashCode/equals..................................................................................................
 
     @Test
     public void testEquals2() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store1 = SpreadsheetExpressionReferenceStores.treeMap();
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store2 = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store1 = SpreadsheetExpressionReferencesStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store2 = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -314,14 +314,14 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         );
 
         this.checkEquals(
-            ReadOnlySpreadsheetExpressionReferenceStore.with(store1),
-            ReadOnlySpreadsheetExpressionReferenceStore.with(store2)
+            ReadOnlySpreadsheetExpressionReferencesStore.with(store1),
+            ReadOnlySpreadsheetExpressionReferencesStore.with(store2)
         );
     }
 
     @Test
     public void testEqualsDifferent() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> different = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> different = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -333,12 +333,12 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         );
 
         this.checkNotEquals(
-            ReadOnlySpreadsheetExpressionReferenceStore.with(different)
+            ReadOnlySpreadsheetExpressionReferencesStore.with(different)
         );
     }
 
     @Override
-    public ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createObject() {
+    public ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> createObject() {
         return this.createStore();
     }
 
@@ -346,7 +346,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
 
     @Test
     public void testToString() {
-        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferenceStores.treeMap();
+        final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -354,7 +354,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
         store.saveCells(a1, Sets.of(b1, c1));
 
         this.toStringAndCheck(
-            ReadOnlySpreadsheetExpressionReferenceStore.with(store),
+            ReadOnlySpreadsheetExpressionReferencesStore.with(store),
             store.toString()
         );
     }
@@ -362,7 +362,7 @@ public class ReadOnlySpreadsheetExpressionReferenceStoreTest extends Spreadsheet
     // class............................................................................................................
     
     @Override
-    public Class<ReadOnlySpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> type() {
-        return Cast.to(ReadOnlySpreadsheetExpressionReferenceStore.class);
+    public Class<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> type() {
+        return Cast.to(ReadOnlySpreadsheetExpressionReferencesStore.class);
     }
 }

@@ -30,7 +30,7 @@ import java.util.Set;
  * A1=A2+A3+1 // A1=A2, A3
  * </pre>
  */
-public interface SpreadsheetCellReferencesStore extends SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> {
+public interface SpreadsheetCellReferencesStore extends SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> {
 
     /**
      * Finds any {@link SpreadsheetCellReference} with the provided {@link SpreadsheetCellReferenceOrRange}.

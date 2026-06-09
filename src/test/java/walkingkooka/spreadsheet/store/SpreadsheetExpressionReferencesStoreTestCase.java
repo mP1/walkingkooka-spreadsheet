@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
-public abstract class SpreadsheetExpressionReferenceStoreTestCase<S extends SpreadsheetExpressionReferenceStore<T>,
+public abstract class SpreadsheetExpressionReferencesStoreTestCase<S extends SpreadsheetExpressionReferencesStore<T>,
     T extends SpreadsheetExpressionReference & Comparable<T>>
-    implements SpreadsheetExpressionReferenceStoreTesting<S, T> {
+    implements SpreadsheetExpressionReferencesStoreTesting<S, T> {
 
-    SpreadsheetExpressionReferenceStoreTestCase() {
+    SpreadsheetExpressionReferencesStoreTestCase() {
         super();
     }
 }

@@ -45,7 +45,7 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     private TreeMapSpreadsheetLabelReferencesStore() {
-        this.store = SpreadsheetExpressionReferenceStores.treeMap();
+        this.store = SpreadsheetExpressionReferencesStores.treeMap();
     }
 
     @Override
@@ -93,7 +93,7 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
         );
     }
 
-    // SpreadsheetExpressionReferenceStore..............................................................................
+    // SpreadsheetExpressionReferencesStore..............................................................................
 
     @Override
     public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
@@ -225,7 +225,7 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
         return this.store.addDeleteWatcher(consumer);
     }
 
-    private final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> store;
+    private final SpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store;
 
     // Object...........................................................................................................
 

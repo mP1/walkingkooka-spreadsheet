@@ -33,7 +33,7 @@ import java.util.function.Consumer;
  * Note that all operations ignore the {@link SpreadsheetReferenceKind} and treat
  * absolute and relative references as equivalent.
  */
-public interface SpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
+public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
 
     @Override
     default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
