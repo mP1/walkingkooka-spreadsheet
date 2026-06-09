@@ -80,7 +80,7 @@ public final class MissingConverterValue implements HasValue<Object>, TreePrinta
 
     private boolean equals0(final MissingConverterValue other) {
         return Objects.equals(this.value, other.value) &&
-            this.type == other.type;
+            this.type.equals(other.type);
     }
 
     @Override
