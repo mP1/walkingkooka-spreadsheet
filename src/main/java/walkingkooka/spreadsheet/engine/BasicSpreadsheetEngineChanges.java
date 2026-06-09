@@ -561,7 +561,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         this.repository.labelReferences()
             .removeReferencesWithCell(cell);
 
-        final SpreadsheetCellRangeStore<SpreadsheetCellReference> cellRangeStore = this.repository.rangeToCells();
+        final SpreadsheetCellRangeStore cellRangeStore = this.repository.rangeToCells();
 
         for (final SpreadsheetCellRangeReference cellRange : cellRangeStore.findCellRangesIncludingCell(cell)) {
             cellRangeStore.removeValue(

@@ -44,7 +44,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.parser.SpreadsheetParser;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProviders;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserSelector;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceLoader;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -432,7 +431,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
         final SpreadsheetLabelStore labels = SpreadsheetLabelStores.treeMap();
         final SpreadsheetLabelReferencesStore labelReferences = SpreadsheetLabelReferencesStores.treeMap();
         final SpreadsheetMetadataStore metadatas = SpreadsheetMetadataStores.treeMap();
-        final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells = SpreadsheetCellRangeStores.treeMap();
+        final SpreadsheetCellRangeStore rangeToCells = SpreadsheetCellRangeStores.treeMap();
         final SpreadsheetRowStore rows = SpreadsheetRowStores.treeMap();
 
         metadatas.save(BEFORE);
@@ -483,7 +482,7 @@ public final class SpreadsheetMetadataStampingSpreadsheetEngineTest implements S
                     }
 
                     @Override
-                    public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
+                    public SpreadsheetCellRangeStore rangeToCells() {
                         return rangeToCells;
                     }
 

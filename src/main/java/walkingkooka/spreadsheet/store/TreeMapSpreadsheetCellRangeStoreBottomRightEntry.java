@@ -22,13 +22,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Comparator;
 
-final class TreeMapSpreadsheetCellRangeStoreBottomRightEntry<V> extends TreeMapSpreadsheetCellRangeStoreEntry<V> {
+final class TreeMapSpreadsheetCellRangeStoreBottomRightEntry extends TreeMapSpreadsheetCellRangeStoreEntry {
 
-    static <V> TreeMapSpreadsheetCellRangeStoreBottomRightEntry<V> with(final SpreadsheetCellRangeReference range, final V value) {
-        return new TreeMapSpreadsheetCellRangeStoreBottomRightEntry<>(range, value);
+    static  TreeMapSpreadsheetCellRangeStoreBottomRightEntry with(final SpreadsheetCellRangeReference range,
+                                                                  final SpreadsheetCellReference value) {
+        return new TreeMapSpreadsheetCellRangeStoreBottomRightEntry(
+            range,
+            value
+        );
     }
 
-    private TreeMapSpreadsheetCellRangeStoreBottomRightEntry(final SpreadsheetCellRangeReference range, final V value) {
+    private TreeMapSpreadsheetCellRangeStoreBottomRightEntry(final SpreadsheetCellRangeReference range,
+                                                             final SpreadsheetCellReference value) {
         super(range, value);
     }
 

@@ -24,13 +24,18 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import java.util.Comparator;
 import java.util.Set;
 
-final class TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> extends TreeMapSpreadsheetCellRangeStoreEntry<V> {
+final class TreeMapSpreadsheetCellRangeStoreTopLeftEntry extends TreeMapSpreadsheetCellRangeStoreEntry {
 
-    static <V> TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> with(final SpreadsheetCellRangeReference range, final V value) {
-        return new TreeMapSpreadsheetCellRangeStoreTopLeftEntry<>(range, value);
+    static  TreeMapSpreadsheetCellRangeStoreTopLeftEntry with(final SpreadsheetCellRangeReference range,
+                                                              final SpreadsheetCellReference value) {
+        return new TreeMapSpreadsheetCellRangeStoreTopLeftEntry(
+            range,
+            value
+        );
     }
 
-    private TreeMapSpreadsheetCellRangeStoreTopLeftEntry(final SpreadsheetCellRangeReference range, final V value) {
+    private TreeMapSpreadsheetCellRangeStoreTopLeftEntry(final SpreadsheetCellRangeReference range,
+                                                         final SpreadsheetCellReference value) {
         super(range, value);
     }
 
@@ -45,7 +50,7 @@ final class TreeMapSpreadsheetCellRangeStoreTopLeftEntry<V> extends TreeMapSprea
     }
 
     @Override
-    SpreadsheetCellReference secondaryCellReference(SpreadsheetCellRangeReference range) {
+    SpreadsheetCellReference secondaryCellReference(final SpreadsheetCellRangeReference range) {
         return range.end();
     }
 

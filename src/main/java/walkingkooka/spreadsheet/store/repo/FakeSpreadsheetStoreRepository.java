@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -78,7 +77,7 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     @Override
-    public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
+    public SpreadsheetCellRangeStore rangeToCells() {
         throw new UnsupportedOperationException();
     }
 

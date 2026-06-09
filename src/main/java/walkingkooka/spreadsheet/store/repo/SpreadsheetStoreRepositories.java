@@ -23,7 +23,6 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
@@ -68,7 +67,7 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetLabelStore labels,
                                                    final SpreadsheetLabelReferencesStore labelReferences,
                                                    final SpreadsheetMetadataStore metadatas,
-                                                   final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
+                                                   final SpreadsheetCellRangeStore rangeToCells,
                                                    final SpreadsheetRowStore rows,
                                                    final SpreadsheetUserStore users) {
         return BasicSpreadsheetStoreRepository.with(

@@ -597,7 +597,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
     private Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> extractExternalReferences() {
         final SpreadsheetStoreRepository repo = this.context.storeRepository();
         final SpreadsheetCellReferencesStore cellReferencesStore = repo.cellReferences();
-        final SpreadsheetCellRangeStore<SpreadsheetCellReference> cellRangesStore = repo.rangeToCells();
+        final SpreadsheetCellRangeStore cellRangesStore = repo.rangeToCells();
         final SpreadsheetLabelStore labelStore = repo.labels();
 
         final Map<SpreadsheetCellReference, Set<SpreadsheetExpressionReference>> all = SpreadsheetSelectionMaps.cell();

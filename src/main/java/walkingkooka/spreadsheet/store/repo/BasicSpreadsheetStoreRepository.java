@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -46,7 +45,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetLabelStore labels,
                                                 final SpreadsheetLabelReferencesStore labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
-                                                final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
+                                                final SpreadsheetCellRangeStore rangeToCells,
                                                 final SpreadsheetRowStore rows,
                                                 final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
@@ -84,7 +83,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetLabelStore labels,
                                             final SpreadsheetLabelReferencesStore labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
-                                            final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells,
+                                            final SpreadsheetCellRangeStore rangeToCells,
                                             final SpreadsheetRowStore rows,
                                             final SpreadsheetUserStore users) {
         this.cells = cells;
@@ -157,11 +156,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetMetadataStore metadatas;
 
     @Override
-    public SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells() {
+    public SpreadsheetCellRangeStore rangeToCells() {
         return this.rangeToCells;
     }
 
-    private final SpreadsheetCellRangeStore<SpreadsheetCellReference> rangeToCells;
+    private final SpreadsheetCellRangeStore rangeToCells;
 
     @Override
     public SpreadsheetRowStore rows() {

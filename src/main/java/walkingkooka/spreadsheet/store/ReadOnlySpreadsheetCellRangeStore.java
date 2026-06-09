@@ -26,24 +26,24 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeStore<V> {
+final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeStore {
 
-    static <V> ReadOnlySpreadsheetCellRangeStore<V> with(final SpreadsheetCellRangeStore<V> store) {
+    static ReadOnlySpreadsheetCellRangeStore with(final SpreadsheetCellRangeStore store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetCellRangeStore<>(store);
+        return new ReadOnlySpreadsheetCellRangeStore(store);
     }
 
-    private ReadOnlySpreadsheetCellRangeStore(final SpreadsheetCellRangeStore<V> store) {
+    private ReadOnlySpreadsheetCellRangeStore(final SpreadsheetCellRangeStore store) {
         this.store = store;
     }
 
     @Override
-    public Optional<List<V>> load(final SpreadsheetCellRangeReference id) {
+    public Optional<List<SpreadsheetCellReference>> load(final SpreadsheetCellRangeReference id) {
         return store.load(id);
     }
 
     @Override
-    public List<V> save(final List<V> value) {
+    public List<SpreadsheetCellReference> save(final List value) {
         Objects.requireNonNull(value, "value");
         throw new UnsupportedOperationException();
     }
@@ -69,8 +69,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public List<List<V>> values(final int offset,
-                                final int count) {
+    public List<List<SpreadsheetCellReference>> values(final int offset,
+                                                       final int count) {
         return store.values(
             offset,
             count
@@ -78,8 +78,8 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public List<List<V>> between(final SpreadsheetCellRangeReference from,
-                                 final SpreadsheetCellRangeReference to) {
+    public List<List<SpreadsheetCellReference>> between(final SpreadsheetCellRangeReference from,
+                                                        final SpreadsheetCellRangeReference to) {
         return store.between(
             from,
             to
@@ -87,7 +87,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Runnable addStoreWatcher(final StoreWatcher<List<V>> watcher) {
+    public Runnable addStoreWatcher(final StoreWatcher<List<SpreadsheetCellReference>> watcher) {
         return this.store.addStoreWatcher(watcher);
     }
 
@@ -97,12 +97,12 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<V> findValuesWithCell(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell) {
         return store.findValuesWithCell(cell);
     }
 
     @Override
-    public void addValue(final SpreadsheetCellRangeReference range, final V value) {
+    public void addValue(final SpreadsheetCellRangeReference range, final SpreadsheetCellReference value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -110,7 +110,7 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public void removeValue(final SpreadsheetCellRangeReference range, final V value) {
+    public void removeValue(final SpreadsheetCellRangeReference range, final SpreadsheetCellReference value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -118,13 +118,13 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     }
 
     @Override
-    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final V value) {
+    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final SpreadsheetCellReference value) {
         Objects.requireNonNull(value, "value");
 
         return this.store.findCellRangesWithValue(value);
     }
 
-    private final SpreadsheetCellRangeStore<V> store;
+    private final SpreadsheetCellRangeStore store;
 
     // Object...........................................................................................................
 
@@ -137,10 +137,10 @@ final class ReadOnlySpreadsheetCellRangeStore<V> implements SpreadsheetCellRange
     public boolean equals(final Object other) {
         return this == other ||
             (other instanceof ReadOnlySpreadsheetCellRangeStore &&
-                this.equals0((ReadOnlySpreadsheetCellRangeStore<?>) other));
+                this.equals0((ReadOnlySpreadsheetCellRangeStore) other));
     }
 
-    private boolean equals0(final ReadOnlySpreadsheetCellRangeStore<?> other) {
+    private boolean equals0(final ReadOnlySpreadsheetCellRangeStore other) {
         return this.store.equals(other.store);
     }
 

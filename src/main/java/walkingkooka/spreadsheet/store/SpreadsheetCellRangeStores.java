@@ -27,21 +27,21 @@ public final class SpreadsheetCellRangeStores implements PublicStaticHelper {
     /**
      * {@see FakeSpreadsheetCellRangeStore}
      */
-    public static <V> SpreadsheetCellRangeStore<V> fake() {
-        return new FakeSpreadsheetCellRangeStore<>();
+    public static <V> SpreadsheetCellRangeStore fake() {
+        return new FakeSpreadsheetCellRangeStore();
     }
 
     /**
      * {@see ReadOnlySpreadsheetCellRangeStore}
      */
-    public static <V> SpreadsheetCellRangeStore<V> readOnly(final SpreadsheetCellRangeStore<V> store) {
+    public static <V> SpreadsheetCellRangeStore readOnly(final SpreadsheetCellRangeStore store) {
         return ReadOnlySpreadsheetCellRangeStore.with(store);
     }
 
     /**
      * {@see TreeMapSpreadsheetCellRangeStore}
      */
-    public static <V> SpreadsheetCellRangeStore<V> treeMap() {
+    public static SpreadsheetCellRangeStore treeMap() {
         return TreeMapSpreadsheetCellRangeStore.create();
     }
 
