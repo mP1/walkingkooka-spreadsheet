@@ -129,7 +129,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithCurrency() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.CURRENCY,
-            (c) -> c.currency()
+            SpreadsheetCell::currency
         );
     }
 
@@ -137,7 +137,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithDateTimeSymbols() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.DATE_TIME_SYMBOLS,
-            (c) -> c.dateTimeSymbols()
+            SpreadsheetCell::dateTimeSymbols
         );
     }
 
@@ -145,7 +145,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithDecimalNumberSymbols() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.DECIMAL_NUMBER_SYMBOLS,
-            (c) -> c.decimalNumberSymbols()
+            SpreadsheetCell::decimalNumberSymbols
         );
     }
 
@@ -153,7 +153,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithFormula() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.FORMULA,
-            (c) -> c.formula()
+            SpreadsheetCell::formula
         );
     }
 
@@ -161,7 +161,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithFormatter() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.FORMATTER,
-            (c) -> c.formatter()
+            SpreadsheetCell::formatter
         );
     }
 
@@ -169,7 +169,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithLocale() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.LOCALE,
-            (c) -> c.locale()
+            SpreadsheetCell::locale
         );
     }
 
@@ -177,7 +177,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithParser() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.PARSER,
-            (c) -> c.parser()
+            SpreadsheetCell::parser
         );
     }
 
@@ -185,7 +185,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithStyle() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.STYLE,
-            (c) -> c.style()
+            SpreadsheetCell::style
         );
     }
 
@@ -193,7 +193,7 @@ public final class SpreadsheetCellValueKindTest implements TreePrintableTesting,
     public void testCellValueWithValidator() {
         this.cellValueAndCheck(
             SpreadsheetCellValueKind.VALIDATOR,
-            (c) -> c.validator()
+            SpreadsheetCell::validator
         );
     }
 

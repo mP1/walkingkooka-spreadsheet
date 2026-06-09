@@ -181,7 +181,7 @@ public final class SpreadsheetCellReferenceToTextStyleMapTest implements MapTest
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

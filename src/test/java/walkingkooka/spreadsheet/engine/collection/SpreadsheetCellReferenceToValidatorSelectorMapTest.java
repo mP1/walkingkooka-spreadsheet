@@ -179,7 +179,7 @@ public final class SpreadsheetCellReferenceToValidatorSelectorMapTest implements
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

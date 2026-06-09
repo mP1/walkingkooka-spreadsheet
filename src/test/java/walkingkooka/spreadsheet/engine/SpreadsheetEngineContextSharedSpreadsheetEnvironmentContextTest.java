@@ -341,7 +341,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
         assertThrows(
             MissingEnvironmentValueException.class,
-            () -> context.spreadsheetMetadata()
+            context::spreadsheetMetadata
         );
     }
 
@@ -412,7 +412,7 @@ public final class SpreadsheetEngineContextSharedSpreadsheetEnvironmentContextTe
 
         assertThrows(
             MissingEnvironmentValueException.class,
-            () -> context.storeRepository()
+            context::storeRepository
         );
     }
 

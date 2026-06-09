@@ -179,7 +179,7 @@ public final class SpreadsheetCellReferenceToLocaleMapTest implements MapTesting
 
         assertThrows(
             UnsupportedOperationException.class,
-            () -> iterator.remove()
+            iterator::remove
         );
     }
 

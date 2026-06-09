@@ -339,7 +339,7 @@ public final class SpreadsheetContextSharedFixedSpreadsheetIdTest extends Spread
 
         final IllegalStateException expected = assertThrows(
             IllegalStateException.class,
-            () -> context.spreadsheetProvider()
+            context::spreadsheetProvider
         );
 
         this.getMessageAndCheck(

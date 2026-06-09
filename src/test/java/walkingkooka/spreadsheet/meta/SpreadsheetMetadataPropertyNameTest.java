@@ -278,7 +278,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testToConverterSelectorWithNotExpressionFunctionAliasSet() {
         final IllegalStateException thrown = assertThrows(
             IllegalStateException.class,
-            () -> SpreadsheetMetadataPropertyName.LOCALE.toConverterSelector()
+            SpreadsheetMetadataPropertyName.LOCALE::toConverterSelector
         );
 
         this.getMessageAndCheck(
