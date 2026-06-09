@@ -136,11 +136,6 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     @Override
-    public int countCellsWithReference(final SpreadsheetLabelName label) {
-        return this.store.countCellsWithReference(label);
-    }
-
-    @Override
     public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> watcher) {
         return this.store.addRemoveCellWatcher(watcher);
     }

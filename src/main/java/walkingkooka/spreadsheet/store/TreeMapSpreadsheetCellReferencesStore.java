@@ -125,11 +125,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public int countCellsWithReference(final SpreadsheetCellReference reference) {
-        return this.store.countCellsWithReference(reference);
-    }
-
-    @Override
     public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> watcher) {
         return this.store.addRemoveCellWatcher(watcher);
     }
