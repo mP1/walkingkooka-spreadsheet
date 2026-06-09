@@ -45,7 +45,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
      */
     public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label,
                                                final SpreadsheetExpressionReference reference) {
-        checkLabel(label);
+        Objects.requireNonNull(label, "label");
         checkReference(reference, label);
 
         return new SpreadsheetLabelMapping(
@@ -68,7 +68,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     }
 
     public SpreadsheetLabelMapping setLabel(final SpreadsheetLabelName label) {
-        checkLabel(label);
+        Objects.requireNonNull(label, "label");
 
         final SpreadsheetExpressionReference reference = this.reference;
         if (label.equals(reference)) {
@@ -87,10 +87,6 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         return this.label.equals(label) ?
             this :
             this.replace(label, reference);
-    }
-
-    private static void checkLabel(final SpreadsheetLabelName label) {
-        Objects.requireNonNull(label, "label");
     }
 
     private final SpreadsheetLabelName label;
