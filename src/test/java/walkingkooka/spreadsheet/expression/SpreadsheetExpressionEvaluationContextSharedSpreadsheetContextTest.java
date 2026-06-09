@@ -481,9 +481,7 @@ public final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetContex
 
     @Test
     public void testSetLineEnding() {
-        final SpreadsheetEnvironmentContext spreadsheetEnvironmentContext = SPREADSHEET_ENVIRONMENT_CONTEXT;
-
-        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(spreadsheetEnvironmentContext);
+        final SpreadsheetExpressionEvaluationContextSharedSpreadsheetContext context = this.createContext(SPREADSHEET_ENVIRONMENT_CONTEXT);
 
         final LineEnding lineEnding = LineEnding.CRNL;
 
