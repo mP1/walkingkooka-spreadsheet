@@ -105,7 +105,7 @@ public final class SpreadsheetCell implements CanBeEmpty,
     UsesToStringBuilder {
 
     /**
-     * A {@link Comparator} that only uses the {@link #REFERENCE_COMPARATOR}.
+     * A {@link Comparator} that only uses the {@link SpreadsheetCell#reference()}.
      */
     public static final Comparator<SpreadsheetCell> REFERENCE_COMPARATOR = Comparator.comparing(SpreadsheetCell::reference);
 
