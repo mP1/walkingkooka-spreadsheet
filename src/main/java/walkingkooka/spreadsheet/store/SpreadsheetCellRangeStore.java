@@ -59,14 +59,6 @@ public interface SpreadsheetCellRangeStore<V> extends SpreadsheetStore<Spreadshe
                   final V value);
 
     /**
-     * If the old value exists replace it with the new value. If old does not exist the replace fails.
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    boolean replaceValue(final SpreadsheetCellRangeReference range,
-                         final V newValue,
-                         final V oldValue);
-
-    /**
      * Removes a single value if it exists for the given {@link SpreadsheetCellRangeReference}
      */
     void removeValue(final SpreadsheetCellRangeReference range,

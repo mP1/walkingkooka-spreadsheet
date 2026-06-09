@@ -57,11 +57,6 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Test
-    public void testReplacealueFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.createStore().replaceValue(RANGE, "old", "new"));
-    }
-
-    @Test
     public void testRemoveValueFails() {
         assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeValue(RANGE, VALUE));
     }

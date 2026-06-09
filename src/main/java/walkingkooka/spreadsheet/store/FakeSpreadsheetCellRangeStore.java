@@ -52,17 +52,6 @@ public class FakeSpreadsheetCellRangeStore<V> extends FakeStore<SpreadsheetCellR
     }
 
     @Override
-    public boolean replaceValue(final SpreadsheetCellRangeReference range,
-                                final V newValue,
-                                final V oldValue) {
-        Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(newValue, "newValue");
-        Objects.requireNonNull(oldValue, "oldValue");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void removeValue(final SpreadsheetCellRangeReference range,
                             final V value) {
         Objects.requireNonNull(range, "range");
