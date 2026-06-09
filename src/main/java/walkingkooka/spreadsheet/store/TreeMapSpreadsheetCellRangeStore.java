@@ -207,63 +207,6 @@ final class TreeMapSpreadsheetCellRangeStore<V> implements SpreadsheetCellRangeS
         }
     }
 
-    // replaceValue.....................................................................................................
-
-    @Override
-    public boolean replaceValue(final SpreadsheetCellRangeReference range,
-                                final V newValue,
-                                final V oldValue) {
-        Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(newValue, "newValue");
-        Objects.requireNonNull(oldValue, "oldValue");
-
-        return false == oldValue.equals(newValue) &&
-            this.replaceValueValueToRanges(range, newValue, oldValue) &&
-            this.replaceValueTopLeft(range, newValue, oldValue) &&
-            this.replaceValueBottomRight(range, newValue, oldValue);
-    }
-
-    private boolean replaceValueValueToRanges(final SpreadsheetCellRangeReference range,
-                                              final V newValue,
-                                              final V oldValue) {
-        final Set<SpreadsheetCellRangeReference> deleted = this.valueToRanges.remove(oldValue);
-
-        final boolean replaced = null != deleted;
-        if (replaced) {
-            this.addValueToValueToRanges(
-                range,
-                newValue
-            );
-        }
-        return replaced;
-    }
-
-    private boolean replaceValueTopLeft(final SpreadsheetCellRangeReference range,
-                                        final V newValue,
-                                        final V oldValue) {
-        final SpreadsheetCellReference topLeft = range.begin();
-        final TreeMapSpreadsheetCellRangeStoreEntry<V> values = this.topLeft.get(topLeft);
-        return null != values &&
-            values.replace(
-                range,
-                newValue,
-                oldValue
-            );
-    }
-
-    private boolean replaceValueBottomRight(final SpreadsheetCellRangeReference range,
-                                            final V newValue,
-                                            final V oldValue) {
-        final SpreadsheetCellReference bottomRight = range.end();
-        final TreeMapSpreadsheetCellRangeStoreEntry<V> values = this.bottomRight.get(bottomRight);
-        return null != values &&
-            values.replace(
-                range,
-                newValue,
-                oldValue
-            );
-    }
-
     private void addValueToValueToRanges(final SpreadsheetCellRangeReference range,
                                          final V value) {
         Set<SpreadsheetCellRangeReference> updated = this.valueToRanges.get(value);

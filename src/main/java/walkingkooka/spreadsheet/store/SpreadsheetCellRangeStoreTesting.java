@@ -159,47 +159,6 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         );
     }
 
-    // replaceValue.....................................................................................................
-
-    @Test
-    default void testReplaceValueNullRangeFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createStore()
-                .replaceValue(
-                    null,
-                    this.valueValue(),
-                    this.valueValue()
-                )
-        );
-    }
-
-    @Test
-    default void testReplaceValueNullNewValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createStore()
-                .replaceValue(
-                    RANGE,
-                    null,
-                    this.valueValue()
-                )
-        );
-    }
-
-    @Test
-    default void testReplaceValueNullOldValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createStore()
-                .replaceValue(
-                    RANGE,
-                    this.valueValue(),
-                    null
-                )
-        );
-    }
-
     @Test
     default void testRemoveValueNullRangeFails() {
         assertThrows(
