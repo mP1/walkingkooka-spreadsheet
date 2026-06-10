@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -53,11 +52,6 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     @Override
     public SpreadsheetFormStore forms() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetGroupStore groups() {
         throw new UnsupportedOperationException();
     }
 

@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -154,11 +153,6 @@ final class SpreadsheetMetadataAwareSpreadsheetCellStoreSpreadsheetStoreReposito
     @Override
     public SpreadsheetFormStore forms() {
         return this.repository.forms();
-    }
-
-    @Override
-    public SpreadsheetGroupStore groups() {
-        return this.repository.groups();
     }
 
     @Override

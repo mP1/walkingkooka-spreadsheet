@@ -111,7 +111,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
@@ -27355,7 +27354,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetCellReferencesStores.treeMap(),
                 SpreadsheetColumnStores.treeMap(),
                 SpreadsheetFormStores.treeMap(),
-                SpreadsheetGroupStores.fake(),
                 SpreadsheetLabelStores.treeMap(),
                 SpreadsheetLabelReferencesStores.treeMap(),
                 SpreadsheetMetadataStores.fake(),

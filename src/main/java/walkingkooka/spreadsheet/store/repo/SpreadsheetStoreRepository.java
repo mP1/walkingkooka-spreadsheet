@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -54,11 +53,6 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetFormStore} holding forms
      */
     SpreadsheetFormStore forms();
-
-    /**
-     * A {@link SpreadsheetGroupStore} holding groups.
-     */
-    SpreadsheetGroupStore groups();
 
     /**
      * A {@link SpreadsheetLabelStore} holding labels.

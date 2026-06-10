@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -55,8 +53,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private final static SpreadsheetFormStore FORMS = SpreadsheetFormStores.fake();
 
-    private final static SpreadsheetGroupStore GROUPS = SpreadsheetGroupStores.fake();
-
     private final static SpreadsheetLabelStore LABELS = SpreadsheetLabelStores.fake();
 
     private final static SpreadsheetLabelReferencesStore LABEL_REFERENCES = SpreadsheetLabelReferencesStores.fake();
@@ -78,7 +74,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -98,7 +93,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 null,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -118,7 +112,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 null,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -137,27 +130,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELLS,
                 CELL_REFERENCES,
                 COLUMNS,
-                null,
-                GROUPS,
-                LABELS,
-                LABEL_REFERENCES,
-                METADATAS,
-                RANGE_TO_CELLS,
-                ROWS,
-                USERS
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullGroupsFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
-                CELLS,
-                CELL_REFERENCES,
-                COLUMNS,
-                FORMS,
                 null,
                 LABELS,
                 LABEL_REFERENCES,
@@ -178,7 +150,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 null,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -198,7 +169,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 null,
                 METADATAS,
@@ -218,7 +188,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 null,
@@ -238,7 +207,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -258,7 +226,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -278,7 +245,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -296,7 +262,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             CELL_REFERENCES,
             COLUMNS,
             FORMS,
-            GROUPS,
             LABELS,
             LABEL_REFERENCES,
             METADATAS,
@@ -316,7 +281,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -335,7 +299,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 SpreadsheetCellReferencesStores.fake(),
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -354,7 +317,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 SpreadsheetColumnStores.fake(),
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -373,26 +335,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 SpreadsheetFormStores.fake(),
-                GROUPS,
-                LABELS,
-                LABEL_REFERENCES,
-                METADATAS,
-                RANGE_TO_CELLS,
-                ROWS,
-                USERS
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentGroups() {
-        this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
-                CELLS,
-                CELL_REFERENCES,
-                COLUMNS,
-                FORMS,
-                SpreadsheetGroupStores.fake(),
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -411,7 +353,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 SpreadsheetLabelStores.fake(),
                 LABEL_REFERENCES,
                 METADATAS,
@@ -430,7 +371,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 SpreadsheetLabelReferencesStores.fake(),
                 METADATAS,
@@ -449,7 +389,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 SpreadsheetMetadataStores.fake(),
@@ -468,7 +407,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -487,7 +425,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -506,7 +443,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 CELL_REFERENCES,
                 COLUMNS,
                 FORMS,
-                GROUPS,
                 LABELS,
                 LABEL_REFERENCES,
                 METADATAS,
@@ -530,7 +466,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetCellReferencesStore cellReferences = CELL_REFERENCES;
         final SpreadsheetColumnStore columns = COLUMNS;
         final SpreadsheetFormStore forms = FORMS;
-        final SpreadsheetGroupStore groups = GROUPS;
         final SpreadsheetLabelStore labels = LABELS;
         final SpreadsheetLabelReferencesStore labelReferences = LABEL_REFERENCES;
         final SpreadsheetCellRangeStore rangeToCells = RANGE_TO_CELLS;
@@ -544,7 +479,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 cellReferences,
                 columns,
                 forms,
-                groups,
                 labels,
                 labelReferences,
                 metadatas,
@@ -552,7 +486,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 rows,
                 users
             ),
-            cells + " " + cellReferences + " " + columns + " " + forms + " " + groups + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + users);
+            cells + " " + cellReferences + " " + columns + " " + forms + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + users);
     }
 
     // class............................................................................................................

@@ -23,8 +23,6 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.meta.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.parser.provider.SpreadsheetParserProvider;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
@@ -63,7 +61,6 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
                                                    final SpreadsheetCellReferencesStore cellReferences,
                                                    final SpreadsheetColumnStore columns,
                                                    final SpreadsheetFormStore forms,
-                                                   final SpreadsheetGroupStore groups,
                                                    final SpreadsheetLabelStore labels,
                                                    final SpreadsheetLabelReferencesStore labelReferences,
                                                    final SpreadsheetMetadataStore metadatas,
@@ -75,7 +72,6 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
             cellReferences,
             columns,
             forms,
-            groups,
             labels,
             labelReferences,
             metadatas,
@@ -111,7 +107,6 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
             SpreadsheetCellReferencesStores.treeMap(),
             SpreadsheetColumnStores.treeMap(),
             SpreadsheetFormStores.treeMap(),
-            SpreadsheetGroupStores.treeMap(),
             SpreadsheetLabelStores.treeMap(),
             SpreadsheetLabelReferencesStores.treeMap(),
             metadatas,

@@ -37,11 +37,6 @@ public interface SpreadsheetStoreRepositoryTesting<S extends SpreadsheetStoreRep
     }
 
     @Test
-    default void testGroups() {
-        assertNotNull(this.createStoreRepository().groups());
-    }
-
-    @Test
     default void testLabels() {
         assertNotNull(this.createStoreRepository().labels());
     }
