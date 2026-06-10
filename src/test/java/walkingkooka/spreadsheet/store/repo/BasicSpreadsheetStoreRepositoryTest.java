@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -63,8 +61,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
 
     private final static SpreadsheetRowStore ROWS = SpreadsheetRowStores.fake();
 
-    private final static SpreadsheetUserStore USERS = SpreadsheetUserStores.fake();
-
     @Test
     public void testWithNullCellsFails() {
         assertThrows(
@@ -78,8 +74,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -97,8 +92,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -116,8 +110,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -135,8 +128,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -154,8 +146,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -173,8 +164,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 null,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -192,8 +182,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 null,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -211,8 +200,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 null,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -230,26 +218,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                null,
-                USERS
-            )
-        );
-    }
-
-    @Test
-    public void testWithNullUserFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> BasicSpreadsheetStoreRepository.with(
-                CELLS,
-                CELL_REFERENCES,
-                COLUMNS,
-                FORMS,
-                LABELS,
-                LABEL_REFERENCES,
-                METADATAS,
-                RANGE_TO_CELLS,
-                ROWS,
                 null
             )
         );
@@ -266,8 +234,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
             LABEL_REFERENCES,
             METADATAS,
             RANGE_TO_CELLS,
-            ROWS,
-            USERS
+            ROWS
         );
     }
 
@@ -285,8 +252,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -303,8 +269,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -321,8 +286,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -339,8 +303,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -357,8 +320,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -375,8 +337,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 SpreadsheetLabelReferencesStores.fake(),
                 METADATAS,
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -393,8 +354,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 SpreadsheetMetadataStores.fake(),
                 RANGE_TO_CELLS,
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -411,8 +371,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 SpreadsheetCellRangeStores.fake(),
-                ROWS,
-                USERS
+                ROWS
             )
         );
     }
@@ -429,26 +388,7 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 LABEL_REFERENCES,
                 METADATAS,
                 RANGE_TO_CELLS,
-                SpreadsheetRowStores.fake(),
-                USERS
-            )
-        );
-    }
-
-    @Test
-    public void testEqualsDifferentUsers() {
-        this.checkNotEquals(
-            BasicSpreadsheetStoreRepository.with(
-                CELLS,
-                CELL_REFERENCES,
-                COLUMNS,
-                FORMS,
-                LABELS,
-                LABEL_REFERENCES,
-                METADATAS,
-                RANGE_TO_CELLS,
-                ROWS,
-                SpreadsheetUserStores.fake()
+                SpreadsheetRowStores.fake()
             )
         );
     }
@@ -471,7 +411,6 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         final SpreadsheetCellRangeStore rangeToCells = RANGE_TO_CELLS;
         final SpreadsheetMetadataStore metadatas = METADATAS;
         final SpreadsheetRowStore rows = ROWS;
-        final SpreadsheetUserStore users = USERS;
 
         this.toStringAndCheck(
             BasicSpreadsheetStoreRepository.with(
@@ -483,10 +422,9 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                 labelReferences,
                 metadatas,
                 rangeToCells,
-                rows,
-                users
+                rows
             ),
-            cells + " " + cellReferences + " " + columns + " " + forms + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows + " " + users);
+            cells + " " + cellReferences + " " + columns + " " + forms + " " + labels + " " + labelReferences + " " + metadatas + " " + rangeToCells + " " + rows);
     }
 
     // class............................................................................................................

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -78,9 +77,4 @@ public interface SpreadsheetStoreRepository {
      * A {@link SpreadsheetRowStore} holding rows.
      */
     SpreadsheetRowStore rows();
-
-    /**
-     * A {@link SpreadsheetUserStore} holding users.
-     */
-    SpreadsheetUserStore users();
 }

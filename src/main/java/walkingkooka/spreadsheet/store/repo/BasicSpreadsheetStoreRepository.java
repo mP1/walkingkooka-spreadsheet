@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -44,8 +43,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetLabelReferencesStore labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetCellRangeStore rangeToCells,
-                                                final SpreadsheetRowStore rows,
-                                                final SpreadsheetUserStore users) {
+                                                final SpreadsheetRowStore rows) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
         Objects.requireNonNull(columns, "columns");
@@ -55,7 +53,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(metadatas, "metadatas");
         Objects.requireNonNull(rangeToCells, "rangeToCells");
         Objects.requireNonNull(rows, "rows");
-        Objects.requireNonNull(users, "users");
 
         return new BasicSpreadsheetStoreRepository(
             cells,
@@ -66,8 +63,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             labelReferences,
             metadatas,
             rangeToCells,
-            rows,
-            users
+            rows
         );
     }
 
@@ -79,8 +75,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetLabelReferencesStore labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetCellRangeStore rangeToCells,
-                                            final SpreadsheetRowStore rows,
-                                            final SpreadsheetUserStore users) {
+                                            final SpreadsheetRowStore rows) {
         this.cells = cells;
         this.cellReferences = cellReferences;
         this.columns = columns;
@@ -90,7 +85,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         this.metadatas = metadatas;
         this.rangeToCells = rangeToCells;
         this.rows = rows;
-        this.users = users;
     }
 
     @Override
@@ -156,13 +150,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
 
     private final SpreadsheetRowStore rows;
 
-    @Override
-    public SpreadsheetUserStore users() {
-        return this.users;
-    }
-
-    private final SpreadsheetUserStore users;
-
     // Object...........................................................................................................
 
     @Override
@@ -176,8 +163,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.labelReferences,
             this.metadatas,
             this.rangeToCells,
-            this.rows,
-            this.users
+            this.rows
         );
     }
 
@@ -197,8 +183,7 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.labelReferences.equals(other.labelReferences) &&
             this.metadatas.equals(other.metadatas) &&
             this.rangeToCells.equals(other.rangeToCells) &&
-            this.rows.equals(other.rows) &&
-            this.users.equals(other.users);
+            this.rows.equals(other.rows);
     }
 
     @Override
@@ -211,7 +196,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.labelReferences + " " +
             this.metadatas + " " +
             this.rangeToCells + " " +
-            this.rows + " " +
-            this.users;
+            this.rows;
     }
 }
