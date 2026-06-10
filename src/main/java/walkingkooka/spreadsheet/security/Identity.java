@@ -33,13 +33,6 @@ public abstract class Identity<I extends IdentityId> implements HasValue<Optiona
     HasId<Optional<I>> {
 
     /**
-     * Factory that creates a new {@link Group}.
-     */
-    public static Group group(final Optional<GroupId> id, final GroupName name) {
-        return Group.with(id, name);
-    }
-
-    /**
      * Factory that creates a new {@link User}.
      */
     public static User user(final Optional<UserId> id, final EmailAddress email) {
