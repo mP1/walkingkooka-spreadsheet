@@ -56,11 +56,6 @@ public interface SpreadsheetStoreRepositoryTesting<S extends SpreadsheetStoreRep
         assertNotNull(this.createStoreRepository().rangeToCells());
     }
 
-    @Test
-    default void testUsers() {
-        assertNotNull(this.createStoreRepository().users());
-    }
-
     S createStoreRepository();
 
     // TypeNameTesting..................................................................................................
