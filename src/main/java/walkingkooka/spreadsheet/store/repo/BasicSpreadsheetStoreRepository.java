@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellReferencesStore;
@@ -41,7 +40,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                                 final SpreadsheetCellReferencesStore cellReferences,
                                                 final SpreadsheetColumnStore columns,
                                                 final SpreadsheetFormStore forms,
-                                                final SpreadsheetGroupStore groups,
                                                 final SpreadsheetLabelStore labels,
                                                 final SpreadsheetLabelReferencesStore labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
@@ -52,7 +50,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         Objects.requireNonNull(cellReferences, "cellReferences");
         Objects.requireNonNull(columns, "columns");
         Objects.requireNonNull(forms, "forms");
-        Objects.requireNonNull(groups, "groups");
         Objects.requireNonNull(labels, "labels");
         Objects.requireNonNull(labelReferences, "labelReferences");
         Objects.requireNonNull(metadatas, "metadatas");
@@ -65,7 +62,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             cellReferences,
             columns,
             forms,
-            groups,
             labels,
             labelReferences,
             metadatas,
@@ -79,7 +75,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
                                             final SpreadsheetCellReferencesStore cellReferences,
                                             final SpreadsheetColumnStore columns,
                                             final SpreadsheetFormStore forms,
-                                            final SpreadsheetGroupStore groups,
                                             final SpreadsheetLabelStore labels,
                                             final SpreadsheetLabelReferencesStore labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
@@ -90,7 +85,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
         this.cellReferences = cellReferences;
         this.columns = columns;
         this.forms = forms;
-        this.groups = groups;
         this.labels = labels;
         this.labelReferences = labelReferences;
         this.metadatas = metadatas;
@@ -126,13 +120,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     private final SpreadsheetFormStore forms;
-
-    @Override
-    public SpreadsheetGroupStore groups() {
-        return this.groups;
-    }
-
-    private final SpreadsheetGroupStore groups;
 
     @Override
     public SpreadsheetLabelStore labels() {
@@ -185,7 +172,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.cellReferences,
             this.columns,
             this.forms,
-            this.groups,
             this.labels,
             this.labelReferences,
             this.metadatas,
@@ -207,7 +193,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.cellReferences.equals(other.cellReferences) &&
             this.columns.equals(other.columns) &&
             this.forms.equals(other.forms) &&
-            this.groups.equals(other.groups) &&
             this.labels.equals(other.labels) &&
             this.labelReferences.equals(other.labelReferences) &&
             this.metadatas.equals(other.metadatas) &&
@@ -222,7 +207,6 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
             this.cellReferences + " " +
             this.columns + " " +
             this.forms + " " +
-            this.groups + " " +
             this.labels + " " +
             this.labelReferences + " " +
             this.metadatas + " " +
