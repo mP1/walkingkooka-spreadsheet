@@ -39,7 +39,7 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
 
     @Override
     public Optional<List<SpreadsheetCellReference>> load(final SpreadsheetCellRangeReference id) {
-        return store.load(id);
+        return this.store.load(id);
     }
 
     @Override
@@ -56,13 +56,13 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
 
     @Override
     public int count() {
-        return store.count();
+        return this.store.count();
     }
 
     @Override
     public Set<SpreadsheetCellRangeReference> ids(final int offset,
                                                   final int count) {
-        return store.ids(
+        return this.store.ids(
             offset,
             count
         );
@@ -71,7 +71,7 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
     @Override
     public List<List<SpreadsheetCellReference>> values(final int offset,
                                                        final int count) {
-        return store.values(
+        return this.store.values(
             offset,
             count
         );
@@ -80,7 +80,7 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
     @Override
     public List<List<SpreadsheetCellReference>> between(final SpreadsheetCellRangeReference from,
                                                         final SpreadsheetCellRangeReference to) {
-        return store.between(
+        return this.store.between(
             from,
             to
         );
@@ -93,12 +93,12 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
 
     @Override
     public Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell) {
-        return store.findCellRangesIncludingCell(cell);
+        return this.store.findCellRangesIncludingCell(cell);
     }
 
     @Override
     public Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell) {
-        return store.findValuesWithCell(cell);
+        return this.store.findValuesWithCell(cell);
     }
 
     @Override
