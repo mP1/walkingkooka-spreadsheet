@@ -19,43 +19,19 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.store.FakeStore;
+import walkingkooka.store.FakeMultiValueStore;
 import walkingkooka.test.Fake;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class FakeSpreadsheetCellRangeStore extends FakeStore<SpreadsheetCellRangeReference, List<SpreadsheetCellReference>> implements SpreadsheetCellRangeStore, Fake {
+public class FakeSpreadsheetCellRangeStore extends FakeMultiValueStore<SpreadsheetCellRangeReference, SpreadsheetCellReference>
+    implements SpreadsheetCellRangeStore,
+    Fake {
 
     @Override
     public Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void addValue(final SpreadsheetCellRangeReference range,
-                         final SpreadsheetCellReference value) {
-        Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(value, "value");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void removeValue(final SpreadsheetCellRangeReference range,
-                            final SpreadsheetCellReference value) {
-        Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(value, "value");
 
         throw new UnsupportedOperationException();
     }

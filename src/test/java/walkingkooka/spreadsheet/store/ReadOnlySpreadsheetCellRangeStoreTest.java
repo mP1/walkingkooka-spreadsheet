@@ -25,12 +25,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.ReadOnlyStoreTesting;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetCellRangeStoreTesting<ReadOnlySpreadsheetCellRangeStore>,
-    ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore, SpreadsheetCellRangeReference, List<SpreadsheetCellReference>>,
+    ReadOnlyStoreTesting<ReadOnlySpreadsheetCellRangeStore, SpreadsheetCellRangeReference, SpreadsheetCellReference>,
     HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetCellRangeStore> {
 
     private final static SpreadsheetCellRangeReference RANGE = SpreadsheetSelection.parseCellRange("a1:b2");
@@ -44,7 +42,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
 
         this.countAndCheck(store, 1);
 
-        this.loadRangeAndCheck(ReadOnlySpreadsheetCellRangeStore.with(store), RANGE, VALUE);
+        this.findValuesByIdAndCheck(ReadOnlySpreadsheetCellRangeStore.with(store), RANGE, VALUE);
     }
 
     @Override
@@ -71,12 +69,11 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Test
-    @Override
-    public void testFindCellRangesWithValue() {
+    public void testFindIdsByValue() {
         final SpreadsheetCellRangeStore store = SpreadsheetCellRangeStores.treeMap();
         store.addValue(RANGE, VALUE);
 
-        this.findCellRangesWithValueAndCheck(
+        this.findIdsByValueAndCheck(
             ReadOnlySpreadsheetCellRangeStore.with(store),
             VALUE,
             RANGE
@@ -94,7 +91,7 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Override
-    public SpreadsheetCellReference valueValue() {
+    public SpreadsheetCellReference value() {
         return SpreadsheetCellReference.A1;
     }
 
