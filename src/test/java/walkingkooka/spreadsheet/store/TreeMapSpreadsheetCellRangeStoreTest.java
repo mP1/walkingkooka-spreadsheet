@@ -79,7 +79,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
     }
 
     @Test
@@ -90,7 +94,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
     }
 
     @Test
@@ -101,7 +109,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1AABSOLUTE, VALUE1);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1AABSOLUTE,
+            VALUE1
+        );
     }
 
     @Test
@@ -112,7 +124,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1AABSOLUTE, VALUE1);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1AABSOLUTE,
+            VALUE1
+        );
     }
 
     @Test
@@ -124,7 +140,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
     }
 
     @Test
@@ -136,7 +156,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1, VALUE2
+        );
     }
 
     @Test
@@ -149,7 +173,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1, VALUE2
+        );
     }
 
     @Test
@@ -162,9 +190,21 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 3);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE2);
-        this.findValuesByIdAndCheck(store, RANGE3, VALUE3);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE2
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE3,
+            VALUE3
+        );
     }
 
     @Test
@@ -178,8 +218,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 4);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1, VALUE2);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE3, VALUE4);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1, VALUE2
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE3, VALUE4
+        );
     }
 
     @Test
@@ -191,8 +239,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
-        this.findValuesByIdAndCheck(store, RANGE1B, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1B,
+            VALUE2
+        );
     }
 
     @Test
@@ -204,8 +260,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
-        this.findValuesByIdAndCheck(store, RANGE1C, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1C,
+            VALUE2
+        );
     }
 
     @Test
@@ -217,8 +281,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
-        this.findValuesByIdAndCheck(store, RANGE1C, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1C,
+            VALUE2
+        );
     }
 
     @Test
@@ -230,8 +302,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2);
 
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE1);
-        this.findValuesByIdAndCheck(store, RANGE2B, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2B,
+            VALUE2
+        );
     }
 
     // ids..............................................................................................................
@@ -246,7 +326,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE2A, VALUE3); // 2
         store.addValue(RANGE3, VALUE4); // 3
 
-        this.idsAndCheck(store, 0, 4, RANGE1A, RANGE1B, RANGE2A, RANGE3);
+        this.idsAndCheck(
+            store,
+            0,
+            4,
+            RANGE1A, RANGE1B, RANGE2A, RANGE3
+        );
     }
 
     @Test
@@ -280,7 +365,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE2A, VALUE3); // 2
         store.addValue(RANGE3, VALUE4); // 3
 
-        this.idsAndCheck(store, 0, 4, RANGE1A, RANGE1B, RANGE2A, RANGE3);
+        this.idsAndCheck(
+            store,
+            0,
+            4,
+            RANGE1A, RANGE1B, RANGE2A, RANGE3
+        );
     }
 
     @Test
@@ -295,7 +385,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE3, VALUE5); // 4
         store.addValue(RANGE4, VALUE6); // 5
 
-        this.idsAndCheck(store, 1, 4, RANGE1B, RANGE2A, RANGE2B, RANGE3);
+        this.idsAndCheck(
+            store,
+            1,
+            4,
+            RANGE1B, RANGE2A, RANGE2B, RANGE3
+        );
     }
 
     // values...........................................................................................................
@@ -389,7 +484,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.begin(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.begin(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -398,7 +497,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.begin().toAbsolute(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.begin()
+                .toAbsolute(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -407,7 +511,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.begin(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.begin(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -416,7 +524,12 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.begin().toAbsolute(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.begin()
+                .toAbsolute(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -429,7 +542,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
         assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
-        this.findCellRangesIncludingCellAndCheck(store, mid, RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            mid,
+            RANGE1A
+        );
     }
 
     @Test
@@ -455,7 +572,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
         assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
-        this.findCellRangesIncludingCellAndCheck(store, mid, RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            mid,
+            RANGE1A
+        );
     }
 
     @Test
@@ -464,7 +585,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.end(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.end(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -473,7 +598,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.end(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.end(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -482,7 +611,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1AABSOLUTE, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1AABSOLUTE.end(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1AABSOLUTE.end(),
+            RANGE1A
+        );
     }
 
     @Test
@@ -491,13 +624,25 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.addValue(RANGE1A, VALUE1);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1AABSOLUTE.end(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1AABSOLUTE.end(),
+            RANGE1A
+        );
     }
 
     @Test
     public void testFindCellRangesIncludingCellWithBeginRange2() {
-        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(
+            RANGE1A.begin(),
+            RANGE1C.begin(),
+            "RANGE1A.begin() != RANGE1C.begin()"
+        );
+        this.checkNotEquals(
+            RANGE1A.begin(),
+            RANGE2A.begin(),
+            "RANGE1A.begin() != RANGE2A.begin()"
+        );
 
         final TreeMapSpreadsheetCellRangeStore store = this.createStore();
 
@@ -505,13 +650,25 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE1C, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1A.begin(), RANGE1A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1A.begin(),
+            RANGE1A
+        );
     }
 
     @Test
     public void testFindCellRangesIncludingCellWithBeginRange3() {
-        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(
+            RANGE1A.begin(),
+            RANGE1C.begin(),
+            "RANGE1A.begin() != RANGE1C.begin()"
+        );
+        this.checkNotEquals(
+            RANGE1A.begin(),
+            RANGE2A.begin(),
+            "RANGE1A.begin() != RANGE2A.begin()"
+        );
 
         final TreeMapSpreadsheetCellRangeStore store = this.createStore();
 
@@ -524,8 +681,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
     @Test
     public void testFindCellRangesIncludingCellWithBeginRange4() {
-        this.checkNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
-        this.checkNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+        this.checkNotEquals(
+            RANGE1A.begin(),
+            RANGE1C.begin(),
+            "RANGE1A.begin() != RANGE1C.begin()"
+        );
+        this.checkNotEquals(
+            RANGE1A.begin(),
+            RANGE2A.begin(),
+            "RANGE1A.begin() != RANGE2A.begin()"
+        );
 
         final TreeMapSpreadsheetCellRangeStore store = this.createStore();
 
@@ -561,13 +726,25 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE1B, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE1B.end(), RANGE1B);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE1B.end(),
+            RANGE1B
+        );
     }
 
     @Test
     public void testFindCellRangesIncludingCellWithEndRange4() {
-        this.checkNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
-        this.checkNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+        this.checkNotEquals(
+            RANGE1A.end(),
+            RANGE1B.end(),
+            "RANGE1A.end() != RANGE1B.end()"
+        );
+        this.checkNotEquals(
+            RANGE1A.end(),
+            RANGE2A.end(),
+            "RANGE1A.end() != RANGE1B.end()"
+        );
 
         final TreeMapSpreadsheetCellRangeStore store = this.createStore();
 
@@ -575,7 +752,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE1B, VALUE2);
         store.addValue(RANGE2A, VALUE3);
 
-        this.findCellRangesIncludingCellAndCheck(store, RANGE2A.end(), RANGE2A);
+        this.findCellRangesIncludingCellAndCheck(
+            store,
+            RANGE2A.end(),
+            RANGE2A
+        );
     }
 
     @Test
@@ -639,7 +820,10 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 0);
 
-        this.findValuesByIdAndCheck(store, RANGE1A);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A
+        );
     }
 
     @Test
@@ -654,8 +838,15 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1A);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE3);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE3
+        );
     }
 
     @Test
@@ -697,9 +888,19 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1AABSOLUTE);
-        this.findValuesByIdAndCheck(store, RANGE2A);
-        this.findValuesByIdAndCheck(store, RANGE3, VALUE4);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1AABSOLUTE
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE3,
+            VALUE4
+        );
     }
 
     @Test
@@ -713,15 +914,31 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         store.delete(RANGE1A);
 
-        this.countAndCheck(store, 2);
+        this.countAndCheck(
+            store,
+            2
+        );
 
         store.delete(RANGE2A);
 
-        this.countAndCheck(store, 1);
+        this.countAndCheck(
+            store,
+            1
+        );
 
-        this.findValuesByIdAndCheck(store, RANGE1A);
-        this.findValuesByIdAndCheck(store, RANGE2A);
-        this.findValuesByIdAndCheck(store, RANGE3, VALUE4);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE3,
+            VALUE4
+        );
     }
 
     // removeValue......................................................................................................
@@ -735,7 +952,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1);
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
     }
 
     @Test
@@ -745,7 +966,10 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
         store.addValue(RANGE1A, VALUE1);
         store.removeValue(RANGE1A, VALUE1);
 
-        this.countAndCheck(store, 0);
+        this.countAndCheck(
+            store,
+            0
+        );
     }
 
     @Test
@@ -758,8 +982,15 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1); // VALUE2
 
-        this.findValuesByIdAndCheck(store, RANGE1A);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE2
+        );
     }
 
     @Test
@@ -772,8 +1003,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2); // VALUE2
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE1);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE2
+        );
     }
 
     @Test
@@ -787,7 +1026,11 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 1); // VALUE2
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE2);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE2
+        );
     }
 
     @Test
@@ -802,8 +1045,16 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2); // VALUE2, VALUE3
 
-        this.findValuesByIdAndCheck(store, RANGE1A, VALUE2);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE3);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A,
+            VALUE2
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE3
+        );
     }
 
     @Test
@@ -818,9 +1069,20 @@ public final class TreeMapSpreadsheetCellRangeStoreTest implements SpreadsheetCe
 
         this.countAndCheck(store, 2); // VALUE2, VALUE3
 
-        this.findValuesByIdAndCheck(store, RANGE1A);
-        this.findValuesByIdAndCheck(store, RANGE2A, VALUE2);
-        this.findValuesByIdAndCheck(store, RANGE3, VALUE3);
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE1A
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE2A,
+            VALUE2
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            RANGE3,
+            VALUE3
+        );
     }
 
     // testFindIdsByValue...............................................................................................
