@@ -19,14 +19,11 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.store.MultiValueStoreWatcher;
 import walkingkooka.store.StoreWatcher;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
-final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeStore {
+final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeStoreDelegator {
 
     static ReadOnlySpreadsheetCellRangeStore with(final SpreadsheetCellRangeStore store) {
         Objects.requireNonNull(store, "store");
@@ -44,72 +41,8 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
     }
 
     @Override
-    public int count() {
-        return this.store.count();
-    }
-
-    @Override
-    public Set<SpreadsheetCellRangeReference> ids(final int offset,
-                                                  final int count) {
-        return this.store.ids(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public List<SpreadsheetCellReference> values(final int offset,
-                                                 final int count) {
-        return store.values(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public List<SpreadsheetCellReference> between(final SpreadsheetCellRangeReference from,
-                                                  final SpreadsheetCellRangeReference to) {
-        return store.between(
-            from,
-            to
-        );
-    }
-
-    @Override
     public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetCellReference> watcher) {
         return this.store.addStoreWatcher(watcher);
-    }
-
-    @Override
-    public Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell) {
-        return this.store.findCellRangesIncludingCell(cell);
-    }
-
-    @Override
-    public List<SpreadsheetCellReference> findValuesById(final SpreadsheetCellRangeReference cellRange,
-                                                         final int offset,
-                                                         final int count) {
-        return this.store.findValuesById(
-            cellRange,
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public List<SpreadsheetCellRangeReference> findIdsByValue(final SpreadsheetCellReference cell,
-                                                              final int offset,
-                                                              final int count) {
-        return this.store.findIdsByValue(
-            cell,
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Runnable addStoreWatcher(MultiValueStoreWatcher<SpreadsheetCellRangeReference, SpreadsheetCellReference> multiValueStoreWatcher) {
-        return null;
     }
 
     @Override
@@ -128,11 +61,11 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public Set<SpreadsheetCellRangeReference> findCellRangesWithValue(final SpreadsheetCellReference value) {
-        Objects.requireNonNull(value, "value");
+    // SpreadsheetCellRangeStoreDelegator...............................................................................
 
-        return this.store.findCellRangesWithValue(value);
+    @Override
+    public SpreadsheetCellRangeStore spreadsheetCellRangeStore() {
+        return this.store;
     }
 
     private final SpreadsheetCellRangeStore store;
