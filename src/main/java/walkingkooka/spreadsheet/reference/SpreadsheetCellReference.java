@@ -60,14 +60,16 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
      */
-    static SpreadsheetCellReference with(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
+    static SpreadsheetCellReference with(final SpreadsheetColumnReference column,
+                                         final SpreadsheetRowReference row) {
         return new SpreadsheetCellReference(
             checkColumn(column),
             checkRow(row)
         );
     }
 
-    private SpreadsheetCellReference(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
+    private SpreadsheetCellReference(final SpreadsheetColumnReference column,
+                                     final SpreadsheetRowReference row) {
         super();
         this.column = column;
         this.row = row;
@@ -78,13 +80,15 @@ public final class SpreadsheetCellReference extends SpreadsheetCellReferenceOrRa
      * Row and column values of 0 and 0 will return this.
      */
     @Override
-    public SpreadsheetCellReference add(final int column, final int row) {
+    public SpreadsheetCellReference add(final int column,
+                                        final int row) {
         return this.addColumn(column)
             .addRow(row);
     }
 
     @Override
-    public SpreadsheetCellReference addSaturated(final int column, final int row) {
+    public SpreadsheetCellReference addSaturated(final int column,
+                                                 final int row) {
         return this.addColumnSaturated(column)
             .addRowSaturated(row);
     }
