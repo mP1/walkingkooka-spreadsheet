@@ -622,7 +622,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
                 );
 
                 references.addAll(
-                    cellRangesStore.findValuesWithCell(cell)
+                    cellRangesStore.findCellRangesWithValue(cell)
                 );
 
                 references.addAll(

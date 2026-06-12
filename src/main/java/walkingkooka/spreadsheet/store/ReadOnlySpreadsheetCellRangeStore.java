@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.store.MultiValueStoreWatcher;
 import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeStore {
@@ -35,17 +35,6 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
 
     private ReadOnlySpreadsheetCellRangeStore(final SpreadsheetCellRangeStore store) {
         this.store = store;
-    }
-
-    @Override
-    public Optional<List<SpreadsheetCellReference>> load(final SpreadsheetCellRangeReference id) {
-        return this.store.load(id);
-    }
-
-    @Override
-    public List<SpreadsheetCellReference> save(final List value) {
-        Objects.requireNonNull(value, "value");
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -69,25 +58,25 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
     }
 
     @Override
-    public List<List<SpreadsheetCellReference>> values(final int offset,
-                                                       final int count) {
-        return this.store.values(
+    public List<SpreadsheetCellReference> values(final int offset,
+                                                 final int count) {
+        return store.values(
             offset,
             count
         );
     }
 
     @Override
-    public List<List<SpreadsheetCellReference>> between(final SpreadsheetCellRangeReference from,
-                                                        final SpreadsheetCellRangeReference to) {
-        return this.store.between(
+    public List<SpreadsheetCellReference> between(final SpreadsheetCellRangeReference from,
+                                                  final SpreadsheetCellRangeReference to) {
+        return store.between(
             from,
             to
         );
     }
 
     @Override
-    public Runnable addStoreWatcher(final StoreWatcher<List<SpreadsheetCellReference>> watcher) {
+    public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetCellReference> watcher) {
         return this.store.addStoreWatcher(watcher);
     }
 
@@ -97,8 +86,30 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell) {
-        return this.store.findValuesWithCell(cell);
+    public List<SpreadsheetCellReference> findValuesById(final SpreadsheetCellRangeReference cellRange,
+                                                         final int offset,
+                                                         final int count) {
+        return this.store.findValuesById(
+            cellRange,
+            offset,
+            count
+        );
+    }
+
+    @Override
+    public List<SpreadsheetCellRangeReference> findIdsByValue(final SpreadsheetCellReference cell,
+                                                              final int offset,
+                                                              final int count) {
+        return this.store.findIdsByValue(
+            cell,
+            offset,
+            count
+        );
+    }
+
+    @Override
+    public Runnable addStoreWatcher(MultiValueStoreWatcher<SpreadsheetCellRangeReference, SpreadsheetCellReference> multiValueStoreWatcher) {
+        return null;
     }
 
     @Override

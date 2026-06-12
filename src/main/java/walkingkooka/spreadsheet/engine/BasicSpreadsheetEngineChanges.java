@@ -534,9 +534,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         for (final SpreadsheetCellRangeReference cellRange : repository.rangeToCells()
             .findCellRangesIncludingCell(cell)) {
-            for (final SpreadsheetCellReference cellInRange : this.repository.rangeToCells()
-                .load(cellRange)
-                .orElse(Lists.empty())) {
+            for (final SpreadsheetCellReference cellInRange : this.repository.rangeToCells().findValuesById(cellRange, 0, Integer.MAX_VALUE)) {
 
                 final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
                     cellInRange,

@@ -19,10 +19,9 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.store.MultiValueStore;
 import walkingkooka.store.Store;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -31,38 +30,12 @@ import java.util.Set;
  * is ignored passing either variant must return the same results.
  * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetCellRangeReference} will be relative and never absolute.
  */
-public interface SpreadsheetCellRangeStore extends SpreadsheetStore<SpreadsheetCellRangeReference, List<SpreadsheetCellReference>> {
-
-    /**
-     * Values dont include the actual range, therefore this {@link Store} method is invalid and throws {@link UnsupportedOperationException}.
-     */
-    @Override
-    default List<SpreadsheetCellReference> save(final List<SpreadsheetCellReference> value) {
-        Objects.requireNonNull(value, "value");
-        throw new UnsupportedOperationException();
-    }
+public interface SpreadsheetCellRangeStore extends MultiValueStore<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
 
     /**
      * Finds all {@link SpreadsheetCellRangeReference} that include the given {@link SpreadsheetCellReference}.
      */
     Set<SpreadsheetCellRangeReference> findCellRangesIncludingCell(final SpreadsheetCellReference cell);
-
-    /**
-     * Load all the values for a single cell.
-     */
-    Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellReference cell);
-
-    /**
-     * Add a single value to the given {@link SpreadsheetCellRangeReference}. If the mapping exists nothing happens.
-     */
-    void addValue(final SpreadsheetCellRangeReference range,
-                  final SpreadsheetCellReference value);
-
-    /**
-     * Removes a single value if it exists for the given {@link SpreadsheetCellRangeReference}
-     */
-    void removeValue(final SpreadsheetCellRangeReference range,
-                     final SpreadsheetCellReference value);
 
     /**
      * Returns all the {@link SpreadsheetCellRangeReference ranges} containing the given value.

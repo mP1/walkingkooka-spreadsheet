@@ -25,16 +25,16 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.store.StoreWatcher2;
+import walkingkooka.store.MultiValueStoreTesting;
+import walkingkooka.store.MultiValueStoreWatcher;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore> extends SpreadsheetStoreTesting<S, SpreadsheetCellRangeReference, List<SpreadsheetCellReference>>,
+public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRangeStore> extends MultiValueStoreTesting<S, SpreadsheetCellRangeReference, SpreadsheetCellReference>,
     TypeNameTesting<S> {
 
     /**
@@ -58,97 +58,65 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     }
 
     @Test
-    default void testLoadUnknownFails() {
-        this.loadAndCheck(
-            this.createStore(),
-            RANGE
-        );
-    }
-
-    default void loadRangeFails(final SpreadsheetCellRangeStore store,
-                                final SpreadsheetCellRangeReference range) {
-        this.checkEquals(
-            Optional.empty(),
-            store.load(range),
-            () -> "load range " + range + " should have returned no values"
-        );
-    }
-
-    @SuppressWarnings({"OptionalGetWithoutIsPresent", "unchecked"})
-    default void loadRangeAndCheck(final SpreadsheetCellRangeStore store,
-                                   final SpreadsheetCellRangeReference range,
-                                   final SpreadsheetCellReference... expected) {
-        final Optional<List<SpreadsheetCellReference>> values = store.load(range);
-
-        this.checkNotEquals(
-            Optional.empty(),
-            values,
-            () -> "load of " + range + " failed"
-        );
-        this.checkEquals(
-            Lists.of(expected),
-            values.get(),
-            () -> "load range " + range
-        );
-    }
-
-    @Test
     @Override
     default void testAddStoreWatcherAndDelete() {
         final SpreadsheetCellRangeReference range = this.id();
-        final SpreadsheetCellReference value = this.valueValue();
+        final SpreadsheetCellReference value = this.value();
 
         final S store = this.createStore();
 
-        final List<SpreadsheetCellReference> fired = Lists.array();
+        final List<SpreadsheetCellReference> added = Lists.array();
+        final List<SpreadsheetCellReference> removed = Lists.array();
 
         store.addStoreWatcher(
-            new StoreWatcher2<>() {
+            new MultiValueStoreWatcher<>() {
                 @Override
-                public void onValueChangeAdd(final List<SpreadsheetCellReference> added) {
-                    throw new UnsupportedOperationException();
+                public void onValueAdded(final SpreadsheetCellRangeReference id,
+                                         final SpreadsheetCellReference value) {
+                    added.add(value);
                 }
 
                 @Override
-                public void onValueChangeRemove(final List<SpreadsheetCellReference> removed) {
-                    fired.addAll(removed);
-                }
-
-                @Override
-                public void onValueChangeReplace(final List<SpreadsheetCellReference> previous,
-                                                 final List<SpreadsheetCellReference> next) {
-                    throw new UnsupportedOperationException();
+                public void onValueRemoved(final SpreadsheetCellRangeReference id,
+                                           final SpreadsheetCellReference value) {
+                    removed.add(value);
                 }
             }
         );
 
         store.addValue(range, value);
 
+        this.checkEquals(
+            Lists.of(value),
+            added,
+            "MultiValueStoreWatcher.onValueAdded"
+        );
+
         store.delete(range);
 
         this.checkEquals(
             Lists.of(value),
-            fired,
-            "fired values"
+            removed,
+            "MultiValueStoreWatcher.onValueRemoved"
         );
     }
 
     // addValue.........................................................................................................
 
     @Test
-    default void testAddValueNullRangeFails() {
+    default void testAddValueWithNullRangeFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
                 .addValue(
                     null,
-                    this.valueValue()
+                    this.value()
                 )
         );
     }
 
     @Test
-    default void testAddValueNullValueFails() {
+    default void testAddValueWithNullValueFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
@@ -160,19 +128,19 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
     }
 
     @Test
-    default void testRemoveValueNullRangeFails() {
+    default void testRemoveValueWithNullRangeFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
                 .removeValue(
                     null,
-                    this.valueValue()
+                    this.value()
                 )
         );
     }
 
     @Test
-    default void testRemoveValueNullValueFails() {
+    default void testRemoveValueWithNullValueFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
@@ -211,106 +179,11 @@ public interface SpreadsheetCellRangeStoreTesting<S extends SpreadsheetCellRange
         return ranges;
     }
 
-    // findValuesWithCell...............................................................................................
-
-    @Test
-    default void testFindValuesWithCellWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createStore()
-                .findValuesWithCell(null)
-        );
-    }
-
-    @Test
-    default void testFindValuesWithCellUnknownReference() {
-        this.findValuesWithCellFails(RANGE.begin());
-    }
-
-    default void findValuesWithCellFails(final SpreadsheetCellReference cell) {
-        this.findValuesWithCellFails(
-            this.createStore(),
-            cell
-        );
-    }
-
-    default void findValuesWithCellFails(final SpreadsheetCellRangeStore store,
-                                         final SpreadsheetCellReference cell) {
-        this.checkEquals(
-            Sets.empty(),
-            this.findValuesWithCell(store, cell),
-            () -> "load cell " + cell + " should have returned no values"
-        );
-    }
-
-    @SuppressWarnings("unchecked")
-    default void findValuesWithCellAndCheck(final SpreadsheetCellRangeStore store,
-                                            final SpreadsheetCellReference cell,
-                                            final SpreadsheetCellReference... values) {
-        this.checkEquals(
-            Sets.of(values),
-            this.findValuesWithCell(store, cell),
-            () -> "load cell reference values for " + cell
-        );
-    }
-
-    default Set<SpreadsheetCellReference> findValuesWithCell(final SpreadsheetCellRangeStore store,
-                                        final SpreadsheetCellReference cell) {
-        final Set<SpreadsheetCellReference> values = store.findValuesWithCell(cell);
-        this.checkNotEquals(
-            null,
-            values,
-            "values"
-        );
-        return values;
-    }
-
-    // findCellRangesWithValue..........................................................................................
-
-    @Test
-    default void testFindCellRangesWithValueWithNullValueFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.createStore()
-                .findCellRangesWithValue(null)
-        );
-    }
-
-    @Test
-    default void testFindCellRangesWithValue() {
-        final S store = this.createStore();
-
-        final SpreadsheetCellRangeReference range = this.id();
-        final SpreadsheetCellReference value = this.valueValue();
-        this.findCellRangesWithValueAndCheck(store, value);
-
-        store.addValue(range, value);
-
-        this.findCellRangesWithValueAndCheck(store, value, range);
-    }
-
-    default void findCellRangesWithValueAndCheck(final SpreadsheetCellRangeStore store,
-                                                 final SpreadsheetCellReference value,
-                                                 final SpreadsheetCellRangeReference... ranges) {
-        this.checkEquals(
-            Sets.of(ranges),
-            store.findCellRangesWithValue(value),
-            () -> "ranges with values for " + value
-        );
-    }
-
-    SpreadsheetCellReference valueValue();
-
     // StoreTesting.....................................................................................................
 
     @Override
     default SpreadsheetCellRangeReference id() {
         return SpreadsheetSelection.parseCellRange("A1:B2");
-    }
-
-    @Override
-    default List<SpreadsheetCellReference> value() {
-        return Lists.of(this.valueValue());
     }
 
     // TypeNameTesting..................................................................................................
