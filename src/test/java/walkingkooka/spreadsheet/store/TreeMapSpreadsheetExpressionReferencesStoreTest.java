@@ -569,79 +569,6 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellWatcherRemoveCellWatcher() {
-        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
-
-        final List<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> add = Lists.array();
-        store.addAddCellWatcher(add::add);
-
-        final List<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> remove = Lists.array();
-        store.addRemoveCellWatcher(remove::add);
-
-        store.addCell(
-            A1,
-            B1
-        );
-        store.addCell(
-            A1,
-            C1
-        );
-
-        store.removeCell(
-            A1,
-            C1
-        );
-        store.removeCell(
-            A1,
-            D1
-        );
-
-        this.checkEquals(
-            Lists.of(
-                ReferenceAndSpreadsheetCellReference.with(
-                    A1,
-                    B1
-                ),
-                ReferenceAndSpreadsheetCellReference.with(
-                    A1,
-                    C1
-                )
-            ),
-            add,
-            "add"
-        );
-        this.checkEquals(
-            Lists.of(
-                ReferenceAndSpreadsheetCellReference.with(
-                    A1,
-                    C1
-                ),
-                ReferenceAndSpreadsheetCellReference.with(
-                    A1,
-                    D1
-                )
-            ),
-            remove,
-            "remove"
-        );
-
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                B1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
-        );
-    }
-
-    @Test
     public void testAddCellWatcherRemoveCellWatcher2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
@@ -650,9 +577,6 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        final List<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> add = Lists.array();
-        store.addAddCellWatcher(add::add);
-
         final List<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> remove = Lists.array();
         store.addRemoveCellWatcher(remove::add);
 
@@ -666,16 +590,6 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.checkEquals(
-            Lists.of(
-                ReferenceAndSpreadsheetCellReference.with(
-                    A1,
-                    C1
-                )
-            ),
-            add,
-            "add"
-        );
         this.checkEquals(
             Lists.of(
                 ReferenceAndSpreadsheetCellReference.with(

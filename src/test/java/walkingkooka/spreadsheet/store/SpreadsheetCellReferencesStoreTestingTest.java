@@ -37,17 +37,7 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     }
 
     @Override
-    public void testAddCellWithWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testDeleteWithRemoveCellWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testRemoveCellWithWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -88,12 +78,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                             final SpreadsheetCellReference value) {
             Objects.requireNonNull(cell, "cell");
             Objects.requireNonNull(value, "value");
-        }
-
-        @Override
-        public Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            return null;
         }
 
         @Override

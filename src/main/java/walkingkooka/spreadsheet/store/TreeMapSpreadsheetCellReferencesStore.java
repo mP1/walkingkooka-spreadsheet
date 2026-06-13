@@ -57,11 +57,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> watcher) {
-        return this.store.addAddCellWatcher(watcher);
-    }
-
-    @Override
     public void removeCell(final SpreadsheetCellReference reference,
                            final SpreadsheetCellReference cell) {
         this.store.removeCell(

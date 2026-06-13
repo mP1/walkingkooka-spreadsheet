@@ -39,13 +39,6 @@ public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     }
 
     @Override
-    public Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
-        Objects.requireNonNull(watcher, "watcher");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void removeCell(final T reference,
                            final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
