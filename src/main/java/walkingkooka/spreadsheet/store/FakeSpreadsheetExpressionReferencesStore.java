@@ -54,9 +54,9 @@ public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     }
 
     @Override
-    public Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
-                                         final int offset,
-                                         final int count) {
+    public Set<T> findIdsByValue(final SpreadsheetCellReference cell,
+                                 final int offset,
+                                 final int count) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();

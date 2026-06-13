@@ -121,10 +121,10 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findReferencesWithCell(final SpreadsheetCellReference cell,
-                                                                final int offset,
-                                                                final int count) {
-        return this.store.findReferencesWithCell(
+    public Set<SpreadsheetCellReference> findIdsByValue(final SpreadsheetCellReference cell,
+                                                        final int offset,
+                                                        final int count) {
+        return this.store.findIdsByValue(
             cell,
             offset,
             count

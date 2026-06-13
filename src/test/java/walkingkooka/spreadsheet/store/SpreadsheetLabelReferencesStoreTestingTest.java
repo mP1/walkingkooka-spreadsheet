@@ -122,9 +122,9 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public Set<SpreadsheetLabelName> findReferencesWithCell(final SpreadsheetCellReference cell,
-                                                                final int offset,
-                                                                final int count) {
+        public Set<SpreadsheetLabelName> findIdsByValue(final SpreadsheetCellReference cell,
+                                                        final int offset,
+                                                        final int count) {
             Objects.requireNonNull(cell, "cell");
             Store.checkOffsetAndCount(
                 offset,

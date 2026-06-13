@@ -274,7 +274,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         this.loadAndCheck(store, A1, B1); // a1 --> b1
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
@@ -283,7 +283,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         ); // b1 --> a1
 
         this.loadAndCheck(store, B1); // b1 -> nothing
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
@@ -406,7 +406,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         this.loadAndCheck(store, A1, B1); // a1 --> b1
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
@@ -415,7 +415,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         ); // b1 --> a1
 
         this.loadAndCheck(store, B1); // b1 -> nothing
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
@@ -709,20 +709,20 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         this.loadAndCheck(store, B1);
         this.loadAndCheck(store, C1);
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             1 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             2, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
@@ -765,28 +765,28 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         this.loadAndCheck(store, A1, B1, C1);
         this.loadAndCheck(store, D1, A1, B1, C1, E1);
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             2, // count
             D1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             2, // count
             A1, D1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
             3, // count
             A1, D1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             E1,
             0, // offset
@@ -963,20 +963,20 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         this.loadAndCheck(store, B1);
         this.loadAndCheck(store, C1);
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             2 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             2, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
@@ -1006,20 +1006,20 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         this.loadAndCheck(store, B1);
         this.loadAndCheck(store, C1);
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             1 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             2, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
@@ -1077,34 +1077,34 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E1
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             1 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             1, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
             2, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             D1,
             0, // offset
             2, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             E1,
             0, // offset
@@ -1181,34 +1181,34 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E1
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             1 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             1, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
             2, // count
             A1, B1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             D1,
             0, // offset
             3, // count
             A1, B1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             E1,
             0, // offset
@@ -1240,32 +1240,32 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         this.loadAndCheck(store, D1);
         this.loadAndCheck(store, E1);
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
             1 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             B1,
             0, // offset
             2 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             C1,
             0, // offset
             2, // count
             A1
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             D1,
             0, // offset
             1 // count
         );
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             E1,
             0, // offset
@@ -1434,7 +1434,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     // findReferencesWithCell...........................................................................................
 
     @Test
-    public void testFindReferencesWithCell() {
+    public void testFindIdsByValue() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
         store.addValue(
@@ -1446,7 +1446,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             A1
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             A1,
             0, // offset
@@ -1479,7 +1479,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             a1
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             a1,
             0, // offset

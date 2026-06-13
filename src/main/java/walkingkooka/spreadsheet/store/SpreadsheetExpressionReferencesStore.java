@@ -75,15 +75,15 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
      * This might be useful to display all references to a particular cell. To display references to a label try
      * {@link SpreadsheetLabelStore#loadCellOrCellRanges(SpreadsheetLabelName)}.
      */
-    Set<T> findReferencesWithCell(final SpreadsheetCellReference cell,
-                                  final int offset,
-                                  final int count);
+    Set<T> findIdsByValue(final SpreadsheetCellReference cell,
+                          final int offset,
+                          final int count);
 
     /**
      * Removes any references for the provided {@link SpreadsheetCellReference}.
      * This is useful to remove references within a {@link SpreadsheetCell#formula()}.
      * <br>
-     * This is equivalent to {@link #findReferencesWithCell(SpreadsheetCellReference, int, int) finding all references for a cell}
+     * This is equivalent to {@link #findIdsByValue(SpreadsheetCellReference, int, int) finding all references for a cell}
      * and then {@link #removeValue(SpreadsheetExpressionReference, SpreadsheetCellReference)}  removing them one by one}.
      */
     void removeByValue(final SpreadsheetCellReference cell);

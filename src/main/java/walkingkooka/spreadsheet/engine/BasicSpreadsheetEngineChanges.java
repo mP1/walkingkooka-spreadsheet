@@ -477,7 +477,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
             .delete(cell);
 
         repository.labelReferences()
-            .findReferencesWithCell(
+            .findIdsByValue(
                 cell,
                 0, // offset
                 BasicSpreadsheetEngine.FIND_REFERENCES_COUNT
