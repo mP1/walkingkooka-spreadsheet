@@ -96,14 +96,14 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         );
     }
 
-    // removeCell........................................................................................................
+    // removeValue......................................................................................................
 
     @Test
-    default void testRemoveCellWithNullIdFails() {
+    default void testRemoveValueWithNullIdFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .removeCell(
+                .removeValue(
                     null,
                     SpreadsheetSelection.A1
                 )
@@ -111,11 +111,11 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     }
 
     @Test
-    default void testRemoveCellWithNullValueFails() {
+    default void testRemoveValueWithNullValueFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .removeCell(
+                .removeValue(
                     this.id(),
                     null
                 )

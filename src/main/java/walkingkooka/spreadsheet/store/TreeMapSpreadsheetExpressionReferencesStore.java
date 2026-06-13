@@ -198,8 +198,8 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     private final Watchers<ReferenceAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.empty();
 
     @Override
-    public void removeCell(final T reference,
-                           final SpreadsheetCellReference value) {
+    public void removeValue(final T reference,
+                            final SpreadsheetCellReference value) {
         this.removeCellNonNull(
             Objects.requireNonNull(reference, "reference"),
             Objects.requireNonNull(value, "value")
