@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * A {@link SpreadsheetLabelReferencesStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetLabelName}.
@@ -127,11 +126,6 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
             offset,
             count
         );
-    }
-
-    @Override
-    public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> watcher) {
-        return this.store.addRemoveCellWatcher(watcher);
     }
 
     @Override

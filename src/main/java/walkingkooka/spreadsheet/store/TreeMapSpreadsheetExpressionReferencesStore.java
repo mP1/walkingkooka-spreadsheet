@@ -40,7 +40,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -86,12 +85,7 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
                         if (references.isEmpty()) {
                             this.cellToReferences.remove(cell);
                         }
-                        this.removeCellWatchers.accept(
-                            ReferenceAndSpreadsheetCellReference.with(
-                                reference,
-                                cell
-                            )
-                        );
+                        // TODO removeCellWatcher
                     }
                 }
             }
@@ -233,21 +227,9 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
                     }
                 }
             }
-            this.removeCellWatchers.accept(
-                ReferenceAndSpreadsheetCellReference.with(
-                    reference,
-                    value
-                )
-            );
+            // TODO removeCell
         }
     }
-
-    @Override
-    public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
-        return this.removeCellWatchers.add(watcher);
-    }
-
-    private final Watchers<ReferenceAndSpreadsheetCellReference<T>> removeCellWatchers = Watchers.empty();
 
     @Override
     public Set<SpreadsheetCellReference> findCellsWithReference(final T reference,

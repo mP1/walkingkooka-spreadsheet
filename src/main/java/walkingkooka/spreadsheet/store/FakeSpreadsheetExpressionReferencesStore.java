@@ -24,7 +24,6 @@ import walkingkooka.test.Fake;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference>
     extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferencesStore<T>, Fake {
@@ -43,13 +42,6 @@ public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
                            final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
-        Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }

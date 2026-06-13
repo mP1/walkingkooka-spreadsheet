@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public final class SpreadsheetLabelReferencesStoreTestingTest implements SpreadsheetLabelReferencesStoreTesting<SpreadsheetLabelReferencesStoreTestingTest.TestSpreadsheetLabelReferencesStore> {
 
@@ -49,11 +48,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
 
     @Override
     public void testAddStoreWatcherAndDelete() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testDeleteWithRemoveCellWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -125,12 +119,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                 count
             );
             return Set.of();
-        }
-
-        @Override
-        public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            return null;
         }
 
         @Override

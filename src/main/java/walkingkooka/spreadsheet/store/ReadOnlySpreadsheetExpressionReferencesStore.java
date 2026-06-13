@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * A read only wrapper around a {@link SpreadsheetExpressionReferencesStore}
@@ -105,13 +104,6 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
                            final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
-        Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }

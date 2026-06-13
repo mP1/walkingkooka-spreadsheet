@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -26,7 +25,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.StoreTesting;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -37,37 +35,6 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     T extends SpreadsheetExpressionReference & Comparable<T>>
     extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
     TypeNameTesting<S> {
-
-    // delete...........................................................................................................
-
-    @Test
-    default void testDeleteWithRemoveCellWatcher() {
-        final S store = this.createStore();
-
-        final T reference = this.id();
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
-
-        store.addCell(
-            reference,
-            cell
-        );
-
-        final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
-        store.addRemoveCellWatcher(fired::add);
-
-        store.delete(reference);
-
-        this.checkEquals(
-            Lists.of(
-                ReferenceAndSpreadsheetCellReference.with(
-                    reference,
-                    cell
-                )
-            ),
-            fired,
-            "fired remove reference events"
-        );
-    }
 
     // load.............................................................................................................
 

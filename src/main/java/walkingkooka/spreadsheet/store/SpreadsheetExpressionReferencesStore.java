@@ -26,7 +26,6 @@ import walkingkooka.store.Store;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * A {@link Store} that tracks cells and labels references for a single {@link SpreadsheetCellReference} within its formula.
@@ -52,11 +51,6 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
      */
     void removeCell(final T reference,
                     final SpreadsheetCellReference cell);
-
-    /**
-     * Adds a {@link Consumer watcher} which receives all removed reference events.
-     */
-    Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);
 
     /**
      * Finds any {@link SpreadsheetCellReference} with the provided reference.
