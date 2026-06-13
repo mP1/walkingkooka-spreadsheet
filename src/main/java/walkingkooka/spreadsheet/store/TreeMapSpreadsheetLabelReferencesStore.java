@@ -110,11 +110,6 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     @Override
-    public Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName>> watcher) {
-        return this.store.addAddCellWatcher(watcher);
-    }
-
-    @Override
     public void removeCell(final SpreadsheetLabelName label,
                            final SpreadsheetCellReference value) {
         this.store.removeCell(

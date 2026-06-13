@@ -129,33 +129,6 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         );
     }
 
-    @Test
-    default void testAddCellWithWatcher() {
-        final S store = this.createStore();
-
-        final T reference = this.id();
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
-
-        final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
-        store.addAddCellWatcher(fired::add);
-
-        store.addCell(
-            reference,
-            cell
-        );
-
-        this.checkEquals(
-            Lists.of(
-                ReferenceAndSpreadsheetCellReference.with(
-                    reference,
-                    cell
-                )
-            ),
-            fired,
-            "fired add reference events"
-        );
-    }
-
     // removeCell........................................................................................................
 
     @Test
@@ -179,36 +152,6 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
                     this.id(),
                     null
                 )
-        );
-    }
-
-    @Test
-    default void testRemoveCellWithWatcher() {
-        final S store = this.createStore();
-
-        final T reference = this.id();
-        final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
-
-        final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
-        store.addAddCellWatcher(fired::add);
-
-        final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
-            reference,
-            cell
-        );
-        store.addCell(
-            reference,
-            cell
-        );
-        store.removeCell(
-            reference,
-            cell
-        );
-
-        this.checkEquals(
-            Lists.of(referenceAndCell),
-            fired,
-            "fired add reference events"
         );
     }
 

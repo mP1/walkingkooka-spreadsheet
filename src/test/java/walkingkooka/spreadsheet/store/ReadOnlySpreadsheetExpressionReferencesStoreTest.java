@@ -171,11 +171,6 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
     }
 
-    @Override
-    @SuppressWarnings("unused")
-    public void testAddCellWithWatcher() {
-    }
-
     @Test
     public void testRemoveCellFails() {
         assertThrows(
@@ -186,11 +181,6 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
                     B1
                 )
         );
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testRemoveCellWithWatcher() {
     }
 
     @Override

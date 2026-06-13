@@ -201,11 +201,6 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
         return SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
     }
 
-    @Override
-    public Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher) {
-        return this.addCellWatchers.add(watcher);
-    }
-
     private final Watchers<ReferenceAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.empty();
 
     @Override

@@ -48,12 +48,6 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
                  final SpreadsheetCellReference cell);
 
     /**
-     * Adds a {@link Consumer watcher} which receives all added reference events.
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    Runnable addAddCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<T>> watcher);
-
-    /**
      * Removes a {@link SpreadsheetExpressionReference} from a {@link SpreadsheetCellReference}
      */
     void removeCell(final T reference,
