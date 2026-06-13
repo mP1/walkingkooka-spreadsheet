@@ -78,26 +78,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     @Override
-    public void testSaveCellsAddCellWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveCellsDoesntFireDeleteWatchers() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveCellsReplaceAddCellWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveCellsReplaceAddCellWatcher2() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public TestSpreadsheetLabelReferencesStore createStore() {
         return new TestSpreadsheetLabelReferencesStore();
     }
@@ -145,13 +125,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                 count
             );
             return Set.of();
-        }
-
-        @Override
-        public void saveCells(final SpreadsheetLabelName label,
-                              final Set<SpreadsheetCellReference> cells) {
-            Objects.requireNonNull(label, "label");
-            Objects.requireNonNull(cells, "cells");
         }
 
         @Override

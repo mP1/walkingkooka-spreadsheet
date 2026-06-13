@@ -44,13 +44,6 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     Runnable addDeleteWatcher(final Consumer<T> watcher);
 
     /**
-     * Saves all the references for a cell or label.
-     * Note any {@link #addAddCellWatcher(Consumer)} and {@link #addRemoveCellWatcher(Consumer)} will be fired for all targets.
-     */
-    void saveCells(final T reference,
-                   final Set<SpreadsheetCellReference> cells);
-
-    /**
      * Adds a reference to the given target.
      */
     void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
