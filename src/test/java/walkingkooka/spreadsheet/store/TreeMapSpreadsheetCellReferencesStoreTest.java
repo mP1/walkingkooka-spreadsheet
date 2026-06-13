@@ -60,7 +60,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
             cell
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             reference,
             0,

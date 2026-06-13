@@ -614,7 +614,7 @@ final class BasicSpreadsheetEnginePrepareResponse {
 
                 final Set<SpreadsheetExpressionReference> references = SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
                 references.addAll(
-                    cellReferencesStore.findCellsWithReference(
+                    cellReferencesStore.findValuesById(
                         cell,
                         0, // offset
                         BasicSpreadsheetEngine.FIND_REFERENCES_COUNT// count

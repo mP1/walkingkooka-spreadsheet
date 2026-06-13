@@ -65,10 +65,10 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findCellsWithReference(final SpreadsheetCellReference reference,
-                                                                final int offset,
-                                                                final int count) {
-        return this.store.findCellsWithReference(
+    public Set<SpreadsheetCellReference> findValuesById(final SpreadsheetCellReference reference,
+                                                        final int offset,
+                                                        final int count) {
+        return this.store.findValuesById(
             reference,
             offset,
             count
@@ -102,7 +102,7 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
         // potentially slow for large ranges with gaps.
         for (final SpreadsheetCellReference cell : cellOrCellRange.toCellRange()) {
             references.addAll(
-                this.findCellsWithReference(
+                this.findValuesById(
                     cell,
                     0,
                     Integer.MAX_VALUE

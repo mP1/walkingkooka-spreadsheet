@@ -232,9 +232,9 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
-                                                                final int offset,
-                                                                final int count) {
+    public Set<SpreadsheetCellReference> findValuesById(final T reference,
+                                                        final int offset,
+                                                        final int count) {
         Objects.requireNonNull(reference, "reference");
         Store.checkOffsetAndCount(
             offset,

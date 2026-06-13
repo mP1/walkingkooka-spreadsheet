@@ -679,7 +679,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             int loadedCount = 0;
 
             // https://github.com/mP1/walkingkooka-spreadsheet/issues/5634 SpreadsheetExpressionReferencesStore.loadReferences(SpreadsheetCellReference, int offset, int count)
-            for (final SpreadsheetCellReference reference : cellReferencesStore.findCellsWithReference(
+            for (final SpreadsheetCellReference reference : cellReferencesStore.findValuesById(
                 cell,
                 0, // offset
                 FIND_REFERENCES_COUNT // count

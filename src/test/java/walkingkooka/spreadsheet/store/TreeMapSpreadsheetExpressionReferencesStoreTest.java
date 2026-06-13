@@ -1273,10 +1273,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
     }
 
-    // findCellsWithReference...........................................................................................
+    // findValuesById...................................................................................................
 
     @Test
-    public void testFindCellsWithReference() {
+    public void testFindValuesById() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
         store.addValue(
@@ -1288,7 +1288,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             A1,
             0, // offset
@@ -1303,7 +1303,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testFindCellsWithReference2() {
+    public void testFindValuesById2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferencesStore.create();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -1327,7 +1327,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             c3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             0, // offset
@@ -1337,7 +1337,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testFindCellsWithReferenceAndOffset() {
+    public void testFindValuesByIdAndOffset() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferencesStore.create();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
@@ -1356,7 +1356,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             1, // offset
@@ -1366,7 +1366,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testFindCellsWithReferenceAndCount() {
+    public void testFindValuesByIdAndCount() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferencesStore.create();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
@@ -1385,7 +1385,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             0, // offset
@@ -1395,7 +1395,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testFindCellsWithReferenceAndOffsetAndCount() {
+    public void testFindValuesByIdAndOffsetAndCount() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferencesStore.create();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
@@ -1422,7 +1422,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E5
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             1, // offset
