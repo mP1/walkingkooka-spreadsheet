@@ -266,20 +266,20 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         );
     }
 
-    // removeReferencesWithCell.........................................................................................
+    // removeByValue....................................................................................................
 
     @Test
-    default void testRemoveReferencesWithCellWithNullCellFails() {
+    default void testRemoveByValueFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .removeReferencesWithCell(null)
+                .removeByValue(null)
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void removeReferencesWithCellAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
-                                                                                              final SpreadsheetCellReference cell) {
-        store.removeReferencesWithCell(cell);
+    default <TT extends SpreadsheetExpressionReference> void removeByValueAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
+                                                                                   final SpreadsheetCellReference cell) {
+        store.removeByValue(cell);
 
         // just deleted references so find should not find it
         this.findReferencesWithCellAndCheck(

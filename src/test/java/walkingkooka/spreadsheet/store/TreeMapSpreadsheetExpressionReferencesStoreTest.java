@@ -1460,10 +1460,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
     }
 
-    // removeReferencesWithCell.........................................................................................
+    // removeByValue....................................................................................................
 
     @Test
-    public void testRemoveReferencesWithCell() {
+    public void testRemoveByValue() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store = TreeMapSpreadsheetExpressionReferencesStore.create();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -1487,7 +1487,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             b1, c1
         );
 
-        this.removeReferencesWithCellAndCheck(
+        this.removeByValueAndCheck(
             store,
             a1
         );

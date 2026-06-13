@@ -551,10 +551,10 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
      */
     private void removeFormulaReferences(final SpreadsheetCellReference cell) {
         this.repository.cellReferences()
-            .removeReferencesWithCell(cell);
+            .removeByValue(cell);
 
         this.repository.labelReferences()
-            .removeReferencesWithCell(cell);
+            .removeByValue(cell);
 
         final SpreadsheetCellRangeStore cellRangeStore = this.repository.rangeToCells();
 
