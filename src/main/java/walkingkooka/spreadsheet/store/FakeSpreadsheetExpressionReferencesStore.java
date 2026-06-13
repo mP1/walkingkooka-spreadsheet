@@ -30,13 +30,6 @@ public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferencesStore<T>, Fake {
 
     @Override
-    public Runnable addDeleteWatcher(final Consumer<T> watcher) {
-        Objects.requireNonNull(watcher, "watcher");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void addCell(final T reference,
                         final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");

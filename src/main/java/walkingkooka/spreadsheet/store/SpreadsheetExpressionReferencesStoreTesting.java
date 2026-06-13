@@ -41,33 +41,6 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     // delete...........................................................................................................
 
     @Test
-    default void testDeleteDoesntFireDeleteWatcher() {
-        final Set<SpreadsheetCellReference> cells = this.value();
-
-        final S store = this.createStore();
-
-        final List<T> fired = Lists.array();
-        store.addDeleteWatcher(fired::add);
-
-        final T id = this.id();
-
-        cells.forEach(
-            v -> store.addCell(
-                id,
-                v
-            )
-        );
-
-        store.delete(id);
-
-        this.checkEquals(
-            Lists.of(),
-            fired,
-            "fired values"
-        );
-    }
-
-    @Test
     default void testDeleteWithRemoveCellWatcher() {
         final S store = this.createStore();
 
@@ -206,37 +179,6 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
                     this.id(),
                     null
                 )
-        );
-    }
-
-    @Test
-    default void testRemoveLastCellAddDeleteWatcher() {
-        final Set<SpreadsheetCellReference> cells = this.value();
-
-        final S store = this.createStore();
-
-        final List<T> fired = Lists.array();
-        store.addDeleteWatcher(fired::add);
-
-        final T id = this.id();
-
-        cells.forEach(
-            v -> store.addCell(
-                id,
-                v
-            )
-        );
-        cells.forEach(
-            v -> store.removeCell(
-                id,
-                v
-            )
-        );
-
-        this.checkEquals(
-            Lists.of(id),
-            fired,
-            "fired values"
         );
     }
 

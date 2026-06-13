@@ -219,11 +219,6 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
        return this.store.addStoreWatcher(watcher);
     }
 
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> consumer) {
-        return this.store.addDeleteWatcher(consumer);
-    }
-
     private final SpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store;
 
     // Object...........................................................................................................

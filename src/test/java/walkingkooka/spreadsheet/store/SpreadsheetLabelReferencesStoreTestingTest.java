@@ -38,11 +38,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     @Override
-    public void testDeleteDoesntFireDeleteWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testAddCellWithWatcher() {
         throw new UnsupportedOperationException();
     }
@@ -69,11 +64,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
 
     @Override
     public void testRemoveCellWithWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testRemoveLastCellAddDeleteWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -108,12 +98,6 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     static class TestSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore {
-
-        @Override
-        public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            return () -> {};
-        }
 
         @Override
         public Set<SpreadsheetLabelName> findLabelsWithCellOrCellRange(final SpreadsheetCellReferenceOrRange cellOrCellRange,

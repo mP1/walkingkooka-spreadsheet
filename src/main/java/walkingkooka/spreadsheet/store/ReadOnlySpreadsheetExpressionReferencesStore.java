@@ -92,11 +92,6 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     }
 
     @Override
-    public Runnable addDeleteWatcher(final Consumer<T> watcher) {
-        return this.store.addDeleteWatcher(watcher);
-    }
-
-    @Override
     public void addCell(final T reference,
                         final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
