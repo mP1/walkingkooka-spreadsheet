@@ -190,10 +190,8 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
             UnsupportedOperationException.class,
             () -> this.createStore()
                 .removeCell(
-                    ReferenceAndSpreadsheetCellReference.with(
-                        this.id(),
-                        this.b1()
-                    )
+                    this.id(),
+                    this.b1()
                 )
         );
     }
@@ -228,7 +226,10 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(a1, c1);
-        store.removeCell(and);
+        store.removeCell(
+            a1,
+            c1
+        );
         store.addCell(
             a1,
             c1

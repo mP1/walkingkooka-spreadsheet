@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
-import walkingkooka.spreadsheet.store.ReferenceAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.SpreadsheetCellRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetColumnStore;
@@ -484,10 +483,8 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
                 BasicSpreadsheetEngine.FIND_REFERENCES_COUNT
             ).forEach(l -> this.repository.labelReferences()
                 .removeCell(
-                    ReferenceAndSpreadsheetCellReference.with(
-                        l,
-                        cell
-                    )
+                    l,
+                    cell
                 )
             );
 

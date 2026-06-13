@@ -58,7 +58,8 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     /**
      * Removes a {@link SpreadsheetExpressionReference} from a {@link SpreadsheetCellReference}
      */
-    void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
+    void removeCell(final T reference,
+                    final SpreadsheetCellReference cell);
 
     /**
      * Adds a {@link Consumer watcher} which receives all removed reference events.

@@ -215,20 +215,21 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     private final Watchers<ReferenceAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.empty();
 
     @Override
-    public void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
+    public void removeCell(final T reference,
+                           final SpreadsheetCellReference value) {
         this.removeCellNonNull(
-            Objects.requireNonNull(referenceAndCell, "referenceAndCell")
+            Objects.requireNonNull(reference, "reference"),
+            Objects.requireNonNull(value, "value")
         );
     }
 
-    private void removeCellNonNull(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        final T reference = referenceAndCell.reference();
-        final SpreadsheetCellReference cell = referenceAndCell.cell();
+    private void removeCellNonNull(final T reference,
+                                   final SpreadsheetCellReference value) {
 
         final Set<SpreadsheetCellReference> allCells = this.referenceToCells.get(reference);
         final boolean removed = null != allCells;
         if (removed) {
-            allCells.remove(cell);
+            allCells.remove(value);
             if (allCells.isEmpty()) {
                 this.referenceToCells.remove(reference);
                 this.deleteWatchers.accept(reference);
@@ -236,15 +237,20 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
         }
 
         if (removed) {
-            final Set<T> allReferences = this.cellToReferences.get(cell);
+            final Set<T> allReferences = this.cellToReferences.get(value);
             if (null != allReferences) {
                 if (allReferences.remove(reference)) {
                     if (allReferences.isEmpty()) {
-                        this.cellToReferences.remove(cell);
+                        this.cellToReferences.remove(value);
                     }
                 }
             }
-            this.removeCellWatchers.accept(referenceAndCell);
+            this.removeCellWatchers.accept(
+                ReferenceAndSpreadsheetCellReference.with(
+                    reference,
+                    value
+                )
+            );
         }
     }
 
@@ -299,10 +305,8 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
 
         for (final T reference : new TreeSet<>(this.referenceToCells.keySet())) {
             this.removeCellNonNull(
-                ReferenceAndSpreadsheetCellReference.with(
-                    reference,
-                    cell
-                )
+                reference,
+                cell
             );
         }
     }
