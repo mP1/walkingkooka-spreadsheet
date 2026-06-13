@@ -290,7 +290,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     // SpreadsheetEngine................................................................................................
 
     @Test
-    public void testAddValuesAndRemoveByValueAndCount() {
+    public void testAddValuesAndRemoveByValueAndFindIdsByValueAndCount() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
         final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
@@ -308,7 +308,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
             a1
         );
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             a1,
             0, // offset
@@ -325,7 +325,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
 
         store.removeByValue(a1);
 
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             a1,
             0, // offset

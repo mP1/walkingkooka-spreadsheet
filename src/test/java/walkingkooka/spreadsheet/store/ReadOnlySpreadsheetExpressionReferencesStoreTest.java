@@ -63,7 +63,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
             A1,
             B1
         ); // a1 --> b1
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             readOnly,
             B1,
             0, // offset
@@ -72,7 +72,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         ); // b1 --> a1
 
         this.loadAndCheck(readOnly, B1); // b1 -> nothing
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             readOnly,
             A1,
             0, // offset

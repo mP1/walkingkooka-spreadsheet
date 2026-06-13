@@ -59,7 +59,7 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         }
 
         for (SpreadsheetCellReference cell : expected) {
-            final Set<TT> references = store.findReferencesWithCell(
+            final Set<TT> references = store.findIdsByValue(
                 cell,
                 0,
                 Integer.MAX_VALUE
@@ -196,11 +196,11 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     // findReferencesWithCell...........................................................................................
 
     @Test
-    default void testFindReferencesWithCellWithNullCellFails() {
+    default void testFindIdsByValueFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .findReferencesWithCell(
+                .findIdsByValue(
                     null,
                     0, // offset
                     0 // count
@@ -213,7 +213,7 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createStore()
-                .findReferencesWithCell(
+                .findIdsByValue(
                     SpreadsheetSelection.A1,
                     -1, // offset
                     0 // count
@@ -226,7 +226,7 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         assertThrows(
             IllegalArgumentException.class,
             () -> this.createStore()
-                .findReferencesWithCell(
+                .findIdsByValue(
                     SpreadsheetSelection.A1,
                     0, // offset
                     -1 // count
@@ -236,12 +236,12 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
 
 
     @SuppressWarnings("unchecked")
-    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
-                                                                                            final SpreadsheetCellReference cell,
-                                                                                            final int offset,
-                                                                                            final int count,
-                                                                                            final TT... expected) {
-        this.findReferencesWithCellAndCheck(
+    default <TT extends SpreadsheetExpressionReference> void findIdsByValueAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
+                                                                                    final SpreadsheetCellReference cell,
+                                                                                    final int offset,
+                                                                                    final int count,
+                                                                                    final TT... expected) {
+        this.findIdsByValueAndCheck(
             store,
             cell,
             offset,
@@ -250,14 +250,14 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         );
     }
 
-    default <TT extends SpreadsheetExpressionReference> void findReferencesWithCellAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
-                                                                                            final SpreadsheetCellReference cell,
-                                                                                            final int offset,
-                                                                                            final int count,
-                                                                                            final Set<TT> expected) {
+    default <TT extends SpreadsheetExpressionReference> void findIdsByValueAndCheck(final SpreadsheetExpressionReferencesStore<TT> store,
+                                                                                    final SpreadsheetCellReference cell,
+                                                                                    final int offset,
+                                                                                    final int count,
+                                                                                    final Set<TT> expected) {
         this.checkEquals(
             expected,
-            store.findReferencesWithCell(
+            store.findIdsByValue(
                 cell,
                 offset,
                 count
@@ -282,7 +282,7 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         store.removeByValue(cell);
 
         // just deleted references so find should not find it
-        this.findReferencesWithCellAndCheck(
+        this.findIdsByValueAndCheck(
             store,
             cell,
             0, // offset

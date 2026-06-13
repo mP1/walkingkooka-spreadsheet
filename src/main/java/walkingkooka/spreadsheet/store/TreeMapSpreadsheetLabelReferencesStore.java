@@ -74,7 +74,7 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
         // potentially slow for large ranges with gaps.
         for (final SpreadsheetCellReference reference : cellOrCellRange.toCellRange()) {
             labels.addAll(
-                this.findReferencesWithCell(
+                this.findIdsByValue(
                     reference,
                     0,
                     Integer.MAX_VALUE
@@ -129,10 +129,10 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     @Override
-    public Set<SpreadsheetLabelName> findReferencesWithCell(final SpreadsheetCellReference cell,
-                                                            final int offset,
-                                                            final int count) {
-        return this.store.findReferencesWithCell(
+    public Set<SpreadsheetLabelName> findIdsByValue(final SpreadsheetCellReference cell,
+                                                    final int offset,
+                                                    final int count) {
+        return this.store.findIdsByValue(
             cell,
             offset,
             count
