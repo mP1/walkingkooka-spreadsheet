@@ -98,7 +98,7 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
      * This is useful to remove references within a {@link SpreadsheetCell#formula()}.
      * <br>
      * This is equivalent to {@link #findReferencesWithCell(SpreadsheetCellReference, int, int) finding all references for a cell}
-     * and then {@link #removeCell(ReferenceAndSpreadsheetCellReference) removing them one by one}.
+     * and then {@link #removeCell(SpreadsheetExpressionReference, SpreadsheetCellReference)}  removing them one by one}.
      */
     void removeReferencesWithCell(final SpreadsheetCellReference cell);
 }
