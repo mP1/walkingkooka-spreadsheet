@@ -63,7 +63,7 @@ public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     }
 
     @Override
-    public void removeReferencesWithCell(final SpreadsheetCellReference cell) {
+    public void removeByValue(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();

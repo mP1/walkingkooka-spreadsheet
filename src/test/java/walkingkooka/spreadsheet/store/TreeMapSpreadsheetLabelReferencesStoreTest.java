@@ -418,7 +418,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
     // SpreadsheetEngine................................................................................................
 
     @Test
-    public void testAddValuesAndRemoveReferencesWithCellAndCount() {
+    public void testAddValuesAndRemoveByValueAndCount() {
         final TreeMapSpreadsheetLabelReferencesStore store = TreeMapSpreadsheetLabelReferencesStore.empty();
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label111");

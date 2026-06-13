@@ -134,7 +134,7 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public void removeReferencesWithCell(final SpreadsheetCellReference cell) {
+        public void removeByValue(final SpreadsheetCellReference cell) {
             Objects.requireNonNull(cell, "cell");
         }
 

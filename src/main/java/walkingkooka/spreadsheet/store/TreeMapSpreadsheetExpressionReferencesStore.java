@@ -270,7 +270,7 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     }
 
     @Override
-    public void removeReferencesWithCell(final SpreadsheetCellReference cell) {
+    public void removeByValue(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         for (final T reference : new TreeSet<>(this.referenceToCells.keySet())) {
