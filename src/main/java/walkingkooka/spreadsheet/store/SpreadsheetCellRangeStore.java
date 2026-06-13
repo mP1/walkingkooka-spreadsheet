@@ -30,7 +30,8 @@ import java.util.Set;
  * is ignored passing either variant must return the same results.
  * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetCellRangeReference} will be relative and never absolute.
  */
-public interface SpreadsheetCellRangeStore extends MultiValueStore<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
+public interface SpreadsheetCellRangeStore extends MultiValueStore<SpreadsheetCellRangeReference, SpreadsheetCellReference>,
+    SpreadsheetStore<SpreadsheetCellRangeReference, SpreadsheetCellReference> {
 
     /**
      * Finds all {@link SpreadsheetCellRangeReference} that include the given {@link SpreadsheetCellReference}.
