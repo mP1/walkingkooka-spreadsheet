@@ -51,7 +51,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     public void testAddCellsAndLoad() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -101,15 +101,15 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     public final void testIds() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99
         );
-        store.addCell(
+        store.addValue(
             B1,
             F99
         );
-        store.addCell(
+        store.addValue(
             C1,
             F99
         );
@@ -128,19 +128,19 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     public final void testValues() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99
         );
-        store.addCell(
+        store.addValue(
             B1,
             G99
         );
-        store.addCell(
+        store.addValue(
             C1,
             H99
         );
-        store.addCell(
+        store.addValue(
             C1,
             I99
         );
@@ -160,11 +160,11 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     }
 
     @Test
-    public void testAddCellFails() {
+    public void testAddValueFails() {
         assertThrows(
             UnsupportedOperationException.class,
             () -> this.createStore()
-                .addCell(
+                .addValue(
                     this.id(),
                     B1
                 )
@@ -186,14 +186,14 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     // count............................................................................................................
 
     @Test
-    public void testCountAfterSaveCellsAddCellRemoveCell() {
+    public void testCountAfterSaveCellsAddValueRemoveValue() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -203,7 +203,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
             A1,
             C1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -243,20 +243,20 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store1 = SpreadsheetExpressionReferencesStores.treeMap();
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store2 = SpreadsheetExpressionReferencesStores.treeMap();
 
-        store1.addCell(
+        store1.addValue(
             A1,
             B1
         );
-        store1.addCell(
+        store1.addValue(
             A1,
             C1
         );
 
-        store2.addCell(
+        store2.addValue(
             A1,
             B1
         );
-        store2.addCell(
+        store2.addValue(
             A1,
             C1
         );
@@ -271,11 +271,11 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     public void testEqualsDifferent() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> different = SpreadsheetExpressionReferencesStores.treeMap();
 
-        different.addCell(
+        different.addValue(
             A1,
             B1
         );
-        different.addCell(
+        different.addValue(
             A1,
             C1
         );
@@ -296,11 +296,11 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     public void testToString() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );

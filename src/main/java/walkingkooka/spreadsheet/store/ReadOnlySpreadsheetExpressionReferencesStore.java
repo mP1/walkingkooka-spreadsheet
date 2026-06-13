@@ -91,8 +91,8 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     }
 
     @Override
-    public void addCell(final T reference,
-                        final SpreadsheetCellReference cell) {
+    public void addValue(final T reference,
+                         final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cell, "cell");
 

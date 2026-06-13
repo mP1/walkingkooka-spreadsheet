@@ -83,7 +83,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testDeleteAfterSaveCells() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -107,11 +107,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testDeleteAfterSaveCells2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             C1,
             D1
         );
@@ -137,10 +137,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testDeleteAfterAddCellAbsolute() {
+    public void testDeleteAfterAddValueAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -168,7 +168,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
 
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
 
-        store.addCell(
+        store.addValue(
             label1,
             A1
         );
@@ -194,15 +194,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public final void testIds() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99
         );
-        store.addCell(
+        store.addValue(
             B1,
             F99
         );
-        store.addCell(
+        store.addValue(
             C1,
             F99
         );
@@ -219,15 +219,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public final void testIdsAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99.toAbsolute()
         );
-        store.addCell(
+        store.addValue(
             B1.toAbsolute(),
             F99
         );
-        store.addCell(
+        store.addValue(
             C1.toAbsolute(),
             F99.toAbsolute()
         );
@@ -244,15 +244,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public final void testIdsWindow() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99
         );
-        store.addCell(
+        store.addValue(
             B1,
             G99
         );
-        store.addCell(
+        store.addValue(
             C1,
             F99
         );
@@ -268,7 +268,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testIdsWithoutCells() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -299,19 +299,19 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public final void testValues() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99
         );
-        store.addCell(
+        store.addValue(
             B1,
             G99
         );
-        store.addCell(
+        store.addValue(
             C1,
             H99
         );
-        store.addCell(
+        store.addValue(
             C1,
             I99
         );
@@ -334,19 +334,19 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public final void testValuesAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1.toAbsolute(),
             F99
         );
-        store.addCell(
+        store.addValue(
             B1.toAbsolute(),
             G99
         );
-        store.addCell(
+        store.addValue(
             C1.toAbsolute(),
             H99
         );
-        store.addCell(
+        store.addValue(
             C1,
             I99
         );
@@ -369,19 +369,19 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public final void testValuesWindow() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             F99
         );
-        store.addCell(
+        store.addValue(
             B1,
             G99
         );
-        store.addCell(
+        store.addValue(
             C1,
             H99
         );
-        store.addCell(
+        store.addValue(
             D1,
             I99
         );
@@ -400,7 +400,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testValuesWithoutCells() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -437,7 +437,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testAddCells() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -462,7 +462,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testAddCellsAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -491,12 +491,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testAddCellsReplaceSome() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -526,17 +526,17 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testAddCellsReplaceAll() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
 
-        store.addCell(
+        store.addValue(
             C1,
             D1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             E1
         );
@@ -569,10 +569,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     // addCell..........................................................................................................
 
     @Test
-    public void testAddCell() {
+    public void testAddValue() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -594,15 +594,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCell2() {
+    public void testAddValue2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
 
-        store.addCell(
+        store.addValue(
             C1,
             D1
         );
@@ -628,10 +628,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellAbsolute() {
+    public void testAddValueAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -653,15 +653,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellSameTarget() {
+    public void testAddValueSameTarget() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -688,15 +688,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellsAddCellAndLoad() {
+    public void testAddValuesAddValueAndLoad() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -732,32 +732,32 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellsAddCellAndLoad2() {
+    public void testAddValuesAddValueAndLoad2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
 
-        store.addCell(
+        store.addValue(
             D1,
             E1
         );
-        store.addCell(
+        store.addValue(
             D1,
             A1
         );
-        store.addCell(
+        store.addValue(
             D1,
             B1
         );
-        store.addCell(
+        store.addValue(
             D1,
             C1
         );
@@ -801,7 +801,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testRemoveCell() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -819,11 +819,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testRemoveCell2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             C1,
             D1
         );
@@ -853,7 +853,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testRemoveCellAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -877,11 +877,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testRemoveCellManyValues() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -911,11 +911,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testRemoveCellManyValuesAbsolute() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -945,7 +945,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testRemoveCellUnknownAndLoad() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
@@ -985,14 +985,14 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellsRemoveCellAndLoad() {
+    public void testAddValuesRemoveValueAndLoad() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -1030,27 +1030,27 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     // addCell & removeCell..............................................................................................
 
     @Test
-    public void testAddCellAndRemoveCell() {
+    public void testAddValueAndRemoveValue() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
-        store.addCell(
+        store.addValue(
             A1,
             D1
         );
-        store.addCell(
+        store.addValue(
             A1,
             E1
         );
@@ -1114,39 +1114,39 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellAndRemoveCell2() {
+    public void testAddValueAndRemoveValue2() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
 
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
-        store.addCell(
+        store.addValue(
             A1,
             D1
         );
-        store.addCell(
+        store.addValue(
             A1,
             E1
         );
-        store.addCell(
+        store.addValue(
             B1,
             C1
         );
-        store.addCell(
+        store.addValue(
             B1,
             D1
         );
-        store.addCell(
+        store.addValue(
             B1,
             E1
         );
@@ -1218,14 +1218,14 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
-    public void testAddCellAndRemoveCell3() {
+    public void testAddValueAndRemoveValue3() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -1279,11 +1279,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testFindCellsWithReference() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -1314,15 +1314,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
         final SpreadsheetLabelName label3 = SpreadsheetSelection.labelName("Label3");
 
-        store.addCell(
+        store.addValue(
             label1,
             a1
         );
-        store.addCell(
+        store.addValue(
             label2,
             b2
         );
-        store.addCell(
+        store.addValue(
             label3,
             c3
         );
@@ -1343,15 +1343,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
 
-        store.addCell(
+        store.addValue(
             label1,
             A1
         );
-        store.addCell(
+        store.addValue(
             label1,
             B2
         );
-        store.addCell(
+        store.addValue(
             label2,
             C3
         );
@@ -1372,15 +1372,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
 
-        store.addCell(
+        store.addValue(
             label1,
             A1
         );
-        store.addCell(
+        store.addValue(
             label1,
             B2
         );
-        store.addCell(
+        store.addValue(
             label2,
             C3
         );
@@ -1401,23 +1401,23 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final SpreadsheetLabelName label1 = SpreadsheetSelection.labelName("Label1");
         final SpreadsheetLabelName label2 = SpreadsheetSelection.labelName("Label2");
 
-        store.addCell(
+        store.addValue(
             label1,
             A1
         );
-        store.addCell(
+        store.addValue(
             label1,
             B2
         );
-        store.addCell(
+        store.addValue(
             label1,
             C3
         );
-        store.addCell(
+        store.addValue(
             label1,
             D4
         );
-        store.addCell(
+        store.addValue(
             label2,
             E5
         );
@@ -1437,11 +1437,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testFindReferencesWithCell() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             B1,
             A1
         );
-        store.addCell(
+        store.addValue(
             C1,
             A1
         );
@@ -1470,11 +1470,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final SpreadsheetLabelName b1 = SpreadsheetSelection.labelName("Label1");
         final SpreadsheetLabelName c1 = SpreadsheetSelection.labelName("Label2");
 
-        store.addCell(
+        store.addValue(
             b1,
             a1
         );
-        store.addCell(
+        store.addValue(
             c1,
             a1
         );
@@ -1496,14 +1496,14 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     // count............................................................................................................
 
     @Test
-    public void testCountWhenSaveReferencesAddCellRemoveCell() {
+    public void testCountWhenSaveReferencesAddValueRemoveValue() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -1512,7 +1512,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             A1,
             C1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
@@ -1526,20 +1526,20 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testToString() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
-        store.addCell(
+        store.addValue(
             A1,
             B1
         );
-        store.addCell(
+        store.addValue(
             A1,
             C1
         );
 
-        store.addCell(
+        store.addValue(
             SpreadsheetSelection.parseCell("e5"),
             SpreadsheetSelection.A1
         );
-        store.addCell(
+        store.addValue(
             SpreadsheetSelection.parseCell("e5"),
             C1
         );
@@ -1597,20 +1597,20 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store1 = this.createStore();
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store2 = this.createStore();
 
-        store1.addCell(
+        store1.addValue(
             A1,
             B1
         );
-        store1.addCell(
+        store1.addValue(
             A1,
             C1
         );
 
-        store2.addCell(
+        store2.addValue(
             A1,
             B1
         );
-        store2.addCell(
+        store2.addValue(
             A1,
             C1
         );
@@ -1625,12 +1625,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     public void testEqualsDifferent() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> different = this.createStore();
 
-        different.addCell(
+        different.addValue(
             A1,
             B1
         );
 
-        different.addCell(
+        different.addValue(
             A1,
             C1
         );

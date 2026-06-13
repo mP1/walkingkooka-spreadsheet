@@ -43,8 +43,8 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     /**
      * Adds a reference to the given target.
      */
-    void addCell(final T reference,
-                 final SpreadsheetCellReference cell);
+    void addValue(final T reference,
+                  final SpreadsheetCellReference cell);
 
     /**
      * Removes a {@link SpreadsheetExpressionReference} from a {@link SpreadsheetCellReference}

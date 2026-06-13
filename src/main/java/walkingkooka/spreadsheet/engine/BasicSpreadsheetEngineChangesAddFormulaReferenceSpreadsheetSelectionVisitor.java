@@ -47,7 +47,7 @@ final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelection
     @Override
     protected void visit(final SpreadsheetCellReference formulaCell) {
         this.repository.cellReferences()
-            .addCell(
+            .addValue(
                 formulaCell,
                 this.cell
             );
@@ -56,7 +56,7 @@ final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelection
     @Override
     protected void visit(final SpreadsheetLabelName label) {
         this.repository.labelReferences()
-            .addCell(
+            .addValue(
                 label,
                 this.cell
             );

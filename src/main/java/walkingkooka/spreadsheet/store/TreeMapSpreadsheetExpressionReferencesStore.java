@@ -150,8 +150,8 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     }
 
     @Override
-    public void addCell(final T reference,
-                        final SpreadsheetCellReference value) {
+    public void addValue(final T reference,
+                         final SpreadsheetCellReference value) {
         final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
             reference,
             value
