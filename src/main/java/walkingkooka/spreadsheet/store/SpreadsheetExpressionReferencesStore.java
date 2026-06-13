@@ -55,9 +55,9 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     /**
      * Finds any {@link SpreadsheetCellReference} with the provided reference.
      */
-    Set<SpreadsheetCellReference> findCellsWithReference(final T reference,
-                                                         final int offset,
-                                                         final int count);
+    Set<SpreadsheetCellReference> findValuesById(final T reference,
+                                                 final int offset,
+                                                 final int count);
 
     /**
      * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference cell}.

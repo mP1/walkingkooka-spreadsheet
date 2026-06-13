@@ -62,7 +62,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             reference
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label,
             0,
@@ -203,7 +203,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label,
             0,
@@ -254,7 +254,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             d4
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             0,
@@ -263,7 +263,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label2,
             0,
@@ -321,7 +321,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             d4
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             0,
@@ -330,7 +330,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label2,
             0,
@@ -388,7 +388,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             d4
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             0,
@@ -397,7 +397,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label2,
             0,
@@ -448,7 +448,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findCellsWithReferenceAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             label1,
             0, // offset

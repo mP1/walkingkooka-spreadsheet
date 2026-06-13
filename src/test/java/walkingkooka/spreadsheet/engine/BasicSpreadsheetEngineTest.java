@@ -27671,7 +27671,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                 final SpreadsheetCellReference... expected) {
         this.checkEquals(
             Sets.of(expected),
-            store.findCellsWithReference(
+            store.findValuesById(
                 cell,
                 0, // offset
                 Integer.MAX_VALUE // count

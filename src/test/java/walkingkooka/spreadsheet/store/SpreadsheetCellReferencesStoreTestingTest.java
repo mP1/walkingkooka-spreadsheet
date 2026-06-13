@@ -82,9 +82,9 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         }
 
         @Override
-        public Set<SpreadsheetCellReference> findCellsWithReference(final SpreadsheetCellReference reference,
-                                                                    final int offset,
-                                                                    final int count) {
+        public Set<SpreadsheetCellReference> findValuesById(final SpreadsheetCellReference reference,
+                                                            final int offset,
+                                                            final int count) {
             Objects.requireNonNull(reference, "reference");
             Store.checkOffsetAndCount(
                 offset,

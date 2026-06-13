@@ -118,10 +118,10 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findCellsWithReference(final SpreadsheetLabelName label,
-                                                                final int offset,
-                                                                final int count) {
-        return this.store.findCellsWithReference(
+    public Set<SpreadsheetCellReference> findValuesById(final SpreadsheetLabelName label,
+                                                        final int offset,
+                                                        final int count) {
+        return this.store.findValuesById(
             label,
             offset,
             count
