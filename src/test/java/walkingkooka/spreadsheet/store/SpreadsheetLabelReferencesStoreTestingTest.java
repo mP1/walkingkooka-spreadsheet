@@ -128,8 +128,10 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public void addCell(final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> labelAndReference) {
-            Objects.requireNonNull(labelAndReference, "labelAndReference");
+        public void addCell(final SpreadsheetLabelName label,
+                            final SpreadsheetCellReference value) {
+            Objects.requireNonNull(label, "label");
+            Objects.requireNonNull(value, "value");
         }
 
         @Override

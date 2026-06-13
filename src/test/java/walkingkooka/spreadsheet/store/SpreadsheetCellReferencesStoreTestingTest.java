@@ -100,8 +100,10 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         }
 
         @Override
-        public void addCell(final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> referenceAndCell) {
-            Objects.requireNonNull(referenceAndCell, "referenceAndCell");
+        public void addCell(final SpreadsheetCellReference cell,
+                            final SpreadsheetCellReference value) {
+            Objects.requireNonNull(cell, "cell");
+            Objects.requireNonNull(value, "value");
         }
 
         @Override

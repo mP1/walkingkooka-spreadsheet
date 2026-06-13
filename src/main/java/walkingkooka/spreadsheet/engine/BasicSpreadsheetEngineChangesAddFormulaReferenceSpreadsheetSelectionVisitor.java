@@ -21,7 +21,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelectionVisitor;
-import walkingkooka.spreadsheet.store.ReferenceAndSpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 /**
@@ -49,10 +48,8 @@ final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelection
     protected void visit(final SpreadsheetCellReference formulaCell) {
         this.repository.cellReferences()
             .addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                    formulaCell,
-                    this.cell
-                )
+                formulaCell,
+                this.cell
             );
     }
 
@@ -60,10 +57,8 @@ final class BasicSpreadsheetEngineChangesAddFormulaReferenceSpreadsheetSelection
     protected void visit(final SpreadsheetLabelName label) {
         this.repository.labelReferences()
             .addCell(
-                ReferenceAndSpreadsheetCellReference.with(
-                    label,
-                    this.cell
-                )
+                label,
+                this.cell
             );
     }
 

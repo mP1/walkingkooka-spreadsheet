@@ -37,8 +37,10 @@ public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     }
 
     @Override
-    public void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        Objects.requireNonNull(referenceAndCell, "referenceAndCell");
+    public void addCell(final T reference,
+                        final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(reference, "reference");
+        Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();
     }

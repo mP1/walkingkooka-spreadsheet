@@ -52,7 +52,9 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         final T id = this.id();
 
         cells.forEach(
-            v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)
+            v -> store.addCell(
+                id,
+                v
             )
         );
 
@@ -73,10 +75,8 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         final SpreadsheetCellReference cell = SpreadsheetSelection.parseCell("Z99");
 
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                reference,
-                cell
-            )
+            reference,
+            cell
         );
 
         final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
@@ -133,11 +133,26 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     // addCell..........................................................................................................
 
     @Test
-    default void testAddCellNullFails() {
+    default void testAddCellWithNullIdFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .addCell(null)
+                .addCell(
+                    null,
+                    SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Test
+    default void testAddCellWithNullValueFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createStore()
+                .addCell(
+                    this.id(),
+                    null
+                )
         );
     }
 
@@ -151,14 +166,18 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         final List<ReferenceAndSpreadsheetCellReference<T>> fired = Lists.array();
         store.addAddCellWatcher(fired::add);
 
-        final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
+        store.addCell(
             reference,
             cell
         );
-        store.addCell(referenceAndCell);
 
         this.checkEquals(
-            Lists.of(referenceAndCell),
+            Lists.of(
+                ReferenceAndSpreadsheetCellReference.with(
+                    reference,
+                    cell
+                )
+            ),
             fired,
             "fired add reference events"
         );
@@ -186,7 +205,12 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
 
         final T id = this.id();
 
-        cells.forEach(v -> store.addCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
+        cells.forEach(
+            v -> store.addCell(
+                id,
+                v
+            )
+        );
         cells.forEach(v -> store.removeCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
 
         this.checkEquals(
@@ -210,7 +234,10 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
             reference,
             cell
         );
-        store.addCell(referenceAndCell);
+        store.addCell(
+            reference,
+            cell
+        );
         store.removeCell(referenceAndCell);
 
         this.checkEquals(

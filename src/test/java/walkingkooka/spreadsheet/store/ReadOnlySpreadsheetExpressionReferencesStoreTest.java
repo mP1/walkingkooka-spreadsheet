@@ -41,10 +41,8 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference b1 = this.b1();
 
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                b1
-            )
+            a1,
+            b1
         );
 
         final ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetExpressionReferencesStore.with(store);
@@ -103,22 +101,16 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference f = this.f99();
 
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a,
-                f
-            )
+            a,
+            f
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                b,
-                f
-            )
+            b,
+            f
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                c,
-                f
-            )
+            c,
+            f
         );
 
         this.idsAndCheck(
@@ -145,28 +137,20 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference i = this.i99();
 
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a,
-                f
-            )
+            a,
+            f
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                b,
-                g
-            )
+            b,
+            g
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                c,
-                h
-            )
+            c,
+            h
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                c,
-                i
-            )
+            c,
+            i
         );
 
         //noinspection unchecked
@@ -189,10 +173,8 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
             UnsupportedOperationException.class,
             () -> this.createStore()
                 .addCell(
-                    ReferenceAndSpreadsheetCellReference.with(
-                        this.id(),
-                        this.b1()
-                    )
+                    this.id(),
+                    this.b1()
                 )
         );
     }
@@ -237,21 +219,20 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference c1 = this.c1();
 
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                b1
-            )
+            a1,
+            b1
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                c1
-            )
+            a1,
+            c1
         );
 
         final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(a1, c1);
         store.removeCell(and);
-        store.addCell(and);
+        store.addCell(
+            a1,
+            c1
+        );
 
         this.countAndCheck(
             ReadOnlySpreadsheetExpressionReferencesStore.with(store),
@@ -317,29 +298,21 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference c1 = this.c1();
 
         store1.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                b1
-            )
+            a1,
+            b1
         );
         store1.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                c1
-            )
+            a1,
+            c1
         );
 
         store2.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                b1
-            )
+            a1,
+            b1
         );
         store2.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                c1
-            )
+            a1,
+            c1
         );
 
         this.checkEquals(
@@ -357,16 +330,12 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference c1 = this.c1();
 
         different.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                b1
-            )
+            a1,
+            b1
         );
         different.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                c1
-            )
+            a1,
+            c1
         );
 
         this.checkNotEquals(
@@ -390,16 +359,12 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference c1 = this.c1();
 
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                b1
-            )
+            a1,
+            b1
         );
         store.addCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                a1,
-                c1
-            )
+            a1,
+            c1
         );
 
         this.toStringAndCheck(
