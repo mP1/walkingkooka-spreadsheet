@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -28,7 +27,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -564,55 +562,6 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
                 ),
                 C1,
                 Sets.of(D1)
-            )
-        );
-    }
-
-    @Test
-    public void testAddCellWatcherRemoveCellWatcher2() {
-        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
-
-        store.addCell(
-            A1,
-            B1
-        );
-
-        final List<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> remove = Lists.array();
-        store.addRemoveCellWatcher(remove::add);
-
-        store.addCell(
-            A1,
-            C1
-        );
-
-        store.removeCell(
-            A1,
-            B1
-        );
-
-        this.checkEquals(
-            Lists.of(
-                ReferenceAndSpreadsheetCellReference.with(
-                    A1,
-                    B1
-                )
-            ),
-            remove,
-            "remove"
-        );
-
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                C1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(C1)
             )
         );
     }

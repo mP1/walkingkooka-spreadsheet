@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore {
 
@@ -119,11 +118,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
                     ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
                 )
         );
-    }
-
-    @Override
-    public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> watcher) {
-        return this.store.addRemoveCellWatcher(watcher);
     }
 
     @Override

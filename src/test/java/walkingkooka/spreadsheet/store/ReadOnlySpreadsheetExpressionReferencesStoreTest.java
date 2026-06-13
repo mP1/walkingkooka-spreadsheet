@@ -183,11 +183,6 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
     }
 
-    @Override
-    @SuppressWarnings("unused")
-    public void testDeleteWithRemoveCellWatcher() {
-    }
-
     // count............................................................................................................
 
     @Test

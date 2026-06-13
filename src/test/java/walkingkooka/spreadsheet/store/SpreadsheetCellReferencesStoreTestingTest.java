@@ -27,17 +27,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 public final class SpreadsheetCellReferencesStoreTestingTest implements SpreadsheetCellReferencesStoreTesting<SpreadsheetCellReferencesStoreTestingTest.TestSpreadsheetCellReferencesStore> {
 
     @Override
     public void testTestNaming() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testDeleteWithRemoveCellWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -109,12 +103,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
                 count
             );
             return Set.of();
-        }
-
-        @Override
-        public Runnable addRemoveCellWatcher(final Consumer<ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference>> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            return null;
         }
 
         @Override
