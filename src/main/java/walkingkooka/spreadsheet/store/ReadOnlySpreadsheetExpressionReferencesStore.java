@@ -98,7 +98,7 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
 
     @Override
     public void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        checkReferenceAndSpreadsheetCell(referenceAndCell);
+        Objects.requireNonNull((ReferenceAndSpreadsheetCellReference<?>) referenceAndCell, "referenceAndCell");
 
         throw new UnsupportedOperationException();
     }
@@ -112,7 +112,7 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
 
     @Override
     public void removeCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        checkReferenceAndSpreadsheetCell(referenceAndCell);
+        Objects.requireNonNull((ReferenceAndSpreadsheetCellReference<?>) referenceAndCell, "referenceAndCell");
 
         throw new UnsupportedOperationException();
     }
@@ -178,7 +178,4 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
         return this.store.toString();
     }
 
-    private static void checkReferenceAndSpreadsheetCell(final ReferenceAndSpreadsheetCellReference<?> referenceAndCell) {
-        Objects.requireNonNull(referenceAndCell, "referenceAndCell");
-    }
 }
