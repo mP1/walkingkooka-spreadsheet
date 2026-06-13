@@ -186,11 +186,26 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     // removeCell........................................................................................................
 
     @Test
-    default void testRemoveCellNullFails() {
+    default void testRemoveCellWithNullIdFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .removeCell(null)
+                .removeCell(
+                    null,
+                    SpreadsheetSelection.A1
+                )
+        );
+    }
+
+    @Test
+    default void testRemoveCellWithNullValueFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.createStore()
+                .removeCell(
+                    this.id(),
+                    null
+                )
         );
     }
 
@@ -211,7 +226,12 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
                 v
             )
         );
-        cells.forEach(v -> store.removeCell(ReferenceAndSpreadsheetCellReference.with(id, v)));
+        cells.forEach(
+            v -> store.removeCell(
+                id,
+                v
+            )
+        );
 
         this.checkEquals(
             Lists.of(id),
@@ -238,7 +258,10 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
             reference,
             cell
         );
-        store.removeCell(referenceAndCell);
+        store.removeCell(
+            reference,
+            cell
+        );
 
         this.checkEquals(
             Lists.of(referenceAndCell),

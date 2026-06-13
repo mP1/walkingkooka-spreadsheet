@@ -588,16 +588,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                A1,
-                C1
-            )
+            A1,
+            C1
         );
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                A1,
-                D1
-            )
+            A1,
+            D1
         );
 
         this.checkEquals(
@@ -666,10 +662,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                A1,
-                B1
-            )
+            A1,
+            B1
         );
 
         this.checkEquals(
@@ -949,7 +943,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        store.removeCell(ReferenceAndSpreadsheetCellReference.with(A1, B1));
+        store.removeCell(
+            A1,
+            B1
+        );
 
         this.cellToReferencesAndCheck(store, Maps.empty());
         this.referenceToCellsAndCheck(store, Maps.empty());
@@ -969,7 +966,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(C1, D1)
+            C1,
+            D1
         );
 
         this.cellToReferencesAndCheck(
@@ -998,10 +996,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                A1.toAbsolute(),
-                B1
-            )
+            A1.toAbsolute(),
+            B1
         );
 
         this.cellToReferencesAndCheck(
@@ -1028,7 +1024,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(A1, C1)
+            A1,
+            C1
         );
 
         this.cellToReferencesAndCheck(
@@ -1061,10 +1058,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                A1.toAbsolute(),
-                C1
-            )
+            A1.toAbsolute(),
+            C1
         );
 
         this.cellToReferencesAndCheck(
@@ -1093,7 +1088,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(A1, C1)
+            A1,
+            C1
         );
 
         this.loadAndCheck(
@@ -1139,7 +1135,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(A1, C1)
+            A1,
+            C1
         );
 
         this.loadAndCheck(store, A1, B1);
@@ -1291,7 +1288,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E1
         );
 
-        store.removeCell(ReferenceAndSpreadsheetCellReference.with(A1, E1));
+        store.removeCell(
+            A1,
+            E1
+        );
 
         this.loadAndCheck(
             store,
@@ -1367,10 +1367,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(
-                A1,
-                B1
-            )
+            A1,
+            B1
         );
 
         this.loadAndCheck(store, A1, C1);
@@ -1435,7 +1433,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1, C1
         );
 
-        store.removeCell(ReferenceAndSpreadsheetCellReference.with(B1, A1));
+        store.removeCell(
+            B1,
+            A1
+        );
     }
 
     @Test
@@ -1590,7 +1591,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1, C1
         );
 
-        store.removeCell(ReferenceAndSpreadsheetCellReference.with(B1, A1));
+        store.removeCell(
+            B1,
+            A1
+        );
     }
 
     // removeReferencesWithCell.........................................................................................
@@ -1642,7 +1646,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
 
         store.removeCell(
-            ReferenceAndSpreadsheetCellReference.with(A1, C1)
+            A1,
+            C1
         );
         store.addCell(
             A1,
