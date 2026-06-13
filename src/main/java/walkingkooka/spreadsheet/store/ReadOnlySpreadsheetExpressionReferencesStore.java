@@ -48,12 +48,6 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     }
 
     @Override
-    public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
-        Objects.requireNonNull(cells, "cells");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void delete(final T reference) {
         Objects.requireNonNull(reference, "reference");
 
@@ -100,15 +94,6 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     @Override
     public Runnable addDeleteWatcher(final Consumer<T> watcher) {
         return this.store.addDeleteWatcher(watcher);
-    }
-
-    @Override
-    public void saveCells(final T reference,
-                          final Set<SpreadsheetCellReference> cells) {
-        Objects.requireNonNull(reference, "reference");
-        Objects.requireNonNull(cells, "cells");
-
-        throw new UnsupportedOperationException();
     }
 
     @Override

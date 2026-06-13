@@ -162,56 +162,6 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     }
 
     @Override
-    public void saveCells(final T reference,
-                          final Set<SpreadsheetCellReference> cells) {
-        Objects.requireNonNull(reference, "reference");
-        Objects.requireNonNull(cells, "cells");
-
-        this.saveCellsWithRelativeReference(
-            (T) reference.toRelative(),
-            cells
-        );
-    }
-
-    private void saveCellsWithRelativeReference(final T reference,
-                                                final Set<SpreadsheetCellReference> cells) {
-        final Set<SpreadsheetCellReference> previous = this.referenceToCells.get(reference);
-        if (null == previous) {
-            cells.forEach(cell -> this.addCellNonNull(
-                    ReferenceAndSpreadsheetCellReference.with(
-                        reference,
-                        cell.toRelative()
-                    )
-                )
-            );
-        } else {
-            final Set<SpreadsheetCellReference> copy = Sets.ordered();
-            copy.addAll(previous);
-
-            cells.stream()
-                .map(SpreadsheetCellReference::toRelative)
-                .filter(cell -> false == copy.contains(cell))
-                .forEach(cell -> this.addCellNonNull(
-                        ReferenceAndSpreadsheetCellReference.with(
-                            reference,
-                            cell.toRelative()
-                        )
-                    )
-                );
-
-            copy.stream()
-                .filter(cell -> false == cells.contains(cell))
-                .forEach(cell -> this.removeCellNonNull(
-                        ReferenceAndSpreadsheetCellReference.with(
-                            reference,
-                            cell.toRelative()
-                        )
-                    )
-                );
-        }
-    }
-
-    @Override
     public void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
         this.addCellNonNull(
             Objects.requireNonNull(referenceAndCell, "referenceAndCell")

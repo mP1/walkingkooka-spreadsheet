@@ -62,26 +62,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     }
 
     @Override
-    public void testSaveCellsAddCellWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveCellsDoesntFireDeleteWatchers() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveCellsReplaceAddCellWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSaveCellsReplaceAddCellWatcher2() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public TestSpreadsheetCellReferencesStore createStore() {
         return new TestSpreadsheetCellReferencesStore();
     }
@@ -117,13 +97,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> watcher) {
             Objects.requireNonNull(watcher, "watcher");
             return () -> {};
-        }
-
-        @Override
-        public void saveCells(final SpreadsheetCellReference reference,
-                              final Set<SpreadsheetCellReference> cells) {
-            Objects.requireNonNull(reference, "reference");
-            Objects.requireNonNull(cells, "cells");
         }
 
         @Override

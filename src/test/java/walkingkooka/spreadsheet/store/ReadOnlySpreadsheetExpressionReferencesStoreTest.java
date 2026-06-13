@@ -34,13 +34,18 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     HashCodeEqualsDefinedTesting2<ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference>> {
 
     @Test
-    public void testSaveAndLoad() {
+    public void testAddCellsAndLoad() {
         final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = SpreadsheetExpressionReferencesStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
 
-        store.saveCells(a1, Sets.of(b1));
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                b1
+            )
+        );
 
         final ReadOnlySpreadsheetExpressionReferencesStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetExpressionReferencesStore.with(store);
 
@@ -97,9 +102,24 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference c = this.c1();
         final SpreadsheetCellReference f = this.f99();
 
-        store.saveCells(a, Sets.of(f));
-        store.saveCells(b, Sets.of(f));
-        store.saveCells(c, Sets.of(f));
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a,
+                f
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                b,
+                f
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                c,
+                f
+            )
+        );
 
         this.idsAndCheck(
             ReadOnlySpreadsheetExpressionReferencesStore.with(store),
@@ -119,67 +139,48 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference b = this.b1();
         final SpreadsheetCellReference c = this.c1();
 
-        final Set<SpreadsheetCellReference> f = Sets.of(this.f99());
-        final Set<SpreadsheetCellReference> g = Sets.of(this.g99());
-        final Set<SpreadsheetCellReference> hi = Sets.of(this.h99(), this.i99());
+        final SpreadsheetCellReference f = this.f99();
+        final SpreadsheetCellReference g = this.g99();
+        final SpreadsheetCellReference h = this.h99();
+        final SpreadsheetCellReference i = this.i99();
 
-        store.saveCells(a, f);
-        store.saveCells(b, g);
-        store.saveCells(c, hi);
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a,
+                f
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                b,
+                g
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                c,
+                h
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                c,
+                i
+            )
+        );
 
         //noinspection unchecked
         this.valuesAndCheck(
             ReadOnlySpreadsheetExpressionReferencesStore.with(store),
             0,
             3,
-            f,
-            g,
-            hi
+            Sets.of(f),
+            Sets.of(g),
+            Sets.of(
+                h,
+                i
+            )
         );
-    }
-
-    @Test
-    public void testSaveCellFails() {
-        assertThrows(
-            UnsupportedOperationException.class,
-            () -> this.createStore()
-                .saveCells(
-                    this.id(),
-                    Sets.of(
-                        this.a1()
-                    )
-                )
-        );
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testSaveCells() {
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testSaveCellsDoesntFireDeleteWatchers() {
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testSaveCellsAddCellWatcher() {
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testSaveCellsReplaceAddCellWatcher() {
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testSaveCellsReplaceNoneAddCellWatcher() {
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testSaveCellsReplaceAddCellWatcher2() {
     }
 
     @Test
@@ -234,7 +235,19 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveCells(a1, Sets.of(b1, c1));
+
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                b1
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                c1
+            )
+        );
 
         final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(a1, c1);
         store.removeCell(and);
@@ -303,14 +316,30 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        store1.saveCells(
-            a1,
-            Sets.of(b1, c1)
+        store1.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                b1
+            )
+        );
+        store1.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                c1
+            )
         );
 
-        store2.saveCells(
-            a1,
-            Sets.of(b1, c1)
+        store2.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                b1
+            )
+        );
+        store2.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                c1
+            )
         );
 
         this.checkEquals(
@@ -327,9 +356,17 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
 
-        different.saveCells(
-            a1,
-            Sets.of(b1, c1)
+        different.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                b1
+            )
+        );
+        different.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                c1
+            )
         );
 
         this.checkNotEquals(
@@ -351,7 +388,19 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
-        store.saveCells(a1, Sets.of(b1, c1));
+
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                b1
+            )
+        );
+        store.addCell(
+            ReferenceAndSpreadsheetCellReference.with(
+                a1,
+                c1
+            )
+        );
 
         this.toStringAndCheck(
             ReadOnlySpreadsheetExpressionReferencesStore.with(store),

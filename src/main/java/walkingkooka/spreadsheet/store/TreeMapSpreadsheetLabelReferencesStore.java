@@ -101,15 +101,6 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     @Override
-    public void saveCells(final SpreadsheetLabelName label,
-                          final Set<SpreadsheetCellReference> cells) {
-        this.store.saveCells(
-            label,
-            cells
-        );
-    }
-
-    @Override
     public void addCell(final ReferenceAndSpreadsheetCellReference<SpreadsheetLabelName> referenceAndCell) {
         this.store.addCell(referenceAndCell);
     }
