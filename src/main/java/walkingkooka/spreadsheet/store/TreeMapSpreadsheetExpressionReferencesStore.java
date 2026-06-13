@@ -99,12 +99,6 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     }
 
     @Override
-    public Runnable addDeleteWatcher(final Consumer<T> deleted) {
-        return this.deleteWatchers.add(deleted);
-    }
-
-    private final Watchers<T> deleteWatchers = Watchers.empty();
-    @Override
     public int count() {
         return this.referenceToCells.size();
     }
@@ -232,7 +226,6 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
             allCells.remove(value);
             if (allCells.isEmpty()) {
                 this.referenceToCells.remove(reference);
-                this.deleteWatchers.accept(reference);
             }
         }
 

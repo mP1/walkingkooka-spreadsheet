@@ -41,8 +41,6 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
         throw new UnsupportedOperationException();
     }
 
-    Runnable addDeleteWatcher(final Consumer<T> watcher);
-
     /**
      * Adds a reference to the given target.
      */

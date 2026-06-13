@@ -66,10 +66,6 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     }
 
     @Override
-    public void testDeleteDoesntFireDeleteWatcher() {
-    }
-
-    @Override
     public void testAddStoreWatcherAndSave() {
         throw new UnsupportedOperationException();
     }
@@ -82,11 +78,6 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     @Override
     public void testAddStoreWatcherAndDelete() {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public void testRemoveLastCellAddDeleteWatcher() {
     }
 
     // ids..............................................................................................................

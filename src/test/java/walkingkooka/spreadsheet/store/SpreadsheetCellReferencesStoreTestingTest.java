@@ -37,11 +37,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     }
 
     @Override
-    public void testDeleteDoesntFireDeleteWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public void testAddCellWithWatcher() {
         throw new UnsupportedOperationException();
     }
@@ -53,11 +48,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
 
     @Override
     public void testRemoveCellWithWatcher() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testRemoveLastCellAddDeleteWatcher() {
         throw new UnsupportedOperationException();
     }
 
@@ -92,12 +82,6 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     }
 
     static class TestSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore {
-
-        @Override
-        public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> watcher) {
-            Objects.requireNonNull(watcher, "watcher");
-            return () -> {};
-        }
 
         @Override
         public void addCell(final SpreadsheetCellReference cell,

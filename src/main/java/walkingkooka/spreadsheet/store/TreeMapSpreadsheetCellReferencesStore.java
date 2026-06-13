@@ -211,11 +211,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
         return this.store.addStoreWatcher(watcher);
     }
 
-    @Override
-    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> consumer) {
-        return this.store.addDeleteWatcher(consumer);
-    }
-
     private final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store;
 
     // Object...........................................................................................................
