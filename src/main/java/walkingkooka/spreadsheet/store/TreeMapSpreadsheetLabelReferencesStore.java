@@ -109,9 +109,9 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
     }
 
     @Override
-    public void removeCell(final SpreadsheetLabelName label,
-                           final SpreadsheetCellReference value) {
-        this.store.removeCell(
+    public void removeValue(final SpreadsheetLabelName label,
+                            final SpreadsheetCellReference value) {
+        this.store.removeValue(
             label,
             value
         );

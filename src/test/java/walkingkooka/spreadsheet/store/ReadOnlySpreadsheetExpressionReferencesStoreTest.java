@@ -172,11 +172,11 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
     }
 
     @Test
-    public void testRemoveCellFails() {
+    public void testRemoveValueFails() {
         assertThrows(
             UnsupportedOperationException.class,
             () -> this.createStore()
-                .removeCell(
+                .removeValue(
                     this.id(),
                     B1
                 )
@@ -199,7 +199,7 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         );
 
         final ReferenceAndSpreadsheetCellReference<SpreadsheetCellReference> and = ReferenceAndSpreadsheetCellReference.with(A1, C1);
-        store.removeCell(
+        store.removeValue(
             A1,
             C1
         );

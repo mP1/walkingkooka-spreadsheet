@@ -103,8 +103,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public void removeCell(final SpreadsheetLabelName label,
-                               final SpreadsheetCellReference value) {
+        public void removeValue(final SpreadsheetLabelName label,
+                                final SpreadsheetCellReference value) {
             Objects.requireNonNull(label, "label");
             Objects.requireNonNull(value, "value");
         }

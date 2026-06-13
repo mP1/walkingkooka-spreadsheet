@@ -75,8 +75,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         }
 
         @Override
-        public void removeCell(final SpreadsheetCellReference reference,
-                               final SpreadsheetCellReference cell) {
+        public void removeValue(final SpreadsheetCellReference reference,
+                                final SpreadsheetCellReference cell) {
             Objects.requireNonNull(reference, "reference");
             Objects.requireNonNull(cell, "cell");
         }

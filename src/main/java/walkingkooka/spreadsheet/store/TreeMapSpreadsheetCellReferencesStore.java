@@ -56,9 +56,9 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public void removeCell(final SpreadsheetCellReference reference,
-                           final SpreadsheetCellReference cell) {
-        this.store.removeCell(
+    public void removeValue(final SpreadsheetCellReference reference,
+                            final SpreadsheetCellReference cell) {
+        this.store.removeValue(
             reference,
             cell
         );

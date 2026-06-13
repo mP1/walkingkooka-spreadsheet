@@ -100,8 +100,8 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     }
 
     @Override
-    public void removeCell(final T reference,
-                           final SpreadsheetCellReference cell) {
+    public void removeValue(final T reference,
+                            final SpreadsheetCellReference cell) {
         Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(cell, "cell");
 
