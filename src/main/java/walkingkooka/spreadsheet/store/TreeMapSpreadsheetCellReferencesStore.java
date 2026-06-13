@@ -47,9 +47,9 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
     }
 
     @Override
-    public void addCell(final SpreadsheetCellReference cell,
-                        final SpreadsheetCellReference value) {
-        this.store.addCell(
+    public void addValue(final SpreadsheetCellReference cell,
+                         final SpreadsheetCellReference value) {
+        this.store.addValue(
             cell,
             value
         );

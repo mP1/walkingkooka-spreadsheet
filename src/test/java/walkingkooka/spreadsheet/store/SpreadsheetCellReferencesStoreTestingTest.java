@@ -68,8 +68,8 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
     static class TestSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore {
 
         @Override
-        public void addCell(final SpreadsheetCellReference cell,
-                            final SpreadsheetCellReference value) {
+        public void addValue(final SpreadsheetCellReference cell,
+                             final SpreadsheetCellReference value) {
             Objects.requireNonNull(cell, "cell");
             Objects.requireNonNull(value, "value");
         }

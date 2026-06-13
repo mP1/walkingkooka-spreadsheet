@@ -35,7 +35,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
-        store.addCell(
+        store.addValue(
             reference,
             cell
         );
@@ -55,7 +55,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
-        store.addCell(
+        store.addValue(
             reference,
             cell
         );
@@ -84,20 +84,20 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
 
-        store.addCell(
+        store.addValue(
             reference,
             cell
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("C3");
 
-        store.addCell(
+        store.addValue(
             reference,
             cell2
         );
 
         // ignored
-        store.addCell(
+        store.addValue(
             cell,
             reference
         );
@@ -119,20 +119,20 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z9");
 
-        store.addCell(
+        store.addValue(
             reference,
             cell
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("B2");
 
-        store.addCell(
+        store.addValue(
             reference,
             cell2
         );
 
         // ignored
-        store.addCell(
+        store.addValue(
             cell,
             reference
         );
@@ -154,7 +154,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
 
-        store.addCell(
+        store.addValue(
             reference1,
             cell1
         );
@@ -162,13 +162,13 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
         final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
 
-        store.addCell(
+        store.addValue(
             reference2,
             cell2
         );
 
         // ignored
-        store.addCell(
+        store.addValue(
             cell1,
             reference1
         );
@@ -190,13 +190,13 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
 
-        store.addCell(
+        store.addValue(
             reference1,
             cell1
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
-        store.addCell(
+        store.addValue(
             reference1,
             cell2
         );
@@ -204,7 +204,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
         final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
 
-        store.addCell(
+        store.addValue(
             reference2,
             cell3
         );
@@ -212,13 +212,13 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
         final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
 
-        store.addCell(
+        store.addValue(
             reference3,
             cell4
         );
 
         // ignored
-        store.addCell(
+        store.addValue(
             cell1,
             reference1
         );
@@ -242,13 +242,13 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
         final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
 
-        store.addCell(
+        store.addValue(
             reference1,
             cell1
         );
 
         final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
-        store.addCell(
+        store.addValue(
             reference1,
             cell2
         );
@@ -256,7 +256,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
         final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
 
-        store.addCell(
+        store.addValue(
             reference2,
             cell3
         );
@@ -264,13 +264,13 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
         final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
 
-        store.addCell(
+        store.addValue(
             reference3,
             cell4
         );
 
         // ignored
-        store.addCell(
+        store.addValue(
             cell1,
             reference1
         );
@@ -298,12 +298,12 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
         final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
         final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
 
-        store.addCell(
+        store.addValue(
             b2,
             a1
         );
 
-        store.addCell(
+        store.addValue(
             c3,
             a1
         );

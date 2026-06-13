@@ -70,14 +70,14 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
         }
     }
 
-    // addCell..........................................................................................................
+    // addValue.........................................................................................................
 
     @Test
-    default void testAddCellWithNullIdFails() {
+    default void testAddValueWithNullIdFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .addCell(
+                .addValue(
                     null,
                     SpreadsheetSelection.A1
                 )
@@ -85,11 +85,11 @@ public interface SpreadsheetExpressionReferencesStoreTesting<S extends Spreadshe
     }
 
     @Test
-    default void testAddCellWithNullValueFails() {
+    default void testAddValueWithNullValueFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createStore()
-                .addCell(
+                .addValue(
                     this.id(),
                     null
                 )
