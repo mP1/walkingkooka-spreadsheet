@@ -46,7 +46,8 @@ public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpre
     /**
      * Adds a reference to the given target.
      */
-    void addCell(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell);
+    void addCell(final T reference,
+                 final SpreadsheetCellReference cell);
 
     /**
      * Adds a {@link Consumer watcher} which receives all added reference events.
