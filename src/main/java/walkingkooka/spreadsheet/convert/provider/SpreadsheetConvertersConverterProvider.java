@@ -33,6 +33,7 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverterContext;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Objects;
@@ -86,7 +87,8 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
 
         final List<?> copy = Lists.immutable(values);
 
-        switch (name.value()) {
+        final String nameString = name.value();
+        switch (nameString) {
             case BASIC_STRING:
                 noParameterCheck(copy);
 
@@ -761,7 +763,13 @@ final class SpreadsheetConvertersConverterProvider implements ConverterProvider 
                 throw new IllegalArgumentException("Unknown converter " + name);
         }
 
-        return Cast.to(converter);
+        return Cast.to(
+            converter.setToString(
+                values.isEmpty() ?
+                    name.value() :
+                    name + " (" + values.stream().map(CharSequences::quoteIfChars).collect(Collectors.joining(", ")) + ")"
+            )
+        );
     }
 
     /**

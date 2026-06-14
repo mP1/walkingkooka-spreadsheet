@@ -25,8 +25,10 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.convert.provider.ConverterName;
 import walkingkooka.convert.provider.ConverterProvider;
 import walkingkooka.convert.provider.ConverterProviderTesting;
+import walkingkooka.convert.provider.ConverterSelector;
 import walkingkooka.currency.CurrencyLocaleContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.locale.LocaleContext;
@@ -50,6 +52,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallUnmarshallContexts;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 
 public class SpreadsheetConvertersConverterProviderTest implements ConverterProviderTesting<SpreadsheetConvertersConverterProvider>,
@@ -112,23 +115,27 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                         SpreadsheetConverters.textToSpreadsheetSelection()
                     )
                 )
-            )
+            ).setToString("collection (SpreadsheetError to Number, TEXT to Selection)")
         );
     }
 
     @Test
     public void testConverterSelectorWithCollection() {
+        final String selector = "collection (error-to-number, text-to-text)";
+
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.COLLECTION + " (error-to-number, text-to-text)",
+            selector,
             PROVIDER_CONTEXT,
             SpreadsheetConverters.collection(
                 Cast.to(
                     Lists.of(
-                        SpreadsheetConverters.errorToNumber(),
+                        SpreadsheetConverters.errorToNumber()
+                            .setToString("error-to-number"),
                         SpreadsheetConverters.textToText()
+                            .setToString("text-to-text")
                     )
                 )
-            )
+            ).setToString(selector)
         );
     }
 
@@ -336,11 +343,13 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
     @Test
     public void testConverterSelectorWithFormatPatternToString() {
         final String pattern = "#.##";
+        final String selector = "format-pattern-to-string (\"" + pattern + "\")";
 
         this.converterAndCheck(
-            SpreadsheetConvertersConverterProvider.FORMAT_PATTERN_TO_STRING + " (\"" + pattern + "\")",
+            selector,
             PROVIDER_CONTEXT,
             SpreadsheetConverters.formatPatternToString(pattern)
+                .setToString(selector)
         );
     }
 
@@ -1234,6 +1243,51 @@ public class SpreadsheetConvertersConverterProviderTest implements ConverterProv
                 SPREADSHEET_FORMATTER_PROVIDER,
                 SPREADSHEET_PARSER_PROVIDER,
                 context
+            )
+        );
+    }
+
+    @Override
+    public void converterAndCheck(final String selector,
+                                  final ProviderContext context,
+                                  final Converter<?> expected) {
+        final ConverterSelector converterSelector = ConverterSelector.parse(selector);
+
+        ConverterProviderTesting.super.converterAndCheck(
+            converterSelector,
+            context,
+            expected.setToString(selector)
+        );
+    }
+
+    @Override
+    public void converterAndCheck(final ConverterProvider provider,
+                                  final ConverterSelector selector,
+                                  final ProviderContext context,
+                                  final Converter<?> expected) {
+        ConverterProviderTesting.super.converterAndCheck(
+            provider,
+            selector,
+            context,
+            expected
+        );
+    }
+
+    @Override
+    public void converterAndCheck(final ConverterProvider provider,
+                                  final ConverterName name,
+                                  final List<?> values,
+                                  final ProviderContext context,
+                                  final Converter<?> expected) {
+        ConverterProviderTesting.super.converterAndCheck(
+            provider,
+            name,
+            values,
+            context,
+            expected.setToString(
+                values.isEmpty() ?
+                    name.toString() :
+                    expected.toString()
             )
         );
     }

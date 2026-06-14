@@ -68,12 +68,27 @@ import java.util.function.Function;
  */
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
+    private final static Converter<SpreadsheetConverterContext> TEMPLATE = namedCollection(
+        "template",
+        TemplateConverters.textToTemplateValueName()
+    );
+
     private final static Converter<SpreadsheetConverterContext> TEXT = namedCollection(
         "TEXT",
         Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
         SpreadsheetConverters.textToCharset(),
         SpreadsheetConverters.textToIndentation(),
         SpreadsheetConverters.textToLineEnding()
+    );
+
+    private final static Converter<SpreadsheetConverterContext> TEXT_NODE = namedCollection(
+        "textNode",
+        textToFlag(),
+        textToSpreadsheetText(),
+        textToTextNode(),
+        hasTextNode(),
+        urlToHyperlink(),
+        urlToImage()
     );
 
     private static final Function<SpreadsheetConverterContext, SpreadsheetParserContext> SPREADSHEET_CONVERTER_CONTEXT_TO_SPREADSHEET_PARSER_CONTEXT = (final SpreadsheetConverterContext scc) ->
@@ -803,11 +818,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
         return TEMPLATE;
     }
 
-    private final static Converter<SpreadsheetConverterContext> TEMPLATE = namedCollection(
-        "template",
-        TemplateConverters.textToTemplateValueName()
-    );
-
     /**
      * A {@link Converter} that handles converting system text conversions.
      */
@@ -824,16 +834,6 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
     public static Converter<SpreadsheetConverterContext> textNode() {
         return TEXT_NODE;
     }
-
-    private final static Converter<SpreadsheetConverterContext> TEXT_NODE = namedCollection(
-        "textNode",
-        textToFlag(),
-        textToSpreadsheetText(),
-        textToTextNode(),
-        hasTextNode(),
-        urlToHyperlink(),
-        urlToImage()
-    );
 
     /**
      * {@link Converters#textToBooleanList()}
