@@ -61,6 +61,13 @@ final class ReadOnlySpreadsheetCellRangeStore implements SpreadsheetCellRangeSto
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void removeByValue(final SpreadsheetCellReference value) {
+        Objects.requireNonNull(value, "value");
+
+        throw new UnsupportedOperationException();
+    }
+
     // SpreadsheetCellRangeStoreDelegator...............................................................................
 
     @Override

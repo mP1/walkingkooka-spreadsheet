@@ -69,6 +69,15 @@ public final class ReadOnlySpreadsheetCellRangeStoreTest implements SpreadsheetC
     }
 
     @Test
+    public void testRemoveByValueFails() {
+        assertThrows(
+            UnsupportedOperationException.class,
+            () -> this.createStore()
+                .removeByValue(VALUE)
+        );
+    }
+
+    @Test
     public void testFindIdsByValue() {
         final SpreadsheetCellRangeStore store = SpreadsheetCellRangeStores.treeMap();
         store.addValue(RANGE, VALUE);
