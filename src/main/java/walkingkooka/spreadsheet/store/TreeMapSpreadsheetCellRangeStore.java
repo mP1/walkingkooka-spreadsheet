@@ -18,14 +18,17 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.ImmutableSet;
+import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellRangeReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.MultiValueStore;
 import walkingkooka.store.MultiValueStoreDelegator;
 import walkingkooka.store.MultiValueStores;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetCellRangeStore} that wraps a {@link walkingkooka.store.TreeMapMultiValueStore}.
@@ -47,9 +50,12 @@ final class TreeMapSpreadsheetCellRangeStore implements SpreadsheetCellRangeStor
         super();
 
         this.store = MultiValueStores.treeMap(
-            (SpreadsheetCellRangeReference left, SpreadsheetCellRangeReference right) -> left.compareTo(right)
+            (SpreadsheetCellRangeReference left, SpreadsheetCellRangeReference right) -> left.compareTo(right),
+            EMPTY_VALUE_SUPPLIER
         );
     }
+
+    private final static Supplier<Set<SpreadsheetCellReference>> EMPTY_VALUE_SUPPLIER = () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
 
     @Override
     public void addValue(final SpreadsheetCellRangeReference id,
