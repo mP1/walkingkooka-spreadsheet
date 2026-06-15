@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.util.Set;
 import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetCellReferencesStoreTest implements SpreadsheetCellReferencesStoreTesting<TreeMapSpreadsheetCellReferencesStore> {
@@ -60,7 +59,7 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
             cell
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             reference,
             0,
@@ -351,12 +350,8 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     }
 
     @Override
-    public Set<SpreadsheetCellReference> value() {
-        return Set.of(
-            SpreadsheetSelection.parseCell("B2"),
-            SpreadsheetSelection.parseCell("C3"),
-            SpreadsheetSelection.parseCell("D4")
-        );
+    public SpreadsheetCellReference value() {
+        return SpreadsheetSelection.parseCell("B2");
     }
 
     // class............................................................................................................

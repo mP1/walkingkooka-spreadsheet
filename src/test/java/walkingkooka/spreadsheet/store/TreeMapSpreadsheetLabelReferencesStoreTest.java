@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 
-import java.util.Set;
 import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetLabelReferencesStoreTest implements SpreadsheetLabelReferencesStoreTesting<TreeMapSpreadsheetLabelReferencesStore> {
@@ -62,7 +61,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             reference
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label,
             0,
@@ -203,7 +202,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label,
             0,
@@ -254,7 +253,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             d4
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             0,
@@ -263,7 +262,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label2,
             0,
@@ -321,7 +320,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             d4
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             0,
@@ -330,7 +329,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label2,
             0,
@@ -388,7 +387,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             d4
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             0,
@@ -397,7 +396,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label2,
             0,
@@ -448,7 +447,7 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
             c3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             0, // offset
@@ -480,12 +479,8 @@ public final class TreeMapSpreadsheetLabelReferencesStoreTest implements Spreads
     }
 
     @Override
-    public Set<SpreadsheetCellReference> value() {
-        return Set.of(
-            SpreadsheetSelection.parseCell("B2"),
-            SpreadsheetSelection.parseCell("C3"),
-            SpreadsheetSelection.parseCell("D4")
-        );
+    public SpreadsheetCellReference value() {
+        return SpreadsheetSelection.parseCell("B2");
     }
 
     // class............................................................................................................

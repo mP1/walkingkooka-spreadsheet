@@ -27654,14 +27654,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private <E extends SpreadsheetExpressionReference & Comparable<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferencesStore<E> store,
                                                                                                    final E cell,
-                                                                                                   final SpreadsheetCellReference... out) {
+                                                                                                   final SpreadsheetCellReference... expected) {
+        this.loadReferencesAndCheck(
+            store,
+            cell,
+            Lists.of(expected)
+        );
+    }
+
+    private <E extends SpreadsheetExpressionReference & Comparable<E>> void loadReferencesAndCheck(final SpreadsheetExpressionReferencesStore<E> store,
+                                                                                                   final E cell,
+                                                                                                   final List<SpreadsheetCellReference> expected) {
         this.checkEquals(
-            Optional.ofNullable(
-                out.length == 0 ?
-                    null :
-                    Sets.of(out)
+            expected,
+            store.findValuesById(
+                cell,
+                0,
+                Integer.MAX_VALUE
             ),
-            store.load(cell),
             () -> "references to " + cell
         );
     }

@@ -24,14 +24,12 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
-import walkingkooka.store.StoreWatcher;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
-final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore {
+final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellReferencesStore,
+    SpreadsheetExpressionReferencesStoreDelegator<SpreadsheetCellReference> {
 
     static TreeMapSpreadsheetCellReferencesStore empty() {
         return new TreeMapSpreadsheetCellReferencesStore();
@@ -39,40 +37,6 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
 
     private TreeMapSpreadsheetCellReferencesStore() {
         this.store = SpreadsheetExpressionReferencesStores.treeMap();
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
-        return this.store.save(cells);
-    }
-
-    @Override
-    public void addValue(final SpreadsheetCellReference cell,
-                         final SpreadsheetCellReference value) {
-        this.store.addValue(
-            cell,
-            value
-        );
-    }
-
-    @Override
-    public void removeValue(final SpreadsheetCellReference reference,
-                            final SpreadsheetCellReference cell) {
-        this.store.removeValue(
-            reference,
-            cell
-        );
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> findValuesById(final SpreadsheetCellReference reference,
-                                                        final int offset,
-                                                        final int count) {
-        return this.store.findValuesById(
-            reference,
-            offset,
-            count
-        );
     }
 
     @Override
@@ -120,84 +84,11 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
         );
     }
 
-    @Override
-    public Set<SpreadsheetCellReference> findIdsByValue(final SpreadsheetCellReference cell,
-                                                        final int offset,
-                                                        final int count) {
-        return this.store.findIdsByValue(
-            cell,
-            offset,
-            count
-        );
-    }
+    // SpreadsheetExpressionReferencesStoreDelegator....................................................................
 
     @Override
-    public void removeByValue(final SpreadsheetCellReference cell) {
-        this.store.removeByValue(cell);
-    }
-
-    // Store............................................................................................................
-
-    @Override
-    public Optional<Set<SpreadsheetCellReference>> load(final SpreadsheetCellReference reference) {
-        return this.store.load(reference);
-    }
-
-    @Override
-    public void delete(final SpreadsheetCellReference reference) {
-        this.store.delete(reference);
-    }
-
-    @Override
-    public int count() {
-        return this.store.count();
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> ids(final int offset,
-                                             final int count) {
-        return this.store.ids(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetCellReference> firstId() {
-        return this.store.firstId();
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> values(final int offset,
-                                                      final int count) {
-        return this.store.values(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Optional<Set<SpreadsheetCellReference>> firstValue() {
-        return this.store.firstValue();
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> all() {
-        return this.store.all();
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> between(final SpreadsheetCellReference from,
-                                                       final SpreadsheetCellReference to) {
-        return this.store.between(
-            from,
-            to
-        );
-    }
-
-    @Override
-    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
-        return this.store.addStoreWatcher(watcher);
+    public SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> spreadsheetExpressionReferencesStore() {
+        return this.store;
     }
 
     private final SpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store;

@@ -19,53 +19,14 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.store.FakeStore;
+import walkingkooka.store.FakeMultiValueStore;
 import walkingkooka.test.Fake;
 
-import java.util.Objects;
-import java.util.Set;
-
 public class FakeSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference>
-    extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetExpressionReferencesStore<T>, Fake {
+    extends FakeMultiValueStore<T, SpreadsheetCellReference>
+    implements SpreadsheetExpressionReferencesStore<T>, Fake {
 
-    @Override
-    public void addValue(final T reference,
-                         final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(reference, "reference");
-        Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void removeValue(final T reference,
-                            final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(reference, "reference");
-        Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> findValuesById(final T reference,
-                                                        final int offset,
-                                                        final int count) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<T> findIdsByValue(final SpreadsheetCellReference cell,
-                                 final int offset,
-                                 final int count) {
-        Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void removeByValue(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-
-        throw new UnsupportedOperationException();
+    public FakeSpreadsheetExpressionReferencesStore() {
+        super();
     }
 }

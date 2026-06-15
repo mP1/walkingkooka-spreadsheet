@@ -19,18 +19,14 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.store.StoreWatcher;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * A read only wrapper around a {@link SpreadsheetExpressionReferencesStore}
  */
 final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference>
-    implements SpreadsheetExpressionReferencesStore<T> {
+    implements SpreadsheetExpressionReferencesStoreDelegator<T> {
 
     static <T extends SpreadsheetExpressionReference> ReadOnlySpreadsheetExpressionReferencesStore<T> with(final SpreadsheetExpressionReferencesStore<T> store) {
         Objects.requireNonNull(store, "store");
@@ -42,52 +38,10 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     }
 
     @Override
-    public Optional<Set<SpreadsheetCellReference>> load(final T id) {
-        return this.store.load(id);
-    }
-
-    @Override
     public void delete(final T reference) {
         Objects.requireNonNull(reference, "reference");
 
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int count() {
-        return this.store.count();
-    }
-
-    @Override
-    public Set<T> ids(final int offset,
-                      final int count) {
-        return this.store.ids(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> values(final int offset,
-                                                      final int count) {
-        return this.store.values(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> between(final T from,
-                                                       final T to) {
-        return this.store.between(
-            from,
-            to
-        );
-    }
-
-    @Override
-    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
-        return this.store.addStoreWatcher(watcher);
     }
 
     @Override
@@ -109,32 +63,17 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     }
 
     @Override
-    public Set<SpreadsheetCellReference> findValuesById(final T reference,
-                                                        final int offset,
-                                                        final int count) {
-        return this.store.findValuesById(
-            reference,
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Set<T> findIdsByValue(final SpreadsheetCellReference cell,
-                                 final int offset,
-                                 final int count) {
-        return this.store.findIdsByValue(
-            cell,
-            offset,
-            count
-        );
-    }
-
-    @Override
     public void removeByValue(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();
+    }
+
+    // SpreadsheetExpressionReferencesStoreDelegator....................................................................
+
+    @Override
+    public SpreadsheetExpressionReferencesStore<T> spreadsheetExpressionReferencesStore() {
+        return this.store;
     }
 
     private final SpreadsheetExpressionReferencesStore<T> store;
@@ -161,5 +100,4 @@ final class ReadOnlySpreadsheetExpressionReferencesStore<T extends SpreadsheetEx
     public String toString() {
         return this.store.toString();
     }
-
 }

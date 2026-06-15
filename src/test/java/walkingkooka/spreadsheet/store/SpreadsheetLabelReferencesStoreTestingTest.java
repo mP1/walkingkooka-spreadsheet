@@ -17,16 +17,17 @@
 
 package walkingkooka.spreadsheet.store;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.store.MultiValueStoreWatcher;
 import walkingkooka.store.Store;
 import walkingkooka.store.StoreWatcher;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 public final class SpreadsheetLabelReferencesStoreTestingTest implements SpreadsheetLabelReferencesStoreTesting<SpreadsheetLabelReferencesStoreTestingTest.TestSpreadsheetLabelReferencesStore> {
@@ -62,11 +63,8 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
     }
 
     @Override
-    public Set<SpreadsheetCellReference> value() {
-        return Set.of(
-            SpreadsheetSelection.parseCell("B2"),
-            SpreadsheetSelection.parseCell("C3")
-        );
+    public SpreadsheetCellReference value() {
+        return SpreadsheetSelection.parseCell("B2");
     }
 
     // class............................................................................................................
@@ -110,7 +108,7 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public Set<SpreadsheetCellReference> findValuesById(final SpreadsheetLabelName label,
+        public List<SpreadsheetCellReference> findValuesById(final SpreadsheetLabelName label,
                                                             final int offset,
                                                             final int count) {
             Objects.requireNonNull(label, "label");
@@ -118,11 +116,11 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                 offset,
                 count
             );
-            return Set.of();
+            return Lists.empty();
         }
 
         @Override
-        public Set<SpreadsheetLabelName> findIdsByValue(final SpreadsheetCellReference cell,
+        public List<SpreadsheetLabelName> findIdsByValue(final SpreadsheetCellReference cell,
                                                         final int offset,
                                                         final int count) {
             Objects.requireNonNull(cell, "cell");
@@ -130,18 +128,12 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
                 offset,
                 count
             );
-            return Set.of();
+            return Lists.of();
         }
 
         @Override
         public void removeByValue(final SpreadsheetCellReference cell) {
             Objects.requireNonNull(cell, "cell");
-        }
-
-        @Override
-        public Optional<Set<SpreadsheetCellReference>> load(final SpreadsheetLabelName label) {
-            Objects.requireNonNull(label, "label");
-            return Optional.empty();
         }
 
         @Override
@@ -165,7 +157,7 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public List<Set<SpreadsheetCellReference>> values(final int offset,
+        public List<SpreadsheetCellReference> values(final int offset,
                                                           final int count) {
             Store.checkOffsetAndCount(
                 offset,
@@ -175,7 +167,7 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public List<Set<SpreadsheetCellReference>> between(final SpreadsheetLabelName from,
+        public List<SpreadsheetCellReference> between(final SpreadsheetLabelName from,
                                                            final SpreadsheetLabelName to) {
             Store.checkBetween(
                 from,
@@ -185,7 +177,13 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
-        public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
+        public Runnable addStoreWatcher(final StoreWatcher<SpreadsheetCellReference> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addStoreWatcher(final MultiValueStoreWatcher<SpreadsheetLabelName, SpreadsheetCellReference> watcher) {
             Objects.requireNonNull(watcher, "watcher");
             throw new UnsupportedOperationException();
         }

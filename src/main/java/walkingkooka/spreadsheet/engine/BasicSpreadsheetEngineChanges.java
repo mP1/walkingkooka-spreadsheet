@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.expression.SpreadsheetExpressionEvaluationContext;
 import walkingkooka.spreadsheet.formula.SpreadsheetFormula;
@@ -322,8 +321,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
 
         final SpreadsheetEngineEvaluation backup = this.setEvaluation(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
         try {
-            for (final SpreadsheetCellReference cell : this.repository.labelReferences()
-                .load(labelCache.reference).orElse(Sets.empty())) {
+            for (final SpreadsheetCellReference cell : this.repository.labelReferences().findValuesById(labelCache.reference, 0, Integer.MAX_VALUE)) {
                 this.getOrCreateCellCache(
                     cell,
                     BasicSpreadsheetEngineChangesCacheStatusCell.REFERENCE_UNLOADED
@@ -474,7 +472,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetStoreRepository repository = this.repository;
 
         repository.cellReferences()
-            .delete(cell);
+            .removeByValue(cell);
 
         repository.labelReferences()
             .findIdsByValue(
@@ -503,8 +501,7 @@ final class BasicSpreadsheetEngineChanges implements SpreadsheetExpressionRefere
         final SpreadsheetStoreRepository repository = this.repository;
 
         for (final SpreadsheetCellReference cellReference : repository.cellReferences()
-            .load(cell)
-            .orElse(Sets.empty())) {
+            .findValuesById(cell, 0, Integer.MAX_VALUE)) {
             final BasicSpreadsheetEngineChangesCache<SpreadsheetCellReference, SpreadsheetCell> cache = this.getOrCreateCellCache(
                 cellReference,
                 initialStatus

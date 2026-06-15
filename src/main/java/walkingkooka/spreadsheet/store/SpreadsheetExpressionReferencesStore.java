@@ -19,72 +19,13 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.value.SpreadsheetCell;
-import walkingkooka.store.Store;
-
-import java.util.Objects;
-import java.util.Set;
+import walkingkooka.store.MultiValueStore;
 
 /**
- * A {@link Store} that tracks cells and labels references for a single {@link SpreadsheetCellReference} within its formula.
- * Note that all operations ignore the {@link SpreadsheetReferenceKind} and treat
- * absolute and relative references as equivalent.
+ * A {@link MultiValueStore} that tracks cells and labels references for a single {@link SpreadsheetCellReference} within its formula.
+ * Note that all operations ignore the {@link SpreadsheetReferenceKind} and treat absolute and relative references as equivalent.
  */
-public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
-
-    @Override
-    default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
-        Objects.requireNonNull(cells, "cells");
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Adds a reference to the given target.
-     */
-    void addValue(final T reference,
-                  final SpreadsheetCellReference cell);
-
-    /**
-     * Removes a {@link SpreadsheetExpressionReference} from a {@link SpreadsheetCellReference}
-     */
-    void removeValue(final T reference,
-                     final SpreadsheetCellReference cell);
-
-    /**
-     * Finds any {@link SpreadsheetCellReference} with the provided reference.
-     */
-    Set<SpreadsheetCellReference> findValuesById(final T reference,
-                                                 final int offset,
-                                                 final int count);
-
-    /**
-     * Loads ALL the targets (references too or mentions) for a given {@link SpreadsheetCellReference cell}.
-     * <pre>
-     * cell=references
-     * A1=Z9+11
-     * B2=Z9+22
-     *
-     * findReferencesWithCell(Z9) -> A1, B2
-     *
-     * // to find references within A1 (without walking the formula AST) try
-     * load(A1) -> Z9
-     * </pre>
-     * <p>
-     * This might be useful to display all references to a particular cell. To display references to a label try
-     * {@link SpreadsheetLabelStore#loadCellOrCellRanges(SpreadsheetLabelName)}.
-     */
-    Set<T> findIdsByValue(final SpreadsheetCellReference cell,
-                          final int offset,
-                          final int count);
-
-    /**
-     * Removes any references for the provided {@link SpreadsheetCellReference}.
-     * This is useful to remove references within a {@link SpreadsheetCell#formula()}.
-     * <br>
-     * This is equivalent to {@link #findIdsByValue(SpreadsheetCellReference, int, int) finding all references for a cell}
-     * and then {@link #removeValue(SpreadsheetExpressionReference, SpreadsheetCellReference)}  removing them one by one}.
-     */
-    void removeByValue(final SpreadsheetCellReference cell);
+public interface SpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> extends MultiValueStore<T, SpreadsheetCellReference>,
+    SpreadsheetStore<T, SpreadsheetCellReference> {
 }
