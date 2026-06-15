@@ -70,6 +70,16 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testAddStoreWatcherOnceAndSave() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddStoreWatcherOnceAndDelete() {
+        throw new UnsupportedOperationException();
+    }
+
     @Test
     @Override
     public void testCount() {

@@ -482,6 +482,11 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         return this.store.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 

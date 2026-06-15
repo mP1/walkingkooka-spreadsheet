@@ -262,6 +262,11 @@ final class SpreadsheetFormulaSpreadsheetMetadataAwareSpreadsheetCellStore imple
     }
 
     @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
+    @Override
     public int rowCount() {
         return this.store.rowCount();
     }

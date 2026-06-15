@@ -150,6 +150,11 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         return this.store.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
     private final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     // Object...........................................................................................................

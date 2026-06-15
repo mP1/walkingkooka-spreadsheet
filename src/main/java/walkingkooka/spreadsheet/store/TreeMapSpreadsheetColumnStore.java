@@ -107,6 +107,11 @@ final class TreeMapSpreadsheetColumnStore implements SpreadsheetColumnStore {
         return this.store.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetColumn> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
     private final Store<SpreadsheetColumnReference, SpreadsheetColumn> store;
 
     // Object...........................................................................................................

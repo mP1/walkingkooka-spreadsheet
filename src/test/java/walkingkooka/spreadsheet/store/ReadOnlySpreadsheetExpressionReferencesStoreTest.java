@@ -96,6 +96,16 @@ public class ReadOnlySpreadsheetExpressionReferencesStoreTest extends Spreadshee
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void testAddStoreWatcherOnceAndSave() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testAddStoreWatcherOnceAndDelete() {
+        throw new UnsupportedOperationException();
+    }
+
     // ids..............................................................................................................
 
     @Test
