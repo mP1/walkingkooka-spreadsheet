@@ -29,6 +29,7 @@ import walkingkooka.storage.StorageName;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 
 import java.util.List;
 import java.util.Optional;
@@ -207,6 +208,22 @@ final class SpreadsheetStorageSpreadsheetMetadata extends SpreadsheetStorage {
                 )
             ).collect(ImmutableList.collector());
     }
+
+    // addWatcher.......................................................................................................
+
+    @Override
+    Runnable addWatcher0(final StorageWatcher watcher,
+                         final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Runnable addWatcherOnce0(final StorageWatcher watcher,
+                             final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    // helper...........................................................................................................
 
     private static SpreadsheetId parseSpreadsheetId(final StorageName name) {
         return SpreadsheetId.parse(

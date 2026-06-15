@@ -26,6 +26,7 @@ import walkingkooka.storage.StorageName;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 
 import java.util.List;
 import java.util.Objects;
@@ -168,6 +169,22 @@ final class SpreadsheetStorageRouter extends SpreadsheetStorage {
             )
         );
     }
+
+    // addWatcher.......................................................................................................
+
+    @Override
+    Runnable addWatcher0(final StorageWatcher watcher,
+                         final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Runnable addWatcherOnce0(final StorageWatcher watcher,
+                             final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    // helper...........................................................................................................
 
     /**
      * If the path is a /cell or /column or /row then add the {@link SpreadsheetEnvironmentContextFactory#SPREADSHEET_ID}.

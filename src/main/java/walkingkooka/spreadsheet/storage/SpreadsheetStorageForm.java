@@ -28,6 +28,7 @@ import walkingkooka.storage.StorageName;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.validation.form.Form;
 import walkingkooka.validation.form.FormName;
 
@@ -203,6 +204,22 @@ final class SpreadsheetStorageForm extends SpreadsheetStorage {
                 )
             ).collect(ImmutableList.collector());
     }
+
+    // addWatcher.......................................................................................................
+
+    @Override
+    Runnable addWatcher0(final StorageWatcher watcher,
+                         final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    Runnable addWatcherOnce0(final StorageWatcher watcher,
+                             final SpreadsheetStorageContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    // helper...........................................................................................................
 
     private static FormName parseFormName(final StorageName name) {
         return FormName.with(
