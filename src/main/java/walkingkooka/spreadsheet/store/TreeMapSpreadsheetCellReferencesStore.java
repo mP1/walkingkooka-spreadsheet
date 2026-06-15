@@ -74,14 +74,12 @@ final class TreeMapSpreadsheetCellReferencesStore implements SpreadsheetCellRefe
             );
         }
 
-        return Sets.readOnly(
-            references.stream()
-                .skip(offset)
-                .limit(count)
-                .collect(
-                    ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
-                )
-        );
+        return references.stream()
+            .skip(offset)
+            .limit(count)
+            .collect(
+                ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
+            );
     }
 
     // SpreadsheetExpressionReferencesStoreDelegator....................................................................
