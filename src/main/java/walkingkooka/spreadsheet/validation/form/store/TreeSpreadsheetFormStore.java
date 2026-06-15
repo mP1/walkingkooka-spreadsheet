@@ -133,6 +133,11 @@ final class TreeSpreadsheetFormStore implements SpreadsheetFormStore {
         return this.store.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<Form<SpreadsheetValidationReference>> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
     private final FormStore<SpreadsheetValidationReference> store;
 
     @Override

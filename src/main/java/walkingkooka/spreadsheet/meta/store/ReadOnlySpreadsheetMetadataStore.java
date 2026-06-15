@@ -107,6 +107,11 @@ final class ReadOnlySpreadsheetMetadataStore implements SpreadsheetMetadataStore
         return this.store.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
     private final SpreadsheetMetadataStore store;
 
     @Override

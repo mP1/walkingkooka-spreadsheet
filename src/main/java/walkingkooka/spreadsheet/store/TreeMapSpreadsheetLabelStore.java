@@ -211,6 +211,11 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         return this.watchers.add(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.watchers.addOnce(watcher);
+    }
+
     private final StoreWatchers<SpreadsheetLabelMapping> watchers = StoreWatchers.empty();
 
     // Object...........................................................................................................

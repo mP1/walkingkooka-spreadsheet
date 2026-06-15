@@ -189,6 +189,11 @@ final class SpreadsheetCellStoreActionSpreadsheetMetadataStore implements Spread
         return this.metadataStore.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetMetadata> watcher) {
+        return this.metadataStore.addStoreWatcherOnce(watcher);
+    }
+
     private final SpreadsheetMetadataStore metadataStore;
 
     @Override

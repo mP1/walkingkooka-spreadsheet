@@ -123,6 +123,11 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
         return this.store.addStoreWatcher(watcher);
     }
 
+    @Override
+    public Runnable addStoreWatcherOnce(final StoreWatcher<SpreadsheetLabelMapping> watcher) {
+        return this.store.addStoreWatcherOnce(watcher);
+    }
+
     private final SpreadsheetLabelStore store;
 
     // Object...........................................................................................................
