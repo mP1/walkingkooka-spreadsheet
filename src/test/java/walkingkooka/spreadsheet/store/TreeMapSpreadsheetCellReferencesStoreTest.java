@@ -25,23 +25,29 @@ import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetCellReferencesStoreTest implements SpreadsheetCellReferencesStoreTesting<TreeMapSpreadsheetCellReferencesStore> {
 
+    final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
+    final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
+    final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("c3");
+    final SpreadsheetCellReference d4 = SpreadsheetSelection.parseCell("d4");
+    final SpreadsheetCellReference f6 = SpreadsheetSelection.parseCell("F6");
+    final SpreadsheetCellReference g7 = SpreadsheetSelection.parseCell("G7");
+    final SpreadsheetCellReference h8 = SpreadsheetSelection.parseCell("H8");
+    final SpreadsheetCellReference z9 = SpreadsheetSelection.parseCell("Z9");
+
     // findCellsWithCellOrCellRange.....................................................................................
 
     @Test
     public void testFindCellsWithCellOrCellRangeWithZeroCount() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-
         store.addValue(
-            reference,
-            cell
+            b2,
+            a1
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
             store,
-            cell,
+            a1,
             0,
             0
         );
@@ -51,28 +57,25 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     public void testFindCellsWithCellOrCellRangeWhereCellWithReference() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-
         store.addValue(
-            reference,
-            cell
+            b2,
+            a1
         );
 
         this.findValuesByIdAndCheck2(
             store,
-            reference,
+            b2,
             0,
             2,
-            cell
+            a1
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
             store,
-            reference,
+            b2,
             0,
             2,
-            cell
+            a1
         );
     }
 
@@ -80,34 +83,29 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferences() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("B2");
-
         store.addValue(
-            reference,
-            cell
+            b2,
+            a1
         );
 
-        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("C3");
-
         store.addValue(
-            reference,
-            cell2
+            b2,
+            c3
         );
 
         // ignored
         store.addValue(
-            cell,
-            reference
+            a1,
+            b2
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
             store,
-            reference,
+            b2,
             0,
             3,
-            cell,
-            cell2
+            a1,
+            c3
         );
     }
 
@@ -115,34 +113,29 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithOffset() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference = SpreadsheetSelection.parseCell("Z9");
-
         store.addValue(
-            reference,
-            cell
+            z9,
+            a1
         );
 
-        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("B2");
-
         store.addValue(
-            reference,
-            cell2
+            z9,
+            c3
         );
 
         // ignored
         store.addValue(
-            cell,
-            reference
+            a1,
+            z9
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
             store,
-            reference,
+            z9,
             1,
             3,
             // cell1 skipped by offset=1
-            cell2
+            c3
         );
     }
 
@@ -150,26 +143,20 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRange() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
-
         store.addValue(
-            reference1,
-            cell1
+            f6,
+            a1
         );
 
-        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
-        final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
-
         store.addValue(
-            reference2,
-            cell2
+            g7,
+            c3
         );
 
         // ignored
         store.addValue(
-            cell1,
-            reference1
+            a1,
+            f6
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
@@ -177,8 +164,8 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
             SpreadsheetSelection.parseCellRange("F6:G7"),
             0,
             3,
-            cell1,
-            cell2
+            a1,
+            c3
         );
     }
 
@@ -186,40 +173,31 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRange2() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
-
         store.addValue(
-            reference1,
-            cell1
+            f6,
+            a1
         );
 
-        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
         store.addValue(
-            reference1,
-            cell2
+            f6,
+            c3
         );
 
-        final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
-        final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
 
         store.addValue(
-            reference2,
-            cell3
+            g7,
+            c3
         );
 
-        final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
-        final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
-
         store.addValue(
-            reference3,
-            cell4
+            h8,
+            d4
         );
 
         // ignored
         store.addValue(
-            cell1,
-            reference1
+            a1,
+            f6
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
@@ -227,10 +205,10 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
             SpreadsheetSelection.parseCellRange("F6:I9"),
             0,
             5,
-            cell1,
-            cell2,
-            cell3,
-            cell4
+            a1,
+            c3,
+            c3,
+            d4
         );
     }
 
@@ -238,40 +216,30 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     public void testFindCellsWithCellOrCellRangeWhereCellWithReferencesWithCellRangeAndOffsetAndCount() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
 
-        final SpreadsheetCellReference cell1 = SpreadsheetSelection.A1;
-        final SpreadsheetCellReference reference1 = SpreadsheetSelection.parseCell("F6");
-
         store.addValue(
-            reference1,
-            cell1
+            f6,
+            a1
         );
 
-        final SpreadsheetCellReference cell2 = SpreadsheetSelection.parseCell("b2");
         store.addValue(
-            reference1,
-            cell2
+            f6,
+            b2
         );
 
-        final SpreadsheetCellReference reference2 = SpreadsheetSelection.parseCell("G7");
-        final SpreadsheetCellReference cell3 = SpreadsheetSelection.parseCell("c3");
-
         store.addValue(
-            reference2,
-            cell3
+            g7,
+            c3
         );
 
-        final SpreadsheetCellReference cell4 = SpreadsheetSelection.parseCell("d4");
-        final SpreadsheetCellReference reference3 = SpreadsheetSelection.parseCell("H8");
-
         store.addValue(
-            reference3,
-            cell4
+            h8,
+            d4
         );
 
         // ignored
         store.addValue(
-            cell1,
-            reference1
+            a1,
+            f6
         );
 
         this.findCellsWithCellOrCellRangeAndCheck(
@@ -280,8 +248,8 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
             1,
             2,
             //cell1, skipped by offset 1
-            cell2,
-            cell3
+            b2,
+            c3
             //cell4 less than count
         );
     }
@@ -291,11 +259,6 @@ public final class TreeMapSpreadsheetCellReferencesStoreTest implements Spreadsh
     @Test
     public void testAddValuesAndRemoveByValueAndFindIdsByValueAndCount() {
         final TreeMapSpreadsheetCellReferencesStore store = TreeMapSpreadsheetCellReferencesStore.empty();
-
-        final SpreadsheetCellReference a1 = SpreadsheetSelection.A1;
-
-        final SpreadsheetCellReference b2 = SpreadsheetSelection.parseCell("B2");
-        final SpreadsheetCellReference c3 = SpreadsheetSelection.parseCell("C3");
 
         store.addValue(
             b2,
