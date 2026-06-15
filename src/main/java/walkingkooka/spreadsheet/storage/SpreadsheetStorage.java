@@ -21,6 +21,7 @@ import walkingkooka.storage.Storage;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.store.Store;
 
 import java.util.List;
@@ -137,4 +138,34 @@ abstract class SpreadsheetStorage implements Storage<SpreadsheetStorageContext> 
                                                 final int offset,
                                                 final int count,
                                                 final SpreadsheetStorageContext context);
+
+    @Override
+    public final Runnable addWatcher(final StorageWatcher watcher,
+                                     final SpreadsheetStorageContext context) {
+        Objects.requireNonNull(watcher, "watcher");
+        Objects.requireNonNull(context, "context");
+
+        return this.addWatcher0(
+            watcher,
+            context
+        );
+    }
+
+    abstract Runnable addWatcher0(final StorageWatcher watcher,
+                                  final SpreadsheetStorageContext context);
+
+    @Override
+    public final Runnable addWatcherOnce(final StorageWatcher watcher,
+                                         final SpreadsheetStorageContext context) {
+        Objects.requireNonNull(watcher, "watcher");
+        Objects.requireNonNull(context, "context");
+
+        return this.addWatcherOnce0(
+            watcher,
+            context
+        );
+    }
+
+    abstract Runnable addWatcherOnce0(final StorageWatcher watcher,
+                                      final SpreadsheetStorageContext context);
 }
