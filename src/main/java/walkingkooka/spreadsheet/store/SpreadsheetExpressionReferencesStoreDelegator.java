@@ -17,21 +17,18 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.store.MultiValueStoreTesting;
+import walkingkooka.store.MultiValueStore;
+import walkingkooka.store.MultiValueStoreDelegator;
 
-@SuppressWarnings("unchecked")
-public interface SpreadsheetExpressionReferencesStoreTesting<S extends SpreadsheetExpressionReferencesStore<T>,
-    T extends SpreadsheetExpressionReference & Comparable<T>>
-    extends MultiValueStoreTesting<S, T, SpreadsheetCellReference>,
-    TypeNameTesting<S> {
-
-    // TypeNameTesting..................................................................................................
+public interface SpreadsheetExpressionReferencesStoreDelegator<T extends SpreadsheetExpressionReference> extends SpreadsheetExpressionReferencesStore<T>,
+    MultiValueStoreDelegator<T, SpreadsheetCellReference> {
 
     @Override
-    default String typeNameSuffix() {
-        return SpreadsheetExpressionReferencesStore.class.getSimpleName();
+    default MultiValueStore<T, SpreadsheetCellReference> multiValueStore() {
+        return this.spreadsheetExpressionReferencesStore();
     }
+
+    SpreadsheetExpressionReferencesStore<T> spreadsheetExpressionReferencesStore();
 }

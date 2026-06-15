@@ -18,36 +18,26 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.Cast;
-import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.ImmutableSortedSet;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
-import walkingkooka.spreadsheet.reference.SpreadsheetSelectionMaps;
-import walkingkooka.store.Store;
-import walkingkooka.store.StoreWatcher;
-import walkingkooka.store.StoreWatchers;
-import walkingkooka.watch.Watchers;
+import walkingkooka.store.MultiValueStore;
+import walkingkooka.store.MultiValueStoreDelegator;
+import walkingkooka.store.MultiValueStores;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetExpressionReferencesStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetCellReference references}.
  */
 // using a type parameter of T extends SpreadsheetExpressionReference & Comparable<T> causes a Transpiler ERROR.
 // Error:TreeMapSpreadsheetExpressionReferencesStore.java:39: This class must implement the inherited abstract method SpreadsheetExpressionReference.equalsIgnoreReferenceK
-final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> implements SpreadsheetExpressionReferencesStore<T> {
+final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExpressionReference> implements SpreadsheetExpressionReferencesStore<T>,
+    MultiValueStoreDelegator<T, SpreadsheetCellReference> {
 
     static <T extends SpreadsheetExpressionReference> TreeMapSpreadsheetExpressionReferencesStore<T> create() {
         return new TreeMapSpreadsheetExpressionReferencesStore<>();
@@ -56,250 +46,56 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     private TreeMapSpreadsheetExpressionReferencesStore() {
         super();
 
-        this.cellToReferences = SpreadsheetSelectionMaps.cell();
-        this.referenceToCells = Maps.sorted(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+        this.store = MultiValueStores.treeMap(
+            Cast.to(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR),
+            EMPTY_VALUES_SET_SUPPLIER
+        );
     }
+
+    private final static Supplier<Set<SpreadsheetCellReference>> EMPTY_VALUES_SET_SUPPLIER = () -> SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
+
+    // addValue/removeValue make id and value relative before delegating...
 
     @Override
-    public Optional<Set<SpreadsheetCellReference>> load(final T reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        // best to take defensive copy to prevent ConcurrentModificationException
-        return Optional.ofNullable(
-            this.referenceToCells.get(reference)
-        ).map(SortedSets::immutable);
-    }
-
-    @Override
-    public void delete(final T reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        // where id=label remove label to cells, then remove cell to label.
-        final Set<SpreadsheetCellReference> allCells = this.referenceToCells.get(reference);
-
-        if (null != allCells) {
-            for (final SpreadsheetCellReference cell : allCells) {
-                final Set<T> references = this.cellToReferences.get(cell);
-                if (null != references) {
-                    if (references.remove(reference)) {
-                        if (references.isEmpty()) {
-                            this.cellToReferences.remove(cell);
-                        }
-                        // TODO removeCellWatcher
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public int count() {
-        return this.referenceToCells.size();
-    }
-
-    @Override
-    public Set<T> ids(final int offset,
-                      final int count) {
-        Store.checkOffsetAndCount(offset, count);
-
-        return this.referenceToCells.keySet()
-            .stream()
-            .skip(offset)
-            .limit(count)
-            .collect(Collectors.toCollection(Sets::ordered));
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> values(final int offset,
-                                                      final int count) {
-        Store.checkOffsetAndCount(offset, count);
-
-        return this.referenceToCells.values()
-            .stream()
-            .skip(offset)
-            .limit(count)
-            .collect(Collectors.toCollection(Lists::array));
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> between(final T from,
-                                                       final T to) {
-        Store.checkBetween(from, to);
-
-        return this.referenceToCells.entrySet()
-            .stream()
-            .filter(e -> castToComparable(
-                    e.getKey()
-                ).compareTo(from) >= 0 &&
-                    castToComparable(
-                        e.getKey()
-                    ).compareTo(to) <= 0
-            ).map(Map.Entry::getValue)
-            .collect(Collectors.toCollection(Lists::array));
-    }
-
-    @Override
-    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
-        return this.watchers.add(watcher);
-    }
-
-    private final StoreWatchers<Set<SpreadsheetCellReference>> watchers = StoreWatchers.empty();
-
-    private Comparable<T> castToComparable(final T cellOrLabel) {
-        return Cast.to(cellOrLabel);
-    }
-
-    @Override
-    public void addValue(final T reference,
+    public void addValue(final T id,
                          final SpreadsheetCellReference value) {
-        final ReferenceAndSpreadsheetCellReference<T> referenceAndCell = ReferenceAndSpreadsheetCellReference.with(
-            reference,
-            value
-        );
+        Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(value, "value");
 
-        this.addCellNonNull(
-            Objects.requireNonNull(referenceAndCell, "referenceAndCell")
-                .setCell(referenceAndCell.cell().toRelative())
-                .setReference((T) referenceAndCell.reference().toRelative())
-        );
-    }
-
-    private void addCellNonNull(final ReferenceAndSpreadsheetCellReference<T> referenceAndCell) {
-        final T reference = referenceAndCell.reference();
-        final SpreadsheetCellReference cell = referenceAndCell.cell()
-            .toRelative();
-
-        SortedSet<SpreadsheetCellReference> allCells = this.referenceToCells.get(reference);
-        //noinspection Java8MapApi
-        if (null == allCells) {
-            allCells = emptySortedSet();
-            this.referenceToCells.put(reference, allCells);
-        }
-        allCells.add(cell);
-
-        SortedSet<T> references = this.cellToReferences.get(cell);
-        //noinspection Java8MapApi
-        if (null == references) {
-            references = emptySortedSet();
-            this.cellToReferences.put(
-                cell,
-                references
+        this.multiValueStore()
+            .addValue(
+                (T) id.toRelative(),
+                value.toRelative()
             );
-        }
-        references.add(reference);
-
-        this.addCellWatchers.accept(referenceAndCell);
     }
-
-    private static <T extends SpreadsheetExpressionReference> SortedSet<T> emptySortedSet() {
-        return SortedSets.tree(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR);
-    }
-
-    private final Watchers<ReferenceAndSpreadsheetCellReference<T>> addCellWatchers = Watchers.empty();
 
     @Override
-    public void removeValue(final T reference,
+    public void removeValue(final T id,
                             final SpreadsheetCellReference value) {
-        this.removeCellNonNull(
-            Objects.requireNonNull(reference, "reference"),
-            Objects.requireNonNull(value, "value")
-        );
-    }
+        Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(value, "value");
 
-    private void removeCellNonNull(final T reference,
-                                   final SpreadsheetCellReference value) {
-
-        final Set<SpreadsheetCellReference> allCells = this.referenceToCells.get(reference);
-        final boolean removed = null != allCells;
-        if (removed) {
-            allCells.remove(value);
-            if (allCells.isEmpty()) {
-                this.referenceToCells.remove(reference);
-            }
-        }
-
-        if (removed) {
-            final Set<T> allReferences = this.cellToReferences.get(value);
-            if (null != allReferences) {
-                if (allReferences.remove(reference)) {
-                    if (allReferences.isEmpty()) {
-                        this.cellToReferences.remove(value);
-                    }
-                }
-            }
-            // TODO removeCell
-        }
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> findValuesById(final T reference,
-                                                        final int offset,
-                                                        final int count) {
-        Objects.requireNonNull(reference, "reference");
-        Store.checkOffsetAndCount(
-            offset,
-            count
-        );
-
-        final SortedSet<SpreadsheetCellReference> cells = this.referenceToCells.get(reference);
-        return null != cells ?
-            cells.stream()
-                .skip(offset)
-                .limit(count)
-                .collect(ImmutableSortedSet.collector(null)) :
-            SortedSets.empty();
-    }
-
-    @Override
-    public Set<T> findIdsByValue(final SpreadsheetCellReference cell,
-                                 final int offset,
-                                 final int count) {
-        Objects.requireNonNull(cell, "cell");
-        Store.checkOffsetAndCount(
-            offset,
-            count
-        );
-
-        final SortedSet<T> references = this.cellToReferences.get(cell);
-        return null != references ?
-            references.stream()
-                .skip(offset)
-                .limit(count)
-                .collect(ImmutableSortedSet.collector(null)) :
-            SortedSets.empty();
-    }
-
-    @Override
-    public void removeByValue(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-
-        for (final T reference : new TreeSet<>(this.referenceToCells.keySet())) {
-            this.removeCellNonNull(
-                reference,
-                cell
+        this.multiValueStore()
+            .removeValue(
+                (T) id.toRelative(),
+                value.toRelative()
             );
-        }
     }
 
-    // helpers..........................................................................................................
+    // MultiValueStoreDelegator.........................................................................................
 
-    /**
-     * Something like labels and the cell references expressions containing the label.
-     */
-    // VisibleForTesting
-    final Map<T, SortedSet<SpreadsheetCellReference>> referenceToCells;
+    @Override
+    public MultiValueStore<T, SpreadsheetCellReference> multiValueStore() {
+        return this.store;
+    }
 
-    /**
-     * The inverse of {@link #referenceToCells}
-     */
-    // VisibleForTesting
-    final Map<SpreadsheetCellReference, SortedSet<T>> cellToReferences;
+    private final MultiValueStore<T, SpreadsheetCellReference> store;
 
     // Object...........................................................................................................
 
     @Override
     public int hashCode() {
-        return this.referenceToCells.hashCode();
+        return this.store.hashCode();
     }
 
     @Override
@@ -310,16 +106,11 @@ final class TreeMapSpreadsheetExpressionReferencesStore<T extends SpreadsheetExp
     }
 
     private boolean equals0(final TreeMapSpreadsheetExpressionReferencesStore<?> other) {
-        return this.referenceToCells.equals(other.referenceToCells);
+       return this.store.equals(other.store);
     }
 
     @Override
     public String toString() {
-        return ToStringBuilder.empty()
-            .label("referenceToCells")
-            .value(this.referenceToCells)
-            .label("cellToReferences")
-            .value(this.cellToReferences)
-            .build();
+        return this.store.toString();
     }
 }

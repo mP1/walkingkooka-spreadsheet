@@ -26,18 +26,16 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReferenceOrRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
 import walkingkooka.store.Store;
-import walkingkooka.store.StoreWatcher;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /**
  * A {@link SpreadsheetLabelReferencesStore} that uses a {@link Map} to store a cell or label to its many {@link SpreadsheetLabelName}.
  */
-final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore {
+final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelReferencesStore,
+    SpreadsheetExpressionReferencesStoreDelegator<SpreadsheetLabelName> {
 
     static TreeMapSpreadsheetLabelReferencesStore empty() {
         return new TreeMapSpreadsheetLabelReferencesStore();
@@ -92,120 +90,11 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
         );
     }
 
-    // SpreadsheetExpressionReferencesStore..............................................................................
+    // SpreadsheetExpressionReferencesStoreDelegator....................................................................
 
     @Override
-    public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> cells) {
-        return this.store.save(cells);
-    }
-
-    @Override
-    public void addValue(final SpreadsheetLabelName label,
-                         final SpreadsheetCellReference value) {
-        this.store.addValue(
-            label,
-            value
-        );
-    }
-
-    @Override
-    public void removeValue(final SpreadsheetLabelName label,
-                            final SpreadsheetCellReference value) {
-        this.store.removeValue(
-            label,
-            value
-        );
-    }
-
-    @Override
-    public Set<SpreadsheetCellReference> findValuesById(final SpreadsheetLabelName label,
-                                                        final int offset,
-                                                        final int count) {
-        return this.store.findValuesById(
-            label,
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Set<SpreadsheetLabelName> findIdsByValue(final SpreadsheetCellReference cell,
-                                                    final int offset,
-                                                    final int count) {
-        return this.store.findIdsByValue(
-            cell,
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public void removeByValue(final SpreadsheetCellReference cell) {
-        this.store.removeByValue(cell);
-    }
-
-    // Store............................................................................................................
-
-    @Override
-    public Optional<Set<SpreadsheetCellReference>> load(final SpreadsheetLabelName label) {
-        return this.store.load(label);
-    }
-
-    @Override
-    public void delete(final SpreadsheetLabelName label) {
-        this.store.delete(label);
-    }
-
-    @Override
-    public int count() {
-        return this.store.count();
-    }
-
-    @Override
-    public Set<SpreadsheetLabelName> ids(final int offset,
-                                         final int count) {
-        return this.store.ids(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Optional<SpreadsheetLabelName> firstId() {
-        return this.store.firstId();
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> values(final int offset,
-                                                      final int count) {
-        return this.store.values(
-            offset,
-            count
-        );
-    }
-
-    @Override
-    public Optional<Set<SpreadsheetCellReference>> firstValue() {
-        return this.store.firstValue();
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> all() {
-        return this.store.all();
-    }
-
-    @Override
-    public List<Set<SpreadsheetCellReference>> between(final SpreadsheetLabelName from,
-                                                       final SpreadsheetLabelName to) {
-        return this.store.between(
-            from,
-            to
-        );
-    }
-
-    @Override
-    public Runnable addStoreWatcher(final StoreWatcher<Set<SpreadsheetCellReference>> watcher) {
-       return this.store.addStoreWatcher(watcher);
+    public SpreadsheetExpressionReferencesStore<SpreadsheetLabelName> spreadsheetExpressionReferencesStore() {
+        return this.store;
     }
 
     private final SpreadsheetExpressionReferencesStore<SpreadsheetLabelName> store;

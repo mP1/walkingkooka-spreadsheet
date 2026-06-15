@@ -20,15 +20,11 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
-import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetSelection;
+import walkingkooka.store.FakeMultiValueStoreWatcher;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class TreeMapSpreadsheetExpressionReferencesStoreTest extends SpreadsheetExpressionReferencesStoreTestCase<TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference>, SpreadsheetCellReference>
@@ -80,7 +76,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     // delete...........................................................................................................
 
     @Test
-    public void testDeleteAfterSaveCells() {
+    public void testDeleteAfterAddCells() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
         store.addValue(
@@ -90,16 +86,9 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
 
         store.delete(A1);
 
-        this.cellToReferencesAndCheck(
+        this.countAndCheck(
             store,
-            Maps.empty()
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            0
         );
     }
 
@@ -118,21 +107,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
 
         store.delete(A1);
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                D1,
-                Sets.of(C1)
-            )
+            A1
         );
-        this.referenceToCellsAndCheck(
+
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                A1,
-                Sets.of(B1),
-                C1,
-                Sets.of(D1)
-            )
+            C1,
+            D1
         );
     }
 
@@ -149,16 +132,9 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             A1.toAbsolute()
         );
 
-        this.cellToReferencesAndCheck(
+        this.countAndCheck(
             store,
-            Maps.empty()
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            0
         );
     }
 
@@ -175,16 +151,9 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
 
         store.delete(label1);
 
-        this.cellToReferencesAndCheck(
+        this.countAndCheck(
             store,
-            Maps.empty()
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                label1,
-                Sets.of(A1)
-            )
+            0
         );
     }
 
@@ -273,7 +242,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.loadAndCheck(store, A1, B1); // a1 --> b1
+        this.findValuesByIdAndCheck(
+            store,
+            A1,
+            B1
+        ); // a1 --> b1
+
         this.findIdsByValueAndCheck(
             store,
             B1,
@@ -282,7 +256,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             A1
         ); // b1 --> a1
 
-        this.loadAndCheck(store, B1); // b1 -> nothing
+        this.findValuesByIdAndCheck(
+            store,
+            B1
+        ); // b1 -> nothing
+
         this.findIdsByValueAndCheck(
             store,
             A1,
@@ -290,7 +268,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             1 // count
         ); // a1 --> nothing
 
-        this.idsAndCheck(store, 0, 2, A1); // b1 doesnt exist because it has 0 references to it
+        this.idsAndCheck(
+            store,
+            0,
+            2,
+            A1
+        ); // b1 doesnt exist because it has 0 references to it
     }
 
     // values...........................................................................................................
@@ -316,17 +299,13 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             I99
         );
 
-        //noinspection unchecked
         this.valuesAndCheck(
             store,
             0,
             3,
-            Sets.of(F99),
-            Sets.of(G99),
-            Sets.of(
-                H99,
-                I99
-            )
+            F99,
+            G99,
+            H99
         );
     }
 
@@ -351,17 +330,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             I99
         );
 
-        //noinspection unchecked
         this.valuesAndCheck(
             store,
             0,
             3,
-            Sets.of(F99),
-            Sets.of(G99),
-            Sets.of(
-                H99,
-                I99
-            )
+            F99, G99, H99
         );
     }
 
@@ -386,13 +359,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             I99
         );
 
-        //noinspection unchecked
         this.valuesAndCheck(
             store,
             1,
             2,
-            Sets.of(G99),
-            Sets.of(H99)
+            G99,
+            H99
         );
     }
 
@@ -405,7 +377,12 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.loadAndCheck(store, A1, B1); // a1 --> b1
+        this.findValuesByIdAndCheck(
+            store,
+            A1,
+            B1
+        ); // a1 --> b1
+
         this.findIdsByValueAndCheck(
             store,
             B1,
@@ -414,7 +391,11 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             A1
         ); // b1 --> a1
 
-        this.loadAndCheck(store, B1); // b1 -> nothing
+        this.findValuesByIdAndCheck(
+            store,
+            B1
+        ); // b1 -> nothing
+
         this.findIdsByValueAndCheck(
             store,
             A1,
@@ -422,151 +403,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             2 // count
         ); // a1 --> nothing
 
-        //noinspection unchecked
         this.valuesAndCheck(
             store,
             0,
             2,
-            Sets.of(B1)
-        );
-    }
-
-    // saveCells .......................................................................................................
-
-    @Test
-    public void testAddCells() {
-        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
-
-        store.addValue(
-            A1,
             B1
         );
-
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                B1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
-        );
     }
 
-    @Test
-    public void testAddCellsAbsolute() {
-        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
-
-        store.addValue(
-            A1,
-            B1
-        );
-
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                B1.toRelative(),
-                Sets.of(
-                    A1.toRelative()
-                )
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1.toRelative(),
-                Sets.of(
-                    B1.toRelative()
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testAddCellsReplaceSome() {
-        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
-
-        store.addValue(
-            A1,
-            B1
-        );
-
-        store.addValue(
-            A1,
-            C1
-        );
-
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                B1,
-                Sets.of(A1),
-                C1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(
-                    B1,
-                    C1
-                )
-            )
-        );
-    }
-
-    @Test
-    public void testAddCellsReplaceAll() {
-        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
-
-        store.addValue(
-            A1,
-            B1
-        );
-
-        store.addValue(
-            C1,
-            D1
-        );
-
-        store.addValue(
-            A1,
-            E1
-        );
-
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                B1,
-                Sets.of(A1),
-                D1,
-                Sets.of(C1),
-                E1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(
-                    B1,
-                    E1
-                ),
-                C1,
-                Sets.of(D1)
-            )
-        );
-    }
-
-    // addCell..........................................................................................................
+    // addValue.........................................................................................................
 
     @Test
     public void testAddValue() {
@@ -577,19 +422,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                B1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            A1,
+            B1
         );
     }
 
@@ -607,23 +443,16 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             D1
         );
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                B1,
-                Sets.of(A1),
-                D1,
-                Sets.of(C1)
-            )
+            A1,
+            B1
         );
-        this.referenceToCellsAndCheck(
+
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                A1,
-                Sets.of(B1),
-                C1,
-                Sets.of(D1)
-            )
+            C1,
+            D1
         );
     }
 
@@ -632,23 +461,14 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
         store.addValue(
-            A1,
-            B1
+            A1.toAbsolute(),
+            B1.toAbsolute()
         );
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                B1.toRelative(),
-                Sets.of(A1.toRelative())
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            A1,
+            B1
         );
     }
 
@@ -666,24 +486,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.cellToReferencesAndCheck(
-            store,
-            Maps.of(
-                B1,
-                Sets.of(A1),
-                C1,
-                Sets.of(A1)
-            )
+        store.addValue(
+            A1,
+            B1
         );
-        this.referenceToCellsAndCheck(
+
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                A1,
-                Sets.of(
-                    B1,
-                    C1
-                )
-            )
+            A1,
+            B1, C1
         );
     }
 
@@ -701,13 +512,19 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             A1,
             B1, C1
         );
-        this.loadAndCheck(store, B1);
-        this.loadAndCheck(store, C1);
+        this.findValuesByIdAndCheck(
+            store,
+            B1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            C1
+        );
 
         this.findIdsByValueAndCheck(
             store,
@@ -762,8 +579,16 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.loadAndCheck(store, A1, B1, C1);
-        this.loadAndCheck(store, D1, A1, B1, C1, E1);
+        this.findValuesByIdAndCheck(
+            store,
+            A1,
+            B1, C1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            D1,
+            A1, B1, C1, E1
+        );
 
         this.findIdsByValueAndCheck(
             store,
@@ -795,6 +620,36 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
         );
     }
 
+    @Test
+    public void testAddValueWithWatcher() {
+        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
+
+        this.fired = false;
+
+        store.addStoreWatcher(
+            new FakeMultiValueStoreWatcher<>() {
+                @Override
+                public void onValueAdded(final SpreadsheetCellReference id,
+                                         final SpreadsheetCellReference value) {
+                    checkEquals(A1, id);
+                    checkEquals(B1, value);
+
+                    fired = true;
+                }
+            }
+        );
+
+        store.addValue(
+            A1,
+            B1
+        );
+
+        this.checkEquals(
+            true,
+            this.fired
+        );
+    }
+
     // removeValue......................................................................................................
 
     @Test
@@ -811,8 +666,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.cellToReferencesAndCheck(store, Maps.empty());
-        this.referenceToCellsAndCheck(store, Maps.empty());
+        this.countAndCheck(
+            store,
+            0
+        );
     }
 
     @Test
@@ -833,19 +690,15 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             D1
         );
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                B1,
-                Sets.of(A1)
-            )
+            A1,
+            B1
         );
-        this.referenceToCellsAndCheck(
+
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            C1
         );
     }
 
@@ -863,13 +716,9 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.cellToReferencesAndCheck(
+        this.countAndCheck(
             store,
-            Maps.empty()
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.empty()
+            0
         );
     }
 
@@ -891,19 +740,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                B1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            A1,
+            B1
         );
     }
 
@@ -925,19 +765,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.cellToReferencesAndCheck(
+        this.findValuesByIdAndCheck(
             store,
-            Maps.of(
-                B1,
-                Sets.of(A1)
-            )
-        );
-        this.referenceToCellsAndCheck(
-            store,
-            Maps.of(
-                A1,
-                Sets.of(B1)
-            )
+            A1,
+            B1
         );
     }
 
@@ -955,13 +786,19 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             A1,
             B1
         );
-        this.loadAndCheck(store, B1);
-        this.loadAndCheck(store, C1);
+        this.findValuesByIdAndCheck(
+            store,
+            B1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            C1
+        );
 
         this.findIdsByValueAndCheck(
             store,
@@ -985,6 +822,43 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Test
+    public void testRemoveValueWithWatcher() {
+        final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
+
+        store.addValue(
+            A1,
+            B1
+        );
+
+        this.fired = false;
+
+        store.addStoreWatcher(
+            new FakeMultiValueStoreWatcher<>() {
+                @Override
+                public void onValueRemoved(final SpreadsheetCellReference id,
+                                           final SpreadsheetCellReference value) {
+                    checkEquals(A1, id);
+                    checkEquals(B1, value);
+
+                    fired = true;
+                }
+            }
+        );
+
+        store.removeValue(
+            A1,
+            B1
+        );
+
+        this.countAndCheck(
+            store,
+            0
+        );
+    }
+
+    private boolean fired;
+
+    @Test
     public void testAddValuesRemoveValueAndLoad() {
         final TreeMapSpreadsheetExpressionReferencesStore<SpreadsheetCellReference> store = this.createStore();
 
@@ -1002,9 +876,19 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.loadAndCheck(store, A1, B1);
-        this.loadAndCheck(store, B1);
-        this.loadAndCheck(store, C1);
+        this.findValuesByIdAndCheck(
+            store,
+            A1,
+            B1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            B1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            C1
+        );
 
         this.findIdsByValueAndCheck(
             store,
@@ -1026,8 +910,6 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             2 // count
         );
     }
-
-    // addCell & removeCell..............................................................................................
 
     @Test
     public void testAddValueAndRemoveValue() {
@@ -1055,24 +937,24 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E1
         );
 
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             A1,
             B1, C1, D1, E1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             B1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             C1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             D1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             E1
         );
@@ -1156,27 +1038,25 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E1
         );
 
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             A1,
-            B1,
-            C1,
-            D1
+            B1, C1, D1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             B1,
             C1, D1, E1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             C1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             D1
         );
-        this.loadAndCheck(
+        this.findValuesByIdAndCheck(
             store,
             E1
         );
@@ -1234,11 +1114,27 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             B1
         );
 
-        this.loadAndCheck(store, A1, C1);
-        this.loadAndCheck(store, B1);
-        this.loadAndCheck(store, C1);
-        this.loadAndCheck(store, D1);
-        this.loadAndCheck(store, E1);
+        this.findValuesByIdAndCheck(
+            store,
+            A1,
+            C1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            B1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            C1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            D1
+        );
+        this.findValuesByIdAndCheck(
+            store,
+            E1
+        );
 
         this.findIdsByValueAndCheck(
             store,
@@ -1288,7 +1184,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             A1,
             0, // offset
@@ -1327,7 +1223,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             c3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             0, // offset
@@ -1356,7 +1252,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             1, // offset
@@ -1385,7 +1281,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C3
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             0, // offset
@@ -1422,7 +1318,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             E5
         );
 
-        this.findValuesByIdAndCheck(
+        this.findValuesByIdAndCheck2(
             store,
             label1,
             1, // offset
@@ -1487,7 +1383,9 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             b1, c1
         );
 
-        this.removeByValueAndCheck(
+        store.removeByValue(a1);
+
+        this.findIdsByValueAndCheck(
             store,
             a1
         );
@@ -1517,7 +1415,10 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
             C1
         );
 
-        this.countAndCheck(store, 1);
+        this.countAndCheck(
+            store,
+        2
+        );
     }
 
     // ToStringTesting..................................................................................................
@@ -1546,7 +1447,7 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
 
         this.toStringAndCheck(
             store,
-            "referenceToCells=A1=B1, C1, E5=A1, C1 cellToReferences=A1=E5, B1=A1, C1=A1, E5"
+            "{A1=[B1, C1], E5=[A1, C1]}"
         );
     }
 
@@ -1558,31 +1459,8 @@ public class TreeMapSpreadsheetExpressionReferencesStoreTest extends Spreadsheet
     }
 
     @Override
-    public Set<SpreadsheetCellReference> value() {
-        return Sets.of(
-            F99,
-            G99,
-            I99,
-            J99
-        );
-    }
-
-    private <T extends SpreadsheetExpressionReference> void referenceToCellsAndCheck(final TreeMapSpreadsheetExpressionReferencesStore<T> store,
-                                                                                     final Map<T, Set<SpreadsheetCellReference>> cellToReferences) {
-        this.checkEquals(
-            cellToReferences,
-            store.referenceToCells,
-            "referenceToCells"
-        );
-    }
-
-    private <T extends SpreadsheetExpressionReference> void cellToReferencesAndCheck(final TreeMapSpreadsheetExpressionReferencesStore<T> store,
-                                                                                     final Map<SpreadsheetCellReference, Set<T>> cellToReferences) {
-        this.checkEquals(
-            cellToReferences,
-            store.cellToReferences,
-            "cellToReferences"
-        );
+    public SpreadsheetCellReference value() {
+        return F99;
     }
     
     @Override
