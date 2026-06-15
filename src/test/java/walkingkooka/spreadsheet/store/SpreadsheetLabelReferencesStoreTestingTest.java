@@ -189,6 +189,12 @@ public final class SpreadsheetLabelReferencesStoreTestingTest implements Spreads
         }
 
         @Override
+        public Runnable addStoreWatcherOnce(final MultiValueStoreWatcher<SpreadsheetLabelName, SpreadsheetCellReference> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public String toString() {
             return this.getClass().getSimpleName();
         }

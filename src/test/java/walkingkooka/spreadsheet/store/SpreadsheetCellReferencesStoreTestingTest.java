@@ -173,6 +173,12 @@ public final class SpreadsheetCellReferencesStoreTestingTest implements Spreadsh
         }
 
         @Override
+        public Runnable addStoreWatcherOnce(final MultiValueStoreWatcher<SpreadsheetCellReference, SpreadsheetCellReference> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public String toString() {
             return this.getClass().getSimpleName();
         }
