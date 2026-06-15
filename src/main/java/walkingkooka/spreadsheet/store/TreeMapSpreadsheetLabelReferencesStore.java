@@ -80,14 +80,12 @@ final class TreeMapSpreadsheetLabelReferencesStore implements SpreadsheetLabelRe
             );
         }
 
-        return Sets.readOnly(
-            labels.stream()
-                .skip(offset)
-                .limit(count)
-                .collect(
-                    ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
-                )
-        );
+        return labels.stream()
+            .skip(offset)
+            .limit(count)
+            .collect(
+                ImmutableSortedSet.collector(SpreadsheetSelection.IGNORES_REFERENCE_KIND_COMPARATOR)
+            );
     }
 
     // SpreadsheetExpressionReferencesStoreDelegator....................................................................
