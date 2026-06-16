@@ -47,7 +47,10 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
     public void testSaveAndLoad() {
         final S store = this.createStore();
 
-        final SpreadsheetMetadata metadata = this.metadata(ID, "user1@example.com");
+        final SpreadsheetMetadata metadata = this.metadata(
+            ID,
+            "user1@example.com"
+        );
         store.save(metadata);
 
         assertSame(metadata, store.loadOrFail(this.id()));
@@ -57,10 +60,16 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
     public void testSaveDeleteLoad() {
         final S store = this.createStore();
 
-        final SpreadsheetMetadata metadata = this.metadata(ID, "user1@example.com");
+        final SpreadsheetMetadata metadata = this.metadata(
+            ID,
+            "user1@example.com"
+        );
         store.save(metadata);
         //noinspection OptionalGetWithoutIsPresent
-        store.delete(metadata.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID).get());
+        store.delete(
+            metadata.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
+                .get()
+        );
 
         this.loadAndCheck(
             store,
@@ -168,8 +177,12 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         );
     }
 
-    final SpreadsheetMetadata metadata(final long id, final String creator) {
-        return this.metadata(SpreadsheetId.with(id), creator);
+    final SpreadsheetMetadata metadata(final long id,
+                                       final String creator) {
+        return this.metadata(
+            SpreadsheetId.with(id),
+            creator
+        );
     }
 
     final SpreadsheetMetadata metadata(final SpreadsheetId id,
@@ -189,6 +202,9 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
                     modifiedEmail,
                     modifiedDateTime
                 )
-            ).set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"));
+            ).set(
+                SpreadsheetMetadataPropertyName.LOCALE,
+                Locale.forLanguageTag("EN-AU")
+            );
     }
 }
