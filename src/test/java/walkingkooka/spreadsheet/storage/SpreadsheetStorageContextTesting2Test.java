@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.Storages;
 import walkingkooka.store.Store;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.validation.form.Form;
@@ -293,6 +294,20 @@ public final class SpreadsheetStorageContextTesting2Test implements SpreadsheetS
         @Override
         public void deleteCells(final SpreadsheetExpressionReference cellsOrLabel) {
             Objects.requireNonNull(cellsOrLabel, "cellsOrLabel");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addCellStoreWatcher(final StoreWatcher<SpreadsheetCell> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
+
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Runnable addCellStoreWatcherOnce(final StoreWatcher<SpreadsheetCell> watcher) {
+            Objects.requireNonNull(watcher, "watcher");
 
             throw new UnsupportedOperationException();
         }

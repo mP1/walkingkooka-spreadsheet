@@ -67,6 +67,7 @@ import walkingkooka.spreadsheet.validation.form.SpreadsheetForms;
 import walkingkooka.spreadsheet.value.SpreadsheetCell;
 import walkingkooka.storage.Storage;
 import walkingkooka.storage.Storages;
+import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
 import walkingkooka.tree.text.TextNode;
@@ -194,6 +195,130 @@ public final class SpreadsheetContextSpreadsheetStorageContextTest implements Sp
             cell.reference()
         );
     }
+
+    @Test
+    public void testAddCellStoreWatcher() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello")
+            )
+        );
+
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        context.addCellStoreWatcher(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            cell.setFormattedValue(
+                                Optional.of(
+                                    TextNode.text("Hello")
+                                )
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.fired = false;
+
+        this.saveCellsAndCheck(
+            context,
+            Sets.of(cell),
+            cell.setFormattedValue(
+                Optional.of(
+                    TextNode.text("Hello")
+                )
+            )
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+    }
+
+    @Test
+    public void testAddCellStoreWatcherOnce() {
+        final SpreadsheetCell cell = SpreadsheetSelection.A1.setFormula(
+            SpreadsheetFormula.EMPTY.setValue(
+                Optional.of("Hello111")
+            )
+        );
+
+        final SpreadsheetContextSpreadsheetStorageContext context = this.createContext();
+
+        context.addCellStoreWatcherOnce(
+            new StoreWatcher<>() {
+                @Override
+                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
+                                          final Optional<SpreadsheetCell> newValue) {
+                    checkEquals(
+                        Optional.empty(),
+                        oldValue,
+                        "oldValue"
+                    );
+                    checkEquals(
+                        Optional.of(
+                            cell.setFormattedValue(
+                                Optional.of(
+                                    TextNode.text("Hello111")
+                                )
+                            )
+                        ),
+                        newValue,
+                        "newValue"
+                    );
+
+                    SpreadsheetContextSpreadsheetStorageContextTest.this.fired = true;
+                }
+            }
+        );
+
+        this.fired = false;
+
+        this.saveCellsAndCheck(
+            context,
+            Sets.of(cell),
+            cell.setFormattedValue(
+                Optional.of(
+                    TextNode.text("Hello111")
+                )
+            )
+        );
+
+        this.checkEquals(
+            true,
+            this.fired,
+            "fired"
+        );
+
+        context.saveCells(
+            Sets.of(
+                cell.setFormula(
+                    SpreadsheetFormula.EMPTY.setValue(
+                        Optional.of("Hello222") // should not be seen by StorageWatcher#onValueChange
+                    )
+                )
+            )
+        );
+    }
+
+    private boolean fired;
 
     // forms............................................................................................................
 
