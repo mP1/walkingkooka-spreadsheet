@@ -329,6 +329,18 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         );
     }
 
+    // StorageContext...................................................................................................
+
+    @Override
+    public StoragePath parseStoragePath(final String text) {
+        return StoragePath.parseSpecial(
+            text,
+            this // HasUserDirectories
+        );
+    }
+
+    // StorageContext helpers...........................................................................................
+
     private <T> T executeWithSpreadsheetEngineContextOrElse(final BiFunction<SpreadsheetEngine, SpreadsheetEngineContext, T> function,
                                                             final T whenMissingSpreadsheetId) {
         final SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentContext context = this.context;
@@ -354,16 +366,6 @@ final class SpreadsheetExpressionEvaluationContextSharedSpreadsheetEnvironmentCo
         return function.apply(
             spreadsheetEngineContext.spreadsheetEngine(),
             spreadsheetEngineContext
-        );
-    }
-
-    // StorageContext...................................................................................................
-
-    @Override
-    public StoragePath parseStoragePath(final String text) {
-        return StoragePath.parseSpecial(
-            text,
-            this // HasUserDirectories
         );
     }
 
