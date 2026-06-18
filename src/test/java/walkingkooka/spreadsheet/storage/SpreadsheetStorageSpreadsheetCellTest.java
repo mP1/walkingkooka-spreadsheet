@@ -67,8 +67,8 @@ import walkingkooka.storage.InvalidStoragePathException;
 import walkingkooka.storage.StoragePath;
 import walkingkooka.storage.StorageValue;
 import walkingkooka.storage.StorageValueInfo;
+import walkingkooka.storage.StorageWatcher;
 import walkingkooka.storage.Storages;
-import walkingkooka.store.StoreWatcher;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.tree.expression.function.provider.ExpressionFunctionProviders;
@@ -502,7 +502,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     }
 
     @Test
-    public void testAddStorageWatcherAndSave() {
+    public void testAddWatcherAndSave() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
@@ -514,48 +514,50 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
 
-        final SpreadsheetCell savedCell = cell.setFormula(
-            cell.formula()
-                .setValue(
-                    Optional.of(
-                        SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
-                    )
-                )
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("#VALUE!")
-            )
-        );
-
         this.fired = false;
 
-        storageContext.addCellStoreWatcher(
-            new StoreWatcher<SpreadsheetCell>() {
+        final StorageValue savedStorageValue = StorageValue.with(
+                StoragePath.parse("/A1")
+            ).setValue(
+                Optional.of(
+                    cell.setFormula(
+                        cell.formula()
+                            .setValue(
+                                Optional.of(
+                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
+                                )
+                            )
+                    ).setFormattedValue(
+                        Optional.of(
+                            TextNode.text("#VALUE!")
+                        )
+                    )
+                )
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+            );
+
+        storage.addWatcher(
+            new StorageWatcher() {
                 @Override
-                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
-                                          final Optional<SpreadsheetCell> newValue) {
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
                     checkEquals(
                         Optional.empty(),
                         oldValue,
                         "oldValue"
                     );
                     checkEquals(
-                        Optional.of(savedCell),
+                        Optional.of(savedStorageValue),
                         newValue,
                         "newValue"
                     );
 
                     SpreadsheetStorageSpreadsheetCellTest.this.fired = true;
                 }
-            }
+            },
+            storageContext
         );
-
-        final StorageValue savedStorageValue = StorageValue.with(path)
-            .setValue(
-                Optional.of(savedCell)
-            ).setContentType(
-                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
-            );
 
         this.saveAndCheck(
             storage,
@@ -564,7 +566,9 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                     Optional.of(cell)
                 ),
             storageContext,
-            savedStorageValue
+            savedStorageValue.setPath(
+                StoragePath.ROOT
+            )
         );
 
         this.checkEquals(
@@ -575,7 +579,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
     }
 
     @Test
-    public void testAddStorageWatcherOnceAndSave() {
+    public void testAddWatcherOnceAndSave() {
         final SpreadsheetContext spreadsheetContext = this.createSpreadsheetContext();
         final SpreadsheetStorageContext storageContext = this.createContext(spreadsheetContext);
 
@@ -587,48 +591,50 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
 
         final SpreadsheetStorageSpreadsheetCell storage = this.createStorage();
 
-        final SpreadsheetCell savedCell = cell.setFormula(
-            cell.formula()
-                .setValue(
-                    Optional.of(
-                        SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
-                    )
-                )
-        ).setFormattedValue(
-            Optional.of(
-                TextNode.text("#VALUE!")
-            )
-        );
-
         this.fired = false;
 
-        storageContext.addCellStoreWatcherOnce(
-            new StoreWatcher<SpreadsheetCell>() {
+        final StorageValue savedStorageValue = StorageValue.with(
+                StoragePath.parse("/A1")
+            ).setValue(
+                Optional.of(
+                    cell.setFormula(
+                        cell.formula()
+                            .setValue(
+                                Optional.of(
+                                    SpreadsheetErrorKind.VALUE.setMessage("Unknown parser date")
+                                )
+                            )
+                    ).setFormattedValue(
+                        Optional.of(
+                            TextNode.text("#VALUE!")
+                        )
+                    )
+                )
+            ).setContentType(
+                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
+            );
+
+        storage.addWatcherOnce(
+            new StorageWatcher() {
                 @Override
-                public void onValueChange(final Optional<SpreadsheetCell> oldValue,
-                                          final Optional<SpreadsheetCell> newValue) {
+                public void onValueChange(final Optional<StorageValue> oldValue,
+                                          final Optional<StorageValue> newValue) {
                     checkEquals(
                         Optional.empty(),
                         oldValue,
                         "oldValue"
                     );
                     checkEquals(
-                        Optional.of(savedCell),
+                        Optional.of(savedStorageValue),
                         newValue,
                         "newValue"
                     );
 
                     SpreadsheetStorageSpreadsheetCellTest.this.fired = true;
                 }
-            }
+            },
+            storageContext
         );
-
-        final StorageValue savedStorageValue = StorageValue.with(path)
-            .setValue(
-                Optional.of(savedCell)
-            ).setContentType(
-                Optional.of(SpreadsheetMediaTypes.MEMORY_CELL)
-            );
 
         this.saveAndCheck(
             storage,
@@ -637,7 +643,7 @@ public final class SpreadsheetStorageSpreadsheetCellTest extends SpreadsheetStor
                     Optional.of(cell)
                 ),
             storageContext,
-            savedStorageValue
+            savedStorageValue.setPath(StoragePath.ROOT)
         );
 
         this.checkEquals(
